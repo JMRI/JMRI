@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.4 on Sat Mar 08 14:53:39 PST 2008 $Id: decoderIndex.xml,v 1.120 2008-03-08 22:55:33 jacobsen Exp $-->
+  <!--Written by JMRI version 2.1.5-A on Tue May 13 09:43:37 PDT 2008 $Id: decoderIndex.xml,v 1.121 2008-05-13 16:46:20 jacobsen Exp $-->
   <decoderIndex version="140">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -165,7 +165,7 @@
       <family name="Bachmann 4-function decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_4fn.xml">
         <model model="Bachmann 4-function decoders" numOuts="4" numFns="8" lowVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
-      <family name="DAC10" mfg="CML Systems" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="CML_Systems_DAC10.xml">
+      <family name="DAC10" mfg="CML Systems" type="stationary" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way" file="CML_Systems_DAC10.xml">
         <model model="DAC10" lowVersionID="1" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Function Decoder" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_DCX_30_V.xml">
@@ -439,12 +439,34 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="1.05" width=".67" height=".25" units="inches" />
         </model>
+        <model model="DH165Q1" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pin" connection="solder" />
+          <output name="2" label="Pin" connection="solder" />
+          <output name="3" label="Pin" connection="solder" />
+          <output name="4" label="Pin" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.877" width=".667" height=".173" units="inches" />
+        </model>
         <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <size length="Unknown" width="Unknown" height="Unknown" units="inches" />
         </model>
         <model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <size length=".55" width=".36" height=".13" units="inches" />
+        </model>
+        <model model="DN143IP" numOuts="4" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1.A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="3" label="Pad (Green)" connection="solder" />
+          <output name="4" label="Pad (Violet)" connection="solder" />
+          <size length="0.55" width="0.36" height="0.13" units="inches" />
+        </model>
+        <model model="DN143K1" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="Kato N Locomotive" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <size length=".55" width=".36" height=".13" units="inches" />
+        </model>
+        <model model="DN143K2" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="Kato N Locomotive" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
           <size length=".55" width=".36" height=".13" units="inches" />
         </model>
@@ -589,8 +611,17 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.158" width="0.58" height="0.135" units="inches" />
         </model>
+        <model model="DN163PS" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=1.5A)" formFactor="N" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.158" width="0.58" height="0.135" units="inches" />
+        </model>
         <model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <size length="0.57" width="0.38" height="0.13" units="inches" />
+          <size length="0.55" width="0.36" height="0.13" units="inches" />
         </model>
         <model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
@@ -599,6 +630,15 @@
         <model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
           <size length="0.55" width="0.36" height="0.13" units="inches" />
+        </model>
+        <model model="DZ125" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="0.418" width="0.340" height="0.112" units="inches" />
+        </model>
+        <model model="DZ125PS" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="0.418" width="0.340" height="0.112" units="inches" />
+        </model>
+        <model model="DZ125IN" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="NMRAsmall" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="0.418" width="0.340" height="0.112" units="inches" />
         </model>
       </family>
       <family name="SFX Sound Decoders" mfg="Digitrax" type="locomotive" file="Digitrax_0SFX.xml">
@@ -700,7 +740,7 @@
         <model model="DN122K2" numOuts="2" numFns="0" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Economy Series 3 with FX3, silent" mfg="Digitrax" lowVersionID="35" highVersionID="35" type="locomotive" file="Digitrax_Economy.xml">
-        <model model="DH123" numOuts="2" numFns="3" connector="9pin" lowVersionID="35" highVersionID="35" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="DH123" numOuts="2" numFns="5" connector="9pin" lowVersionID="35" highVersionID="35" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <size length="1.2" width=".66" height="0.25" units="inches" />
@@ -891,7 +931,12 @@
         </model>
       </family>
       <family name="R8215" mfg="Hornby" type="locomotive" file="Hornby8215.xml">
-        <model model="Hornby R8215" numOuts="4" numFns="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="R8215" numOuts="4" numFns="4" lowVersionID="13" nmraWarrant="yes" nmraWarrantStart="200804" maxTotalCurrent="0.5A" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no">
+          <size length="17" width="10" height="3.5" units="mm" />
+        </model>
+      </family>
+      <family name="Digital" mfg="Hornby" type="locomotive" file="HornbyDigitalFnOnly.xml">
+        <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
       </family>
       <family name="NMRA-DCC/Motorola" mfg="Kuehn" type="locomotive" file="Kuehn_5Moto.xml">
         <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -1175,60 +1220,6 @@
       <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
-      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="1" type="locomotive" file="MRC_1626.xml">
-        <model model="Synch Diesel Sound 1626" numOuts="4" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
-      </family>
-      <family name="Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_1627.xml">
-        <model model="Synch Steam Sound 1627" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1630.xml">
-        <model model="Synch Steam Sound 1630" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="48" width="17" height="7.5" units="mm" />
-        </model>
-        <model model="1656" numOuts="4" numFns="28" connector="NMRAmedium" maxMotorCurrent="1.5A" maxInputVolts="18" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="45" width="18" height="6.2" units="mm" />
-        </model>
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1631.xml">
-        <model model="Synch Diesel Sound 1631" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="48" width="17" height="7.5" units="mm" />
-        </model>
-        <model model="Synch Diesel Sound 1632" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="48" width="17" height="7.5" units="mm" />
-        </model>
-        <model model="Synch Diesel Sound 1633" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="48" width="17" height="7.5" units="mm" />
-        </model>
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1636.xml">
-        <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="70" width="9.2" height="5.8" units="mm" />
-        </model>
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1644.xml">
-        <model model="Synch Diesel Sound 1644" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="90" width="14" height="4.2" units="mm" />
-        </model>
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1645.xml">
-        <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="90" width="14" height="4.2" units="mm" />
-        </model>
-      </family>
-      <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1650.xml">
-        <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note All functions are NMRA compatible -->
-          <size length="25.5" width="12.3" height="4.5" units="mm" />
-        </model>
-      </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" comment="MRC Sound Decoders" lowVersionID="32" type="locomotive" file="MRC_AD370.xml">
         <model model="AD370" numOuts="4" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <versionCV lowVersionID="32" />
@@ -1243,17 +1234,92 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_BigBoy.xml">
-        <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note All functions are NMRA compatible -->
-          <size length="45" width="18" height="6.2" units="mm" />
-        </model>
-      </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Challenger.xml">
         <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_F_Unit.xml">
         <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_lights1650.xml">
+        <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All functions are NMRA compatible -->
+          <size length="25.5" width="12.3" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="1" type="locomotive" file="MRC_sound1626.xml">
+        <model model="Synch Diesel Sound 1626" numOuts="4" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_sound1627.xml">
+        <model model="Synch Steam Sound 1627" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sound1634.xml">
+        <model model="Synch Diesel Sound 1634" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="70" width="9.2" height="5.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1630.xml">
+        <model model="Synch Steam Sound 1630" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1631.xml">
+        <model model="Synch Diesel Sound 1631" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+        <model model="Synch Diesel Sound 1632" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+        <model model="Synch Diesel Sound 1633" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1636.xml">
+        <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="70" width="9.2" height="5.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1639.xml">
+        <model model="Mini HO/N Synch Steam Sound 1639" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="33" width="10.5" height="5.0" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1644.xml">
+        <model model="Synch Diesel Sound 1644" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1645.xml">
+        <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1656.xml">
+        <model model="Synch Steam Sound 1656" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All functions are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1663.xml">
+        <model model="Synch Diesel Sound 1663 for S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- Functions F0 to F28 are NMRA compatible -->
+          <size length="95" width="14" height="9" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_soundbrillianceBigBoy.xml">
+        <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All 28 functions are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sounder1666.xml">
+        <model model="Diesel Sound Decoder 1666 Alco244SD60-70" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="17.4" width="17.4" height="4.0" units="mm" />
+        </model>
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
         <model model="LGB MTS I 55020 loco decoders" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
@@ -1528,6 +1594,17 @@
           <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
           <size length="2.3" width="1.2" height="0.375" units="inches" />
         </model>
+        <model model="D408SR V3.6" numOuts="8" numFns="14" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="1" label="Wht" connection="wire" maxcurrent="1000 mA" />
+          <output name="2" label="Yel" connection="wire" maxcurrent="500 mA" />
+          <output name="3" label="Grn" connection="wire" maxcurrent="500 mA" />
+          <output name="4" label="Vlt" connection="wire" maxcurrent="500 mA" />
+          <output name="5" label="brn" connection="wire" maxcurrent="500 mA" />
+          <output name="6" label="Wht/yel" connection="wire" maxcurrent="500 mA" />
+          <output name="7" label="Wht/grn" connection="wire" maxcurrent="500 mA" />
+          <output name="8" label="Pad 8" connection="solder" maxcurrent="1000 mA" />
+          <size length="2.3" width="1.2" height="0.375" units="inches" />
+        </model>
         <model model="D808SR" numOuts="8" numFns="14" maxMotorCurrent="8A (peak=30A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="Screw" connection="other" />
           <output name="2" label="Screw" connection="other" />
@@ -1631,6 +1708,7 @@
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="0.57" width="0.34" height="0.13" units="inches" />
         </model>
+        <model model="FDT Trackmobile" numOuts="0" numFns="0" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Silent Running BEMF" mfg="North Coast Engineering" lowVersionID="40" highVersionID="40" comment="These are the version 4.0 decoders released after September 2006" type="locomotive" file="NCE_E.xml">
         <model model="D408SR-E" numOuts="9" numFns="14" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
@@ -2419,6 +2497,10 @@
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="02" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Servo Accessory Decoders" mfg="SPROG DCC" type="locomotive" file="SPROG_DCC_Servo6.xml">
+        comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..."&gt;
+        <model model="Servo6" lowVersionID="10" highVersionID="10" type="stationary" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
