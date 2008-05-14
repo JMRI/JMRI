@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.37 2008-05-11 19:13:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.38 2008-05-14 23:55:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -383,6 +383,11 @@ Now, it asks first.
 <p>
 Michael Mosher added the Digitrax DH165Q1 decoder.
 
+<p>
+David Duchamp made some additions to Layout Editor that allow easy train tracking around a Layout Editor panel.
+
+<p>
+David Duchamp added a first version of a method suggested by Ken Cameron to allow scripts access facing signal heads at block boundaries, provided signals were set up using Layout Editor tools.
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
