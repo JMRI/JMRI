@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.1.2
  *
  */
