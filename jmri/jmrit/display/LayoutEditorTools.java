@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutEditorTools 
@@ -1453,7 +1453,8 @@ public class LayoutEditorTools
 	public boolean reachedEndBumper() {return hitEndBumper;}
 	/* 
 	 * Returns 'true' if "track" enters a block boundary at the west(north) end of
-	 *		"point". Returns "false" otherwise.
+	 *		"point". Returns "false" otherwise. If track is neither horizontal or 
+	 *      vertical, assumes horizontal, as done when setting signals at block boundary.
 	 *	"track" is a TrackSegment connected to "point".
 	 *  "point" is an anchor point serving as a block boundary.
 	 */
@@ -1489,9 +1490,10 @@ public class LayoutEditorTools
 			if (delY>0.0) return false;
 			else return true;
 		}
-		// track is not vertical or horizontal
+		// track is not vertical or horizontal, assume horizontal
 		log.error ("Track is not vertical or horizontal at anchor");
-		return false;		
+		if (delX>0.0) return false;
+		return true;
 	}
 
 	/** 

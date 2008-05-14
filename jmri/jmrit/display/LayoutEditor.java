@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3457,6 +3457,16 @@ public class LayoutEditor extends JmriJFrame {
 		for (int i = 0; i<pointList.size(); i++) {
 			PositionablePoint p = (PositionablePoint)pointList.get(i);
 			if (p.getID().equals(name)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	public PositionablePoint findPositionablePointAtTrackSegments(TrackSegment tr1, TrackSegment tr2) {
+		for (int i = 0; i<pointList.size(); i++) {
+			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			if ( ( (p.getConnect1()==tr1) && (p.getConnect2()==tr2) ) ||
+					( (p.getConnect1()==tr2) && (p.getConnect2()==tr1) ) ) {
 				return p;
 			}
 		}

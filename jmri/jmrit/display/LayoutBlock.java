@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -357,6 +357,30 @@ public class LayoutBlock extends AbstractNamedBean
 	// dummy for completion of NamedBean interface
 	public void setState(int i) {}
 	
+	/**
+	 * Get the Layout Editor panel with the highest connectivity to this Layout Block
+	 */
+	protected LayoutEditor getMaxConnectedPanel() {
+		LayoutEditor panel = null;
+		if ( (block!=null) && (panels.size()>0) ) {
+			// a block is attached and this LayoutBlock is used
+			// initialize connectivity as defined in first Layout Editor panel
+			panel = (LayoutEditor)panels.get(0);
+			ArrayList c = panel.auxTools.getConnectivityList(_instance);
+			// if more than one panel, find panel with the highest connectivity
+			if (panels.size()>1) {
+				for (int i = 1;i < panels.size();i++) {
+					if (c.size()<((LayoutEditor)panels.get(i)).auxTools.
+										getConnectivityList(_instance).size()) {
+						panel = (LayoutEditor)panels.get(i);
+						c = panel.auxTools.getConnectivityList(_instance);
+					}
+				}
+			}
+		}
+		return panel;
+	}
+			
 	/**
 	 * Check/Update Path objects for the attached jmri.Block
 	 * <P>
