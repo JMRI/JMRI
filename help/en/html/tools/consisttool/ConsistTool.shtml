@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConsistTool.shtml,v 1.3 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: ConsistTool.shtml,v 1.4 2008-05-14 23:43:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -103,9 +103,10 @@
              </p>
              <p>
                 If CV19 contains a value other than 0, the locomotive will
-                respond to speed and direction instructions on this 
-                address.  Otherwise, it will respond to speed and 
-                direction commands sent only on the consist address.
+                respond to speed and direction instructions on the 
+                address in CV19.  Otherwise, it will respond to speed and 
+                direction commands sent only on the usual short
+                or long decoder address.
              </p>  
              <p>
                 Since the consist address is a single CV, it is limited 
