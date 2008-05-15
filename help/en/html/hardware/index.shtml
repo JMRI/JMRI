@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.15 2008-05-04 01:55:20 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.16 2008-05-15 14:10:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -203,6 +203,13 @@
 	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/">SPROG</a></dt>
 	    <dt>Andrew Crosland</dt>
 	    <dd><p class="dl">Configure: <A HREF="sprog/SPROG.shtml">SPROG</a></p></dd>
+
+	    <dt class="im"><a href="http://www.tchtechnology.com/">
+		<img src="images/tchlogo.gif" width="150" height="34" alt="TCH Technology"></a>
+	    <dt>TCH Technology</dt>
+	    <dd>
+		<p>Connection: </p>
+	        <p class="dl">Configure: <A HREF="tchtech/index.shtml">via serial port</a></p></dd>
 
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
 	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
