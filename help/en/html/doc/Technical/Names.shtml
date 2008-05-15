@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.12 2008-03-17 05:24:12 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.13 2008-05-15 04:47:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -121,9 +121,8 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
 <LI>D (reserved for Direct-packet-drive and direct serial port sensors)
 <LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
 <LI>F
-<LI>G
+<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
 <LI>H
 <LI>I Internal, e.g. objects with no associated hardware
 <LI>J
