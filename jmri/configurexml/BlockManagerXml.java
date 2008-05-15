@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @since 2.1.2
  *
  */
@@ -154,7 +154,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
     /**
      * Utility method to load the individual Block objects.
      * 
-     * @param block Element holding one block
+     * @param element Element holding one block
      */
     public void loadBlock(Element element) {
             if ( element.getAttribute("systemName") == null) {
