@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -42,7 +42,6 @@ public class ActiveSystemsMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         // the following is somewhat brute-force!
-
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
@@ -61,6 +60,8 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGCSMenu"));
+        if (jmri.jmrix.tchtech.serial.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tchtech.TCHTechMenu"));
         if (jmri.jmrix.tmcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
@@ -85,7 +86,6 @@ public class ActiveSystemsMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         // the following is somewhat brute-force!
-
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
 
@@ -112,6 +112,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
               m.add(getMenu("jmri.jmrix.sprog.SPROGCSMenu"));
+
+        if (jmri.jmrix.tchtech.serial.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tchtech.TCHTechMenu"));
 
         if (jmri.jmrix.tmcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
