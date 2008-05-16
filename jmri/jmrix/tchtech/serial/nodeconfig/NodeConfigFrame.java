@@ -18,7 +18,7 @@ import jmri.jmrix.tchtech.serial.SerialSensorManager;
  * Frame for user configuration of  serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -327,6 +327,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             });
         cancelButton.setVisible(false);			
         contentPane.add(panel4);
+
+        // add help
+        addHelpMenu("package.jmri.jmrix.tchtech.serial.nodeconfig.NodeConfigFrame", true);
 
         // pack for display
         pack();

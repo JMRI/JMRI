@@ -203,6 +203,8 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         });
         contentPane.add(panel4);
 
+        addHelpMenu("package.jmri.jmrix.tchtech.serial.diagnostic.DiagnosticFrame", true);
+
         // pack for display
         pack();
     }

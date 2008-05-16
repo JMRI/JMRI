@@ -199,6 +199,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			displayNodeInfo( (String)nodeSelBox.getSelectedItem() );
 		}
 
+        addHelpMenu("package.jmri.jmrix.tchtech.serial.assignment.ListFrame", true);
+
         // pack for display
         pack();
     }
