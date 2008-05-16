@@ -19,10 +19,10 @@ import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
- * cmri.serial.SerialDriverFrame object
+ * tchtech.serial.SerialDriverFrame object
  *
- * @author   Bob Jacobsen    Copyright (C) 2002
- * @version  $Revision: 1.1 $
+ * @author   Bob Jacobsen    Copyright (C) 2002, 2008
+ * @version  $Revision: 1.2 $
  */
 public class SerialDriverAction 			extends AbstractAction {
 

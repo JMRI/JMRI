@@ -33,7 +33,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to TCH Technology SNIC via a serial comm port.
  * Normally controlled by the tchtech.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -63,7 +63,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
-            // try to set it for CMRI serial
+            // try to set it for serial
             try {
                 setSerialPort();
             } catch (javax.comm.UnsupportedCommOperationException e) {
