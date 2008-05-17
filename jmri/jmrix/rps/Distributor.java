@@ -6,11 +6,10 @@ import java.util.Vector;
 
 /**
  * Distributes Readings and the Measurements calculated from them.
- 
  * <P>
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  *
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Distributor {
 
@@ -40,10 +39,9 @@ public class Distributor {
     public void submitReading(Reading s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
-        synchronized(this)
-            {
-                v = (Vector) readingListeners.clone();
-            }
+        synchronized(this) {
+            v = (Vector) readingListeners.clone();
+        }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" ReadingListeners about item ");
         // forward to all listeners
@@ -80,10 +78,9 @@ public class Distributor {
     public void submitMeasurement(Measurement s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
-        synchronized(this)
-            {
+        synchronized(this) {
                 v = (Vector) measurementListeners.clone();
-            }
+        }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" MeasurementListeners about item ");
         // forward to all listeners
