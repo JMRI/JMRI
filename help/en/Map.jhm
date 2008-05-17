@@ -373,6 +373,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter4_Merging" url="html/tools/throttle/ThrottleChapter4.shtml#Merging" />
 	<mapID target="package.jmri.jmrit.display.EditTurntable" url="package/jmri/jmrit/display/EditTurntable.shtml" />
 	<mapID target="html.doc.Technical.WebSite" url="html/doc/Technical/WebSite.shtml" />
+	<mapID target="package.jmri.jmrit.messager.MessageFrame" url="package/jmri/jmrit/messager/MessageFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml" />
 	<mapID target="html.doc.Technical.NetBeans_patch" url="html/doc/Technical/NetBeans.shtml#patch" />
