@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.*;
 /**
  * Frame for sending messages to throttles
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class MessageFrame extends jmri.util.JmriJFrame {
 
@@ -38,7 +38,7 @@ public class MessageFrame extends jmri.util.JmriJFrame {
             }
         });
         
-        addHelpMenu("package.jmri.jmrit.messager.MessageFrame");
+        addHelpMenu("package.jmri.jmrit.messager.MessageFrame", true);
         
         pack();
     }
