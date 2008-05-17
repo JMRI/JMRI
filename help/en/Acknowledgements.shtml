@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.39 2008-05-11 19:14:15 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.40 2008-05-17 16:47:02 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -207,6 +207,7 @@
 <a name="M"></A>
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
+	<LI>John McAleely, who contributed Hornby decoder definitions
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
