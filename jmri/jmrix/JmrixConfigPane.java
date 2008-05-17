@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.37 $
+ * @version	$Revision: 1.38 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -56,6 +56,7 @@ public class JmrixConfigPane extends JPanel {
                               "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
                               "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",  
                               "jmri.jmrix.grapevine.serialdriver.ConnectionConfig",
+                              "jmri.jmrix.lenz.hornbyelite.ConnectionConfig",
                               "jmri.jmrix.lenz.li100.ConnectionConfig",
                               "jmri.jmrix.lenz.li100f.ConnectionConfig",
                               "jmri.jmrix.lenz.li101.ConnectionConfig",
@@ -75,19 +76,19 @@ public class JmrixConfigPane extends JPanel {
                               "jmri.jmrix.nce.usbdriver.ConnectionConfig",
                               "jmri.jmrix.oaktree.serialdriver.ConnectionConfig",
                               "jmri.jmrix.powerline.serialdriver.ConnectionConfig",
+                              "jmri.jmrix.qsi.serialdriver.ConnectionConfig",
+                              "jmri.jmrix.rps.serial.ConnectionConfig",
+                              "jmri.jmrix.secsi.serialdriver.ConnectionConfig",
                               "jmri.jmrix.sprog.sprog.ConnectionConfig",
                               "jmri.jmrix.sprog.sprogCS.ConnectionConfig",
-                              "jmri.jmrix.secsi.serialdriver.ConnectionConfig",
                               "jmri.jmrix.tchtech.serial.serialdriver.ConnectionConfig",
                               "jmri.jmrix.tmcc.serialdriver.ConnectionConfig",
                               "jmri.jmrix.wangrow.serialdriver.ConnectionConfig",
+                              "jmri.jmrix.lenz.xntcp.ConnectionConfig",
                               "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
                               "jmri.jmrix.zimo.mx1.ConnectionConfig",
                               "jmri.jmrix.lenz.ztc640.ConnectionConfig",
-                              "jmri.jmrix.lenz.hornbyelite.ConnectionConfig",
-                              "jmri.jmrix.lenz.xntcp.ConnectionConfig",              // experimental
                               // "jmri.jmrix.mrc.serialdriver.ConnectionConfig",     // experimental
-                              "jmri.jmrix.qsi.serialdriver.ConnectionConfig",
                               "jmri.jmrix.direct.serial.ConnectionConfig"            // experimental
         };
     }
