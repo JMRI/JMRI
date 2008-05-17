@@ -22,7 +22,7 @@ import jmri.jmrix.rps.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -264,7 +264,7 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
             ostream = activeSerialPort.getOutputStream();
 
-            // start the DUMP
+            // start getting the initial message
             sendBytes(new byte[]{(byte)'g'});
             // purge contents, if any
             int count = serialStream.available();
