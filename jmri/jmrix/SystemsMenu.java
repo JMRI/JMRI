@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -38,6 +38,11 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.loconet.LocoNetMenu");
         addMenu("jmri.jmrix.nce.NceMenu");
         addMenu("jmri.jmrix.oaktree.OakTreeMenu");
+        addMenu("jmri.jmrix.powerline.SystemMenu");
+        addMenu("jmri.jmrix.pricom.PricomMenu");
+        addMenu("jmri.jmrix.qsi.QSIMenu");
+        addMenu("jmri.jmrix.rps.RpsMenu");
+        addMenu("jmri.jmrix.secsi.SecsiMenu");
         addMenu("jmri.jmrix.sprog.SPROGMenu");
         addMenu("jmri.jmrix.tchtech.TCHTechMenu");    
         addMenu("jmri.jmrix.tmcc.TMCCMenu");
@@ -47,8 +52,6 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());
         addMenu("jmri.jmrix.direct.DirectMenu");
-        addMenu("jmri.jmrix.qsi.QSIMenu");
-        addMenu("jmri.jmrix.powerline.SystemMenu");
 
     }
 

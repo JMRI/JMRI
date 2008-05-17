@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -42,6 +42,9 @@ public class ActiveSystemsMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         // the following is somewhat brute-force!
+
+        if (jmri.jmrix.acela.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
@@ -54,8 +57,16 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
         if (jmri.jmrix.oaktree.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
+        if (jmri.jmrix.powerline.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
+        if (jmri.jmrix.pricom.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.pricom.PricomMenu"));
         if (jmri.jmrix.qsi.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
+        if (jmri.jmrix.rps.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
+        if (jmri.jmrix.secsi.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
@@ -77,15 +88,16 @@ public class ActiveSystemsMenu extends JMenu {
         
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        if (jmri.jmrix.powerline.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
-        if (jmri.jmrix.acela.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));    }
+    }
 
     static public void addItems(JMenuBar m) {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         // the following is somewhat brute-force!
+
+        if (jmri.jmrix.acela.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
+
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
 
@@ -104,8 +116,20 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.oaktree.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
 
+        if (jmri.jmrix.powerline.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
+
+        if (jmri.jmrix.pricom.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.pricom.PricomMenu"));
+
         if (jmri.jmrix.qsi.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
+
+        if (jmri.jmrix.rps.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
+
+        if (jmri.jmrix.secsi.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
 
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
@@ -134,11 +158,7 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
-        if (jmri.jmrix.powerline.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
 
-        if (jmri.jmrix.acela.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
     }
 
     static JMenu getMenu(String className) {
