@@ -27,8 +27,9 @@ package jmri.jmrix.tchtech.serial;
  *              xxxx is a bit number of the input or output bit (1-2048)
  *      examples: HT0B2 (node address 0, bit 2), HS1B3 (node address 1, bit 3), 
  *              HL11B234 (node address 11, bit234)
- ** @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.1 $
+ * @author	Dave Duchamp, Copyright (C) 2004 - 2006
+ * @author Tim Hatch Copyright 2007, 2008
+ * @version     $Revision: 1.2 $
  * 
  */
 public class SerialAddress {
