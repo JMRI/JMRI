@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.39 2008-05-15 14:16:29 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.40 2008-05-18 15:49:59 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -176,8 +176,9 @@ Ken Cameron and Bob Jacobsen added support for the CP290 house adapter to the
 <a href="http://jmri.sf.net/help/en/html/hardware/powerline/Compatibility.shtml">X10 powerline support</a>.
 
 <p>
-Dan Boudreau fixed a problem that would cause a lockup if a NCE command station crashed
-while coming out of programing mode.
+Dan Boudreau fixed a problem that would cause a lockup if a NCE command station or NCE Power Cab crashs
+while coming out of programing mode.  The NCE Power Cab can crash when reading 
+non-existing indexed CVs.
 
 <p>
 The new Mac OS X startup scripts would fail if placed in a directory with spaces in the name.
