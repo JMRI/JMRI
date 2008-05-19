@@ -15,7 +15,7 @@ import java.io.*;
  * Panel for load/store of RPS setup
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -26,7 +26,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
 
         // file load, store
         JButton b1;
-        b1 = new JButton("Store");
+        b1 = new JButton("Set Defaults");
         b1.setToolTipText("Store new default values");
         b1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
