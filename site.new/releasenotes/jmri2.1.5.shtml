@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.41 2008-05-19 03:58:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.42 2008-05-19 20:47:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -176,8 +176,8 @@ Ken Cameron and Bob Jacobsen added support for the CP290 house adapter to the
 <a href="http://jmri.sf.net/help/en/html/hardware/powerline/Compatibility.shtml">X10 powerline support</a>.
 
 <p>
-Dan Boudreau fixed a problem that would cause a lockup if a NCE command station or NCE Power Cab crashs
-while coming out of programing mode.  The NCE Power Cab can crash when reading 
+Dan Boudreau fixed a problem that would cause a lockup if a NCE command station or NCE Power Cab crashes
+while coming out of programming mode.  The NCE Power Cab can crash when reading 
 non-existing indexed CVs.
 
 <p>
