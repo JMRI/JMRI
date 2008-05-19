@@ -16,7 +16,7 @@ import jmri.jmrix.qsi.QsiReply;
  * JUnit tests for the QsiReplyclass
  * @author			Bob Jacobsen Copyright 2006, 2007
  *
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class QsiReplyTest extends TestCase {
 
@@ -57,36 +57,6 @@ public class QsiReplyTest extends TestCase {
 		Assert.assertEquals(" skip no blanks", 3, m.skipWhiteSpace(3));
 		Assert.assertEquals(" handle start", 0, m.skipWhiteSpace(0));
 		Assert.assertEquals(" skip LF", 5, m.skipWhiteSpace(4));
-	}
-
-	public void testValue1() {
-		// value when just the string comes back
-		QsiReply m = new QsiReply();
-                int i= 0;
-		m.setElement(i++, 'C');
-		m.setElement(i++, 'V');
-		m.setElement(i++, '0');
-		m.setElement(i++, '0');
-		m.setElement(i++, '1');
-		m.setElement(i++, '2');
-		m.setElement(i++, '7');
-		Assert.assertEquals("value ", -1, m.value());
-		JUnitAppender.assertErrorMessage("Unable to get number from reply: \"CV\" index: 0 message: \"CV00127\"");
-	}
-
-	public void testValue2() {
-		// value when a hex string comes back
-		QsiReply m = new QsiReply();
-        int i= 0;
-		m.setElement(i++, 'C');
-		m.setElement(i++, 'V');
-		m.setElement(i++, '0');
-		m.setElement(i++, '0');
-		m.setElement(i++, '1');
-		m.setElement(i++, 'A');
-		m.setElement(i++, 'B');
-		Assert.assertEquals("value ", -1, m.value());
-		JUnitAppender.assertErrorMessage("Unable to get number from reply: \"CV\" index: 0 message: \"CV001AB\"");
 	}
 
 	public void testMatch() {
