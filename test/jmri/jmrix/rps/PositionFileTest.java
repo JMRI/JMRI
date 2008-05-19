@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class PositionFileTest extends TestCase {
 
@@ -62,7 +62,7 @@ public class PositionFileTest extends TestCase {
     public void testRW() throws IOException, org.jdom.JDOMException {
         PositionFile fout = new PositionFile();
         fout.prepare();
-        fout.setReceiver(new Point3d(1.0f,2.0f,3.0f));
+        fout.setReceiver(2,new Point3d(1.0f,2.0f,3.0f));
         
         Reading rout = new Reading(21, new double[]{11,12,13,14});
         fout.setCalibrationPoint(new Point3d(-1.0f,-2.0f,-3.0f), rout);
@@ -74,10 +74,10 @@ public class PositionFileTest extends TestCase {
         fin.loadFile(new File("temp"+File.separator+"PositionFileTest.xml"));
         
         Point3d p;
-        p = fin.getReceiverPosition(0);
+        p = fin.getReceiverPosition(2);
         checkPoint3d(new Point3d(1.0f,2.0f,3.0f), p);
         
-        Assert.assertEquals("no 2nd receiver position", null, fin.getReceiverPosition(1));
+        Assert.assertEquals("no 2nd receiver position", null, fin.getReceiverPosition(3));
 
         p = fin.getCalibrationPosition(0);
         checkPoint3d(new Point3d(-1.0f,-2.0f,-3.0f), p);
