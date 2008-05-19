@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.8 2008-05-11 19:13:07 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.9 2008-05-19 17:30:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
@@ -81,8 +81,11 @@ from
 you will need to download the patched&nbsp;
 <a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a>
 &nbsp;(right click and save this file) to replace the one that came
-with the distribution. A better option is to upgrade your system to the
-Ubuntu 8.04 release which includes a fix for this driver problem.&nbsp;<br><br><h2>3 Installation Steps</h2>
+with the distribution. 
+A better option is to upgrade your system to the
+Ubuntu 8.04 release which includes a fix for this driver problem.
+
+<h2>3 Installation Steps</h2>
 <p>There are three steps in Installing JMRI in Linux/GNU,
 The are installation of Java, running the Install-RXTX script (which
 installs the RXTX files, alters permissions on TTY devices and adds
@@ -90,40 +93,58 @@ the user to etc/group), installing JMRI itself and finally setting
 up the programme environment if necessary.</p>
 
 <h3>3.1 JAVA</h3>
-<p>One must be carefull which Java is Loaded. java
--version will often show Java 1.4.2 gij, this one is not wanted.
-Blackwood does not work. 
-It's best to have the "SDK" software development kit
+
+One must be careful which Java is loaded. 
+'java -version' will often show Java 1.4.2 gij, this one is not wanted.
+The 'Blackwood' Java Virtual Machine does not work for JMRI, as it doesn't have all the needed libraries.
+It's best to have the Sun "SDK" software development kit
 instead of just the runtime environment (JRE).
-</p><p>
+
+<p>
 We recommend installing from the
 repositories. 
-</p>
+
 <p>System &gt; Administration &gt; Synaptic Package Manager
-</p><p>Then search for sun-java6-jdk (or later version). 
+
+<p>Then search for sun-java6-jdk (or later version). 
 Once you've found it, mark it to be loaded, and click apply.
 You'll probably be told that a number of other packages will 
 also be loaded. That's OK.
-</p>
 
 <a id="rxtx">
 <h3>3.2 RxTx</h3></a>
 
 <p>A problem here is that the RxTx in the Ubuntu
-repositories does not work with JMRI! It appears that "2.0.7pre2"
-is required and that is what is included in the automated script which can currently be downloaded&nbsp;</p>
-<p><span style="text-decoration: underline;">&nbsp;<a href="http://downloads.sourceforge.net/jmri/RXTX-install-2.tar.gz?download">Download RXTX-Install</a></span><a href="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/"><u></u></a></p>
-<p><span style="text-decoration: none;">and</span> place
-in  spare directory then unpack by double clicking, and then
-extracting (extract) the file. &nbsp;The script is run by opening a terminal and giving the command ./RXTXinstall.&nbsp;</p>
-<p>The script will do the following:<span style="text-decoration: underline;"><span style="text-decoration: underline;"></span></span></p><p>Checks that the correct java version is installed, then copies the RXTX files to the following directories:<span style="text-decoration: underline;"><span style="text-decoration: underline;"></span></span></p>
+repositories does not work with JMRI! RXTX 2.1 uses a different structure than
+RXTX 2.0; JMRI requires the RXTX 2.0 structure.
+The "2.0.7pre2" is known to work well
+and that is what is included in the automated script which can currently be downloaded</p>
+<p><a href="http://downloads.sourceforge.net/jmri/RXTX-install-5.tar.gz?download">Download RXTX-Install</a>
+<p>and place it
+in a spare directory. Unpack it by double clicking, and then
+extracting (extract) the file. 
+The script is run by opening a terminal and giving the command "./RXTXinstall"
 
-<p style="margin-left: 40px;">javax.comm.properties,&nbsp;ext/javax.comm.rxtx.properties, ext/comm.jar and ext/RXTXcomm.jar to
-/usr/lib/jvm/java-6-sun-??/jre/lib/ and lib/ext.</p>
-<p style="margin-left: 40px;">i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
-</p>
-<p>Makes a symbolic link in /i386/ so the programe finds the correct
-RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).</p>Alters the permission on dev/ttyS0 and ttyS1.<br><br>Backs up /etc/group and adds the user to it.<br><br>The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
+<p>The script will do the following:
+
+<ul>
+<li>Checks that the correct java version is installed, then copies the RXTX files to the following directories:
+
+<ul>
+<li>javax.comm.properties,&nbsp;ext/javax.comm.rxtx.properties, ext/comm.jar and ext/RXTXcomm.jar to
+/usr/lib/jvm/java-6-sun-??/jre/lib/ and lib/ext
+<li>i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
+</ul>
+
+<li>Makes a symbolic link in /i386/ so the program finds the correct
+RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).
+
+<li>Alters the permission on dev/ttyS0 and ttyS1.
+
+<li>Backs up /etc/group and adds the user to it.
+
+</ul>
+The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
 
 <h3>3.3 JMRI</h3>
 <p>JMRI is downloaded in the normal manner.</p>
@@ -171,12 +192,17 @@ below:
 <h3>4.1 Errors</h3>
 <p>If you have any problems get back to the group.</p>
 
-<p style="text-decoration: underline;">bash: ./whatever.csh: bad interpreter: No such file
-or directory</p>
-<p>Can not run the shell try installing csh.</p>
-<p style="text-decoration: underline;">bash; ./cats.csh: Permission denied</p>
-<p>try setting the icon to executable.</p><p style="text-align: right;">(Rev 1.7 Mon 5 May 2008)</p>
+<dl>
+<dt>bash: ./whatever.csh: bad interpreter: No such file
+or directory
+<dd>Can not run the shell: Try installing csh.
 
+<dt>bash; ./cats.csh: Permission denied
+<dd>Try setting the icon to executable.
+
+</dl>
+
+<p style="text-align: right;">(Rev 1.7 Mon 5 May 2008)</p>
 
 <!--#include virtual="/Footer" -->
 
