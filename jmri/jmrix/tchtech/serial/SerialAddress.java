@@ -29,7 +29,7 @@ package jmri.jmrix.tchtech.serial;
  *              HL11B234 (node address 11, bit234)
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
  * @author Tim Hatch Copyright 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * 
  */
 public class SerialAddress {
@@ -46,7 +46,6 @@ public class SerialAddress {
 
 /**
  *
- * @author Tim Hatch
  */
 
     public static int getNodeAddressFromSystemName(String systemName) {
