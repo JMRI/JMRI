@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -158,6 +158,9 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         Distributor.instance().addReadingListener(this);
         Distributor.instance().addMeasurementListener(this);
         
+        // add help
+        addHelpMenu("package.jmri.jmrix.rps.swing.debugger.DebuggerFrame", true);
+
         // prepare for display
         pack();
     }

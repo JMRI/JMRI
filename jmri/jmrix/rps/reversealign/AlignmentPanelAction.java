@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  *       			RpsTrackingFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class AlignmentPanelAction 			extends AbstractAction {
 
@@ -25,9 +25,12 @@ public class AlignmentPanelAction 			extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JFrame f = new jmri.util.JmriJFrame("RPS Alignment");
+        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Alignment");
+        
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-                        
+                   
+        f.addHelpMenu("package.jmri.jmrix.rps.reversealign.AlignmentPanel", true);
+             
         panel = new AlignmentPanel();
         panel.initComponents();
         f.getContentPane().add(panel);

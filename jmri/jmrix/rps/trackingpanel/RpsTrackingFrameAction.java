@@ -13,8 +13,8 @@ import java.awt.event.ActionListener;
  * Swing action to create and register a
  *       			RpsTrackingFrame object
  *
- * @author			Bob Jacobsen    Copyright (C) 2006
- * @version         $Revision: 1.1 $
+ * @author			Bob Jacobsen    Copyright (C) 2006, 2008
+ * @version         $Revision: 1.2 $
  */
 public class RpsTrackingFrameAction 			extends AbstractAction {
 
@@ -25,7 +25,10 @@ public class RpsTrackingFrameAction 			extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JFrame f = new jmri.util.JmriJFrame("RPS Tracking");
+        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Tracking");
+
+        f.addHelpMenu("package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame", true);
+
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
         
         // add button for handling errors
