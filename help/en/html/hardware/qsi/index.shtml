@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.4 2008-05-04 17:00:15 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-05-19 17:20:45 jacobsen Exp $ -->
 <title>JMRI: QSI Programmer</title>
 
 <!-- Style -->
@@ -21,16 +21,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-
-
 <h2> 
 JMRI: QSI Programmer
 </h2>
 
 <em>This page describes QSI support that first became available
-in JMRI version 2.1.5.  Previous versions of JMRI do not contain it.</em><p>
+in JMRI version 2.1.5.  Previous versions of JMRI do not contain it.</em>
 
+<p>
 JMRI can now use a QSI Programmer module
 to read and write CVs in DCC decoders.
 
@@ -128,7 +126,17 @@ Click the "Save" button. When prompted, allow the program to quit.
 </ol>
 
 The program is now configured. Restart it, and it should be ready to use.
-    
+
+<h2>Features and Limitations</h2>
+
+The QSI programmer hardware is capable of driving one (low-current) locomotive
+in "Ops Mode".  This lets the user run the engine, test the lights, etc.
+JMRI does not yet have code to do this, but if there's enough interest we can certainly
+add it.
+
+<p>
+We currently don't have enough information to download sounds to the decoder through 
+the QSI programmer.  If we get the information, we'll certainly write this code.
 <!--#include virtual="/Footer" -->
 </body>
 </html>
