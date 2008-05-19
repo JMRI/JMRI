@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import jmri.CommandStation;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -21,9 +23,9 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
-public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
+public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
 	public NceTrafficController() {
         super();
@@ -44,6 +46,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 		return 1000;
 	}
 
+    /**
+     * CommandStation implementation
+     */
+    public void sendPacket(byte[] packet,int count) {
+        NceMessage m = NceMessage.sendPacketMessage(packet);
+	    NceTrafficController.instance().sendNceMessage(m, null);
+    }
+    
     /**
      * Forward a NceMessage to all registered NceInterface listeners.
      */
@@ -151,6 +161,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new NceTrafficController object");
             self = new NceTrafficController();
+            // set as command station too
+            jmri.InstanceManager.setCommandStation(self);
         }
         return self;
     }
