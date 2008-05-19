@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.16 $ -->
+<!-- Revision $Revision: 1.17 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -62,6 +62,7 @@
 	<copy todir="${target}" >
     	<fileset dir="${fromDTD}" >
       		<include name="decoderIndex-config.dtd"/>
+      		<include name="decoder-config.dtd"/>
     	</fileset>
   	</copy> 
   </target>
