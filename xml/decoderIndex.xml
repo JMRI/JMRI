@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.5-A on Tue May 13 09:43:37 PDT 2008 $Id: decoderIndex.xml,v 1.121 2008-05-13 16:46:20 jacobsen Exp $-->
+  <!--Written by JMRI version 2.1.5 on Sun May 18 22:01:54 PDT 2008 $Id: decoderIndex.xml,v 1.122 2008-05-19 05:02:59 jacobsen Exp $-->
   <decoderIndex version="140">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -932,6 +932,16 @@
       </family>
       <family name="R8215" mfg="Hornby" type="locomotive" file="Hornby8215.xml">
         <model model="R8215" numOuts="4" numFns="4" lowVersionID="13" nmraWarrant="yes" nmraWarrantStart="200804" maxTotalCurrent="0.5A" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no">
+          <size length="17" width="10" height="3.5" units="mm" />
+        </model>
+      </family>
+      <family name="Digital" mfg="Hornby" type="locomotive" file="HornbyDigital.xml">
+        <!-- We have to choose these by hand - there is no signature to read from the decoder -->
+        <productIDalgorithm>
+          <none />
+        </productIDalgorithm>
+        <model model="DCC-Fitted (Motored)" numOuts="2" numFns="1" nmraWarrant="no" maxTotalCurrent="0.5A" formFactor="DCC Fitted" comment="Pendolino, other light only locos" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
+        <model model="R8215" numOuts="4" numFns="4" nmraWarrant="no" maxTotalCurrent="0.5A" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no">
           <size length="17" width="10" height="3.5" units="mm" />
         </model>
       </family>
