@@ -20,14 +20,14 @@ import javax.vecmath.Point3d;
  * flip the sign of Z coordinates to keep this bias working for us.
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {
     
     public AlignmentPanel() {
         super();
-        Distributor.getInstance().addReadingListener(this);
+        Distributor.instance().addReadingListener(this);
         nf = java.text.NumberFormat.getInstance();
         nf.setMinimumFractionDigits(1);
         nf.setMaximumFractionDigits(1);
@@ -163,10 +163,10 @@ public class AlignmentPanel extends javax.swing.JPanel
                 // handle the file
                 PositionFile pf = new PositionFile();
                 pf.prepare();
-                pf.setReceiver(getPoint(x1l,y1l,z1l));
-                pf.setReceiver(getPoint(x2l,y1l,z2l));
-                pf.setReceiver(getPoint(x3l,y1l,z3l));
-                pf.setReceiver(getPoint(x4l,y1l,z4l));
+                pf.setReceiver(1,getPoint(x1l,y1l,z1l));
+                pf.setReceiver(2,getPoint(x2l,y1l,z2l));
+                pf.setReceiver(3,getPoint(x3l,y1l,z3l));
+                pf.setReceiver(4,getPoint(x4l,y1l,z4l));
                 
                 // save the measurements too
                 for (int i=0; i<NREADINGS; i++) {

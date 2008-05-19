@@ -3,7 +3,7 @@
  *
  * Description:		Frame displaying (and logging) RPS messages
  * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 package jmri.jmrix.rps.rpsmon;
@@ -15,16 +15,16 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
 
     public RpsMonFrame() {
         super();
-        Distributor.getInstance().addReadingListener(this);
-        Distributor.getInstance().addMeasurementListener(this);
+        Distributor.instance().addReadingListener(this);
+        Distributor.instance().addMeasurementListener(this);
     }
 
     protected String title() { return "RPS Traffic"; }
 
     public void dispose() {
         // remove from notification
-        Distributor.getInstance().removeReadingListener(this);
-        Distributor.getInstance().removeMeasurementListener(this);
+        Distributor.instance().removeReadingListener(this);
+        Distributor.instance().removeMeasurementListener(this);
         // and unwind swing
         super.dispose();
     }

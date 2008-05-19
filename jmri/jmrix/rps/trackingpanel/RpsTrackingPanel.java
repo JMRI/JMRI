@@ -9,14 +9,14 @@ import jmri.jmrix.rps.*;
  * Fram to show a 2D representation of the RPS Measurements
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
         implements MeasurementListener {
 
     public RpsTrackingPanel() {
         super();
-        Distributor.getInstance().addMeasurementListener(this);
+        Distributor.instance().addMeasurementListener(this);
     }
 
     Measurement lastMessage = null;

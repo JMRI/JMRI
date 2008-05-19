@@ -2,6 +2,11 @@
 
 package jmri.jmrix.rps.aligntable;
 
+import jmri.jmrix.rps.Engine;
+import jmri.jmrix.rps.Receiver;
+
+import javax.vecmath.Point3d;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
@@ -17,11 +22,11 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 		
     /**
      * Constructor method
@@ -31,7 +36,6 @@ public class AlignTablePane extends javax.swing.JPanel {
     }
 
     AlignModel alignModel = null;
-    JLabel status;
     
     /** 
      *  Initialize the window
@@ -52,7 +56,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         
         try {
             jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)alignTable.getModel());
-            tmodel.setSortingStatus(alignModel.NUMCOL, jmri.util.com.sun.TableSorter.DESCENDING);
+            tmodel.setSortingStatus(alignModel.NUMCOL, jmri.util.com.sun.TableSorter.ASCENDING);
         } catch (ClassCastException e3) {}  // if not a sortable table model
         alignTable.setRowSelectionAllowed(false);
         alignTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580,80));
@@ -67,23 +71,67 @@ public class AlignTablePane extends javax.swing.JPanel {
                 int width = super.getMaximumSize().width;
                 return new Dimension(width, height); }
         };
-        p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
-        JButton b = new JButton(rb.getString("ButtonCheck"));
-        b.setToolTipText(rb.getString("TipCheck"));
+        p.setLayout(new FlowLayout());
+
+        p.add(new JLabel(rb.getString("LabelNumCol")));
+        num.setText(""+Engine.instance().getReceiverCount());
+        p.add(num);
+        
+        JButton b = new JButton(rb.getString("ButtonSet"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                // startPoll();
+                // set number of columns
+                Engine.instance().setReceiverCount(
+                    Integer.parseInt(num.getText()));
+                // resize table
+                alignModel.fireTableStructureChanged();
             }
         });
         p.add(b);
-        status = new JLabel("");
-        p.add(status);
-        
-        p.add(Box.createHorizontalGlue());
-        
         add(p);
+        
+        p = new JPanel() {
+            public Dimension getMaximumSize() { 
+                int height = getPreferredSize().height;
+                int width = super.getMaximumSize().width;
+                return new Dimension(width, height); }
+        };
+        p.setLayout(new FlowLayout());
+
+        p.add(new JLabel(rb.getString("LabelVSound")));
+        vsound.setText(""+Engine.instance().getVSound());
+        p.add(vsound);
+        
+        p.add(new JLabel(rb.getString("LabelOffset")));
+        offset.setText(""+Engine.instance().getOffset());
+        p.add(offset);
+        
+        b = new JButton(rb.getString("ButtonSet"));
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                // set number of vsound, offset
+                Engine.instance().setOffset(
+                    Integer.parseInt(offset.getText()));
+                Engine.instance().setVSound(
+                    Double.parseDouble(vsound.getText()));
+            }
+        });
+        p.add(b);        
+        add(p);
+
+        //
+        add(new jmri.jmrix.rps.swing.LoadStorePanel(){
+            // make sure we redisplay if changed
+            public void load() {
+                super.load();
+                alignModel.fireTableStructureChanged();
+            }
+        });
     }
     
+    JTextField num      = new JTextField(4);
+    JTextField vsound   = new JTextField(8);
+    JTextField offset   = new JTextField(4);
     
     /**
      * Set up table for showing individual recievers
@@ -104,7 +152,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         public int getColumnCount () {return LAST+1;}
 
         public int getRowCount () {
-            return 127;
+            return Engine.instance().getReceiverCount();
         }
 
         public String getColumnName(int c) {
@@ -112,11 +160,11 @@ public class AlignTablePane extends javax.swing.JPanel {
             case NUMCOL:
                 return rb.getString("TitleColNum");
             case XCOL:
-                return "X";
+                return rb.getString("TitleColX");
             case YCOL:
-                return "Y";
+                return rb.getString("TitleColY");
             case ZCOL:
-                return "Z";
+                return rb.getString("TitleColZ");
             default:
                 return "";
             }
@@ -126,7 +174,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             if (c == XCOL || c == YCOL || c == ZCOL)
                 return Double.class;
             else if (c == NUMCOL)
-                return Integer.class;
+                return Double.class;
             else 
                 return String.class;
         }
@@ -139,23 +187,69 @@ public class AlignTablePane extends javax.swing.JPanel {
         }
 
         public Object getValueAt (int r,int c) {
-            // r is row number, from 0, and therefore r+1 is receiver number
+            // r is row number, from 0; receiver addresses start at 1
+            Receiver rc;
             switch (c) {
             case NUMCOL:
                 return new Integer(r+1);
             case XCOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Double(rc.getPosition().x);
             case YCOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Double(rc.getPosition().y);
             case ZCOL:
-                
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Double(rc.getPosition().z);
             default:
                 return null;
             }
         }
 
-        public void setValueAt(Object type,int r,int c) {
+        public void setValueAt(Object val,int r,int c) {
+            // r is row number, from 0
+            Receiver rc;
+            Point3d p;
+            switch (c) {
+            case XCOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                p = rc.getPosition();
+                p.x = ((Double)val).doubleValue();
+                Engine.instance().setReceiverPosition(r+1, p);
+                break;
+            case YCOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                p = rc.getPosition();
+                p.y = ((Double)val).doubleValue();
+                Engine.instance().setReceiverPosition(r+1, p);
+                break;
+            case ZCOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                p = rc.getPosition();
+                p.z = ((Double)val).doubleValue();
+                Engine.instance().setReceiverPosition(r+1, p);
+                break;
+            default:
+                log.error("setValueAt of column "+c);
+            }
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlignTableFrame.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlignTablePane.class.getName());
 
 }

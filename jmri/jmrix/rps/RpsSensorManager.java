@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractMRReply;
  * CSV representation of the region.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class RpsSensorManager extends jmri.AbstractSensorManager {
 
@@ -30,7 +30,7 @@ public class RpsSensorManager extends jmri.AbstractSensorManager {
 
     public Sensor createNewSensor(String systemName, String userName) {
         RpsSensor r = new RpsSensor(systemName, userName);
-        Distributor.getInstance().addMeasurementListener(r);
+        Distributor.instance().addMeasurementListener(r);
         return r;
     }
 

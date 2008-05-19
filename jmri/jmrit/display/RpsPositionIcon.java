@@ -20,7 +20,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -36,7 +36,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
         
         // connect
-        Distributor.getInstance().addMeasurementListener(this);
+        Distributor.instance().addMeasurementListener(this);
     }
 
 
@@ -288,7 +288,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     }
  
     public void dispose() {
-        Distributor.getInstance().removeMeasurementListener(this);
+        Distributor.instance().removeMeasurementListener(this);
         active = null;
         error = null;
 

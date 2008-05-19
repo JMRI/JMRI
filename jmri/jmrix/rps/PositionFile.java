@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PositionFile extends XmlFile {
 
@@ -37,8 +37,26 @@ public class PositionFile extends XmlFile {
         
     }
 
-    public void setReceiver(Point3d p) {
+    public void setConstants(double vSound, int offset) {
+        Element v = new Element("vsound");
+        v.addContent(""+vSound);
+        root.addContent(v);
+        
+        Element o = new Element("offset");
+        o.addContent(""+offset);
+        root.addContent(o);
+    }
+    
+    public void setReceiver(int n, Receiver r) {
         Element e = new Element("receiver");
+        e.setAttribute("number", ""+n);
+        e.addContent(positionElement(r.getPosition()));
+        root.addContent(e);
+    }
+
+    public void setReceiver(int n, Point3d p) {
+        Element e = new Element("receiver");
+        e.setAttribute("number", ""+n);
         e.addContent(positionElement(p));
         root.addContent(e);
     }
@@ -124,15 +142,49 @@ public class PositionFile extends XmlFile {
         root = rootFromFile(f);
     }
     
+    public double getVSound() {
+        Element e = root.getChild("vsound");
+        return Double.parseDouble(e.getText());
+    }
+    
+    public int getOffset() {
+        Element e = root.getChild("offset");
+        return Integer.parseInt(e.getText());
+    }
+    
+    /**
+     * FInd the highest numbered receiver in the file
+     */
+    public int maxReceiver() {
+        List kids = root.getChildren("receiver");
+        int max = -1;
+        for (int i = 0; i<kids.size(); i++) {
+            Attribute a = ((Element) kids.get(i)).getAttribute("number");
+            if (a==null) continue;
+            int n = -1;
+            try { n = a.getIntValue(); }
+            catch (org.jdom.DataConversionException e) {}
+            max = Math.max(max, n);
+        }
+        return max;
+    }
+    
     /**
      * Get the nth receiver position in the file.
      * @return null if not present
      */
     public Point3d getReceiverPosition(int n) {
         List kids = root.getChildren("receiver");
-        if (n>= kids.size()) return null;
-        Element e = (Element) kids.get(n);
-        return positionFromElement(e.getChild("position"));
+        for (int i = 0; i<kids.size(); i++) {
+            Element e = (Element) kids.get(i);
+            Attribute a = e.getAttribute("number");
+            if (a == null) continue;
+            int num = -1;
+            try { num = a.getIntValue(); }
+            catch (org.jdom.DataConversionException ex) {}
+            if (num == n) return positionFromElement(e.getChild("position"));
+        }
+        return null;
     }
         
     /**
@@ -157,6 +209,16 @@ public class PositionFile extends XmlFile {
         return readingFromElement(e.getChild("reading"));
     }
         
+    static public String defaultLocation() {
+        String location = XmlFile.prefsDir()+File.separator+"rps"+File.separator;
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(location);
+        return location;
+    }
+    static public String defaultFilename() {
+        return defaultLocation()+"positions.xml";
+    }
+    
     // initialize logging
     static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionFile.class.getName());
 }

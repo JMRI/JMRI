@@ -23,7 +23,7 @@ import javax.vecmath.Point3d;
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Ash2_1Algorithm implements Calculator {
 
@@ -64,6 +64,12 @@ public class Ash2_1Algorithm implements Calculator {
     
     public Measurement convert(Reading r) {
     
+        if (log.isDebugEnabled()) {
+            log.debug("Reading: "+r.toString());
+            log.debug("Sensors: "+sensors.length);
+            if (sensors.length>=1) log.debug("Sensor[0]: "+sensors[0].x+","+sensors[0].y+","+sensors[0].z);
+        }
+        
         int nr = r.getNSample();
         if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
         nr = Math.min(nr, sensors.length); // accept the shortest

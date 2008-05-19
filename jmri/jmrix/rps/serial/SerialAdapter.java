@@ -3,6 +3,7 @@
 package jmri.jmrix.rps.serial;
 
 import jmri.jmrix.rps.Distributor;
+import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
 
 import java.io.DataInputStream;
@@ -29,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -146,12 +147,15 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     }
 
     /**
-     * set up all of the other objects to operate
+     * Set up all of the other objects to operate
      */
     public void configure() {
 
-        // connect to the control objects
-
+        // Connect the control objects:
+        //   connect an Engine to the Distributor
+        Engine e = Engine.instance();
+        Distributor.instance().addReadingListener(e);
+        
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -321,7 +325,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
         
         // forward
         try {
-            Distributor.getInstance().submitReading(r);
+            Distributor.instance().submitReading(r);
         } catch (Exception e) {
             log.error("Exception forwarding reading: "+e);
         }
@@ -375,7 +379,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
         for (int i=0; i<count; i++) {
             vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
         }
-        Reading r = new Reading(21, vals);
+        Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
         
         return r;
     }

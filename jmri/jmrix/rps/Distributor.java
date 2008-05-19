@@ -9,7 +9,7 @@ import java.util.Vector;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  *
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Distributor {
 
@@ -93,7 +93,7 @@ public class Distributor {
     
     static private Distributor instance = null;
     
-    public static Distributor getInstance() {
+    public static Distributor instance() {
         if (instance == null) instance = new Distributor();
         return instance;
     }

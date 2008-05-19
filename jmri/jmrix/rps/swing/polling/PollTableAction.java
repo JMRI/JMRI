@@ -1,28 +1,28 @@
-// DisplayAction.java
+// PollTableAction.java
 
-package jmri.jmrix.rps.swing.controlpanel;
+package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 /**
  * Swing action to create and register a
- *       			DisplayFrame object
+ *       			PollTableFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
  * @version         $Revision: 1.1 $
  */
-public class DisplayAction 			extends AbstractAction {
+public class PollTableAction 			extends AbstractAction {
 
-	public DisplayAction(String s) { super(s);}
+	public PollTableAction(String s) { super(s);}
 
-    public DisplayAction() {
-        this("RPS Calculations Display");
+    public PollTableAction() {
+        this("RPS Polling Control");
     }
 
     public void actionPerformed(ActionEvent e) {
         log.debug("starting frame creation");
-		DisplayFrame f = new DisplayFrame();
+		PollTableFrame f = new PollTableFrame();
 		try {
 			f.initComponents();
 			}
@@ -33,9 +33,9 @@ public class DisplayAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DisplayAction.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollTableAction.class.getName());
 
 }
 
 
-/* @(#)DisplayAction.java */
+/* @(#)PollTableAction.java */
