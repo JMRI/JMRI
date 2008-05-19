@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.40 2008-05-18 15:49:59 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.41 2008-05-19 03:58:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -397,6 +397,16 @@ provided
 <a href="http://jmri.sourceforge.net/help/en/html/hardware/tchtech/index.shtml">JMRI interface code</a> for their 
 <a href="http://www.tchtechnology.com/products/nics/">Node Interface Control System (NICS)</a> 
 hardware system, which uses "H" as it's system letter.
+
+<p>
+John McAleely contributed new definitions for Hornby decoders
+
+<p>
+NCE systems now have CommandStation object support, so they can send 
+arbitrary DCC packets.
+
+<p>
+The <a href="http://www.nacservicesinc.com/">RPS</a> system support received a major update.
 
 <!--#include virtual="/Footer" -->
 
