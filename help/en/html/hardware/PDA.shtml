@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PDA.shtml,v 1.1 2008-01-13 04:50:14 jacobsen Exp $ -->
+<!-- $Id: PDA.shtml,v 1.2 2008-05-19 04:50:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,7 +43,7 @@ our cable internet service.
 
 <P>
 2. My train computer is connected to our LAN and, of course, is 
-connected to the Loconet via an MS100 and JMRI.
+connected to JMRI and the LocoNet via an interface.
 
 <P>
 3. My Dell Axim has wireless and terminal services client.
