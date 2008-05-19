@@ -205,6 +205,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="TemplateBar" url="TemplateBar.shtml" />
 	<mapID target="html.doc.Technical.NewSystem" url="html/doc/Technical/NewSystem.shtml" />
 	<mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml" />
+	<mapID target="package.jmri.jmrix.rps.reversealign.AlignmentPanel" url="package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml" />
 	<mapID target="html.doc.Technical.index_use" url="html/doc/Technical/index.shtml#use" />
 	<mapID target="package.apps.DecoderPro.DecoderPro" url="package/apps/DecoderPro/DecoderPro.shtml" />
 	<mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml" />
@@ -484,6 +485,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.StartUpScripts_linux" url="html/doc/Technical/StartUpScripts.shtml#linux" />
 	<mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml" />
 	<mapID target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame" url="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml" />
+	<mapID target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame" url="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml" />
 	<mapID target="html.apps.PanelPro.AdvIcons" url="html/apps/PanelPro/AdvIcons.shtml" />
 	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml" />
 	<mapID target="html.hardware.powerline.Names" url="html/hardware/powerline/Names.shtml" />
