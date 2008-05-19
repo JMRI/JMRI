@@ -303,6 +303,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.nce.NCE_names" url="html/hardware/nce/NCE.shtml#names" />
 	<mapID target="package.jmri.jmrit.beantable.ReporterAddEdit" url="package/jmri/jmrit/beantable/ReporterAddEdit.shtml" />
 	<mapID target="DecoderProManual.index_Getting Started" url="DecoderProManual/index.shtml#Getting Started" />
+	<mapID target="package.jmri.jmrix.rps.aligntable.AlignTableFrame" url="package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml" />
 	<mapID target="Acknowledgements_N" url="Acknowledgements.shtml#N" />
 	<mapID target="html.tools.consisttool.ConsistTool" url="html/tools/consisttool/ConsistTool.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_DCC systems" url="DecoderProManual/Getting_Started.shtml#DCC systems" />
@@ -392,6 +393,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter2_SliderBar" url="html/tools/throttle/ThrottleChapter2.shtml#SliderBar" />
 	<mapID target="html.tools.fastclock.index" url="html/tools/fastclock/index.shtml" />
 	<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q" />
+	<mapID target="package.jmri.jmrix.rps.swing.polling.PollTableFrame" url="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml" />
 	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.shtml" />
 	<mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml" />
 	<mapID target="html.doc.Technical.Eclipse_older" url="html/doc/Technical/Eclipse.shtml#older" />
@@ -441,6 +443,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml" />
 	<mapID target="html.hardware.loconet.LocoNetClasses_startup" url="html/hardware/loconet/LocoNetClasses.shtml#startup" />
+	<mapID target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame" url="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml" />
 	<mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V" />
 	<mapID target="DecoderProManual.Comp_PrintData_c" url="DecoderProManual/Comp_PrintData_c.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_addLight" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#addLight" />
