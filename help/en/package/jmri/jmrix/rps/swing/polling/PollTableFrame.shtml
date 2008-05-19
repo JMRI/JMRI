@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PollTableFrame.shtml,v 1.1 2008-05-19 04:30:37 jacobsen Exp $ -->
+<!-- $Id: PollTableFrame.shtml,v 1.2 2008-05-19 17:30:03 jacobsen Exp $ -->
 <title>JMRI: RPS Polling Control</title>
 
 <!-- Style -->
@@ -28,7 +28,26 @@
 JMRI: RPS Polling Control
 </h2>
 
+<a href="../../../../../../html/hardware/rps/images/PollControl.gif">
+<img src="../../../../../../html/hardware/rps/images/PollControl.gif" height="80" width="300" alt="RPS Receiver Control window" align="right"/></a>
 
+The RPS Polling Control window is where you tell 
+the RPS system which of your locomotives have RPS transmitters 
+installed, and how often to talk to them.
+
+<p>
+When you open the window, you should see your entire
+<a href="../../../../../../DecoderProManual/Comp_Setup_Roster.shtml">roster of locomotives</a>
+displayed, one per line.
+
+<p>
+If a locomotive has a RPS transmitter installed and you'd like the 
+system to track its position, check the box in the "Poll" column.
+
+<p>
+To control whether the system as a whole is polling, check or uncheck
+the "Poll" box in the bottom section of the window.
+<p>
 This is the jmri.jmrix.rps.swing.polling.PollTableFrame help page
 
 
