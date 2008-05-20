@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.42 2008-05-19 20:47:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.43 2008-05-20 16:45:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -20,8 +20,6 @@
 </head>
 
 <body>
-<div id="container">
-  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
   
 <!--#include virtual="/Header" -->
 
@@ -33,11 +31,11 @@
       Release Notes for JMRI 2.1.5 release
       </h2>
 
-	<p>Date: MMM DD, 2008</p>
+	<p>Date: May 20, 2008</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.1.5 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -50,11 +48,17 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<!-- <li>Support for the X10 power adapters, -->
-<!-- <li>improved consisting support, -->
-<!-- <li>additional sounds and graphics for creating USS CTC panels, -->
-<!-- <li>lots of additions to the help screens -->
-<!-- <li>and several decoder definitions were added and improved. -->
+<li>New support for the 
+<a href="../help/en/html/hardware/qsi/index.shtml">QSI Programmer</a>,
+the <a href="../help/en/html/hardware/acela/index.shtml">CTI Acela system</a>,
+the <a href="../help/en/html/hardware/tchtech/index.shtml">TCH Technology NICS system</a>,
+and the <a href="http://www.terdina.net/rails/">XnTcp network adapter</a>.
+
+<li>Many updates to decoder definitions and new decoder definitions
+<li>Many new and updated help pages
+<li>Updates to the support for the NCE USB adapter
+<li>A new, movable "marker" on panels
+<li>Experimental <a href="../install/USB.shtml">direct USB support</a>
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -234,6 +238,7 @@ such as joysticks.  They're input values are copied to
 Sensors and Memories, so that Routes and Logix can then use those
 values to cause actions on the layout. For now, this feature is 
 available from the Debug menu.
+<a href="http://jmri.sf.net/install/USB.shtml">Documentation</a> is stil being written.
 
 <p>
 Andrew Crosland added a tool to make it easy to read the version information from an SPROG.
