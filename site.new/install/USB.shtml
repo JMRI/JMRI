@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: USB.shtml,v 1.2 2008-03-31 05:46:43 jacobsen Exp $ -->
+<!-- $Id: USB.shtml,v 1.3 2008-05-20 16:43:55 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -20,37 +20,102 @@
 
 <div id="mainContent">
 
-<H2> 
+<H1> 
 JMRI Install Guide: USB Components
-</H2>
+</H1>
 
-To provide direct access to USB devices....
+Starting in version 2.1.5, JMRI contains some 
+tools for direct access to USB devices.  We built in this support
+initially so that we could directly access the 
+<a href="../help/en/html/hardware/qsi/index.shtml">QSI Programmer</a>
+and certain Insteon
+<a href="../help/en/html/hardware/powerline/index.shtml">powerline</a>
+adapters, but hope that it will eventually be generally useful.
 
-<h3>JInput</h3>
+<h2>JInput</h2>
+<a href="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.jpg">
+<img src="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.jpg" align="right" height="132" width="325"/></a>
 
-<h3>LibUSB</h3>
-
-libusb-Java requires Java 1.5 or later. (It might be possible to make
-small modifications and compile it with Java 1.4, but we haven't done that)
+Certain types of USB devices can be attached as a "HID device".
+(That stands for "Human Interface Device device", but let's not get distracted)
+The 
+<a href="https://jinput.dev.java.net">JInput project</a>
+has provided tools for accessing these devices which we can use
+to connect HID devices to events within the JMRI programs.
 
 <p>
-Windows XP and later: Download and install
+As a first approach to this, you can find a "USB Input Control"
+under the Debug menu in JMRI 2.1.5 and later.
+A screen-shot of it is shown
+<a href="images/JInputFrame.gif">to the right</a>.
+When you open the tool, you'll get a window that lets
+you browse the HID devices on your computer, and attach 
+them to specific JMRI sensors and memories.  You can
+then have Routes, Logix and scripts access that information to
+do whatever you'd like with the device inputs.
+
+<p>
+For more information, including some info on limitations, 
+please see the 
+<a href="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">help page</a>
+for the tool.
+
+<p>
+
+
+<h2>LibUSB</h2>
+
+LibUSB (also known as libusb and libUSB) is a powerful, but tough to
+use, library for general access to all USB devices, not just HID devices.
+We intend to use it in JMRI to access Insteon adapters and other 
+devices that have complicated (i.e. powerful) interfaces.
+<p>
+In JMRI 2.1.5, there's only a browsing tool that we'll be using to
+check connections to various USB devices on various types of computers.
+By putting this out in the general test release, even if 
+it doesn't do anything model-railroad related, it makes it much
+easier to test how well this works in various situations.
+<p>
+Eventually, we'll have more in this section.
+
+<h3>Limitations</h3>
+libusb requires Java 1.5 or later. (It might be possible to make
+small modifications and compile it with Java 1.4, but we haven't done that,
+and because JMRI is shortly going to require Java 1.5 we probably won't)
+
+<h3>Installing LibUSB</h3>
+
+Before you can use LibUSB on your computer, you have to download
+and install a library.  The following sections talk about how to
+do that.
+
+<h4>Windows XP and later</h4>
+Download and install
 the 
 <a href="http://downloads.sourceforge.net/libusb-win32/libusb-win32-filter-bin-0.1.12.1.exe?modtime=1174387137&big_mirror=0">libusb-win32 installer</a>.
 This is called the "filter mode driver", and it's the one you want.
 
 <p>
-Ubuntu Linux: Start by opening<p>
-System &gt; Administration &gt; Synaptic Package Manager<p>
+There is currently no version of LibUSB for versions of Windows before XP, 
+due to limitations in their USB support.
+
+<h4>Ubuntu Linux</h4>
+Start by opening
+<p>
+System &gt; Administration &gt; Synaptic Package Manager
+<p>
 and search for "libusb". There are four packages that start with that name;
 install them all.
 
-<p>
-Packages for MacOS X, see
-<a href="http://www.ellert.se/twain-sane/">here</a>
-(you don't need the TWAIN or others, just LibUSB).
 
-<table>
+<h4>MacOS X</h4>
+
+You need to install a library package to use libUSB on Mac OS X.
+<a href="http://www.ellert.se/twain-sane/">here</a>
+for an installer
+(you don't need the TWAIN or others, just LibUSB).
+or you can download an installer using one of the following direct links.
+<table border="1">
 <tr class="even">
 <th></th>
 <td>Version</td>
