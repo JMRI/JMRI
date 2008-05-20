@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.45 2008-05-20 21:29:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.46 2008-05-20 21:30:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -170,7 +170,7 @@ some bugs, so please keep an eye out.
 <p>
 Many more help updates.  Please check it out, either in the 
 program or 
-<a href="http://jmri.sf.net/help/en/webtoc.stml">on the web</a>.
+<a href="http://jmri.sf.net/help/en/webtoc.shtml">on the web</a>.
 
 <p>
 Chris Zurek updated the Digitrax DH123 "Economy" decoder definition.
