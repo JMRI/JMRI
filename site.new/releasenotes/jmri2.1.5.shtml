@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.43 2008-05-20 16:45:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.44 2008-05-20 16:47:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -85,7 +85,7 @@ users.  They still work the way they used to.
 
 <h3>Warnings from older versions:</h3>
 
-Starting in this version, panels should not have duplicate names.  
+Starting in the 2.1.4 version, panels should not have duplicate names.  
 The program assigns a unique default name to newly created panels, and will prevent you from renaming a panel to an existing name.
 If you read a file containing a panel with a name that duplicates an existing panel's name, you'll get a warning message.
 Depending on user reaction, this may become a dialog box that asks if you want to continue.
