@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.68 $)
+distribution.  ($Revision: 1.69 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -71,6 +71,9 @@ Make sure everything is up-to-date:
 
     Commit back to CVS
 
+( ) Create the _next_ version-specific layout-config-1-2-3.dtd in xml/DTD
+    and commit back to CVS
+    
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
     cvs -q update -dA
@@ -134,8 +137,22 @@ change that (temporarily) for production versions
 	
 	The next few steps can be done in parallel.
 	
+	
+** Consider making the files available for testing from the main site,
+** and getting feedback from jmri-developers
+
+
 ( ) Upload the MacOS X and Linux files
-    (Failed recently, been doing this by hand, see note below)
+    (SourceForge has new method)
+    
+    Finder: Connect to Server
+    https://frs.sourceforge.net/j/ja/jacobsen/uploads
+    
+    Appears as /Volumes/uploads/
+    
+    Then do finder copies...
+    
+    (need to fix the release2 ant target)
 
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
 
@@ -174,8 +191,10 @@ it in the JavaDoc step following)
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 	
 ( ) When ready to upload the Windows version:
-    (Failed recently, been doing this by hand, see note below)
+    (SourceForge has new method)
+    (Failed recently, been doing this by hand, see note above)
 
+    (fix the following target)
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 		
 ( ) Format the email announcement; you'll cut and paste parts
@@ -253,16 +272,6 @@ it in the JavaDoc step following)
 
 Old notes follow
 
-	Note on using SF "Quick File Release" system:
-		In Spring 2004, it would often give an error about "could not
-		add file".  In that case, reupload the file, and edit the release
-		to include the file (was a Safari problem; use IE)
-		
-		Alternately, use the Quick File Release system without selecting
-		a file, then add it later.  This prevents the original uploads from
-		being erased, so you don't have to upload them twice.
-
-------------
 
 ( ) Create MacOS X DMG
    
@@ -277,25 +286,4 @@ Old notes follow
     cd (back to Distributions)
     (eject)
     hdiutil convert temp.dmg -format UDZO -o JMRI.1.2.3.dmg
-
-------------
-
-( ) To manually upload:
-    
-    ftp upload.sf.net (userid ftp, pwd is email address)
-    cd incoming
-    bin
-    put JMRI.1.2.3.dmg
-    put JMRI.1.2.3.tgz
-    exit
-
-------------
-
-To get ftp to work, needed to download two Apache jar
-files and put in ~/.ant/lib/
-
-ls -lt ~/.ant/lib
-total 488
--rw-r--r--   1 jake  admin  180792 Nov  4 06:41 commons-net-1.4.1.jar
--rw-r--r--   1 jake  admin   65261 Nov  4 06:40 jakarta-oro-2.0.8.jar
 
