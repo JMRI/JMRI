@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logging.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
+<!-- $Id: Logging.shtml,v 1.3 2008-05-21 20:36:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -58,7 +58,8 @@ program down significantly.
 By convention, JMRI applications will attempt to initialize
 Log4J using a "default.lcf" file.  The JMRI distributions
 contain a version of this file with
-extensive comments.
+extensive comments. (This file needs to be in the "Program Directory",
+which can be found by selecting the "Locations" item in the main help menu)
 
 <P>
 If you change the line:
@@ -93,12 +94,22 @@ If the message is not just an explicit string, you should use
 this form instead:
 <code>
 <PRE>
-	if (log.isInfoDebug()) log.debug("Found "+numberEntrie());
+	if (log.isDebugEnabled()) log.debug("Found "+numberEntrie());
 </PRE>
 </code>
 so the program doesn't waste time forming the message string (in this
 case, calling numberEntries() and concatenating the strings) if
 the log.debug call isn't going to store it anyway.
+
+<h3>Logging Levels</h3>
+<table border="1">
+<tr><th>Level</th><th>Code Fragment</th><th>Use</th></tr>
+<tr><td>DEBUG</td><td>if (log.isDebugEnabled()) log.debug(..)</td><td>Detailed messages, only used in debugging</td></tr>
+<tr><td>INFO</td><td>if (log.isInfoEnabled())log.info(..)</td><td>Routine messages you want to see in normal operation</td></tr>
+<tr><td>WARN</td><td>log.warn(..)</td><td>The program is still operating, sort of, but something here needs to be looked at</td></tr>
+<tr><td>ERROR</td><td>log.error(..)</td><td>Indicates the desired operation is not going to happen, and explains why</td></tr>
+<tr><td>FATAL</td><td>log.fatal(..)</td><td>Rarely used, these are the last things the program says before shutting down unexpectedly</td></tr>
+</table>
 
 <!--#include virtual="/Footer" -->
 
