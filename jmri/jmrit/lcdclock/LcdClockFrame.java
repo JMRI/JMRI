@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * 
  * This was a very direct steal from the Nixie clock code, ver 1.12.
  * Thank you Bob Jacobson.
@@ -55,11 +55,11 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-          baseTubes[i] = new NamedIcon("resources/icons/misc/Lcd/Lcd_" + i + "b.gif", "resources/icons/misc/Lcd/Lcd_" + i + "B.gif");
-          tubes[i] = new NamedIcon("resources/icons/misc/Lcd/Lcd_" + i + "b.gif", "resources/icons/misc/Lcd/Lcd_" + i + "B.gif");
+          baseTubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.gif", "resources/icons/misc/LCD/Lcd_" + i + "b.gif");
+          tubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.gif", "resources/icons/misc/LCD/Lcd_" + i + "b.gif");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/Lcd/Lcd_colonB.gif", "resources/icons/misc/Lcd/Lcd_colonB.gif");
-        baseColon = new NamedIcon("resources/icons/misc/Lcd/Lcd_colonB.gif", "resources/icons/misc/Lcd/Lcd_colonB.gif");
+        colonIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_colonB.gif", "resources/icons/misc/LCD/Lcd_colonb.gif");
+        baseColon = new NamedIcon("resources/icons/misc/LCD/Lcd_colonB.gif", "resources/icons/misc/LCD/Lcd_colonb.gif");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
           Image scaledImage = baseTubes[i].getImage().getScaledInstance(23,32,Image.SCALE_SMOOTH);
