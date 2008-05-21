@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -635,6 +635,8 @@ public class PanelEditor extends JmriJFrame {
                     setAllPositionable(false);
                 }
             });
+        // and don't destroy the window
+        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
     }  // end ctor
 
     // For choosing background images
