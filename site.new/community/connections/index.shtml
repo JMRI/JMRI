@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-05-23 16:45:47 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-05-23 17:24:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -37,7 +37,7 @@ JMRI works with other software in various ways.
 
 <p>
 For example, Giorgio Terdina has written the
-<a href="XTrkCadReader/index.shtml">XTrkCadReader</a> 
+<a href="XtrkCadReader/index.shtml">XTrkCadReader</a> 
 tool to let you use your XTrkCad layout designs to create 
 JMRI layout panels.
 
