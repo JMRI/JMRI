@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.6.shtml,v 1.3 2008-05-21 12:57:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.6.shtml,v 1.4 2008-05-24 19:23:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -137,6 +137,14 @@ Fixed a nasty bug introduced in 2.1.5 where closing the editor window on a panel
 <p>
 Matt Harris and Ken Cameron fixed a problem with the LCD clock on Linux.
 
+<p>
+Giorgio Terdina reformatted the main screens to add a little more space between the logo and status lines
+
+<p>
+The RPS receiver control and polling control now properly keep track of whether they've been modified and need to be written out
+
+<p>
+Giorgio Terdina updated the XnTcp adapter to allow manual selection of IP address
 
 <!--#include virtual="/Footer" -->
 

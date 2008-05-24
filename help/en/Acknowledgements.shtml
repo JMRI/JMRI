@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.40 2008-05-17 16:47:02 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.41 2008-05-24 19:24:27 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -293,7 +293,9 @@
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>.
-	<LI>Walter Thompson, who provided the ID information for the Lionel
+        He also wrote the 
+        <a href="http://jmri.sf.net/community/connections/XtrkCadReader/">XTrkCadReader</a> tool.
+   	<LI>Walter Thompson, who provided the ID information for the Lionel
 	Challenger decoder and DS54 accessory decoder,
 	updated lots of decoder definitions,
 	and is a jmriusers moderator.
