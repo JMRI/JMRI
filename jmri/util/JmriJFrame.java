@@ -50,10 +50,10 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
-public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
+public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag {
 
     public JmriJFrame() {
 	    super();
@@ -245,17 +245,20 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     }
 
     /**
-     * A frame is considered "dirty" if it has changes
+     * A frame is considered "modified" if it has changes
      * that have not been stored.
-     * <p>
-     * We provide standard GUI handling for that here.
      */
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
+    public void setModifiedFlag(boolean flag) {
+        this.modifiedFlag = flag;
         // mark the window in the GUI
-        markWindowModified(dirty);
+        markWindowModified(this.modifiedFlag);
     }
-    private boolean dirty = false;
+    /**
+     * Get the balue of the modified flag.
+     * <p>Not a bound parameter
+     */
+    public boolean getModifiedFlag() { return modifiedFlag; }
+    private boolean modifiedFlag = false;
     
     // For marking the window as modified on MacOS X
     // See: http://developer.apple.com/qa/qa2001/qa1146.html
