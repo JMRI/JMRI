@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.shtml,v 1.4 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: NetBeans.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -68,6 +68,12 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
 <P>
 This will create a number of subdirectories, including one named "java"
 that we'll reference below.
+<p>
+If you have an existing copy of the code and want to update it
+to the most recent contents of CVS, the second command is:
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
+</PRE>
       
     </ul>
 

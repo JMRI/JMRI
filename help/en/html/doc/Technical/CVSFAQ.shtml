@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.shtml,v 1.4 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: CVSFAQ.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -72,8 +72,38 @@ On other computers, you can type them directly on the command line.
 For more information, see the page on 
 <A HREF="getcode.shtml">getting your own copy of the source code</a>.
 
+<A name="update">
+<h3>How can I bring my copy of the JMRI code up to date?</h3></a>
+People contribute updates to the JMRI code almost every week.
+Your local copy doesn't get these changes until you ask for them,
+so that you've got something stable to work with.
+If you have an existing copy of the code and want to update it
+to the most recent contents of CVS, the CVS command is:
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
+</PRE>
+
+The "-q" option suppresses a lot of routine messages.  The
+"-d" option is needed to tell CVS to also bring in new directories.
+The "-A" option, here combined with "-d", means you want the most recent
+contents.
+
+<A name="release">
+<h3>How can I get the code for a particular release?</h3></a>
+
+CVS uses "tags" to make specific sets of content.
+We use these to mark the code for each release as we build it.
+To get the code for a release, you can ask for it with a command like this:
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q co -rRelease-2-1-5
+</PRE>
+
+In this example, "Release-2-1-5" is the tag for the 2.1.5 release.  You can adjust that
+as needed.  If you already have a release checked out and want to update it
+to a specific release, change the "co" command to "update -d"
+
 <A name="refid">
-<h3>What are those lines like <i>$Revision: 1.4 $</i> and <i>$Id: CVSFAQ.shtml,v 1.4 2008-03-09 20:27:28 jacobsen Exp $</i>?</h3>
+<h3>What are those lines like <i>$Revision: 1.5 $</i> and <i>$Id: CVSFAQ.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $</i>?</h3>
 </a>
 
 Those are automatically updated by CVS every time a new version of the 

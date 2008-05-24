@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.3 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.4 2008-05-24 17:08:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -80,6 +80,13 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
 If you're using a GUI-based client like WinCVS, pull down the "admin"
 menu and select "command line" to get a place to type these commands.
 On other computers, you can type them directly on the command line.
+<p>
+If you have an existing copy of the code and want to update it
+to the most recent contents of CVS, the second command is:
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
+</PRE>
+
 <P>
 See also the 
 <A HREF="CVSFAQ.shtml">CVS FAQ page</a>.
