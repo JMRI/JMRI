@@ -1,0 +1,22 @@
+<!-- Defines XML for RPS polling information -->
+<!-- $Id: rpsroster.dtd,v 1.1 2008-05-24 20:33:54 jacobsen Exp $ -->
+
+<!-- This DTD is Copyright 2008 Bob Jacobsen.  You may freely use    -->
+<!-- it subject to the Open Source Artistic License, a copy of     -->
+<!-- which is available in the COPYING file distributed along with -->
+<!-- this file or at http://jmri.sf.net/COPYING                    -->
+<!-- For more information on the JMRI project, including this DTD, -->
+<!-- see http://jmri.sf.net                                        -->
+
+<!ELEMENT rpsfile (poll, transmitter*)>
+
+<!ELEMENT poll  (#PCDATA)>
+<!ATTLIST poll active (true|false) "false" >
+<!ATTLIST poll interval CDATA #REQUIRED>
+
+<!ELEMENT transmitter (#PCDATA)>
+<!ATTLIST transmitter id CDATA #REQUIRED>
+<!ATTLIST transmitter address CDATA #IMPLIED>
+<!ATTLIST transmitter long (true|false) "false" >
+<!ATTLIST transmitter poll (true|false) "false" >
+
