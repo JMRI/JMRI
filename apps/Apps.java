@@ -34,7 +34,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -506,6 +506,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         log.debug("Fetch main logo: "+logo()+" "+ClassLoader.getSystemResource(logo()));
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource(logo()),"JMRI logo"), JLabel.LEFT));
+		pane1.add(Box.createRigidArea(new Dimension(15,0))); // Some spacing between logo and status panel
 
         log.debug("start labels");
         JPanel pane2 = new JPanel();
