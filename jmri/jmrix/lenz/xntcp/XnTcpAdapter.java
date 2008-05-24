@@ -10,22 +10,27 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.*;
 import java.util.*;
 import java.net.*;
+import javax.swing.JOptionPane;
+import jmri.jmrix.ConnectionStatus;
 
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
- *					Normally controlled by the lenz.xntcp.XnTcpFrame class.
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
+ * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
+ * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  */
 
 public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
 	static final int DEFAULT_UDP_PORT = 61234;
+	static final int DEFAULT_TCP_PORT = 61235;
+	static final String DEFAULT_IP_ADDRESS = "10.1.0.1";
 	static final int UDP_LENGTH = 18;			// Length of UDP packet
 	static final int BROADCAST_TIMEOUT = 1000;
 	static final int READ_TIMEOUT = 8000;
 	// Increasing MAX_PENDING_PACKETS makes output to CS faster, but may delay reception of unexpected notifications from CS
-	static final int MAX_PENDING_PACKETS = 15;	// Allow a buffer up to 128 bytes to be sent before waiting for acknowledgment
+	static final int MAX_PENDING_PACKETS = 15;	// Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
 	private  Vector hostNameVector = null;		// Contains the list of interfaces found on the LAN
 	private  Vector HostAddressVector = null;	// Contains their IP and port numbers
 	private  Socket tcpSocket = null;
@@ -33,6 +38,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	private  InputStream inTcpStream = null;
 	protected  OutputTcpStream outTcpStream = null;
 	private  int pendingPackets = 0;			// Number of packets sent and not yet acknowledged
+	protected String outName = "";  // Interface name, used for possible error messages (can be either the netBios name or the IP address)
 	
 	// Internal class, used to keep track of IP and port number
 	//  of each interface found on the LAN
@@ -54,10 +60,24 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	public String openPort(String portName, String appName)  {
 		// Connect to the choosen XPressNet/TCP interface
 		int ind;
-		int remotePort = 0;
-		findInterfaces();
-		if((ind = hostNameVector.indexOf(portName)) < 0) return "XpressNet/TCP interface "+portName+" not found";
-		HostAddress hostNumber = (HostAddress)HostAddressVector.get(ind);
+		HostAddress hostNumber;
+		setPort(portName);
+		if(portName.equals("Manual")) {
+			hostNumber = new HostAddress(DEFAULT_IP_ADDRESS, DEFAULT_TCP_PORT);
+			if(getCurrentOption1Setting() != null) hostNumber.ipNumber = getCurrentOption1Setting();
+			outName = hostNumber.ipNumber;
+			if(getCurrentOption2Setting() != null) {
+				try {
+					hostNumber.portNumber = (new Integer(getCurrentOption2Setting())).intValue();
+				}
+				catch (java.lang.NumberFormatException e) {}
+			}
+		} else {
+			outName = portName;
+			if(hostNameVector == null) findInterfaces();
+			if((ind = hostNameVector.indexOf(portName)) < 0) return "XpressNet/TCP interface "+portName+" not found";
+			hostNumber = (HostAddress)HostAddressVector.get(ind);
+		}
 		try {
 			// Connect!
 			try {
@@ -65,7 +85,8 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 				tcpSocket.setSoTimeout(READ_TIMEOUT);
 	  			}
 			catch (UnknownHostException e) {
-				return "XpressNet/TCP interface "+portName+" not found: "+ e;
+    			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+				return "XpressNet/TCP interface "+outName+" not found: "+ e;
 			}
 			// get and save input stream
 			inTcpStream = tcpSocket.getInputStream();
@@ -78,13 +99,14 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 			}
 
 			opened = true;
+			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_UP);
 
 		}
 		// Report possible errors encountered while opening the connection
 		catch (Exception ex) {
-			log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
-			ex.printStackTrace();
-			return "Unexpected error while opening TCP connection with "+portName+": "+ex;
+			log.error("Unexpected exception while opening port "+outName+" trace follows: "+ex);
+   			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+			return "Unexpected error while opening TCP connection with "+outName+": "+ex;
 		}
 
 		return null; // normal operation
@@ -176,6 +198,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 			// Post an error message routine to the SWING thread
 				javax.swing.SwingUtilities.invokeLater( new Runnable() {
 					public void run() {
+					ConnectionStatus.instance().setConnectionState(XnTcpAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 					ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.xntcp.XnTcpBundle");
 					javax.swing.JOptionPane.showMessageDialog(null,rb.getString("Error1"), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 				}}) ;
@@ -237,25 +260,19 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	/**
 	 * Local method to do specific configuration
 	 */
-	/**
-	* Get an array of valid baud rates. We support only one communication speed	*/
-	public String[] validBaudRates() {
-            return new String[]{"10Mbps"};
-         }
+	/* Get an array of valid baud rates. We support only one communication speed	*/
+	public String[] validBaudRates() {return new String[]{""};}
+    public String getCurrentBaudRate() {return null;}
 
 	/**
-     * XnTcp comunication options are fixed
-	 * Option 1 controls flow control option (always software)
+     * XnTcp comunication options (used only with manual configuration)
+	 * Option 1 is used to specify the IP address
 	 */
-	public String option1Name() { return "XnTcp connection uses "; }
-	public String[] validOption1() { return new String[]{"software flow control"}; }
-
+	public String option1Name() { return "XnTcp IP Address "; }
 	/**
-	 * Option 2 controls if the buffer status will be checked when 
-     * sending data (always yes)
+	 * Option 2 is used to specify the port number
 	 */
-	public String option2Name() { return "Check Buffer Status when sending? "; }
-	public String[] validOption2() { return new String[]{"yes"}; }
+	public String option2Name() { return "XnTcp TCP port "; }
 
 	static public XnTcpAdapter instance() {
 		if (mInstance == null) mInstance = new XnTcpAdapter();
