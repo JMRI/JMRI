@@ -1,5 +1,5 @@
 <!-- Defines XML for RPS position information -->
-<!-- $Id: rpsfile.dtd,v 1.2 2008-05-19 03:37:40 jacobsen Exp $ -->
+<!-- $Id: rpsfile.dtd,v 1.3 2008-05-24 20:34:27 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2008 Bob Jacobsen.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -31,5 +31,5 @@
 
 <!ELEMENT transmitter (#PCDATA)>
 <!ATTLIST transmitter address CDATA #REQUIRED>
-<!ATTLIST transmitter long CDATA #REQUIRED>
+<!ATTLIST transmitter long (true|false) "false" >
 
