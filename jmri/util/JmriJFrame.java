@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag {
@@ -260,6 +260,35 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public boolean getModifiedFlag() { return modifiedFlag; }
     private boolean modifiedFlag = false;
     
+    /**
+     * Handle closing a window or quiting the program
+     * while the modified bit was set.
+     */
+    protected void handleModified() {
+        if (getModifiedFlag()) {
+            if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.util.UtilBundle");
+            this.setVisible(true);
+            int result = javax.swing.JOptionPane.showOptionDialog(this,
+                rb.getString("WarnChangedMsg"),
+                rb.getString("WarnChangedTitle"),
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.WARNING_MESSAGE,
+                null, // icon
+                new String[]{rb.getString("WarnYesSave"),rb.getString("WarnNoClose")},
+                rb.getString("WarnYesSave")
+            );
+            if (result == javax.swing.JOptionPane.YES_OPTION) {
+                // user wants to save
+                storeValues();
+            }
+        }
+    }
+    static java.util.ResourceBundle rb = null; 
+    protected void storeValues() {
+        log.error("default storeValues does nothing for "+getTitle());
+    }
+        
+    
     // For marking the window as modified on MacOS X
     // See: http://developer.apple.com/qa/qa2001/qa1146.html
     final static String WINDOW_MODIFIED = "windowModified";
@@ -269,14 +298,31 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     // Window methods
     public void windowOpened(java.awt.event.WindowEvent e) {}
-    public void windowClosing(java.awt.event.WindowEvent e) {log.debug("Window ("+getTitle()+") closing "+e); }  
-    public void windowClosed(java.awt.event.WindowEvent e) {log.debug("Window ("+getTitle()+") closed "+e); }
+    public void windowClosed(java.awt.event.WindowEvent e) {}
     
     public void windowActivated(java.awt.event.WindowEvent e) {}
     public void windowDeactivated(java.awt.event.WindowEvent e) {}
     public void windowIconified(java.awt.event.WindowEvent e) {}
     public void windowDeiconified(java.awt.event.WindowEvent e) {}
 
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        handleModified();
+    }
+
+    private jmri.implementation.AbstractShutDownTask task = null;
+    protected void setShutDownTask() {
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
+            task = 
+                    new jmri.implementation.AbstractShutDownTask(getTitle()){
+                        public boolean execute() {
+                            handleModified();
+                            return true;
+                        }
+            };
+            jmri.InstanceManager.shutDownManagerInstance().register(task);
+        }
+    }
+    
     /**
      * When window is finally destroyed, remove it from the 
      * list of windows.
@@ -286,6 +332,10 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void dispose() {
         log.debug("dispose "+getTitle());
+        if (task != null) {
+            jmri.InstanceManager.shutDownManagerInstance().deregister(task);
+            task = null;
+        }
         synchronized (list) {
             list.remove(this);
         }

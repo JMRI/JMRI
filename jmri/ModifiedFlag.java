@@ -5,7 +5,7 @@ package jmri;
 /**
  * Tags objects that remember whether they've been modified and
  * need to be (optionally) stored, for example before the program
- * terminates.
+ * terminates or when a window closes.
  *<P>
  * The default state of an object is undefined.
  * <p>
@@ -25,7 +25,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @since 2.1.6
  */
 public interface ModifiedFlag {
@@ -41,11 +41,6 @@ public interface ModifiedFlag {
      * @return true if the object has been modified and needs to be stored
      */
     public boolean getModifiedFlag();
-    
-    /**
-     * As a convenience, this interface provides
-     * a method definition for storing the object
-     */
 }
 
 /* @(#)NamedBean.java */
