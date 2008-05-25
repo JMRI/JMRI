@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class PollDataModel extends AbstractTableModel {
 
@@ -32,6 +32,12 @@ public class PollDataModel extends AbstractTableModel {
     static final int TYPECOL = 4;
     
     static final int LAST = 4;
+    jmri.ModifiedFlag modifiedFlag;
+    
+    public PollDataModel(jmri.ModifiedFlag flag) {
+        super();
+        this.modifiedFlag = flag;
+    }
     
     public int getColumnCount () {return LAST+1;}
 
@@ -99,6 +105,7 @@ public class PollDataModel extends AbstractTableModel {
         case POLLCOL:
             boolean p = ((Boolean)value).booleanValue();
             Engine.instance().getTransmitter(r).setPolled(p);
+            modifiedFlag.setModifiedFlag(true);
             return;
         case TYPECOL:
             System.out.println("Got "+((JComboBox)value).getSelectedItem());

@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -135,7 +135,7 @@ public class Engine implements ReadingListener {
         Distributor.instance().submitMeasurement(m);
     }
     
-    // load and store
+    // Store alignment info
     public void store(File file) throws org.jdom.JDOMException, IOException {
         PositionFile pf = new PositionFile();
         pf.prepare();
@@ -193,11 +193,14 @@ public class Engine implements ReadingListener {
     int pollingInterval = 500;
     public int getPollingInterval() { return pollingInterval; }
     
+    boolean polling = false;
     public void setPolling(boolean polling) {
+        this.polling = polling;
         if (polling) startpoll();
         else stoppoll();
     }
-        
+    public boolean getPolling() { return polling; }
+    
     java.util.ArrayList transmitters;
     
     void loadInitialTransmitters() {
@@ -216,6 +219,19 @@ public class Engine implements ReadingListener {
         }
     }
     
+    // Store polling info
+    public void storePoll(File file) throws org.jdom.JDOMException, IOException {
+        PollingFile pf = new PollingFile();
+        pf.prepare();
+        pf.setPoll();
+        
+        for (int i = 0; i<getNumTransmitters(); i++) {
+            pf.setTransmitter(i);
+        }
+        pf.store(file);
+    }
+    
+
     public Transmitter getTransmitter(int i) { 
         if (i<0) return null;
         if (transmitters == null) return null;

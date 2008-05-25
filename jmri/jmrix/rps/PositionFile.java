@@ -10,8 +10,8 @@ import javax.vecmath.Point3d;
 /**
  * Persist RPS configuration information
  * <P>
- * @author  Bob Jacobsen   Copyright 2007
- * @version $Revision: 1.4 $
+ * @author  Bob Jacobsen   Copyright 2007, 2008
+ * @version $Revision: 1.5 $
  */
 public class PositionFile extends XmlFile {
 

@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -31,11 +31,13 @@ public class AlignTablePane extends javax.swing.JPanel {
     /**
      * Constructor method
      */
-    public AlignTablePane() {
+    public AlignTablePane(jmri.ModifiedFlag flag) {
     	super();
+    	this.flag = flag;
     }
 
     AlignModel alignModel = null;
+    jmri.ModifiedFlag flag;
     
     /** 
      *  Initialize the window
@@ -83,8 +85,11 @@ public class AlignTablePane extends javax.swing.JPanel {
                 // set number of columns
                 Engine.instance().setReceiverCount(
                     Integer.parseInt(num.getText()));
+                // mark modification
+                flag.setModifiedFlag(true);
                 // resize table
                 alignModel.fireTableStructureChanged();
+                
             }
         });
         p.add(b);
@@ -114,6 +119,8 @@ public class AlignTablePane extends javax.swing.JPanel {
                     Integer.parseInt(offset.getText()));
                 Engine.instance().setVSound(
                     Double.parseDouble(vsound.getText()));
+                // mark modification
+                flag.setModifiedFlag(true);
             }
         });
         p.add(b);        
@@ -125,6 +132,13 @@ public class AlignTablePane extends javax.swing.JPanel {
             public void load() {
                 super.load();
                 alignModel.fireTableStructureChanged();
+                // modified (to force store of default after load new values)
+                flag.setModifiedFlag(true);
+            }
+            public void storeDefault() {
+                super.storeDefault();
+                // no longer modified after storeDefault
+                flag.setModifiedFlag(false);
             }
         });
     }
@@ -223,6 +237,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                 p = rc.getPosition();
                 p.x = ((Double)val).doubleValue();
                 Engine.instance().setReceiverPosition(r+1, p);
+                flag.setModifiedFlag(true);
                 break;
             case YCOL:
                 rc = Engine.instance().getReceiver(r+1);
@@ -233,6 +248,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                 p = rc.getPosition();
                 p.y = ((Double)val).doubleValue();
                 Engine.instance().setReceiverPosition(r+1, p);
+                flag.setModifiedFlag(true);
                 break;
             case ZCOL:
                 rc = Engine.instance().getReceiver(r+1);
@@ -243,6 +259,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                 p = rc.getPosition();
                 p.z = ((Double)val).doubleValue();
                 Engine.instance().setReceiverPosition(r+1, p);
+                flag.setModifiedFlag(true);
                 break;
             default:
                 log.error("setValueAt of column "+c);

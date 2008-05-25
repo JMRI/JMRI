@@ -8,11 +8,14 @@ import java.awt.event.ActionEvent;
 /**
  * Swing action to create and register a
  *       			AlignTableFrame object.
+ * <p>
+ * Only one frame is used (e.g. it's reused) because notification is
+ * not yet completely in place.
  *<p>
  * Note that we only allow one of these right now.
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AlignTableAction extends AbstractAction {
 

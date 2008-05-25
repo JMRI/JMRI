@@ -16,7 +16,7 @@ import javax.swing.border.Border;
  * @see AlignTableAction
  * 
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
@@ -44,7 +44,7 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
 			
 
         // add table
-        p = new AlignTablePane();
+        p = new AlignTablePane(this);
         p.initComponents();
         contentPane.add(p);
         
