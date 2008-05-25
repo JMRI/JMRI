@@ -16,7 +16,7 @@ import javax.swing.border.Border;
  * @see AlignTableAction
  * 
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
@@ -51,11 +51,16 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
         // add help menu to window
     	addHelpMenu("package.jmri.jmrix.rps.aligntable.AlignTableFrame", true);
 
+        // check at shutdown
+        setShutDownTask();
+        
         // pack for display
         pack();
     }
 
-    public void dispose() {
-        // SerialTrafficController.instance().removeSerialListener(p);
+    protected void storeValues() {
+        p.storeDefault();
+        setModifiedFlag(false);
     }
+    
 }

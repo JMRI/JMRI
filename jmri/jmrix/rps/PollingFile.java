@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PollingFile extends XmlFile {
 
@@ -68,28 +68,44 @@ public class PollingFile extends XmlFile {
         root = rootFromFile(f);
     }
     
-    public boolean getPoll() {
+    public void getPollValues() {
         Element e = root.getChild("poll");
+        
         Attribute a = e.getAttribute("active");
-        if (a == null) return false;
-        if (a.getValue().equals("true")) return true;
-        return false;
+        boolean poll = false;
+        if (a != null && a.getValue().equals("true")) poll = true;
+        Engine.instance().setPolling(poll);
+        
+        a = e.getAttribute("interval");
+        int value = 0;
+        try {
+            if (a != null) value = a.getIntValue();
+        } catch (org.jdom.DataConversionException ex) {}
+        Engine.instance().setPollingInterval(value);
     }
     
     /**
      * Get the transmitters from the file
-     * @return null if not present
      */
-    public List getTransmitters() {
-        List kids = root.getChildren("receiver");
-        for (int i = 0; i<kids.size(); i++) {
-            Element e = (Element) kids.get(i);
-            Attribute a = e.getAttribute("number");
-            int num = -1;
-            try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex) {}
+    public void getTransmitters(Engine engine) {
+        List l = root.getChildren("transmitter");
+
+        for (int i = 0; i<l.size(); i++) {
+            Element e = (Element)l.get(i);
+            String id = e.getAttribute("id").getValue();
+            // find the matching transmitter (from Roster) and load poll value
+            for (int j = 0; j<engine.getNumTransmitters(); j++) {
+                if (engine.getTransmitter(i).getID().equals(id)) {
+                    Attribute a = e.getAttribute("poll");
+                    boolean poll = false;
+                    if (a != null && a.getValue().equals("true")) poll = true;
+                    engine.getTransmitter(i).setPolled(poll);
+                    break;
+                }
+            }
         }
-        return null;
+        
+        return;
     }
                 
     static public String defaultLocation() {

@@ -17,7 +17,7 @@ import java.io.*;
  * Frame for control of RPS polling
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 
@@ -48,46 +48,16 @@ public class PollTableFrame extends jmri.util.JmriJFrame  {
         // add help
         addHelpMenu("package.jmri.jmrix.rps.swing.polling.PollTableFrame", true);
 
-        // create ShutDownTask
-        // no need to remember this, as don't need to remove it
-        // once this frame is created
-        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            AbstractShutDownTask task = 
-                    new AbstractShutDownTask("rps.PollingTableFrame"){
-                        public boolean execute() {
-                            checkForSave();
-                            return true;
-                        }
-            };
-            jmri.InstanceManager.shutDownManagerInstance().register(task);
-        }
+        // check at shutdown
+        setShutDownTask();
+        
         // prepare for display
         pack();
     }
-    
-    /**
-     * Check for modified when closing
-     */
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        checkForSave();
-    }
-    
-    void checkForSave() {
-        if (getModifiedFlag()) {
-            int result = JOptionPane.showOptionDialog(this,
-                rb.getString("WarnChanged"),
-                rb.getString("WarnTitle"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE,
-                null, // icon
-                new String[]{rb.getString("LabelYesSave"),rb.getString("LabelNoClose")},
-                rb.getString("LabelYesSave")
-            );
-            if (result == JOptionPane.YES_OPTION) {
-                // user wants to save
-                pane.setDefaults();
-            }
-        }
+        
+    protected void storeValues() {
+        pane.setDefaults();
+        setModifiedFlag(false);
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollTableFrame.class.getName());

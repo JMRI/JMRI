@@ -20,14 +20,16 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 
 public class Engine implements ReadingListener {
 
     public Engine() {
+    }
     
+    void loadValues() {
         // load dummy contents
         setInitialAlignment();
         loadInitialTransmitters();
@@ -43,6 +45,7 @@ public class Engine implements ReadingListener {
         return vsound;
     }
     private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec, 
+    private int offset = 0;
     
     public void setOffset(int offset) {
         this.offset = offset;
@@ -50,7 +53,6 @@ public class Engine implements ReadingListener {
     public int getOffset() {
         return offset;
     }
-    private int offset;
         
     Measurement lastPoint = null;
     
@@ -136,7 +138,7 @@ public class Engine implements ReadingListener {
     }
     
     // Store alignment info
-    public void store(File file) throws org.jdom.JDOMException, IOException {
+    public void storeAlignment(File file) throws org.jdom.JDOMException, IOException {
         PositionFile pf = new PositionFile();
         pf.prepare();
         pf.setConstants(getVSound(), getOffset());
@@ -148,7 +150,7 @@ public class Engine implements ReadingListener {
         pf.store(file);
     }
     
-    public void load(File file) throws org.jdom.JDOMException, IOException {
+    public void loadAlignment(File file) throws org.jdom.JDOMException, IOException {
         // start by getting the file
         PositionFile pf = new PositionFile();
         pf.loadFile(file);
@@ -174,7 +176,7 @@ public class Engine implements ReadingListener {
     void setInitialAlignment() {
         File defaultFile = new File(PositionFile.defaultFilename());
         try {
-            load(defaultFile);
+            loadAlignment(defaultFile);
         } catch (Exception e) {
             log.debug("load exception"+e);
             // load dummy values
@@ -217,10 +219,17 @@ public class Engine implements ReadingListener {
             Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
             transmitters.add(t);
         }
+        
+        // get polling status, if possible
+        try {
+            loadPollConfig(new File(PollingFile.defaultFilename()));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     
     // Store polling info
-    public void storePoll(File file) throws org.jdom.JDOMException, IOException {
+    public void storePollConfig(File file) throws org.jdom.JDOMException, IOException {
         PollingFile pf = new PollingFile();
         pf.prepare();
         pf.setPoll();
@@ -231,6 +240,14 @@ public class Engine implements ReadingListener {
         pf.store(file);
     }
     
+    public void loadPollConfig(File file) throws org.jdom.JDOMException, IOException {
+        PollingFile pf = new PollingFile();
+        pf.loadFile(file);  
+        // first make sure transmitters defined      
+        pf.getTransmitters(this);
+        // and possibly start polling
+        pf.getPollValues();
+    }    
 
     public Transmitter getTransmitter(int i) { 
         if (i<0) return null;
@@ -300,14 +317,16 @@ public class Engine implements ReadingListener {
         byte[] packet = jmri.NmraPacket.function0Through4Packet(
                                 t.getAddress(), t.isLongAddress(),
                                 false, false, true, false, false);
-        jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+        if (jmri.InstanceManager.commandStationInstance() != null)
+            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
     }
     void setOff(int i) {
         Transmitter t = getTransmitter(i);
         byte[] packet = jmri.NmraPacket.function0Through4Packet(
                                 t.getAddress(), t.isLongAddress(),
                                 false, false, false, false, false);
-        jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+        if (jmri.InstanceManager.commandStationInstance() != null)
+            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
     }
     
     public class Transmitter {
@@ -339,7 +358,10 @@ public class Engine implements ReadingListener {
     // for now, we only allow one Engine
     static Engine _instance = null;
     static public Engine instance() {
-        if (_instance == null) _instance = new Engine();
+        if (_instance == null) {
+            _instance = new Engine();
+            _instance.loadValues();
+        }
         return _instance;
     }
 

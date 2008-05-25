@@ -15,7 +15,7 @@ import java.io.*;
  * Panel for load/store of RPS setup
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 
@@ -63,7 +63,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) log.info("located file "+file+" for load");
                 // handle the file
-                Engine.instance().load(file);
+                Engine.instance().loadAlignment(file);
             }
             else log.info("load cancelled in open dialog");
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) log.info("located file "+file+" for store");
                 // handle the file
-                Engine.instance().store(file);
+                Engine.instance().storeAlignment(file);
             }
             else log.info("load cancelled in open dialog");
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
             File file = new File(PositionFile.defaultFilename());
             if (log.isInfoEnabled()) log.info("located file "+file+" for store");
             // handle the file
-            Engine.instance().store(file);
+            Engine.instance().storeAlignment(file);
         } catch (Exception e) {
             log.error("exception during storeDefault: "+e);
         }

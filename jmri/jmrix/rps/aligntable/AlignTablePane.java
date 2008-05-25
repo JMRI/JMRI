@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -127,7 +127,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         add(p);
 
         //
-        add(new jmri.jmrix.rps.swing.LoadStorePanel(){
+        add(loadStore = new jmri.jmrix.rps.swing.LoadStorePanel(){
             // make sure we redisplay if changed
             public void load() {
                 super.load();
@@ -141,6 +141,15 @@ public class AlignTablePane extends javax.swing.JPanel {
                 flag.setModifiedFlag(false);
             }
         });
+    }
+    
+    
+    jmri.jmrix.rps.swing.LoadStorePanel loadStore;
+
+    void storeDefault() {
+        loadStore.storeDefault();
+        // no longer modified after storeDefault
+        flag.setModifiedFlag(false);
     }
     
     JTextField num      = new JTextField(4);

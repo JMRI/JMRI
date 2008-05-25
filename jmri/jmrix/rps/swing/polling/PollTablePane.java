@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -72,6 +72,7 @@ public class PollTablePane extends javax.swing.JPanel {
         p.setLayout(new FlowLayout());
 
         polling = new JCheckBox(rb.getString("LabelPoll"));
+        polling.setSelected(Engine.instance().getPolling());
         p.add(polling);
         polling.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event) {
@@ -114,7 +115,8 @@ public class PollTablePane extends javax.swing.JPanel {
             File file = new File(PollingFile.defaultFilename());
             if (log.isInfoEnabled()) log.info("located file "+file+" for store");
             // handle the file
-            Engine.instance().storePoll(file);
+            Engine.instance().storePollConfig(file);
+            modifiedFlag.setModifiedFlag(false);
         } catch (Exception e) {
             log.error("exception during storeDefault: "+e);
         }
