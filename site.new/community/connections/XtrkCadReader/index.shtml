@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-05-23 16:39:47 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-05-26 03:07:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -50,7 +50,7 @@ that represents your trackwork.
 
 <p>
 XTrkCadRead can be downloaded via 
-<a href="http://downloads.sourceforge.net/jmri/XtrkCadReader-1.zip">this link</a>.
+<a href="http://downloads.sourceforge.net/jmri/XtrkCadReader1v1.zip">this link</a>.
 
 <p>
 A manual describing how to run XTrkCadReader, including the options
@@ -69,9 +69,11 @@ licensing terms, kindly refer to
 
 The code for XTrkCadReader is available in the 
 <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/getcode.shtml">JMRI CVS Repository</a>.  You can 
-<a href="http://jmri.cvs.sourceforge.net/jmri/XTrkCadReader">look at it in your web browser</a>.  
+<a href="http://jmri.cvs.sourceforge.net/jmri/XTrkCadReader">look at it in your web browser</a> or 
+directly 
+<a href="http://downloads.sourceforge.net/jmri/XtrkCadReaderSource1v1.zip">download a copy</a>. 
 <P>
-If you'd like a complete copy, for example to modify or improve it,
+If you'd like a complete copy from CVS, for example to modify or improve it,
 you can check it out from CVS using the commands:
 <code><pre>
    cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
