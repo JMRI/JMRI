@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.6.shtml,v 1.4 2008-05-24 19:23:47 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.6.shtml,v 1.5 2008-05-26 22:57:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -145,6 +145,15 @@ The RPS receiver control and polling control now properly keep track of whether 
 
 <p>
 Giorgio Terdina updated the XnTcp adapter to allow manual selection of IP address
+
+<p>
+We've included an
+<a href="../help/en/html/hardware/SRCP/index.shtml">SRCP connection</a>
+in this version. It's still being developed, but basic power, throttle and turnout operation is thought to be OK.
+
+<p>
+Paul Bender fixed a spurious warning message about a missing consist file.
+
 
 <!--#include virtual="/Footer" -->
 
