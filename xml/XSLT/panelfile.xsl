@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.13 2008-05-10 03:24:22 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.14 2008-05-26 02:00:41 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -24,6 +24,10 @@
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
+
+<!-- Define variables for translation -->
+<xsl:variable name="lcletters">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+<xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -89,7 +93,7 @@
 <xsl:template match="layout-config/signalheads">
 <h3>Signal Heads</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td><td>Type</td><td>Output</td></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Output</th></tr>
     <!-- index through individal signalhead elements -->
     <xsl:apply-templates/>
     </table>
@@ -100,7 +104,7 @@
 <xsl:template match="layout-config/sensors">
 <h3>Sensors</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Invert?</th></tr>
     <!-- index through individal sensor elements -->
     <xsl:apply-templates/>
     </table>
@@ -111,7 +115,7 @@
 <xsl:template match="layout-config/memories">
 <h3>Memories</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
+    <tr><th>System Name</th><th>User Name</th></tr>
     <!-- index through individal memory elements -->
     <xsl:apply-templates/>
     </table>
@@ -122,7 +126,7 @@
 <xsl:template match="layout-config/reporters">
 <h3>Reporters</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
+    <tr><th>System Name</th><th>User Name</th></tr>
     <!-- index through individal reporter elements -->
     <xsl:apply-templates/>
     </table>
@@ -133,11 +137,33 @@
 <xsl:template match="layout-config/routes">
 <h3>Routes</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
+    <tr><th>System Name</th><th>User Name</th>
+    <th>Input Sensors</th><th>Input Turnouts</th>
+    <th>Output Turnouts</th>
+    <th>Output Sensors</th>
+    </tr>
     <!-- index through individal route elements -->
     <xsl:apply-templates/>
     </table>
 </xsl:template>
+
+<xsl:template match="route">
+<tr>
+<td><xsl:value-of select="@systemName"/></td>
+<td><xsl:value-of select="@userName"/></td>
+<td><xsl:for-each select="routeSensor">
+        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
+    </xsl:for-each></td>
+<td><xsl:value-of select="@controlTurnout"/>&#160;&#160;&#160;<xsl:value-of select="@controlTurnoutState"/></td>
+<td><xsl:for-each select="routeOutputTurnout">
+        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
+    </xsl:for-each></td>
+<td><xsl:for-each select="routeOutputSensor">
+        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
+    </xsl:for-each></td>
+</tr>
+</xsl:template>
+
 
 <!-- Index through logixs elements -->
 <!-- each one becomes a separate section -->
@@ -159,8 +185,8 @@
     <!-- each one becomes a table -->
     <h3>Simple Signal Logic</h3>
         <table border="1">
-        <tr><td>Controlled Signal</td><td>Watched Signal</td>
-            <td>Turnout</td><td>Sensors</td><td>Options</td></tr>
+        <tr><th>Controlled Signal</th><th>Watched Signal</th>
+            <th>Turnout</th><th>Sensors</th><th>Options</th></tr>
         <!-- index through individal block elements -->
         <xsl:for-each select="block">
             <xsl:call-template name="signalelement"/>
@@ -205,10 +231,10 @@
         <h3>Blocks</h3>
             <table border="1">
             <tr>
-                <td>System Name</td>
-                <td>User Name</td>
-                <td>Sensor</td>
-                <td>Paths</td>
+                <th>System Name</th>
+                <th>User Name</th>
+                <th>Sensor</th>
+                <th>Paths</th>
             </tr>
             <!-- index through individal block elements -->
             <xsl:for-each select="block">
@@ -274,10 +300,10 @@
 <h3>Layout Blocks</h3>
     <table border="1">
     <tr>
-        <td>System Name</td>
-        <td>User Name</td>
-        <td>Occupancy Sensor</td>
-        <td>Memory</td>
+        <th>System Name</th>
+        <th>User Name</th>
+        <th>Occupancy Sensor</th>
+        <th>Memory</th>
     </tr>
     <!-- index through individal turnout elements -->
     <xsl:apply-templates/>
@@ -311,7 +337,9 @@
 </xsl:template>
 
 <xsl:template match="sensor">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
+<tr><td><xsl:value-of select="@systemName"/></td>
+    <td><xsl:value-of select="@userName"/></td>
+    <td><xsl:if test='(@inverted = "true")'>Yes</xsl:if></td></tr>
 </xsl:template>
 
 <xsl:template match="memory">
@@ -319,10 +347,6 @@
 </xsl:template>
 
 <xsl:template match="reporter">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
-</xsl:template>
-
-<xsl:template match="route">
 <tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
 </xsl:template>
 
@@ -353,7 +377,7 @@
         <xsl:param name="name"/>
     <!-- index through individual conditional elements, looking for match -->
     <xsl:for-each select="/layout-config/conditionals/conditional">
-		<xsl:if test="( @systemName = $name )" >
+		<xsl:if test='( @systemName = translate($name,$lcletters,$ucletters) )' >
 		<!-- here have found correct conditional -->
             <h4>Conditional <xsl:value-of select="@systemName"/>
             <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
@@ -400,7 +424,7 @@
   <xsl:when test="( @type = 19 )" >Signal Head Held</xsl:when>
   <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
 </xsl:choose>
-systemName="<xsl:value-of select="@systemName"/>"
+name="<xsl:value-of select="@systemName"/>"
 num1="<xsl:value-of select="@num1"/>"
 num2="<xsl:value-of select="@num2"/>"
 triggerCalc="<xsl:value-of select="@triggerCalc"/>"
@@ -408,6 +432,7 @@ triggerCalc="<xsl:value-of select="@triggerCalc"/>"
 </xsl:template>
 
 <xsl:template name="conditionalAction">
+<xsl:if test='@type != 1'>
 <p/>
 <!-- decode operator -->
 <xsl:choose>
@@ -438,11 +463,12 @@ triggerCalc="<xsl:value-of select="@triggerCalc"/>"
   <xsl:when test="( @type = 18 )" >Lock Turnout </xsl:when>
   <xsl:otherwise>(type="<xsl:value-of select="@type"/>") </xsl:otherwise>
 </xsl:choose>
-delay="<xsl:value-of select="@delay"/>"
-systemName="<xsl:value-of select="@systemName"/>"
+name="<xsl:value-of select="@systemName"/>"
 data="<xsl:value-of select="@data"/>"
+delay="<xsl:value-of select="@delay"/>"
 string="<xsl:value-of select="@string"/>"
 <br/>
+</xsl:if>
 </xsl:template>
 
 <xsl:template match="paneleditor">
