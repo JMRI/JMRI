@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-05-26 19:02:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-05-26 19:18:21 jacobsen Exp $ -->
 <title>JMRI: Configuring SRCP Connection</title>
 
 <!-- Style -->
@@ -27,6 +27,11 @@ JMRI: Configuring SRCP Connection
 
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">
 <img src="http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"/></a>
+
+SRCP support will be available in
+<a href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI 2.1.6</a>.
+<p>
+
 The
 <a href="http://srcpd.sourceforge.net/">SRCP protocol</a>
 was created by the 
@@ -49,6 +54,13 @@ JMRI Throttles via SRCP.
 <h2>Configuring JMRI</h2>
 
 To use an SRCP connection, select "SRCP Server" as a protocol under the preferences.
+<p>
+Next fill in the Internet address for the SRCP server.  This can be numbers like 127.0.0.1 or 
+a name like "srcp.sf.net".  A server running on the same computer can usually be referred to as "localhost".
+<p>
+Then fill in the port number.  This can be obtained from the configuration for your SRCP server.
+<p>
+Finally, save the preferences and restart the program.
 
 <h3>Limitations</h3>
 
