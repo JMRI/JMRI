@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -282,6 +282,7 @@ public class Engine implements ReadingListener {
     }
     
     int pollIndex = -1; // left at last one done
+    boolean bscPoll = false;
     
     void startpoll() {
         log.debug("start poll");
@@ -293,9 +294,9 @@ public class Engine implements ReadingListener {
                     try {
                         int i = selectNextPoll();
                         log.debug("Poll "+i);
-                                setOn(i);
-                                synchronized (this) { wait(20); }
-                                setOff(i);
+                        setOn(i);
+                        synchronized (this) { wait(20); }
+                        setOff(i);
                         synchronized (this) { wait(pollingInterval); }
                     } catch (InterruptedException e) { 
                         // cancel whatever is happening
@@ -314,19 +315,32 @@ public class Engine implements ReadingListener {
 
     void setOn(int i) {
         Transmitter t = getTransmitter(i);
-        byte[] packet = jmri.NmraPacket.function0Through4Packet(
+        byte[] packet;
+        if (bscPoll) {
+            // poll using BSC instruction
+            packet = jmri.NmraPacket.threeBytePacket(
+                                t.getAddress(), t.isLongAddress(), 
+                                (byte)0xC0, (byte)0xA5, (byte)0xFF);
+
+        } else {
+            // poll using F2
+            packet = jmri.NmraPacket.function0Through4Packet(
                                 t.getAddress(), t.isLongAddress(),
                                 false, false, true, false, false);
+        }
         if (jmri.InstanceManager.commandStationInstance() != null)
             jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
     }
     void setOff(int i) {
-        Transmitter t = getTransmitter(i);
-        byte[] packet = jmri.NmraPacket.function0Through4Packet(
-                                t.getAddress(), t.isLongAddress(),
-                                false, false, false, false, false);
-        if (jmri.InstanceManager.commandStationInstance() != null)
-            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+    if (!bscPoll) {
+            // have to turn off F2 since not using BSC
+            Transmitter t = getTransmitter(i);
+            byte[] packet = jmri.NmraPacket.function0Through4Packet(
+                                    t.getAddress(), t.isLongAddress(),
+                                    false, false, false, false, false);
+            if (jmri.InstanceManager.commandStationInstance() != null)
+                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+        }
     }
     
     public class Transmitter {
