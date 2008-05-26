@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.14 2008-05-15 14:15:47 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.15 2008-05-26 22:54:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -119,7 +119,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
 <LI>B (reserved for CTI Train-Brain)
 <LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
-<LI>D (reserved for Direct-packet-drive and direct serial port sensors)
+<LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
 <LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
 <LI>F
 <LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
@@ -132,8 +132,8 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
 <LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
 <LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
-<LI>Q QSI programmer interface
-<LI>R RPS system
+<LI>Q <a href="../../hardware/qsi/index.shtml">QSI programmer interface</a>
+<LI>R <a href="../../hardware/rps/index.shtml">RPS system</a>
 <LI>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a>
 <LI>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
 <li>U (reserved for ESU eCos)
