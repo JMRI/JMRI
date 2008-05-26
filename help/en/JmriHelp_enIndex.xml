@@ -57,8 +57,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Lionel TMCC" target="html.hardware.tmcc.index"/>
       <indexitem text="NCE" target="html.hardware.nce.NCE"/>
       <indexitem text="Oak Tree Systems" target="html.hardware.oaktree.OakTree"/>
+      <indexitem text="QSI" target="html.hardware.qsi.index"/>
       <indexitem text="RPS positioning system" target="html.hardware.rps.index"/>
       <indexitem text="SPROG" target="html.hardware.sprog.SPROG"/>
+      <indexitem text="SRCP" target="html.hardware.SRCP.index"/>
       <indexitem text="TCH Technology" target="html.hardware.tchtech.index"/>
       <indexitem text="Uhlenbrock Intelllibox" target="html.hardware.loconet.Uhlenbrock"/>
       <indexitem text="X10" target="html.hardware.powerline.index"/>
@@ -105,6 +107,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming_Basic Programmer"/>
       <indexitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
    </indexitem>
+   <indexitem text="QSI" target="html.hardware.qsi.index"/>
    <indexitem text="Reporter" target="html.tools.Reporters">
       <indexitem text="Add Reporter" target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
       <indexitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
@@ -137,6 +140,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Update SPROG II" target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
       <indexitem text="Update SPROG V3/V4" target="package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame"/>
    </indexitem>
+   <indexitem text="SRCP" target="html.hardware.SRCP.index"/>
    <indexitem text="Tables">
       <indexitem text="Block Table" target="package.jmri.jmrit.beantable.BlockTable"/>
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>

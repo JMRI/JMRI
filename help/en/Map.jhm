@@ -154,14 +154,14 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.apps.Apps" url="package/apps/Apps.shtml" />
 	<mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml" />
 	<mapID target="html.doc.Technical.StartUpScripts" url="html/doc/Technical/StartUpScripts.shtml" />
-	<mapID target="DecoderProManual.Comp_Advanced_Top" url="DecoderProManual/Comp_Advanced.shtml#Top" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_decodercol" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#decodercol" />
+	<mapID target="DecoderProManual.Comp_Advanced_Top" url="DecoderProManual/Comp_Advanced.shtml#Top" />
 	<mapID target="html.tools.Signals_edit" url="html/tools/Signals.shtml#edit" />
 	<mapID target="DecoderProManual.Basic_Programming_Top" url="DecoderProManual/Basic_Programming.shtml#Top" />
 	<mapID target="DecoderProManual.Basic_Programming_Roster" url="DecoderProManual/Basic_Programming.shtml#Roster" />
 	<mapID target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame" url="package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml" />
-	<mapID target="html.tools.Reporters" url="html/tools/Reporters.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback" />
+	<mapID target="html.tools.Reporters" url="html/tools/Reporters.shtml" />
 	<mapID target="html.apps.DecoderPro.Roster" url="html/apps/DecoderPro/Roster.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_AddressPanel" url="html/tools/throttle/ThrottleChapter2.shtml#AddressPanel" />
 	<mapID target="html.apps.DecoderPro.IntroXML" url="html/apps/DecoderPro/IntroXML.shtml" />
@@ -207,6 +207,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml" />
 	<mapID target="package.jmri.jmrix.rps.reversealign.AlignmentPanel" url="package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml" />
 	<mapID target="html.doc.Technical.index_use" url="html/doc/Technical/index.shtml#use" />
+	<mapID target="html.doc.Technical.CVSFAQ_release" url="html/doc/Technical/CVSFAQ.shtml#release" />
 	<mapID target="package.apps.DecoderPro.DecoderPro" url="package/apps/DecoderPro/DecoderPro.shtml" />
 	<mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml" />
 	<mapID target="html.tools.automation.viaJava" url="html/tools/automation/viaJava.shtml" />
@@ -446,6 +447,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.LocoNetClasses_startup" url="html/hardware/loconet/LocoNetClasses.shtml#startup" />
 	<mapID target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame" url="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml" />
 	<mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V" />
+	<mapID target="html.hardware.SRCP.index" url="html/hardware/SRCP/index.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c" url="DecoderProManual/Comp_PrintData_c.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_addLight" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#addLight" />
 	<mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml" />

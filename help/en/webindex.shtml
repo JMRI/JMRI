@@ -248,12 +248,22 @@
 </li>
       
 <li>
+<a href="html/hardware/qsi/index.shtml">QSI</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/hardware/rps/index.shtml">RPS positioning system</a>
 <ul></ul>
 </li>
       
 <li>
 <a href="html/hardware/sprog/SPROG.shtml">SPROG</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/SRCP/index.shtml">SRCP</a>
 <ul></ul>
 </li>
       
@@ -460,6 +470,11 @@
 </li>
    
 <li>
+<a href="html/hardware/qsi/index.shtml">QSI</a>
+<ul></ul>
+</li>
+   
+<li>
 <a href="html/tools/Reporters.shtml">Reporter</a>
 <ul>
       
@@ -598,6 +613,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="html/hardware/SRCP/index.shtml">SRCP</a>
+<ul></ul>
 </li>
    
 <li>Tables<ul>
