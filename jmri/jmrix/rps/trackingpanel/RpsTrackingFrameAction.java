@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  *       			RpsTrackingFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class RpsTrackingFrameAction 			extends AbstractAction {
 
@@ -44,13 +44,15 @@ public class RpsTrackingFrameAction 			extends AbstractAction {
 
         // then alignment control
         panel = new RpsTrackingPanel();
-        controls.add(new RpsTrackingControlPane(panel));
+        RpsTrackingControlPane scale = new RpsTrackingControlPane(panel);
+        controls.add(scale);
         controls.add(new JSeparator());
 
         panel.setSize(440,240);
         panel.setPreferredSize(new Dimension(440,240));
-        panel.setOrigin(-20.,-20.);
-        panel.setCoordMax(420.,220.);
+
+        scale.set(-20.,-20.,400.,400.);  // lower left X, Y, then upper right 
+        scale.update();
 
         // combine
         JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controls, panel);
