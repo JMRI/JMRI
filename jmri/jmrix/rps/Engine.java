@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 
@@ -133,8 +133,20 @@ public class Engine implements ReadingListener {
 
         Measurement m = c.convert(r, lastPoint);
 
+        saveLastMeasurement(r.getID(), m);
+        
         lastPoint = m;
         Distributor.instance().submitMeasurement(m);
+    }
+    
+    // Store the lastMeasurement 
+    void saveLastMeasurement(int addr, Measurement m) {
+        for (int i=0; i<getNumTransmitters(); i++) {
+            if (getTransmitter(i).getAddress() == addr) {
+                getTransmitter(i).setLastMeasurement(m);
+                // might be more than one, so don't end here
+            }
+        }
     }
     
     // Store alignment info
@@ -367,6 +379,9 @@ public class Engine implements ReadingListener {
         boolean polled;
         public void setPolled(boolean polled) { this.polled = polled; }
         
+        Measurement lastMeasurement = null;
+        public void setLastMeasurement(Measurement last) { lastMeasurement = last; }
+        public Measurement getLastMeasurement() { return lastMeasurement; }
     }
 
     // for now, we only allow one Engine
