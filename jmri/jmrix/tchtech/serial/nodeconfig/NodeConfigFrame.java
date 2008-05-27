@@ -18,7 +18,7 @@ import jmri.jmrix.tchtech.serial.SerialSensorManager;
  * Frame for user configuration of  serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -107,21 +107,21 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeTypeBox = new JComboBox();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("MICRO-48");
-        nodeTypeBox.addItem("NIC-32");
+        nodeTypeBox.addItem("NIT-32");
 // Here add code for other types of nodes
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
                 {
                     String s = (String)nodeTypeBox.getSelectedItem();
-                    if (s.equals("MIRCO")) {
+                    if (s.equals("MICRO-48")) {
                         panel2.setVisible(false);
                         panel2a.setVisible(true);
                         cardSizeText.setVisible(false);
                         cardSizeBox.setVisible(false);
                         nodeType = SerialNode.MICRO;
                     }
-                    else if (s.equals("NIC-32")) {
+                    else if (s.equals("NIT-32")) {
                         panel2.setVisible(true);
                         panel2a.setVisible(false);
                         cardSizeText.setVisible(true);
@@ -403,10 +403,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
         if (nodeType==SerialNode.MICRO) {
-            nodeTypeBox.setSelectedItem("MICRO");
+            nodeTypeBox.setSelectedItem("MICRO-48");
         }
         else if (nodeType==SerialNode.SNIC) {
-            nodeTypeBox.setSelectedItem("NIC-32");
+            nodeTypeBox.setSelectedItem("NIT-32");
         }
 // here add code for other node types
         // Node specific initialization
@@ -682,7 +682,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         numOutput ++;
                     }
                     else {
-                        log.error("Unexpected card type - "+cardType[i]);
+                        log.error("Unexpected Tab type - "+cardType[i]);
                     }
                 }
                 // consistency check

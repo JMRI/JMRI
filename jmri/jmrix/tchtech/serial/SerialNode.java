@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Tim Hatch for TCH Technology nodes
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialNode {
 
@@ -224,7 +224,7 @@ public class SerialNode {
     		if (cardTypeLocation[i]==INPUT_CARD) result++;
 
     	// check consistency
-    	if (nodeType==MICRO && result!=2)
+    	if (nodeType==MICRO && result!=1)
     		warn("NIC node with "+result+" input cards");
     	if (nodeType==SNIC && result>=MAXCARDLOCATIONBYTES)
     		warn("NIC node with "+result+" input cards");
