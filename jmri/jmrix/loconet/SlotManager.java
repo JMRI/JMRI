@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -75,7 +75,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats>7) log.error("Too many repeats!");
         if (packet.length<=1) log.error("Invalid DCC packet length: "+packet.length);
-        if (packet.length>=6) log.error("Only 5-byte packets accepted: "+packet.length);
+        if (packet.length>6) log.error("Only 6-byte packets accepted: "+packet.length);
 
         LocoNetMessage m = new LocoNetMessage(11);
         m.setElement(0,0xED);
