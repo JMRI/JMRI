@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsTrackingFrame.shtml,v 1.1 2008-05-19 04:53:24 jacobsen Exp $ -->
+<!-- $Id: RpsTrackingFrame.shtml,v 1.2 2008-05-27 04:18:41 jacobsen Exp $ -->
 <title>JMRI: RPS Tracking Frame</title>
 
 <!-- Style -->
@@ -28,6 +28,27 @@
 JMRI: RPS Tracking Frame
 </h2>
 
+This frame displays a map of there RPS measurements are located.
+As each position reading comes in, a line is drawn to the new position
+from the last position.
+<P>
+In the top part of the window are some simple controls.
+<p>
+Normally, measurements flagged as in error are just skipped. They often carry
+very large position values, and will result in lines running off the panel.
+If you do want to see them, check the "show errors" checkbox.
+
+<p>
+The four text boxes and "set" button let you set the coordinate mapping
+for the window.  The top two set the RPS position that corresponds to the upper-right
+corner of the display frame, while the lower two set the RPS position that corresponds to
+the lower left corner.  The lower-left corner is often set to 0,0, and the upper left
+set to large enough values to show your entire layout, but you don't have to do it like that.
+
+<p>
+If you resize the window, the display is erased and starts over.
+
+<p>
 This is the jmri.jmrix.rps.trackingpanel.RpsTrackingFrame help page
 
 
