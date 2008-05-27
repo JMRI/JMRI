@@ -8,8 +8,8 @@ import jmri.jmrix.rps.*;
  *
  * Fram to show a 2D representation of the RPS Measurements
  * 
- * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.2 $
+ * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
+ * @version   $Revision: 1.3 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
         implements MeasurementListener {

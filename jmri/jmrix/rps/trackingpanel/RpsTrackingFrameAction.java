@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  *       			RpsTrackingFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class RpsTrackingFrameAction 			extends AbstractAction {
 
@@ -31,27 +31,32 @@ public class RpsTrackingFrameAction 			extends AbstractAction {
 
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
         
-        // add button for handling errors
+        // add controls; first, button for handling errors
         JPanel controls = new JPanel();
         controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
-        controls.add(new JLabel("Show error points: "));
-        showButton = new JCheckBox();
+        showButton = new JCheckBox("Show error points");
         showButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent event) {
                                 showButtonChanged();
                         }
                 });
         controls.add(showButton);
-        controls.add(new JSeparator());
-        f.getContentPane().add(controls);
-           
+
+        // then alignment control
         panel = new RpsTrackingPanel();
+        controls.add(new RpsTrackingControlPane(panel));
+        controls.add(new JSeparator());
+
         panel.setSize(440,240);
+        panel.setPreferredSize(new Dimension(440,240));
         panel.setOrigin(-20.,-20.);
         panel.setCoordMax(420.,220.);
-        f.getContentPane().add(panel);
-        
-        f.setSize(400,600);
+
+        // combine
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controls, panel);
+        f.getContentPane().add(split);
+ 
+        f.pack();        
         f.setVisible(true);
 	}
 	
