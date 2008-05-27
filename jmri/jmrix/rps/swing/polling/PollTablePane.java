@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -80,6 +80,15 @@ public class PollTablePane extends javax.swing.JPanel {
                     checkPolling();
             }
         });
+        bscMode = new JCheckBox(rb.getString("LabelBscMode"));
+        bscMode.setSelected(Engine.instance().getBscPollMode());
+        p.add(bscMode);
+        bscMode.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event) {
+                    modifiedFlag.setModifiedFlag(true);
+                    checkMode();
+            }
+        });
         p.add(Box.createHorizontalGlue());
         p.add(new JLabel(rb.getString("LabelDelay")));
         delay = new JTextField(5);
@@ -106,6 +115,7 @@ public class PollTablePane extends javax.swing.JPanel {
     
     JTextField delay;
     JCheckBox polling;
+    JCheckBox bscMode;
     
     /**
      * Save the default value file
@@ -127,6 +137,13 @@ public class PollTablePane extends javax.swing.JPanel {
      */
     void checkPolling() {
         Engine.instance().setPolling(polling.isSelected());
+    }
+    
+    /**
+     * Change the polling mode
+     */
+    void checkMode() {
+        Engine.instance().setBscPollMode(bscMode.isSelected());
     }
     
     /**

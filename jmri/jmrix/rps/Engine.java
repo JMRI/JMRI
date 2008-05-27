@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 
@@ -295,6 +295,9 @@ public class Engine implements ReadingListener {
     
     int pollIndex = -1; // left at last one done
     boolean bscPoll = false;
+    
+    public void setBscPollMode(boolean bsc) { bscPoll = bsc; }
+    public boolean getBscPollMode() { return bscPoll; }
     
     void startpoll() {
         log.debug("start poll");
