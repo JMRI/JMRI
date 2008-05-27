@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PollTableFrame.shtml,v 1.2 2008-05-19 17:30:03 jacobsen Exp $ -->
+<!-- $Id: PollTableFrame.shtml,v 1.3 2008-05-27 06:04:42 jacobsen Exp $ -->
 <title>JMRI: RPS Polling Control</title>
 
 <!-- Style -->
@@ -47,6 +47,13 @@ system to track its position, check the box in the "Poll" column.
 <p>
 To control whether the system as a whole is polling, check or uncheck
 the "Poll" box in the bottom section of the window.
+
+<p>
+The "BSC" check box controls what poll message is set through your 
+DCC system.  When checked, it sends a "Binary State Command"; when 
+unchecked, it uses F2.  This option will be removed with 
+later versions of the m-RPS hardware.
+
 <p>
 This is the jmri.jmrix.rps.swing.polling.PollTableFrame help page
 
