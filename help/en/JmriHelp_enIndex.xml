@@ -32,6 +32,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
       <indexitem text="PM4" target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
       <indexitem text="PR2" target="html.hardware.loconet.PR2"/>
+      <indexitem text="PR3" target="html.hardware.loconet.PR3"/>
       <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
       <indexitem text="Slot Monitor" target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
       <indexitem text="Sound">

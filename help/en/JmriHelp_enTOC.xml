@@ -6,25 +6,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
 
 <toc version="1.0"> 
 
-   <tocitem text="Hardware Support" target="html.hardware.index">
-      <tocitem text="Acela" target="html.hardware.acela.index"/>
-      <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
-      <tocitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
-      <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
-      <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
-      <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>
-      <tocitem text="NCE" target="html.hardware.nce.NCE"/>
-      <tocitem text="OakTree Systems" target="html.hardware.oaktree.OakTree"/>
-      <tocitem text="Powerline (X10)" target="html.hardware.powerline.index"/>
-      <tocitem text="RPS" target="html.hardware.rps.index"/>
-      <tocitem text="SECSI (TrakTronix)" target="html.hardware.secsi.index"/>
-      <tocitem text="SPROG" target="html.hardware.sprog.SPROG"/>
-      <tocitem text="SRCP" target="html.hardware.qsi.index"/>
-      <tocitem text="TCH Technology" target="html.hardware.tchtech.index"/>
-      <tocitem text="TMCC (Lionel)" target="html.hardware.tmcc.index"/>
-      <tocitem text="XPressNet (Lenz)" target="html.hardware.XPressNet.index"/>
-      <tocitem text="Zimo" target="html.hardware.zimo.Zimo"/>
-   </tocitem>
    <tocitem text="JMRI Help Main Page" target="index"/>
    <tocitem text="Acknowledgements" target="Acknowledgements"/>
    <tocitem text="DecoderPro">
@@ -71,6 +52,25 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Getting Started" target="html.apps.DecoderPro.index"/>
       </tocitem>
       <tocitem text="Error Messages" target="html.tools.programmer.messages"/>
+   </tocitem>
+   <tocitem text="Hardware Support" target="html.hardware.index">
+      <tocitem text="Acela" target="html.hardware.acela.index"/>
+      <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
+      <tocitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
+      <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
+      <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
+      <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>
+      <tocitem text="NCE" target="html.hardware.nce.NCE"/>
+      <tocitem text="OakTree Systems" target="html.hardware.oaktree.OakTree"/>
+      <tocitem text="Powerline (X10)" target="html.hardware.powerline.index"/>
+      <tocitem text="RPS" target="html.hardware.rps.index"/>
+      <tocitem text="SECSI (TrakTronix)" target="html.hardware.secsi.index"/>
+      <tocitem text="SPROG" target="html.hardware.sprog.SPROG"/>
+      <tocitem text="SRCP" target="html.hardware.qsi.index"/>
+      <tocitem text="TCH Technology" target="html.hardware.tchtech.index"/>
+      <tocitem text="TMCC (Lionel)" target="html.hardware.tmcc.index"/>
+      <tocitem text="XPressNet (Lenz)" target="html.hardware.XPressNet.index"/>
+      <tocitem text="Zimo" target="html.hardware.zimo.Zimo"/>
    </tocitem>
    <tocitem text="Tools" target="html.tools.index">
       <tocitem text="Consist Tool" target="html.tools.consisttool.ConsistTool"/>

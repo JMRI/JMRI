@@ -323,6 +323,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_SoundFX_Top" url="DecoderProManual/Comp_SoundFX.shtml#Top" />
 	<mapID target="html.apps.DecoderPro.LocoFile" url="html/apps/DecoderPro/LocoFile.shtml" />
 	<mapID target="html.apps.PanelPro.FAQ_store" url="html/apps/PanelPro/FAQ.shtml#store" />
+	<mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml" />
 	<mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml" />
 	<mapID target="html.hardware.loconet.LbServer" url="html/hardware/loconet/LbServer.shtml" />
@@ -447,7 +448,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.LocoNetClasses_startup" url="html/hardware/loconet/LocoNetClasses.shtml#startup" />
 	<mapID target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame" url="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml" />
 	<mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V" />
-	<mapID target="html.hardware.SRCP.index" url="html/hardware/SRCP/index.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c" url="DecoderProManual/Comp_PrintData_c.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_addLight" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#addLight" />
 	<mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml" />
@@ -482,6 +482,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.USBtoSerial_LI100" url="html/hardware/USBtoSerial.shtml#LI100" />
 	<mapID target="DecoderProManual.Comp_Motor" url="DecoderProManual/Comp_Motor.shtml" />
 	<mapID target="package.jmri.jmrix.jinput.treemodel.TreeFrame" url="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml" />
+	<mapID target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select" url="package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml" />
 	<mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml" />
 	<mapID target="html.tools.Memories" url="html/tools/Memories.shtml" />
 	<mapID target="html.doc.Technical.StartUpScripts_linux" url="html/doc/Technical/StartUpScripts.shtml#linux" />
