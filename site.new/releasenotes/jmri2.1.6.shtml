@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.6.shtml,v 1.5 2008-05-26 22:57:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.6.shtml,v 1.6 2008-05-28 05:16:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -48,6 +48,10 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
+<li>Support for the new 
+    <a href="../help/en/html/hardware/loconet/PR3.shtml">Digitrax PR3</a>.
+<li>Support for connecting to 
+    <a href="../help/en/html/hardware/SRCP/index.shtml">SRCP servers</a>.
 <!-- <li>Support for the X10 power adapters, -->
 <!-- <li>improved consisting support, -->
 <!-- <li>additional sounds and graphics for creating USS CTC panels, -->
@@ -154,6 +158,15 @@ in this version. It's still being developed, but basic power, throttle and turno
 <p>
 Paul Bender fixed a spurious warning message about a missing consist file.
 
+<p>
+The 
+<a href="../help/en/html/hardware/rps/index.shtml">m-RPS</a> support has received various bug fixes and a new tool.
+
+<p>
+You can now send 6-byte (including error check byte) DCC packets through a Digitrax interface.
+
+<p>
+New support for the <a href="../help/en/html/hardware/loconet/PR3.shtml">Digitrax PR3</a>.
 
 <!--#include virtual="/Footer" -->
 
