@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.17 2008-05-26 19:02:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.18 2008-05-28 04:30:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -87,9 +87,19 @@
 		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
 	    <dt>Digitrax</dt>
 	    <dd>
-	        <p class="dl">Configure: Digitrax command stations via 
-		<A HREF="loconet/Digitrax.shtml">LocoBuffer-USB, LocoBuffer-II, LocoBuffer or MS100 LocoNet interfaces</a>.</p>
-	        <p class="dl">Configuring the 
+	        <p class="dl"><A HREF="loconet/Digitrax.shtml">General information on connecting JMRI to a Digitrax LocoNet</a>
+	        <p class="dl">Configure: Connections to a LocoNet via
+	            <ul>
+	            <li><A HREF="loconet/PR3.shtml">Digitrax PR3 interface</a>
+	            <li><A HREF="loconet/LocoBufferUSB.shtml">RR-CirKits LocoBuffer-USB</a>
+	            <li>The older 
+	                <A HREF="loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+	                <A HREF="loconet/LocoBuffer.shtml">LocoBuffer</a> and
+	                <A HREF="loconet/MS100.shtml">MS100</a>
+	                interfaces
+	            </ul>
+		    </p>
+	        <p class="dl">Configure:
 		<A HREF="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
 		<A HREF="loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
