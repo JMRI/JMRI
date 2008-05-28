@@ -13,8 +13,12 @@ import javax.swing.ImageIcon;
 /**
  * Extend an ImageIcon to remember the name from which it was created
  * and provide rotation services.
- * @author Bob Jacobsen  Copyright 2002
- * @version $Revision: 1.6 $
+ *<p>
+ * We store both a "URL" for finding the file this was made from
+ * (so we can load this later), plus a shorter "name" for display.
+ *
+ * @author Bob Jacobsen  Copyright 2002, 2008
+ * @version $Revision: 1.7 $
  */
 
 public class NamedIcon extends ImageIcon {
