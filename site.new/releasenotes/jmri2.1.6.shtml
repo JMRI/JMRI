@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.6.shtml,v 1.6 2008-05-28 05:16:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.6.shtml,v 1.7 2008-05-28 22:23:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,6 +149,9 @@ The RPS receiver control and polling control now properly keep track of whether 
 
 <p>
 Giorgio Terdina updated the XnTcp adapter to allow manual selection of IP address
+
+<p>
+Fixed a problem where the power to a Digitrax PR2 could not be turned on after over-current.
 
 <p>
 We've included an
