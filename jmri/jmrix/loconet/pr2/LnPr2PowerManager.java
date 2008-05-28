@@ -25,7 +25,7 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
@@ -40,39 +40,41 @@ public class LnPr2PowerManager extends LnPowerManager {
         if (v==ON) {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
-            pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
-            checkOpsProg();
-
-            // set bit 1 in CV 128
-            pm.writeCV(128, 1, null);
-            power = ON;
-            firePropertyChange("Power", null, null);
-            // start making sure that the power is refreshed
-            if (timer==null) {
-                timer = new javax.swing.Timer(2*1000, new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            refresh();
-                        }
-                    });
-                timer.setInitialDelay(2*1000);
-                timer.setRepeats(true);     // in case we run by
-            }     
-            timer.start();
-            
+            if (activeAddress != null) {
+                pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+                checkOpsProg();
+    
+                // set bit 1 in CV 128
+                pm.writeCV(128, 1, null);
+                power = ON;
+                firePropertyChange("Power", null, null);
+                // start making sure that the power is refreshed
+                if (timer==null) {
+                    timer = new javax.swing.Timer(2*1000, new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent e) {
+                                refresh();
+                            }
+                        });
+                    timer.setInitialDelay(2*1000);
+                    timer.setRepeats(true);     // in case we run by
+                }     
+                timer.start();
+            }
         } else if (v==OFF) {
-            timer.stop();
+            if (timer!=null) timer.stop();
 
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
-            pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
-            checkOpsProg();
-
-            // reset bit 1 in CV 128
-            pm.writeCV(128, 0, null);
-            power = OFF;
-            firePropertyChange("Power", null, null);
+            if (activeAddress != null) {
+                pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+                checkOpsProg();
+    
+                // reset bit 1 in CV 128
+                pm.writeCV(128, 0, null);
+                power = OFF;
+            }
         }            
-
+        // notify of change
 		firePropertyChange("Power", null, null);
 	}
 
