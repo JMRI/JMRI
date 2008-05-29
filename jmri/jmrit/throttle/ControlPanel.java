@@ -47,7 +47,7 @@ import org.jdom.Attribute;
  * @author     glen   Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  *
- * @version    $Revision: 1.55 $
+ * @version    $Revision: 1.56 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -216,6 +216,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         forwardButton.setSelected(isForward);
         reverseButton.setSelected(!isForward);
     }
+    public boolean getIsForward() { return forwardButton.isSelected(); }
     
     /**
      *  Set the GUI to match the speed steps of the current address.
@@ -728,7 +729,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.55 $
+     * @version    $Revision: 1.56 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
