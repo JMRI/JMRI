@@ -47,7 +47,7 @@ import org.jdom.Attribute;
  * @author     glen   Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  *
- * @version    $Revision: 1.54 $
+ * @version    $Revision: 1.55 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -654,12 +654,81 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
     }
     
+    public void accelerate1() {
+        if (speedSlider.isEnabled()) {
+            if (speedSlider.getValue() != speedSlider.getMaximum()) {
+                speedSlider.setValue(speedSlider.getValue() + 1);
+            }
+        } else if(speedSpinner!=null && speedSpinner.isEnabled()) {
+            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
+               ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() ) {
+                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 1));
+            }
+        }
+    }
+    
+    public void accelerate10() {
+        if (speedSlider.isEnabled())
+            {
+                if (speedSlider.getValue() != speedSlider.getMaximum())
+                    {
+                        speedSlider.setValue(speedSlider.getValue() + 10);
+                    }
+            }
+        else if (speedSpinner!=null && speedSpinner.isEnabled())
+            {
+                if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
+                    ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
+                    {
+                        Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 10);
+                        if(speedvalue.intValue()<((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue())
+                            JSpinnerUtil.setValue(speedSpinner,speedvalue);
+                        else
+                            JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)));
+                    }
+            }
+    }
+    
+    public void decelerate1() {
+        if (speedSlider.isEnabled()) {
+            if (speedSlider.getValue() != speedSlider.getMinimum()) {
+                speedSlider.setValue(speedSlider.getValue() - 1);
+            }
+        } else if (speedSpinner!=null && speedSpinner.isEnabled()) {
+            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
+                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() ) {
+                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 1));
+            }
+        }
+    }
+    
+    public void decelerate10() {
+        if (speedSlider.isEnabled())
+            {
+                if (speedSlider.getValue() != speedSlider.getMinimum())
+                    {
+                        speedSlider.setValue(speedSlider.getValue() - 10);
+                    }
+            }
+        else if (speedSpinner!=null && speedSpinner.isEnabled())
+            {
+                if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
+                    ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
+                    {
+                        Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 10);
+                        if(speedvalue.intValue()>((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue())
+                            JSpinnerUtil.setValue(speedSpinner,speedvalue);
+                        else
+                            JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)));
+                    }
+            }
+    }
     
     /**
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.54 $
+     * @version    $Revision: 1.55 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -670,116 +739,37 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          */
         public void keyPressed(KeyEvent e)
         {
-            if ( (e.getKeyCode() == accelerateKey) | (e.getKeyCode() == accelerateKey1) )
-                {
-                    if (speedSlider.isEnabled())
-                        {
-                            if (speedSlider.getValue() != speedSlider.getMaximum())
-                                {
-                                    speedSlider.setValue(speedSlider.getValue() + 1);
-                                }
-                        }
-                    else if(speedSpinner!=null && speedSpinner.isEnabled())
-                        {
-                            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
-                                {
-                                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 1));
-                                }
-                        }
-                }
-            if ( e.getKeyCode() == accelerateKey2 )
-                {
-                    if (speedSlider.isEnabled())
-                        {
-                            if (speedSlider.getValue() != speedSlider.getMaximum())
-                                {
-                                    speedSlider.setValue(speedSlider.getValue() + 10);
-                                }
-                        }
-                    else if (speedSpinner!=null && speedSpinner.isEnabled())
-                        {
-                            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
-                                {
-                                    Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 10);
-                                    if(speedvalue.intValue()<((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue())
-                                        JSpinnerUtil.setValue(speedSpinner,speedvalue);
-                                    else
-                                        JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)));
-                                }
-                        }
-                }
-            else if ( (e.getKeyCode() == decelerateKey) | (e.getKeyCode() == decelerateKey1) )
-                {
-                    if (speedSlider.isEnabled())
-                        {
-                            if (speedSlider.getValue() != speedSlider.getMinimum())
-                                {
-                                    speedSlider.setValue(speedSlider.getValue() - 1);
-                                }
-                        }
-                    else if (speedSpinner!=null && speedSpinner.isEnabled())
-                        {
-                            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
-                                {
-                                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 1));
-                                }
-                        }
-                }
-            else if ( e.getKeyCode() == decelerateKey2 )
-                {
-                    if (speedSlider.isEnabled())
-                        {
-                            if (speedSlider.getValue() != speedSlider.getMinimum())
-                                {
-                                    speedSlider.setValue(speedSlider.getValue() - 10);
-                                }
-                        }
-                    else if (speedSpinner!=null && speedSpinner.isEnabled())
-                        {
-                            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
-                                {
-                                    Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 10);
-                                    if(speedvalue.intValue()>((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue())
-                                        JSpinnerUtil.setValue(speedSpinner,speedvalue);
-                                    else
-                                        JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)));
-                                }
-                        }
-                }
-            else if (e.getKeyCode() == forwardKey)
-                {
-                    if (forwardButton.isEnabled())
-                        {
-                            forwardButton.doClick();
-                        }
-                }
-            else if (e.getKeyCode() == reverseKey)
-                {
-                    if (reverseButton.isEnabled())
-                        {
-                            reverseButton.doClick();
-                        }
-                }
-            else if (e.getKeyCode() == stopKey)
-                {
-                    if (speedSlider.isEnabled() || 
-                        (speedSpinner!=null && speedSpinner.isEnabled()) )
-                        {
-                            stop();
-                        }
-                }
-            else if (e.getKeyCode() == idleKey)
-                {
-                    if (speedSlider.isEnabled() || 
-                        (speedSpinner!=null && speedSpinner.isEnabled()))
-                        {
-                            speedSlider.setValue(0);
-                        }
-                }
+            if ( (e.getKeyCode() == accelerateKey) | (e.getKeyCode() == accelerateKey1) ) {
+                accelerate1();
+            } else if ( e.getKeyCode() == accelerateKey2 ) {
+                accelerate10();
+            } else if ( (e.getKeyCode() == decelerateKey) | (e.getKeyCode() == decelerateKey1) ) {
+                decelerate1();
+            } else if ( e.getKeyCode() == decelerateKey2 ) {
+                decelerate10();
+            } else if (e.getKeyCode() == forwardKey) {
+                if (forwardButton.isEnabled())
+                    {
+                        forwardButton.doClick();
+                    }
+            } else if (e.getKeyCode() == reverseKey) {
+                if (reverseButton.isEnabled())
+                    {
+                        reverseButton.doClick();
+                    }
+            } else if (e.getKeyCode() == stopKey) {
+                if (speedSlider.isEnabled() || 
+                    (speedSpinner!=null && speedSpinner.isEnabled()) )
+                    {
+                        stop();
+                    }
+            } else if (e.getKeyCode() == idleKey) {
+                if (speedSlider.isEnabled() || 
+                    (speedSpinner!=null && speedSpinner.isEnabled()))
+                    {
+                        speedSlider.setValue(0);
+                    }
+            }
         }
     }
     
