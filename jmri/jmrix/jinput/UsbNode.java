@@ -16,7 +16,7 @@ import net.java.games.input.*;
  * Can be connected to a JMRI Sensor or Memory.
  * 
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class UsbNode extends DefaultMutableTreeNode {
     String name;
@@ -79,12 +79,13 @@ public class UsbNode extends DefaultMutableTreeNode {
     }
     public String getAttachedMemory() { return attachedMemory; }
     
+    public String getName() { return name; }
     /**
      * Get a specific node. This is used instead of a ctor
      * to ensure that node objects for a given 
      * USB object are unique.
      */
-    static UsbNode getNode(String name, Controller controller, Component component) {
+    static public UsbNode getNode(String name, Controller controller, Component component) {
         Object key = controller;
         if (component != null) key = component;
         
