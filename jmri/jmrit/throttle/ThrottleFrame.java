@@ -44,7 +44,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.36 $
+ * @version    $Revision: 1.37 $
  */
 /**
  * @author DSM
@@ -97,6 +97,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         else powerMgr.addPropertyChangeListener(this);
         initGUI();
     }
+    
+    public ControlPanel getControlPanel() { return controlPanel; }
+    public FunctionPanel getFunctionPanel() { return functionPanel; }
+    public AddressPanel getAddressPanel() { return addressPanel; }
     
     /**
      * Get notification that a throttle has been found as you requested.
