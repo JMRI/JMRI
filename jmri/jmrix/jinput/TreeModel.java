@@ -21,12 +21,16 @@ import net.java.games.input.*;
  *   <li>USB controller
  *   <li>Components (input, axis)
  * </ol>
+ *<P>
+ * jinput requires that there be only one of these 
+ * for a given USB system in a given JVM
+ * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class TreeModel extends DefaultTreeModel {
-    public TreeModel() {
+    private TreeModel() {
 
         super(new DefaultMutableTreeNode("Root"));
         dRoot = (DefaultMutableTreeNode)getRoot();  // this is used because we can't store the DMTN we just made during the super() call
