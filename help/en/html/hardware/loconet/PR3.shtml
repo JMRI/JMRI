@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.1 2008-05-28 04:30:18 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.2 2008-05-30 14:52:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,7 +38,8 @@ The Digitrax PR3 can be used as either a standalone
 decoder programmer much like the PR2, or as an 
 interface between your computer and a LocoNet, much
 like an MS100. It can only do one or the other 
-of these at a given time.
+of these at a given time. You select the mode
+of operation in the JMRI preferences during setup.
 
 <p>
 When the PR3 is acting as a programmer, it can be used
@@ -49,12 +50,14 @@ capability, run one locomotive to test it.
 
 <p>
 When acting as an interface, the PR3 allows JMRI full control of the 
-LocoNet and the devices attached to it.  
-
-<p>
-You select the default mode in the preferences, and the
-"<a href="../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">Select PR3 Mode</a>"
-tool in the LocoNet menu lets you change the mode during operation.
+LocoNet and the devices attached to it.
+That includes programming
+decoders on a programming track attached to a LocoNet command station,
+or on the main track.
+The PR3 can also serve
+as the "LocoNet terminator", which allows it to drive a 
+LocoNet without an attached command station, e.g. if you want
+to have a LocoNet dedicated to signaling.
 
 <p>
 For more information on the PR3 itself, please see the
@@ -67,13 +70,51 @@ in the
 
 <h2>Using the PR3 as a LocoNet Interface</h2>
 
+To use the PR3 as an interface, connect a LocoNet cable to the
+LocoNet connector on the PR3.  If you'll be using the PR3
+without a command station, you need to connec it to a power supply.
+(Although not required, it's a good idea to do this even if you're
+using the PR3 as an interface to a LocoNet with a command station).
+Finally, connect a USB cable between the PR3 and your computer.
+
+<h3>Recommended setup</h3>
+<p>
+To set up a JMRI application to use the PR3 as an interface:
+</p>
+
+<UL>
+<LI>
+Start the program.
+<li>
+Open the Preferences window from the Edit menu and configure the connection by:
+<UL>
+<LI>Select LocoNet PR3
+<LI>Select the serial port that's connected to the PR3
+<li>The speed will be fixed at 57,600 baud; don't try to change this 
+in your computer's settings
+<li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
+uses the status leads in the serial connection to determine when the PR3
+is ready to send and receive.  You should try that first, as it is the most
+reliable mode.  
+Only if you can't connect to your LocoNet with that setting,
+and only after checking that you're using the right port, should you select "None" for 
+this preference and try again.
+<li>In the "Command Station" option, select the type of command station you've
+got on your LocoNet, e.g. DCS100 (Chief), DCS050 (Zephyr), etc.  
+The "Stand-alone LocoNet" option should be selected if you don't have a command
+station connected.
+</UL>
+<li>Click Save at the bottom of the preferences window, quit the program and restart.
+</UL>
+
+
 <h2>Using the PR3 Programming Track</h2>
 
 <p>
 To use the PR3 programming track, 
 connect the PR3 to its power supply and to a 
 dedicated piece of track which you'll use as the programming track.
-Also, connect a USB cable between the PR3 and your computer.
+Finally, connect a USB cable between the PR3 and your computer.
 
 <h3>Recommended setup</h3>
 <p>
@@ -97,6 +138,7 @@ reliable mode.
 Only if you can't program decoders using that choice, 
 and only after checking that you're using the right port, should you select "None" for 
 this preference and try again.
+<li>In the "Command Station" option, select "PR3 Programmer".
 </UL>
 <li>Click Save at the bottom of the preferences window, quit the program and restart.
 </UL>
@@ -105,7 +147,7 @@ this preference and try again.
 
 <P> 
 You can use a JMRI throttle to control the locomotive connected
-to the PR3. Use the JMRI Power Control or the "Power" menu item 
+to the PR3 Programmer. Use the JMRI Power Control or the "Power" menu item 
 on the Throttle's menu bar to turn on track power, and then you 
 can operate the locomotive normally.  
 
