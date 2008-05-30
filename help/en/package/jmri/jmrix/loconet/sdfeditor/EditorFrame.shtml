@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.7 2008-03-31 03:17:52 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.8 2008-05-30 15:21:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -37,7 +37,7 @@ because the SDF information is stored in a Digitrax SPJ sound project file.
 After you edit the SDF information, you can save it to a file
 from the 
 <a href="../soundloader/EditorFrame.shtml">SPJ editor</a>,
-and the download it to a Digitrax sound decoder with a Digitrax PR2 and the 
+and the download it to a Digitrax sound decoder with a Digitrax PR2 or PR3 and the 
 <a href="../soundloader/LoaderFrame.shtml">JMRI sound downloader tool</a>
 or the Digitrax SoundLoader program.
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LoaderFrame.shtml,v 1.4 2008-03-31 03:17:52 jacobsen Exp $ -->
+<!-- $Id: LoaderFrame.shtml,v 1.5 2008-05-30 15:21:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -28,7 +28,10 @@ Digitrax sound decoders are loaded with "sound projects", stored in
 in .wav format, plus some additional control information.
 <p>
 The Decoder Sound Downloader tool lets you load a new .spj file into 
-a Digitrax sound decoder via a Digitrax PR2 interface.
+a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're 
+using a PR3, it needs to be put into "Programmer mode" before 
+trying to download, see the main
+<a href="../../../../../html/hardware/loconet/PR3.shtml">PR3 page</a>.
 
 <p>
 Digitrax provides sample sound project files at their Sound Depot 
@@ -79,14 +82,14 @@ while. The progress is described in the status line:
 </ol>
 <p>
 If you have more decoders to load with the same file, you can just
-connect them each in turn to the PR2 and click "Download", there's 
+connect them each in turn to the PR2/PR3 and click "Download", there's 
 no need to reload the file each time.
 
 <p>
 Also, you can use a JMRI 
 <a href="../../../../../html/tools/throttle/ThrottleMain.shtml">Throttle</a>
 to try out your new sounds via the PR2.  JMRI takes care of
-converting the PR2 from a programmer/loader into a low power command
+converting the PR2/PR3 from a programmer/loader into a low power command
 station to run the locomotive.
 
 
