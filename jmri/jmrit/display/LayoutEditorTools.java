@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutEditorTools 
@@ -258,6 +258,7 @@ public class LayoutEditorTools
 					setSignalsCancelPressed(null);
 				}
 			});
+			if (turnoutFromMenu) turnoutSignalsGetSaved(null);
 		}
         setSignalsFrame.pack();
         setSignalsFrame.setVisible(true);		
@@ -1660,11 +1661,12 @@ public class LayoutEditorTools
 					setSignalsAtBoundaryCancelPressed(null);
 				}
 			});
+			if (boundaryFromMenu) getSavedAnchorSignals(null);
 		}
         setSignalsAtBoundaryFrame.pack();
         setSignalsAtBoundaryFrame.setVisible(true);		
 		setSignalsAtBoundaryOpen = true;
-	}	
+	}
 	private void getSavedAnchorSignals (ActionEvent a) {
 		if ( !getBlockInformation() ) return;
 		eastBoundField.setText(boundary.getEastBoundSignal());	
@@ -2278,6 +2280,7 @@ public class LayoutEditorTools
 					setXoverSignalsCancelPressed(null);
 				}
 			});
+			if (xoverFromMenu) xoverTurnoutSignalsGetSaved(null);
 		}
         setSignalsAtXoverFrame.pack();
         setSignalsAtXoverFrame.setVisible(true);		
@@ -3340,6 +3343,7 @@ public class LayoutEditorTools
 					setXingSignalsCancelPressed(null);
 				}
 			});
+			if (xingFromMenu) xingSignalsGetSaved(null);
 		}
         setSignalsAtXingFrame.pack();
         setSignalsAtXingFrame.setVisible(true);		
