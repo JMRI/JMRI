@@ -4,11 +4,12 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 
 # set the name of the controller we're looking for
-desiredControllerName = "Griffin PowerMate" # "Apple Internal Keyboard / Trackpad"
+desiredControllerName = "Griffin PowerMate"
+# desiredControllerName = "Apple Internal Keyboard / Trackpad"
 componentWheel = "rx" # "2" # relative turn of wheel
 componentPress = "1"  # pressing the wheel
 componentForSwitchDirection = "."
@@ -41,12 +42,12 @@ class TreeListener(java.beans.PropertyChangeListener):
         #print component, value
         #
         if (component == componentWheel and value > 0.0) :
-            controlPanel.accelerate1()
+            controlPanel.accelerate10()
         if (component == componentWheel and value < 0.0) :
-            controlPanel.decelerate1()
+            controlPanel.decelerate10()
         if (component == componentPress and value > 0.0) :
             # alternate direction
-            controlPanel.setIsForward(not controlPanel.getIsForward())
+            controlPanel.setForwardDirection(not controlPanel.getIsForward())
     return
 
 model.addPropertyChangeListener(TreeListener())
