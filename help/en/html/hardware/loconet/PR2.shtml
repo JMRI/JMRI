@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR2.shtml,v 1.2 2008-03-26 18:49:30 jacobsen Exp $ -->
+<!-- $Id: PR2.shtml,v 1.3 2008-05-30 14:47:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,7 +32,7 @@ JMRI Hardware Guide: Connecting to a Digitrax PR2
 
 <a href="http://digitrax.com/prd_compint_pr2.php">
 <img src="images/PR2.jpg" align="right" width="200" height="179" alt="PR2 picture"/>
-</a><br/>
+</a><br>
 The PR2 is a standalone programmer that can be used
 to set CVs in all decoders that DecoderPro supports.
 It can also be used to download sound information into
