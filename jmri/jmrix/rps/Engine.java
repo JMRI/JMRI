@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
 
@@ -335,7 +335,7 @@ public class Engine implements ReadingListener {
             // poll using BSC instruction
             packet = jmri.NmraPacket.threeBytePacket(
                                 t.getAddress(), t.isLongAddress(), 
-                                (byte)0xC0, (byte)0xA5, (byte)0xFF);
+                                (byte)0xC0, (byte)0xA5, (byte)0xFE);
 
         } else {
             // poll using F2
