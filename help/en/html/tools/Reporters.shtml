@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Reporters.shtml,v 1.4 2008-05-24 18:45:49 jacobsen Exp $ -->
+<!-- $Id: Reporters.shtml,v 1.5 2008-05-31 05:03:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -46,7 +46,7 @@ on the layout, and makes that devices information available to the rest of JMRI.
 The initial implementation is for LocoNet (Digitrax) transponding,
 where the Reporter provides access to information
 from Digitrax 
-<a  href="http://www.digitrax.com/prd_statdec_bdl168.php">BDL168<a/> cards with 
+<a  href="http://www.digitrax.com/prd_statdec_bdl168.php">BDL168</a> cards with 
 <a href="http://www.digitrax.com/prd_statdec_rx4.php">RX4 transponding sensors</a>.
 When the BDL168 reports that a decoder has been seen
 in a transponding block or is not longer visible
