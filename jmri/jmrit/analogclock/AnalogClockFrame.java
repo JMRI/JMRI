@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.14 $
+ * @version                    $Revision: 1.15 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -40,15 +40,15 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         clock.addPropertyChangeListener(this);
         
         // init GUI
-        setSize(200,200);
+        setPreferredSize(new java.awt.Dimension(200,200));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         JPanel analogClockPanel = new clockPanel();
         analogClockPanel.setOpaque(true);
         getContentPane().add(analogClockPanel);
         
         JPanel buttonPanel = new JPanel();
-	// Need to put a Box Layout on the panel to ensure the run/stop button is centered
-	// Without it, the button does not center properly
+	    // Need to put a Box Layout on the panel to ensure the run/stop button is centered
+	    // Without it, the button does not center properly
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(b = new JButton("Pause"));
         if (!clock.getRun()) b.setText("Run");
@@ -56,7 +56,10 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         b.setOpaque(true);
         b.setVisible(true);
         getContentPane().add(buttonPanel);
-        update();
+        
+        // get ready to display
+        pack();
+        update();  // set proper time
         
         // request callback to update time
         clock.addMinuteChangeListener( new java.beans.PropertyChangeListener() {
