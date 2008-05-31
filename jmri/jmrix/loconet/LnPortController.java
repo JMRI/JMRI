@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -50,6 +50,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
                                     "DB150 (Empire Builder)",
                                     "Intellibox",
                                     "LocoBuffer (PS)"};
+    
+    // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
+    // in pr3/PR3Adapter
                                     
     /**
      * Set config info from the command station type name.
@@ -75,6 +78,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
      * @param name Command station type name
      */
     static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, String name) {
+
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
         jmri.jmrix.loconet.SlotManager.instance();
