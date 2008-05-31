@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.3 2008-04-02 16:16:43 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.4 2008-05-31 05:01:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,14 +23,17 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: Digitrax DCC
-      </h1>
+  <h1> 
+  JMRI Hardware Guide: Digitrax DCC
+  </h1>
 
-	<h2>Supported Command Stations</h2>
-	<p>DecoderPro works with your Digitrax command station to program
+	<h2>LocoNet Connections</h2>
+	
+	<p>JMRI, including DecoderPro and PanelPro,
+	works with your Digitrax command station to program
 	decoders.  To do this, it communicates with the command station
 	over the LocoNet using one of several types of LocoNet adapter.</p>
+	
 	<P>DecoderPro will work with all the following command stations:</p>
 	<ul>
 	  <li>Zephyr Starter Set</li>
@@ -41,30 +44,42 @@
 	  <li>DCS100 Command Station/Booster</li>
 	  <li>DCS200 Command Station/Booster</li>
 	  <li><a href="http://www.uhlenbrock.de/3/index.htm">Intellibox: The Uhlenbrock Central Unit</a></li>
+      <li>LocoBuffer (PS): LocoBuffer with built-in command station
     </ul>
     
     <P>To connect your computer to the LocoNet, and hence to the command
     station, you need one of the following adapters:</P>
+    <ul>
 	  <li><a href="LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
+	  <li><a href="PR3.shtml">PR3</a></li>
 	  <li><a href="LocoBufferII.shtml">LocoBuffer II</a></li>
 	  <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
 	  <li><a href="MS100.shtml">MS-100</a></li>
 	</ul>
+	
 	<P>Generally, any of these can be used with any type of computer
-	to communicate with any type of command station.  It is strongly
-	recommended, however, that you use a LocoBuffer-style device in preference 
-	to an MS100.  The MS100 does not provide reliable communications,
+	to communicate with any type of command station.  
+	Currently, the LocoBuffer-USB and PR3 are the recommended solutions.
+	The LocoBuffer II and original LocoBuffer are no longer being
+	actively produced; their only advantage now is that they use a
+	traditional serial port rather than USB.
+	The MS100 is not recommended; it sometimes fails to provide reliable communications,
 	and cannot be used with JMRI if you are using 
 	MacOS X or on most Windows Vista machines.
 	
-	<p>
-	DecoderPro can also use a 
-	<a href="PR2.shtml">Digitrax PR2</a> to program and test decoders.
+	<h2>PR2 and PR3 Programmers</h2>
+	JMRI can also use a 
+	<a href="PR2.shtml">Digitrax PR2</a> or
+	<a href="PR3.shtml">PR3</a>
+	to program and test decoders.
 	The PR2 is a stand-alone unit which does not connect to the 
 	rest of the layout, the command station, nor to a LocoNet.
 	For more information on using a PR2 with DecoderPro, please
 	see the
-	<a href="PR2.shtml">PR2 setup page</a>.
+	<a href="PR2.shtml">PR2 setup page</a>. The PR3 can either
+	serve as an interface (see above) or as a standalone programmer.
+	There is more information on the 
+	<a href="PR3.shtml">PR3 setup page</a>.
 	
 	<h2>Setup</h2>
 
