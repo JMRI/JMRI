@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -58,16 +58,18 @@ public class NceConsistRoster extends XmlFile {
      * @return The valid Roster object
      */
     public static synchronized NceConsistRoster instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) log.debug("ConsistRoster creating instance");
-            // create and load
-            _instance = new NceConsistRoster();
-            try {
-                _instance.readFile(defaultNceConsistRosterFilename());
-            } catch (Exception e) {
-                log.error("Exception during ConsistRoster reading: "+e);
-            }
-        }
+    	if (_instance == null) {
+    		if (log.isDebugEnabled()) log.debug("ConsistRoster creating instance");
+    		// create and load
+    		_instance = new NceConsistRoster();
+    		if(_instance.checkFile(defaultNceConsistRosterFilename())){
+    			try {
+    				_instance.readFile(defaultNceConsistRosterFilename());
+    			} catch (Exception e) {
+    				log.error("Exception during ConsistRoster reading: "+e);
+    			}
+    		}
+    	}
         if (log.isDebugEnabled()) log.debug("ConsistRoster returns instance "+_instance);
         return _instance;
     }
