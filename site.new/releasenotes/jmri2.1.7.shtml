@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.6.shtml,v 1.9 2008-05-31 17:48:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.1 2008-05-31 17:48:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
- JMRI: Release Notes for 2.1.6
+ JMRI: Release Notes for 2.1.7
  
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -28,14 +28,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.1.6 release
+      Release Notes for JMRI 2.1.7 release
       </h2>
 
-	<p>Date: May 31, 2008</p>
+	<p>Date: MMM DD, 2008</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.1.6 of JMRI/DecoderPro is available for download.
+	<p>Subject: Test version 2.1.7 of JMRI/DecoderPro is available for download.
 
-<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+<br><b>This is a draft release note only; the download links do not yet work</b>
 
 <h3>Notes:</h3>
 
@@ -48,10 +48,10 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<li>Support for the new 
-    <a href="../help/en/html/hardware/loconet/PR3.shtml">Digitrax PR3</a>.
-<li>Support for connecting to 
-    <a href="../help/en/html/hardware/SRCP/index.shtml">SRCP servers</a>.
+<!-- <li>Support for the new  -->
+<!--     <a href="../help/en/html/hardware/loconet/PR3.shtml">Digitrax PR3</a>. -->
+<!-- <li>Support for connecting to  -->
+<!--     <a href="../help/en/html/hardware/SRCP/index.shtml">SRCP servers</a>. -->
 <!-- <li>Support for the X10 power adapters, -->
 <!-- <li>improved consisting support, -->
 <!-- <li>additional sounds and graphics for creating USS CTC panels, -->
@@ -117,65 +117,19 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 <p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.6.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.7.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.7.dmg?download</a>
 
 <p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.6.exe?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.7.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.7.exe?download</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.6.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.1.7.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.1.7.tgz?download</a>
 
 
 
 <h3>Changes since test version 2.1.5:</h3>
 
-Fixed a nasty bug introduced in 2.1.5 where closing the editor window on a panel would close and delete the panel.
-
-<p>
-Matt Harris and Ken Cameron fixed a problem with the LCD clock on Linux.
-
-<p>
-Giorgio Terdina reformatted the main screens to add a little more space between the logo and status lines
-
-<p>
-The RPS receiver control and polling control now properly keep track of whether they've been modified and need to be written out
-
-<p>
-Giorgio Terdina updated the XnTcp adapter to allow manual selection of IP address
-
-<p>
-Fixed a problem where the power to a Digitrax PR2 could not be turned on after over-current.
-
-<p>
-We've included an
-<a href="../help/en/html/hardware/SRCP/index.shtml">SRCP connection</a>
-in this version. It's still being developed, but basic power, throttle and turnout operation is thought to be OK.
-
-<p>
-The way panel icons in the "preferences" folder are handled has been made much more robust.
-If you create a "resources" directory in your 
-<a href="http://jmri.sourceforge.net/apps/PanelPro/FAQ.html#location">JMRI preferences directory</a>,
-it will appear in the various icon selection panels as a separate set of selections
-under "files".
-The way these files are handled when you store and load panel files has been
-improved, so that you can move a panel file from one location to another and 
-have it still work.
-
-<p>
-Paul Bender fixed a spurious warning message about a missing consist file.
-
-<p>
-The 
-<a href="../help/en/html/hardware/rps/index.shtml">m-RPS</a> support has received various bug fixes and a new tool.
-
-<p>
-You can now send 6-byte (including error check byte) DCC packets through a Digitrax interface.
-
-<p>
-New support for the <a href="../help/en/html/hardware/loconet/PR3.shtml">Digitrax PR3</a>.
-
-<p>
-David Duchamp improved how signals are initialized in the Layout Editor
+Dan Boudreau has worked on the consisting tools.
 
 <!--#include virtual="/Footer" -->
 
