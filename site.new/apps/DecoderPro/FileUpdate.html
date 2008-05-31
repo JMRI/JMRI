@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FileUpdate.html,v 1.3 2008-02-18 20:01:04 jacobsen Exp $ -->
+<!-- $Id: FileUpdate.html,v 1.4 2008-05-31 13:52:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -104,9 +104,10 @@ or in the
 To use these xml files you need to download and install them.
 
 <P>
-<h3>On Windows Systems</h3>
+<h3>Windows</h3>
+To install a new file on a Windows computer:
 <UL>
-<LI>Go to the files menu where the decoder.XML file is located and 
+<LI>Go to the files menu where the decoder.xml file is located and 
   right click on the file.
  <P>
   (Don't double click or you will open the file rather than saving 
@@ -149,17 +150,46 @@ decoder
 
 </UL>
 
-<h3>MAC Classic</h3>
+<h3>MacOS X</h3>
+
+To install a new file on a computer running MacOS X:
 
 <ul>
-<LI>If you want to down load one of these "option and click" on it.
+<LI>To download a file in a Mac browser, "option-click" on it.
 
-<LI>Then copy the 
-file into
-the JMRI/xml/decoder folder. 
-<LI>Once the file is moved, rebuild the decoder 
-index through
-use of the "Recreate Decoder Index" found under the Debug menu. 
+<LI>Open a Finder window showing the preferences directory 
+choosing "Go to Folder..." from the "Go" menu in the Finder,
+entering "~/Library/Preferences/JMRI", then clicking "Go".
+
+<li>Make sure there's a "decoders" folder in the JMRI
+preferences directory.  If not, create it.
+
+<li>Move your new decoder file to that decoders folder.
+
+<LI>Once the file is moved, start DecoderPro and rebuild the decoder index
+using the "Recreate Decoder Index" item in the Debug menu. 
+</UL>
+
+
+<h3>Linux</h3>
+
+To install a new file on a computer running MacOS X:
+
+<ul>
+<LI>Download the file using your browser.
+
+<LI>You're going to move the file to within the JMRI preferences
+directory.  The preferences directory is usually ".jmri" in your
+home directory.  Note the leading "." in the name, which usually
+means it's not included in directory listings, etc.
+
+<li>Make sure there's a "decoders" folder in the JMRI
+preferences directory.  If not, create it.
+
+<li>Move your new decoder file to that decoders folder.
+
+<LI>Once the file is moved, start DecoderPro and rebuild the decoder index
+using the "Recreate Decoder Index" item in the Debug menu. 
 </UL>
 
 
