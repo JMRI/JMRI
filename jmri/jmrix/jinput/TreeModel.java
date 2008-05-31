@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -113,21 +113,25 @@ public class TreeModel extends DefaultTreeModel {
                     // Then we can get the component that this event relates to, and the new value.
     
                     while(queue.getNextEvent(event)) {
-                        StringBuffer buffer = new StringBuffer("Name [");
-                        buffer.append(controllers[i].getName());
-                        buffer.append("] Component [");
-                        // buffer.append(event.getNanos()).append(", ");
                         Component comp = event.getComponent();
-                        buffer.append(comp.getName()).append("] changed to ");
-                        float value = event.getValue(); 
-                        if(comp.isAnalog()) {
-                            buffer.append(value);
-                        } else {
-                            if(value==1.0f) {
-                                buffer.append("On");
+                        float value = event.getValue();
+                        
+                        if (log.isDebugEnabled()) {
+                            StringBuffer buffer = new StringBuffer("Name [");
+                            buffer.append(controllers[i].getName());
+                            buffer.append("] Component [");
+                            // buffer.append(event.getNanos()).append(", ");
+                            buffer.append(comp.getName()).append("] changed to ");
+                            if(comp.isAnalog()) {
+                                buffer.append(value);
                             } else {
-                                buffer.append("Off");
+                                if(value==1.0f) {
+                                    buffer.append("On");
+                                } else {
+                                    buffer.append("Off");
+                                }
                             }
+                            log.debug(new String(buffer));
                         }
                         
                         // ensure item exits
