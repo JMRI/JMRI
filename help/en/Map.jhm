@@ -448,6 +448,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.LocoNetClasses_startup" url="html/hardware/loconet/LocoNetClasses.shtml#startup" />
 	<mapID target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame" url="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml" />
 	<mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V" />
+	<mapID target="html.hardware.SRCP.index" url="html/hardware/SRCP/index.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c" url="DecoderProManual/Comp_PrintData_c.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_addLight" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#addLight" />
 	<mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml" />

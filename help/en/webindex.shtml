@@ -268,7 +268,7 @@
 </li>
       
 <li>
-<a href="">SRCP</a>
+<a href="html/hardware/SRCP/index.shtml">SRCP</a>
 <ul></ul>
 </li>
       
@@ -459,6 +459,11 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="html/hardware/loconet/PR3.shtml">PR3</a>
+<ul></ul>
+</li>
+   
 <li>Programmers<ul>
       
 <li>
@@ -621,7 +626,7 @@
 </li>
    
 <li>
-<a href="">SRCP</a>
+<a href="html/hardware/SRCP/index.shtml">SRCP</a>
 <ul></ul>
 </li>
    
