@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.14 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.15 2008-05-31 04:59:49 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
-<TITLE>JMRI: NCE</TITLE>
+<TITLE>JMRI Hardware Guide: NCE</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help NCE">
@@ -24,7 +24,7 @@
 <DIV CLASS="nomenu" ID="mBody">
 <DIV ID="mainContent">
 
-<H2>NCE</H2>
+<H1>JMRI Hardware Guide: NCE</H1>
 
 <P>JMRI supports three NCE layout connections, Power Pro (PowerHouse) via serial
 cable, Power Pro (PowerHouse) via network connection, and NCE USB adapter via serial
@@ -32,10 +32,10 @@ cable. They are shown in the preferences menu as NCE, NCE via network,
 and NCE USB respectively.</P>
 
 <a name="phpro">
-<H3>Power Pro</H3></A>
+<H2>Power Pro</H2>
 This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
 
-<H4>Setup</H4>
+<H3>Setup</H3>
 
 <OL>
 	<LI>To connect your computer to an NCE Power Pro or PowerHouse system, you
@@ -66,15 +66,15 @@ This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
 	<LI>Click "Save". You'll be asked if it's OK for the program to
 	quit, click "Yes".</LI>
 	<LI>Restart the program. You should be up and running.</LI>
-	<LI>If not see the <A HREF="#troubleShoot">
-	trouble shooting </A> section below.</LI>
+	<LI>If not see the 
+	<A HREF="#troubleShoot">trouble shooting</A> section below.</LI>
 </OL>
 <P>For reliable operation, we recommend that you disable "AIU
 broadcast", and set the baud rate to 9,600. These are the normal
 defaults for NCE. Both of these parameters can be found in your NCE
 user's manual under "Setup Command Station".</P>
 
-<H4>EPROM Versions</H4>
+<H3>EPROM Versions</H3>
 
 <P>The NCE Power Pro command station uses an "EPROM" to contain
 it's software. NCE has made several of these available to it's users.
@@ -105,7 +105,7 @@ feedback, contact NCE for an EPROM upgrade.</P>
 
 <a name="AIU">
 <a name="names">
-<H4>AIU (Input) Numbering</H4></A></A>
+<H3>AIU (Input) Numbering</H3></A></A>
 The NCE "AIU" device allows the NCE command station to check the status
 of inputs from the layout. These are referenced in JMRI as "Sensors"
 with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
@@ -117,14 +117,14 @@ BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
 <P>Sensor ID = 785</P>
 
-<h4>Turnout Numbering</h4>
+<h3>Turnout Numbering</h3>
 JMRI can access accessory decoders as NCE Turnouts and Lights.
 They are addressed using the same numbers that you would use on your
 NCE throttle to throw the accessory decoder.  For example, if you
 can access turnout 21 from your throttle, JMRI would address it as 
 "NT21" or just "21".
 
-<H4>Limitations</H4>
+<H3>Limitations</H3>
 
 <P>A very small number of early NCE Power Pro (PowerHouse) command stations
 have an "optional analog control circuit". (If you don't recall special
@@ -136,16 +136,15 @@ cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
 <a name="powercab">
-<H3>NCE USB Adapter</H3></A>
+<H2>NCE USB Adapter</H2>
 
 <IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALT="NCE USB" >
-
 
 <P>The NCE USB Adapter can be connected to three NCE systems,
 Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</P>
 
-<H4>Setup</H4>
+<H3>Setup</H3>
 
 <OL>
 	<LI>To connect your computer using a NCE USB adaptor, you will
@@ -179,7 +178,7 @@ system from the preference menu for reliable operation.</P>
 	trouble shooting </A> section below.</LI>
 </OL>
 
-<H4>NCE USB Adapter Limitations</H4>
+<H3>NCE USB Adapter Limitations</H3>
 
 <P>The NCE USB Adapter doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
@@ -215,7 +214,7 @@ limitation when connected to a Power Pro.</P>
 </DL>
 
 <a name="troubleShoot">
-<H3>Trouble Shooting</H3></A>
+<H2>Trouble Shooting</H2></A>
 
 When the connection to your NCE is okay and your NCE system is powered
 up you should see after starting PanelPro the following control panel:
@@ -239,7 +238,7 @@ list of potential issues that might help you resolve your problem.</P>
 	NCE Command Station are set to the same rates.</LI>
 </OL>
 
-<H4>Console Window</H4>
+<H3>Console Window</H3>
 
 When JMRI starts, it opens a console window that provides program
 status. Below is an image of the console window when the program is
@@ -290,8 +289,8 @@ out.</P>
 <P><A HREF="http://www.ncedcc.com/">NCE Systems and
 Cabs Catalog</A></P>
 
-<!--#include virtual="/Footer" --></DIV>
-</DIV>
+<!--#include virtual="/Footer" -->
+
 </BODY>
 </HTML>
 

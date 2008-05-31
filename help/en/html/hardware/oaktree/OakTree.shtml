@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OakTree.shtml,v 1.1 2008-01-13 04:50:37 jacobsen Exp $ -->
+<!-- $Id: OakTree.shtml,v 1.2 2008-05-31 05:02:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,9 +26,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
+      <H1> 
       JMRI Hardware Guide: Oak Tree Systems Railroad Control Interface (RCI)
-      </H2>
+      </H1>
       
 	<H3>Supported Hardware</H3>
 
