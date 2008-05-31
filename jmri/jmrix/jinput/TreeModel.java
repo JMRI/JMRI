@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -149,6 +149,10 @@ public class TreeModel extends DefaultTreeModel {
         }
     }
     
+    /**
+     * Carry a single event to the Swing thread
+     * for processing
+     */
     class Report implements Runnable {
         Controller controller;
         Component component;
