@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.70 $)
+distribution.  ($Revision: 1.71 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -152,8 +152,12 @@ change that (temporarily) for production versions
 
 
 ( ) Upload the MacOS X and Linux files
-    (SourceForge has new method)
-    
+
+    ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 -Duser.name=jacobsen release2
+
+    (The user.name only needs to be provided if your SourceForge.net ID is different than your 
+     current login ID)
+     
     Finder: Connect to Server
     https://frs.sourceforge.net/j/ja/jacobsen/uploads
     
@@ -161,9 +165,10 @@ change that (temporarily) for production versions
     
     Then do finder copies...
     
-    (need to fix the release2 ant target)
-
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
+    Or:
+    echo put JMRI.1.2.3.dmg | sftp jacobsen@frs.sf.net:uploads
+    echo put JMRI.1.2.3.tgz | sftp jacobsen@frs.sf.net:uploads
+    
 
 ( ) Any time after release1 is complete, start building the Windows installer.
 	
@@ -185,33 +190,21 @@ change that (temporarily) for production versions
     Create and test installer as above.  Copy the .exe back
     to the Distributions directory
     	
-(The following step should be automated in the next release by including
-it in the JavaDoc step following)
-
-( ) Any time after release1 is complete, create and upload the XSLT pages. 
-    
-    cd Release-1-2-3/xml/XLST
-    ant xslt
-      (proceed only if no errors)
-    ant upload
-    cd ../../..
 
 ( ) Any time after release1 is complete, create and upload the JavaDocs
+    and XSLT'd decoder pages
+    
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 	
 ( ) When ready to upload the Windows version:
-    (SourceForge has new method)
-    (Failed recently, been doing this by hand, see note above)
-
-    (fix the following target)
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
+	
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 -Duser.name=jacobsen release4
 		
-( ) Format the email announcement; you'll cut and paste parts
-	to the release form.
+( ) Format the release note page, change date, etc
 
-( ) Login to SourceForge web using Firefox, not Safari (to use Quick Release)
+( ) Login to SourceForge web using Firefox
 
-	Go to the project home page, then admin page
+	Go to the project home page, login, then admin page
 	
 	Click on Edit/Release Files  & release each of the three files
 	in the order:
@@ -220,16 +213,26 @@ it in the JavaDoc step following)
 		MacOS X
 		Windows
 		
-	Be sure to update the top of the release note paragraph.
-	
-	The test release name convention is "JMRI 1.2.3 test version for Linux"
-	
-	Be sure to select "preserve preformatted text"
+	The name convention is "JMRI 2.1.6 test version for Linux"
+
+    The note says:
+
+The JMRI 2.1.6 test release is now available for download. 
+This is the specific version for Linux users. 
+For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.1.6.shtml
+
+    The change log says:
+    
+The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.1.6.shtml
+
+	Don't select "preserve preformatted text"
 	
 ( ) Wait until the downloads have propagated to the mirrors; check 
     by trying to download each file
     
-( ) Commit announcement file to the web site CVS directory
+( ) Ask JMRI-developers for a quick look _AND_ _WAIT_ _FOR_ _IT_!!
+
+( ) Commit release note files to the web site CVS directory
 
 ( ) Update the web site front page and downloads page
     		

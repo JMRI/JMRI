@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.29 $ -->
+<!-- Revision $Revision: 1.30 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -55,13 +55,6 @@
 	<echo message="**************************"/>
 
  </target>
-
- <target name="release2" depends=""
- 	description="part 2 of build a release; useage is ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2" >
-
-	<echo message="upload file MacOS X, Linux files"/>
-    <antcall target="x-rel-upload-mac-linux" />
-</target>
 
  <target name="x-rel-base-build" depends=""
  					description="checkout, test, create jar files">
@@ -279,8 +272,8 @@
 </target>
  
  <target name="x-rel-upload-mac-linux" depends=""
- 					description="part 3 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
-	<echo message="upload Mac, Linux files"/>
+ 					description="sftp uploads">
+
 	<echo message="JMRI.${number}.dmg, JMRI.${number}.tgz"/>
 
     <ftp server="upload.sourceforge.net"
@@ -291,21 +284,42 @@
     </ftp>
  </target>
  
+ <target name="release2" depends=""
+ 	description="part 2 of build a release; useage is ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2" >
+	<echo message="upload MacOS X file"/>
+    <scp sftp="true" 
+        keyfile="${user.home}/.ssh/id_dsa"
+        password="${password}"
+        todir="${user.name}@frs.sourceforge.net:uploads" >
+      <fileset dir="." includes="JMRI.${number}.dmg" />
+    </scp>
+	<echo message="upload Linux file"/>
+    <scp sftp="true" 
+        keyfile="${user.home}/.ssh/id_dsa"
+        password="${password}"
+        todir="${user.name}@frs.sourceforge.net:uploads" >
+      <fileset dir="." includes="JMRI.${number}.tgz" />
+    </scp>
+</target>
+
  <target name="release3" depends=""
  					description="part 3 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
  	<echo message="upload javadocs"/>
-    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" />
+<!--    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" /> -->
+ 	<echo message="upload XSLT decoder files"/>
+    <ant antfile="build.xml" dir="${release}/xml/XSLT" target="xslt" inheritAll="false"/>
+    <ant antfile="build.xml" dir="${release}/xml/XSLT" target="upload" inheritAll="false"/>
  </target>
 
  <target name="release4" depends=""
  					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
-	<echo message="upload file Windows .exe file"/>
-    <ftp server="upload.sourceforge.net"
-         userid="ftp" password="jake@physics.berkeley.edu"
-         action="put" passive="yes"
-         verbose="yes" remotedir="incoming" >
+	<echo message="upload Windows file"/>
+    <scp sftp="true" 
+        keyfile="${user.home}/.ssh/id_dsa"
+        password="${password}"
+        todir="${user.name}@frs.sourceforge.net:uploads" >
       <fileset dir="." includes="JMRI.${number}.exe" />
-    </ftp>
+    </scp>
  </target>
 
 </project>
