@@ -3,6 +3,10 @@
 package jmri.jmrix.loconet.pr3;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetMessage;
+
 import javax.comm.SerialPort;
 
 /**
@@ -10,7 +14,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -21,7 +25,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Always use flow control, not considered a user-setable option
+     * Always use flow control, not considered a user-settable option
      */
     protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -53,37 +57,88 @@ public class PR3Adapter extends LocoBufferAdapter {
      * functionality there, so the code is basically copied.
      */
     public void configure() {
-        // connect to a packetizing traffic controller
-        // that does echoing
-        jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
-        packets.connectPort(this);
 
-        // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        configureManagers();
-
-        // start operation
-        packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
+        if (commandStationName.startsWith("PR3")) {
+            // PR3 case
+            // connect to a packetizing traffic controller
+            // that does echoing
+            jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
+            packets.connectPort(this);
+    
+            // do the common manager config
+            configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            configureManagersPR2();
+    
+            // start operation
+            packets.startThreads();
+            jmri.jmrix.loconet.ActiveFlag.setActive();
+            
+            // set mode
+            LocoNetMessage msg = new LocoNetMessage( 6 ) ;
+            msg.setOpCode( 0xD3 );
+            msg.setElement( 1, 0x10 );
+            msg.setElement( 2, 1 );  // set PR2
+            msg.setElement( 3, 0 );
+            msg.setElement( 4, 0 );
+            LnTrafficController.instance().sendLocoNetMessage(msg);
+            
+        } else {
+            // MS100 modes
+            // connect to a packetizing traffic controller
+            LnPacketizer packets = new LnPacketizer();
+            packets.connectPort(this);
+    
+            // do the common manager config
+            configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            configureManagersMS100();
+    
+            // start operation
+            packets.startThreads();
+            jmri.jmrix.loconet.ActiveFlag.setActive();
+            
+            // set mode
+            LocoNetMessage msg = new LocoNetMessage( 6 ) ;
+            msg.setOpCode( 0xD3 );
+            msg.setElement( 1, 0x10 );
+            msg.setElement( 2, 0 );  // set MS100, no power
+            if (commandStationName.startsWith("Stand-alone"))
+                msg.setElement( 2, 3 );  // set MS100, with power
+            msg.setElement( 3, 0 );
+            msg.setElement( 4, 0 );
+            LnTrafficController.instance().sendLocoNetMessage(msg);
+        }
     }
 
    /**
-     * Configure the subset of LocoNet managers valid for the PR3.
-     * This overrides the method in LnPortController, which is more general.
+     * Configure the subset of LocoNet managers valid for the PR3 in PR2 mode.
+     * This is used instead of the method in LnPortController, which is more general.
      */
-    static public void configureManagers() {
-        //jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
+    static public void configureManagersPR2() {
+        
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
 
-        /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
+    }
 
-        /* jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager()); */
+   /**
+     * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
+     * This is used instead of the method in LnPortController, which is more general.
+     */
+    static public void configureManagersMS100() {
+        
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
-        /* jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager()); */
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
-        //jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
+        jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
 
-        /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
+        jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
+
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager());
+
+        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
+
+        jmri.InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl());
 
     }
 
@@ -103,20 +158,18 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
     protected int [] validSpeedValues = new int[]{57600};
 
+    // Option 1 does flow control, inherited from LocoBufferAdapter
+    
     /**
-     * Option 1 controls flow control option
+     * The PR3 can be used in numerous modes, so handle that
      */
-    public String option1Name() { return "LocoBuffer connection uses "; }
-    public String[] validOption1() { return validOption1; }
-    // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-
-    /**
-     * The PR3 is itself a command station, so fix that choice
-     * by providing just the one option
-     */
-    public String[] validOption2() { 
-        String[] retval = {"PR3"}; 
+    public String[] validOption2() {
+        String[] retval = new String[commandStationNames.length+2];
+        retval[0] = "PR3 standalone programmer";
+        for (int i=0; i<commandStationNames.length; i++) {
+            retval[i+1] = commandStationNames[i];
+        }
+        retval[retval.length-1] = "Stand-alone LocoNet";
         return retval;
     }
 
