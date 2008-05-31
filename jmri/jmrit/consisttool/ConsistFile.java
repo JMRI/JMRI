@@ -19,7 +19,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -41,18 +41,24 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          */
 	private void ConsistFromXML(Element consist){
                 org.jdom.Attribute type,cnumber,isCLong;
-                jmri.Consist newConsist;
+                jmri.Consist newConsist = null;
 
                 // Read the consist address from the file and create the 
                 // consisit in memory if it doesn't exist already.
                 cnumber=consist.getAttribute("consistNumber");
                 isCLong=consist.getAttribute("longAddress");
-                DccLocoAddress consistAddress;
+                DccLocoAddress consistAddress = null;
                 if(isCLong!=null) {
-                   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with longAddress set to" +isCLong.getValue());
-                   consistAddress=new DccLocoAddress(
-                                             Integer.parseInt(cnumber.getValue()),
-                                             isCLong.getValue().equals("yes"));
+                   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with longAddress set to " +isCLong.getValue());
+                   try {
+                	   int number = Integer.parseInt(cnumber.getValue());
+                	   consistAddress=new DccLocoAddress(number, isCLong.getValue().equals("yes"));
+                   } catch (NumberFormatException e) {
+                       if(log.isDebugEnabled())
+                           log.debug("Consist number not an integer");
+                	   return;
+                   }
+                   
                 } else {
                    if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with default long address setting.");
                    consistAddress=new DccLocoAddress(
