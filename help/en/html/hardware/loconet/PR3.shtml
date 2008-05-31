@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.3 2008-05-30 15:23:00 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.4 2008-05-31 21:35:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,9 +34,9 @@ JMRI Hardware Guide: Connecting to a Digitrax PR3
 <img src="http://digitrax.com/images/pr3.jpg" align="right" width="200" height="179" alt="PR3 picture"/>
 </a><br/>
 
-<em>Support for the Digitrax PR3 will available in 
+<em>Support for the Digitrax PR3 was first available in 
 <A href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI 2.1.6</a>,
-expected around June 1, 2008.</em><p>
+released May 31, 2008.</em><p>
 
 The Digitrax PR3 can be used as either a standalone
 decoder programmer much like the PR2, or as an 
