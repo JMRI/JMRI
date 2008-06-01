@@ -16,17 +16,36 @@ import javax.swing.ImageIcon;
  *<p>
  * We store both a "URL" for finding the file this was made from
  * (so we can load this later), plus a shorter "name" for display.
+ * <p>
+ * These can be persisted by storing their name and rotation
  *
+ * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class NamedIcon extends ImageIcon {
 
+    /**
+     * Create a NamedIcon that is a complete copy 
+     * of an existing NamedIcon
+     * @param pOld Object to copy
+     */
     public NamedIcon(NamedIcon pOld) {
         this(pOld.mURL, pOld.mName);
     }
-
+    
+    /**
+     * Create a named icon that includes an image 
+     * to be loaded from a URL.
+     * <p>
+     * The default access form is "file:", so a 
+     * bare pathname to an icon file will also work
+     * for the URL argument
+     *
+     * @param pUrl URL of image file to load
+     * @param pName Human-readable name for the icon
+     */
     public NamedIcon(String pUrl, String pName) {
         super(pUrl);
         mDefaultImage = getImage();
@@ -36,13 +55,32 @@ public class NamedIcon extends ImageIcon {
         mRotation = 0;
     }
 
+    /**
+     * Create a named icon that includes an image 
+     * to be loaded from a URL.
+     *
+     * @param pUrl String-form URL of image file to load
+     * @param pName Human-readable name for the icon
+     */
     public NamedIcon(URL pUrl, String pName) {
         this(pUrl.toString(), pName);
     }
 
+    /**
+     * Return the human-readable name of this icon
+     */
     public String getName() { return mName; }
 
+    /**
+     * Return the 0-3 number of 90-degree rotations needed to
+     * properly display this icon
+     */
     public int getRotation() { return mRotation; }
+    
+    /**
+     * Set the 0-3 number of 90-degree rotations needed to properly
+     * display this icon
+     */
     public void setRotation(int pRotation, Component pComponent) {
         if (pRotation>3) pRotation = 0;
         if (pRotation<0) pRotation = 3;
@@ -67,10 +105,11 @@ public class NamedIcon extends ImageIcon {
     /**
      * The following was based on a text-rotating applet from
      * David Risner, available at http://www.risner.org/java/rotate_text.html
-     * @param pImage
-     * @param pComponent
-     * @param pRotation
-     * @return new Image object containing the rotated input
+     * @param pImage Image to transform
+     * @param pComponent Component containing the image, needed to obtain
+     *                  a MediaTracker to process the image consistently with display
+     * @param pRotation 0-3 number of 90-degree rotations needed
+     * @return new Image object containing the rotated input image
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
 
