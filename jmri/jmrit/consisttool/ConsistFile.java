@@ -19,7 +19,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -40,7 +40,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          * @param consist a JDOM element containing a consist
          */
 	private void ConsistFromXML(Element consist){
-                org.jdom.Attribute type,cnumber,isCLong;
+                org.jdom.Attribute type,cnumber,isCLong,cID;
                 jmri.Consist newConsist = null;
 
                 // Read the consist address from the file and create the 
@@ -82,6 +82,13 @@ class ConsistFile extends jmri.jmrit.XmlFile {
                    newConsist.setConsistType(jmri.Consist.ADVANCED_CONSIST);
                 }
 
+		// Read the consist ID from the file;
+		cID=consist.getAttribute("id");
+		if(cID!=null) {
+			// use the value read from the file
+			newConsist.setConsistID(cID.getValue());
+		}
+
                 // read each child of locomotive in the consist from the file
                 // and restore it's information to memory.
                 java.util.Iterator childIterator=consist.getDescendants(new org.jdom.filter.ElementFilter("loco"));
@@ -94,12 +101,13 @@ class ConsistFile extends jmri.jmrit.XmlFile {
                         isLong=e.getAttribute("longAddress");
                         direction=e.getAttribute("locoDir");
                         position=e.getAttribute("locoName");
-                        log.debug("adding Loco "+number);
+                        if(log.isDebugEnabled())log.debug("adding Loco "+number);
                         // Use restore so we DO NOT cause send any commands
                         // to the command station as we recreate the consist.
                         DccLocoAddress address;
                         if(isLong!=null && direction !=null) {
                            // use the values from the file
+                          if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
                            address=new DccLocoAddress(
                                             Integer.parseInt(number.getValue()),
                                             isLong.getValue().equals("yes"));
@@ -108,6 +116,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
                         } else if(isLong==null && direction !=null) {
                            // use the direction from the file
                            // but set as long address
+                          if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
                            address=new DccLocoAddress(
                                             Integer.parseInt(number.getValue()),
                                             true);
@@ -154,7 +163,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
  	 */
 	private org.jdom.Element ConsistToXML(jmri.Consist consist){
               org.jdom.Element e = new org.jdom.Element("consist");
-              e.setAttribute("id", consist.getConsistAddress().toString());
+              e.setAttribute("id", consist.getConsistID());
               e.setAttribute("consistNumber",""+consist.getConsistAddress()
                                                     .getNumber());
               e.setAttribute("longAddress",consist.getConsistAddress()

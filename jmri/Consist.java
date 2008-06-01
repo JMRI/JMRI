@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003-2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public interface Consist {
 
@@ -132,4 +132,20 @@ public interface Consist {
          */
 	public void removeConsistListener(jmri.ConsistListener Listener);
 
+
+	/*
+	 * Set the text ID associated with the consist
+         * @param String is a string identifier for the consist
+         */
+	public void setConsistID(String ID);
+	
+	/*
+	 * Get the text ID associated with the consist
+         * @return String identifier for the consist
+         * 	   default value is the string Identifier for the 
+	 *	   consist address.
+         */
+	public String getConsistID();
+
 }
+

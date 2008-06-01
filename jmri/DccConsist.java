@@ -38,6 +38,8 @@ public class DccConsist implements Consist, ProgListener{
         protected int ConsistType = ADVANCED_CONSIST;
 
 	protected DccLocoAddress ConsistAddress = null;
+        
+	protected String ConsistID = null;
 
 	// Initialize a consist for the specific address.
         // In this implementation, we can safely assume the address is a 
@@ -49,6 +51,7 @@ public class DccConsist implements Consist, ProgListener{
 		ConsistDir = new Hashtable();
 		ConsistList = new ArrayList();
                 ConsistPosition = new Hashtable();
+	        ConsistID = ConsistAddress.toString();
 	}
 
 	// Initialize a consist for a specific DccLocoAddress.
@@ -58,6 +61,7 @@ public class DccConsist implements Consist, ProgListener{
 		ConsistDir = new Hashtable();
 		ConsistList = new ArrayList();
                 ConsistPosition = new Hashtable();
+	        ConsistID = ConsistAddress.toString();
 	}
 
 	// Clean Up local Storage.
@@ -289,6 +293,25 @@ public class DccConsist implements Consist, ProgListener{
 		if(listeners.contains(Listener))
 			listeners.removeElement(Listener);
 	}
+
+        // Get and set the 
+        /*
+         * Set the text ID associated with the consist
+         * @param String is a string identifier for the consist
+         */
+        public void setConsistID(String ID){
+ 		ConsistID=ID;
+        }
+
+        /*
+         * Get the text ID associated with the consist
+         * @return String identifier for the consist
+         *         default value is the string Identifier for the 
+         *         consist address.
+         */
+        public String getConsistID(){
+		return ConsistID;
+        }
 
 	/*
          * Notify all listener objects of a status change.
