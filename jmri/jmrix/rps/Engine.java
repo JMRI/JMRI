@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 
 
@@ -344,7 +344,7 @@ public class Engine implements ReadingListener {
                                 false, false, true, false, false);
         }
         if (jmri.InstanceManager.commandStationInstance() != null)
-            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
     }
     void setOff(int i) {
     if (!bscPoll) {
@@ -354,7 +354,7 @@ public class Engine implements ReadingListener {
                                     t.getAddress(), t.isLongAddress(),
                                     false, false, false, false, false);
             if (jmri.InstanceManager.commandStationInstance() != null)
-                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 3);
+                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
         }
     }
     
