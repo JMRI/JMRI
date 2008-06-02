@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.4 2008-03-31 03:17:52 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.5 2008-06-02 03:01:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,7 +32,8 @@ program is stored in a "Sound Definition" (SDF) format.
 <p>
 The "Digitrax SPJ Editor" window allows you to examine and change the
 contents of a sound project file.
-
+Once you've changed them, you can install them into your decoder with the
+<a href="LoaderFrame.shtml">sound downloader</a>.
 
 <p>
 Digitrax provides sample sound project files at their Sound Depot 
