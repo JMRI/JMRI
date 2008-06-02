@@ -6,6 +6,30 @@ package jmri;
 /**
  * Represent a Turnout on the layout.
  * <P>
+ * A Turnout has two states:
+ * <ul>
+ * <li>The "commandedState" records the state that's been commanded in the
+ *     program.  It might take some time, perhaps a long time, for that
+ *     to actually take effect.
+ * <li>The "knownState" is the program's best idea of the actual state on the
+ *     the layout.
+ * </ul>
+ * <P>
+ * There are a number of reasons that commandedState and knownState differ:
+ * <ul>
+ * <li>A change has been commanded, but it hasn't had time to happen yet
+ * <li>Something has gone wrong, and a commanded change isn't actually going to happen
+ * <li>Although the program hasn't commanded a change, something on the layout
+ *     has made the turnout change.  This could be a local electrical button,
+ *     a mechanical movement of the points, or something else.
+ * <li>For a bus-like system, e.g. LocoNet or XPressNet, some other device might
+ *     have sent a command to change the turnout.
+ * </ul>
+ * <P>
+ * Turnout feedback is involved in the connection between these two states;
+ * for more information see the
+ * <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TurnoutFeedback.shtml">feedback page</a>.
+ * <P>
  * The AbstractTurnout class contains a basic implementation of the state and messaging
  * code, and forms a useful start for a system-specific implementation.
  * Specific implementations in the jmrix package, e.g. for LocoNet and NCE, will
@@ -36,7 +60,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
