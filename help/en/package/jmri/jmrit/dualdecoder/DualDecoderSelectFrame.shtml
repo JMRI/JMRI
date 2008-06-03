@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: DualDecoderSelectFrame.shtml,v 1.1 2008-06-03 05:21:53 jacobsen Exp $ -->
+<title>JMRI: Multi-Decoder Control</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Multi-Decoder Control
+</h2>
+
+<a href="../../../../images/DualDecoder.jpg">
+<img src="../../../../images/DualDecoder.jpg" width="122" height="306" align="right" alt="Dual Decoder Window"/></a>
+
+Originally, DCC did not provide a convenient way to 
+program configuration values (CVs) when you have more than one decoder installed in
+a locomotive.  For example, if you have separate decoders
+to control the motor and provide sound, and they both
+use the same CV locations, programming one decoder would 
+change the settings on the other, usually in an undesired way.
+
+<p>
+There are various tricks that can be used with long and short addresses
+and programming on the main, but they're not entirely satisfactory.
+
+<p>
+Digitrax
+<a href="http://www.digitrax.com/v1/LOCK.htm">proposed a method</a>
+for dealing with this to the
+<a href="http://www.nmra.org/standards/DCC/WGpublic/0305051/0305051.html">DCC Working Group</a>.
+This was  
+<a href="http://www.nmra.org/standards/DCC/WGpublic/discussion_topics.html#Topic0305051">accepted by the NMRA</a> for inclusion in a 
+"<a href="http://www.nmra.org/standards/DCC/standards_rps/rp922.html#Descriptions%20of%20Configuration%20Variables%20for%20Multi-Function%20Decoders">Recommended Practice</a>",
+and has since been adopted by many manufacturers.
+
+<p>
+The method uses CV15 and CV16 to control writing and reading CV values.
+Before the decoders are installed in the locomotive, each one has a specific value
+programmed into CV16.  (The recommended values are 1 for the motor decoder,
+2 for a sound decoder, 3 for a function-only decoder, and 4-7 for other uses)
+When a decoder has a non-zero value in CV16, it will only respond to read and write
+operations if CV15 has a zero value, or has the value that the decoder has in its CV16.
+In effect, CV16 is a lock and CV15 is the key.
+
+<p>
+DecoderPro has a "Multi-Decoder Control" to make use of this feature easier. 
+You can open it from the "Programmers" selection in the "Tools" menu.
+This opens a window, which you can also see on the right of this page.
+
+<p>
+The top section of the window consists of eight radio buttons.
+Clicking the buttons numbered 1 to 6 will unlock the decoder
+with the corresponding number in it's lock CV (CV16).
+
+<p>
+
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
