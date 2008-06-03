@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * DualDecoderTool
  *
  * @author    Bob Jacobsen    Copyright (C) 2001
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class DualDecoderToolAction extends AbstractAction {
@@ -26,7 +26,7 @@ public class DualDecoderToolAction extends AbstractAction {
     }
 
     public DualDecoderToolAction() {
-        this("Multi-decoder control");
+        this("Multi-Decoder Control");
     }
 
     public void actionPerformed(ActionEvent e) {
