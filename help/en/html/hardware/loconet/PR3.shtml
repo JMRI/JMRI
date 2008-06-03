@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.4 2008-05-31 21:35:15 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.5 2008-06-03 22:42:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -50,7 +50,13 @@ When the PR3 is acting as a programmer, it can be used
 to set CVs in all decoders that DecoderPro supports.
 It can also be used to download sound information into
 Digitrax sound decoders and, within its limited current
-capability, run one locomotive to test it.
+capability, run one locomotive to test it. When used with 
+Digitrax SFX decoders, "neutral mode" allows you to vary the speed
+without the motor moving the deocder, so you can hear how the locomotive
+sound reacts to varying speeds.
+(Note that Digitrax only guarantees programming for Digitrax
+SFX decoders with properly installed loads, etc, but our testing
+has found that the PR3 will work with many common decoders)
 
 <p>
 When acting as an interface, the PR3 allows JMRI full control of the 
