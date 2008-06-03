@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DualDecoderSelectFrame.shtml,v 1.2 2008-06-03 05:33:16 jacobsen Exp $ -->
+<!-- $Id: DualDecoderSelectFrame.shtml,v 1.3 2008-06-03 22:17:21 jacobsen Exp $ -->
 <title>JMRI: Multi-Decoder Control</title>
 
 <!-- Style -->
@@ -53,9 +53,10 @@ and has since been adopted by many manufacturers.
 The method uses CV15 and CV16 to control writing and reading CV values.
 Before the decoders are installed in the locomotive, each one has a specific value
 programmed into CV16.  (The recommended values are 1 for the motor decoder,
-2 for a sound decoder, 3 for a function-only decoder, and 4-7 for other uses)
-When a decoder has a non-zero value in CV16, it will only respond to read and write
-operations if CV15 has a zero value, or has the value that the decoder has in its CV16.
+2 for a sound decoder, 3 for a function-only decoder, and 4-7 for other uses;
+decoders are supposed to ship with a value of 0 in both CV15 and CV16)
+A decoder will only do read and write operations if the values in CV15 and CV16
+are the same, with the exception that you can always write CV15.
 In effect, CV16 is a lock and CV15 is the key.
 
 <p>
@@ -68,7 +69,7 @@ This opens a window, which you can also see on the right of this page.
 
 <p>
 The top section of the window consists of eight radio buttons.
-Clicking the buttons numbered 1 to 6 will unlock the decoder
+Clicking the buttons numbered 0 to 6 will unlock the decoder
 with the corresponding number in it's lock CV (CV16). DecoderPro
 then reads back the value in CV16 to confirm that the decoder has successfully unlocked.
 
@@ -76,10 +77,6 @@ then reads back the value in CV16 to confirm that the decoder has successfully u
 Normally, one clicks the button for the decoder you want to program,
 and them moves over to the main DecoderPro window to read and write 
 values.
-
-<p>
-As a special case, clicking the 0 button writes 0 to CV15, which 
-unlocks all installed decoders.
 
 <p>
 The "Legacy" button writes a 7 to CV15, which is another special case.
