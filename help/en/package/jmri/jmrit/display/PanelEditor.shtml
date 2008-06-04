@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.5 2008-02-25 17:52:49 dan_boudreau Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.6 2008-06-04 21:00:14 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -34,10 +34,15 @@ to represent turnouts, signals, sensors, trackwork, etc.
 things are actually done on the computer screen, please see <A
 	HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
 Bronson's clinics page</A>.</P>
-<BR>
+
+
 <H3>Contents of the Panel Editor</H3>
 
-<P>Starting from the top:</P>
+<A HREF="../../../../images/paneleditor.gif">
+<IMG SRC="../../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
+WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0" align="right"></a>
+
+Starting from the top:</P>
 <UL>
 	<LI>Two text fields specifying where (in pixels) new components
 	will be inserted on the panel. You can generally ignore these, as once
@@ -60,17 +65,66 @@ Bronson's clinics page</A>.</P>
 	selected icon. This is a general mechanism: Any icon in an Change Icon
 	window can be replaced by selecting the desired new one and clicking on
 	the icon to be replaced.</LI>
+	
 	<LI>Two sections for adding left- and right-bound turnouts. These
 	actually work the same way, only with different icons to represent the
 	states of the turnouts. Enter the turnout number (e.g. 23) and click
 	"Add turnout:". If you'd prefer a different graphic for the closed and
 	thrown states, you can change their icons as described above.</LI>
+	
 	<LI>A section for adding a sensor. Type the sensor number (e.g.
 	74) in the field and click "Add sensor:".</LI>
-	<LI>A section for adding a signal head. You should define your
-	signal heads by using the signal head table before attempting to add
+	
+	<LI>A section for adding a 
+	<a href="../../../../html/tools/Signals.shtml">signal head</a> icon. 
+	You should define your
+	signal heads by using the 
+	<a href="../beantable/SignalTable.shtml">signal head table</a>
+	before attempting to add
 	them to your panel. Then type in the signal head number in the field
 	and click "Add signal head:".</LI>
+
+    <lI>A button for adding a 
+    <a href="../../../../html/tools/Memories.shtml">memory</a>.  Memories can contain various 
+    kinds of things, but are generaly used to hold text or
+    numbers that you want to display on a panel.
+    You can set the value of a memory with a 
+    <a href="../../../../html/tools/Logix.shtml">Logix</a>
+    or a 
+    <a href="../../../../html/tools/scripting/index.shtml">script</a>.
+    
+    <lI>A button for adding a 
+    <a href="../../../../html/tools/Reporters.shtml">reporter</a>.  
+    Reporters contain information from the layout
+    hardware such as train locations from
+    Digitrax Transponding or Lissy receivers.
+    You can also manipulate the value of a reporter with a 
+    <a href="../../../../html/tools/Logix.shtml">Logix</a>
+    or a 
+    <a href="../../../../html/tools/scripting/index.shtml">script</a>.
+    
+    <li>A button to add an 
+    <a href="../../../../html/hardware/rps/index.shtml">RPS reporter</a> icon. 
+    (This may only appear if you
+    have an RPS system attached and configured)
+    RPS is a system for measuring the positions of rolling stock on your
+    layout.  RPS Reporter icons move around on the panel to show
+    where the corresponding equipment is on the layout.
+    For more information, see the 
+    <a href="RpsIcon.shtml">RPS icon help page</a>.
+
+    <li>A button to add a 
+    <a href="MultiSensorIconFrame.shtml">mult-sensor icon</a>.
+    A multi-sensor icon displays the status of a number of sensors
+    in a single set of icons.  This can be useful, for example, to 
+    display the position of a rotary switch.
+    
+    <li>A button to add a 
+    <a href="../../../../html/tools/fastclock/index.shtml">fast clock</a>.
+    When clicked, a fast clock will appear in the default
+    location on the panel.  You can drag it around in the usual
+    way.
+
 </UL>
 
 <H3>Control Checkboxes</H3>
@@ -83,7 +137,6 @@ Bronson's clinics page</A>.</P>
 	type of icon, for example, you can disable a turnout so it doesn't
 	actually control anything.
 
-	<P></P>
 	<P>The popup menu may also change if the configuration of an item
 	is changed. For example, if you add feedback to a turnout, the popup
 	menu includes a new item choice called "Tristate". Tristate allows you
