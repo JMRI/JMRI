@@ -494,6 +494,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.apps.PanelPro.AdvIcons" url="html/apps/PanelPro/AdvIcons.shtml" />
 	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml" />
 	<mapID target="html.hardware.powerline.Names" url="html/hardware/powerline/Names.shtml" />
+	<mapID target="package.jmri.jmrit.display.RpsIcon" url="package/jmri/jmrit/display/RpsIcon.shtml" />
 	<mapID target="html.hardware.secsi.index" url="html/hardware/secsi/index.shtml" />
 	<mapID target="html.apps.DecoderPro.MoreInfo" url="html/apps/DecoderPro/MoreInfo.shtml" />
 	<mapID target="DecoderProManual.index_Advanced Programmer" url="DecoderProManual/index.shtml#Advanced Programmer" />
