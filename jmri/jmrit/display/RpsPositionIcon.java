@@ -20,7 +20,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -121,8 +121,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
                         dispose();
                     }
                 });
- //       }  // end creation of popup menu
 
+            // add help item
+            JMenuItem item = new JMenuItem("Help");
+            jmri.util.HelpUtil.addHelpToComponent(item, "package.jmri.jmrit.display.RpsIcon");
+            popup.add(item);
+            
         // update position
         notify.setPosition(getX(), getY());
         popup.show(e.getComponent(), e.getX(), e.getY());
