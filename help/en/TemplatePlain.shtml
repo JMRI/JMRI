@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id: TemplatePlain.shtml,v 1.5 2008-01-20 05:41:50 jacobsen Exp $ -->
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: TemplatePlain.shtml,v 1.6 2008-06-04 20:43:06 jacobsen Exp $ -->
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
@@ -21,12 +21,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-
-
-<h2> 
+<h1> 
 JMRI: Page Title???
-</h2>
+</h1>
 
 Content????
 
