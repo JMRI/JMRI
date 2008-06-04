@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: RpsIcon.shtml,v 1.1 2008-06-04 20:58:14 jacobsen Exp $ -->
+<title>JMRI: RPS Icon</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: RPS Icon
+</h1>
+
+RPS is a system for measuring the positions of rolling stock on your
+layout.  RPS Reporter icons move around on the panel to show
+where the corresponding equipment is on the layout.
+
+<h2>Popup Menu</h2>
+
+The popup menu for an RPS icon contains:
+<dl>
+<dt>RPS Position Readout
+<dd>This is just a title; selecting it doesn't do anything
+
+<dt>Rotate
+<dd>
+
+<dt>Set Origin
+<dd>
+
+<dt>Set Current Location
+<dd>
+
+<dt>Not Calibrated
+<dd>
+
+<dt>Disable
+<dd>
+
+<dt>Remove
+<dd>
+
+<dt>Help
+<dd>Shows this page
+
+</dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
