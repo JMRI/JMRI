@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag {
@@ -82,6 +82,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void initComponents() throws Exception {}
     
     /**
+     * Add a standard help menu, including window specific help item.
+     * @param ref JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
      *        e.g. there are no items in the help menu
      */
