@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.86 $
+ * @version $Revision: 1.87 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -111,7 +111,7 @@ public class PanelEditor extends JmriJFrame {
     JButton reporterAdd = new JButton(rb.getString("ButtonAddReporter"));
     JTextField nextReporter = new JTextField(5);
 
-    JButton rpsAdd = new JButton("Add RPS reporter:");
+    JButton rpsAdd = new JButton("Add RPS Reporter");
 
     JButton multiSensorAdd = new JButton(rb.getString("ButtonAddMultiSensor"));
 
