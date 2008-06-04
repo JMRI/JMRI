@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PanelPro.shtml,v 1.6 2008-04-06 06:47:39 jacobsen Exp $ -->
+<!-- $Id: PanelPro.shtml,v 1.7 2008-06-04 20:59:22 jacobsen Exp $ -->
 <title>JMRI: PanelPro, An Application For Making Control Panels</title>
 
 <!-- Style -->
@@ -128,7 +128,9 @@ please see
 You start the editor by selecting "New panel..." from the "Panel" menu
 in the PanelPro program.  You'll get a blank control panel, plus the
 editor window:<BR>
-<IMG SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" WIDTH="382" HEIGHT="320" HSPACE="0" VSPACE="0">
+<A HREF="../../../images/paneleditor.gif">
+<IMG SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
+WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0" align="right"></a>
 <P>
 From the top, this contains:
 <UL>
@@ -146,7 +148,9 @@ slide the label around after inserting it, but you currently can't edit the text
 <LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
 icon, click the "edit icon..." button to pop an
 icon editor panel.<BR>
-<IMG SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" WIDTH="295" HEIGHT="427" HSPACE="0" VSPACE="0"><BR>
+<A HREF="../../../images/iconeditor.gif">
+<IMG SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" 
+WIDTH="148" HEIGHT="214" HSPACE="0" VSPACE="0" align="right"></a><br>
 The current icon is shown at the top.
 To change it, use the tree in the bottom of the window to select a new one, then click on 
 the icon at the top of the icon editor panel
@@ -161,6 +165,11 @@ and thrown states, you can change their icons as described above.
 <LI>A section for adding a sensor.  
 Type the sensor number (e.g. 74) in the field and click "Add sensor:".
 </UL>
+
+There are also buttons to add more advanced objects, including a clock face,
+and checkboxes that control the operation of the panel.  
+More information about these is available on the 
+<a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor help page</a>.
 
 <P>
 After getting the panel the way you want, you can use the "Store panel..." 

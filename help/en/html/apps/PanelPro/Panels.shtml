@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Panels.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ -->
+<!-- $Id: Panels.shtml,v 1.4 2008-06-04 20:59:22 jacobsen Exp $ -->
 <title>JMRI: Creating Control Panels</title>
 
 <!-- Style -->
@@ -58,7 +58,9 @@ to represent turnouts, sensors (on some systems) and trackwork.
 You start the editor by selecting "New panel..." from the "Panel" menu
 in the JmriDemo program.  You'll get a blank control panel, plus the
 editor window:
-<A HREF="../../../images/paneleditor.gif"><IMG SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" ALIGN=RIGHT WIDTH="191" HEIGHT="160" HSPACE="0" VSPACE="0"></A>
+<A HREF="../../../images/paneleditor.gif">
+<IMG SRC="../../../images/paneleditor.gif" 
+ALT="Screen shot of panel editor" ALIGN=RIGHT WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0"></A>
 <P>
 <A NAME="editor">
 From the top, this contains:</a>
