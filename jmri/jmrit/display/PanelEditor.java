@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.87 $
+ * @version $Revision: 1.88 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -644,11 +644,12 @@ public class PanelEditor extends JmriJFrame {
     
     /**
      * Button pushed, add a background image. Note that a background image
-     * differs from a regular icon only in the level at which it's presented.
+     * differs from a regular icon only in the level at which it's presented,
+     * and that it can be selected as a file anywhere in the file system.
      */
     void addBackground() {
         if (inputFileChooser == null) {
-            inputFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources"+java.io.File.separator+"icons");
+            inputFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources");
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
             filt.addExtension("gif");
             filt.addExtension("jpg");
@@ -658,9 +659,28 @@ public class PanelEditor extends JmriJFrame {
         
         int retVal = inputFileChooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
-        NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
-                                       inputFileChooser.getSelectedFile().getPath());
+ 
+        String name = inputFileChooser.getSelectedFile().getPath();
+        String defaultPrefDir = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+java.io.File.separator;
+        String defaultProgDir = System.getProperty("user.dir")+java.io.File.separator;
+        // try to convert to portable path
+        int len = name.length();
+        // first, try relative to preferences directory, a "file:" name
+        if (name.startsWith(defaultPrefDir))
+            name = "file:"+name.substring(defaultPrefDir.length(),len);
+        
+        // next, try relative to program directory, a "resource:" name
+        if (name.startsWith(defaultProgDir))
+            name = name.substring(defaultProgDir.length(),len);
+            
+        if (log.isDebugEnabled()) {
+            log.debug("getPath: "+inputFileChooser.getSelectedFile().getPath());
+            log.debug("prgPath: "+defaultProgDir);
+            log.debug("prfPath: "+defaultPrefDir);
+            log.debug("   name: "+name);
+        }
+        
+        NamedIcon icon = jmri.jmrit.catalog.CatalogPane.getIconByName(name);
         PositionableLabel l = new PositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
