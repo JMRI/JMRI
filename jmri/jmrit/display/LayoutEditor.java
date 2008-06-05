@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -215,8 +215,9 @@ public class LayoutEditor extends JmriJFrame {
 	private int numLevelXings = 0;
 	private int numLayoutTurnouts = 0;
 	private int numLayoutTurntables = 0;
-	// Lists of items that facilitate tools
+	// Lists of items that facilitate tools and drawings
 	public ArrayList signalList = new ArrayList();  // Signal Head Icons
+	public ArrayList memoryLabelList = new ArrayList(); // Memory Label List
         
     // persistent instance variables - saved to disk with Save Panel
 	private int panelWidth = 0;
@@ -3061,6 +3062,7 @@ public class LayoutEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
+		memoryLabelList.add((Object)l);
 		setDirty(true);
         putLabel(l);
     }
@@ -3559,6 +3561,7 @@ public class LayoutEditor extends JmriJFrame {
 				drawTrackOvals(g2);
 				drawSelectionRect(g2);
 				drawTurntableRects(g2);
+				drawMemoryRects(g2);
 			}
         }
     }
@@ -4385,6 +4388,16 @@ public class LayoutEditor extends JmriJFrame {
 			g2.setColor(defaultTrackColor);
 			g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND));
 			g2.draw(new Rectangle2D.Double (selectionX, selectionY, selectionWidth, selectionHeight));
+		}
+	}
+
+	private void drawMemoryRects(Graphics2D g2) {
+		if (memoryLabelList.size()<=0) return;
+		g2.setColor(defaultTrackColor);
+		g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND));
+		for (int i = 0;i<memoryLabelList.size();i++) {
+			LayoutMemoryIcon l = (LayoutMemoryIcon) memoryLabelList.get(i);
+			g2.draw(new Rectangle2D.Double (l.getX(), l.getY(), l.getSize().width, l.getSize().height));
 		}
 	}
 	
