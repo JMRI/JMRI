@@ -16,7 +16,7 @@ import java.awt.event.*;
  * Panel to control the scaling of a RpsTrackingPane
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class RpsTrackingControlPane extends JPanel {
 
@@ -35,7 +35,7 @@ public class RpsTrackingControlPane extends JPanel {
         trYf = new JTextField(6);
         blXf = new JTextField(6);
         blYf = new JTextField(6);
-
+        
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Upper-right corner X, Y:"));
@@ -53,14 +53,14 @@ public class RpsTrackingControlPane extends JPanel {
         // set button
         JButton set = new JButton("Set");
         set.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event) {
-                update();
-            }
-        });
+                public void actionPerformed(ActionEvent event) {
+                    update();
+                }
+            });
         this.add(set);
         
     }
-
+    
     void set(double blX, double blY, double trX, double trY) {
         trXf.setText(""+trX);
         trYf.setText(""+trY);
