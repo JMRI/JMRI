@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -57,7 +57,8 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     double xmax, ymax;
     
     static final double MEASUREMENT_ACCURACY = 0.2; // in user units
-    static final Color regionColor = new Color(255, 128, 128);
+    static final Color regionFillColor = Color.BLUE.brighter();
+    static final Color regionOutlineColor = Color.GRAY.brighter();
     // static final Color measurementColor = new Color(0,0,0);
     int measurementColor = 0;
     
@@ -83,10 +84,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         g2.setTransform(newAT);
 
         // Draw the regions
-        g2.setPaint(regionColor);
         List l = Model.instance().getRegions();
         for (int i = 0; i<l.size(); i++) {
-            // g2.draw(((Region)l.get(i)).getPath()); // border (same color)
+            g2.setPaint(regionOutlineColor);
+            g2.draw(((Region)l.get(i)).getPath()); // border (same color)
+            g2.setPaint(regionFillColor);
             g2.fill(((Region)l.get(i)).getPath());
         }
 
