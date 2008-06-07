@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.9 2008-03-09 19:57:55 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.10 2008-06-07 03:45:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -21,8 +21,8 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Adding/Editing Signals
-</H2>
+<H1>Adding/Editing Signals
+</H1>
     
 <A href="../../../../images/SigAdd.gif"><IMG SRC="../../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
