@@ -12,7 +12,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the rps.Region class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RegionTest extends TestCase {
 
@@ -34,7 +34,7 @@ public class RegionTest extends TestCase {
 
 	}
         
-	public void testInside() {
+	public void testInside1() {
         // square
 	    Region r = new Region(new Point3d[] { 
 	        new Point3d(0.,0.,0.), 
@@ -51,7 +51,30 @@ public class RegionTest extends TestCase {
 	    Assert.assertTrue("outside",   !r.isInside(new Point3d( 0.5, 1.5,0.)));
 	    
 	}
-           
+    
+	public void testInside2() {
+        // C chape
+	    Region r = new Region(new Point3d[] { 
+	        new Point3d(0.,0.,0.), 
+	        new Point3d(3.,0.,0.), 
+	        new Point3d(3.,1.,0.), 
+	        new Point3d(1.,1.,0.), 
+	        new Point3d(1.,2.,0.), 
+	        new Point3d(2.,2.,0.), 
+	        new Point3d(2.,3.,0.),
+	        new Point3d(0.,3.,0.),
+	        new Point3d(0.,0.,0.)}
+	    );
+	    
+	    Assert.assertTrue("inside",     r.isInside(new Point3d(0.5,0.5,0.)));
+
+	    Assert.assertTrue("outside",   !r.isInside(new Point3d(-0.5, 0.5,0.)));
+	    Assert.assertTrue("outside",   !r.isInside(new Point3d( 0.5,-0.5,0.)));
+	    Assert.assertTrue("outside",   !r.isInside(new Point3d( 1.5, 1.5,0.)));
+	    Assert.assertTrue("outside",   !r.isInside(new Point3d( 3.0, 1.5,0.)));
+	    
+	}
+    
 	public void testEquals() {
         // square
 	    Region r1 = new Region(new Point3d[] { 
@@ -84,6 +107,7 @@ public class RegionTest extends TestCase {
 	    Assert.assertTrue("r1==r2",r1.equals(r2));
 	    Assert.assertTrue("r1!=r3",!r1.equals(r3));
 	    Assert.assertTrue("r1!=r4",!r1.equals(r4));
+	    Assert.assertTrue("r4==r4",r4.equals(r4));
 	    
 	}
     

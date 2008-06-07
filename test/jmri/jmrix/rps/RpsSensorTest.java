@@ -14,7 +14,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the RPS Sensor class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RpsSensorTest extends TestCase {
 
@@ -75,6 +75,19 @@ public class RpsSensorTest extends TestCase {
         m = new Measurement(loco2, -0.5, 0.5, 0.0, 0.133, 0, "source");
         s.notify(m);
         Assert.assertTrue("5: inactive",s.getKnownState()==Sensor.INACTIVE);
+    }
+    
+    public void testModel() {
+        // clear Model to create a new one
+        new Model(){ void reset() { _instance = null; }}.reset();
+        // create sensor
+        RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        // check for Region
+        Assert.assertTrue("1 region",Model.instance().getRegions().size()==1);
+        Assert.assertTrue("equal",
+            new Region("(0,0,0);(1,0,0);(1,1,0);(0,1,0)").equals(
+            Model.instance().getRegions().get(0))
+        );
     }
     
     // from here down is testing infrastructure
