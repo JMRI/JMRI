@@ -9,41 +9,88 @@ import junit.framework.TestSuite;
 
 import javax.swing.*;
 
+import jmri.util.JmriJFrame;
+
+import jmri.jmrix.rps.*;
+
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RpsTrackingPanelTest extends TestCase {
 
-	public void testShow() {
-        JFrame f = new JFrame("RPS Tracking");
+    public void testShow() {
+        JmriJFrame f = new JmriJFrame("Test Tracking Panel");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
         RpsTrackingPanel p = new RpsTrackingPanel();
         p.setSize(400,400);
-        p.setOrigin(0.,0.);
-        p.setCoordMax(100.,100.);
+        p.setOrigin(0, 0);
+        p.setCoordMax(30.,30.);
         f.getContentPane().add(p);
         f.pack();
-        f.setVisible(true);
-  	}
         
-	// from here down is testing infrastructure
+        // add some regions
+        Region r = new Region("(4,4,0);(10,16,0);(18,10,0);(4,4,0)");
+        Model.instance().addRegion(r);
+        
+        r = new Region("(30,15,0);(25,15,0);(25,20,0);(30,15,0)");
+        Model.instance().addRegion(r);
 
-	public RpsTrackingPanelTest(String s) {
-            super(s);
-	}
+        r = new Region("(15,30,0);(15,25,0);(20,25,0);(15,30,0)");
+        Model.instance().addRegion(r);
 
-	// Main entry point
-	static public void main(String[] args) {
-            String[] testCaseName = {RpsTrackingPanelTest.class.getName()};
-            junit.swingui.TestRunner.main(testCaseName);
-	}
+        r = new Region("(25,25,0);(25,28,0);(30,30,1);(29,25,0);(25,25,0)");
+        Model.instance().addRegion(r);
 
-	// test suite from all defined tests
-	public static Test suite() {
-            TestSuite suite = new TestSuite(RpsTrackingPanelTest.class);
-            return suite;
-	}
+        // show
+        f.setSize(400,400);
+        f.setVisible(true);
+        
+        Reading loco = new Reading(21, null);
+        Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 0, "source");
+        p.notify(m);
+        
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 5., 5., 0.0, 0.133, 0, "source");
+        p.notify(m);
+        
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 0., 5., 0.0, 0.133, 0, "source");
+        p.notify(m);
 
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 5., 0., 0.0, 0.133, 0, "source");
+        p.notify(m);
+        
+        // check separate locos
+        int NUM_LOCO = 64;
+        for (int i=0; i<NUM_LOCO; i++) {
+            loco = new Reading(i, null);
+            m = new Measurement(loco, 6.+1.*i, 0., 0.0, 0.133, 0, "source");
+            p.notify(m);
+            m = new Measurement(loco, 6.+1.*i, 2., 0.0, 0.133, 0, "source");
+            p.notify(m);
+        }
+        
+    }
+    
+    // from here down is testing infrastructure
+    
+    public RpsTrackingPanelTest(String s) {
+        super(s);
+    }
+    
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {RpsTrackingPanelTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+    
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(RpsTrackingPanelTest.class);
+        return suite;
+    }
+    
 }
