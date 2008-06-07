@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -25,12 +25,14 @@ public class RpsSensor extends AbstractSensor
         super(systemName);
         // create Region from all but prefix
         region = new Region(systemName.substring(2,systemName.length()));
+        Model.instance().addRegion(region);
     }
 
     public RpsSensor(String systemName, String userName) {
         super(systemName, userName);
        // create Region from all but prefix
         region = new Region(systemName.substring(2,systemName.length()));
+        Model.instance().addRegion(region);
     }
 
     public void notify(Measurement r) {
@@ -98,7 +100,9 @@ public class RpsSensor extends AbstractSensor
         firePropertyChange("Arriving", null, id);
     }
     
-    public void dispose() {}
+    public void dispose() {
+        Model.instance().removeRegion(region);
+    }
 
     public void requestUpdateFromLayout() {
     }
