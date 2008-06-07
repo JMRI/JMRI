@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.6 2008-02-23 22:27:59 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.7 2008-06-07 03:41:55 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -139,7 +139,7 @@ Each of these can be used as a JMRI
 <a href="../../tools/Turnouts.shtml">Turnout</a>, 
 <a href="../../tools/Lights.shtml">Light</a> 
 or 
-<a href="../../tools/Signals.shtml">Signal</a>.
+<a href="../../tools/Signals.shtml">Signalhead</a>.
 
 <h4>Turnouts</h4>
 
