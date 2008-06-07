@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.3 2008-06-03 06:31:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.4 2008-06-07 03:52:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -22,8 +22,6 @@
 <body>
   
 <!--#include virtual="/Header" -->
-
-  <hr class="hide">
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -137,6 +135,20 @@ This is believed to be fixed.
 
 <p>
 Some changes have been made to the way RPS handles polling.
+
+<P>
+To make it easier to see and position them, 
+David Duchamp added an outline to a memory icon that's being put on a layout editor panel.
+
+<p>
+More improvements in making panel files portable from one computer
+to another, particularly Mac to PC and back.
+Please remember to put your own custom icons in the 
+<a href="http://jmri.sourceforge.net/help/en/html/apps/PanelPro/FAQ.shtml#location">appropriate directory</a> 
+so that this can work well.
+
+<p>
+More help updates, particular to the PanelPro help pages.
 
 <!--#include virtual="/Footer" -->
 
