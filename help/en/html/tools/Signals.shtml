@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Signals.shtml,v 1.3 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: Signals.shtml,v 1.4 2008-06-07 03:42:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
- 	JMRI: Turnout Documentation
+ 	JMRI: Signal Head Documentation
   </TITLE>
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
@@ -30,21 +30,18 @@
 
       <div id="mainContent">
       <!-- Page Body -->
-        <H2>
-		JMRI: Signals Documentation
-        </H2>
+        <H1>
+		JMRI: Signal Head Documentation
+        </H1>
 
-<!-- This page needs to be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalTable.html -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalAddEdit.html -->
-
-<h3>What are Signals?</h3>
-
-<p>
-Signals (or more formally SignalHeads) are how JMRI represents and 
+Signals (or more formally Signal Heads) are how JMRI represents and 
 controls signal heads on a layout.  They are a specific kind of
 output device that can be set to various colors:  Red, Yellow, Green, Flashing Yellow, etc.
-</p>
+
+<p>
+Much more information about JMRI signaling is available
+from the 
+<a href="signaling/index.shtml">JMRI signaling help page</a>.
 
 <a name="table"><h3>The Signal Table</h3></a>
 
@@ -53,36 +50,11 @@ output device that can be set to various colors:  Red, Yellow, Green, Flashing Y
 <!-- help/en/package/jmri/jmrit/beantable/SignalTable.html -->
 
 All the signals that JMRI knows about can be referenced
-using the "Signal Table" tool in the Tools menu of most JMRI programs.
-There are five columns in the table:
-<UL>
-<LI>The system name is assigned to the signal when it's created, 
-and can't be changed.
-<LI>If you're interested in having your signals carry "human readable"
-names, you can click in the "user name" column and change that information
-to whatever you want.
-<LI>As the signal changes, for whatever reason, the current
-appearance will show in the table.  You can also click on the
-appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
-<LI>The check box in the "Lit" column lets you control whether the
-signal head on the layout is lit (checked) or stays dark (unchecked).
-<LI>The check box in the "Held" column shows the "held" property of the
-signal, and allows you to change it.  This property is used by e.g. CTC
-machine logic to say "Don't change this signal head from red, even if it 
-would be safe to do so, because I want to hold a train here".
-</UL>
-<P>To define a new signal, click on the 
-"<A HREF="#SignalAddEdit">Add.." button<a/>.
-It will
-prompt you for the type (run off turnout outputs; SE8c; etc), and
-whatever setup information is needed.
-<P> This information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  For more information
-on creating and displaying panels, including how to show signals
-on your panels,
-please see the 
-<A HREF="../apps/PanelPro/Panels.html">Panels pages</a>.
+using the "Signal Table" tool in the Tools menu of JMRI programs.
+<p>
+For more information on configuring and operating signals with the Signal
+Table, please see the 
+<a href="../../package/jmri/jmrit/beantable/SignalTable.shtml">signal table help page</a>.
 
 <a name="add"><h3>Creating a Signal</h3></a>
 <A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
@@ -94,6 +66,8 @@ please see the
 It will
 prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
 whatever setup information is needed for your choice.
+There's more information on the
+<a href="../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">help page on adding signals</a>.
 
 <a name="edit"><h3>Editing an Existing Signal</h3>
 
@@ -109,18 +83,24 @@ to locate the right line.  Note that you need to remove the entire line, and
 not leave any part of it, especially the opening and closing brackets. Save
 a copy of the file as a backup first!
 
-<P>
-
 <h3>Controlling a Signal</h3>
 
-   
-<h3>Saving and Reloading Configuration</h3>
+Signals can be controlled various ways by JMRI, including
+<ul>
+<LI><a href="signaling/index.shtml">Simple Signal Logic</a>, for basic ABS signaling of the North American type
+<li><a href="Logix.shtml">Logix</a>, a graphical way of controlling signals with simple logic
+<li>JMRI <a href="scripting/index.shtml">scripts</a>, using a full programming language to do whatever you'd like
+</UL>
 
+<h2>Saving and Reloading Configuration</h2>
 
-<ol>
-	<li>
-	
-</ol>
+The signal information is saved with the configuration in an XML file, along
+with control panel setup and similar stuff.  For more information
+on creating and displaying panels, including how to show signals
+on your panels,
+please see the 
+<A HREF="../apps/PanelPro/Panels.html">Panels pages</a>.
+
 
 <!--#include virtual="/Footer" -->
 
