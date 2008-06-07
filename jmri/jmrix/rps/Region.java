@@ -3,21 +3,60 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.*;
+import java.awt.geom.GeneralPath;
+import java.awt.Shape;
 
 /**
  * Represent a region in space for the RPS system.
  *<P>
  * The region is specfied by a <em>right-handed</em>
  * set of points.
+ * <p>
+ * Regions are immutable once created.
+ * <p>
+ * This initial implementation of a Region is inherently 2-dimensional,
+ * deferring use of the 3rd (Z) dimension to a later implementation.
+ * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
- * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @author	Bob Jacobsen  Copyright (C) 2007, 2008
+ * @version	$Revision: 1.2 $
  */
 public class Region {
     
     public Region(Point3d[] points) {
+        super();
+
+        initPath(points);
+        
+        // old init
         if (points.length<3) log.error("Not enough points to define region");
         this.points = points;
+    }
+    
+    GeneralPath path;
+    
+    /**
+     * Provide Java2D access to the shape of this region.
+     *<p>
+     * This should provide a copy of the GeneralPath path, to keep the underlying
+     * object immutable, but by returning a Shape type hopefully we 
+     * achieve the same result with a little better performance. Please
+     * don't assume you can cast and modify this.
+     */
+    public Shape getPath() {
+        return path;
+    }
+    
+    void initPath(Point3d[] points) {
+        if (points.length < 3) 
+            log.error("Region needs at least three points to have non-zero area");
+        
+        path = new GeneralPath();
+        path.moveTo((float)points[0].x, (float)points[0].y);
+        for (int i = 1; i<points.length; i++) {
+            path.lineTo((float)points[i].x, (float)points[i].y);
+        }
+        path.lineTo((float)points[0].x, (float)points[0].y);
     }
     
     /**
@@ -38,38 +77,32 @@ public class Region {
             double z = Double.valueOf(coord[2]).doubleValue();
             points[i] = new Point3d(x,y,z);
         }
+        initPath(points);
     }
 
-    public boolean isInside(Point3d p) {
-        for (int i = 0; i<points.length; i++) {
-            int next = i+1;
-            if (next >= points.length) next = 0;
-            
-            // check orientation of point offset and edge
-            Vector3d edge = new Vector3d(
-                                points[next].x-points[i].x,
-                                points[next].y-points[i].y,
-                                points[next].z-points[i].z);
-                                
-            Vector3d offset = new Vector3d(
-                                p.x-points[i].x,
-                                p.y-points[i].y,
-                                p.z-points[i].z);
-            
-            offset.cross(offset,edge);               
-            if (log.isDebugEnabled()) log.debug(""+i+" finds "+offset.z);
-            if (offset.z > 0) return false;
+    public String toString() {
+        String retval = "";
+        for (int i=0; i<points.length; i++) {
+            retval += "("+points[i].x+","+points[i].y+","+points[i].z+")";
+            if (i!=points.length-1) retval+=";";
         }
-
-        // passed all        
-        return true;
+        return retval;
     }
     
-    public boolean equals(Region r) {
-        if (points.length != r.points.length) return false;
-        for (int i = 0; i<points.length; i++)
-            if (!points[i].epsilonEquals(r.points[i], 0.001)) return false;
-        return true;
+    public boolean isInside(Point3d p) {
+        return path.contains(p.x, p.y);
+    }
+    
+    public boolean equals(Object ro) {
+        try {
+            Region r = (Region)ro;
+            if (points.length != r.points.length) return false;
+            for (int i = 0; i<points.length; i++)
+                if (!points[i].epsilonEquals(r.points[i], 0.001)) {
+                    return false;
+                }
+            return true;
+        } catch (Exception e) { return false; }
     }
     
     Point3d[] points;
