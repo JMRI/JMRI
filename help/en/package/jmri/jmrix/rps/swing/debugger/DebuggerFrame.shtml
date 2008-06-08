@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DebuggerFrame.shtml,v 1.2 2008-05-19 17:30:03 jacobsen Exp $ -->
+<!-- $Id: DebuggerFrame.shtml,v 1.3 2008-06-08 02:13:32 jacobsen Exp $ -->
 <title>JMRI: RPS Debugger</title>
 
 <!-- Style -->
@@ -22,28 +22,29 @@
     <div id="mainContent">
 
 
-
-
-<h2> 
+<h1> 
 JMRI: RPS Debugger
-</h2>
+</h1>
+
+<a href="../../../../../../html/hardware/rps/images/Debugger.jpg">
+<img src="../../../../../../html/hardware/rps/images/Debugger.jpg" height="262" width="168" alt="RPS Receiver Control window" align="right"></a><br>
 
 The debugger window lets you look at information as it moves
 through the RPS system.
 
 <p>
-The upper left part displays the time value from each active transmitter
+The upper left part displays the time value from each active receiver
 every time a reading is taken. 
 
 <p>
 If a position was successfully computed from
-a set of times, the "residual" value is displayed for each one.
+a set of times, the "residual" value is displayed for each receiver.
 This is the difference between the measured time and the time that
 the RPS system expected to measure if the locomotive was really in that position.
 Typical value are up to about plus or minus 100, corresponding to about a inch in accuracy.
 If one or two receivers have much larger residual values, there
-may be a problem with the readins from that receiver with the transmitter 
-in it's current location.
+may be a problem with the readings from that receiver with the transmitter 
+in its current location.
 
 <p>
 The bottom section of the window shows the position calculated from each reading.
@@ -51,9 +52,6 @@ The bottom section of the window shows the position calculated from each reading
 <p>
 It's also possible to type values into the fields and ask the system to process them as
 if they were inputs.  The selection box and button at the bottom are how you do this.
-
-<p>
-This is the jmri.jmrix.rps.swing.debugger.DebuggerFrame help page.
 
 <!--#include virtual="/Footer" -->
 </body>

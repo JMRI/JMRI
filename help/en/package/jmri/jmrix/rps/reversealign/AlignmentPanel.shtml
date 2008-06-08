@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AlignmentPanel.shtml,v 1.1 2008-05-19 04:53:23 jacobsen Exp $ -->
+<!-- $Id: AlignmentPanel.shtml,v 1.2 2008-06-08 02:13:31 jacobsen Exp $ -->
 <title>JMRI: RPS Alignment Tools</title>
 
 <!-- Style -->
@@ -21,12 +21,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-
-
-<h2> 
+<h1> 
 JMRI: RPS Alignment Tool
-</h2>
+</h1>
 
 This is the jmri.jmrix.rps.reversealign.AlignmentPanel help page.
 
