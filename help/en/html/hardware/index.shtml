@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.18 2008-05-28 04:30:18 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.19 2008-06-08 03:08:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -169,11 +169,13 @@
 		<A HREF="nce/NCE.shtml#powercab">NCE USB adapter</a>.
 		</dd>
 		
-	    <dt class=im><a href="http://www.nacservicesinc.com/">RPS</a></dt>
+	    <dt class=im><a href="http://www.nacservicesinc.com/">
+	    <IMG src="images/RPS.gif"
+	        width="64" height="41" alt="RPS image"></a></dt>
 	    <dt><a href="http://www.nacservicesinc.com/">NAC Services</a></dt>
 	    <dd>
-		Configure connection to an RPS position measurement system via 
-		<A HREF="rps/index.shtml">serial link</a>.
+		<A HREF="rps/index.shtml">Configure connection</a>
+		 to an RPS position measurement system.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
