@@ -775,6 +775,16 @@
 <a href="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugger Window</a>
 <ul></ul>
 </li>
+         
+<li>
+<a href="html/hardware/rps/sensors.shtml">RPS Sensors</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
+<ul></ul>
+</li>
       
 </ul>
 </li>

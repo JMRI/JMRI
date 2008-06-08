@@ -258,7 +258,7 @@
 </li>
       
 <li>
-<a href="html/hardware/rps/index.shtml">RPS positioning system</a>
+<a href="html/hardware/rps/index.shtml">RPS Position System</a>
 <ul></ul>
 </li>
       
@@ -520,6 +520,38 @@
       
 <li>
 <a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
+<a href="html/hardware/rps/index.shtml">RPS Position System</a>
+<ul>
+      
+<li>
+<a href="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">RPS Debug Display</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/rps/sensors.shtml">RPS Sensors</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
 <ul></ul>
 </li>
    

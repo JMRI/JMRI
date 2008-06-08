@@ -33,6 +33,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml" />
 	<mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml" />
 	<mapID target="Acknowledgements_G" url="Acknowledgements.shtml#G" />
+	<mapID target="html.hardware.rps.sensors" url="html/hardware/rps/sensors.shtml" />
 	<mapID target="html.hardware.XPressNet.XNetSystemInformationtool" url="html/hardware/XPressNet/XNetSystemInformationtool.shtml" />
 	<mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml" />
@@ -323,9 +324,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml" />
 	<mapID target="DecoderProManual.Comp_SoundFX_Top" url="DecoderProManual/Comp_SoundFX.shtml#Top" />
 	<mapID target="html.apps.DecoderPro.LocoFile" url="html/apps/DecoderPro/LocoFile.shtml" />
+	<mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml" />
 	<mapID target="html.apps.PanelPro.FAQ_store" url="html/apps/PanelPro/FAQ.shtml#store" />
 	<mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml" />
-	<mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml" />
 	<mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml" />
 	<mapID target="html.hardware.loconet.LbServer" url="html/hardware/loconet/LbServer.shtml" />
 	<mapID target="package.jmri.jmrix.nce.clockmon.ClockMonFrame" url="package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml" />
