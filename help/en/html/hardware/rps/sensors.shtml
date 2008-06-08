@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: sensors.shtml,v 1.1 2008-06-07 03:43:18 jacobsen Exp $ -->
+<!-- $Id: sensors.shtml,v 1.2 2008-06-08 02:11:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -47,6 +47,45 @@ JMRI functions such as
 <p>
 An RPS sensor is associated with an area bounded by a series of
 points and the lines between them.
+
+<h2>Defining a Sensor</h2>
+There are two ways to create an RPS Sensor and define the 
+area on the layout that it covers.
+
+<h3>By Coordinates</h3>
+
+You can enter a series of coordinates that list the corners 
+of the region to be covered.  For example, the points
+defining a square one unit on a side are:
+<code><pre>
+ (0,0,0)
+ (1,0,0)
+ (1,1,0)
+ (0,1,0)
+</pre></code>
+If you use the Sensor Table's "Add..." button
+to create a sensor with the system name
+<code><pre>
+  RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)
+</pre></code>
+you'll get an RPS Sensor that shows "ACTIVE" when a 
+transmitter is present in that area, and "INACTIVE" otherwise.
+<p>
+The "R" means the RPS system, "S" means you're defining a Sensor,
+and the rest of the name defines the coordinates of the corners
+of the region to include in the sensor.
+Each corner is specified by its X, Y and Z values, all grouped
+together with parantheses.  The corners should be separated by
+semicolons; see the example above.
+
+<p>
+Once you've defined your sensor, you can use the 
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display</a>
+to see if it's in the right place on your layout.
+
+<h3>Using the Tracking Tool</h3>
+(To be written, for now see the
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display help page</a>.)
 
 <h2>For More Information</h2>
 
