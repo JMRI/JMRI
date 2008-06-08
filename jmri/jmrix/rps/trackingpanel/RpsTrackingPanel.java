@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -197,6 +197,13 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             // remember where now
             transmitter.measurement = m;        
         }
+    }
+    
+    /**
+     * Clear the measurement history
+     */
+    void clear() {
+        measurementRepList = new ArrayList();
     }
     
     /**
