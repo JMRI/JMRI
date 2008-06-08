@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2008-06-08 02:11:46 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2008-06-08 03:14:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -165,7 +165,7 @@ transmitters, and how often you want JMRI to poll them
 </dl>
 
 You can also display RPS information on PanelPro control panels using an
-"<a href="">RPS Icon</a>.
+"<a href="../../../package/jmri/jmrit/display/RpsIcon.shtml">RPS Icon</a>".
 <p>
 RPS information may be used to detect occupancy using 
 <a href="sensors.shtml">JMRI RPS Sensors</a>.
