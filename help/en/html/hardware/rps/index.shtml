@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2008-06-08 03:14:08 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2008-06-08 03:18:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -139,7 +139,7 @@ RPS transmitters. To do this:
 <p>
 To see that the system is working, open the 
 "<a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugging Display</a>"
-from the RPS menu.  You should see time readins coming
+from the RPS menu.  You should see time readings coming
 in and being converted to positions.  You can also check the
 communications with the unit by opening the "RPS Monitor"
 from the RPS menu.
