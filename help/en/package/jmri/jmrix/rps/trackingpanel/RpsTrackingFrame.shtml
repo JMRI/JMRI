@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsTrackingFrame.shtml,v 1.3 2008-06-08 02:13:32 jacobsen Exp $ -->
+<!-- $Id: RpsTrackingFrame.shtml,v 1.4 2008-06-08 15:11:47 jacobsen Exp $ -->
 <title>JMRI: RPS Tracking Frame</title>
 
 <!-- Style -->
@@ -29,7 +29,9 @@ JMRI: RPS Tracking Frame
 <img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"
     height="248" width="209" ALIGN="RIGHT" alt="screenshot"></a><br>
 
-This frame displays a map of the RPS system's view of the layout.
+This frame displays a map of the 
+<a href="../../../../../html/hardware/rps/index.shtml">RPS system's</a>
+view of the layout.
 
 <h2>Display</h2>
 There are two types of things drawn:
