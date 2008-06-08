@@ -16,7 +16,7 @@ import jmri.jmrix.rps.*;
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RpsTrackingPanelTest extends TestCase {
 
@@ -30,7 +30,7 @@ public class RpsTrackingPanelTest extends TestCase {
         f.getContentPane().add(p);
         f.pack();
         
-        // add some regions
+        // add some regions to probe corners
         Region r = new Region("(4,4,0);(10,16,0);(18,10,0);(4,4,0)");
         Model.instance().addRegion(r);
         
@@ -43,7 +43,13 @@ public class RpsTrackingPanelTest extends TestCase {
         r = new Region("(25,25,0);(25,28,0);(30,30,1);(29,25,0);(25,25,0)");
         Model.instance().addRegion(r);
 
-        // show
+        // show overlap
+        r = new Region("(20,20,0);(22,20,0);(22,22,1);(20,22,0)");
+        Model.instance().addRegion(r);
+        r = new Region("(19,19,0);(21,19,0);(21,21,1);(19,21,0)");
+        Model.instance().addRegion(r);
+        
+        // show panel
         f.setSize(400,400);
         f.setVisible(true);
         
