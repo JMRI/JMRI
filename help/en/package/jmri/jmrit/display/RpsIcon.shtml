@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.1 2008-06-04 20:58:14 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.2 2008-06-08 03:13:39 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -29,6 +29,9 @@ RPS is a system for measuring the positions of rolling stock on your
 layout.  RPS Reporter icons move around on the panel to show
 where the corresponding equipment is on the layout.
 
+<p>
+<em>This page is still under construction, but the RPS icon 
+support itself is already present in JMRI. Go ahead and try it out!</em>
 <h2>Popup Menu</h2>
 
 The popup menu for an RPS icon contains:
