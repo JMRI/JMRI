@@ -6,6 +6,7 @@ import jmri.jmrix.rps.*;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -25,6 +26,43 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     public RpsTrackingPanel() {
         super();
         Distributor.instance().addMeasurementListener(this);
+        setToolTipText("<no item>");  // activates ToolTip, sets default
+    }
+    
+    /**
+     * Provide tool tip text that depends on 
+     * what's under the cursor.
+     * <p>
+     * Names either a measurement point
+     * or a region.
+     * @return null if no object under mouse; this suppresses ToolTip
+     */
+    public String getToolTipText(MouseEvent e) {
+        // get mouse coordinates
+        try {
+            Point mouse = e.getPoint();
+            Point2D userPt = currentAT.inverseTransform(new Point2D.Double((double)mouse.x, (double)mouse.y), null);
+            // find the path object containing it, if any
+            for (int i = measurementRepList.size()-1; i>=0 ; i--) {
+                MeasurementRep r = (MeasurementRep)measurementRepList.get(i);
+                if (r.contains(userPt)) {
+                    Measurement m = r.measurement;
+                    return "ID "+m.getID()+" at "+m.getX()+","+m.getY();
+                }
+            }
+
+            // find the region containing it, if any
+            // Go through backwards to find the top if overlaps
+            List l = Model.instance().getRegions();
+            for (int i = l.size()-1; i>=0; i--) {
+                Shape s = ((Region)l.get(i)).getPath();
+                if (s.contains(userPt)) {
+                    return "Region: "+((Region)l.get(i)).toString();
+                }
+            }
+        } catch (Exception ex) {} // just skip to default
+        // or return default
+        return null;
     }
     
     /**
@@ -58,9 +96,12 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     
     static final double MEASUREMENT_ACCURACY = 0.2; // in user units
     static final Color regionFillColor = Color.BLUE.brighter();
-    static final Color regionOutlineColor = Color.GRAY.brighter();
+    static final Color regionOutlineColor = Color.GRAY.darker();
     // static final Color measurementColor = new Color(0,0,0);
     int measurementColor = 0;
+    
+    // current transform to graphics coordinates
+    AffineTransform currentAT;
     
     public void paint(Graphics g) {
         // draw everything else
@@ -77,11 +118,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         // Save the current transform
         AffineTransform saveAT = g2.getTransform();
         // Install the new one
-        AffineTransform newAT = new AffineTransform();        
-        newAT.translate(0, this.getHeight());
-        newAT.scale(xscale, -yscale);
-        newAT.translate(-xorigin,-yorigin);  // put origin in bottom corner
-        g2.setTransform(newAT);
+        currentAT = new AffineTransform();        
+        currentAT.translate(0, this.getHeight());
+        currentAT.scale(xscale, -yscale);
+        currentAT.translate(-xorigin,-yorigin);  // put origin in bottom corner
+        g2.setTransform(currentAT);
 
         // Draw the regions
         List l = Model.instance().getRegions();
@@ -134,6 +175,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             r.rep1 = new Ellipse2D.Double(xend-MEASUREMENT_ACCURACY/2, 
                                    yend-MEASUREMENT_ACCURACY/2, 
                                    MEASUREMENT_ACCURACY, MEASUREMENT_ACCURACY);
+            r.measurement = m;
             measurementRepList.add(r);
 
             return;
@@ -150,6 +192,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             double xinit = lastMessage.getX();
             double yinit = lastMessage.getY();
             r.rep1 = new Line2D.Double(xinit, yinit, xend, yend);
+            r.measurement = m;
             measurementRepList.add(r);
             // remember where now
             transmitter.measurement = m;        
@@ -174,9 +217,15 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             g2.draw(rep1);
             if (rep2!=null) g2.draw(rep2);
         }
+        boolean contains(Point2D pt) {
+            if (rep1.contains(pt)) return true;
+            if (rep2 != null && rep2.contains(pt)) return true;
+            return false;
+        }
         Color color;
         Shape rep1;
         Shape rep2;
+        Measurement measurement;
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsTrackingPanel.class.getName());
 }
