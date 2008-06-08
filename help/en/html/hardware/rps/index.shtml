@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-06-04 20:59:42 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-06-08 02:11:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -54,7 +54,7 @@ At the present time, RPS is supported with DCC systems from:
     <LI>Lenz
     <li>NCE
 </ul>
-Others may work, and we're interested in making them work, but the
+Others may work, and we're interested in making them work, but they
 haven't been tested in combination with RPS yet.
       
 <h2>System Setup</h2>
@@ -144,10 +144,6 @@ in and being converted to positions.  You can also check the
 communications with the unit by opening the "RPS Monitor"
 from the RPS menu.
 
-<h2>Features and Limitations</h2>
-
-(Not yet complete)
-
 <h2>RPS Tools</h2>
 
 JMRI provides a number of tools in the RPS menu for 
@@ -170,6 +166,9 @@ transmitters, and how often you want JMRI to poll them
 
 You can also display RPS information on PanelPro control panels using an
 "<a href="">RPS Icon</a>.
+<p>
+RPS information may be used to detect occupancy using 
+<a href="sensors.shtml">JMRI RPS Sensors</a>.
 
 <h2>For More Information</h2>
 
