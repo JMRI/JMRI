@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Windows.html,v 1.15 2008-03-09 06:05:31 jacobsen Exp $ -->
+<!-- $Id: Windows.html,v 1.16 2008-06-08 15:58:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -53,9 +53,9 @@
 
 <div class="nomenu" id="mBody">
 <div id="mainContent">
-<H2> 
+<H1> 
 JMRI Install Guide: Windows
-</H2>
+</H1>
 
 <OL>
     <LI>Determine if your hardware supports Java and JMRI</LI>
@@ -162,59 +162,67 @@ JMRI Install Guide: Windows
 	You can start the programs from the JMRI group under Programs in your
 	Start menu.
 
-	<LI>Notes:</LI>
-	
-	<a id="largewindow"/>
-	<h4>Large Windows</h4>
-	<img src="images/TaskbarOptions.png" height="228" width="202" align="right" alt="control panel"/>
-	Depending on what it wants to display, JMRI can open up very large
-	windows.  Generally, JMRI uses the size of the screen and 
-	information about fixed things like the start bar to decide the
-	maximum size for an opening window so that e.g. the corners can't 
-	be reached to resize the window.
-	<p>
-	Depending your Windows display operation, large JMRI windows
-	will either resize to stay on the large part of the screen, clear
-	of start bars and menu bars, or will be displayed at the full size of 
-	the screen, appearing under the start bar and menu bars.
-	<p>
-	This is controlled by the 
-	<a href="images/TaskbarOptions.png">Taskbar and Start Menu Properties</a>
-	control panel.
-	JMRI windows can open to the full screen size if the
-	'Keep the taskbar on top of other windows' option is de-selected.
-
-    Also, they can open to the full screen size if the 'Auto hide the taskbar' 
-    option is selected
-	
-	<H4>Windows Themes and Skins</H4>
-	If you're using a "skinning" utility which changes the appearance of
-	programs running on your computer, you should tell it to ignore 
-	the "java.exe" program.  That's how JMRI and DecoderPro will appear to
-	it, and they weren't written with such "skins" in mind.
-
-	<H4>Serial port configuration</H4>
-	<P>DecoderPro may encounter problems if the serial port used to
-	connect to the layout shares an interrupt with another serial
-	port.  
-	Typically COM1 and COM3 share an interrupt, as do COM2 and COM4.
-	In particular, some systems are unable to communicate
-	(and may experience a lockup)
-	when the layout's serial port shares an interrupt with a port
-	used for a serial mouse.  Please make sure that the serial port
-	connected to your layout does not share an interrupt with
-	another serial port.</P>
-
-    <P>With Windows XP, your serial port parameters might not be properly set for 
-    hardware flow control. To fix this, right-click on 
-    My Computer and select Properties. Go to the Hardware tab and click on 
-    Device Manager. Open up the section that says Ports (COM &amp; LPT). 
-    Right-click on the serial port you have the LocoBuffer hooked to and 
-    select Properties. Go to the Port Settings tab and set the options 
-    to 19200, 8, None, 1, Hardware. Click OK. Close everything. 
-    Restart JMRI and verify your connection settings.</P>
+    <li>Configure the program to connect to your layout
+    <p>
+    The JMRI
+    <a href="http://jmri.sourceforge.net/help/en/html/hardware/index.shtml">hardware page</a>
+    lists the various types of layout equipment that
+    JMRI can connect to, and gives links to 
+    instruction pages. Go there next to complete your
+    setup.
 
 	</OL>
+<h2>Notes:</h2>
+	
+<a id="largewindow"/>
+<h4>Large Windows</h4>
+<img src="images/TaskbarOptions.png" height="228" width="202" align="right" alt="control panel"/>
+Depending on what it wants to display, JMRI can open up very large
+windows.  Generally, JMRI uses the size of the screen and 
+information about fixed things like the start bar to decide the
+maximum size for an opening window so that e.g. the corners can't 
+be reached to resize the window.
+<p>
+Depending your Windows display operation, large JMRI windows
+will either resize to stay on the large part of the screen, clear
+of start bars and menu bars, or will be displayed at the full size of 
+the screen, appearing under the start bar and menu bars.
+<p>
+This is controlled by the 
+<a href="images/TaskbarOptions.png">Taskbar and Start Menu Properties</a>
+control panel.
+JMRI windows can open to the full screen size if the
+'Keep the taskbar on top of other windows' option is de-selected.
+
+Also, they can open to the full screen size if the 'Auto hide the taskbar' 
+option is selected
+
+<H4>Windows Themes and Skins</H4>
+If you're using a "skinning" utility which changes the appearance of
+programs running on your computer, you should tell it to ignore 
+the "java.exe" program.  That's how JMRI and DecoderPro will appear to
+it, and they weren't written with such "skins" in mind.
+
+<H4>Serial port configuration</H4>
+<P>DecoderPro may encounter problems if the serial port used to
+connect to the layout shares an interrupt with another serial
+port.  
+Typically COM1 and COM3 share an interrupt, as do COM2 and COM4.
+In particular, some systems are unable to communicate
+(and may experience a lockup)
+when the layout's serial port shares an interrupt with a port
+used for a serial mouse.  Please make sure that the serial port
+connected to your layout does not share an interrupt with
+another serial port.</P>
+
+<P>With Windows XP, your serial port parameters might not be properly set for 
+hardware flow control. To fix this, right-click on 
+My Computer and select Properties. Go to the Hardware tab and click on 
+Device Manager. Open up the section that says Ports (COM &amp; LPT). 
+Right-click on the serial port you have the LocoBuffer hooked to and 
+select Properties. Go to the Port Settings tab and set the options 
+to 19200, 8, None, 1, Hardware. Click OK. Close everything. 
+Restart JMRI and verify your connection settings.</P>
 
 <h2>Debugging</h2>
 Sometimes things go wrong.  The information in this section can help.
