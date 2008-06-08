@@ -9,10 +9,12 @@ import junit.framework.TestSuite;
 
 import javax.swing.*;
 
+import jmri.jmrix.rps.*;
+
 /**
  * JUnit tests for the rps.RpsTrackingFrame class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RpsTrackingFrameTest extends TestCase {
 
@@ -20,6 +22,25 @@ public class RpsTrackingFrameTest extends TestCase {
         RpsTrackingFrame f = new RpsTrackingFrame("Test RPS Tracking");
         f.initComponents();
         f.setVisible(true);
+
+        RpsTrackingPanel p = f.panel; // use local access
+        
+        Reading loco = new Reading(21, null);
+        Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 0, "source");
+        p.notify(m);
+        
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 5., 5., 0.0, 0.133, 0, "source");
+        p.notify(m);
+        
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 0., 5., 0.0, 0.133, 0, "source");
+        p.notify(m);
+
+        loco = new Reading(21, null);
+        m = new Measurement(loco, 5., 0., 0.0, 0.133, 0, "source");
+        p.notify(m);
+
     }
     
     // from here down is testing infrastructure
