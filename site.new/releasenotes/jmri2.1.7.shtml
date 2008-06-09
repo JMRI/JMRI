@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.4 2008-06-07 03:52:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.5 2008-06-09 15:03:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,6 +149,23 @@ so that this can work well.
 
 <p>
 More help updates, particular to the PanelPro help pages.
+
+<p>
+David Duchamp updated the getFacingSignalHead support.
+
+<p>
+Ken Cameron added a tooltip to the DecoderPro decoder selection window that
+shows you the decoder ID number (CV7 value) for each type.
+
+<p>
+The 
+<a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">RPS tracking display</a>
+has been updated.
+
+<p>
+Ken Cameron added a "RobotThrottle.py" example script to demonstrate his
+automated running of trains.
+
 
 <!--#include virtual="/Footer" -->
 
