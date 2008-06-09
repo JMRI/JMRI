@@ -40,7 +40,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -102,6 +102,20 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyElement = null;
             }
+        	String famComment = ((DecoderFile) decoders.get(i)).getFamilyComment();
+        	String verString = ((DecoderFile) decoders.get(i)).getVersionsAsString();
+        	String hoverText = "";
+        	if (famComment == "" || famComment == null) {
+        		if (verString != "") {
+            		hoverText = "CV7=" + verString;
+        		}
+        	} else {
+        		if (verString == "") {
+            		hoverText = famComment;
+        		} else {
+            		hoverText = famComment + "  CV7=" + verString;
+        		}
+        	}
             if (familyElement==null || !family.equals(familyElement.toString()) ) {
                 // need new family node - is there only one model? Expect the
                 // family element, plus the model element, so check i+2
@@ -114,7 +128,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     // normal here; insert the new family element & exit
                     log.debug("normal family update case: "+family);
                     familyElement = new DecoderTreeNode(family,
-                                                        ((DecoderFile) decoders.get(i)).getFamilyComment(),
+                    									hoverText,
                                                         ((DecoderFile) decoders.get(i)).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     continue;
@@ -125,7 +139,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     if (i+1 > len) log.error("Unexpected single entry for family: "+family);
                     family = ((DecoderFile) decoders.get(i+1)).getModel();
                     familyElement = new DecoderTreeNode(family,
-                                                        ((DecoderFile) decoders.get(i)).getFamilyComment(),
+                    									hoverText,
                                                         ((DecoderFile) decoders.get(i)).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     i = i+1;
@@ -135,7 +149,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             // insert at the decoder level, except if family name is the same
             if (!family.equals(model)){
                 dModel.insertNodeInto(new DecoderTreeNode(model,
-                                                        ((DecoderFile) decoders.get(i)).getModelComment(),
+                                                        hoverText,
                                                         ((DecoderFile) decoders.get(i)).titleString()),
                                     familyElement, familyElement.getChildCount());
             }

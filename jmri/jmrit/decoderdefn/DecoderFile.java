@@ -13,14 +13,14 @@ import org.jdom.Element;
 
 /**
  * Represents and manipulates a decoder definition, both as a file and
- * in memory.  The interal storage is a JDOM tree.
+ * in memory.  The internal storage is a JDOM tree.
  *<P>
  * This object is created by DecoderIndexFile to represent the
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -72,7 +72,60 @@ public class DecoderFile extends XmlFile {
         }
     }
 
+    /**
+     * return true/false if decoder version matches id
+     * @param i
+     * @return
+     */
     public boolean isVersion(int i) { return versions[i]; }
+    
+    /**
+     * return array of versions
+     * 
+     */
+    public boolean[] getVersions() { return(versions); }
+    
+    public String getVersionsAsString() {
+    	String ret = "";
+    	int partStart = -1;
+		String part = "";
+    	for (int i = 0; i < 256; i++) {
+    		if (partStart >= 0) {
+        		/* working on part, found end of range */
+        		if (!versions[i]) {
+        			if (i - partStart > 1) {
+        				part = partStart + "-" + (i - 1);
+        			} else {
+        				part = "" + (i - 1);
+        			}
+        			if (ret == "") {
+        				ret = part;
+        			} else {
+        				ret = "," + part;
+        			}
+        			partStart = -1;
+        		}
+    		} else {
+        		/* testing for new part */
+    			if (versions[i]) {
+    				partStart = i;
+    			}
+    		}
+    	}
+    	if (partStart >= 0) {
+    		if (partStart != 255) {
+    			part = partStart + "-" + 255;
+    		} else {
+    			part = "" + partStart;
+    		}
+    		if (ret != "") {
+    			ret = ret + "," + part;
+    		} else {
+    			ret = part;
+    		}
+    	}
+    	return(ret);
+    }
 
     // store indexing information
     String _mfg       = null;
