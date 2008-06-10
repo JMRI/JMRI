@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Frame containing the entire display tool
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     
@@ -76,7 +76,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
         controls.add(line);
         
-        // then alignment control
+        // configure alignment control
         RpsTrackingControlPane scale = new RpsTrackingControlPane(panel);
         controls.add(scale);
         controls.add(new JSeparator());
@@ -88,10 +88,22 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         scale.update();
         
         // combine
-        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controls, panel);
-        getContentPane().add(split);
+        //JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controls, panel);
+        //getContentPane().add(split);
+        getContentPane().add(panel);
+        getContentPane().add(new JSeparator());
+        getContentPane().add(controls);
         
-        pack();        
+        
+        panel.repaint();
+        pack();
+
+        // fix size of controls
+        Dimension d = controls.getSize();
+        controls.setMinimumSize(d);
+        controls.setPreferredSize(d);
+        controls.setMaximumSize(d);
+          
     }
     
     JButton clearButton;
