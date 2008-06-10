@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.3 2008-06-10 14:18:25 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.4 2008-06-10 14:33:54 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -120,7 +120,10 @@ have it track transmitter 5510, change the line to:
     &lt;sensoricon filter="5510" x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre></code>
 <li>The "active" and "error" attributes are the icons to be displayed when the system is 
-getting good readings and not getting good readings, respectively.  You can change these to the location of any icon file you'd like.
+getting good readings and not getting good readings, respectively. 
+You can change these to the location of any icon file you'd like.
+For example, you can change them to a (small) photo of
+a locomotive, or to an image with the train number.
 </UL>
 
 A nice graphical interface for this is coming, but it's not here yet.
