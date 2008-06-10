@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsTrackingFrame.shtml,v 1.4 2008-06-08 15:11:47 jacobsen Exp $ -->
+<!-- $Id: RpsTrackingFrame.shtml,v 1.5 2008-06-10 06:40:49 jacobsen Exp $ -->
 <title>JMRI: RPS Tracking Frame</title>
 
 <!-- Style -->
@@ -76,12 +76,15 @@ After a short time, a tooltip will display the coordinates of the corners.
 
 <h2>Controls</h2>
 In the top part of the window are some simple controls.
-<p>
-The "Clear" button erases the transmitter display, leaving the regions visible.
-The "Show error points" checkbox, mentioned above, will include 
+<ul>
+<li>The "Clear" button erases the transmitter display, leaving the regions visible.
+<li>The "Show error points" checkbox, mentioned above, will include 
 lines to lower-quality measurements.
+<li>"Show receivers", when checked, displays receiver locations as 
+slightly larger black dots.
+<li>"Show regions" controls whether the regions are drawn or not.
+</ul>
 
-<p>
 The four text boxes and "Set" button let you set the coordinate mapping
 for the window.  The top two set the RPS position that corresponds to the upper-right
 corner of the display frame, while the lower two set the RPS position that corresponds to
