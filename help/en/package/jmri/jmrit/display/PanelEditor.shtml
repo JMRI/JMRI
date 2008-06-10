@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.6 2008-06-04 21:00:14 jacobsen Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.7 2008-06-10 14:18:05 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -21,22 +21,28 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
-<H2>The Panel Editor</H2>
+<H1>The Panel Editor</H1>
 
 A panel is a set of icons representing various components of a layout.
 Some of the icons available in JMRI include turnouts, signals, and
 sensors. You can also include a background icon for your panel.
 
-<H3>Creating a panel</H3>
-These are made with the Panel Editor, which allows you to place images
+<p>
+The controls on the panel itself as 
+described on a 
+<a href="PanelTarget.shtml">separate help page</a>.
+
+<p>
+Panels are created with the Panel Editor, which allows you to place images
 to represent turnouts, signals, sensors, trackwork, etc.
+
 <P>If you'd like to see animated clinics that show how each of these
 things are actually done on the computer screen, please see <A
 	HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
 Bronson's clinics page</A>.</P>
 
 
-<H3>Contents of the Panel Editor</H3>
+<H2>Contents of the Panel Editor</H2>
 
 <A HREF="../../../../images/paneleditor.gif">
 <IMG SRC="../../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
@@ -127,7 +133,7 @@ Starting from the top:</P>
 
 </UL>
 
-<H3>Control Checkboxes</H3>
+<H2>Control Checkboxes</H2>
 
 <UL>
 
@@ -189,7 +195,7 @@ your JMRI Preferences directory. Add your new icons to that folder. This will pr
 possible conflicts or loss of data during an upgrade. These new items will automatically 
 appear under "files" in the icon selections.</P>
 
-<H3>Other types of panels</H3>
+<H2>Other types of panels</H2>
 
 Because this is icon-based, you can create panels that look any way you
 want. For example, instead of using track-schematic icons for turnouts,
@@ -202,7 +208,8 @@ change color to indicate whether the track is occupied. The procedure
 for doing that is described on a <A
 	HREF="http://jmri.sourceforge.net/apps/PanelPro/ColorTrack.html">separate
 page</A>.</P>
-<H3>Manipulating Icons</H3>
+
+<H2>Manipulating Icons</H2>
 
 To move an icon around on the panel, you "meta-drag" it. On a Mac,
 that's "hold the cmd key and drag with the cursor"; on Linux or Windows, "hold the

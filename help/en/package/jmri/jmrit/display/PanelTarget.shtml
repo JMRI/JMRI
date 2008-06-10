@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.5 2008-04-03 18:21:19 dan_boudreau Exp $ -->
+<!-- $Id: PanelTarget.shtml,v 1.6 2008-06-10 14:18:05 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -21,13 +21,18 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
-<H2>The Panel</H2>
+<H1>The Panel</H1>
 
 A panel is a set of icons representing various components of a layout.
 Some of the icons available in JMRI include turnouts, signals, and
 sensors. You can also include a background icon for your panel.
 
-<H3>Panel operation</H3>
+<p>
+The panel editor which you use to create a panel is 
+described on a 
+<a href="PanelEditor.shtml">separate help page</a>.
+
+<H2>Panel operation</H2>
 Clicking on a turnout symbol flips it from closed to thrown and
 vice-versa. A turnout also has "unknown" and "inconsistent" states,
 represented by an icon with a question mark and X respectively. These
@@ -49,13 +54,14 @@ is a green circle and inactive is an empty circle. These are meant to
 represent a lit/dark panel indicator. A red circle represents the
 "unknown" state, used when no information has yet been received from the
 layout.</P>
-<H3>Creating a panel</H3>
-These are made with a
-<A HREF="PanelEditor.shtml"> Panel Editor</A>
-, which allows you to place images to represent turnouts, sensors (on
+
+<H2>Creating a Panel</H2>
+Panels are created with a
+<A HREF="PanelEditor.shtml">Panel Editor</A>, 
+which allows you to place images to represent turnouts, sensors (on
 some systems) and trackwork.
 
-<H3>Popup menus</H3>
+<H2>Popup menus</H2>
 
 If the "Panel items popup menu active" box is checked in the Panel
 Editor, a small popup menu will appear when you right click an icon.
@@ -80,7 +86,7 @@ you don't use Tristate, when you click on the icon, it may take some
 time (milliseconds to seconds depending on the system) before the icon
 responds with the known state of the turnout.</P>
 
-<H3>Marker</H3>
+<H2>Marker</H2>
 
 The panel menu includes an item called "Marker". You can use a marker to
 represent a locomotive or other device on your panel. You can move the
