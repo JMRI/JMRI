@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.5 2008-06-10 14:40:11 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.6 2008-06-10 15:07:46 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -26,7 +26,10 @@ JMRI: RPS Icon
 </h1>
 
 RPS is a system for measuring the positions of rolling stock on your
-layout.  RPS Reporter icons move around on the panel to show
+layout.  
+More information on RPS is available on the 
+<a href="../../../../html/hardware/rps/index.shtml">main RPS help page</a>.
+RPS Reporter icons move around on the panel to show
 where the corresponding equipment is on the layout.
 
 <p>
@@ -47,11 +50,33 @@ an associated transmitter.
 Click "Add RPS reporter" on the 
 <a href="PanelEditor.shtml">panel editor</a>.
 An RPS icon will appear on the panel at the 
-default location and start working.
+default location, but it won't work yet until it's calibrated.
 <p>
 RIght-click or option-click on the icon to see the popup menu, where
 you can calibrate the icon.
 
+<h3>Calibrating an RPS Icon</h3>
+When you calibrate an RPS icon, you're specifying
+how RPS measured locations correspond to positions on the panel.
+<p>
+The steps are:
+<ul>
+<li>Stop the RPS system polling, so things won't move around
+on you.
+<li>Add the icon to the panel.
+<li>Drag the icon until it sits over the position that
+corresponds to the 0,0 origin of your RPS installation.
+<li>Right-click or option-click on the icon to 
+get the pop-up menu, and select "Set Origin".
+<li>Move the actual locomotive to some other point on the
+layout, and start the RPS system polling again.  Get a 
+good measurement of the position.  Stop the RPS system.
+<li>Drag the icon to where you want it to be on the screen
+when the transmitter is in that location.
+<li>From the icon's popup menu, select "Set Current Location".
+<li>Get the popup menu again.  It should no longer say
+"Not Calibrated", and instead should show you the current position.
+</UL>
 <p>
 Don't forget to save your panel!
 
@@ -81,15 +106,20 @@ when the RPS system measures the same location, the icon will appear
 in that position.
 
 <dt>Not Calibrated
-<dd>Not a control, this is used to indicate whether the
-icon has been calibrated so that it's position on the screen properly
+<dd>A status message, not a control, this appears when the
+icon has not been calibrated.
+Calibration ensure the icon's position on the screen properly
 reflects the location that RPS has measured.
+
+<dt>At (x), (y)
+<dd>Once the icon has been calibrated, the popup menu displays
+the most recent RPS location measurement.
 
 <dt>Disable
 <dd>Controls whether or not the icon can be dragged around manually.
 
 <dt>Remove
-<dd>Removes the RPS icon from the panel.  This is a permanent removal.
+<dd>Removes the RPS icon from the panel.  This is a permanent deletion.
 
 <dt>Help
 <dd>Shows this page
