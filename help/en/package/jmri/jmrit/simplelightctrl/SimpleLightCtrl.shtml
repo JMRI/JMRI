@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleLightCtrl.shtml,v 1.3 2008-03-01 14:24:02 ken_c Exp $ -->
+<!-- $Id: SimpleLightCtrl.shtml,v 1.4 2008-06-10 02:12:28 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Light Control</TITLE>
@@ -40,10 +40,19 @@ light on the layout. See "
 <H3>Light Control Buttons and Status</H3>
 
 <DL>
-	<DT>current state:</DT>
-	<DD>Shows the current known state of the light. A light can
-	have two states: on, and off. The on and off states are what the JMRI
-	program knows or believes is the state of the light.</DD>
+	<DT>Current State:</DT>
+	<DD>Shows the current known state of the light.
+		<DL>
+			<DT>Enabled:</DT>
+			<DD>The light will respond to its automatic control type.</DD>
+			<DT>Variable:</DT>
+			<DD>Light may be commanded to values between 0% and 100%.</DD>
+			<DT>Transitional:</DT>
+			<DD>Changes of intensity will use the transition time to step
+				between current and target intensity.
+			</DD>
+		</DL>
+	</DD>
 
 	<DT>On</DT>
 	<DD>Push this button to turn on the light.</DD>
@@ -70,14 +79,18 @@ disable dimming for the light.
 	of the device and we have not found a way around this for all devices.</DD>
 	<BR>
 	
-	<DT>Minimum Dim:</DT>
+	<DT>Minimum Intensity:</DT>
 	<DD>A value 0 to 100 (percent) that sets the lowest amount of light that
 	will be output by a dim command.</DD>
 	<BR>
 	
-	<DT>Maximum Dim:</DT>
+	<DT>Maximum Intensity:</DT>
 	<DD>A value 0 to 100 (percent) that sets the highest amount of light that
 	will be output by a dim command.</DD>
+	<BR>
+	
+	<DT>Transition Time:</DT>
+	<DD>Number of fast minutes to go from 0% to 100% intensity.</DD>
 	<BR>
 </DL>
 
