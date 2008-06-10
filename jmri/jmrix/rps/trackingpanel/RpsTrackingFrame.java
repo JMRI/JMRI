@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Frame containing the entire display tool
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     
@@ -27,6 +27,8 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
+        panel = new RpsTrackingPanel();
+
         // add controls; first, clear button
         JPanel controls = new JPanel();
         controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
@@ -57,6 +59,8 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
                     showRecButtonChanged();
                 }
             });
+        showRecButton.setSelected(true);
+        showRecButtonChanged();
         line.add(showRecButton);
 
         // button for showing regions
@@ -66,12 +70,13 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
                     showRegButtonChanged();
                 }
             });
+        showRegButton.setSelected(true);
+        showRegButtonChanged();
         line.add(showRegButton);
 
         controls.add(line);
         
         // then alignment control
-        panel = new RpsTrackingPanel();
         RpsTrackingControlPane scale = new RpsTrackingControlPane(panel);
         controls.add(scale);
         controls.add(new JSeparator());
@@ -79,7 +84,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         panel.setSize(440,240);
         panel.setPreferredSize(new Dimension(440,240));
         
-        scale.set(-20.,-20.,400.,400.);  // lower left X, Y, then upper right 
+        scale.set(-10.,-10.,50.,50.);  // lower left X, Y, then upper right 
         scale.update();
         
         // combine
