@@ -9,6 +9,7 @@ import java.awt.geom.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
+import javax.vecmath.Point3d;
 
 /**
  *
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -79,7 +80,12 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         this.showErrors = show;
     }
     
+    void setShowReceivers(boolean show) {
+        this.showReceivers = show;
+    }
+    
     boolean showErrors = false;
+    boolean showReceivers = false;
     
     /**
      * Sets the coordinates of the upper-right corner of
@@ -95,6 +101,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     double xmax, ymax;
     
     static final double MEASUREMENT_ACCURACY = 0.2; // in user units
+    static final double RECEIVER_SIZE = 0.75; // in user units
     static final Color regionFillColor = Color.BLUE.brighter();
     static final Color regionOutlineColor = Color.GRAY.darker();
     // static final Color measurementColor = new Color(0,0,0);
@@ -136,6 +143,17 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         // Draw the measurements; changes graphics
         for (int i = 0; i<measurementRepList.size(); i++) {
             ((MeasurementRep)measurementRepList.get(i)).draw(g2);
+        }
+        if (showReceivers) { // draw receivers
+            for (int i = 0; i<Engine.instance().getReceiverCount(); i++) {
+                Point3d p = Engine.instance().getReceiverPosition(i);
+                g2.setPaint(Color.BLACK);
+                Shape r = new Ellipse2D.Double(p.x-RECEIVER_SIZE/2, 
+                               p.y-RECEIVER_SIZE/2, 
+                               RECEIVER_SIZE, RECEIVER_SIZE);
+                g2.draw(r);
+                g2.fill(r);
+            }
         }
         // restore original transform
         g2.setTransform(saveAT);
