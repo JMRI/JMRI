@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmrit.display package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 package jmri.jmrit.display;
@@ -33,6 +33,7 @@ public class DisplayTest extends TestCase {
 		suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
 		suite.addTest(jmri.jmrit.display.MemoryIconTest.suite());
 		suite.addTest(jmri.jmrit.display.ReporterIconTest.suite());
+		suite.addTest(jmri.jmrit.display.RpsPositionIconTest.suite());
 		return suite;
 	}
 
