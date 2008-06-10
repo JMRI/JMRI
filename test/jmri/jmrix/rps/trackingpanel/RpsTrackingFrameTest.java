@@ -11,14 +11,21 @@ import javax.swing.*;
 
 import jmri.jmrix.rps.*;
 
+import javax.vecmath.Point3d;
+
 /**
  * JUnit tests for the rps.RpsTrackingFrame class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RpsTrackingFrameTest extends TestCase {
 
     public void testShow() {
+        new Engine(){ void reset() { _instance = null; }}.reset();
+        Engine.instance().setReceiverCount(2);
+        Engine.instance().setReceiver(0, new Receiver(new Point3d(12.,12.,0.)));
+        Engine.instance().setReceiver(1, new Receiver(new Point3d(12.,12.,0.)));
+
         RpsTrackingFrame f = new RpsTrackingFrame("Test RPS Tracking");
         f.initComponents();
         f.setVisible(true);
