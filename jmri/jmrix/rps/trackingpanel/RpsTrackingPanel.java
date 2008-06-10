@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -84,8 +84,13 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         this.showReceivers = show;
     }
     
+    void setShowRegions(boolean show) {
+        this.showRegions = show;
+    }
+    
     boolean showErrors = false;
     boolean showReceivers = false;
+    boolean showRegions = false;
     
     /**
      * Sets the coordinates of the upper-right corner of
@@ -131,15 +136,17 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         currentAT.translate(-xorigin,-yorigin);  // put origin in bottom corner
         g2.setTransform(currentAT);
 
-        // Draw the regions
-        List l = Model.instance().getRegions();
-        for (int i = 0; i<l.size(); i++) {
-            g2.setPaint(regionOutlineColor);
-            g2.draw(((Region)l.get(i)).getPath()); // border (same color)
-            g2.setPaint(regionFillColor);
-            g2.fill(((Region)l.get(i)).getPath());
+        if (showRegions) {
+            // Draw the regions
+            List l = Model.instance().getRegions();
+            for (int i = 0; i<l.size(); i++) {
+                g2.setPaint(regionOutlineColor);
+                g2.draw(((Region)l.get(i)).getPath()); // border (same color)
+                g2.setPaint(regionFillColor);
+                g2.fill(((Region)l.get(i)).getPath());
+            }
         }
-
+        
         // Draw the measurements; changes graphics
         for (int i = 0; i<measurementRepList.size(); i++) {
             ((MeasurementRep)measurementRepList.get(i)).draw(g2);

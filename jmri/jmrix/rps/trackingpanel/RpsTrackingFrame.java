@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Frame containing the entire display tool
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     
@@ -50,7 +50,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
             });
         line.add(showErrButton);
 
-        // button for handling errors
+        // button for showing receivers
         showRecButton = new JCheckBox("Show receivers");
         showRecButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -58,6 +58,15 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
                 }
             });
         line.add(showRecButton);
+
+        // button for showing regions
+        showRegButton = new JCheckBox("Show regions");
+        showRegButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    showRegButtonChanged();
+                }
+            });
+        line.add(showRegButton);
 
         controls.add(line);
         
@@ -83,6 +92,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     JButton clearButton;
     JCheckBox showErrButton;
     JCheckBox showRecButton;
+    JCheckBox showRegButton;
     RpsTrackingPanel panel;
     
     void showErrButtonChanged() {
@@ -90,6 +100,10 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     }
     void showRecButtonChanged() {
         panel.setShowReceivers(showRecButton.isSelected());
+        panel.repaint();
+    }
+    void showRegButtonChanged() {
+        panel.setShowRegions(showRegButton.isSelected());
         panel.repaint();
     }
     void clearButtonChanged() {
