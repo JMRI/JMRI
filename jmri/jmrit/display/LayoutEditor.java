@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3095,9 +3095,30 @@ public class LayoutEditor extends JmriJFrame {
         
         int retVal = inputFileChooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
-                                       inputFileChooser.getSelectedFile().getPath());
-									   
+//        NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
+//                                       inputFileChooser.getSelectedFile().getPath());
+ 
+        String name = inputFileChooser.getSelectedFile().getPath();
+        String defaultPrefDir = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+java.io.File.separator;
+        String defaultProgDir = System.getProperty("user.dir")+java.io.File.separator;
+        // try to convert to portable path
+        int len = name.length();
+        // first, try relative to preferences directory, a "file:" name
+        if (name.startsWith(defaultPrefDir))
+            name = "file:"+name.substring(defaultPrefDir.length(),len);
+        
+        // next, try relative to program directory, a "resource:" name
+        if (name.startsWith(defaultProgDir))
+            name = name.substring(defaultProgDir.length(),len);
+            
+        if (log.isDebugEnabled()) {
+            log.debug("getPath: "+inputFileChooser.getSelectedFile().getPath());
+            log.debug("prgPath: "+defaultProgDir);
+            log.debug("prfPath: "+defaultPrefDir);
+            log.debug("   name: "+name);
+        }
+        
+        NamedIcon icon = jmri.jmrit.catalog.CatalogPane.getIconByName(name);									   
         LayoutPositionableLabel l = new LayoutPositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
