@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.4 2008-06-10 14:33:54 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.5 2008-06-10 14:40:11 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -109,7 +109,7 @@ XML format we use
 <li>Create the icon on the panel editor, and save the panel into a file.
 <li>Make a backup copy of the file, in case something goes wrong.
 <li>Using a text editor, open the file to change it.
-<li>Find the line that defines the icon.  It will contain the string "RpsIcon", 
+<li>Find the line that defines the icon.  It will contain the string "RpsPositionIconXml", 
 so one approach is to search for that. It will look something like:
 <code><pre>
     &lt;sensoricon x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
