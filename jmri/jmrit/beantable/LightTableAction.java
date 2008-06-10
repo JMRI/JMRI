@@ -37,7 +37,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -197,6 +197,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     DecimalFormat oneDigit = new DecimalFormat("0");
+    DecimalFormat oneDotTwoDigit = new DecimalFormat("0.00");
     JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreated = false;
@@ -777,7 +778,7 @@ public class LightTableAction extends AbstractTableAction {
             fieldMinIntensity.setText(oneDigit.format(g.getMinIntensity() * 100) + "  ");
             fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100) + "  ");
         	if (g.isTransitionAvailable()) {
-                fieldTransitionTime.setText(oneDigit.format(g.getTransitionTime()) + "    ");
+                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    ");
         	}
         }
         setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());

@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -32,6 +32,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
     DecimalFormat threeDigits = new DecimalFormat("000");
     DecimalFormat oneDigits = new DecimalFormat("0");
+    DecimalFormat oneDotTwoDigits = new DecimalFormat("0.00");
 
     Light light = null;
     String newState = "";
@@ -435,12 +436,12 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         statusIsVariableCheckBox.setSelected(light.isIntensityVariable());
         statusIsTransitionCheckBox.setSelected(light.isTransitionAvailable());
         nowIntensityLabel.setText(oneDigits.format(light.getCurrentIntensity() * 100));
-        nowTransitionTimeLabel.setText(oneDigits.format(light.getTransitionTime()));
+        nowTransitionTimeLabel.setText(oneDotTwoDigits.format(light.getTransitionTime()));
         nowIntensityMinLabel.setText(oneDigits.format(light.getMinIntensity() * 100));
         nowIntensityMaxLabel.setText(oneDigits.format(light.getMaxIntensity() * 100));
         if (flag) {
         	intensityTextField.setText(oneDigits.format(light.getTargetIntensity() * 100));
-		    transitionTimeTextField.setText(oneDigits.format(light.getTransitionTime()));
+		    transitionTimeTextField.setText(oneDotTwoDigits.format(light.getTransitionTime()));
 		    intensityMinTextField.setText(oneDigits.format(light.getMinIntensity() * 100));
 		    intensityMaxTextField.setText(oneDigits.format(light.getMaxIntensity() * 100));
         }
