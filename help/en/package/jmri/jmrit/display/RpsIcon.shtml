@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.2 2008-06-08 03:13:39 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.3 2008-06-10 14:18:25 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -30,8 +30,31 @@ layout.  RPS Reporter icons move around on the panel to show
 where the corresponding equipment is on the layout.
 
 <p>
+<img src="../../../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work"/>
 <em>This page is still under construction, but the RPS icon 
 support itself is already present in JMRI. Go ahead and try it out!</em>
+<p>
+
+RPS icons are a way of putting icons on a 
+<a href="PanelEditor.shtml">panel</a>
+that will move around as the RPS system finds the location of
+an associated transmitter.
+
+<h2>Adding an RPS Icon to a Panel</h2>
+
+<em>Section still needs lots of work</em><p>
+
+Click "Add RPS reporter" on the 
+<a href="PanelEditor.shtml">panel editor</a>.
+An RPS icon will appear on the panel at the 
+default location and start working.
+<p>
+RIght-click or option-click on the icon to see the popup menu, where
+you can calibrate the icon.
+
+<p>
+Don't forget to save your panel!
+
 <h2>Popup Menu</h2>
 
 The popup menu for an RPS icon contains:
@@ -40,28 +63,67 @@ The popup menu for an RPS icon contains:
 <dd>This is just a title; selecting it doesn't do anything
 
 <dt>Rotate
-<dd>
+<dd>Rotates how the icon is displayed, in 90-degree increments.  Note that
+this is not a rotation of the RPS coordinate system, but merely of the
+icon presentation.
 
 <dt>Set Origin
-<dd>
+<dd>Sets the current display position of the icon as the 0,0 position
+of the RPS system.  This must be done as the first step in calibration.
 
 <dt>Set Current Location
-<dd>
+<dd>Changes the calibration so that it's position on the screen
+and the RPS measurement agree.  To use this, first make sure that the
+RPS system has made a good measurement of the transmitters position, then
+drag the icon to where it should appear on the screen, and finally
+choose "Set Current Location" from the popup menu. In the future, 
+when the RPS system measures the same location, the icon will appear 
+in that position.
 
 <dt>Not Calibrated
-<dd>
+<dd>Not a control, this is used to indicate whether the
+icon has been calibrated so that it's position on the screen properly
+reflects the location that RPS has measured.
 
 <dt>Disable
-<dd>
+<dd>Controls whether or not the icon can be dragged around manually.
 
 <dt>Remove
-<dd>
+<dd>Removes the RPS icon from the panel.  This is a permanent removal.
 
 <dt>Help
 <dd>Shows this page
 
 </dl>
 
+<h2>Customization</h2>
+
+Although there is not yet a graphical interface for this yet (it's coming!),
+you can modify the icon for a transmitter that's being tracked by 
+the RPS system so that it displays e.g. the locomotive number, or even a
+small picture of the locomotive.  To do this, you'll edit the
+panel definition file directly.  (There's more information on the
+XML format we use 
+<a href="../../../../html/apps/DecoderPro/IntroXML.shtml">here</a>) The steps are:
+<ul>
+<li>Create the icon on the panel editor, and save the panel into a file.
+<li>Make a backup copy of the file, in case something goes wrong.
+<li>Using a text editor, open the file to change it.
+<li>Find the line that defines the icon.  It will contain the string "RpsIcon", 
+so one approach is to search for that. It will look something like:
+<code><pre>
+    &lt;sensoricon x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre></code>
+<li>To make the icon track a specific transmitter, enter the transmitter's ID as a "filter" attribute.  For example, to 
+have it track transmitter 5510, change the line to:
+<code><pre>
+    &lt;sensoricon filter="5510" x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre></code>
+<li>The "active" and "error" attributes are the icons to be displayed when the system is 
+getting good readings and not getting good readings, respectively.  You can change these to the location of any icon file you'd like.
+</UL>
+
+A nice graphical interface for this is coming, but it's not here yet.
 <!--#include virtual="/Footer" -->
 </body>
 </html>
