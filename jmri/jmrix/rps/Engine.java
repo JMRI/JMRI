@@ -20,7 +20,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 
 
@@ -59,7 +59,7 @@ public class Engine implements ReadingListener {
     Receiver[] receivers;
     
     /**
-     * Set the number of receivers (highest address, since they start from one)
+     * Set the number of receivers
      */
     public void setReceiverCount(int n) {
         if ((receivers!=null) && (n == receivers.length+1)) return;
@@ -388,7 +388,7 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
-    static Engine _instance = null;
+    static protected Engine _instance = null;
     static public Engine instance() {
         if (_instance == null) {
             _instance = new Engine();
