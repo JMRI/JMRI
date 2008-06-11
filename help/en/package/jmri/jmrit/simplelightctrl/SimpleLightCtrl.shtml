@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleLightCtrl.shtml,v 1.4 2008-06-10 02:12:28 ken_c Exp $ -->
+<!-- $Id: SimpleLightCtrl.shtml,v 1.5 2008-06-11 12:57:43 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Light Control</TITLE>
@@ -41,9 +41,47 @@ light on the layout. See "
 
 <DL>
 	<DT>Current State:</DT>
-	<DD>Shows the current known state of the light.
+	
+	<DD>Shows the current known state of the light.</DD>
 		<DL>
-			<DT>Enabled:</DT>
+			<DT>&lt;Unknown&gt;</DT>
+			<DD>Either no light selected or invalid light name.</DD>
+			<DT>Off</DT>
+			<DD>Light is at minimum intensity if variable intensity supported, or off.</DD>
+			<DT>On</DT>
+			<DD>Light is at maximum intensity if variable intensity supported, or full on.</DD>
+			<DT>Intermediate</DT>
+			<DD>
+				Light intensity is between 0 and 100% and the current intensity is equal to
+				the target intensity.
+			</DD>
+			<DT>Transitioning Higher</DT>
+			<DD>
+				Target intensity is higher than the current intensity and light is adjusting
+				every fast minute according to Transition Time value.
+			</DD>
+			<DT>Transitioning Lower</DT>
+			<DD>
+				Target intensity is lower than the current intensity and light is adjusting
+				every fast minute according to Transition Time value.
+			</DD>
+			<DT>Transitioning to Full On</DT>
+			<DD>
+				Target intensity is higher than the current intensity,
+				and equal or higher than maximum intensity and light is adjusting
+				every fast minute according to Transition Time value.
+			</DD>
+			<DT>Transitioning to Full Off</DT>
+			<DD>
+				Target intensity is lower than the current intensity,
+				and equal or lower than minimum intensity and light is adjusting
+				every fast minute according to Transition Time value.
+			</DD>
+		</DL>
+	
+	<DD>Configuration Options of Lights:
+		<DL>
+		<DT>Enabled:</DT>
 			<DD>The light will respond to its automatic control type.</DD>
 			<DT>Variable:</DT>
 			<DD>Light may be commanded to values between 0% and 100%.</DD>
@@ -59,6 +97,14 @@ light on the layout. See "
 
 	<DT>Off</DT>
 	<DD>Push this button to turn off the light.</DD>
+
+	<DT>Change Intensity</DT>
+	<DD>Enter a new value for the light (0% to 100%) and pressing
+		this button will set the new target intensity.
+		If transitional is supported if will use the transition
+		time for computing how fast to move from current intensity
+		to the new target intensity.
+	</DD>
 
 </DL>
 <BR>
