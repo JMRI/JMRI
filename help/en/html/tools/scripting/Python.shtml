@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Python.shtml,v 1.1 2008-02-17 04:52:52 jacobsen Exp $ -->
+<!-- $Id: Python.shtml,v 1.2 2008-06-12 15:04:15 jacobsen Exp $ -->
 <title>JMRI: The Python/Jython language</title>
 
 <!-- Style -->
@@ -49,7 +49,7 @@ at the beginning.  You might want to skip to the
 <a href="http://www.python.org/doc/tut/node5.html">part about the language itself</a>.
 
 <P>
-Non-programmers might want to start with some of the resources for them 
+Non-programmers might want to start with some of the  
 <A HREF="http://www.python.org/moin/BeginnersGuide">resources for them</a>
 listed on the python website.
 
