@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -80,15 +80,42 @@ public class PollTablePane extends javax.swing.JPanel {
                     checkPolling();
             }
         });
-        bscMode = new JCheckBox(rb.getString("LabelBscMode"));
+    
+        JPanel m = new JPanel();
+        m.setLayout(new BoxLayout(m, BoxLayout.Y_AXIS));
+        ButtonGroup g = new ButtonGroup();
+        bscMode = new JRadioButton(rb.getString("LabelBscMode"));
         bscMode.setSelected(Engine.instance().getBscPollMode());
-        p.add(bscMode);
+        m.add(bscMode);
+        g.add(bscMode);
         bscMode.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event) {
                     modifiedFlag.setModifiedFlag(true);
                     checkMode();
             }
         });
+        directMode = new JRadioButton(rb.getString("LabelDirectMode"));
+        directMode.setSelected(Engine.instance().getDirectPollMode());
+        m.add(directMode);
+        g.add(directMode);
+        directMode.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event) {
+                    modifiedFlag.setModifiedFlag(true);
+                    checkMode();
+            }
+        });
+        throttleMode = new JRadioButton(rb.getString("LabelThrottleMode"));
+        throttleMode.setSelected(Engine.instance().getThrottlePollMode());
+        m.add(throttleMode);
+        g.add(throttleMode);
+        throttleMode.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event) {
+                    modifiedFlag.setModifiedFlag(true);
+                    checkMode();
+            }
+        });
+        p.add(m);
+        
         p.add(Box.createHorizontalGlue());
         p.add(new JLabel(rb.getString("LabelDelay")));
         delay = new JTextField(5);
@@ -115,7 +142,9 @@ public class PollTablePane extends javax.swing.JPanel {
     
     JTextField delay;
     JCheckBox polling;
-    JCheckBox bscMode;
+    JRadioButton bscMode;
+    JRadioButton directMode;
+    JRadioButton throttleMode;
     
     /**
      * Save the default value file
@@ -143,7 +172,12 @@ public class PollTablePane extends javax.swing.JPanel {
      * Change the polling mode
      */
     void checkMode() {
-        Engine.instance().setBscPollMode(bscMode.isSelected());
+        if (bscMode.isSelected())
+            Engine.instance().setBscPollMode();
+        else if (throttleMode.isSelected())
+            Engine.instance().setThrottlePollMode();
+        else
+            Engine.instance().setDirectPollMode();
     }
     
     /**

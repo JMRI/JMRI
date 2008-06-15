@@ -5,6 +5,10 @@ package jmri.jmrix.rps;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+// for F2 hack
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +24,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 
 
@@ -295,12 +299,25 @@ public class Engine implements ReadingListener {
     
     int pollIndex = -1; // left at last one done
     boolean bscPoll = false;
+    boolean throttlePoll = false;
     
-    public void setBscPollMode(boolean bsc) { bscPoll = bsc; }
+    public void setBscPollMode() { 
+        bscPoll = true;
+        throttlePoll = false;
+    }
+    public void setDirectPollMode() { 
+        bscPoll = false;
+        throttlePoll = false;
+    }
+    public void setThrottlePollMode() { 
+        bscPoll = false;
+        throttlePoll = true;
+    }
     public boolean getBscPollMode() { return bscPoll; }
-    
+    public boolean getThrottlePollMode() { return throttlePoll; }
+    public boolean getDirectPollMode() { return !(bscPoll || throttlePoll); }
+        
     void startpoll() {
-        log.debug("start poll");
         // time to start operation
         pollThread = new Thread(){
             public void run() {
@@ -323,7 +340,9 @@ public class Engine implements ReadingListener {
         };
         pollThread.start();
     }
+    
     Thread pollThread;
+    
     void stoppoll() {
         if (pollThread != null) pollThread.interrupt();
     }
@@ -336,29 +355,48 @@ public class Engine implements ReadingListener {
             packet = jmri.NmraPacket.threeBytePacket(
                                 t.getAddress(), t.isLongAddress(), 
                                 (byte)0xC0, (byte)0xA5, (byte)0xFE);
-
+            if (jmri.InstanceManager.commandStationInstance() != null)
+                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
         } else {
             // poll using F2
-            packet = jmri.NmraPacket.function0Through4Packet(
+            if (throttlePoll) {
+                // use throttle; first, get throttle
+                if (t.checkInit()) {
+                    // now send F2
+                    t.getThrottle().setF2(true);
+                } else return;  // bail if not ready
+            } else {
+                // send packet direct
+                packet = jmri.NmraPacket.function0Through4Packet(
                                 t.getAddress(), t.isLongAddress(),
                                 false, false, true, false, false);
+                if (jmri.InstanceManager.commandStationInstance() != null)
+                    jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+            }
         }
-        if (jmri.InstanceManager.commandStationInstance() != null)
-            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
     }
     void setOff(int i) {
     if (!bscPoll) {
             // have to turn off F2 since not using BSC
             Transmitter t = getTransmitter(i);
-            byte[] packet = jmri.NmraPacket.function0Through4Packet(
+            if (throttlePoll) {
+                // use throttle; first, get throttle
+                if (t.checkInit()) {
+                    // now send F2
+                    t.getThrottle().setF2(false);
+                } else return;  // bail if not ready
+            } else {
+                // send direct
+                byte[] packet = jmri.NmraPacket.function0Through4Packet(
                                     t.getAddress(), t.isLongAddress(),
                                     false, false, false, false, false);
-            if (jmri.InstanceManager.commandStationInstance() != null)
-                jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+                if (jmri.InstanceManager.commandStationInstance() != null)
+                    jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+            }
         }
     }
     
-    public class Transmitter {
+    public class Transmitter implements jmri.ThrottleListener {
         Transmitter(String id, boolean polled, int address, boolean longAddress) {
             setID(id);
             setPolled(polled);
@@ -385,6 +423,24 @@ public class Engine implements ReadingListener {
         Measurement lastMeasurement = null;
         public void setLastMeasurement(Measurement last) { lastMeasurement = last; }
         public Measurement getLastMeasurement() { return lastMeasurement; }
+    
+        // stuff to do F2 poll
+        DccThrottle throttle;
+        boolean needReqThrottle = true;
+        
+        DccThrottle getThrottle() { return throttle; }
+        boolean checkInit() {
+            if (throttle != null) return true;
+            if (!needReqThrottle) return false;
+            // request throttle
+            InstanceManager.throttleManagerInstance().requestThrottle(address,longAddress, this);
+            return false;
+        }
+
+        public void notifyThrottleFound(DccThrottle t) {
+            needReqThrottle = false;
+            throttle = t;
+        }
     }
 
     // for now, we only allow one Engine
