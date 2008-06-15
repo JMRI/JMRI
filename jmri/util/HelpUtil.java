@@ -22,7 +22,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class HelpUtil {
@@ -70,7 +70,8 @@ public class HelpUtil {
     }
 
     static public void addHelpToComponent(java.awt.Component component, String ref) {
-        globalHelpBroker.enableHelpOnButton(component, ref, null);
+        if (globalHelpBroker!=null)
+            globalHelpBroker.enableHelpOnButton(component, ref, null);
     }
     
     static boolean init = false;
