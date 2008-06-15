@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class LocoNetMenu extends JMenu {
     public LocoNetMenu(String name) {
@@ -35,7 +35,6 @@ public class LocoNetMenu extends JMenu {
         add(new javax.swing.JSeparator());
         
         add(new jmri.jmrix.loconet.bdl16.BDL16Action(rb.getString("MenuItemBDL16Programmer")));
-        // add(new jmri.jmrix.loconet.locoio.LocoIOAction(rb.getString("MenuItemLocoIOProgrammer")));
         add(new jmri.jmrix.loconet.locoio.LocoIOAction(rb.getString("MenuItemLocoIOProgrammer")));
         add(new jmri.jmrix.loconet.pm4.PM4Action(rb.getString("MenuItemPM4Programmer")));
         add(new jmri.jmrix.loconet.se8.SE8Action(rb.getString("MenuItemSE8cProgrammer")));
@@ -51,7 +50,7 @@ public class LocoNetMenu extends JMenu {
 
         add(new javax.swing.JSeparator());
         
-        add(new jmri.jmrit.messager.MessageFrameAction( rb.getString("MenuItemThrottleMessages")));
+        add(new jmri.jmrix.loconet.swing.throttlemsg.MessageFrameAction( rb.getString("MenuItemThrottleMessages")));
         add(new jmri.jmrix.loconet.locogen.LocoGenAction(rb.getString("MenuItemSendPacket")));
         add(new jmri.jmrix.loconet.downloader.LoaderPanelAction( rb.getString("MenuItemDownload")));
         add(new jmri.jmrix.loconet.soundloader.LoaderPanelAction( rb.getString("MenuItemSoundload")));
