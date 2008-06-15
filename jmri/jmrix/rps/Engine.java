@@ -24,7 +24,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 
 
@@ -270,7 +270,10 @@ public class Engine implements ReadingListener {
         if (transmitters == null) return null;
         return (Transmitter) transmitters.get(i);
     }
-    public int getNumTransmitters() { return transmitters.size(); }
+    public int getNumTransmitters() { 
+        if (transmitters == null) return 0;
+        return transmitters.size();
+    }
     
     public int getPolledAddress() {
         Transmitter t = getTransmitter(pollIndex);
