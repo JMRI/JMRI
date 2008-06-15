@@ -10,11 +10,19 @@ import java.util.ArrayList;
  * Model (and provide utility functions for) board memory
  * as expressed in .hex files.
  * <P>
- * This will eventually have to be extended to 24-bit addressing,
+ * Files come in two formats.  The older one had 16 bit (4 character)
+ * addresses; we support the entire address space for these.
+ * The newer form has 24 bit (6 character) addresses, which moves
+ * the rest of the information over on the line.  The
+ * "address24bit" boolean controls which of these is expected.
+ * <p>
+ * Note that even with 24 bit addresses, we load the entire address space
+ * by assuming that there are is only 64K of actual content.
+ * This will eventually have to be extended to full 24-bit addressing,
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class MemoryContents {
 
@@ -60,6 +68,7 @@ public class MemoryContents {
         return null;
     }
     
+    boolean address24bit = true;
     
     public void readHex(File file) throws FileNotFoundException {
         DataInputStream fileStream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
@@ -81,27 +90,30 @@ public class MemoryContents {
                     // machine comment; store 
                     lines.add(s);
                 } else if (s.charAt(0)==':') {
-                    // hex file
-                    int type = Integer.valueOf(s.substring(7,9),16).intValue();
+                    // hex file, find record type
+                    int start = 2;
+                    if (address24bit) start = 4;
+                    int type = Integer.valueOf(s.substring(start+5,start+7),16).intValue();
+                    
                     if (type == 0) {
                         // record type 0 is data
                         int count = Integer.valueOf(s.substring(1,3),16).intValue();
-                        int address = Integer.valueOf(s.substring(3,7),16).intValue();
+                        int address = Integer.valueOf(s.substring(start+1,start+5),16).intValue();
 
-                        for (int i=9; i<9+count*2; i+=2) {
+                        for (int i=7+start; i<7+start+count*2; i+=2) {
                             // parse as hex into integer, then convert to byte
                             ival = Integer.valueOf(s.substring(i,i+2),16).intValue();
                             pageArray[currentPage][address++] = ival;
                         } 
                     } else if (type == 4) {
                         // set segment
-                        currentPage = Integer.valueOf(s.substring(9,13),16).intValue();
+                        currentPage = Integer.valueOf(s.substring(start+7,start+11),16).intValue();
                         log.debug("New page "+currentPage+" "+s);
                         initPage(currentPage);
                     } else if (type == 1) {
                         continue; // not record we need to handle
                     } else {
-                        log.warn("Unknown hex record type "+type);
+                        log.warn("Unknown hex record type "+type+"\n"+s);
                         continue;
                     }
                     // end parsing hex file record
