@@ -11,7 +11,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Reading {
 
@@ -20,9 +20,22 @@ public class Reading {
         this.values = values;
     }
         
+    public Reading(int id, double[] values, int time) {
+        this.id = id;
+        this.values = values;
+        this.time = time;
+    }
+        
     public Reading(Reading r) {
         this.id = r.getID();
         this.values = r.getValues();
+    }
+    
+    /**
+     * Return the time at which this Reading was requested
+     */
+    public int getTime() {
+        return time;
     }
     
     /**
@@ -54,6 +67,7 @@ public class Reading {
         
     int id;
     double[] values;
+    int time; // in msec since epoch
         
     /**
      * Preserve a reference to raw data for possible later logging
