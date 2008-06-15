@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PollingFile extends XmlFile {
 
@@ -41,6 +41,8 @@ public class PollingFile extends XmlFile {
         Element v = new Element("poll");
         v.setAttribute("active", Engine.instance().getPolling()?"true":"false");
         v.setAttribute("interval", ""+Engine.instance().getPollingInterval());
+        v.setAttribute("bscpoll", Engine.instance().getBscPollMode()?"true":"false");
+        v.setAttribute("throttlepoll", Engine.instance().getThrottlePollMode()?"true":"false");
         root.addContent(v);
     }
     
@@ -82,6 +84,19 @@ public class PollingFile extends XmlFile {
             if (a != null) value = a.getIntValue();
         } catch (org.jdom.DataConversionException ex) {}
         Engine.instance().setPollingInterval(value);
+
+        Engine.instance().setDirectPollMode();
+    
+        a = e.getAttribute("bscpoll");
+        boolean bscpoll = false;
+        if (a != null && a.getValue().equals("true")) bscpoll = true;
+        if (bscpoll) Engine.instance().setBscPollMode();
+
+        a = e.getAttribute("throttlepoll");
+        boolean throttlepoll = false;
+        if (a != null && a.getValue().equals("true")) throttlepoll = true;
+        if (throttlepoll) Engine.instance().setThrottlePollMode();
+
     }
     
     /**
