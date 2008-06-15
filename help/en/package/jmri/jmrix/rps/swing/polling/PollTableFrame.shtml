@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PollTableFrame.shtml,v 1.4 2008-06-08 02:13:32 jacobsen Exp $ -->
+<!-- $Id: PollTableFrame.shtml,v 1.5 2008-06-15 05:01:03 jacobsen Exp $ -->
 <title>JMRI: RPS Polling Control</title>
 
 <!-- Style -->
@@ -46,18 +46,31 @@ To control whether the system as a whole is polling, check or uncheck
 the "Poll" box in the bottom section of the window.
 
 <p>
-The "BSC" check box controls what poll message is set through your 
-DCC system.  When checked, it sends a "Binary State Command"; when 
-unchecked, it uses F2.  This option will be removed with 
-later versions of the m-RPS hardware.
+There are three radio buttons that control how polling is done.
+<dl>
+<dt>Use BSC Poll
+<dd>When checked, this uses a "Binary State Command" to poll the RPS system.
+If your RPS transmitters support this, it is the recommended setting except
+for with Lenz systems.
+<dt>Use Direct Poll
+<dd>When checked, JMRI sends F2 commands directly on the track.  
+Use this if your RPS transmitters require F2 polls, and you don't
+have a Lenz DCC system.
+<dt>Use Throttle Poll
+<dd>When checked, JMRI simulates a throttle to send F2 polls.  This
+is currently required for Lenz systems, and not recommended for others.
+</dl>
 
 <p>
-This is the jmri.jmrix.rps.swing.polling.PollTableFrame help page
+The interval box controls the number of milliseconds between polls.
+This should not be set below about 80.  If you are polling
+less than 5 transmitters, set it to 300 or above.
+This option will eventually be removed
+in a later JMRI version, when it becomes automatic.
+<p>
+To save the values so they'll be automatically used
+when the program is next started, click "Store New Default Values".
 
-
-
-
-    
 <!--#include virtual="/Footer" -->
 </body>
 </html>
