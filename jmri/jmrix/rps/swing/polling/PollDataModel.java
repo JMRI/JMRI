@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class PollDataModel extends AbstractTableModel {
 
@@ -33,8 +33,9 @@ public class PollDataModel extends AbstractTableModel {
     static final int LASTXCOL = 4;
     static final int LASTYCOL = 5;
     static final int LASTZCOL = 6;
+    static final int LASTTIME = 7;
 
-    static final int LAST = 6;
+    static final int LAST = 7;
     jmri.ModifiedFlag modifiedFlag;
     
     static final int TYPECOL = -1;
@@ -68,6 +69,8 @@ public class PollDataModel extends AbstractTableModel {
             return rb.getString("TitleYCol");
         case LASTZCOL:
             return rb.getString("TitleZCol");
+        case LASTTIME:
+            return rb.getString("TitleTime");
         default:
             return "";
         }
@@ -76,7 +79,7 @@ public class PollDataModel extends AbstractTableModel {
     public Class getColumnClass(int c) {
         if (c == LONGCOL || c == POLLCOL)
             return Boolean.class;
-        else if (c == ADDRCOL)
+        else if (c == ADDRCOL || c == LASTTIME)
             return Integer.class;
         else if (c == TYPECOL)
             return JComboBox.class;
@@ -124,6 +127,11 @@ public class PollDataModel extends AbstractTableModel {
             if (m == null) return null;
             val = m.getZ();
             return new Double(val);
+        case LASTTIME:
+            m = Engine.instance().getTransmitter(r).getLastMeasurement();
+            if (m == null) return null;
+            int time = m.getReading().getTime();
+            return new Integer(time);
         default:
             return null;
         }
