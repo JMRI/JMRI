@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.5 2008-06-09 15:03:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.6 2008-06-15 16:56:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -166,6 +166,23 @@ has been updated.
 Ken Cameron added a "RobotThrottle.py" example script to demonstrate his
 automated running of trains.
 
+<p>
+Ken Cameron improved formatting in the Light control.
+
+<p>
+Andrew Crosland fixed a bug that Bob Jacobsen had accidentally introduced into the SPROG downloader screens in JMRI 2.1.5
+
+<p>
+Digitrax firmware downloader updated to handle another file format.
+
+<p>
+An internal change:  Throttle messaging has been refactored. 
+If you're building your own application and now have an error with "jmrit.messager", please consult the JavaDoc.
+
+<p>
+C/MRI poll timing has been improved a little.
+
+<p>
 
 <!--#include virtual="/Footer" -->
 
