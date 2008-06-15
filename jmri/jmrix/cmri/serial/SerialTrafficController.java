@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -39,7 +39,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         init (0, 127);
         
         // entirely poll driven, so reduce interval
-        mWaitBeforePoll = 25;  // default = 25
+        mWaitBeforePoll = 5;  // default = 25
 
     }
 
@@ -115,7 +115,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
             log.debug("send init message: "+m);
-            m.setTimeout(2000);  // wait for init to finish (milliseconds)
+            m.setTimeout(500);  // wait for init to finish (milliseconds)
             return m;
         }
         // send Output packet if needed
@@ -123,7 +123,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             log.debug("request write command to send");
             getNode(curSerialNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curSerialNodeIndex).createOutPacket();
-            m.setTimeout(50);  // no need to wait for output to answer
+            m.setTimeout(10);  // no need to wait for output to answer
             return m;
         }
         // poll for Sensor input
