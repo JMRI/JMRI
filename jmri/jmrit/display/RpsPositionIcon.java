@@ -20,7 +20,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -38,7 +38,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         // connect
         Distributor.instance().addMeasurementListener(this);
     }
-
 
     // display icon for a correct reading
     String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
@@ -74,64 +73,76 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
- //       if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            
-            // add x and y coordinates
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getNameString();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
-			
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        active.setRotation(active.getRotation()+1, ours);
-                        error.setRotation(error.getRotation()+1, ours);
-                        displayState();
-                    }
-                });
+        popup = new JPopupMenu();
+        popup.add(new JMenuItem(getNameString()));
+        
+        // add x and y coordinates
+        if (getViewCoordinates()) {
+            popup.add("x= " + this.getX());
+            popup.add("y= " + this.getY());
+            popup.add(new AbstractAction("Set x & y") {
+                public void actionPerformed(ActionEvent e) {
+                    String name = getNameString();
+                    displayCoordinateEdit(name);
+                }
+            });
+        }
+        
+        if (icon) popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    active.setRotation(active.getRotation()+1, ours);
+                    error.setRotation(error.getRotation()+1, ours);
+                    displayState();
+                }
+            });
 
-            popup.add(new AbstractAction("Set Origin") {
-                    public void actionPerformed(ActionEvent e) {
-                        setRpsOrigin();
-                    }
-                });
+        if (showIdItem == null) {
+            showIdItem = new JCheckBoxMenuItem("Show ID");
+            showIdItem.setSelected(false);
+            showIdItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    toggleID(showIdItem.isSelected());
+                }
+            });
+        }
+        popup.add(showIdItem);
 
-            popup.add(new AbstractAction("Set Current Location") {
-                    public void actionPerformed(ActionEvent e) {
-                        setRpsCurrentLocation();
-                    }
-                });
+        popup.add(new AbstractAction("Set Origin") {
+                public void actionPerformed(ActionEvent e) {
+                    setRpsOrigin();
+                }
+            });
 
-            notify = new Notifier();
-            popup.add(notify);
-            
-            addDisableMenuEntry(popup);
-            
-            popup.add(new AbstractAction("Remove") {
-                    public void actionPerformed(ActionEvent e) {
-                        remove();
-                        dispose();
-                    }
-                });
+        popup.add(new AbstractAction("Set Current Location") {
+                public void actionPerformed(ActionEvent e) {
+                    setRpsCurrentLocation();
+                }
+            });
 
-            // add help item
-            JMenuItem item = new JMenuItem("Help");
-            jmri.util.HelpUtil.addHelpToComponent(item, "package.jmri.jmrit.display.RpsIcon");
-            popup.add(item);
-            
+        notify = new Notifier();
+        popup.add(notify);
+        
+        addDisableMenuEntry(popup);
+        
+        popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
+
+        // add help item
+        JMenuItem item = new JMenuItem("Help");
+        jmri.util.HelpUtil.addHelpToComponent(item, "package.jmri.jmrit.display.RpsIcon");
+        popup.add(item);
+        
         // update position
         notify.setPosition(getX(), getY());
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    JCheckBoxMenuItem showIdItem = null;
+    
     /** 
      * Internal class to show position in the popup menu.
      * <P>
@@ -182,33 +193,43 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
      */
     void displayState() {
 
-        updateSize();
-
         if (state) {
-            if (text) super.setText("Active");
             if (icon) super.setIcon(active);
         } else {
-            if (text) super.setText("<unknown>");
             if (icon) super.setIcon(error);
         }
         
+        updateSize();
+        revalidate();
         return;
     }
-
+    
     protected int maxHeight() {
-        return Math.max( (active!=null) ? active.getIconHeight() : 0,
-                         ( error!=null) ?  error.getIconHeight() : 0
-            );
+        return getPreferredSize().height;
     }
     protected int maxWidth() {
-        return Math.max( (active!=null) ? active.getIconWidth() : 0,
-                         ( error!=null) ?  error.getIconWidth() : 0
-            );
+        return getPreferredSize().width;
     }
-
+    
     boolean momentary = false;
     public boolean getMomentary() { return momentary; }
     public void setMomentary(boolean m) { momentary = m; }
+    
+    void toggleID(boolean value) {
+        if (value) {
+            text = true;
+        } else {
+            text = false;
+            setText(null);
+        }
+        displayState();
+    }
+    
+    public boolean isShowID() { return text; }
+    public void setShowID(boolean mode) { 
+        text = mode;
+        displayState();
+    }
     
     /**
      * Respond to a measurement by moving to new position
@@ -226,6 +247,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         else 
             state = true;
             
+        if (text) super.setText(""+m.getReading().getID());
         displayState();
         
         // if the state is bad, leave icon in last position
@@ -337,12 +359,11 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
         if (sxOrigin == getX()) return;
         if (syOrigin == getY()) return;
-        if (lastMeasurement.getX()<10. && lastMeasurement.getX()>-10) return;
-        if (lastMeasurement.getY()<10. && lastMeasurement.getY()>-10) return;
+        // if (lastMeasurement.getX()<10. && lastMeasurement.getX()>-10) return;
+        // if (lastMeasurement.getY()<10. && lastMeasurement.getY()>-10) return;
         
         sxScale = (getX()-sxOrigin)/lastMeasurement.getX();
         syScale = (getY()-syOrigin)/lastMeasurement.getY();
-        System.out.println("scales X: "+sxScale+" Y: "+syScale);
     }
 
     // store coordinate system information
