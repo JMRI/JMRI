@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -128,7 +128,9 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
                 log.error("System name null during register Sensor");
             }
             else {
-                log.debug("system name is "+sName);
+                if (log.isDebugEnabled()) {
+                	log.debug("system name is "+sName);
+                }
                 if ( (sName.charAt(0) == 'P') && (sName.charAt(1) == 'S') ) {
                     // This is a Sensor
                     tNode = SerialAddress.getNodeFromSystemName(sName);

@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -76,7 +76,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
             lastOutputStep = 0;
             
-            log.debug("initIntensity: sent dim reset");
+            if (log.isDebugEnabled()) {
+            	log.debug("initIntensity: sent dim reset");
+            }
         } else {
             // create output sequence
             X10Sequence out = new X10Sequence();
@@ -90,7 +92,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
             lastOutputStep = maxDimStep;
             
-            log.debug("initIntensity: sent bright reset");
+            if (log.isDebugEnabled()) {
+            	log.debug("initIntensity: sent bright reset");
+            }
         }
     }
     
@@ -137,16 +141,22 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         int function;
         if (sendSteps == 0) {
             // nothing to do!
-            log.debug("intensity "+intensity+" within current step, return");
+            if (log.isDebugEnabled()) {
+            	log.debug("intensity "+intensity+" within current step, return");
+            }
             return;
         
         } else if (sendSteps >0) {
             function = X10Sequence.FUNCTION_BRIGHT;
-        	log.debug("function bright");
+        	if (log.isDebugEnabled()) {
+        		log.debug("function bright");
+        	}
         }
         else {
             function = X10Sequence.FUNCTION_DIM;
-        	log.debug("function dim");
+        	if (log.isDebugEnabled()) {
+        		log.debug("function dim");
+        	}
         }
 
         // check for errors

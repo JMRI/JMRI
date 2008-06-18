@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -98,7 +98,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             expectLength = false;
             countingBytes = true;
             remainingBytes = msg.getElement(1)&0xF; // 0 was the read command; max 9, really
-            log.debug("Receive count set to "+remainingBytes);
+            if (logDebug) log.debug("Receive count set to "+remainingBytes);
             return false;
         }
         if (remainingBytes>0) {
@@ -132,14 +132,14 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
         // if the interlock is present, send it
         if (sendInterlock) {
-            log.debug("Send interlock");
+        	if (logDebug) log.debug("Send interlock");
             sendInterlock = false;
             SerialMessage m = new SpecificMessage(1);
             m.setElement(0,0); // not really needed, but this is a slow protocol anyway
             forwardToPort(m, null);
             return false; // just leave in buffer
         }
-        log.debug("end of message: "+msg);
+        if (logDebug) log.debug("end of message: "+msg);
         return true;
     }
     

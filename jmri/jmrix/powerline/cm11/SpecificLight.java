@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -75,7 +75,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * @param intensity The next intensity value that will be set
      */
     protected void initIntensity(double intensity) {
-        log.debug("initIntensity("+intensity+")");
+    	if (log.isDebugEnabled()) {
+            log.debug("initIntensity("+intensity+")");
+    	}
         
         maxDimStep = SerialTrafficController.instance().maxX10DimStep();
 
@@ -91,7 +93,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
             lastOutputStep = 0;
             
-            log.debug("initIntensity: sent dim reset");
+            if (log.isDebugEnabled()) {
+            	log.debug("initIntensity: sent dim reset");
+            }
         } else {
             // going to high, send max dim count high
             X10Sequence out2 = new X10Sequence();
@@ -102,7 +106,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
             lastOutputStep = maxDimStep;
             
-            log.debug("initIntensity: sent bright reset");
+            if (log.isDebugEnabled()) {
+            	log.debug("initIntensity: sent bright reset");
+            }
         }
     }
     
@@ -135,7 +141,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         int function;
         if (sendSteps == 0) {
             // nothing to do!
-            log.debug("intensity " + intensity + " within current step, return");
+            if (log.isDebugEnabled()) {
+            	log.debug("intensity " + intensity + " within current step, return");
+            }
             return;
         
         } else if (sendSteps > 0) {
@@ -188,7 +196,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             return;
         }
 
-        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        if (log.isDebugEnabled()) {
+        	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        }
 
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();

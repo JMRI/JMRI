@@ -9,7 +9,7 @@ import jmri.jmrix.powerline.nodeconfig.*;
  * Definition of objects to handle configuring a layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -37,11 +37,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 		details.add(p);
 
 		// add another button
-		JButton b = new JButton("Configure nodes");
+		//JButton b = new JButton("Configure nodes");
 
-		details.add(b);
+		//details.add(b);
 						
-		b.addActionListener(new NodeConfigAction());		
+		//b.addActionListener(new NodeConfigAction());		
         
     }
     public String name() { return "Powerline Device Connection"; }

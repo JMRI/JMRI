@@ -27,7 +27,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -109,7 +109,9 @@ abstract public class SerialLight extends AbstractVariableLight {
             return;
         }
 
-        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        if (log.isDebugEnabled()) {
+        	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        }
 
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();

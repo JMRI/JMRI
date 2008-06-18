@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialAddress {
 
@@ -234,7 +234,9 @@ public class SerialAddress {
             nName = systemName.substring(0,3) + Integer.toString(Integer.parseInt(hCodes.group(2)));
         }
         if (nName == "") {
-        	log.debug("valid name doesn't normalize: " + systemName + " nMatch: " + nMatch + " nCount: " + nCount + " hMatch: " + hMatch + " hCount: " + hCount);
+        	if (log.isDebugEnabled()) {
+        		log.debug("valid name doesn't normalize: " + systemName + " nMatch: " + nMatch + " nCount: " + nCount + " hMatch: " + hMatch + " hCount: " + hCount);
+        	}
         }
         return nName;
     }

@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -104,7 +104,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             log.warn("can't handle dim counts > 15?");
             level = 16;
         }
-        log.debug("dim level: " + level);
+        if (logDebug) log.debug("dim level: " + level);
         level = 16 - level;
         int function = c.getFunction();
         

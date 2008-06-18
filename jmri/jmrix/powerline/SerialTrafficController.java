@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -245,7 +245,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     static public SerialTrafficController instance() {
         if (self == null) {
-            log.debug("Creating default SerialTrafficController instance");
+            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
             self = new SerialTrafficController();
         }
         return self;
