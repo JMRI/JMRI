@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-1-7.dtd,v 1.1 2008-05-31 05:16:33 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-1-7.dtd,v 1.2 2008-06-18 05:34:11 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.1.7 development.  Do not modify it       -->
 <!-- after version 2.1.7 is released.  For more information,                -->
@@ -365,6 +365,12 @@
     <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
     <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
     <!ATTLIST sensoricon momentary	(true|false) "false">
+    <!ATTLIST sensoricon sxscale	CDATA #IMPLIED>
+    <!ATTLIST sensoricon syscale	CDATA #IMPLIED>
+    <!ATTLIST sensoricon sxorigin	CDATA #IMPLIED>
+    <!ATTLIST sensoricon syorigin	CDATA #IMPLIED>
+    <!ATTLIST sensoricon filter	    CDATA #IMPLIED>
+    <!ATTLIST sensoricon showid	(true|false) "false">
 
   <!ELEMENT reportericon EMPTY>
     <!ATTLIST reportericon class	CDATA #REQUIRED>
