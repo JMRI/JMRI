@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.6 2008-06-10 15:07:46 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.7 2008-06-18 05:33:16 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -91,6 +91,9 @@ The popup menu for an RPS icon contains:
 <dd>Rotates how the icon is displayed, in 90-degree increments.  Note that
 this is not a rotation of the RPS coordinate system, but merely of the
 icon presentation.
+
+<dt>Show ID
+<dd>When checked, the ID string will be displayed in addition to the icon.
 
 <dt>Set Origin
 <dd>Sets the current display position of the icon as the 0,0 position
