@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -46,6 +46,8 @@ public class RpsPositionIconXml implements XmlAdapter {
         element.setAttribute("syscale", ""+p.getYScale());
         element.setAttribute("sxorigin", ""+p.getXOrigin());
         element.setAttribute("syorigin", ""+p.getYOrigin());
+        
+        element.setAttribute("showid", p.isShowID()?"true":"false");
 
         if (p.getFilter() > 0) 
             element.setAttribute("filter", ""+p.getFilter());
@@ -99,6 +101,12 @@ public class RpsPositionIconXml implements XmlAdapter {
             l.setMomentary(true);
         else
             l.setMomentary(false);
+
+        a = element.getAttribute("showid");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setShowID(true);
+        else
+            l.setShowID(false);
 
         // find coordinates
         int x = 0;
