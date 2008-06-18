@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class RpsTest extends TestCase {
 
@@ -46,7 +46,7 @@ public class RpsTest extends TestCase {
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
         suite.addTest(jmri.jmrix.rps.TransformTest.suite());
-        suite.addTest(jmri.jmrix.rps.swing.polling.PollTableActionTest.suite()); // do 2nd to display in front
+        suite.addTest(jmri.jmrix.rps.swing.SwingTest.suite()); // do 2nd to display in front
         suite.addTest(jmri.jmrix.rps.csvinput.CsvTest.suite()); // do 3rd to display in front
         suite.addTest(jmri.jmrix.rps.trackingpanel.TrackingPanelTest.suite()); // do 4th to display in front
         return suite;
