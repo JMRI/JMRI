@@ -21,7 +21,7 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -30,7 +30,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Define the current DTD version string.
      * {@see <A HREF="package-summary.html#DTD">DTD versioning</a>
      */
-    static final String dtdVersion = "2-1-5";
+    static final String dtdVersion = "2-1-7";
     
     public ConfigXmlManager() {
     }
