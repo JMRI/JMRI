@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.6 2008-06-15 16:56:22 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.7 2008-06-21 23:50:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -183,6 +183,11 @@ If you're building your own application and now have an error with "jmrit.messag
 C/MRI poll timing has been improved a little.
 
 <p>
+<a href="http://jmri.sf.net/help/en/html/hardware/can/index.shtml">Initial support</a>
+for CAN-based networks is included,
+focusing on the
+<a href="http://www.merg.org.uk/">MERG</a>
+<a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>.
 
 <!--#include virtual="/Footer" -->
 
