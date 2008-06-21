@@ -433,6 +433,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.JUnit_write" url="html/doc/Technical/JUnit.shtml#write" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_WinConfig" url="html/tools/throttle/ThrottleChapter2.shtml#WinConfig" />
 	<mapID target="html.tools.signaling.index_logix" url="html/tools/signaling/index.shtml#logix" />
+	<mapID target="package.jmri.jmrix.can.swing.send.CanSendFrame" url="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml" />
 	<mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml" />
 	<mapID target="html.apps.DecoderPro.FnMapping" url="html/apps/DecoderPro/FnMapping.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter1_MainMenu" url="html/tools/throttle/ThrottleChapter1.shtml#MainMenu" />
