@@ -25,8 +25,8 @@ import java.util.LinkedList;
  * "Idle" is a special case, where there is no communications in process,
  * and the port is waiting to do something.
  *
- * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.55 $
+ * @author          Bob Jacobsen  Copyright (C) 2003
+ * @version         $Revision: 1.56 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -85,11 +85,10 @@ abstract public class AbstractMRTrafficController {
                 try {
                     forwardMessage(client, m);
                 }
-                catch (Exception e)
-                    {
-                        log.warn("notify: During message dispatch to "+client+"\nException "+e);
-                        e.printStackTrace();
-                    }
+                catch (Exception e) {
+                    log.warn("notify: During message dispatch to "+client+"\nException "+e);
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -131,12 +130,12 @@ abstract public class AbstractMRTrafficController {
     // Use this function to check and see if the programmer is idle 
     // Override in the system specific code if necessary (see notes for 
     // enterNormalMode() Above).
-    protected boolean programmerIdle() {	    
+    protected boolean programmerIdle() {        
         return true; 
     }
     
     // Allow subclasses to add a delay after enabling the programming track
-    protected int enterProgModeDelayTime() {	    
+    protected int enterProgModeDelayTime() {        
         return 0; 
     }
     
@@ -152,7 +151,7 @@ abstract public class AbstractMRTrafficController {
     
     // Use this function to identify If the command station may send 
     // messages without a request sent to it
-    protected void setAllowUnexpectedReply(boolean expected) {	    
+    protected void setAllowUnexpectedReply(boolean expected) {      
         allowUnexpectedReply=expected; 
     }
     
@@ -170,7 +169,7 @@ abstract public class AbstractMRTrafficController {
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
                 //skip dest for now, we'll send the message to there last.
-		if(dest!=client)
+        if(dest!=client)
                     forwardReply(client, r);
             }
             catch (Exception e) {
@@ -248,7 +247,7 @@ abstract public class AbstractMRTrafficController {
                         mCurrentState = WAITREPLYINNORMMODESTATE;
                         log.debug("Enter Normal Mode");
                     }
-		    if(modeMsg!=null) {
+                    if(modeMsg!=null) {
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {
@@ -259,7 +258,7 @@ abstract public class AbstractMRTrafficController {
                         if (mCurrentState != OKSENDMSGSTATE)
                             handleTimeout(modeMsg);
                         mCurrentState = WAITMSGREPLYSTATE;
-		    }
+                    }
                 }
                 forwardToPort(m, l);
                 
@@ -345,12 +344,12 @@ abstract public class AbstractMRTrafficController {
     }
     
     // Dispatch control and timer
-    protected boolean replyInDispatch = false;			// true when reply has been received but dispatch not completed
+    protected boolean replyInDispatch = false;          // true when reply has been received but dispatch not completed
     private int maxDispatchTime = 0;
     private int warningMessageTime = DISPATCH_WARNING_TIME;
     private static final int DISPATCH_WAIT_INTERVAL = 100;
-    private static final int DISPATCH_WARNING_TIME = 12000;	// report warning when max dispatch time exceeded
-    private static final int WARN_NEXT_TIME = 1000;			// report every second
+    private static final int DISPATCH_WARNING_TIME = 12000; // report warning when max dispatch time exceeded
+    private static final int WARN_NEXT_TIME = 1000;         // report every second
     
     private void checkReplyInDispatch() {
         int loopCount = 0;
@@ -376,7 +375,7 @@ abstract public class AbstractMRTrafficController {
     
     // used to determine if interface is down
     public static boolean hasTimeouts(){
-    	return timeoutFlag;
+        return timeoutFlag;
     }
     
     private static boolean timeoutFlag = false;
@@ -463,10 +462,10 @@ abstract public class AbstractMRTrafficController {
                     for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     log.debug(f);
                 }
-		while(m.getRetries()>=0) {
+        while(m.getRetries()>=0) {
                     if(portReadyToSend(controller)) {
-			ostream.write(msg);
-			break;
+            ostream.write(msg);
+            break;
                     } else if(m.getRetries()>=0) {
                         if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
                         m.setRetries(m.getRetries() - 1);
@@ -476,7 +475,7 @@ abstract public class AbstractMRTrafficController {
                             }
                         } catch (InterruptedException e) { log.error("retry wait interupted"); }
                     } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
-		}
+        }
             }
             else {
                 // no stream connected
@@ -532,7 +531,7 @@ abstract public class AbstractMRTrafficController {
             rcvThread.setName("Receive");
             int xr = rcvThread.getPriority();
             xr++;
-            rcvThread.setPriority(xr);		//bump up the priority
+            rcvThread.setPriority(xr);      //bump up the priority
             rcvThread.start();
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was "+e);
@@ -544,7 +543,7 @@ abstract public class AbstractMRTrafficController {
      */
     private String portName = "<unknown>";
     public String getPortName(){
-    	return controller.getCurrentPortName();
+        return controller.getCurrentPortName();
     }
     
     /**
@@ -565,8 +564,8 @@ abstract public class AbstractMRTrafficController {
      * May throw an Exception.
      */
     public boolean portReadyToSend(AbstractPortController p) throws Exception {
-	if(p!=null) return true;
-	else return false;
+    if(p!=null) return true;
+    else return false;
     }
 
     // data members to hold the streams
@@ -653,7 +652,7 @@ abstract public class AbstractMRTrafficController {
             if(flushReceiveChars){
                 log.warn("timeout flushes receive buffer: "+ msg.toString());
                 msg.flush();
-                i = 0;	// restart
+                i = 0;  // restart
                 flushReceiveChars = false;
             }
             if (canReceive()) {
@@ -673,7 +672,7 @@ abstract public class AbstractMRTrafficController {
      * into a reply message.  When false, discard char received
      */
     protected boolean canReceive(){
-    	return true;
+        return true;
     }
 
     /**
@@ -763,7 +762,7 @@ abstract public class AbstractMRTrafficController {
                 if (allowUnexpectedReply == true) {
                     if (log.isDebugEnabled())
                         log.debug("Allowed unexpected reply received in state: "
-                                  + mCurrentState	+ " was " + msg.toString());
+                                  + mCurrentState   + " was " + msg.toString());
                 } else {
                     log.error("reply complete in unexpected state: "
                               + mCurrentState + " was " + msg.toString());
@@ -850,7 +849,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
         public void run() {
-	    mTC.finalize();
+        mTC.finalize();
         }
     } // end cleanUpHook
 
