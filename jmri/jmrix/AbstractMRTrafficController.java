@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.56 $
+ * @version         $Revision: 1.57 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -458,14 +458,15 @@ abstract public class AbstractMRTrafficController {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "write message: ";
+                    String f = "formatted message: ";
                     for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     log.debug(f);
                 }
-        while(m.getRetries()>=0) {
+                while(m.getRetries()>=0) {
                     if(portReadyToSend(controller)) {
-            ostream.write(msg);
-            break;
+                        ostream.write(msg);
+                        log.debug("written");
+                        break;
                     } else if(m.getRetries()>=0) {
                         if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
                         m.setRetries(m.getRetries() - 1);
@@ -475,14 +476,12 @@ abstract public class AbstractMRTrafficController {
                             }
                         } catch (InterruptedException e) { log.error("retry wait interupted"); }
                     } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
-        }
-            }
-            else {
+                }
+            } else {  // ostream is null
                 // no stream connected
                 connectionWarn();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             portWarn(e);
         }
      }
@@ -589,6 +588,10 @@ abstract public class AbstractMRTrafficController {
                 reportReceiveLoopException(e);
                 break;
             }
+            catch (Exception e1) {
+                log.error("Exception in receive loop: "+e1);
+                e1.printStackTrace();
+            }
         }
     }
     
@@ -647,7 +650,7 @@ abstract public class AbstractMRTrafficController {
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
-            // log.debug("char: "+(char1&0xFF));
+            //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over
             if(flushReceiveChars){
                 log.warn("timeout flushes receive buffer: "+ msg.toString());
@@ -801,7 +804,7 @@ abstract public class AbstractMRTrafficController {
      * Internal class to remember the Reply object and destination
      * listener with a reply is received.
      */
-    class RcvNotifier implements Runnable {
+    protected class RcvNotifier implements Runnable {
         AbstractMRReply mMsg;
         AbstractMRListener mDest;
         AbstractMRTrafficController mTC;
@@ -816,6 +819,12 @@ abstract public class AbstractMRTrafficController {
             mTC.notifyReply(mMsg, mDest);
         }
     } // end RcvNotifier
+    
+    // allow creation of object outside package
+    protected RcvNotifier newRcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
+                    AbstractMRTrafficController pTC) {
+           return new RcvNotifier(pMsg, pDest, pTC);      
+    }
     
     /**
      * Internal class to remember the Message object and destination
