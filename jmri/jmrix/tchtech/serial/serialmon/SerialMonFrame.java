@@ -21,7 +21,7 @@ import jmri.jmrix.tchtech.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) TCH Technology SNIC serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -60,13 +60,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine(s+"\n", l.toString());
         } else if (l.isInit()) {
             String s = "Set Attrib Node="+l.getNA()
-                +" type="+((char)l.getElement(2));
+                +" type="+((char)l.getElement(2));//2
             int len = l.getNumDataElements();
-            if (len>=5)
-                //s +=" DL="+(l.getElement(3)*256+l.getElement(4));
+                         
             if (len>=6) {
-                s+=" SA="+l.getElement(5)+" TT: ";
-                for (int i=6; i<l.getNumDataElements(); i++)
+                s+=" SA="+l.getElement(3)+" TT: ";//3
+                for (int i=4; i<l.getNumDataElements(); i++)//1=6
                     s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
             }
             nextLine(s+"\n", l.toString());

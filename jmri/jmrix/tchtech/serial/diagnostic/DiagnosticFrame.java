@@ -272,7 +272,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // determine if node is MICRO, NIC, or 
         int type = node.getNodeType();
         isMICRO = (type==SerialNode.MICRO);
-        isNIC = (type==SerialNode.SNIC);
+        isNIC = (type==SerialNode.TERA);
 // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = node.numOutputCards();

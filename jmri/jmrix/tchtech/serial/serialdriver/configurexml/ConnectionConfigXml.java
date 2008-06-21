@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -99,7 +99,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             SerialNode node = new SerialNode(addr, type);
             node.setNumBitsPerCard(bpc);
             //node.setTransmissionDelay(delay);
-            //node.setNum2SearchLights(num2l);
+            node.setNum2LSearchLights(num2l);
 			node.setPulseWidth(pulseWidth);
             
             for (int j = 0; j<slb.length(); j++) {

@@ -18,7 +18,7 @@ import jmri.jmrix.tchtech.serial.SerialSensorManager;
  * Frame for user configuration of  serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -27,7 +27,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
     protected javax.swing.JComboBox nodeTypeBox; 
-    protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
+   // protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
     protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
     protected javax.swing.JComboBox cardSizeBox; 
     protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+rb.getString("LabelCardSize"));
@@ -45,6 +45,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected javax.swing.JPanel panel2 = new JPanel();
     protected javax.swing.JPanel panel2a = new JPanel();
+    protected javax.swing.JPanel panel2b = new JPanel();
+
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
@@ -77,7 +79,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         for (int i = 0; i<64 ; i++) {
             cardType[i] = rb.getString("CardTypeNone");
         }
-        for (int i = 0; i<32 ; i++) {
+        for (int i = 0; i<96 ; i++) {
             searchlightBits[i] = false;
             firstSearchlight[i] = false;
         }
@@ -106,27 +108,35 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
         nodeTypeBox = new JComboBox();
         panel11.add(nodeTypeBox);
-        nodeTypeBox.addItem("MICRO-48");
-        nodeTypeBox.addItem("NIT-32");
+        nodeTypeBox.addItem("MICRO I/O 48");
+        nodeTypeBox.addItem("MEGA I/O 144");
+        nodeTypeBox.addItem("TERA I/O 5");
 // Here add code for other types of nodes
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
                 {
                     String s = (String)nodeTypeBox.getSelectedItem();
-                    if (s.equals("MICRO-48")) {
+                    if (s.equals("MICRO I/O 48")) {
                         panel2.setVisible(false);
                         panel2a.setVisible(true);
                         cardSizeText.setVisible(false);
                         cardSizeBox.setVisible(false);
                         nodeType = SerialNode.MICRO;
                     }
-                    else if (s.equals("NIT-32")) {
+                    if (s.equals("MEGA I/O 144")) {
+                        panel2.setVisible(false);
+                        panel2a.setVisible(true);
+                        cardSizeText.setVisible(false);
+                        cardSizeBox.setVisible(false);
+                        nodeType = SerialNode.MEGA;
+                    }
+                    else if (s.equals("TERA I/O 5")) {
                         panel2.setVisible(true);
                         panel2a.setVisible(false);
                         cardSizeText.setVisible(true);
                         cardSizeBox.setVisible(true);
-                        nodeType = SerialNode.SNIC;
+                        nodeType = SerialNode.TERA;
                     }
 // Here add code for other types of nodes
                     // reset notes as appropriate
@@ -188,6 +198,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel21.add(new JLabel(" "+rb.getString("HintCardTypePartF")));
         panel2.add(panel21);
         TableModel cardConfigModel = new CardConfigModel();
+        //TableModelb cardConfigModelb = new CardConfigModelb();
         JTable cardConfigTable = new JTable(cardConfigModel);
         cardConfigTable.setRowSelectionAllowed(false);
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,70));
@@ -206,7 +217,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardTypeColumn.setResizable(false);//false
         cardTypeColumn.setMinWidth(90);
         cardTypeColumn.setMaxWidth(90);
-			
         JScrollPane cardScrollPane = new JScrollPane(cardConfigTable);
         panel2.add(cardScrollPane,BorderLayout.CENTER);
         contentPane.add(panel2);
@@ -227,14 +237,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JTable searchlightConfigTable = new JTable(searchlightConfigModel);
         searchlightConfigTable.setRowSelectionAllowed(false);
         searchlightConfigTable.sizeColumnsToFit(true);
-        searchlightConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(215,75));
+        searchlightConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(215,190));
         TableColumnModel searchlightColumnModel = searchlightConfigTable.getColumnModel();
         TableColumn portColumn = searchlightColumnModel.getColumn(SearchlightConfigModel.PORT_COLUMN);
         portColumn.setMinWidth(90);
         portColumn.setMaxWidth(100);
         JScrollPane searchlightScrollPane = new JScrollPane(searchlightConfigTable);
         panel2a.add(searchlightScrollPane,BorderLayout.CENTER);
-        contentPane.add(panel2a);			
+        contentPane.add(panel2a);
+        
+        // Set up MEGA oscillating 2-lead searchlight configuration table
+        
+        
 
         // Set up the notes panel
         JPanel panel3 = new JPanel();
@@ -403,14 +417,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
         if (nodeType==SerialNode.MICRO) {
-            nodeTypeBox.setSelectedItem("MICRO-48");
+            nodeTypeBox.setSelectedItem("MICRO I/O 48");
         }
-        else if (nodeType==SerialNode.SNIC) {
-            nodeTypeBox.setSelectedItem("NIT-32");
+        if (nodeType==SerialNode.MEGA) {
+            nodeTypeBox.setSelectedItem("MEGA I/O 144");
+        }
+        else if (nodeType==SerialNode.TERA) {
+            nodeTypeBox.setSelectedItem("TERA I/O 5");
         }
 // here add code for other node types
         // Node specific initialization
-        if (nodeType==SerialNode.SNIC) {
+        if (nodeType==SerialNode.TERA) {
             bitsPerCard = curNode.getNumBitsPerCard();
             if (bitsPerCard==24) {
                 cardSizeBox.setSelectedItem(rb.getString("CardSize24"));
@@ -424,7 +441,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             cardSizeBox.setSelectedItem(rb.getString("CardSize16"));
             // set up the searchlight arrays
             num2LSearchLights = 0;
-            for (int i=0;i<32;i++) {
+            for (int i=0;i<32;i++) {//48
+                if ( curNode.isSearchLightBit(i) ) {
+                    searchlightBits[i] = true;
+                    searchlightBits[i+1] = true;
+                    firstSearchlight[i] = true;
+                    firstSearchlight[i+1] = false;
+                    num2LSearchLights ++;
+                    i ++;
+                }
+                else {
+                    searchlightBits[i] = false;
+                    firstSearchlight[i] = false;
+                }
+            }
+        }
+        else if (nodeType==SerialNode.MEGA) {
+            bitsPerCard = 16;
+            cardSizeBox.setSelectedItem(rb.getString("CardSize16"));
+            // set up the searchlight arrays
+            num2LSearchLights = 0;
+            for (int i=0;i<96;i++) {//48
                 if ( curNode.isSearchLightBit(i) ) {
                     searchlightBits[i] = true;
                     searchlightBits[i+1] = true;
@@ -460,8 +497,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // ensure that table displays correctly
         panel2.setVisible(false);
         panel2a.setVisible(false);
-        if (nodeType==SerialNode.SNIC) {
+        if (nodeType==SerialNode.TERA) {
             panel2.setVisible(true);
+        }
+       
+        if (nodeType==SerialNode.MEGA) {
+            panel2a.setVisible(true);
         }
         else if (nodeType==SerialNode.MICRO) {
             panel2a.setVisible(true);
@@ -629,10 +670,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // continue in a node specific way
         switch (nodeType) {
             case SerialNode.MICRO:
+                case SerialNode.MEGA:
                 // Note: most parameters are set by default on creation
                 int numSet = 0;
                 // Configure 2-lead oscillating searchlights - first clear unneeded searchlights
-                for (int j=0;j<48;j++) {
+                for (int j=0;j<96;j++) {//48
                     if ( curNode.isSearchLightBit(j) ) {
                         if(!firstSearchlight[j]) {
                             // this is the first bit of a deleted searchlight - clear it
@@ -647,7 +689,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     }
                 }
                 // Add needed searchlights that are not already configured    
-                for (int i=0;i<47;i++) {
+                for (int i=0;i<96;i++) {//47
                     if ( firstSearchlight[i] ) {
                         if ( !curNode.isSearchLightBit(i) ) {
                             // this is the first bit of an added searchlight
@@ -663,7 +705,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                             Integer.toString(num2LSearchLights) );
                 }
                 break;
-            case SerialNode.SNIC:
+                 
+                case SerialNode.TERA:
                 // set number of bits per card
                 curNode.setNumBitsPerCard(bitsPerCard);
                 // configure the input/output cards
@@ -853,9 +896,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected boolean checkConsistency() {
         switch (nodeType) {
             case SerialNode.MICRO:
+                case SerialNode.MEGA:
                 // ensure that number of searchlight bits is consistent
                 int numBits = 0;
-                for (int i = 0;i<48;i++) {
+                for (int i = 0;i<96;i++) {
                     if (searchlightBits[i]) numBits ++;
                 }
                 if ( (2*num2LSearchLights) != numBits ) {
@@ -866,7 +910,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     return (false);
                 }
                 break;
-            case SerialNode.SNIC:
+               
+            case SerialNode.TERA:
                 // ensure that at least one card is defined
                 numCards = 0;
                 boolean atNoCard = false;
@@ -985,7 +1030,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
         public int getColumnCount () {return 9;}
-        public int getRowCount () {return 4;}//6
+        public int getRowCount () {return 12;}//6
         public Object getValueAt (int r,int c) {
             if (c==0) {
                 switch (r) {
@@ -997,10 +1042,22 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         return ("Tab 1 Port A");
                     case 3:
                         return ("Tab 1 Port B");
-                    //case 4:
-                        //return ("Card 1 Port B");
-                    //case 5:
-                        //return ("Card 1 Port C");
+                    case 4:
+                        return ("Tab 2 Port A");
+                    case 5:
+                        return ("Tab 2 Port B");
+                    case 6:
+                        return ("Tab 3 Port A");
+                    case 7:
+                        return ("Tab 3 Port B");
+                    case 8:
+                        return ("Tab 4 Port A");
+                    case 9:
+                        return ("Tab 4 Port B");
+                    case 10:
+                        return ("Tab 5 Port A");
+                    case 11:
+                       return ("Tab 5 Port B");
                     default:
                         return ("");
                 }
@@ -1031,7 +1088,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     num2LSearchLights --;
                 }
                 else {
-                    if (index<47) {
+                    if (index<96) {//47
                         if (!searchlightBits[index] && !searchlightBits[index+1]) {
                             searchlightBits[index] = true;
                             searchlightBits[index+1] = true;
@@ -1054,8 +1111,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
     private String[] searchlightConfigColumnNames = {rb.getString("HeadingPort"),
                                 "0","1","2","3","4","5","6","7"};
-    private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
-    private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
+    private boolean[] searchlightBits = new boolean[96];   //48  true if this bit is a searchlight bit
+    private boolean[] firstSearchlight = new boolean[96];  // 48 true if first of a pair of searchlight bits
 
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigFrame.class.getName());

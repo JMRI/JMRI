@@ -265,7 +265,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 				numInputBits = 16;
 				numOutputBits = 32;
 			}
-			else if (type == SerialNode.SNIC) {
+			else if (type == SerialNode.TERA) {
 				int bitsPerCard = selNode.getNumBitsPerCard();
 				int numInputCards = selNode.numInputCards();
 				int numOutputCards = selNode.numOutputCards();
