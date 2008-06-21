@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoGenFrame.shtml,v 1.2 2008-03-26 19:04:52 jacobsen Exp $ -->
+<!-- $Id: LocoGenFrame.shtml,v 1.3 2008-06-21 19:09:13 jacobsen Exp $ -->
 <!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
@@ -36,7 +36,7 @@ directly command LocoNet devices.
 
 <p>It works best in combination with the 
 "Show Raw Data" option in the 
-<a href="">LocoNet Monitor</a>, 
+<a href="../locomon/LocoMonFrame.shtml">LocoNet Monitor</a>, 
 because packets are entered here in raw hexadecimal format.
 
 <p>
@@ -50,6 +50,10 @@ The bottom section lets you enter from one to four packets
 that will be repeatedly sent in sequence, with user-defined delays in between.
 Press the "Go" button to start the transmission sequence, and press it again
 to stop the sequence.
+
+<p>
+More information on the general controls is available on
+<a href="../../AbstractMonFrame.shtml">another page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
