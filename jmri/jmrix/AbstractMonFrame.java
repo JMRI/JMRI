@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -124,24 +124,24 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         getContentPane().add(jScrollPane1);
 
         JPanel paneA = new JPanel();
-	paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
+	    paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
 	
         JPanel pane1 = new JPanel();
-	pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
+	    pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
         pane1.add(timeCheckBox);
-	paneA.add(pane1);
+	    paneA.add(pane1);
 
         JPanel pane2 = new JPanel();
-	pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+	    pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
-	paneA.add(pane2);
+	    paneA.add(pane2);
 
-       JPanel pane3 = new JPanel();
+        JPanel pane3 = new JPanel();
 	    pane3.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
         pane3.add(enterButton);
         pane3.add(entryField);
