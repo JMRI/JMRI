@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -73,9 +73,9 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * return true/false if decoder version matches id
+     * Test for correct decoder version number
      * @param i
-     * @return
+     * @return true if decoder version matches id
      */
     public boolean isVersion(int i) { return versions[i]; }
     
