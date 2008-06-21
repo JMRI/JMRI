@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+  $Id: package.html,v 1.1 2008-06-21 19:39:08 jacobsen Exp $
+
+  Made with permission from the Sun version at
+  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+
+  Copyright 2003
+
+-->
+</head>
+<body bgcolor="white">
+
+Defines classes for interfacing to a CAN based model railway
+control bus.
+
+<p>
+It is expected that there will be multiple CAN implementations (e.g. MERG
+CBUS or ATBUS) each accessible through a variety of CAN adapters (e.g. 
+CAN232 or MERG CAN-RS), but that each implementation will be based uppon
+basic CANbus concepts such as ID (standard or extended), Normal and RTR
+frames and a data field.
+
+<p>
+This package is therefore organized in several subtrees:
+<dl>
+<dt>adapters
+<dd>Specific implementations for CAN adapter hardware, e.g. 
+<a href="http://www.merg.org.uk/resources/lcb.html">MERG</a>'s <a href="http://www.merg.org.uk/resources/lcb.html#CAN_RS">CAN_RS</a>; 
+<a href="http://canusb.com/">LAWICEL AB</a>'s <a href="http://canusb.com/">CANUSB and CAN232</a>; etc.
+<dt>protocols
+<dd>Specific implementations for e.g. CBUS, NmraNet, etc
+<dt>swing
+<dd>Swing-based GUI tools
+</dl>
+<!-- Put @see and @since tags down here. -->
+<!-- @see jmri.InstanceManager -->
+
+@since 2.1.7
+
+</body>
+</html>
