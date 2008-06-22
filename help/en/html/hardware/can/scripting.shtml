@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: scripting.shtml,v 1.1 2008-06-21 23:49:51 jacobsen Exp $ -->
+<!-- $Id: scripting.shtml,v 1.2 2008-06-22 00:24:57 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -36,16 +36,42 @@ For more information on JMRI scripting itself,
 see the
 <a href="../../tools/scripting/index.shtml">help pages</a>.
 
+<p>
+Theres a basic
+<a href="../../../../../jython/CanExample.py">CanExample.py</a>
+sample script in the jython directory.
+
 <h2>Sending CAN Frames</h2>
 
 CAN frames are created as objects, then queued for 
 transmission.  The header (ID) and data are handled 
 separately.
 
+<code><pre>
+frame = jmri.jmrix.can.CanMessage(2)  # will load 2 bytes
+frame.setId(0x123)
+frame.setElement(0, 0x45)
+frame.setElement(1, 0x67)
+jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
+</pre></code>
+
 <h2>Receiving CAN Frames</h2>
 
 CAN frames are received by registering a listener.
 
+<code><pre>
+class MyCanListener (jmri.jmrix.can.CanListener) :
+    def message(self, msg) :
+        # this handles messages being sent by ignoring them
+        return
+    def reply(self, msg) :
+        print "received Frame"
+        print "ID: 0x"+java.lang.Integer.toHexString(msg.getId())
+        print "content: ", msg.toString()
+        return
+    
+jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
+</pre></code>
 
 <!--#include virtual="/Footer" -->
 </body>
