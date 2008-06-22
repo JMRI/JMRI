@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlView.shtml,v 1.1 2008-06-22 19:33:27 jacobsen Exp $ -->
+<!-- $Id: XmlView.shtml,v 1.2 2008-06-22 19:39:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -111,9 +111,15 @@ can copy the file from the xml/XSLT directory in your
 local copy of the JMRI distribution.
 <p>
 Unfortunately, you'll have to edit that line in the XML
-file every time you rewrite it with JMRI. We hope to improve that
-in a later JMRI version.
+file every time you rewrite it with JMRI. 
 </UL>
+
+We hope to improve all this
+in a later JMRI version.
+Unfortunately, the only way we know how to do this will 
+break some backward compatibility, but 
+we've put the pieces in place in JMRI 2.0
+so that it and all following versions should remain compatible.
 
 
 <!--#include virtual="/Footer" -->
