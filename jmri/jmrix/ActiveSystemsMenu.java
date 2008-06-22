@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -89,11 +89,11 @@ public class ActiveSystemsMenu extends JMenu {
         m.add(new javax.swing.JSeparator());
         
         if (jmri.jmrix.can.adapters.gridconnect.canrs.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.gridconnect.canrs.CanRsMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
         if (jmri.jmrix.can.adapters.gridconnect.canusb.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.gridconnect.canusb.CanUsbMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
         if (jmri.jmrix.can.adapters.lawicell.canusb.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.lawicell.canusb.CanUsbMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
     }
@@ -170,13 +170,13 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
         if (jmri.jmrix.can.adapters.gridconnect.canrs.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.gridconnect.canrs.CanRsMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
 
         if (jmri.jmrix.can.adapters.gridconnect.canusb.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.gridconnect.canusb.CanUsbMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
 
         if (jmri.jmrix.can.adapters.lawicell.canusb.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.adapters.lawicell.canusb.CanUsbMenu"));
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
     }
 
     static JMenu getMenu(String className) {
