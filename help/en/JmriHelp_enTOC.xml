@@ -56,6 +56,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="Hardware Support" target="html.hardware.index">
       <tocitem text="Acela" target="html.hardware.acela.index"/>
+      <tocitem text="CAN Bus" target="html.hardware.can.index"/>
+      <tocitem text="CBUS" target="html.hardware.can.CBUS"/>
       <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
       <tocitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
       <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>

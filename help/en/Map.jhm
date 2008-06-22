@@ -19,6 +19,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Basic_Programming" url="DecoderProManual/Basic_Programming.shtml" />
 	<mapID target="html.tools.scripting.Examples" url="html/tools/scripting/Examples.shtml" />
 	<mapID target="html.tools.index" url="html/tools/index.shtml" />
+	<mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel" />
 	<mapID target="package.jmri.jmrix.grapevine.nodetable.RenumberFrame" url="package/jmri/jmrix/grapevine/nodetable/RenumberFrame.shtml" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCE Turnout lock feature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCE Turnout lock feature" />
@@ -89,6 +90,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml" />
 	<mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml" />
+	<mapID target="html.hardware.can.CBUS" url="html/hardware/can/CBUS.shtml" />
 	<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.shtml#turnouts" />
 	<mapID target="html.apps.DecoderPro.index" url="html/apps/DecoderPro/index.shtml" />
@@ -158,6 +160,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.StartUpScripts" url="html/doc/Technical/StartUpScripts.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_decodercol" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#decodercol" />
 	<mapID target="DecoderProManual.Comp_Advanced_Top" url="DecoderProManual/Comp_Advanced.shtml#Top" />
+	<mapID target="html.hardware.can.scripting" url="html/hardware/can/scripting.shtml" />
 	<mapID target="html.tools.Signals_edit" url="html/tools/Signals.shtml#edit" />
 	<mapID target="DecoderProManual.Basic_Programming_Top" url="DecoderProManual/Basic_Programming.shtml#Top" />
 	<mapID target="DecoderProManual.Basic_Programming_Roster" url="DecoderProManual/Basic_Programming.shtml#Roster" />
@@ -353,8 +356,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.I8N_custom" url="html/doc/Technical/I8N.shtml#custom" />
 	<mapID target="DecoderProManual.Getting_Started" url="DecoderProManual/Getting_Started.shtml" />
 	<mapID target="html.hardware.loconet.KeyspanUSB" url="html/hardware/loconet/KeyspanUSB.shtml" />
-	<mapID target="html.hardware.sprog.SPROG" url="html/hardware/sprog/SPROG.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml" />
+	<mapID target="html.hardware.sprog.SPROG" url="html/hardware/sprog/SPROG.shtml" />
 	<mapID target="html.doc.Technical.Names_types" url="html/doc/Technical/Names.shtml#types" />
 	<mapID target="Acknowledgements_S" url="Acknowledgements.shtml#S" />
 	<mapID target="package.jmri.jmrit.beantable.SignalTable" url="package/jmri/jmrit/beantable/SignalTable.shtml" />
