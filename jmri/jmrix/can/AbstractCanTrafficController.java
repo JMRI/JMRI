@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
     
@@ -84,7 +84,6 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
                     if(portReadyToSend(controller)) {                
                         ostream.write(msg);
                         log.debug("message written");
-                        System.out.println("ostream "+ostream);
                         break;
                     } else if(hm.getRetries()>=0) {
                         if (log.isDebugEnabled()) log.debug("Retry message: "+hm.toString() +" attempts remaining: " + hm.getRetries());
@@ -167,7 +166,6 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
         loadChars(hmsg, istream);
         
         // Decode the message from the hardware into a CanReply
-        System.out.println("decode");
         msg = decodeFromHardware(hmsg);
 
         // message is complete, dispatch it !!

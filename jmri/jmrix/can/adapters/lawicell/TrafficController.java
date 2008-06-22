@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     
@@ -113,23 +113,11 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
         ret.setId(gc.getID());
         
         // Get the data
-        System.out.println("1");
-        System.out.println(" byte 0: "+gc.getElement(0));
-        System.out.println(" byte 1: "+gc.getElement(1));
-        System.out.println(" byte 2: "+gc.getElement(2));
-        System.out.println(" byte 3: "+gc.getElement(3));
-        System.out.println(" byte 4: "+gc.getElement(4));
-        System.out.println(" byte 5: "+gc.getElement(5));
-        
         for (int i = 0; i < gc.getNumBytes(); i++) {
-            System.out.println("2 "+i+" "+gc.getByte(i));
             ret.setElement(i, gc.getByte(i));
         }
-        System.out.println("3");
         ret.setNumDataElements(gc.getNumBytes());
-        System.out.println("4");
         if (log.isDebugEnabled()) log.debug("Decoded as "+ret);
-        System.out.println("ret "+ret);
         
         return ret;
     }
@@ -184,10 +172,8 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     }
     
     boolean endNormalReply(AbstractMRReply r) {
-        System.out.println("check endNormalReply "+r);
         // Detect if the reply buffer ends with bell or cr
         int num = r.getNumDataElements() - 1;
-        System.out.println("check endNormalReply "+r+"\n index "+num+" last "+r.getElement(num));
         if (r.getElement(num) == 0x0D) return true;
         if (r.getElement(num) == 0x07) return true;
         return false;

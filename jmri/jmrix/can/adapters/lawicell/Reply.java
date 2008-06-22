@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class Reply extends AbstractMRReply {
     
@@ -76,7 +76,6 @@ public class Reply extends AbstractMRReply {
             int index = b*2 + (isExtended() ? 10 : 5);
             int hi = getHexDigit(index++);
             int lo = getHexDigit(index);
-            System.out.println("index "+index+" hi "+hi+" lo "+lo);
             if ((hi < 16) && (lo < 16)) {
                 return (hi*16 + lo);
             }
