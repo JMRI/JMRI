@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: CBUS.shtml,v 1.1 2008-06-21 23:49:51 jacobsen Exp $ -->
+<!-- $Id: CBUS.shtml,v 1.2 2008-06-22 00:32:00 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -34,6 +34,10 @@ JMRI provides
 and
 <a href="../../tools/Turnouts.shtml">Turnout</a>
 support for CBUS in terms of "events".
+
+<p>
+See also the 
+<a href="index.shtml">main help page</a> for JMRI CAN support.
 
 <h2>Naming</h2>
 
