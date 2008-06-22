@@ -13,9 +13,9 @@ import jmri.jmrix.AbstractMRReply;
  * <P>
  * The _dataChars[] and _nDataChars members refer to the data field, not the
  * entire message.
- *
+ * <p>
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CanReply extends AbstractMRReply {
     
