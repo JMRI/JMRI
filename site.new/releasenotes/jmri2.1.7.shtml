@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.7 2008-06-21 23:50:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.8 2008-06-22 00:41:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -188,6 +188,13 @@ for CAN-based networks is included,
 focusing on the
 <a href="http://www.merg.org.uk/">MERG</a>
 <a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>.
+
+<p>
+Two scripts 
+(<a href="../jython/ParallelPortTest.py">ParallelPortTest.py</a> and 
+<a href="../jython/ParallelPortTurnouts.py">ParallelPortTurnouts.py</a>)
+show how you can connect JMRI to custom hardware via a PC parallel port.
+
 
 <!--#include virtual="/Footer" -->
 
