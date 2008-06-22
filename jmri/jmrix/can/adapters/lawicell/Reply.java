@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class Reply extends AbstractMRReply {
     
@@ -45,8 +45,8 @@ public class Reply extends AbstractMRReply {
      * @return int the CAN ID
      */        
     public int getID() {
-        return getHexDigit(1)*4096 + getHexDigit(2)*256
-                    + getHexDigit(3)*16 + getHexDigit(4);
+        return getHexDigit(1)*256
+                    + getHexDigit(2)*16 + getHexDigit(3);
     }
     
     /**
