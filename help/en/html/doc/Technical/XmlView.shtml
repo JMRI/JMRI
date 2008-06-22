@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlView.shtml,v 1.1 2008-06-22 19:33:27 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Viewing JMRI XML Files
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml usage">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: Viewing XML Files</H1>
+
+JMRI stores various information in XML files.
+Although they're a text format that is basically human-readable,
+it's a complicated format.
+
+<P>
+To make them easier to read, print and understand, most JMRI XML
+files can be displayed in a web browser.  A technique called
+"XSLT stylesheets"
+is used to format them within the web browser.  
+For an example of how this looks, please see the 
+<a href="http://jmri.sourceforge.net/xml/samples/NicksClinic.xml">sample panel XML file</a> on the main JMRI
+web site.
+
+<p>
+To view an XML file that JMRI has created, just open the file with your
+favorite web browser.  In many cases, you should be able to just double-click
+on it, or drag it to the web browser's icon.  On some computer types, you'll
+need to open it from the "File" menu.
+
+<p>
+Unfortunately, this simple approach doesn't always work, because not all browsers
+properly implement the algorithms for finding the formatting files that are
+needed for this display.  
+If the first browser you try doesn't display the XML file (usually just 
+showing a blank page, though sometimes they'll display an error message),
+please try other ones you've got installed.  Internet Explorer is particularly
+problematic.  Mozilla, Safari and Opera seem to get this right, while Firefox 
+seems to work properly on some platforms and not on others.  (There might also
+be options that affect whether it works)
+<p>
+If none of the browsers available to you can display the file, the 
+rest of this page describes how to work around the problem by copying some files.
+<p>
+For this to work right, the browser has to be able to find two other
+files, referenced from within the XML file.
+<ul>
+<li>First, it needs a "DTD" file, which defines the information content
+of the main XML file.  This is referenced via a line near the top
+of the XML file that looks like:
+<code><pre>
+&lt;!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd"&gt;
+</pre></code>
+or perhaps
+<code><pre>
+&lt;!DOCTYPE layout-config SYSTEM "layout-config.dtd"&gt;
+</pre></code>
+In that example, the file is called "layout-config.dtd".
+<p>
+You probably need to put a copy of that file in the same directory
+as the file you want to display.  You can either 
+download it from the 
+<a href="http://jmri.sourceforge.net/xml/DTD">JMRI DTD directory on the web</a> 
+(don't try to view the file, just download it to the same directory as the 
+file you want to display), or you can copy it from the 
+xml/DTD directory in the copy of JMRI that you've downloaded and installed.
+
+<p>
+After putting a copy of this file in the same directory, try displaying the file again.
+If it still doesn't work, move to the next step.
+
+<li>The browser also needs an "xsl" formatting file (stylesheet), which 
+tells the browser how to display the raw data in the XML file.
+This is usually specified by a line containing an URL like:
+<code><pre>
+&lt;?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?&gt;
+</pre></code>
+Browsers are supposed to be able to download the xsl
+file from the web using that URL. Unfortunately, some
+browsers have broken security code that prevents it.
+In that case, you can directly download the file to 
+the same directory as the XML file and change the line
+in the XML file to a local reference:
+<code><pre>
+&lt;?xml-stylesheet type="text/xsl" href="panelfile.xsl"?&gt;
+</pre></code>
+Alternately, if you don't have an Internet connection, you 
+can copy the file from the xml/XSLT directory in your
+local copy of the JMRI distribution.
+<p>
+Unfortunately, you'll have to edit that line in the XML
+file every time you rewrite it with JMRI. We hope to improve that
+in a later JMRI version.
+</UL>
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
