@@ -47,7 +47,7 @@ import org.jdom.Attribute;
  * @author     glen   Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  *
- * @version    $Revision: 1.57 $
+ * @version    $Revision: 1.58 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -376,6 +376,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             JSpinnerUtil.setValue(speedSpinner, new Integer(speed));
     }
     
+    public JSlider getSpeedSlider() { return speedSlider; }
+    
     /**
      *  Create, initialize and place GUI components.
      */
@@ -635,7 +637,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Perform an emergency stop
      */
-    private void stop()
+    public void stop()
     {
         if(this.throttle==null) return;
         speedSlider.setValue(0);
@@ -738,7 +740,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.57 $
+     * @version    $Revision: 1.58 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
