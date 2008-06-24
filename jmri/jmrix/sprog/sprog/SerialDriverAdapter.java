@@ -31,7 +31,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -146,6 +146,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 
         jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
+
+        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
         // start operation
         // sourceThread = new Thread(p);
