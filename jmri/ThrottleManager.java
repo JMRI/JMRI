@@ -4,7 +4,7 @@ package jmri;
  * Interface for allocating {@link Throttle} objects.
  * <P>
  * "Address" is interpreted in the context of the DCC implementation.
- * Different systems will distrinquish between short and long addresses
+ * Different systems will distinquish between short and long addresses
  * in different ways.
  * <P>
  * When the allocated Throttle is no longer needed, it is told that
@@ -26,7 +26,8 @@ package jmri;
  * for more details.
  * <P>
  * @author			Glen Oberhauser
- * @version			$Revision: 1.17 $
+ * @author			Bob Jacobsen Copyright 2006
+ * @version			$Revision: 1.18 $
  */
 public interface ThrottleManager {
 
