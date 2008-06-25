@@ -4,23 +4,17 @@ package jmri;
 
 /**
  * A Throttle object can be manipulated to change the speed, direction
- * and functions of a locomotive.
+ * and functions of a single locomotive.
  * <P>
- * A Throttle implementation provides the actual control mechanism.  Clients
- * then provide GUI throttles, automated start/stop, etc.
+ * A Throttle implementation provides the actual control mechanism.  
+ * These are obtained via a {@link ThrottleManager}.
  * <P>
- * What's the multiplicity of Throttle objects?  Entirely separate
- * locomotives, etc, need their own.  But can there be more than one
- * Throttle working with a single locomotive, e.g. for a buddy throttle,
- * or to display the status of a physical throttle on a screen.
- * <P>
- * Our working model was that there's _something_ in the control system
- * hardware that's the resource represented by a Throttle, so there's
- * a limited number of Throttle's available. A single Throttle object
- * can be used by multiple cabs via the parameters, parameter change
- * notifications, etc.  This implies that we should be able to assign
- * and deassign locos from this throttle, but that doesn't seem right.
- *
+ * With some control systems, there are only
+ * a limited number of Throttle's available. 
+ * <p>
+ * On DCC systems, Throttles are often actually
+ * {@link DccThrottle} objects, which have some additional
+ * DCC-specific capabilities.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -35,8 +29,8 @@ package jmri;
  * for more details.
  * <P>
  *
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008
+ * @version			$Revision: 1.15 $
  */
 public interface Throttle {
 
@@ -246,9 +240,14 @@ public interface Throttle {
 
 
     /**
-     * Dispose when finished with this object.  This does not
+     * Not for general use, see {@link #release()} and {@link #dispatch()}.
+     * <p> 
+     * Dispose of object when finished it.  This does not
      * free any hardware resources used; rather, it just cleans up the
-     * software implmentation.
+     * software implementation.
+     * <P>
+     * Used for handling certain internal error conditions, where
+     * the object still exists but hardware is not associated with it.
      * <P>
      * After this, further usage of
      * this Throttle object will result in a JmriException.
