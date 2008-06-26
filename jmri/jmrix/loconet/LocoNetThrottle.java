@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -41,12 +41,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(2, slot.getSlot());
         network.sendLocoNetMessage(msg);
 
-	// save last known layout state for spd/dirf/snd so we can
-	// avoid race condition if another LocoNet process queries
-	// our slot while we are in the act of changing it.
-	layout_spd  = slot.speed();
-	layout_dirf = slot.dirf();
-	layout_snd  = slot.snd();
+        // save last known layout state for spd/dirf/snd so we can
+        // avoid race condition if another LocoNet process queries
+        // our slot while we are in the act of changing it.
+        layout_spd  = slot.speed();
+        layout_dirf = slot.dirf();
+        layout_snd  = slot.snd();
 
 
         // cache settings
@@ -124,13 +124,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                         (getF2() ? LnConstants.DIRF_F2 : 0) |
                         (getF3() ? LnConstants.DIRF_F3 : 0) |
                         (getF4() ? LnConstants.DIRF_F4 : 0));
-	if (new_dirf != layout_dirf) {
-	    LocoNetMessage msg = new LocoNetMessage(4);
-	    msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
-	    msg.setElement(1, slot.getSlot());
-	    msg.setElement(2, new_dirf);
-	    network.sendLocoNetMessage(msg);
-	}
+        if (new_dirf != layout_dirf) {
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
+            msg.setElement(1, slot.getSlot());
+            msg.setElement(2, new_dirf);
+            network.sendLocoNetMessage(msg);
+        }
     }
 
     /**
@@ -143,13 +143,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                        (getF7() ? LnConstants.SND_F7 : 0) |
                        (getF6() ? LnConstants.SND_F6 : 0) |
                        (getF5() ? LnConstants.SND_F5 : 0));
-	if (new_snd != layout_snd) {
-	    LocoNetMessage msg = new LocoNetMessage(4);
-	    msg.setOpCode(LnConstants.OPC_LOCO_SND);
-	    msg.setElement(1, slot.getSlot());
-	    msg.setElement(2, new_snd);
-	    network.sendLocoNetMessage(msg);
-	}
+        if (new_snd != layout_snd) {
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_LOCO_SND);
+            msg.setElement(1, slot.getSlot());
+            msg.setElement(2, new_snd);
+            network.sendLocoNetMessage(msg);
+        }
     }
 
     protected void sendFunctionGroup3() {
@@ -279,12 +279,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void notifyChangedSlot(LocoNetSlot pSlot) {
         if (slot!=pSlot) log.error("notified of change in different slot");
 
-	// Save current layout state of spd/dirf/snd so we won't run amok
-	// toggling values if another LocoNet entity accesses the slot while
-	// our most recent change request is still in-flight.
-	layout_spd  = slot.speed();
-	layout_dirf = slot.dirf();
-	layout_snd  = slot.snd();
+        // Save current layout state of spd/dirf/snd so we won't run amok
+        // toggling values if another LocoNet entity accesses the slot while
+        // our most recent change request is still in-flight.
+        layout_spd  = slot.speed();
+        layout_dirf = slot.dirf();
+        layout_snd  = slot.snd();
 
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
@@ -294,36 +294,57 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
           this.speedSetting = newSpeed.floatValue() ;
         }
 
+        boolean temp;
         if (this.isForward != slot.isForward()) {
-            notifyPropertyChangeListener("isForward", new Boolean(this.isForward), new Boolean(slot.isForward()));
+            temp = this.isForward;
+            this.isForward = slot.isForward();
+            notifyPropertyChangeListener("IsForward", new Boolean(temp), new Boolean(slot.isForward()));
         }
 
         if (this.f0 != slot.isF0()) {
-            notifyPropertyChangeListener("F0", new Boolean(this.f0), new Boolean(slot.isF0()));
+            temp = this.f0;
+            this.f0 = slot.isF0();
+            notifyPropertyChangeListener("F0", new Boolean(temp), new Boolean(slot.isF0()));
         }
         if (this.f1 != slot.isF1()) {
-            notifyPropertyChangeListener("F1", new Boolean(this.f1), new Boolean(slot.isF1()));
+            temp = this.f1;
+            this.f1 = slot.isF1();
+            notifyPropertyChangeListener("F1", new Boolean(temp), new Boolean(slot.isF1()));
         }
         if (this.f2 != slot.isF2()) {
-            notifyPropertyChangeListener("F2", new Boolean(this.f2), new Boolean(slot.isF2()));
+            temp = this.f2;
+            this.f2 = slot.isF2();
+            notifyPropertyChangeListener("F2", new Boolean(temp), new Boolean(slot.isF2()));
         }
         if (this.f3 != slot.isF3()) {
-            notifyPropertyChangeListener("F3", new Boolean(this.f3), new Boolean(slot.isF3()));
+            temp = this.f3;
+            this.f3 = slot.isF3();
+            notifyPropertyChangeListener("F3", new Boolean(temp), new Boolean(slot.isF3()));
         }
         if (this.f4 != slot.isF4()) {
-            notifyPropertyChangeListener("F4", new Boolean(this.f4), new Boolean(slot.isF4()));
+            temp = this.f4;
+            this.f4 = slot.isF4();
+            notifyPropertyChangeListener("F4", new Boolean(temp), new Boolean(slot.isF4()));
         }
         if (this.f5 != slot.isF5()) {
-            notifyPropertyChangeListener("F5", new Boolean(this.f5), new Boolean(slot.isF5()));
+            temp = this.f5;
+            this.f5 = slot.isF5();
+            notifyPropertyChangeListener("F5", new Boolean(temp), new Boolean(slot.isF5()));
         }
         if (this.f6 != slot.isF6()) {
-            notifyPropertyChangeListener("F6", new Boolean(this.f6), new Boolean(slot.isF6()));
+            temp = this.f6;
+            this.f6 = slot.isF6();
+            notifyPropertyChangeListener("F6", new Boolean(temp), new Boolean(slot.isF6()));
         }
         if (this.f7 != slot.isF7()) {
-            notifyPropertyChangeListener("F7", new Boolean(this.f7), new Boolean(slot.isF7()));
+            temp = this.f7;
+            this.f7 = slot.isF7();
+            notifyPropertyChangeListener("F7", new Boolean(temp), new Boolean(slot.isF7()));
         }
         if (this.f8 != slot.isF8()) {
-            notifyPropertyChangeListener("F8", new Boolean(this.f8), new Boolean(slot.isF8()));
+            temp = this.f8;
+            this.f8 = slot.isF8();
+            notifyPropertyChangeListener("F8", new Boolean(temp), new Boolean(slot.isF8()));
         }
 
         // f9 through f12 are not in the slot
