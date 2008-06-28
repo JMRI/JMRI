@@ -8,7 +8,7 @@ package jmri.jmrix.qsi.serialdriver;
  * via an QSI SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -26,7 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "QSI Programmer"; }
+    public String name() { return "Quantum Programmer"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
