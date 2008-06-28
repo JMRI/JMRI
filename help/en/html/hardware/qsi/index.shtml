@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.5 2008-05-19 17:20:45 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-06-28 02:21:13 jacobsen Exp $ -->
 <title>JMRI: QSI Programmer</title>
 
 <!-- Style -->
@@ -22,28 +22,28 @@
     <div id="mainContent">
 
 <h2> 
-JMRI: QSI Programmer
+JMRI: Quantum Programmer
 </h2>
 
-<em>This page describes QSI support that first became available
+<em>This page describes Quantum Programmer support that first became available
 in JMRI version 2.1.5.  Previous versions of JMRI do not contain it.</em>
 
 <p>
-JMRI can now use a QSI Programmer module
+JMRI can now use a Quantum Programmer module
 to read and write CVs in DCC decoders.
 
 <p>
 JMRI cannot (yet) download sounds to QSI decoders.
 
 <p>
-Note that when using JMRI with the QSI Programmer,
+Note that when using JMRI with the Quantum Programmer,
 the Quantum CV Manager program must <em>not</em>
 be running. If it is, you'll get obscure errors and JMRI won't be
 able to access the decoder.
 
 <h2>Driver Installation</h2>
 
-To access the QSI Programmer, you need to install a driver on your
+To access the Quantum Programmer, you need to install a driver on your
 computer.  This section describes how to do that for several popular
 computer types.
 
@@ -52,17 +52,31 @@ computer types.
 
 <em>This is still being worked on.</em>
 <p>
-For JMRI to talk to the QSI Programmer, drivers have to be installed
-so that the QSI Programmer appears to be a serial port (a Virtual Comm Port, or
+For JMRI to talk to the Quantum Programmer, drivers have to be installed
+so that the Quantum Programmer appears to be a serial port (a Virtual Comm Port, or
 VCP).  These drivers are different from the ones that the QSI software uses, so
 have to be downloaded and installed separately.
 <p>
-There are drivers available from the
+There are VCP drivers available from the
 <a href="http://www.silabs.com/tgwWebApp/public/web_content/products/Microcontrollers/en/MCU_Downloads.htm">SiLabs web site</a>.
+Download and install them.  That seems to involve two parts:
+<ul>
+<LI>Download the CP210x_VCP_Win2K_XP_S2K3.exe file and execute it.  This creates a C:\SiLabs directory.
+<li>Inside that SiLabs directory, nested quite far down, is a "CP210xVCPInstaller Driver Installation Utility". 
+Find and execute that.
+</UL>
 <p>
 Unfortunately, we have not yet managed to get all those pieces 
 together in the right way to make this work.  If you'd like
 to work on this, it would be greatly appreciated.
+
+<p>
+The Quantum Programmer web site has 
+<a href="http://www.qsisolutions.com/products/techinfo/qprogrammer/q_prog_usbdrvrs_readme.html">different instructions</a>,
+which might give a clue to somebody who wants to work on this.
+<p>
+The problem may be that the standard driver doesn't understand the 
+custom VID/PID pair 0x10C4/0x8208 that the Quantum Programmer uses.
 
 <a id="driverMac">
 <h3>Mac OS X</h3>
@@ -79,8 +93,8 @@ Double-click on the installer and follow the directions.
 Restart your computer.
 </ol>
 You should now be able to start a JMRI application
-and access the QSI Programmer.  It will appear as
-"QSI Programmer" in the preferences windows.
+and access the Quantum Programmer.  It will appear as
+"Quantum Programmer" in the preferences windows.
 
 <a id="driverLinux">
 <h3>Linux</h3>
@@ -105,9 +119,9 @@ sudo ./load_qsi_prog
 </pre></code>
 </ol>
 
-<h2>Configure the QSI Programmer Support</h2>
+<h2>Configure the Quantum Programmer Support</h2>
 
-You configure JMRI to use a QSI Programmer similarly to the
+You configure JMRI to use a Quantum Programmer similarly to the
 way all other connection types are configured.
 
 <ol>
@@ -116,7 +130,7 @@ Start the program
 <li>
 Select the "Preferences..." item from the "Edit" menu on the main window.
 <li>
-Select "QSI Programmer" as the connection type.
+Select "Quantum Programmer" as the connection type.
 <li>
 Select "QSIProgrammer" as the port to use.
 <li>
@@ -129,14 +143,15 @@ The program is now configured. Restart it, and it should be ready to use.
 
 <h2>Features and Limitations</h2>
 
-The QSI programmer hardware is capable of driving one (low-current) locomotive
+The Quantum Programmer hardware is capable of driving one (low-current) locomotive
 in "Ops Mode".  This lets the user run the engine, test the lights, etc.
 JMRI does not yet have code to do this, but if there's enough interest we can certainly
 add it.
 
 <p>
 We currently don't have enough information to download sounds to the decoder through 
-the QSI programmer.  If we get the information, we'll certainly write this code.
+the Quantum Programmer.  If we get the information, we'll certainly write this code.
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
