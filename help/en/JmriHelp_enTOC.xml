@@ -66,6 +66,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="NCE" target="html.hardware.nce.NCE"/>
       <tocitem text="OakTree Systems" target="html.hardware.oaktree.OakTree"/>
       <tocitem text="Powerline (X10)" target="html.hardware.powerline.index"/>
+      <tocitem text="RailDriver Throttle" target="html.hardware.raildriver.index"/>
       <tocitem text="RPS" target="html.hardware.rps.index"/>
       <tocitem text="SECSI (TrakTronix)" target="html.hardware.secsi.index"/>
       <tocitem text="SPROG" target="html.hardware.sprog.SPROG"/>

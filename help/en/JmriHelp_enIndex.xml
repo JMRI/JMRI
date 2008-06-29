@@ -114,6 +114,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
    </indexitem>
    <indexitem text="QSI" target="html.hardware.qsi.index"/>
+   <indexitem text="RailDriver Throttle" target="html.hardware.raildriver.index"/>
    <indexitem text="Reporter" target="html.tools.Reporters">
       <indexitem text="Add Reporter" target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
       <indexitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
