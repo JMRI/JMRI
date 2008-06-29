@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -149,6 +149,13 @@ public class TreeModel extends DefaultTreeModel {
         }
     }
     
+        
+    // we build an array of USB controllers here
+    // note they might not arrive for a while
+    Controller[] ca;
+    
+    public Controller[] controllers() { return ca; }
+    
     /**
      * Carry a single event to the Swing thread
      * for processing
@@ -186,9 +193,10 @@ public class TreeModel extends DefaultTreeModel {
         }
     }
       
+    
     void loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
-        Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
+        ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
         System.out.println("Found "+ca.length+" controllers");
 
         for(int i =0;i<ca.length;i++){
