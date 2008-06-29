@@ -14,23 +14,41 @@ import java.io.*;
  * invoking the "jython/jmri-defaults.py" file before starting the
  * user code.
  * <P>
+ * There are two constructors. One, without a script file name,
+ * will open a FileDialog to prompt for the file to use. The other, 
+ * with a File object, will directly invoke that file.
+ * <P>
  * Access is via Java reflection so that both users and developers can work
  * without the jython.jar file in the classpath. To make it easier to
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class RunJythonScript extends AbstractAction {
 
     /**
-     * Constructor just initializes parent class.
+     * Constructor that, when action is invoked, opens a JFileChooser
+     * to select file to invoke.
      * @param name Action name
      */
     public RunJythonScript(String name) {
         super(name);
+        configuredFile = null;
     }
 
+    /**
+     * Constructor that, when action is invoked, directly
+     * invokes the provided File
+     * @param name Action name
+     */
+    public RunJythonScript(String name, File file) {
+        super(name);
+        this.configuredFile = file;
+    }
+
+    File configuredFile;
+    
     /**
      * We always use the same file chooser in this class, so that
      * the user's last-accessed directory remains available.
@@ -44,6 +62,20 @@ public class RunJythonScript extends AbstractAction {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
+        File thisFile;
+        if (configuredFile != null) 
+            thisFile = configuredFile;
+        else
+            thisFile = selectFile();
+        
+        // and invoke that file
+        if (thisFile != null)
+            invoke(thisFile);
+        else
+            log.info("No file selected");
+    }
+
+    File selectFile() {
         if (fci==null) {
             fci = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
@@ -60,11 +92,15 @@ public class RunJythonScript extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
             // Run the script from it's filename
-            jmri.util.PythonInterp.runScript(file.toString());
+            return file;
         }
+        return null;
     }
 
-
+    void invoke(File file) {
+        jmri.util.PythonInterp.runScript(file.toString());
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RunJythonScript.class.getName());
 
