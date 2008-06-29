@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 
 
 # set the name of the controller we're looking for
@@ -22,6 +22,10 @@ componentStop = "1"     # button, sets stop when clicked
 componentReverse = "2"  # button, reverse when on
 
 # from here down is the code for the throttle
+
+# uncomment the following two lines to run from a keyboard
+#desiredControllerName = "Apple Internal Keyboard / Trackpad"
+#componentWheel = "2" # "rx" # "2" # relative turn of wheel
 
 # open a throttle window and get components
 tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame()
