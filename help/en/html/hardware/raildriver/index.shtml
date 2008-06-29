@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-06-29 03:38:13 jacobsen Exp $ -->
-<title>JMRI: Raildriver Throttle</title>
+<!-- $Id: index.shtml,v 1.3 2008-06-29 14:02:42 jacobsen Exp $ -->
+<title>JMRI: RailDriver Throttle</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -25,7 +25,7 @@
 
 
 <h2> 
-JMRI: Raildriver Throttle
+JMRI: RailDriver Throttle
 </h2>
 
 This page is under construction. 
@@ -38,7 +38,7 @@ JMRI's RailDriver support is not generally available yet.
 
 <p>
 JMRI allows you to use a 
-<a href="http://www.raildriver.com/">Raildriver</a> from
+<a href="http://www.raildriver.com/">RailDriver</a> from
 <a href="http://www.piengineering.com/">PI Engineering</a>
 as a throttle to run locomotives with your DCC system.
     
@@ -47,7 +47,7 @@ First, connect your computer to your DCC system and make sure that
 the regular 
 <a href="../../tools/throttle/ThrottleMain.shtml">JMRI throttles</a>
 are working fine.  (Unless you do this first,
-debugging possible problems connecting the Raildriver is very difficult)
+debugging possible problems connecting the RailDriver is very difficult)
 
 <p>
 Next, plug the RailDriver into a USB port on your computer while
@@ -74,8 +74,19 @@ the RailDriver.
 The top row of buttons across the front edge control the decoder functions.
 The left most (1 in the figure) is F0, usually the headlight.
 The next button to the right (2 in the figure) is F1, etc.
+When you press the button, the function toggles: From off to on, or on to off.
 Try pressing one, and see if the throttle function buttons on the screen and the
 functions in the locomotive respond.
+
+<p>
+The "Bell" button (37 in the figure) drives F3 (this can be changed by editting a file in the 
+JMRI distribution if your DCC system uses something different).  
+It's momentary, so F3 is set on when the button is pressed, and off when it's
+released.
+
+<p>
+The horn lever (38 in the figure) operates F2.
+Push it forward or back to turn F2 on, and release or center it to turn F2 off.
 
 <p>
 The left-most large handle, labeled "Forward N Reverse" (39 in the figure)
