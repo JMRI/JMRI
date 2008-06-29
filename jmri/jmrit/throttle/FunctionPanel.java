@@ -114,6 +114,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 		throttle = null;
 	}
 
+    public FunctionButton[] getFunctionButtons() { return functionButton; }
+    
     /**
      * Get notification that a function has changed state
      * @param functionNumber The function that has changed (0-9).
@@ -332,7 +334,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.33 $
+	 * @version $Revision: 1.34 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

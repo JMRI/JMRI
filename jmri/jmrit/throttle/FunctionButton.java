@@ -116,6 +116,15 @@ public class FunctionButton extends JToggleButton implements ActionListener
     }
 
     /**
+     * get the state of the function
+     * @returns true if the function is active.
+     */
+    public boolean getState()
+    {
+        return isOn;
+    }
+
+    /**
      * Set the locking state of the button
      * @param isLockable True if the a clicking and releasing the button
      * changes the function state. False if the state is changed
