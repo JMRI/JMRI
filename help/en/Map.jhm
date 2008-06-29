@@ -414,6 +414,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_SoundFX" url="DecoderProManual/Comp_SoundFX.shtml" />
 	<mapID target="html.doc.Technical.Names_hardware" url="html/doc/Technical/Names.shtml#hardware" />
 	<mapID target="html.tools.signaling.ldt.output2" url="html/tools/signaling/ldt/output2.shtml" />
+	<mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.shtml#Top" />
 	<mapID target="html.tools.Routes" url="html/tools/Routes.shtml" />
 	<mapID target="html.tools.fastclock.LocoNetClock" url="html/tools/fastclock/LocoNetClock.shtml" />
@@ -513,9 +514,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtBoundary" url="package/jmri/jmrit/display/SetSignalsAtBoundary.shtml" />
 	<mapID target="DecoderProManual.index_Basic Programmer" url="DecoderProManual/index.shtml#Basic Programmer" />
 	<mapID target="html.apps.DecoderPro.index_guide" url="html/apps/DecoderPro/index.shtml#guide" />
+	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml" />
 	<mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_lightcontrol" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrol" />
-	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml" />
 	<mapID target="Acknowledgements_L" url="Acknowledgements.shtml#L" />
 	<mapID target="DecoderProManual.Basic_Programming_Basic 2" url="DecoderProManual/Basic_Programming.shtml#Basic 2" />
 	<mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable" />
