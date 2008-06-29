@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008-06-29 14:02:42 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-06-29 16:21:52 jacobsen Exp $ -->
 <title>JMRI: RailDriver Throttle</title>
 
 <!-- Style -->
@@ -32,6 +32,7 @@ This page is under construction.
 JMRI's RailDriver support is not generally available yet.
 <img src="../../../images/bangdesk.gif">
 
+<br>
 <a href="RailDriver.gif">
 <img src="RailDriver.gif" align="right" width="389" height="236" alternate="RailDriver line drawing">
 </a>
@@ -58,8 +59,8 @@ Finally, start the JMRI program
 and select "RailDriver Throttle" from the Debug menu.
 (It's temporarily there while we develop the support)
 A Throttle window with the title "RailDriver" should open.
-
-<img src="../../tools/throttle/images/jmri012.jpg" alt="throttle window" align="right" height="188" width="154"/>
+<br>
+<img src="../../tools/throttle/images/jmri012.jpg" alt="throttle window" align="right" height="188" width="154">
 
 <p>
 Type the address of your locomotive (DCC address) into the address box,
@@ -104,6 +105,10 @@ are when the lever is pulled back.
 Eventually, we'd like to make a more detailed simulation available 
 by connecting the rest of the controls, and adding a detailed model of
 the trains braking and accelaration.
+
+<p>
+For technical information, please see the 
+<a href="details.shtml">details page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
