@@ -1,10 +1,12 @@
-# Connect a RailDriver Modern Desktop (USB device) to a throttle
+# Connect a RailDriver Modern Desktop (USB device) to a throttle.
+#
+# See <http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml>
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 
 # set the name of the controller we're looking for
@@ -24,11 +26,69 @@ functionPanel = tf.getFunctionPanel()
 # connect to USB device
 model = jmri.jmrix.jinput.TreeModel.instance()
 
-# add listener for USB events
+# Define listener for handling USB events
 class TreeListener(java.beans.PropertyChangeListener):
+  # 
+  # Main processing: convent an input event into action
+  #
+  # Arguments:  index is control number (0-57), value is current value
+  def process(self, index, value):  
+    #
+    # First, the functions. Button number i and function
+    # number are the same here (by coincidence), so do simple mapping.
+    # Pressing the button alternates the state
+    if (index <= 12) :
+        if (value>0.1) :
+            button = functionPanel.getFunctionButtons()[index]
+            button.changeState(not button.getState())
+    # A couple special buttons
+    # "Bell" is F3, toggles
+    if (index == 41) :
+        if (value>0.1) :
+            button = functionPanel.getFunctionButtons()[bellFn]
+            button.changeState(not button.getState())
+    # "Horn" lever, momentary
+    if (index == 42 or index == 43) :
+        if (value>0.1) :
+            functionPanel.getFunctionButtons()[hornFn].changeState(True)
+        else :
+            functionPanel.getFunctionButtons()[hornFn].changeState(False)
+    # Then, the throttle controls
+    # Left-most fwd-reverse lever
+    if (index == 57) :
+        # negative is lever front, positive is lever back
+        if (value<0.1) :
+            controlPanel.setForwardDirection(True)
+        else :
+            controlPanel.setForwardDirection(False)
+        #print "Direction changed"
+    # estop
+    if (index == 36) :
+        if (value>0.1) :
+            controlPanel.stop()
+    # speed control
+    if (index == 58) :
+        # negative is lever front, positive is lever back
+        # convert speed
+        mininput = 0.15
+        maxinput = 0.4
+        if (value < mininput) : value = mininput
+        if (value > maxinput) : value = maxinput
+        fraction = (value-mininput)/(maxinput-mininput)
+        slider = controlPanel.getSpeedSlider()
+        setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
+        slider.setValue(setting)
+        #print "Throttle:", value, setting
+    # end of handling valid input
+    return
+  #
+  #
+  # ctor equivalent, initialize local variables
   def __init__(self) :
     self.loaded = False
-  def propertyChange(self, event):
+  # 
+  # handle an event from USB subsystem
+  def propertyChange(self, event):  
     if (event.propertyName == "Value") :
       # event.oldValue is the UsbNode
       #
@@ -44,12 +104,12 @@ class TreeListener(java.beans.PropertyChangeListener):
             # print "Starting initialization"
             # find Controller
             controllers = jmri.jmrix.jinput.TreeModel.instance().controllers()
-            print controllers
+            # print controllers
             for c in controllers :
                 if (c.toString().find(desiredControllerName) != -1) :
                     # that's the one!
                     self.components = c.getComponents()
-                    print self.components
+                    # print self.components
         # event.newValue is the value, e.g. 1.0
         # Check for desired component and act
         component = event.oldValue.getComponent()
@@ -65,57 +125,11 @@ class TreeListener(java.beans.PropertyChangeListener):
             i = i+1
         #print "component index ", i
         #
-        # Now start turning index into operation
+        # Now start turn index into operation
         #
-        # First, the functions. Button number i and function
-        # number are the same here (by coincidence), so do simple mapping.
-        # Pressing the button alternates the state
-        if (i <= 12) :
-            if (value>0.1) :
-                button = functionPanel.getFunctionButtons()[i]
-                print i, button.getState(), (not button.getState())
-                button.changeState(not button.getState())
-        # A couple special buttons
-        # "Bell" is F3, toggles
-        if (i == 41) :
-            if (value>0.1) :
-                button = functionPanel.getFunctionButtons()[bellFn]
-                button.changeState(not button.getState())
-        # "Horn", momentary
-        if (i == 42 or i == 43) :
-            if (value>0.1) :
-                functionPanel.getFunctionButtons()[hornFn].changeState(True)
-            else :
-                functionPanel.getFunctionButtons()[hornFn].changeState(False)
-        # Then, the throttle controls
-        # Left-most fwd-reverse lever
-        if (i == 57) :
-            # negative is lever front, positive is lever back
-            #print "57", value
-            if (value<0.1) :
-                controlPanel.setForwardDirection(True)
-            else :
-                controlPanel.setForwardDirection(False)
-        # estop
-        if (i == 36) :
-            if (value>0.1) :
-                controlPanel.stop()
-        # speed control
-        if (i == 58) :
-            # negative is lever front, positive is lever back
-            #print "58", value
-            # convert speed
-            mininput = 0.15
-            maxinput = 0.4
-            if (value < mininput) : value = mininput
-            if (value > maxinput) : value = maxinput
-            fraction = (value-mininput)/(maxinput-mininput)
-            slider = controlPanel.getSpeedSlider()
-            setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
-            slider.setValue(setting)
-            print "58", value, setting
-        # end of handling valid input
+        self.process(i, value)
     # end of handling input event
     return
 
+# create one, add it to USB system to wait for input
 model.addPropertyChangeListener(TreeListener())
