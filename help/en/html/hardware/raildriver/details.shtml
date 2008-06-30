@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: details.shtml,v 1.1 2008-06-29 16:22:04 jacobsen Exp $ -->
+<!-- $Id: details.shtml,v 1.2 2008-06-30 18:13:40 jacobsen Exp $ -->
 <title>JMRI: RailDriver Throttle Details</title>
 
 <!-- Style -->
@@ -28,11 +28,13 @@
 JMRI: RailDriver Throttle Details
 </h2>
 
+<img src="../../../images/bangdesk.gif" align="left">
 This page is under construction. 
-JMRI's RailDriver support is not generally available yet.
-Information on how to configure and use this is available on the
-<a href="index.shtml">introductory page</a>.
-<img src="../../../images/bangdesk.gif">
+JMRI's RailDriver support was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
+It is evolving rapidly, so check back here or on the
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list<a/>
+for changes.
 
 <br>
 <a href="RailDriver.gif">
