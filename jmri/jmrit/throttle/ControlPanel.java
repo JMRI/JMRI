@@ -17,6 +17,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.event.MouseInputAdapter;
 
@@ -47,7 +49,7 @@ import org.jdom.Attribute;
  * @author     glen   Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  *
- * @version    $Revision: 1.58 $
+ * @version    $Revision: 1.59 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -116,6 +118,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setValue(0);
         SwingUtil.setFocusable(speedSlider,false);
 	
+	    // add mouse-wheel support
+        speedSlider.addMouseWheelListener(new MouseWheelListener() {
+          public void mouseWheelMoved(MouseWheelEvent e) {
+            if(e.getWheelRotation() > 0) 
+              decelerate1();
+            else
+              accelerate1();
+          }
+        });
+	    
         try {
             speedSpinner = JSpinnerUtil.getJSpinner();
             if (speedSpinner !=null) {
@@ -740,7 +752,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.58 $
+     * @version    $Revision: 1.59 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
