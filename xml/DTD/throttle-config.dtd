@@ -1,5 +1,5 @@
 <!-- Defines XML for configuring the ThrottleFrames -->
-<!-- $Id: throttle-config.dtd,v 1.9 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: throttle-config.dtd,v 1.10 2008-06-30 03:34:55 ken_c Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2003-2007.                         -->
 <!--                                                                        -->
@@ -19,6 +19,8 @@
 <!--  Section identifies serial port info -->
 <!ELEMENT ThrottleFrame (window, ControlPanel, FunctionPanel, AddressPanel) >
 <!ATTLIST ThrottleFrame title CDATA #REQUIRED>
+<!ATTLIST ThrottleFrame titleType (address | text | textAddress | addresstext) "address" >
+
 
 <!ELEMENT ControlPanel (window) >
 <!ATTLIST ControlPanel displaySpeedSlider CDATA #IMPLIED>
