@@ -78,7 +78,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
      */
     public void notifyThrottleFound(DccThrottle t)
     {
-        log.debug("Throttle found");
+        if (log.isDebugEnabled()) log.debug("Throttle found");
         this.throttle = t;
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
@@ -334,7 +334,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.34 $
+	 * @version $Revision: 1.35 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

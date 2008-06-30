@@ -23,10 +23,11 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class AddressPanel extends JInternalFrame {
 
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 	private DccThrottle throttle;
 	private DccThrottle consistThrottle;
 
@@ -139,7 +140,7 @@ public class AddressPanel extends JInternalFrame {
 		addrSelector.setVariableSize(true);
 		mainPanel.add(addrSelector.getCombinedJPanel(), constraints);
 
-		setButton = new JButton("Set");
+		setButton = new JButton(rb.getString("ButtonSet"));
 		constraints.gridx = GridBagConstraints.RELATIVE;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0;
@@ -156,7 +157,7 @@ public class AddressPanel extends JInternalFrame {
 		rosterBox = Roster.instance().fullRosterComboBox();
 		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		rosterBox.setSelectedIndex(0);
-		rosterBox.setToolTipText("Select loco from roster");
+		rosterBox.setToolTipText(rb.getString("SelectLocoFromRosterTT"));
 		rosterBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rosterItemSelected();
@@ -173,7 +174,7 @@ public class AddressPanel extends JInternalFrame {
 		if (NceConsistRoster.instance().numEntries() > 0) {
 			conRosterBox.insertItemAt(new NullComboBoxConsist(), 0);
 			conRosterBox.setSelectedIndex(0);
-			conRosterBox.setToolTipText("Select consist from roster");
+			conRosterBox.setToolTipText(rb.getString("SelectConsistFromRosterTT"));
 			conRosterBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					consistRosterSelected();
@@ -189,7 +190,7 @@ public class AddressPanel extends JInternalFrame {
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
-		dispatchButton = new JButton("Dispatch");
+		dispatchButton = new JButton(rb.getString("ButtonDispatch"));
 		buttonPanel.add(dispatchButton);
 		dispatchButton.setEnabled(false);
 		dispatchButton.addActionListener(new ActionListener() {
@@ -198,7 +199,7 @@ public class AddressPanel extends JInternalFrame {
 			}
 		});
 
-		releaseButton = new JButton("Release");
+		releaseButton = new JButton(rb.getString("ButtonRelease"));
 		buttonPanel.add(releaseButton);
 		releaseButton.setEnabled(false);
 		releaseButton.addActionListener(new ActionListener() {
@@ -250,8 +251,9 @@ public class AddressPanel extends JInternalFrame {
 			} else {
 				log.warn("consist number missing " + cre.getLoco1DccAddress());
 				JOptionPane.showMessageDialog(this,
-						"Consist number has not been assigned!",
-						"Needs consist number", JOptionPane.ERROR_MESSAGE);
+						rb.getString("ConsistNumberHasNotBeenAssigned"),
+						rb.getString("NeedsConsistNumber"),
+						JOptionPane.ERROR_MESSAGE);
 			}
 			changeOfAddress();
 		}
@@ -265,7 +267,9 @@ public class AddressPanel extends JInternalFrame {
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {
 				AddressListener l = (AddressListener) listeners.get(i);
-				log.debug("Notify address listener " + l);
+				if (log.isDebugEnabled()) {
+					log.debug("Notify address listener " + l);
+				}
 				currentAddress = addrSelector.getAddress();
 				if (currentAddress != null) {
 					l.notifyAddressChosen(currentAddress.getNumber(),
@@ -307,7 +311,9 @@ public class AddressPanel extends JInternalFrame {
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {
 				AddressListener l = (AddressListener) listeners.get(i);
-				log.debug("Notify address listener " + l);
+				if (log.isDebugEnabled()) {
+					log.debug("Notify address listener " + l);
+				}
 				l.notifyAddressReleased(currentAddress.getNumber(),
 						currentAddress.isLongAddress());
 			}
@@ -376,13 +382,13 @@ public class AddressPanel extends JInternalFrame {
 
 	class NullComboBoxItem {
 		public String toString() {
-			return "<No Loco Selected>";
+			return rb.getString("NoLocoSelected");
 		}
 	}
 
 	class NullComboBoxConsist {
 		public String toString() {
-			return "<No Consist Selected>";
+			return rb.getString("NoConsistSelected");
 		}
 	}
 

@@ -3,25 +3,41 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 
 /**
  * A very specific dialog for editing the properties of a ThrottleFrame
  * object.
+ * @author		Original Unknown
+ * @author		Ken Cameron, copyright 2008
+ * @version     $Revision: 1.5 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    
     private ThrottleFrame frame;
 	
 	private JTextField titleField;
+	
+	private JList titleType;
+
+    private String [] titleTextTypes = {"address", "text", "textAddress", "addressText"};
+    private String [] titleTextTypeNames = {
+    		rb.getString("SelectTitleTypeADDRESS"),
+    		rb.getString("SelectTitleTypeTEXT"),
+    		rb.getString("SelectTitleTypeTEXTADDRESS"),
+    		rb.getString("SelectTitleTypeADDRESSTEXT")
+    };
 	
     /**
      * Constructor. Create it and pack it.
      */
     public ThrottleFramePropertyEditor()
     {
-        initGUI();
-		//this.setModal(true);
-        pack();
+//        initGUI();
+//		//this.setModal(true);
+//        pack();
     }
 
     /**
@@ -30,7 +46,7 @@ public class ThrottleFramePropertyEditor extends JDialog
     private void initGUI()
     {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.setTitle("Edit Throttle Frame");
+        this.setTitle(rb.getString("EditThrottleFrameTitle"));
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
@@ -53,16 +69,29 @@ public class ThrottleFramePropertyEditor extends JDialog
 
         titleField = new JTextField();
         titleField.setColumns(24);
-        propertyPanel.add(new JLabel("Frame Title:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("FrameTitlePrompt")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
-        constraints.gridx = 1;
+        constraints.gridx++;
         propertyPanel.add(titleField, constraints);
 
+        titleType = new JList(titleTextTypeNames);
+        titleType.setVisibleRowCount(titleTextTypeNames.length);
+        titleType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        for (int i = 0; i < titleTextTypes.length; i++) {
+        	if (titleTextTypes[i] == frame.titleTextType)
+            	titleType.setSelectedIndex(i);
+        }
+        constraints.gridy++;
+        constraints.gridx = 0;
+        propertyPanel.add(new JLabel(rb.getString("SelectTitleTypePrompt")), constraints);
+        constraints.gridx++;
+        propertyPanel.add(titleType, constraints);
+        
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton("OK");
+        JButton saveButton = new JButton(rb.getString("ButtonOk"));
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -72,7 +101,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         });
 
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -95,7 +124,9 @@ public class ThrottleFramePropertyEditor extends JDialog
     public void setThrottleFrame(ThrottleFrame f)
     {
         this.frame = f;
-        titleField.setText(frame.getTitle());
+        initGUI();
+        pack();
+        titleField.setText(frame.titleText);
 		titleField.selectAll();
     }
 
@@ -106,7 +137,9 @@ public class ThrottleFramePropertyEditor extends JDialog
     {
         if (isDataValid())
         {
-            frame.setTitle(titleField.getText());
+        	frame.titleText = titleField.getText();
+            frame.titleTextType = titleTextTypes[titleType.getSelectedIndex()];
+            frame.setFrameTitle();
             finishEdit();
         }
     }
@@ -131,7 +164,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         if (errorNumber > 0)
         {
             JOptionPane.showMessageDialog(this, errors,
-                    "Errors on page", JOptionPane.ERROR_MESSAGE);
+                    rb.getString("ErrorOnPage"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

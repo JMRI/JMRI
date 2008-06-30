@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ResourceBundle;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -32,6 +33,7 @@ import org.jdom.Element;
  */
 public class FunctionButton extends JToggleButton implements ActionListener
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private FunctionListener listener;
     private int identity; // F0, F1, etc?
     private boolean isOn;
@@ -50,7 +52,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         popup = new JPopupMenu();
 
-        JMenuItem propertiesItem = new JMenuItem("Properties");
+        JMenuItem propertiesItem = new JMenuItem(rb.getString("MenuItemProperties"));
         propertiesItem.addActionListener(this);
         popup.add(propertiesItem);
 

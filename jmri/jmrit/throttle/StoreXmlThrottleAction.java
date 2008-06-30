@@ -8,6 +8,7 @@ import java.io.*;
 import javax.swing.*;
 
 import java.util.*;
+
 import org.jdom.*;
 import org.jdom.output.*;
 
@@ -15,17 +16,18 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     /**
      * Constructor
      * @param s Name for the action.
      */
     public StoreXmlThrottleAction(String s) {
         super(s);
-	// disable the ourselves if there is no throttle Manager
+	// disable this ourselves if there is no throttle Manager
         if (jmri.InstanceManager.throttleManagerInstance()==null) {
             setEnabled(false);
         }
@@ -39,7 +41,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
     public void actionPerformed(ActionEvent e)
     {
         JFileChooser fileChooser = new JFileChooser(XmlFile.userFileLocationDefault());
-        fileChooser = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
+        fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
        	java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
     	if (file == null) return;
 

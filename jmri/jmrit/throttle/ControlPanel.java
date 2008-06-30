@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import jmri.DccThrottle;
 import jmri.util.SwingUtil;
 import jmri.util.JSpinnerUtil;
+import java.util.ResourceBundle;
 import jmri.util.MouseInputAdapterInstaller;
 
 import java.awt.BorderLayout;
@@ -48,11 +49,14 @@ import org.jdom.Attribute;
  *
  * @author     glen   Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.59 $
+ * @version    $Revision: 1.60 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    
     private DccThrottle throttle;
     
     private JSlider speedSlider;
@@ -143,13 +147,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             // we can't use a JSpinner Object.
             speedSpinner = null;
         }
-        SpeedStep128Button = new JRadioButton("128 SS");
-        SpeedStep28Button = new JRadioButton("28 SS");
-        SpeedStep27Button = new JRadioButton("27 SS");
-        SpeedStep14Button= new JRadioButton("14 SS");
+        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
+        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
+        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
+        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
         
-        forwardButton = new JRadioButton("Forward");
-        reverseButton = new JRadioButton("Reverse");
+        forwardButton = new JRadioButton(rb.getString("ButtonForward"));
+        reverseButton = new JRadioButton(rb.getString("ButtonReverse"));
         
         propertiesPopup = new JPopupMenu();
         initGUI();
@@ -285,7 +289,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable labelTable = new java.util.Hashtable();
         labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(new Integer(0), new JLabel("Stop"));
+        labelTable.put(new Integer(0), new JLabel(rb.getString("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -428,7 +432,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable labelTable = new java.util.Hashtable();
         labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(new Integer(0), new JLabel("Stop"));
+        labelTable.put(new Integer(0), new JLabel(rb.getString("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -449,7 +453,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                   }
                                                   if (doIt) {
                                                       float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
-                                                      log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );
+                                                      if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
                                                       throttle.setSpeedSetting( newSpeed );
                                                       if(speedSpinner!=null)
                                                           JSpinnerUtil.setValue(speedSpinner, new Integer(speedSlider.getValue()));
@@ -478,7 +482,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                        //if (!speedSpinner.getValueIsAdjusting())
                                                        //{
                                                        float newSpeed = ((Integer)JSpinnerUtil.getValue(speedSpinner)).floatValue() / ( MAX_SPEED * 1.0f );
-                                                       log.debug( "stateChanged: spinner pos: " + JSpinnerUtil.getValue(speedSpinner) + " speed: " + newSpeed );
+                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + JSpinnerUtil.getValue(speedSpinner) + " speed: " + newSpeed );}
                                                        if (throttle != null) {
                                                            throttle.setSpeedSetting( newSpeed );
                                                            speedSlider.setValue(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue());
@@ -604,7 +608,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                         public void mouseClicked(MouseEvent e) {}
                                     });
         
-        idleButton = new JButton("Idle");
+        idleButton = new JButton(rb.getString("ButtonIdle"));
         constraints.gridy = 4;
         buttonPanel.add(idleButton, constraints);
         idleButton.addActionListener(
@@ -752,7 +756,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.59 $
+     * @version    $Revision: 1.60 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -806,7 +810,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             // multiply by MAX_SPEED, and round to find the new
             //slider setting.
             int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
-            log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;
+            if (log.isDebugEnabled()) {log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
             speedSlider.setValue( newSliderSetting );
             if(speedSpinner!=null)
                 JSpinnerUtil.setValue(speedSpinner, new Integer(newSliderSetting));

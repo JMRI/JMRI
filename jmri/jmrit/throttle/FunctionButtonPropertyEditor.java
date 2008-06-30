@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 
 /**
  * A very specific dialog for editing the properties of a FunctionButton
@@ -10,6 +11,7 @@ import java.awt.event.*;
  */
 public class FunctionButtonPropertyEditor extends JDialog
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private FunctionButton button;
 
     private JTextField textField;
@@ -33,7 +35,7 @@ public class FunctionButtonPropertyEditor extends JDialog
     private void initGUI()
     {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.setTitle("Edit Function Button");
+        this.setTitle(rb.getString("ButtonEditFunction"));
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
@@ -56,7 +58,7 @@ public class FunctionButtonPropertyEditor extends JDialog
 
         idField = new JTextField();
         idField.setColumns(1);
-        propertyPanel.add(new JLabel("Function Number:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("LabelFunctionNumber")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
@@ -67,7 +69,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 1;
         textField = new JTextField();
         textField.setColumns(10);
-        propertyPanel.add(new JLabel("Text:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("LabelText")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
@@ -78,19 +80,19 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 2;
         fontField = new JTextField();
         fontField.setColumns(10);
-        propertyPanel.add(new JLabel("Font Size:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("LabelFontSize")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
         propertyPanel.add(fontField, constraints);
 
-        lockableCheckBox = new JCheckBox("Lockable");
+        lockableCheckBox = new JCheckBox(rb.getString("CheckBoxLockable"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
         constraints.gridy = 3;
         propertyPanel.add(lockableCheckBox, constraints);
 
-        visibleCheckBox = new JCheckBox("Visible");
+        visibleCheckBox = new JCheckBox(rb.getString("CheckBoxVisible"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -99,7 +101,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton("OK");
+        JButton saveButton = new JButton(rb.getString("ButtonOk"));
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -109,7 +111,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         });
 
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -192,7 +194,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". Function number must integer between 0 and 28\n");
+            errors.append(". " + rb.getString("ErrorFunctionKeyRange") + "\n");
         }
 
         /* font > 0 */
@@ -207,7 +209,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". Font size must integer greater than 0");
+            errors.append(". " + rb.getString("ErrorFontSize"));
         }
 
 

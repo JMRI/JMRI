@@ -9,16 +9,19 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import java.util.List;
+import java.util.ResourceBundle;
+
 import org.jdom.Element;
 
 /**
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     
     /**
      *  Constructor
@@ -49,7 +52,7 @@ public class LoadXmlThrottleAction extends AbstractAction
     public void actionPerformed(ActionEvent e)
     {
         if (fileChooser == null) {
-            fileChooser = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
         }
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION)
@@ -61,15 +64,17 @@ public class LoadXmlThrottleAction extends AbstractAction
         // if exising frames are open ask to destroy those or merge.
         if (ThrottleFrameManager.instance().getThrottleFrames().hasNext())
             {
-                Object[] possibleValues = {"Merge", "Replace", "Cancel"};
+                Object[] possibleValues = {
+                		rb.getString("LabelMerge"), 
+                		rb.getString("LabelReplace"), 
+                		rb.getString("LabelCancel")
+                };
                 int selectedValue = JOptionPane.showOptionDialog(null,
-                                                                 "Throttles are currently open.\nDo you wish to Merge "
-                                                                 + "saved throttles with open throttles or\n"
-                                                                 + "Replace open throttles",
-                                                                 "Loading Throttles",
-                                                                 JOptionPane.YES_NO_CANCEL_OPTION,
-                                                                 JOptionPane.INFORMATION_MESSAGE, null,
-                                                                 possibleValues, possibleValues[0]);
+                		rb.getString("DialogMergeOrReplace"),
+                		rb.getString("OptionLoadingThrottles"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null,
+						possibleValues, possibleValues[0]);
                 if (selectedValue == JOptionPane.NO_OPTION)
                     {
                         // replace chosen - close all then load
@@ -115,7 +120,7 @@ public class LoadXmlThrottleAction extends AbstractAction
      *  An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author     glen
-     * @version    $Revision: 1.15 $
+     * @version    $Revision: 1.16 $
      */
     class ThrottlePrefs extends XmlFile
     {

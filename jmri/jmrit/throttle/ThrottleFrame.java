@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -44,7 +45,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.37 $
+ * @version    $Revision: 1.38 $
  */
 /**
  * @author DSM
@@ -52,6 +53,7 @@ import org.jdom.Element;
  */
 public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener, java.beans.PropertyChangeListener
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private final Integer PANEL_LAYER = new Integer(1);
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;
@@ -84,6 +86,9 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     NamedIcon powerOffIcon = new NamedIcon("resources/RedPowerLED.gif", "resources/RedPowerLED.gif");
     NamedIcon powerXIcon = new NamedIcon("resources/YellowPowerLED.gif", "resources/YellowPowerLED.gif");
     
+    String titleText = "";
+    String titleTextType = "address";
+        
     /**
      *  Default constructor
      */
@@ -101,7 +106,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     public ControlPanel getControlPanel() { return controlPanel; }
     public FunctionPanel getFunctionPanel() { return functionPanel; }
     public AddressPanel getAddressPanel() { return addressPanel; }
-    
+        
     /**
      * Get notification that a throttle has been found as you requested.
      * @param t An instantiation of the DccThrottle with the address requested.
@@ -135,7 +140,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
             }
         else
             {
-                setTitle(Integer.toString(address)); 
+        		setFrameTitle(); 
             }
     }
     
@@ -573,7 +578,8 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     public Element getXml()
     {
         Element me = new Element("ThrottleFrame");
-        me.setAttribute("title", this.getTitle());
+        me.setAttribute("title", titleText);
+        me.setAttribute("titleType", titleTextType);
         java.util.ArrayList children =
             new java.util.ArrayList(1);
         WindowPreferences wp = new WindowPreferences();
@@ -601,7 +607,9 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public void setXml(Element e)
     {
-        this.setTitle(e.getAttribute("title").getValue());
+        titleText = e.getAttribute("title").getValue();
+        titleTextType = e.getAttribute("titleType").getValue();
+        
         Element window = e.getChild("window");
         WindowPreferences wp = new WindowPreferences();
         wp.setPreferences(this, window);
@@ -611,6 +619,28 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         functionPanel.setXml(functionPanelElement);
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
+        
+        setFrameTitle();
+    }
+    
+    /**
+     * setFrameTitle - set the frame title based on type, text and address
+     */
+    void setFrameTitle()
+    {
+    	String addr = "";
+    	if (throttle != null) {
+    		addr = throttle.getLocoAddress().toString();
+    	}
+    	if (titleTextType.compareTo("address") == 0) {
+    		this.setTitle(addr);
+    	} else if (titleTextType.compareTo("text") == 0) {
+    		this.setTitle(titleText);
+    	} else if (titleTextType.compareTo("addressText") == 0) {
+    		this.setTitle(addr + " " + titleText);
+    	} else if (titleTextType.compareTo("textAddress") == 0) {
+    		this.setTitle(titleText + " " + addr);
+    	}
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleFrame.class.getName());

@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 
 
@@ -8,9 +10,11 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class EditThrottlePreferencesAction extends AbstractAction {
+	
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 
     /**
      * Constructor
@@ -32,7 +36,7 @@ public class EditThrottlePreferencesAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e)
 	{
-		javax.swing.JOptionPane.showMessageDialog(null, "Coming Soon!");
+		javax.swing.JOptionPane.showMessageDialog(null, rb.getString("ComingSoon"));
     }
 
     // initialize logging

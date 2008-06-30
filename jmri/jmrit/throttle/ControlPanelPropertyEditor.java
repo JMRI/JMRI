@@ -3,16 +3,18 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 
 /**
  * A very specific dialog for editing the properties of a FunctionButton
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private ControlPanel control;
 
     private JRadioButton displaySlider;
@@ -37,7 +39,7 @@ public class ControlPanelPropertyEditor extends JDialog
     private void initGUI()
     {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.setTitle("Edit Speed Control Panel");
+        this.setTitle(rb.getString("TitleEditSpeedControlPanel"));
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
@@ -60,8 +62,8 @@ public class ControlPanelPropertyEditor extends JDialog
 
 	ButtonGroup modeSelectionButtons = new ButtonGroup();
 
-    	displaySlider=new JRadioButton("Display Speed Slider");
-    	displaySteps=new JRadioButton("Display Speed Steps");
+    	displaySlider=new JRadioButton(rb.getString("ButtonDisplaySpeedSlider"));
+    	displaySteps=new JRadioButton(rb.getString("ButtonDisplaySpeedSteps"));
 
 	modeSelectionButtons.add(displaySlider);
 	modeSelectionButtons.add(displaySteps);
@@ -77,7 +79,7 @@ public class ControlPanelPropertyEditor extends JDialog
         propertyPanel.add(displaySteps, constraints);
 
         
-        trackBox = new JCheckBox("Track slider in real time", control.getTrackSlider());
+        trackBox = new JCheckBox(rb.getString("CheckBoxTrackSliderInRealTime"));
         constraints.gridy = 3;
         propertyPanel.add(trackBox, constraints);
 	displaySlider.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAY);
@@ -105,7 +107,7 @@ public class ControlPanelPropertyEditor extends JDialog
                                 }
                         });
  
-	// dissable the speed controls if the control panel says they 
+	// disable the speed controls if the control panel says they 
 	// aren't possible
 	displaySlider.setEnabled(control.
 				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));
@@ -115,7 +117,7 @@ public class ControlPanelPropertyEditor extends JDialog
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton("OK");
+        JButton saveButton = new JButton(rb.getString("ButtonOk"));
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -124,7 +126,7 @@ public class ControlPanelPropertyEditor extends JDialog
             }
         });
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
