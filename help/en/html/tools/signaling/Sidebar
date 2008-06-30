@@ -35,7 +35,7 @@
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="../apps/Automation">Layout Automation</a></h3></dt>
+		<dt><h3><a href="../automation/index.shtml">Layout Automation</a></h3></dt>
 		<dd>JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
