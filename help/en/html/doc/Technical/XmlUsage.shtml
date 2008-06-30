@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.4 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.5 2008-06-30 04:54:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -29,10 +29,8 @@
 
 	<div id="mainContent">
 
-	    <H1>JMRI: XML Usage</H1>
+<H1>JMRI: XML Usage</H1>
 
-
-<P>
 JMRI uses XML for a number of purposes: 
 to hold decoder definitions, for its
 <a href="XmlPersistance.shtml">persistance system</a>
