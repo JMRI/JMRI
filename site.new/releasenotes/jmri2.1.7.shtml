@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.9 2008-06-25 00:44:33 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.10 2008-06-30 04:54:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -205,6 +205,24 @@ as a JMIR throttle.
 When in EasyDCC or SPROG mode, JMRI didn't include support for internal sensors due 
 to an oversight.  This is now fixed, so internal sensors are available
 for panels, Logix, etc.
+
+<p>
+Fixed a problem with function and forward-reverse tracking when using multiple Digitrax throttles.
+
+<p>
+Introductor support for the PI Engineering 
+<a href="http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml">RailDriver throttle simulator</a>
+is included.
+
+<p>
+Ronnie Pinkerton and Peter Lloyd-Jones updated the throttle speed slider so that
+it would also respond to a mouse wheel.
+
+<p>
+Ken Cameron added several options for adding titles to throttle windows,
+and fixed a bug that kept throttle titles from saving and restoring properly.
+Also, he added internationalization to the throttle so they can be 
+translated into other languages.
 
 <!--#include virtual="/Footer" -->
 
