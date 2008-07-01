@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.4 2008-05-31 05:01:06 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.5 2008-07-01 04:17:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,7 +43,7 @@
 	  <li>DB150 Command Station/Booster</li>
 	  <li>DCS100 Command Station/Booster</li>
 	  <li>DCS200 Command Station/Booster</li>
-	  <li><a href="http://www.uhlenbrock.de/3/index.htm">Intellibox: The Uhlenbrock Central Unit</a></li>
+	  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a></li>
       <li>LocoBuffer (PS): LocoBuffer with built-in command station
     </ul>
     
@@ -67,6 +67,12 @@
 	and cannot be used with JMRI if you are using 
 	MacOS X or on most Windows Vista machines.
 	
+	<p>
+	The Uhlenbrock Intellibox can also be controlled directly through it's serial port;
+	there's a 
+	<a href="Uhlenbrock.shtml">separate page</a>
+	on how to do this.
+	 
 	<h2>PR2 and PR3 Programmers</h2>
 	JMRI can also use a 
 	<a href="PR2.shtml">Digitrax PR2</a> or
