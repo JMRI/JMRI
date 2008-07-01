@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Uhlenbrock.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: Uhlenbrock.shtml,v 1.2 2008-07-01 04:14:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,15 +34,8 @@
 
 <P>DecoderPro can communicate with an Uhlenbrock Intellibox via
 the built-in serial port and the LocoNet protocol. 
-<p>
-Note that this capability was added to JMRI in test version 1.5.2, 
-and is not present in the previous 1.4 production release.  
-If you are using a JMRI version before version 1.5.2, 
-please go to the 
-<A HREF="http://jmri.sf.net/download/">download page</a>
-to download the latest version.
 
-<P>
+<p>
 Configure the options of your Uhlenbrock Intellibox to be:
 <UL>
 <LI>SO 2 value 4  (Select LocoNet protocol in the interface)
