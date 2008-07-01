@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.20 2008-06-29 14:03:03 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.21 2008-07-01 04:22:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -106,8 +106,12 @@
 	        <p class="dl">Configure: Remote connection to a LocoNet via
 		<A HREF="loconet/LbServer.shtml">LbServer</a>.</p>
 		<A HREF="loconet/LocoNetworking.shtml">More information on connecting multiple computers to a single LocoNet</a>
-	        <p class="dl">Configure: Programming and testing decoders via a 
-		<A HREF="loconet/PR2.shtml">Digitrax PR2 interface</a>.</p>
+	        <p class="dl">Configure: Programming and testing decoders without a command station via a 
+		<A HREF="loconet/PR2.shtml">Digitrax PR2 interface</a>
+		or
+		<A HREF="loconet/PR3.shtml">PR3 interface</a>.</p>
+		    <p class="dl">Configure: Directly connecting to an
+		<a href="loconet/Uhlenbrock.shtml">Intellibox serial port</a>.
 	    </dd>
 
 	    <dt class="im">
