@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.15 2008-05-31 04:59:49 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.16 2008-07-03 15:21:51 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -91,8 +91,10 @@ installed.</P>
 </UL>
 
 <P>If you wish to use MONITORING for turnout feedback, you must
-upgrade your command station to the Mar 1 2007A EPROM or newer. The
-release in the first half of 2007 had a problem with odd turnout status.
+upgrade your command station to the Mar 1 2007A EPROM or newer. 
+(For more information on turnout feedback, please see the feedback
+<a href="../../doc/Technical/TurnoutFeedback.shtml">documentation page</a>)
+The release in the first half of 2007 had a problem with odd turnout status.
 Every other odd accessory shared the same status bit. JMRI checks the
 revision number at startup, and will send a warning to the console
 window if it finds the early 2007 EPROM. If you're not sure if you have
