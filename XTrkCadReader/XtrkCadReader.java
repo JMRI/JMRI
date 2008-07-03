@@ -5,8 +5,9 @@
  * program XtrkCAD (freely available from  http://www.xtrkcad.org )
  * to JMRI Layout Editor format.
  * @author			Giorgio Terdina Copyright (C) 2008
- * @version			$Revision: 1.1.1.1 $
+ * @version			$Revision: 1.2 $
  *	2008-May-21		GT - Added support for negative radius (found in some track libraries)
+ *	2008-Jul-03		GT - Stripped XML chracters (&, <...) from title and description fields
  */
 import java.util.*;
 import java.io.*;
@@ -222,6 +223,7 @@ public class XtrkCadReader {
 						layoutName = line.next();
 						while (line.hasNext()) layoutName += " " + line.next();
 						System.out.println("\t\tLayout title: " + layoutName);
+						layoutName = layoutName.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("'", "&apos;").replace("\"", "&quot;");
 					} else if(keyword.equals("ROOMSIZE")) {
 						// layout size - get X and Y values
 						originalWidth = line.nextDouble();
@@ -954,6 +956,7 @@ public class XtrkCadReader {
 				angleReference = line.nextDouble();
 				description = "#" + originalNumber;
 				while(line.hasNext()) description += " " + line.next();
+				description = description.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("'", "&apos;").replace("\"", "&quot;");
 			} else if(trackType == STRAIGHT) {
 				description = "#" + originalNumber + " Flexi-track straight segment";
 			}
