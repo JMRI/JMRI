@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.10 2008-06-30 04:54:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.11 2008-07-03 06:35:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -223,6 +223,10 @@ Ken Cameron added several options for adding titles to throttle windows,
 and fixed a bug that kept throttle titles from saving and restoring properly.
 Also, he added internationalization to the throttle so they can be 
 translated into other languages.
+
+<p>
+John McAleely added an decoder description for the Bachmann 1fn decoder released 
+to the UK market as 36-551.
 
 <!--#include virtual="/Footer" -->
 
