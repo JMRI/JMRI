@@ -34,7 +34,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected boolean outTest = true;
     protected boolean wrapTest = false;
     protected boolean isMICRO = false;
-    protected boolean isNIC = true;
+    protected boolean isTERA = true;
+    protected boolean isPICO = false;
+    protected boolean isMEGA = false;
 // Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
@@ -72,7 +74,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     javax.swing.JRadioButton outputButton = new javax.swing.JRadioButton("Output Test   ",true);
     javax.swing.JRadioButton wrapButton = new javax.swing.JRadioButton("Wraparound Test",false);
 
-    javax.swing.JTextField uaAddrField = new javax.swing.JTextField(3);
+    javax.swing.JTextField naAddrField = new javax.swing.JTextField(3);
     javax.swing.JTextField outCardField = new javax.swing.JTextField(3);
     javax.swing.JTextField inCardField = new javax.swing.JTextField(3);
     javax.swing.JTextField obsDelayField = new javax.swing.JTextField(5);
@@ -94,7 +96,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     public void initComponents() throws Exception {
 
         // set the frame's initial state
-        setTitle("Run TCH Technology NIC Diagnostic");
+        setTitle("Run TCH Technology NICS Diagnostic");
         setSize(1000,1000);
         Container contentPane = getContentPane();        
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -116,12 +118,12 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         JPanel panel21 = new JPanel();
         panel21.setLayout(new FlowLayout());
         panel21.add(new JLabel("Node(NA):"));
-        panel21.add(uaAddrField);
-        uaAddrField.setToolTipText("Enter node address, numbering from 0.");
-        uaAddrField.setText("0");
-        panel21.add(new JLabel("  Out Card:"));
+        panel21.add(naAddrField);
+        naAddrField.setToolTipText("Enter node address, numbering from 0.");
+        naAddrField.setText("0");
+        panel21.add(new JLabel("  Out Tab:"));
         panel21.add(outCardField);
-        outCardField.setToolTipText("Enter output card number, numbering from 0.");
+        outCardField.setToolTipText("Enter output Tab number, numbering from 0.");
         outCardField.setText("0");
         JPanel panel22 = new JPanel();
         panel22.setLayout(new FlowLayout());
@@ -131,9 +133,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         obsDelayField.setText("500");        
         JPanel panel23 = new JPanel();
         panel23.setLayout(new FlowLayout());
-        panel23.add(new JLabel("Wraparound Test Only - In Card:"));
+        panel23.add(new JLabel("Wraparound Test Only - In Tab:"));
         panel23.add(inCardField);
-        inCardField.setToolTipText("Enter input card number, numbering from 0.");
+        inCardField.setToolTipText("Enter input Tab number, numbering from 0.");
         inCardField.setText("2");
         panel23.add(new JLabel("   Filtering Delay:"));
         panel23.add(filterDelayField);
@@ -249,7 +251,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // read setup data - Node(NA) field
         try 
         {
-            na = Integer.parseInt(uaAddrField.getText());
+            na = Integer.parseInt(naAddrField.getText());
         }
         catch (Exception e)
         {
@@ -258,7 +260,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         if ( (na < 0) || (na > 256) ) {
-            statusText1.setText("Error - Node(NA) is not between 0 and 256, please try again.");
+            statusText1.setText("Error - Node(NA) is not between 0 and 255, please try again.");
             statusText1.setVisible(true);
             return (false);
         }
@@ -272,7 +274,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // determine if node is MICRO, NIC, or 
         int type = node.getNodeType();
         isMICRO = (type==SerialNode.MICRO);
-        isNIC = (type==SerialNode.TERA);
+        isTERA = (type==SerialNode.TERA);
+        isPICO = (type==SerialNode.PICO);
+        isMEGA = (type==SerialNode.MEGA);
 // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = node.numOutputCards();
@@ -286,27 +290,27 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         catch (Exception e)
         {
-            statusText1.setText("Error - Bad character in Out Card field, please try again.");
+            statusText1.setText("Error - Bad character in Out Tab field, please try again.");
             statusText1.setVisible(true);
             return (false);
         }
         // Check for consistency with Node definition
-        if ( isNIC ) {
+        if ( isTERA ) {
             if ( (outCardNum < 0) || (outCardNum >= numCards) ) {
-                statusText1.setText("Error - Out Card is not between 0 and "+Integer.toString(numCards-1)+
+                statusText1.setText("Error - Out Tab is not between 0 and "+Integer.toString(numCards-1)+
                                                                         ", please try again.");
                 statusText1.setVisible(true);
                 return (false);
             }
             if (!node.isOutputCard(outCardNum)) {
-                statusText1.setText("Error - Out Card is not an Output Card in your Node definition, "+
+                statusText1.setText("Error - Out Tab is not an Output Tab in your Node definition, "+
                                                                             "please try again.");
                 statusText1.setVisible(true);
                 return (false);
             }
         }
         if (isMICRO && ( (outCardNum < 0) || (outCardNum > 1) ) ) {
-            statusText1.setText("Error - Out Card is not 0 or 1, please try again.");
+            statusText1.setText("Error - Out Tab is not 0 or 1, please try again.");
             statusText1.setVisible(true);
             return (false);
         }
@@ -333,30 +337,42 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
             catch (Exception e)
             {
-                statusText1.setText("Error - Bad character in In Card field, please try again.");
+                statusText1.setText("Error - Bad character in In Tab field, please try again.");
                 statusText1.setVisible(true);
                 return (false);
             }
             // Check for consistency with Node definition
-            if (isNIC) {
+            if (isTERA) {
                 if ( (inCardNum < 0) || (inCardNum >= numCards) )  {
-                    statusText1.setText("Error - In Card is not between 0 and "+
+                    statusText1.setText("Error - In Tab is not between 0 and "+
                                             Integer.toString(numCards-1)+", please try again.");
                     statusText1.setVisible(true);
                     return (false);
                 }
                 if (!node.isInputCard(inCardNum)) {
-                    statusText1.setText("Error - In Card is not an Input Card in your Node definition, "+
+                    statusText1.setText("Error - In Tab is not an Input Card in your Node definition, "+
                                                                             "please try again.");
                     statusText1.setVisible(true);
                     return (false);
                 }
             }
             if (isMICRO && (inCardNum != 2) ) {
-                statusText1.setText("Error - In Card not 2 for MICRO, please try again.");
+                statusText1.setText("Error - In Tab not 2 for MICRO, please try again.");
                 statusText1.setVisible(true);
                 return (false);
             }
+            if (isPICO && (inCardNum != 2) ) {
+                statusText1.setText("Error - In Tab not 2 for Pico, please try again.");
+                statusText1.setVisible(true);
+                return (false);
+            }
+            if (isMEGA && (inCardNum != 2) ) {
+                statusText1.setText("Error - In Tab not 2 for Mega, please try again.");
+                statusText1.setVisible(true);
+                return (false);
+            }
+
+
 
             // read setup data - Filtering Delay field
             try 
@@ -436,7 +452,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
         try {
             // Wait for initialization to complete
-            wait (1000);    
+            wait (500);    
         }
         catch (Exception e) {
             // Ignore exception and continue
@@ -465,7 +481,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                     m.setTimeout(50);
                     SerialTrafficController.instance().sendSerialMessage(m,curFrame);
                     // update status panel to show bit that is on
-                    statusText1.setText("Port "+portID[curOutByte-begOutByte]+" Bit "+
+                    statusText1.setText("Port "+portID[curOutByte-begOutByte]+" Line "+
                             Integer.toString(curOutBit)+
                                     " is on - Compare LED's with the pattern below");
                     statusText1.setVisible(true);
@@ -474,9 +490,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         st = st + "  ";
                         for (int j = 0;j<8;j++) {
                             if ( (i==curOutByte) && (j==curOutBit) )
-                                st = st + "X";
+                                st = st + " X";
                             else
-                                st = st + "O";
+                                st = st + " O";
                         }
                     }                        
                     statusText2.setText(st);
@@ -538,7 +554,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
         try {
             // Wait for initialization to complete
-            wait (1000);    
+            wait (500);    
         }
         catch (Exception e) {
             // Ignore exception and continue
@@ -611,8 +627,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
                         // send next output pattern
                         outBytes[curOutByte] = (byte) curOutValue;
-                        if (isMICRO) {
-                            // If MICRO, send same pattern to both output cards
+                        if (isMICRO)
+                        if (isPICO)
+                        if (isMEGA){
+                            // If MICRO , send same pattern to both output cards
                             if (curOutByte > 2) {
                                 outBytes[curOutByte-3] = (byte) curOutValue;
                             }
@@ -631,10 +649,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         String st = "Port: "+portID[curOutByte-begOutByte]+",  Pattern: ";
                         for (int j = 0;j < 8;j++) {
                             if ( (curOutValue&outBitPattern[j]) != 0 ) {
-                                st = st + "X";
+                                st = st + " X";
                             }
                             else {
-                                st = st + "O";
+                                st = st + " O";
                             }
                         }    
                         statusText2.setText(st);
@@ -658,8 +676,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             // Move to the next byte
                             curOutValue = 0;
                             outBytes[curOutByte] = 0;
-                            if (isMICRO) {
-                                // If MICRO, clear ports of both output cards
+                            if (isMICRO)
+                            if (isPICO)
+                            if (isMEGA){
+                                // If MICRO, PICO or MEGA clear ports of both output cards
                                 if (curOutByte>2) {
                                     outBytes[curOutByte-3] = 0;
                                 }
@@ -706,7 +726,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // Create a Serial message and add initial bytes
         SerialMessage m = new SerialMessage(nOutBytes + 2);
         m.setElement(0,na);  // node address
-        m.setElement(1,83);     // 'T'
+        m.setElement(1,0xE3);     // 'T'
         // Add nOutBytes output bytes to message
         int k = 2;
         for (int i=0; i<nOutBytes; i++) {
