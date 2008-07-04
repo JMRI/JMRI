@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Tim Hatch for TCH Technology nodes
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialNode {
 
@@ -36,22 +36,23 @@ public class SerialNode {
      */
     static final int MAXSENSORS = 999;
     
-    static public final int MAXSEARCHLIGHTBYTES = 144;
+    static public final int MAXSEARCHLIGHTBYTES = 96;
     static public final int MAXCARDLOCATIONBYTES = 64;
     
    // class constants
-    public static final int MICRO = 1;          // MICRO node type
-    public static final int MEGA = 2;           // NICS node type
-    public static final int TERA =3;             //Mega Series
+    public static final int MICRO = 1;          // Micro series node type
+    public static final int TERA = 2;           // Tera series node type
+    public static final int PICO = 3;           // Pico series node type
+    public static final int MEGA = 4;           // Mega series node type
     public static final byte INPUT_CARD = 1;    // NICS input card type for specifying location
     public static final byte OUTPUT_CARD = 2;   // NICS output card type for specifying location
     public static final byte NO_CARD = 0;       // NICS unused location
     // node definition instance variables (must persist between runs)
     public int nodeAddress = 0;                 // NA, Node address, 0-255 allowed
     protected int nodeType = MICRO;             // See above
-    protected int bitsPerCard = 16;             // 24 for MICRO and 32 for NICS
-    //protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
-         protected int pulseWidth = 500;	// Pulse width for pulsed turnout control (milliseconds)
+    protected int bitsPerCard = 16;             // 16 Pico, Micro, Mega, 24 and 32 for Tera
+   // protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
+    protected int pulseWidth = 500;	// Pulse width for pulsed turnout control (milliseconds)
     protected int num2LSearchLights = 0;        // MICRO Node only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // Micro Node only, 0 = not targetlight LED,
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
@@ -81,7 +82,7 @@ public class SerialNode {
     /**
      * Creates a new SerialNode and initialize default instance variables
      *   address - Address of node on TCH Technology serial bus (0-255)
-     *   type - MICRO Node, NICS,
+     *   type - PICO, MICRO, MEGA and TERA Nodes
      */
     public SerialNode(int address, int type) {
         // set address and type and check validity
@@ -89,7 +90,6 @@ public class SerialNode {
         setNodeType (type);
         // set default values for other instance variables
         bitsPerCard = 16;
-        //transmissionDelay = 0;
         num2LSearchLights = 0;
         for (int i = 0; i<MAXSEARCHLIGHTBYTES; i++) {
             locSearchLightBits[i] = 0;
@@ -143,7 +143,7 @@ public class SerialNode {
             log.error("setCardTypeLocation - invalid value - "+val);
             return;
         }
-        // Set the card type
+        // Set the Tab type
     	cardTypeLocation[num] = (byte)(val);
     }
     	
@@ -157,7 +157,7 @@ public class SerialNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("TCH Tech NIC - Output bit out-of-range for defined node");
+            warn("TCH Tech NIC - Output lines out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -181,7 +181,7 @@ public class SerialNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("TCH Tech NIC - Output bit out-of-range for defined node");
+            warn("TCH Tech NICS - Output lines out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -226,11 +226,13 @@ public class SerialNode {
 
     	// check consistency
     	if (nodeType==MICRO && result!=1)
-    		warn("NIC node with "+result+" input cards");
-        if (nodeType==MEGA && result!=3)
-    		warn("NIC node with "+result+" input cards");
+    		warn("Micro node with "+result+" input Tabs");
     	if (nodeType==TERA && result>=MAXCARDLOCATIONBYTES)
-    		warn("NIC node with "+result+" input cards");
+    		warn("Tera node with "+result+" input Tabs");
+        if (nodeType==PICO && result!=1)
+    		warn("Pico node with "+result+" input Tabs");
+        if (nodeType==MEGA && result!=3)
+    		warn("MEGA node with "+result+" input Tabs");
 
     	return result;
     }
@@ -245,11 +247,13 @@ public class SerialNode {
 
     	// check consistency
     	if (nodeType==MICRO && result!=2)
-    		warn("MICRO node with "+result+" output cards");
-        if (nodeType==MEGA && result!=6)
-    		warn("MEGA node with "+result+" output cards");
+    		warn("Micro node with "+result+" output Tabs");
     	if (nodeType==TERA && result>=MAXCARDLOCATIONBYTES)
-    		warn("NIC node with "+result+" output cards");
+    		warn("Tera node with "+result+" output Tabs");
+        if (nodeType==PICO && result!=1)
+    		warn("Pico node with "+result+" output Tabs");
+        if (nodeType==MEGA && result!=6)
+    		warn("Mega node with "+result+" output Tabs");
 
     	return result;
     }
@@ -257,7 +261,7 @@ public class SerialNode {
     /**
      * Public method to return node type
      *   Current types are:
-     *      MICRO Node, NICS,
+     *      Pico, Micro, Mega and Tera Nodes
      */
     public int getNodeType() {
         return (nodeType);
@@ -274,18 +278,35 @@ public class SerialNode {
         if (type == MICRO) {
             nodeType = type;
             bitsPerCard = 16;
-            // set cardTypeLocation for MICRO
+            // set cardTypeLocation for Micro
             cardTypeLocation[0] = OUTPUT_CARD;
             cardTypeLocation[1] = OUTPUT_CARD;
             cardTypeLocation[2] = INPUT_CARD;
-            for (int i=3;i<MAXCARDLOCATIONBYTES;i++) {
+            for (int i=4;i<MAXCARDLOCATIONBYTES;i++) {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
-         if (type == MEGA) {
+        if (type == TERA) {
+            nodeType = type;
+            // clear cardTypeLocations
+            for (int i=0;i<MAXCARDLOCATIONBYTES;i++) {
+                cardTypeLocation[i] = NO_CARD;
+            }
+        }
+        if (type==PICO) {
             nodeType = type;
             bitsPerCard = 16;
-            // set cardTypeLocation for MEGA
+            // set cardTypeLocation for Pico
+            cardTypeLocation[0] = OUTPUT_CARD;
+            cardTypeLocation[1] = INPUT_CARD;
+            for (int i=2;i<MAXCARDLOCATIONBYTES;i++) {
+                cardTypeLocation[i] = NO_CARD;
+            }
+        }
+        else if (type == MEGA) {
+            nodeType = type;
+            bitsPerCard = 16;
+            // set cardTypeLocation for Mega
             cardTypeLocation[0] = OUTPUT_CARD;
             cardTypeLocation[1] = OUTPUT_CARD;
             cardTypeLocation[2] = OUTPUT_CARD;
@@ -296,13 +317,6 @@ public class SerialNode {
             cardTypeLocation[7] = INPUT_CARD;
             cardTypeLocation[8] = INPUT_CARD;
             for (int i=9;i<MAXCARDLOCATIONBYTES;i++) {
-                cardTypeLocation[i] = NO_CARD;
-            }
-        }
-        else if (type ==TERA) {
-            nodeType = type;
-            // clear cardTypeLocations
-            for (int i=0;i<MAXCARDLOCATIONBYTES;i++) {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
@@ -323,7 +337,7 @@ public class SerialNode {
      * Public method to set number of bits per card.
      */
     public void setNumBitsPerCard(int bits) {
-        if ( (bits==24) || (bits==32) || (bits==16) ) {
+        if ( (bits==24) || (bits==32) || (bits==16) || (bits==8)) {
             bitsPerCard = bits;
         }
         else {
@@ -354,29 +368,6 @@ public class SerialNode {
     }
 
     /**
-     * Public method to return transmission delay.
-     */
-   // public int getTransmissionDelay() {
-       // return (transmissionDelay);
-    //}
-
-    /**
-     * Public method to set transmission delay.
-     *   delay - delay between bytes on receive (units of 10 microsec.)
-     *   Note: two bytes are used, so range is 0-65,535.  If delay
-     *          is out of range, it is restricted to the allowable range
-     */
-   // public void setTransmissionDelay(int delay) {
-        //if ( (delay < 0) || (delay > 65535) ) {
-            //log.warn("transmission delay out of 0-65535 range: "+
-                                           // Integer.toString(delay));
-            //if (delay < 0) delay = 0;
-            //if (delay > 65535) delay = 65535;
-       //}
-        //transmissionDelay = delay;
-    //}
-
-    /**
      * Public method to return pulse width.
 	 *    Used with pulsed turnout control.
      */
@@ -401,20 +392,20 @@ public class SerialNode {
     }
 
     /**
-     * Public method to set the type of one card.
-     *   address - address recognized for this card by the node hardware.
-     *               for NICS address set in card's dip switches (0 - 63)
-     *   type - INPUT_CARD, OUTPUT_CARD, or NO_CARD
+     * Public method to set the type of one Tab.
+     *   address - address recognized for this Tab by the node hardware.
+     *               for Tera address set in card's dip switches (0 - 63)
+     *   type - INPUT_TAB, OUTPUT_TAB, or NO_TAB
      */
      public void setCardTypeByAddress (int address, int type) {
         // validate address
         if ( (address < 0) || (address > 63) ) {
-            log.error("illegal card address: "+Integer.toString(address));
+            log.error("illegal tab address: "+Integer.toString(address));
             return;
         }
         // validate type
         if ( (type != OUTPUT_CARD) && (type != INPUT_CARD) && (type != NO_CARD) ) {
-            log.error("illegal card type: "+Integer.toString(type));
+            log.error("illegal tab type: "+Integer.toString(type));
             cardTypeLocation[address] = NO_CARD;
             return;
         }
@@ -422,7 +413,19 @@ public class SerialNode {
         if ( (nodeType==MICRO) && ( ( (address>2) && (type!=NO_CARD) ) ||
                                 ( (address==2) && (type!=INPUT_CARD) ) ||
                                 ( (address<2) && (type!=OUTPUT_CARD) ) ) ) {
-            log.error("illegal card type/address specification for MICRO");
+            log.error("illegal tab type/address specification for MICRO");
+            return;
+        }
+         if ( (nodeType==PICO) && ( ( (address>2) && (type!=NO_CARD) ) ||
+                                ( (address==2) && (type!=INPUT_CARD) ) ||
+                                ( (address<2) && (type!=OUTPUT_CARD) ) ) ) {
+            log.error("illegal tab type/address specification for PICO");
+            return;
+        }
+         if ( (nodeType==MEGA) && ( ( (address>2) && (type!=NO_CARD) ) ||
+                                ( (address==2) && (type!=INPUT_CARD) ) ||
+                                ( (address<2) && (type!=OUTPUT_CARD) ) ) ) {
+            log.error("illegal tab type/address specification for PICO");
             return;
         }
          if ( (nodeType==MEGA) && ( ( (address>2) && (type!=NO_CARD) ) ||
@@ -442,7 +445,7 @@ public class SerialNode {
      */
     public boolean isOutputCard(int cardNum) {
         if (cardNum>63) {
-            warn("TCH Tech NIC - isOutputCard - cardNum out of range");
+            warn("TCH Tech NICS - isOutputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==MICRO) {
@@ -451,7 +454,14 @@ public class SerialNode {
         }if (nodeType==MEGA) {
             if ( (cardNum==0) || (cardNum==1)  )  return(true); 
         }
-             else return (false);
+        if (nodeType==PICO) {
+            if ( (cardNum==0) || (cardNum==1) ) return(true);
+            else return (false);
+        }
+        if (nodeType==MEGA) {
+            if ( (cardNum==0) || (cardNum==1) ) return(true);
+            else return (false);
+        }
         
         return (cardTypeLocation[cardNum]==OUTPUT_CARD);
     }
@@ -463,17 +473,21 @@ public class SerialNode {
      */
     public boolean isInputCard(int cardNum) {
         if (cardNum>63) {
-            warn("TCH Tech NIC - isInputCard - cardNum out of range");
+            warn("TCH Tech NICS - isInputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==MICRO) {
-            if (cardNum==1) return(true);
-            else return (false);//else return (false);
-        // if (nodeType==MEGA) 
-            //if (cardNum==4) return(true);
-            //else return (false);
-       
-        }    
+            if (cardNum==2) return(true);
+            else return (false);
+        }
+        if (nodeType==PICO) {
+            if (cardNum==2) return(true);
+            else return (false);
+        }
+         if (nodeType==MEGA) {
+            if (cardNum==2) return(true);
+            else return (false);
+        }
         return (cardTypeLocation[cardNum]==INPUT_CARD);
     }
 
@@ -487,8 +501,11 @@ public class SerialNode {
         if (nodeType==MICRO) {
             if ( (cardNum==0) || (cardNum==1) ) return(cardNum);
         }
+         if (nodeType==PICO) {
+            if ( (cardNum==0) || (cardNum==1) ) return(cardNum);//if ( (cardNum==0) || (cardNum==1) ) return(cardNum);
+        }
          if (nodeType==MEGA) {
-            if ( (cardNum==0) || (cardNum==1) || (cardNum==2) || (cardNum==3) || (cardNum==4) || (cardNum==5)  ) return(cardNum);
+            if ( (cardNum==0) || (cardNum==1) || (cardNum==2) || (cardNum==3) ||(cardNum==4) || (cardNum==5) ) return(cardNum);
         }
         else {
             int index = 0;
@@ -516,8 +533,11 @@ public class SerialNode {
         if (nodeType==MICRO) {
             if (cardNum==2) return(0);
         }
+        if (nodeType==PICO) {
+            if (cardNum==2) return(0);
+        }
          if (nodeType==MEGA) {
-            if (cardNum==4) return(0);
+            if (cardNum==2) return(0);
         }
         else {
             int index = 0;
@@ -531,7 +551,7 @@ public class SerialNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("NIC - input card to getOutputCardIndex is not an Output Card");
+        warn("NICS - input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -546,14 +566,15 @@ public class SerialNode {
     public void set2LeadSearchLight(int bit) {
         // check for MICRO
 // if other types of TCH Technology nodes allow oscillating search lights, modify this method
-        if (nodeType!=MEGA) 
-        if (nodeType!=MICRO){  
-            log.error("Invalid setting of Searchlights bits - not MICRO/MEGA node");
+        if (nodeType!=MICRO)
+         if (nodeType!=PICO)
+         if (nodeType!=MEGA){
+            log.error("Invalid setting of Targetlights bits - not NICS node");
             return;
         }
         // validate bit number range
-        if ( (bit<0) || (bit>96) ) {//46
-            log.error("Invalid bit number when setting MICRO Searchlights bits: "+
+        if ( (bit<0) || (bit>96) ) {
+            log.error("Invalid bit number when setting NIC Targetlights bits: "+
                                             Integer.toString(bit));
             return;
         }
@@ -582,21 +603,21 @@ public class SerialNode {
     public void clear2LeadSearchLight(int bit) {
         // check for MICRO
 // if other types of TCH Technology nodes allow oscillating search lights, modify this method
-         
-        if (nodeType!=MEGA) 
-        if (nodeType!=MICRO) {
-            log.error("Invalid setting of Targetlights bits - not MICRO node");
+        if (nodeType!=MICRO)
+         if (nodeType!=PICO)
+         if (nodeType!=MEGA){
+            log.error("Invalid setting of Targetlights bits - not NICS node");
             return;
         }
         // validate bit number range
-        if ( (bit<0) || (bit>96) ) {//46
-            log.error("Invalid bit number when setting MICRO Targetlights bits: "+
+        if ( (bit<0) || (bit>94) ) {
+            log.error("Invalid bit number when setting NICS Targetlights lines: "+
                                             Integer.toString(bit));
             return;
         }
         // validate that bits are not already clear
         if ( (locSearchLightBits[bit] != 1) || (locSearchLightBits[bit+1] != 1) ) {
-            log.error("bit number for MICRO Targetlights bits already clear: "+
+            log.error("bit number for NICS Targetlights lines already clear: "+
                                             Integer.toString(bit));
             return;
         }
@@ -615,14 +636,15 @@ public class SerialNode {
      public boolean isSearchLightBit (int bit) {
         // check for MIRCO
 // if other types of TCH Technology nodes allow oscillating Target lights, modify this method
-         if  (nodeType!=MEGA) 
-         if  (nodeType!=MICRO) {
-            log.error("Invalid query of Searchlights bits - not MICRO node");
+        if (nodeType!=MICRO)
+        if (nodeType!=PICO)
+        if (nodeType!=MEGA){
+            log.error("Invalid query of Targetlights lines - not NICS node");
             return (false);
         }
         // validate bit number range
-        if ( (bit<0) || (bit>96) ) {//47
-            log.error("Invalid bit number in query of MICRO Targetlights bits: "+
+        if ( (bit<0) || (bit>96) ) {
+            log.error("Invalid bit number in query of NICS Targetlights lines: "+
                                             Integer.toString(bit));
             return (false);
         }
@@ -644,12 +666,21 @@ public class SerialNode {
         byte[] initBytes = new byte [20];
         int code = 0;
         // set node definition parameter
-        if (nodeType==MICRO) initBytes[0] = 0X4D;  //  "Micro I/O 48 Node" 
-        if (nodeType==MEGA) initBytes[0] = 0X4F;  // "Mega series Node"
+        if (nodeType==MEGA) initBytes[0] = 0x47; //"G" for meGa
+        if (nodeType==PICO) initBytes[0] = 0x50;  // "P" for Pico
+        if (nodeType==MICRO) initBytes[0] = 0x4D;  //'M' for Micro
         else if (nodeType==TERA) {
-           
-            if (bitsPerCard==32) initBytes[0] = 0X20;  // Tera I/O 5 32 Line Tab
+            if (bitsPerCard==24) initBytes[0] = 78;  // 78 = 'N'  110 = "n"
+            else
+            if (bitsPerCard==32) initBytes[0] = 0x54;  // "T" for Tera
         }
+// Here add code for other type of card
+        // add Transmission Delay bytes (same for MIRCO and NICS)
+        //int firstByte = transmissionDelay / 256;
+        //int secondByte = transmissionDelay - ( firstByte*256 );
+        //if (firstByte>255) firstByte = 255;
+        //initBytes[1] = (byte)firstByte;
+        //initBytes[2] = (byte)secondByte;
 
         // MICRO sereis specific part of initialization byte array
         if (nodeType==MICRO) {
@@ -670,8 +701,41 @@ public class SerialNode {
                 }
             }
         }
-        // Mega series specific part of initialization byte array
-         if (nodeType==MEGA) {
+         
+        // SNIC specific part of initialization byte array
+        if (nodeType==TERA) {
+            int numCards = numInputCards() + numOutputCards();
+            int numFours = numCards/4;
+            if ( (numCards-(numFours*4)) > 0) numFours ++;  // Round up if not even multiple
+            initBytes[1] = (byte)numFours;
+            for (int i=0,j=0;i<numFours;i++,j+=4) {
+                code = cardTypeLocation[j];
+                code = code + (cardTypeLocation[j+1] * 4);
+                code = code + (cardTypeLocation[j+2] * 16);
+                code = code + (cardTypeLocation[j+3] * 64);
+                initBytes[nInitBytes] = (byte)code;
+                nInitBytes ++;
+            }
+        }
+        else if (nodeType==PICO) {
+            initBytes[1] = (byte)num2LSearchLights;
+            if (num2LSearchLights>0) {
+                // Set up searchlight LED bit codes
+                for (int i=0,j=0;i<2;i++,j+=8) {
+                    code = locSearchLightBits[j];
+                    code = code + (locSearchLightBits[j+1]*2);
+                    code = code + (locSearchLightBits[j+2]*4);
+                    code = code + (locSearchLightBits[j+3]*8);
+                    code = code + (locSearchLightBits[j+4]*16);
+                    code = code + (locSearchLightBits[j+5]*32);
+                    code = code + (locSearchLightBits[j+6]*64);
+                    code = code + (locSearchLightBits[j+7]*128);
+                    initBytes[nInitBytes] = (byte)code;
+                    nInitBytes ++;
+                }
+            }
+        }
+        else if (nodeType==MEGA) {
             initBytes[1] = (byte)num2LSearchLights;
             if (num2LSearchLights>0) {
                 // Set up searchlight LED bit codes
@@ -689,28 +753,14 @@ public class SerialNode {
                 }
             }
         }
-        // TERA sereis specific part of initialization byte array
-        else if (nodeType==TERA) {
-            int numCards = numInputCards() + numOutputCards();
-            int numFours = numCards/4;
-            if ( (numCards-(numFours*4)) > 0) numFours ++;  // Round up if not even multiple
-            initBytes[1] = (byte)numFours;
-            for (int i=0,j=0;i<numFours;i++,j+=4) {
-                code = cardTypeLocation[j];
-                code = code + (cardTypeLocation[j+1] * 4);
-                code = code + (cardTypeLocation[j+2] * 16);
-                code = code + (cardTypeLocation[j+3] * 64);
-                initBytes[nInitBytes] = (byte)code;
-                nInitBytes ++;
-            }
-        }
+        
 // here add specific Attribute for other type of card
 
        // create a Serial message and add Attribute bytes
        SerialMessage m = new SerialMessage(nInitBytes + 2);
        // add Attribute bytes
        m.setElement(0,nodeAddress);  // node address
-       m.setElement(1,0x28);     // "SA" Set Attributes
+       m.setElement(1,0x28);     // 'I'
        // copy the data bytes into the buffer
        int k = 2;
        for (int i=0; i<nInitBytes; i++) {
@@ -728,11 +778,11 @@ public class SerialNode {
         // Create a Serial message and add Attribute bytes
         SerialMessage m = new SerialMessage(nOutBytes + 2);
         m.setElement(0,nodeAddress); // node address
-        m.setElement(1,0xE3);         //Send
+        m.setElement(1,0xE3);         // "T" Ext Binary coded Dec Inter code
         // Add output bytes to buffer
         int k = 2;
         for (int i=0; i<nOutBytes; i++) {
-            m.setElement(k,outputArray[i]);  // DLE
+            m.setElement(k,outputArray[i]);
             k ++;
         }
         return m;

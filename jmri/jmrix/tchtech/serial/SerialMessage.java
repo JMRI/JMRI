@@ -22,7 +22,7 @@ package jmri.jmrix.tchtech.serial;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -73,11 +73,12 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to recognize a message
-    public boolean isErr() { return getElement(1)==0x45;}
+    public boolean isAck() { return getElement(1)==0x2E;} 
+    public boolean isErr() { return getElement(1)==0xC5;}
     public boolean isInq() { return getElement(1)==0x2D;}
     public boolean isPoll() { return getElement(1)==0xD7;}
-    public boolean isXmt()  { return getElement(1)==0x53;}
-    public boolean isInit() { return (getElement(1)==0xC9);}
+    public boolean isXmt()  { return getElement(1)==0xE3;}
+    public boolean isInit() { return (getElement(1)==0x28);}
     public int getNA() { return getElement(0); }
 
     // static methods to return a formatted message

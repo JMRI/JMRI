@@ -20,7 +20,7 @@ package jmri.jmrix.tchtech.serial;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -47,8 +47,9 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // recognize format
+    public boolean isAck()  { return getElement(1)==0x2E;} //R for RX Ackn
     public boolean isRcv()  { return getElement(1)==0xD9;} //R for RX
-    public int getNA() { return getElement(0);}//Node Address '@'return getElement (0)-64;
+    public int getNA() { return getElement(0);}//Node Address 
 
     protected int skipPrefix(int index) {
         // doesn't have to do anything

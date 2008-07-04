@@ -21,14 +21,14 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigAction extends AbstractAction {
 
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {
-        this("Provison Node Interface Cards");
+        this("Provison Node Interface Control System");
     }
 
     public void actionPerformed(ActionEvent e) {

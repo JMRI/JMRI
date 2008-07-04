@@ -22,14 +22,14 @@ import javax.swing.AbstractAction;
  *       			SerialMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialMonAction 			extends AbstractAction {
 
 	public SerialMonAction(String s) { super(s);}
 
     public SerialMonAction() {
-        this("Node Interface Card monitor");
+        this("Node Interface Control System monitor");
     }
 
     public void actionPerformed(ActionEvent e) {

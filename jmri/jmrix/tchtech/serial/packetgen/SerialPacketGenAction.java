@@ -31,7 +31,7 @@ public class SerialPacketGenAction 			extends AbstractAction {
 	public SerialPacketGenAction(String s) { super(s);}
 
     public SerialPacketGenAction() {
-        this("Send TCH Node Interface Card message");
+        this("Send TCH Node Interface Control System message");
     }
 
     public void actionPerformed(ActionEvent e) {

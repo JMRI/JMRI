@@ -30,7 +30,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of TCH Technology serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tchtech.serial.SerialListener {
 
@@ -40,7 +40,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
     javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
-    javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
+    javax.swing.JTextField naAddrField = new javax.swing.JTextField(5);
 
     public SerialPacketGenFrame() {
     }
@@ -63,7 +63,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                                                      )
                                        );
 
-        setTitle("Send TCH Technology Node Interface Card Command");
+        setTitle("Send NICS Command");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -83,10 +83,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(new JLabel("NA:"));
-        pane3.add(uaAddrField);
+        pane3.add(naAddrField);
         pane3.add(pollButton);
-        uaAddrField.setText("0");
-        uaAddrField.setToolTipText("Enter node address (decimal integer)");
+        naAddrField.setText("0");
+        naAddrField.setToolTipText("Enter node address (decimal integer)");
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,11 +100,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         pack();
     }
  //public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        //SerialMessage msg = SerialMessage.getInq(Integer.valueOf(uaAddrField.getText()).intValue());
+        //SerialMessage msg = SerialMessage.getInq(Integer.valueOf(naAddrField.getText()).intValue());
        // SerialTrafficController.instance().sendSerialMessage(msg, this);
     //}
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
+        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(naAddrField.getText()).intValue());
         SerialTrafficController.instance().sendSerialMessage(msg, this);
     }
 
