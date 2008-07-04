@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -100,7 +100,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             node.setNumBitsPerCard(bpc);
             //node.setTransmissionDelay(delay);
             node.setNum2LSearchLights(num2l);
-			node.setPulseWidth(pulseWidth);
+            node.setPulseWidth(pulseWidth);
             
             for (int j = 0; j<slb.length(); j++) {
             	node.setLocSearchLightBits(j, (slb.charAt(j)-'0') );
