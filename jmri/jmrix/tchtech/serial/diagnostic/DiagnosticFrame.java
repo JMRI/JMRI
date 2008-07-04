@@ -1,18 +1,7 @@
-/*
- * DiagnosticFrame.java
- *
- * Created on August 18, 2007, 7:56 AM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+// DiagnosticFrame.java
 
 package jmri.jmrix.tchtech.serial.diagnostic;
 
-/**
- *
- * @author tim
- */
 import jmri.jmrix.tchtech.serial.SerialMessage;
 import jmri.jmrix.tchtech.serial.SerialReply;
 import jmri.jmrix.tchtech.serial.SerialTrafficController;
@@ -28,6 +17,14 @@ import javax.swing.*;
 import java.lang.Integer;
 
 
+/**
+ * Hardware diagnostics
+ *
+ * @author    David Duchamp  Copyright (C) 2005, 2006
+ * @author    Bob Jacobsen  Copyright (C) 2005, 20007
+ * @author    Tim Hatch  Copyright (C) 2007, 2008
+ * @version   $Revision: 1.5 $
+ */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tchtech.serial.SerialListener {
 
     // member declarations
