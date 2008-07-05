@@ -18,7 +18,7 @@ import jmri.jmrix.tchtech.serial.SerialSensorManager;
  * Frame for user configuration of  serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -136,6 +136,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         panel2.setVisible(false);
                         panel2a.setVisible(true);
                         nodeType = SerialNode.MICRO;
+                        bitsPerCard = 16;
                         searchlightConfigModel.fireTableStructureChanged();
                         configSearchLightTable();
                     }
@@ -143,11 +144,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         panel2.setVisible(true);
                         panel2a.setVisible(false);
                         nodeType = SerialNode.TERA;
+                        bitsPerCard = 32;
                     }
                     if (s.equals(picoName)) {
                         panel2.setVisible(false);
                         panel2a.setVisible(true);
                         nodeType = SerialNode.PICO;
+                        bitsPerCard = 16;
                         searchlightConfigModel.fireTableStructureChanged();
                         configSearchLightTable();
                     }
@@ -155,6 +158,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         panel2.setVisible(false);
                         panel2a.setVisible(true);
                         nodeType = SerialNode.MEGA;
+                        bitsPerCard = 16;
                         searchlightConfigModel.fireTableStructureChanged();
                         configSearchLightTable();
                     }
