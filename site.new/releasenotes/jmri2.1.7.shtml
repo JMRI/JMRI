@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.12 2008-07-04 14:18:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.13 2008-07-05 01:53:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -230,6 +230,11 @@ to the UK market as 36-551.
 
 <p>
 Multiple updates to the TCH Tech system by Tim Hatch and Bob Jacobsen.
+
+<p>
+There's a new "Create Entry" item in the Roster menu.  It opens 
+a window for creating and editing a new roster entry, using a panel
+very similar to a DecoderPro paned window.
 
 
 <!--#include virtual="/Footer" -->
