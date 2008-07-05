@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.7 2008-06-18 05:33:16 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.8 2008-07-05 02:57:25 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -33,7 +33,7 @@ RPS Reporter icons move around on the panel to show
 where the corresponding equipment is on the layout.
 
 <p>
-<img src="../../../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work"/>
+<img src="../../../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work">
 <em>This page is still under construction, but the RPS icon 
 support itself is already present in JMRI. Go ahead and try it out!</em>
 <p>
@@ -118,6 +118,10 @@ reflects the location that RPS has measured.
 <dd>Once the icon has been calibrated, the popup menu displays
 the most recent RPS location measurement.
 
+<dt>Set Filter
+<dd>Opens a window that lets you enter a filter value for this
+icon.
+
 <dt>Disable
 <dd>Controls whether or not the icon can be dragged around manually.
 
@@ -129,13 +133,50 @@ the most recent RPS location measurement.
 
 </dl>
 
-<h2>Customization</h2>
+<h2>Filtering and Multiple Locomotives</h2>
 
+We're still trying to figure out how best to configure multiple icons
+on a panel.  A single icon, with no special settings, will hop around
+as readings come in. It will go to the position of one reading, and then
+move directly to the position of the next reading, which might come from
+another locomotive transmitter.
+
+<p>
+If you want to have multiple icons, each showing the position of a single
+locomotive, you can configure filters on each icon.
+<ul>
+<li>Add an RPS icon to the panel
+<li>Open the icon's pop-up menu, and select "Set Filter".
+<li>This will open a small window in which you can enter the ID value for the
+locomotive you want this icon to track.  Once you've done this, 
+the icon will only move to the position measured for this locomotive.
+</ul>
+
+<p>
+This method is a little tedious, particularly if you have a large roster,
+since you'll have to do it manually for each locomotive.  And you'll have to
+calibrate them all.  (One good way to do this is to copy the lines defining
+one icon in the panel file, in effect making a bunch of duplicate calibrated icons,
+and then set the filters; see below).
+But it has the advantage that you can control exactly which locomotives to 
+display and which not to.
+
+<h2>Customization</h2>
+<h3>Starting Position</h3>
+When you first open the panel, the icons are put back to the same
+position on the screen that they occupied when the screen was saved to the file.
+<p>
+You can use this to e.g. put the icons out of the way initially.
+They'll stay in that position until a valid reading moves them, so 
+you can use this to "park" locomotives that are not on the track 
+off the active part of the panel.
+
+<h3>Displaying a Custom Icon</h3>
 Although there is not yet a graphical interface for this yet (it's coming!),
 you can modify the icon for a transmitter that's being tracked by 
-the RPS system so that it displays e.g. the locomotive number, or even a
-small picture of the locomotive.  To do this, you'll edit the
-panel definition file directly.  (There's more information on the
+the RPS system so that it displays e.g. a small picture of the locomotive.  
+To do this, you'll edit the panel definition file directly.  
+(There's more information on the
 XML format we use 
 <a href="../../../../html/apps/DecoderPro/IntroXML.shtml">here</a>) The steps are:
 <ul>
@@ -143,14 +184,26 @@ XML format we use
 <li>Make a backup copy of the file, in case something goes wrong.
 <li>Using a text editor, open the file to change it.
 <li>Find the line that defines the icon.  It will contain the string "RpsPositionIconXml", 
-so one approach is to search for that. It will look something like:
+so one approach is to search for that. It will look something like (it'll probably be all on one line):
 <code><pre>
-    &lt;sensoricon x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+    &lt;sensoricon x="95" y="150" level="10" 
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
+            rotate="0" forcecontroloff="false" momentary="false" 
+            sxscale="11.849106591612951" syscale="-11.889381744148094" 
+            sxorigin="41" syorigin="768" 
+            class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre></code>
 <li>To make the icon track a specific transmitter, enter the transmitter's ID as a "filter" attribute.  For example, to 
 have it track transmitter 5510, change the line to:
 <code><pre>
-    &lt;sensoricon filter="5510" x="95" y="150" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="11.849106591612951" syscale="-11.889381744148094" sxorigin="41" syorigin="768" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+    &lt;sensoricon filter="5510" x="95" y="150" level="10" 
+            active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" 
+            error="resources/icons/smallschematics/tracksegments/circuit-error.gif" 
+            rotate="0" forcecontroloff="false" momentary="false" s
+            xscale="11.849106591612951" syscale="-11.889381744148094" 
+            sxorigin="41" syorigin="768" 
+            class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
 </pre></code>
 <li>The "active" and "error" attributes are the icons to be displayed when the system is 
 getting good readings and not getting good readings, respectively. 
