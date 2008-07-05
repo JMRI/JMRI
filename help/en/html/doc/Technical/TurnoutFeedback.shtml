@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutFeedback.shtml,v 1.3 2008-02-17 15:51:14 jacobsen Exp $ -->
+<!-- $Id: TurnoutFeedback.shtml,v 1.4 2008-07-05 02:13:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -30,7 +30,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-	    <H1>JMRI: Turnout Feedback</H1>
+<H1>JMRI: Turnout Feedback</H1>
 
 Model railroaders  want different things when it comes to knowing the 
 status of the turnouts on their layout.  Some are quite happy
@@ -135,12 +135,75 @@ to the switch and aux leads.  For more information, see the
 <P>Most people will (and probably should!!!) stick with the default 
 feedback type that the software selects for them.
 
-<P>Right now, the only people who should probably run out and try this 
-are those who have their Digitrax DS54 
-devices set up to trigger from a local input, and to send sensor 
-messages when that happens.  in that case, switching to "ONESENSOR" 
-or "TWOSENSOR" feedback will make everything work properly.  (DON'T 
-FORGET TO SAVE THE CONFIGURATION!)
+<h2>Operation</h2>
+
+When feedback is used, Turnouts can start to behave in complicated ways.
+
+<h3>Simplest Case</h3>
+The most common case is JMRI commanding turnouts to move, and they move properly.
+The sequence is then:
+<ol>
+<li>JMRI commands the Turnout to move by setting the commanded state to e.g. THROWN.
+<li>The Turnout object figures out the right commands to send to the layout hardware, 
+and works with the rest of the program to do that.
+<li>The position changes on the layout.
+</ol>
+
+If no feedback (really, DIRECT feedback) is in use, the 
+known state of the turnout will also change in step 1.  At that point,
+icons on panels, signal logic, etc will all be notified of the change and react.
+
+<h3>Simple Layout Feedback</h3>
+
+The simplest case for using feedback from a microswitch on the layout is similar:
+
+<ol>
+<li>JMRI commands the Turnout to move by setting the commanded state to e.g. THROWN.
+<li>The Turnout object figures out the right commands to send to the layout hardware, 
+and works with the rest of the program to do that.
+<li>The position changes on the layout.
+<li>A microswitch detects that position change, and informs the layout electronics, 
+which in turn changes an input to JMRI.
+<li>That input is connected to a JMRI Sensor object, which changes its state
+e.g. from INACTIVE to ACTIVE.
+<li>Because the Turnout is watching that Sensor for ONESENSOR feedback, when the 
+change occurs it sets the known state of the turnout to THROWN.
+</ol>
+
+This sequence takes a little time, but the known state of the 
+Turnout isn't changed until the points have actually moved on the layout.
+Then, icons on panels, signal logic, etc will all be notified of the change 
+in known state and react.
+
+<h3>Uncommanded changes on the layout</h3>
+
+Feedback allows JMRI to detect that something has changed
+due to action on the layout, instead of a command from the program.
+For example, if you're using feedback from a turnout, you might see
+something like this sequence:
+<ol>
+<li>The program sets the commanded state to THROWN, and
+instructions go out to the turnout telling it to move to that position.
+<li>Later, the feedback information comes back to indicate that the
+movement has taken place.  This sets the known state in JMRI 
+to THROWN.
+<li>Later, and independently, you move the turnout on the layout to the CLOSED position, 
+perhaps with a ground throw or local pushbutton.
+<li>This causes the feedback information send to JMRI to change.
+<li>Because of this, the known state is changed to CLOSED.
+<li>At this point, JMRI makes the assumption that 
+you wanted this to happen; in effect, a command was given on the layout
+(not in the program) to move the turnout.  So JMRI changes the 
+commanded state to CLOSED also.
+</ul>
+
+Note that this last transition in commanded state does not send commands to
+the layout; it's just a change within in the program.
+
+<h3>TWOSENSOR feedback and inconsistent state</h3>
+
+
+<h3>Bus-based systems and input messages</h3>
 
 <!--#include virtual="/Footer" -->
 
