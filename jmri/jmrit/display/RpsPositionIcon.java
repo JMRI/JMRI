@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBoxMenuItem;
 
 /**
@@ -20,7 +21,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -122,6 +123,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         notify = new Notifier();
         popup.add(notify);
         
+        popup.add(new AbstractAction("Set Filter") {
+                public void actionPerformed(ActionEvent e) {
+                    setFilterPopup();
+                }
+            });
+
         addDisableMenuEntry(popup);
         
         popup.add(new AbstractAction("Remove") {
@@ -264,6 +271,19 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     
         // and set position
         setLocation(x,y);
+    }
+    
+    public void setFilterPopup(){
+        // Popup menu has trigger request for filter value
+        String inputValue = JOptionPane.showInputDialog("Please enter a filter value");
+        if (inputValue == null) return; // cancelled
+        try {
+            int filt = Integer.parseInt(inputValue);
+            // and store
+            setFilter(filt);
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid ID value, filter not set", "Alert", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void setFilter(int num) {
