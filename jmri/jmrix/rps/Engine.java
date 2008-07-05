@@ -24,7 +24,7 @@ import java.io.*;
  * Gets a reading from the Distributor and passes back a Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 
 
@@ -230,10 +230,19 @@ public class Engine implements ReadingListener {
         java.util.List l = Roster.instance().matchingList(null, null, null, null, null, null, null);
         log.debug("Got "+l.size()+" roster entries");
         for (int i=0; i<l.size(); i++) {
-            RosterEntry r = (RosterEntry)l.get(i);
-            int address = Integer.parseInt(r.getDccAddress());
-            Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
-            transmitters.add(t);
+            RosterEntry r = null;
+            try {
+                r = (RosterEntry)l.get(i);
+                int address = Integer.parseInt(r.getDccAddress());
+                Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
+                transmitters.add(t);
+            } catch (Exception e) {
+                // just skip this entry
+                if (r!=null)
+                    log.warn("Skip roster entry: "+r.getId());
+                else
+                    log.warn("Failed roster entry skipped");
+            } 
         }
         
         // get polling status, if possible
