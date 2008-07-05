@@ -40,21 +40,17 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
-        public CombinedLocoSelTreePane(JLabel s) {
-                super(s);
-        }
+    public CombinedLocoSelTreePane(JLabel s) {
+            super(s);
+    }
 
-        public CombinedLocoSelTreePane() {
-
-                super();
-        }
-
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    public CombinedLocoSelTreePane() {
+            super();
+    }
 
     JTree dTree;
     DefaultTreeModel dModel;
@@ -174,7 +170,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                         dTree.getSelectionCount()<2) {
                     // decoder selected - reset and disable loco selection
                     log.debug("Selection event with "+dTree.getSelectionPath().toString());
-                    locoBox.setSelectedIndex(0);
+                    if (locoBox != null) locoBox.setSelectedIndex(0);
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
@@ -191,7 +187,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         dTree.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent me){
              // Clear any status messages and ensure the tree is in single path select mode
-             _statusLabel.setText(rbt.getString("StateIdle"));
+             if (_statusLabel != null) _statusLabel.setText(rbt.getString("StateIdle"));
              dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
             	
              /* check for both double click and that it's a decoder 
@@ -207,21 +203,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             } );
 
         // add button
-        iddecoder= new JToggleButton(rbt.getString("ButtonReadType"));
-        iddecoder.setToolTipText(rbt.getString("TipSelectType"));
-            if (jmri.InstanceManager.programmerManagerInstance()!= null
-                    && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
-                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
-            // can't read, disable the button
-            iddecoder.setEnabled(false);
-            iddecoder.setToolTipText(rbt.getString("TipNoRead"));
-        }
-        iddecoder.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                        startIdentifyDecoder();
-                }
-        });
-        pane1a.add(iddecoder);
+        iddecoder = addDecoderIdentButton();
+        if (iddecoder!=null) pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         return pane1a;
     }

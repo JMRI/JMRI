@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -50,7 +51,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -62,6 +63,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     public CombinedLocoSelPane() {
         init();
     }
+
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
     /**
      * Create the panel used to select the decoder
@@ -90,26 +94,30 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                 }
             });
         pane1a.add(decoderBox);
-        iddecoder= new JToggleButton("Ident");
-        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
-        if ((jmri.InstanceManager.programmerManagerInstance()==null) ||
-                (jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()==null) ||
-                (!jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead())) {
-            // can't read, disable the button
-            iddecoder.setEnabled(false);
-            iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
-        iddecoder.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("identify decoder pressed");
-                    startIdentifyDecoder();
-                }
-            });
-        pane1a.add(iddecoder);
+        iddecoder = addDecoderIdentButton();
+        if (iddecoder!=null) pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         return pane1a;
     }
 
+    JToggleButton addDecoderIdentButton() {
+        JToggleButton iddecoder = new JToggleButton(rbt.getString("ButtonReadType"));
+        iddecoder.setToolTipText(rbt.getString("TipSelectType"));
+            if (jmri.InstanceManager.programmerManagerInstance()!= null
+                    && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
+                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
+            // can't read, disable the button
+            iddecoder.setEnabled(false);
+            iddecoder.setToolTipText(rbt.getString("TipNoRead"));
+        }
+        iddecoder.addActionListener( new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                        startIdentifyDecoder();
+                }
+        });
+        return iddecoder;
+    }
+    
     /**
      *  Set the decoder GUI back to having no selection
      */
@@ -136,12 +144,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     /**
-     * Initialize the GUI
+     * Create the panel used to select an existing entry
+     * @return a JPanel for handling the entry-selection GUI
      */
-    protected void init() {
-        JLabel last;
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+    protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel("Use locomotive settings for: "));
@@ -182,7 +188,18 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             });
         pane2a.add(idloco);
         pane2a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-        add(pane2a);
+        return pane2a;
+    }
+    
+    /**
+     * Initialize the GUI
+     */
+    protected void init() {
+        JLabel last;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        JPanel pane2a = layoutRosterSelection();
+        if (pane2a != null) add(pane2a);
 
 
         add(layoutDecoderSelection());
@@ -390,7 +407,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     /** handle pushing the open programmer button by finding names, then calling a template method */
     protected void openButton() {
         // figure out which we're dealing with
-        if (locoBox.getSelectedIndex()!=0) {
+        if (locoBox != null && locoBox.getSelectedIndex()!=0) {
             // known loco
             openKnownLoco();
         } else if (isDecoderSelected()) {

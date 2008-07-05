@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.62 $
+ * @version   $Revision: 1.63 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -295,7 +295,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_cvTable)
         	bottom.add(confirmAllButton);
 
-        add(bottom);
+        // don't show buttons if no programmer at all
+        if (_cvModel.getProgrammer()!= null) add(bottom);
     }
 
 

@@ -38,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.64 $
+ * @version   $Revision: 1.65 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -95,7 +95,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            if (decoderDirtyTask == null) decoderDirtyTask = 
+            if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask = 
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
                                                                   rbt.getString("PromptQuitWindowNotWrittenDecoder"), 
                                                                   (String)null, 
@@ -251,24 +251,29 @@ abstract public class PaneProgFrame extends JmriJFrame
         // which configures the tabPane
         pane.add(tabPane);
 
-        // add buttons
-        JPanel bottom = new JPanel();
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-        bottom.add(readChangesButton);
-        bottom.add(writeChangesButton);
-        bottom.add(readAllButton);
-        bottom.add(writeAllButton);
-        pane.add(bottom);
-
+        // see if programming mode is available
         modePane = getModePane();
         if (modePane!=null) {
+            // if so, configure programming part of GUI
+            
+            // add buttons
+            JPanel bottom = new JPanel();
+            bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+            bottom.add(readChangesButton);
+            bottom.add(writeChangesButton);
+            bottom.add(readAllButton);
+            bottom.add(writeAllButton);
+            pane.add(bottom);
+            
+            // add programming mode
             pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
             pane.add(modePane);
-        }
 
-        pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        pane.add(progStatus);
+            // add programming status message
+            pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+            progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            pane.add(progStatus);
+        }
 
         // and put that pane into the JFrame
         getContentPane().add(pane);
@@ -504,7 +509,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     protected boolean checkDirtyDecoder() {
         if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
-        return (cvModel.decoderDirty() || variableModel.decoderDirty() ); 
+        return (getModePane()!= null && (cvModel.decoderDirty() || variableModel.decoderDirty()) ); 
     }
     
     /**

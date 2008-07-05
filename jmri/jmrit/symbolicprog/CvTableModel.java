@@ -18,7 +18,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -39,7 +39,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     private static final int READCOLUMN  = 3;
     private static final int WRITECOLUMN = 4;
     private static final int COMPARECOLUMN = 5;
+    
     private static final int HIGHESTCOLUMN = COMPARECOLUMN+1;
+    private static final int HIGHESTNOPROG = STATECOLUMN+1;
 
     private JLabel _status = null;
 
@@ -72,7 +74,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     // basic methods for AbstractTableModel implementation
     public int getRowCount() { return _numRows; }
 
-    public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    public int getColumnCount( ){ 
+        if (getProgrammer()!=null)
+            return HIGHESTCOLUMN;
+        else 
+            return HIGHESTNOPROG;
+    }
 
     public String getColumnName(int col) {
         switch (col) {
