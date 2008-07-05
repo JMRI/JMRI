@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -125,9 +125,14 @@ public class SimpleTimebaseXml implements XmlAdapter {
         }
 		else if (element.getAttribute("time")!=null) {
 			// this only to preserve previous behavior for preexisting files
-			val2 = element.getAttributeValue("time");
-			clock.setStartSetTime(true,new Date(val2));
-			clock.setTime(new Date(val2));
+            val2 = element.getAttributeValue("time");
+			try {
+                clock.setStartSetTime(true,new Date(val2));
+                clock.setTime(new Date(val2));
+            } catch (IllegalArgumentException e) {
+                // if non-invertable date format, just skip
+                log.warn("Cannot set date using value stored in file: "+val2);
+            }
 		}
 		if (element.getAttribute("startclockoption")!=null) {
 			int option = Integer.parseInt(element.getAttribute(
