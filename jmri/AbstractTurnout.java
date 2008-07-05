@@ -25,7 +25,7 @@ package jmri;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -134,7 +134,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		// set the commanded state to match
 		if ((_knownState == THROWN && _commandedState != THROWN)
 				|| (_knownState == CLOSED && _commandedState != CLOSED))
-			setCommandedState(_knownState);
+			newCommandedState(_knownState);
 	}
 
 	/**
