@@ -18,7 +18,7 @@ import jmri.jmrix.tchtech.serial.SerialSensorManager;
  * Frame for user configuration of  serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -917,15 +917,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     statusText1.setVisible(true);
                     errorInStatus1 = true;
                     errorInStatus2 = true;
-                    return (false);
-                }
-                // check that Tab size is 24 or 32 line
-                if ( (bitsPerCard!=24 ) && (bitsPerCard!=32) ) {
-                    // card size error
-                    statusText1.setText(rb.getString("Error15"));
-                    statusText1.setVisible(true);
-                    errorInStatus1 = true;
-                    resetNotes2();
                     return (false);
                 }
                 // further checking if in Edit mode
