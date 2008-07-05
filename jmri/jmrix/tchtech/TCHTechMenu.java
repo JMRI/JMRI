@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 /* @author	Bob Jacobsen   Copyright 2003
-/* @version     $Revision: 1.1 $
+/* @version     $Revision: 1.2 $
 /**
  *
  * @author tim
@@ -33,9 +33,9 @@ public class TCHTechMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tchtech.TCHTechBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        setText(rb.getString("MenuTCHTech"));
+        setText(rb.getString("MenuItemTCHTech"));
         add(new jmri.jmrix.tchtech.serial.nodeconfig.NodeConfigAction());
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.tchtech.serial.diagnostic.DiagnosticAction(rb.getString("MenuItemDiagnostics")));
