@@ -13,9 +13,9 @@ import javax.swing.JMenu;
  * Provides a context-specific menu for handling the Roster.
  * <P>
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -43,7 +43,7 @@ public class RosterMenu extends JMenu {
     static public final int ENTRYMENU = 3;
 
     /**
-     * Create a
+     * Create a menu of Roster tools.
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the
      *                  right set of items to be enabled.
@@ -56,6 +56,9 @@ public class RosterMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
         // create the menu
+
+        AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));
+        createAction.setEnabled(false);
 
         AbstractAction importAction = new ImportRosterItemAction(rb.getString("MenuItemImport"), pWho);
         importAction.setEnabled(false);
@@ -76,6 +79,7 @@ public class RosterMenu extends JMenu {
         AbstractAction previewAction = new PrintRosterAction(rb.getString("MenuItemPreview"), newFrame, true);
         printAction.setEnabled(false);
 
+        add(createAction);
         add(copyAction);
         add(importAction);
         add(exportAction);
@@ -86,6 +90,7 @@ public class RosterMenu extends JMenu {
         // activate the right items
         switch (pMenuType) {
             case MAINMENU:
+                createAction.setEnabled(true);
                 deleteAction.setEnabled(true);
                 importAction.setEnabled(true);
                 exportAction.setEnabled(true);
