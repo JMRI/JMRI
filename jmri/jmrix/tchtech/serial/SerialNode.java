@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Tim Hatch for TCH Technology nodes
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialNode {
 
@@ -286,14 +286,14 @@ public class SerialNode {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
-        if (type == TERA) {
+        else if (type == TERA) {
             nodeType = type;
             // clear cardTypeLocations
             for (int i=0;i<MAXCARDLOCATIONBYTES;i++) {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
-        if (type==PICO) {
+        else if (type==PICO) {
             nodeType = type;
             bitsPerCard = 16;
             // set cardTypeLocation for Pico
@@ -322,7 +322,7 @@ public class SerialNode {
         }
 // here recognize other node types
         else {
-            log.error("Bad node type - "+Integer.toString(type) );
+            log.error("Bad node type - "+type );
         }
     }
 
