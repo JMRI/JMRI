@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -329,7 +329,7 @@ public class DefaultConditional extends AbstractNamedBean
 					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
 				}
-				if (t.getState() == Turnout.THROWN) result = true;
+				if (t.getKnownState() == Turnout.THROWN) result = true;
 				else result = false;
 				break;
 			case TYPE_TURNOUT_CLOSED:
@@ -338,7 +338,7 @@ public class DefaultConditional extends AbstractNamedBean
 					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
 				}
-				if (t.getState() == Turnout.CLOSED) result = true;
+				if (t.getKnownState() == Turnout.CLOSED) result = true;
 				else result = false;
 				break;
 			case TYPE_CONDITIONAL_TRUE:
