@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PollTableFrame.shtml,v 1.5 2008-06-15 05:01:03 jacobsen Exp $ -->
+<!-- $Id: PollTableFrame.shtml,v 1.6 2008-07-06 03:59:37 jacobsen Exp $ -->
 <title>JMRI: RPS Polling Control</title>
 
 <!-- Style -->
@@ -28,8 +28,9 @@ JMRI: RPS Polling Control
 <a href="../../../../../../html/hardware/rps/images/PollControl.gif">
 <img src="../../../../../../html/hardware/rps/images/PollControl.gif" height="80" width="300" alt="RPS Receiver Control window" align="right"></a><br>
 
-The RPS Polling Control window is where you tell 
-the RPS system which of your locomotives have RPS transmitters 
+The RPS Polling Control window is where you tell the 
+<a href="../../../../../../html/hardware/rps/index.shtml">RPS system</a> 
+which of your locomotives have RPS transmitters 
 installed, and how often to talk to them.
 
 <p>
