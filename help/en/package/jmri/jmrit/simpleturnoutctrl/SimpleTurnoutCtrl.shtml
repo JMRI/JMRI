@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.5 2007-11-23 06:45:59 jacobsen Exp $ -->
+<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.6 2008-07-06 15:48:04 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Control</TITLE>
@@ -21,7 +21,7 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
-<H2>Turnout Control</H2>
+<H1>Turnout Control</H1>
 
 Enter the accessory number or turnout system name for the accessory or
 turnout you wish to control in the box to right of "turnout:". For
@@ -33,11 +33,15 @@ should be able to change the state of turnout or accessory number 456 on
 the layout. Another example, a valid turnout system name could be IT123
 which is internal turnout number 123. Pressing Thrown or Closed will
 only change the state of the internal turnout and will not change a
-turnout on the layout. See "
-<A HREF="../../../../html/doc/Technical/Names.html">Names</A>
-" under general help for more information.
+turnout on the layout. 
+See "<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>" 
+under general help for more information.
 
-<H3>Turnout Control Buttons and Status</H3>
+<p>
+For more information on JMRI Turnouts, see the
+<a href="../../../../html/tools/Turnouts.shtml">Turnout help page</a>.
+
+<H2>Turnout Control Buttons and Status</H2>
 
 <DL>
 	<DT>current state:</DT>
@@ -55,14 +59,14 @@ turnout on the layout. See "
 		HREF="#Feedback">feedback</A> modes are: DIRECT, ONE SENSOR, TWO
 	SENSOR, and MONITORING. A turnout using DIRECT mode doesn't have
 	feedback from the layout. When a close or throw command is executed the
-	JMRI program assumes that the command always competes. ONE SENSOR use
+	JMRI program assumes that the command always completes. ONE SENSOR use
 	one sensor on the layout to provide feedback on the state of the
 	turnout. TWO SENSOR uses two sensors for feedback, one for closed and
 	one for thrown. MONITORING gets feedback from the system by either
 	listening to cab commands on the layout or polling the system for
-	turnout status. See <A
-		HREF="../beantable/TurnoutTable.html#JMRI:Turnout Feedback">JMRI:
-	Turnout Feedback</A> for more information.</DD>
+	turnout status. See the
+	<A HREF="../../../../html/doc/Technical/TurnoutFeedback.shtml">turnout feedback page</A>
+	for more information.</DD>
 
 	<DT>Thrown</DT>
 	<DD>Push this button to throw the turnout.</DD>
@@ -72,21 +76,13 @@ turnout on the layout. See "
 
 	<DT>Cab operation:</DT>
 	<DD>Some turnouts can be locked. If the control button is grayed
-	out, the lock feature isn't available. See <A
-		HREF="#NCE Turnout lock feature">NCE Turnout lock feature</A> below.</DD>
+	out, the lock feature isn't available. See the
+    <A HREF="#NCETurnoutLockFeature">NCE Turnout lock feature</A>
+    below.</DD>
 
 </DL>
-<BR>
-<H3><A NAME="Feedback"></A>Feedback</H3>
 
-To change the feedback mode for a turnout you must use the turnout
-table. The turnout table is located under the system menu "Tools". Under
-Tools you will find "Tables" and under Tables is "Turnouts", or
-Tools->Tables->Turnouts.
-
-<BR>
-<BR>
-<H3><A NAME="NCE Turnout lock feature"></A>NCE Turnout lock feature</H3>
+<H3><A NAME="NCETurnoutLockFeature"></A>NCE Turnout lock feature</H3>
 
 <P>The turnout lock feature allows you to selectively disable
 accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
