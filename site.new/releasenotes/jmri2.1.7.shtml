@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.13 2008-07-05 01:53:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.14 2008-07-06 04:37:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -236,6 +236,30 @@ There's a new "Create Entry" item in the Roster menu.  It opens
 a window for creating and editing a new roster entry, using a panel
 very similar to a DecoderPro paned window.
 
+<p>
+For consistency with other JMRI utilities, conditionals now check the 
+"known state" of Turnouts instead of the "commanded state".  If you're not using
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TurnoutFeedback.shtml">turnout feedback</a>, this won't effect you.
+If you are using feedback, your conditionals will now fire when the 
+feedback comes back from the layout, rather than immediately with a 
+state change is requested.
+
+<p>
+Turnout feedback was causing a problem with two opposing commands were issued
+very close together, for example when a Logix tries to set a turnout back when
+it is changed.  This has been fixed by logic changes in AbstractTurnout and LnTurnout.
+
+<p>
+Sometimes a panel file will have the current fast-clock time written to it in a
+format, e.g. using a timezone identifier, that's not available when the 
+file is read back.  This caused an exception, which in turn prevented the rest of the
+file from being written.  The program now protects against this error. If it happens,
+the time won't be set, but the rest of the panel file will be loaded properly.
+
+<p>
+Added a new
+<a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS tool</a>
+for handling the speed of sound.
 
 <!--#include virtual="/Footer" -->
 
