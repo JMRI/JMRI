@@ -22,9 +22,14 @@ import java.io.*;
  * Holds all the alignment info. Receiver numbers are indexed from one.
  *<p>
  * Gets a reading from the Distributor and passes back a Measurement
+ *<p>
+ * Bound properties:
+ *<ul>
+ *<li>vSound - velocity of sound, in whatever units are in use
+ *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 
 
@@ -43,7 +48,10 @@ public class Engine implements ReadingListener {
     }
 
     public void setVSound(double v) {
+        double oldVal = vsound;
         vsound = v;
+        log.info("change vsound from "+oldVal+" to "+v);
+        prop.firePropertyChange("vSound", new Double(oldVal), new Double(v));
     }
     public double getVSound() {
         return vsound;
@@ -249,7 +257,7 @@ public class Engine implements ReadingListener {
         try {
             loadPollConfig(new File(PollingFile.defaultFilename()));
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     
@@ -464,6 +472,11 @@ public class Engine implements ReadingListener {
         }
         return _instance;
     }
+
+    // handle outgoing parameter notification
+    java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Engine.class.getName());
 }
