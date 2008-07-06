@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.18 2008-07-06 16:11:30 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.19 2008-07-06 16:15:04 jacobsen Exp $ -->
 		<version author="Bruce Shanks"
 					version="13" lastUpdated="20080614"/>
 		<version author="Howard G. Penny"
@@ -106,8 +106,8 @@
 				<column>
 					<label label=" "/>
 					<display item="Speed Table Definition"
-						format="offradiobutton" layout="above" label="Set button Green to use settings shown below"/>
-		<label label="     To turn off, use Advanced Speed Control"/>
+						format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
+		<label label="     To turn off, use Speed Table pane"/>
 					<label label=" "/>
 				</column>
 			</row>
@@ -157,13 +157,13 @@
 	</column>
 </pane>
 
-<pane name="Advanced Speed Control">	
+<pane name="Speed Table">	
 		<column>
 			<row>
 				<column>
 					<display item="Speed Table Definition"
-						format="onradiobutton" layout="above" label="Set button Green to use a Speed Table for Speed Control"/>
-		<label label="            To turn off, use Basic Speed Control "/>
+						format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
+		<label label="            To turn off, use Basic Speed Control pane"/>
 				</column>
 			</row>
 			<row>
