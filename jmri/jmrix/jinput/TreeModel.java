@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -197,12 +197,12 @@ public class TreeModel extends DefaultTreeModel {
     void loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
         ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-        System.out.println("Found "+ca.length+" controllers");
+        log.info("Found "+ca.length+" controllers");
 
         for(int i =0;i<ca.length;i++){
             // Get this controllers components (buttons and axis)
             Component[] components = ca[i].getComponents();
-            System.out.println("Controller "+ca[i].getName()+" has "+components.length+" components"); 
+            log.info("Controller "+ca[i].getName()+" has "+components.length+" components"); 
             for (int j=0;j<components.length;j++){
                 
                 Controller controller = ca[i];
