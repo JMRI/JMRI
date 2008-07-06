@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.12 2008-04-12 23:29:11 dan_boudreau Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.13 2008-07-06 15:34:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -29,7 +29,7 @@ There's a top part that contains the basics, and
 a separate section for advanced preferences.
 
 <p>
-<img src="../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work"/>
+<img src="../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work">
 This page is under construction. 
 In the meantime, there's some more information on preferences
 on some 
