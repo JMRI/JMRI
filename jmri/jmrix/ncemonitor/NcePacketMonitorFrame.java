@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.DataInputStream;
 
@@ -19,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -291,24 +292,36 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         return "DCC Packet Analyzer";
     }
 
+    /**
+     * Sends stream of bytes to the command station
+     * @param bytes - array of bytes to send
+     */
     synchronized void sendBytes(byte[] bytes) {
         try {
-            for (int i=0; i<bytes.length; i++) {
-                ostream.write(bytes[i]);
-                wait(3);
-            }
-            final byte endbyte = 13;
-            ostream.write(endbyte);
-        } catch (java.io.IOException e) {
-            log.error("Exception on output: "+e);
-        } catch (java.lang.InterruptedException e) {
-            log.error("Interrupted output: "+e);
-        }
+			// only attempt to send data if output stream is not null (i.e. it
+			// was opened successfully)
+			if (ostream == null) {
+				throw new IOException(
+						"Unable to send data to command station: output stream is null");
+			} 
+			else {
+				for (int i = 0; i < bytes.length; i++) {
+					ostream.write(bytes[i]);
+					wait(3);
+				}
+				final byte endbyte = 13;
+				ostream.write(endbyte);
+			}
+		} catch (IOException e) {
+			log.error("Exception on output: " + e);
+		} catch (InterruptedException e) {
+			log.error("Interrupted output: " + e);
+		}
     }
 
     /**
-     * Open button has been pushed, create the actual display connection
-     */
+	 * Open button has been pushed, create the actual display connection
+	 */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
         log.info("Open button pushed");
         // can't change this anymore
