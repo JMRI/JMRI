@@ -184,6 +184,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Debugger Window" target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame"/>
          <tocitem text="RPS Sensors" target="html.hardware.rps.sensors"/>
          <tocitem text="Tracking Display" target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
+         <tocitem text="Sound Speed Control" target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame"/>
       </tocitem>
       <tocitem text="SRCP" target="html.hardware.SRCP.index"/>
    </tocitem>
