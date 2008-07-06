@@ -7,6 +7,8 @@ import jmri.jmrix.rps.Receiver;
 
 import javax.vecmath.Point3d;
 
+import java.beans.PropertyChangeListener;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
@@ -22,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -139,6 +141,16 @@ public class AlignTablePane extends javax.swing.JPanel {
                 super.storeDefault();
                 // no longer modified after storeDefault
                 flag.setModifiedFlag(false);
+            }
+        });
+
+        // add sound listener
+        Engine.instance().addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if(e.getPropertyName().equals("vSound")) {
+                    // update sound display
+                    vsound.setText(""+e.getNewValue());
+                }
             }
         });
     }
