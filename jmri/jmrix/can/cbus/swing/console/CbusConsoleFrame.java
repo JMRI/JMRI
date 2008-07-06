@@ -23,16 +23,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.text.*;
+import javax.swing.JOptionPane;
 
 import jmri.util.JmriJFrame;
 
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusConstants;
 
 /**
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -49,8 +52,16 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
+    protected JTextField sentCountField = new JTextField("0", 8);
+    protected JTextField rcvdCountField = new JTextField("0", 8);
+    protected JButton statsClearButton = new JButton();
+    protected JTextField priField = new JTextField();
+    protected JTextField[] dataFields = new JTextField[8];
     protected JButton sendButton = new JButton();
+    protected JButton dataClearButton = new JButton();
 
+    protected int i;
+    
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
@@ -80,6 +91,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
+        _sent = 0;
+        _rcvd = 0;
         
         clearButton.setText("Clear screen");
         clearButton.setVisible(true);
@@ -101,14 +114,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         monTextPaneCbus.setToolTipText("Command and reply monitoring information appears here");
         monTextPaneCbus.setEditable(false);
         
-        sendButton.setText("Send");
-        sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
-        
         entryField.setToolTipText("Enter text here, then click button to include it in log");
         
         // fix a width for raw field for current character set
-        JTextField tCan = new JTextField(50);
+        JTextField tCan = new JTextField(30);
         int x = jScrollPane1Can.getPreferredSize().width+tCan.getPreferredSize().width;
         int y = jScrollPane1Can.getPreferredSize().height+10*tCan.getPreferredSize().height;
         
@@ -116,10 +125,18 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         jScrollPane1Can.setPreferredSize(new Dimension(x, y));
         jScrollPane1Can.setVisible(true);
         
+        // Add a nice border
+        jScrollPane1Can.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "CAN Frame"));
+        
         // fix a width for Cbus field for current character set
-        JTextField tCbus = new JTextField(50);
+        JTextField tCbus = new JTextField(30);
         x = jScrollPane1Cbus.getPreferredSize().width+tCbus.getPreferredSize().width;
         y = jScrollPane1Cbus.getPreferredSize().height+10*tCbus.getPreferredSize().height;
+        
+        // Add a nice border
+        jScrollPane1Cbus.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "CBUS Message"));
         
         jScrollPane1Cbus.getViewport().add(monTextPaneCbus);
         jScrollPane1Cbus.setPreferredSize(new Dimension(x, y));
@@ -141,18 +158,46 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText("Click here to select a new output log file");
         
+        sentCountField.setToolTipText("The number of packet sent");
+        sentCountField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Sent"));
+        
+        rcvdCountField.setToolTipText("The number of packet received");
+        rcvdCountField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Received"));
+        
+        statsClearButton.setText("Clear");
+        statsClearButton.setVisible(true);
+        statsClearButton.setToolTipText("Clear the sent and received packet counters");
+        
+        sendButton.setText("Send");
+        sendButton.setVisible(true);
+        sendButton.setToolTipText("Send packet");
+        
+        dataClearButton.setText("Clear");
+        dataClearButton.setVisible(true);
+        dataClearButton.setToolTipText("Clear all data fields");
+        
         setTitle(title());
+        // Panels will be added downwards
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
-        
         // add items to GUI
-        // Constrain scroll panels to be side-by-side
+        // Pane to hold packet history
+        JPanel historyPane = new JPanel();
+        historyPane.setLayout(new BoxLayout(historyPane, BoxLayout.Y_AXIS));
+        historyPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Packet history"));
+        
+        // sub-pane to hold scrolling text boxes
         JPanel paneB = new JPanel();
+        // Constrain scroll panels to be side-by-side
         paneB.setLayout(new BoxLayout(paneB, BoxLayout.X_AXIS));
         paneB.add(jScrollPane1Can);
         paneB.add(jScrollPane1Cbus);
-        getContentPane().add(paneB);
+        historyPane.add(paneB);
         
+        // Sub-pane to hold buttons
         JPanel paneA = new JPanel();
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
         
@@ -176,13 +221,44 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         pane3.add(entryField);
         paneA.add(pane3);
         
-        JPanel pane4 = new JPanel();
-        pane4.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
-        pane4.add(sendButton);
-        paneA.add(pane4);
-
-        getContentPane().add(paneA);
+        historyPane.add(paneA);
+        getContentPane().add(historyPane);
         
+        // Pane for network statistics
+        JPanel statsPane = new JPanel();
+        statsPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Packets"));
+        statsPane.add(sentCountField);
+        statsPane.add(rcvdCountField);
+        statsPane.add(statsClearButton);
+        getContentPane().add(statsPane);
+        
+        // Pane for constructing packet to send
+        JPanel sendPane = new JPanel();
+        sendPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Send Packet"));
+
+        // Construct data fields for Priority and up to 8 bytes
+        priField = new JTextField("", 4);
+        priField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Pri"));
+        sendPane.add(priField);
+        for (i=0; i<8; i++) {
+            dataFields[i] = new JTextField("", 6);
+            if (i==0) {
+                dataFields[i].setBorder(BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(), "d0 (OPC)"));
+            } else {
+                dataFields[i].setBorder(BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(), "d"+i));
+            }
+            sendPane.add(dataFields[i]);
+        }
+        sendPane.add(sendButton);
+        sendPane.add(dataClearButton);
+        getContentPane().add(sendPane);
+        
+
         // connect actions to buttons
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -214,6 +290,18 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
+            }
+        });
+        
+        dataClearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                dataClearButtonActionPerformed(e);
+            }
+        });
+        
+        statsClearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                statsClearButtonActionPerformed(e);
             }
         });
         
@@ -250,12 +338,13 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         // protocol specific, form
         // Both should contain the same number of well-formed lines, e.g. end
         // with \n
-        StringBuffer sbCan = new StringBuffer(120);
-        StringBuffer sbCbus = new StringBuffer(120);
+        StringBuffer sbCan = new StringBuffer(80);
+        StringBuffer sbCbus = new StringBuffer(80);
         
         // display the timestamp if requested
         if ( timeCheckBox.isSelected() ) {
             sbCan.append(df.format(new Date())).append( ": " ) ;
+            sbCbus.append(df.format(new Date())).append( ": " ) ;
         }
         
         // display decoded data
@@ -359,17 +448,68 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     }
     
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText() + "\n", "");
+        nextLine(entryField.getText() + "\n", entryField.getText() + "\n");
     }
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        CanMessage m = new CanMessage(2);
-        m.setId(100);
-        m.setElement(0,1);
-        m.setElement(1,2);
+        int i;
+        int data;
+        CanMessage m = new CanMessage();
+        try {
+            data = Integer.parseInt(priField.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Invalid Priority Value",
+                    "CBUS Console", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        m.setPri(data);
+        for (i=0; i<8; i++) {
+            if (!dataFields[i].getText().equals("")) {
+                try {
+                    data = Integer.parseInt(dataFields[i].getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid Data Value"
+                            +"in d"+i,
+                            "CBUS Console", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                m.setElement(i, data);
+            } else {
+                break;
+            }
+        }
+        if (i==0) {
+            JOptionPane.showMessageDialog(null, "You must enter at least an opcode",
+                    "CBUS Console", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Does the number of data match the opcode?
+        // Subtract one as loop variable will have incremented
+        if ((i-1) != Integer.parseInt(dataFields[0].getText())>>5) {
+            JOptionPane.showMessageDialog(null, "Number of data bytes entered\n"
+                    +"does not match count in d0(OPC)",
+                    "CBUS Console", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        m.setNumDataElements(i);
         // Messages sent by us will not be forwarded back so add to display manually
         message(m);
         tc.sendCanMessage(m, this);
+    }
+    
+    public void dataClearButtonActionPerformed(java.awt.event.ActionEvent e) {
+        int i;
+        priField.setText("");
+        for (i=0; i<8; i++) {
+            dataFields[i].setText("");
+        }
+    }
+    
+    public void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
+        _sent = 0;
+        _rcvd = 0;
+        sentCountField.setText("0");
+        rcvdCountField.setText("0");
     }
     
     public synchronized String getCanFrameText() {
@@ -390,12 +530,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     static private int MAX_LINES = 500 ;
     
     public synchronized void message(CanMessage l) {  // receive a message and log it
-        nextLine("sent: "+l.toString()+"\n", decode(l));
+        nextLine("sent: "+l.toString()+"\n",
+                "Pri:"+l.getPri()+" ID:---"+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+        sentCountField.setText(Integer.toString(++_sent));
     }
     
     public synchronized void reply(CanReply l) {  // receive a reply message and log it
-        replyString = l.toString();
-        nextLine("rcvd: "+replyString+"\n", decode(l));
+        nextLine("rcvd: "+l.toString()+"\n", 
+                "Pri:"+l.getPri()+" ID:"+l.getId()+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+        rcvdCountField.setText(Integer.toString(++_rcvd));
     }
     
     /**
@@ -404,22 +547,46 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * @param msg CanMessage to be decoded
      * Return String decoded message
      */
-    public String decode(CanMessage msg) {
-        // *** temporary
-        return ("decoded: "+msg.toString()+"\n");
+    public String decode(AbstractMessage msg) {
+        String str = "";
+        int bytes = msg.getElement(0) >> 5;
+        int op = msg.getElement(0);
+        int node = msg.getElement(1)*256 + msg.getElement(2);
+        int event = msg.getElement(3)*256 + msg.getElement(4);
+        switch (op) {
+            case CbusConstants.CBUS_OP_EV_ON: {
+                // ON event
+                str = str+"Event ON NN:"+node+" Ev:"+event;
+                break;
+            }
+               
+            case CbusConstants.CBUS_OP_EV_OFF: {
+                // OFF event
+                str = str+"Event OFF NN:"+node+" Ev:"+event;
+                break;
+            }
+             case CbusConstants.CBUS_OP_EV_ON_DATA: {
+                // ON event
+                str = str+"Event ON NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
+                break;
+            }
+               
+            case CbusConstants.CBUS_OP_EV_OFF_DATA: {
+                // OFF event
+                str = str+"Event OFF NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
+                break;
+            }
+            
+            default: {
+                str = str+"Unrecognised: "+msg.toString();
+                break;
+            }
+        }
+        return (str+"\n");
     }
     
-    /**
-     * Return a string representation of a decoded canReply
-     *
-     * @param rep CanReply to be decoded
-     * Return String decoded message
-     */
-    public String decode(CanReply rep) {
-        // *** temporary
-        String ret = "";
-        return ("decoded: "+ret);
-    }
+    private int _sent;
+    private int _rcvd;
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusConsoleFrame.class.getName());
 }

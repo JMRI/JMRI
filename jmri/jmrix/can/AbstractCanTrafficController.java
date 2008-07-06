@@ -15,16 +15,17 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
+
 abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
-    
+
     public AbstractCanTrafficController() {
         super();
     }
 
     // The methods to implement the CAN Interface
-    
+ 
     public synchronized void addCanListener(CanListener l) {
         this.addListener(l);
     }
@@ -41,6 +42,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
      protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 //        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
         log.debug("forwardToPort message: ["+m+"]");//warn
+
         // remember who sent this
         mLastSender = reply;
 
@@ -52,6 +54,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
 
         // Create the correct concrete class for sending to the hardware
         AbstractMRMessage hm = newMessage();
+
         // Encode the message to be sent
         if ( ((CanMessage)m).isTranslated() ) 
             hm = m;
@@ -61,6 +64,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
+
         // add header
         int offset = addHeaderToOutput(msg, hm);
 
@@ -81,7 +85,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
                     log.debug(f);
                 }
                 while(hm.getRetries()>=0) {
-                    if(portReadyToSend(controller)) {                
+                    if(portReadyToSend(controller)) {
                         ostream.write(msg);
                         log.debug("message written");
                         break;
@@ -111,11 +115,11 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
     protected AbstractMRMessage pollMessage() {
         return null;
     }
-             
+          
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
-     
+    
     /*
      * enterProgMode() and enterNormalMode() return any message that 
      * needs to be returned to the command station to change modes.
@@ -130,6 +134,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
+
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -137,12 +142,13 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
     /**
      * Get the correct concrete class for the hardware connection message
      */
+
     abstract protected AbstractMRMessage newMessage();
 
     abstract public CanReply decodeFromHardware(AbstractMRReply m);
 
     abstract public AbstractMRMessage encodeForHardware(CanMessage m);
-    
+  
     /**
      * Handle each reply when complete.
      * <P>
@@ -152,27 +158,29 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
-
+        
         // Create messages off the right concrete classes
         // for the CanReply
         CanReply msg = new CanReply();
+        
         // and for the incoming reply from the hardware
         AbstractMRReply hmsg = newReply();
-
+        
         // wait for start if needed
         waitForStartOfReply(istream);
-
+        
         // message exists, now fill it
         loadChars(hmsg, istream);
         
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
-
+        
         // message is complete, dispatch it !!
         replyInDispatch = true;
+        
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements()+
-                                        " contains "+msg.toString()+" state "+mCurrentState);
-
+                " contains "+msg.toString()+" state "+mCurrentState);
+        
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
@@ -185,72 +193,84 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
         }
         
         if (!msg.isUnsolicited()) {
-			// effect on transmit:
-			switch (mCurrentState) {
-			case WAITMSGREPLYSTATE: {
-				// update state, and notify to continue
-				synchronized (xmtRunnable) {
-					mCurrentState = NOTIFIEDSTATE;
-					replyInDispatch = false;
-					xmtRunnable.notify();
-				}
-				break;
-			}
-			case WAITREPLYINPROGMODESTATE: {
-				// entering programming mode
-				mCurrentMode = PROGRAMINGMODE;
-				replyInDispatch = false;
-
-				// check to see if we need to delay to allow decoders to become
-				// responsive
-				int warmUpDelay = enterProgModeDelayTime();
-				if (warmUpDelay != 0) {
-					try {
-						synchronized (xmtRunnable) {
-							xmtRunnable.wait(warmUpDelay);
-						}
-					} catch (InterruptedException e) {
-					}
-				}
-				// update state, and notify to continue
-				synchronized (xmtRunnable) {
-					mCurrentState = OKSENDMSGSTATE;
-					xmtRunnable.notify();
-				}
-				break;
-			}
-			case WAITREPLYINNORMMODESTATE: {
-				// entering normal mode
-				mCurrentMode = NORMALMODE;
-				replyInDispatch = false;
-				// update state, and notify to continue
-				synchronized (xmtRunnable) {
-					mCurrentState = OKSENDMSGSTATE;
-					xmtRunnable.notify();
-				}
-				break;
-			}
-			default: {
-				replyInDispatch = false;
-				if (allowUnexpectedReply == true) {
-					if (log.isDebugEnabled())
-						log.debug("Allowed unexpected reply received in state: "
-							+ mCurrentState	+ " was " + msg.toString());
-				} else {
-					log.error("reply complete in unexpected state: "
-							+ mCurrentState + " was " + msg.toString());
-				}
-			}
-			}
-		// Unsolicited message
-		} else {
-			replyInDispatch = false;
-		}
-	}
+            // effect on transmit:
+            switch (mCurrentState) {
+                
+                case WAITMSGREPLYSTATE: {
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = NOTIFIEDSTATE;
+                        replyInDispatch = false;
+                        xmtRunnable.notify();
+                    }
+                    break;
+                }
+                
+                case WAITREPLYINPROGMODESTATE: {
+                    // entering programming mode
+                    mCurrentMode = PROGRAMINGMODE;
+                    replyInDispatch = false;
+                    
+                    // check to see if we need to delay to allow decoders to become
+                    // responsive
+                    int warmUpDelay = enterProgModeDelayTime();
+                    if (warmUpDelay != 0) {
+                        try {
+                            synchronized (xmtRunnable) {
+                                xmtRunnable.wait(warmUpDelay);
+                            }
+                        } catch (InterruptedException e) {
+                        }
+                        
+                    }
+                    
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = OKSENDMSGSTATE;
+                        xmtRunnable.notify();
+                    }
+                    break;
+                }
+                
+                case WAITREPLYINNORMMODESTATE: {
+                    // entering normal mode
+                    mCurrentMode = NORMALMODE;
+                    replyInDispatch = false;
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = OKSENDMSGSTATE;
+                        xmtRunnable.notify();
+                    }
+                    break;
+                }
+                
+                default: {
+                    replyInDispatch = false;
+                    if (allowUnexpectedReply == true) {
+                        if (log.isDebugEnabled())
+                            log.debug("Allowed unexpected reply received in state: "
+                                    + mCurrentState	+ " was " + msg.toString());
+                    } else {
+                        log.error("reply complete in unexpected state: "
+                                + mCurrentState + " was " + msg.toString());
+                    }
+                }
+            }
+            // Unsolicited message
+        } else {
+            replyInDispatch = false;
+        }
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractCanTrafficController.class.getName());
+
 }
 
+
+
 /* @(#)AbstractCanTrafficController.java */
+
+
+
 
 

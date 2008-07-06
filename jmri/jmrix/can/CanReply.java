@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * entire message.
  * <p>
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CanReply extends AbstractMRReply {
     
@@ -24,7 +24,8 @@ public class CanReply extends AbstractMRReply {
     
     // Creates a new instance of CanMessage
     public CanReply() {
-	_id = 0x7aa;            // can't have too many ones in header
+        _pri = 0;
+	_id = 0x7a;
 	_isExtended = false;
 	_isRtr = false;
         _nDataChars = 8;
@@ -51,6 +52,7 @@ public class CanReply extends AbstractMRReply {
     public  CanReply(CanReply m) {
         if (m == null)
             log.error("copy ctor of null message");
+        _pri = m._pri;
 	_id = m._id;
 	_isExtended = m._isExtended;
 	_isRtr = m._isRtr;
@@ -80,12 +82,15 @@ public class CanReply extends AbstractMRReply {
     public int getId() { return _id; }
     public void setId(int id) { _id = id; }
     public void setId(int id, boolean b) { _id = id; _isExtended = b; }
+    public int getPri() { return _pri; }
+    public void setPri(int pri) { _pri = pri; }
     public boolean isExtended() { return _isExtended; }
     public void setExtended(boolean b) { _isExtended = b; }
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
 
     // contents (private)
+    protected int _pri;
     protected int _id;
     protected boolean _isExtended;
     protected boolean _isRtr;

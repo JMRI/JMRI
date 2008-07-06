@@ -22,7 +22,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -110,8 +110,10 @@ public class GcTrafficController extends TrafficController {
 	GridConnectReply gc = (GridConnectReply)m;
         CanReply ret = new CanReply();
 
-	// Get the ID
-        int id = gc.getID();
+	// Get the Priority
+        ret.setPri(gc.getPri());
+	// and ID
+        ret.setId(gc.getID());
         // Is it an RTR frame
 	if (gc.getElement(6) == 'R') ret.setRtr(true);
         // Get the data
@@ -127,13 +129,15 @@ public class GcTrafficController extends TrafficController {
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         log.debug("Encoding for hardware");
-	    GridConnectMessage ret = new GridConnectMessage();
+	GridConnectMessage ret = new GridConnectMessage();
         // Prefix
         ret.setElement(0, ';');
         // Standard frame
         ret.setElement(1, 'S');
-        // CAN ID
-        ret.setID(m.getId()<<5);
+        // CBUS Priority
+        ret.setPri(m.getPri());
+        // CBUS ID 
+        ret.setID(m.getId());
         // Normal or Remote frame?
         ret.setElement(6, m.isRtr() ? 'R' : 'N');
         // Data payload
@@ -167,7 +171,11 @@ public class GcTrafficController extends TrafficController {
     boolean endNormalReply(AbstractMRReply r) {
         // Detect if the reply buffer ends with ":"
         int num = r.getNumDataElements() - 1;
-        if (r.getElement(num) == ':') return true;
+        // log.debug("endNormalReply checking "+num+" of "+(r.getNumDataElements()-1));
+        if (r.getElement(num) == ':') {
+            // log.debug("End of normal message detected");
+            return true;
+        }
         return false;
     }
 

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRMessage;
  * entire message.
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -29,9 +29,10 @@ public class CanMessage extends AbstractMRMessage {
     
     // Creates a new instance of CanMessage
     public CanMessage() {
-	    _id = 0x7aa;            // can't have too many ones in header
-	    _isExtended = false;
-	    _isRtr = false;
+        _pri = 0;
+	_id = 0x7a;
+	_isExtended = false;
+	_isRtr = false;
         _nDataChars = 8;
         setBinary(true);
         _dataChars = new int[8];
@@ -56,9 +57,10 @@ public class CanMessage extends AbstractMRMessage {
     public  CanMessage(CanMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
-	    _id = m._id;
-	    _isExtended = m._isExtended;
-	    _isRtr = m._isRtr;
+        _pri = m._pri;
+	_id = m._id;
+	_isExtended = m._isExtended;
+	_isRtr = m._isRtr;
         setBinary(true);
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
@@ -67,6 +69,7 @@ public class CanMessage extends AbstractMRMessage {
 
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
+    public void setNumDataElements(int n) { _nDataChars = n; }
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
       _dataChars[n] = v;
@@ -84,6 +87,8 @@ public class CanMessage extends AbstractMRMessage {
     public int getId() { return _id; }
     public void setId(int id) { _id = id; }
     public void setId(int id, boolean b) { _id = id; _isExtended = b; }
+    public int getPri() { return _pri; }
+    public void setPri(int pri) { _pri = pri; }
     public boolean isExtended() { return _isExtended; }
     public void setExtended(boolean b) { _isExtended = b; }
     public boolean isRtr() { return _isRtr; }
@@ -92,6 +97,7 @@ public class CanMessage extends AbstractMRMessage {
     public static void setProtocol(int p) { _protocol = p; }
 
     // contents (private)
+    protected int _pri;
     protected int _id;
     protected boolean _isExtended;
     protected boolean _isRtr;

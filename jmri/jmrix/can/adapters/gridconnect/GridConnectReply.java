@@ -10,13 +10,13 @@ import jmri.jmrix.can.CanReply;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
     // Creates a new instance of GridConnectReply
     public GridConnectReply() {
-        _nDataChars = 24;
+        _nDataChars = 0;
         _dataChars = new int[24];
     }
 
@@ -54,7 +54,10 @@ public class GridConnectReply extends AbstractMRReply {
     public void setNumDataElements(int n) { _nDataChars = (n <= 24) ? n : 24;}
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
-      _dataChars[n] = v;
+        if (n<24) {
+            _dataChars[n] = v;
+            _nDataChars = Math.max(_nDataChars, n+1);
+        }
     }
 
     public void setData(int [] d) {
@@ -65,13 +68,21 @@ public class GridConnectReply extends AbstractMRReply {
     }
 
     /**
-     * Get the CAN ID as an int
+     * Get the CBUS ID as an int
      *
-     * @return int the CAN ID
+     * @return int the CBUS ID
      */        
     public int getID() {
-        return getHexDigit(2)*4096 + getHexDigit(3)*256
-                    + getHexDigit(4)*16 + getHexDigit(5);
+        return (getHexDigit(3)<<3) + (getHexDigit(4)>>1);
+    }
+    
+    /**
+     * Get the CBus Priority as an int
+     *
+     * @return int the CBUS priority
+     */        
+    public int getPri() {
+        return getHexDigit(2);
     }
     
     /**
