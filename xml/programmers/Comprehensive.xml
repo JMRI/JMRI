@@ -14,7 +14,9 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.17 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.18 2008-07-06 16:11:30 jacobsen Exp $ -->
+		<version author="Bruce Shanks"
+					version="13" lastUpdated="20080614"/>
 		<version author="Howard G. Penny"
 					version="11" lastUpdated="20050713"/>
 		<version author="Michael Mosher" version="12" lastUpdated="20070717"/>
@@ -28,6 +30,7 @@
       <!-- Version 9 - added Analog pane wsthompson@earthlink.net -->
       <!-- Version 11 - updated tooltip for Decoder Version -->
       <!-- Version 12 - added sound group 3  -->
+      <!-- Version 13 - two panes for speed control -->
 
 <programmer decoderFilePanes="yes" showEmptyPanes="default">
 
@@ -97,15 +100,22 @@
 		</column>
 	</pane>
 
-	<pane name="Speed Control">
+	<pane name="Basic Speed Control">
 		<column>
 			<row>
 				<column>
 					<label label=" "/>
 					<display item="Speed Table Definition"
-						format="offradiobutton" label=""/>
+						format="offradiobutton" layout="above" label="Set button Green to use settings shown below"/>
+		<label label="     To turn off, use Advanced Speed Control"/>
 					<label label=" "/>
 				</column>
+			</row>
+			<row>
+					<label label=" "/>
+			</row>
+			<row>
+					<label label=" "/>
 			</row>
 			<row>
 				<column>
@@ -144,12 +154,23 @@
 					<label label=" "/>
 				</column>
 			</row>
-			<separator/>
+	</column>
+</pane>
+
+<pane name="Advanced Speed Control">	
+		<column>
 			<row>
 				<column>
 					<display item="Speed Table Definition"
-						format="onradiobutton" layout="above" label=""/>
+						format="onradiobutton" layout="above" label="Set button Green to use a Speed Table for Speed Control"/>
+		<label label="            To turn off, use Basic Speed Control "/>
 				</column>
+			</row>
+			<row>
+					<label label=" "/>
+			</row>
+			<row>
+					<label label=" "/>
 			</row>
 			<row>
 			  <column>
@@ -792,4 +813,5 @@
 
 </programmer>
 </programmer-config>
+
 
