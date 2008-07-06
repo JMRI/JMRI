@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PollingFile extends XmlFile {
 
@@ -105,16 +105,16 @@ public class PollingFile extends XmlFile {
     public void getTransmitters(Engine engine) {
         List l = root.getChildren("transmitter");
 
-        for (int i = 0; i<l.size(); i++) {
+        for (int i = 0; i<l.size(); i++) {  // i indexes over the elements in the file
             Element e = (Element)l.get(i);
             String id = e.getAttribute("id").getValue();
             // find the matching transmitter (from Roster) and load poll value
-            for (int j = 0; j<engine.getNumTransmitters(); j++) {
-                if (engine.getTransmitter(i).getID().equals(id)) {
+            for (int j = 0; j<engine.getNumTransmitters(); j++) { // j indexes over transmitters
+                if (engine.getTransmitter(j).getID().equals(id)) {
                     Attribute a = e.getAttribute("poll");
                     boolean poll = false;
                     if (a != null && a.getValue().equals("true")) poll = true;
-                    engine.getTransmitter(i).setPolled(poll);
+                    engine.getTransmitter(j).setPolled(poll);
                     break;
                 }
             }
