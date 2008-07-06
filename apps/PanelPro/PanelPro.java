@@ -31,7 +31,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class PanelPro extends Apps {
 
@@ -53,7 +53,7 @@ public class PanelPro extends Apps {
     }
 
     protected String line2() {
-        return "http://jmri.sf.net/PanelPro.html ";
+        return "http://jmri.sf.net/PanelPro ";
     }
 
     // Main entry point
