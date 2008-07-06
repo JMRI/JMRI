@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.8 2008-06-08 03:18:37 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2008-07-06 04:26:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -162,6 +162,11 @@ transmitters, and how often you want JMRI to poll them
 
 <dt><a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
 <dd>This shows the points as they are measured on a graphical display.
+
+<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control</a>
+<dd>This lets you see and set the speed of sound used by the RPS system, and can set it automatically
+in certain cases.
+
 </dl>
 
 You can also display RPS information on PanelPro control panels using an
