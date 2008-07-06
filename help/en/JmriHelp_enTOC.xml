@@ -8,6 +8,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
 
    <tocitem text="JMRI Help Main Page" target="index"/>
    <tocitem text="Acknowledgements" target="Acknowledgements"/>
+   <tocitem text="InstallTest" target="package.apps.InstallTest.InstallTest"/>
    <tocitem text="DecoderPro">
       <tocitem text="Introduction" target="html.apps.DecoderPro.index">
          <tocitem text="Tour" target="html.apps.DecoderPro.Tour"/>

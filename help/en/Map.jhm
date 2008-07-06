@@ -39,6 +39,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml" />
 	<mapID target="Acknowledgements_M" url="Acknowledgements.shtml#M" />
+	<mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml" />
 	<mapID target="html.tools.signaling.index_automat" url="html/tools/signaling/index.shtml#automat" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_logic" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#logic" />
 	<mapID target="html.doc.Technical.CVSFAQ" url="html/doc/Technical/CVSFAQ.shtml" />

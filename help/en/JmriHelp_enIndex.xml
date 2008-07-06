@@ -71,6 +71,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Zimo" target="html.hardware.zimo.Zimo"/>
       <indexitem text="ZTC" target="html.hardware.XPressNet.index"/>
    </indexitem>
+   <indexitem text="InstallTest" target="package.apps.InstallTest.InstallTest"/>
    <indexitem text="LDT signals" target="html.tools.signaling.ldt.output"/>
    <indexitem text="Light" target="html.tools.Lights">
       <indexitem text="Add Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
