@@ -353,6 +353,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.USBtoSerial_LI101" url="html/hardware/USBtoSerial.shtml#LI101" />
 	<mapID target="html.apps.PanelPro.AdvIcons_reportericon" url="html/apps/PanelPro/AdvIcons.shtml#reportericon" />
 	<mapID target="package.jmri.jmrit.sensorgroup.SensorGroupFrame" url="package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml" />
+	<mapID target="html.hardware.raildriver.details" url="html/hardware/raildriver/details.shtml" />
 	<mapID target="html.doc.Technical.I8N_custom" url="html/doc/Technical/I8N.shtml#custom" />
 	<mapID target="DecoderProManual.Getting_Started" url="DecoderProManual/Getting_Started.shtml" />
 	<mapID target="html.hardware.loconet.KeyspanUSB" url="html/hardware/loconet/KeyspanUSB.shtml" />
@@ -471,6 +472,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_Basic_Top" url="DecoderProManual/Comp_Basic.shtml#Top" />
 	<mapID target="html.tools.signaling.index_logic" url="html/tools/signaling/index.shtml#logic" />
 	<mapID target="html.tools.signaling.index_intro" url="html/tools/signaling/index.shtml#intro" />
+	<mapID target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame" url="package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml" />
 	<mapID target="html.doc.Technical.JVMCapabilities" url="html/doc/Technical/JVMCapabilities.shtml" />
 	<mapID target="html.apps.LocoTools.index_sendpkt" url="html/apps/LocoTools/index.shtml#sendpkt" />
