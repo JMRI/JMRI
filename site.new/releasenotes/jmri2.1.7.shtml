@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.15 2008-07-06 15:52:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.16 2008-07-06 18:44:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -199,7 +199,7 @@ show how you can connect JMRI to custom hardware via a PC parallel port.
 New 
 <a href="../jython/USBThrottle.py">USBThrottle.py</a>
 script lets you use a USB HID device (joystick, scrollwheel, etc)
-as a JMIR throttle.  
+as a JMRI throttle.  
 
 <P>
 When in EasyDCC or SPROG mode, JMRI didn't include support for internal sensors due 
@@ -207,10 +207,11 @@ to an oversight.  This is now fixed, so internal sensors are available
 for panels, Logix, etc.
 
 <p>
-Fixed a problem with function and forward-reverse tracking when using multiple Digitrax throttles.
+Fixed a problem with function and forward-reverse tracking when 
+using multiple Digitrax throttles.
 
 <p>
-Introductor support for the PI Engineering 
+Introductory support for the PI Engineering 
 <a href="http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml">RailDriver throttle simulator</a>
 is included.
 
@@ -245,6 +246,12 @@ feedback comes back from the layout, rather than immediately with a
 state change is requested.
 
 <p>
+Bruce Shanks updated the Comprehensive decoder programmer format to have
+"basic speed controls" (Vstart, Vmid, Vhigh) on a separate pane from the 
+speed table.  This greatly speeds reading and writing if you just need the
+basic information.
+
+<p>
 Turnout feedback was causing a problem with two opposing commands were issued
 very close together, for example when a Logix tries to set a turnout back when
 it is changed.  This has been fixed by logic changes in AbstractTurnout and LnTurnout.
@@ -264,6 +271,11 @@ for handling the speed of sound.
 <p>
 Ken Cameron added InstallTest, a new application and startup test 
 for debugging installation problems.
+
+<p>
+Dick Bronson provided some icons for USS CTC track diagrams.  They're
+available in 
+<a href="http://jmri.sf.net/resources/icons/USS/proto">resources/icons/USS/proto</a>.
 
 <!--#include virtual="/Footer" -->
 
