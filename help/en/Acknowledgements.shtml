@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.42 2008-06-03 06:52:50 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.43 2008-07-06 15:55:56 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -104,7 +104,9 @@
     <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
     <LI>Ken Cameron, who wrote the NCE fast clock support, added 
         support for more than two systems to the preferences,
-        and added the Light Control
+        added the Light Control, provided sample scripts, 
+        improved the titling of throttle windows, 
+        and created the InstallTest app.
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<LI>Normal Clymer, who contribed a TCS definition file
@@ -207,7 +209,7 @@
 <a name="M"></A>
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
-	<LI>John McAleely, who contributed Hornby decoder definitions
+	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
@@ -242,6 +244,7 @@
 	<LI>Phill Perry, who contributed a decoder definition for the New York Byano Limited locomotive
 	<LI>Bruce Petrarca, who has started offering CDs so nobody else has to burn them
 	<li>Bob Phillips provided an MRC decoder definition
+    <li>Ronnie Pinkerton, who worked on a throttle update
 	<LI>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux
 	<LI>John Plocher, who make good suggestions on XML DTD items,
 	created the infrastructure for this web site, and lead the construction of the demo layout for the JavaOne show.

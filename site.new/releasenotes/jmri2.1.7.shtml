@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.14 2008-07-06 04:37:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.15 2008-07-06 15:52:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -260,6 +260,10 @@ the time won't be set, but the rest of the panel file will be loaded properly.
 Added a new
 <a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS tool</a>
 for handling the speed of sound.
+
+<p>
+Ken Cameron added InstallTest, a new application and startup test 
+for debugging installation problems.
 
 <!--#include virtual="/Footer" -->
 
