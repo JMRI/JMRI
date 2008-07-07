@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CanSendFrame.shtml,v 1.1 2008-06-21 19:11:27 jacobsen Exp $ -->
+<!-- $Id: CanSendFrame.shtml,v 1.2 2008-07-07 14:07:31 jacobsen Exp $ -->
 <!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
@@ -25,9 +25,9 @@
 <H2>Send CAN Frame
 </H2>
     
-<a href="../../../../../../html/apps/LocoTools/images/SendPkt.gif">
-    <img src="../../../../../../html/apps/LocoTools/images/SendPkt.gif"
-         width="200" height="100"
+<a href="../../../../../../html/hardware/can/images/SendFrame.jpg">
+    <img src="../../../../../../html/hardware/can/images/SendFrame.jpg"
+         width="268" height="168"
          alt="Send Frame Tool" align="right"></a>
 <br>
 
@@ -45,7 +45,7 @@ Just type the packet contents as
 hexadecimal numbers, for example "83 7C", and click "Send".
 
 <p>
-The bottom section lets you enter from one to four frames.
+The bottom section lets you enter from one to four frames
 that will be repeatedly sent in sequence, with user-defined delays in between.
 Press the "Go" button to start the transmission sequence, and press it again
 to stop the sequence.
