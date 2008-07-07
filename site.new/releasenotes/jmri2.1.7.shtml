@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.16 2008-07-06 18:44:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.17 2008-07-07 02:03:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -125,7 +125,7 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 
 
-<h3>Changes since test version 2.1.5:</h3>
+<h3>Changes since test version 2.1.6:</h3>
 
 Dan Boudreau and Paul Bender have worked on the consisting tools.
 
@@ -188,6 +188,9 @@ for CAN-based networks is included,
 focusing on the
 <a href="http://www.merg.org.uk/">MERG</a>
 <a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>.
+See the initial draft of the 
+<a href="http://jmri.sf.net/help/en/html/hardware/can/index.shtml">help page</a> 
+for more information.
 
 <p>
 Two scripts 
@@ -267,6 +270,9 @@ the time won't be set, but the rest of the panel file will be loaded properly.
 Added a new
 <a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS tool</a>
 for handling the speed of sound.
+
+<p>
+Dima Stepanchuk fixed a problem that would cause recurring errors for the NCE Packet Analyzer.
 
 <p>
 Ken Cameron added InstallTest, a new application and startup test 
