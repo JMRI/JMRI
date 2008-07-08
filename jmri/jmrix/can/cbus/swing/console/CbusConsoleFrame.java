@@ -35,7 +35,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -55,7 +55,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JTextField sentCountField = new JTextField("0", 8);
     protected JTextField rcvdCountField = new JTextField("0", 8);
     protected JButton statsClearButton = new JButton();
-    protected JTextField priField = new JTextField();
+    protected JTextField dynPriField = new JTextField();
+    protected JTextField minPriField = new JTextField();
     protected JTextField[] dataFields = new JTextField[8];
     protected JButton sendButton = new JButton();
     protected JButton dataClearButton = new JButton();
@@ -239,10 +240,14 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 BorderFactory.createEtchedBorder(), "Send Packet"));
 
         // Construct data fields for Priority and up to 8 bytes
-        priField = new JTextField("", 4);
-        priField.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Pri"));
-        sendPane.add(priField);
+        dynPriField = new JTextField("2", 4);
+        dynPriField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Dyn Pri"));
+        sendPane.add(dynPriField);
+        minPriField = new JTextField("3", 4);
+        minPriField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Min Pri"));
+        sendPane.add(minPriField);
         for (i=0; i<8; i++) {
             dataFields[i] = new JTextField("", 6);
             if (i==0) {
@@ -453,27 +458,17 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         int i;
-        int data;
+        int data, data2;
         CanMessage m = new CanMessage();
-        try {
-            data = Integer.parseInt(priField.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid Priority Value",
-                    "CBUS Console", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        m.setPri(data);
+        data = parseBinHexByte(dynPriField.getText(), 2, "CBUS Console", "Invalid Dynamic Priority Value");
+        data2 = parseBinHexByte(minPriField.getText(), 3, "CBUS Console", "Invalid Minor Priority Value");
+        m.setPri(data*4 + data2);
         for (i=0; i<8; i++) {
             if (!dataFields[i].getText().equals("")) {
-                try {
-                    data = Integer.parseInt(dataFields[i].getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Invalid Data Value"
-                            +"in d"+i,
-                            "CBUS Console", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                data = parseBinHexByte(dataFields[i].getText(), 255, "CBUS Console", 
+                        "Invalid Data Value in d"+i);
                 m.setElement(i, data);
+                if (i==0) data2 = data;     // save OPC(d0) for later
             } else {
                 break;
             }
@@ -485,9 +480,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         // Does the number of data match the opcode?
         // Subtract one as loop variable will have incremented
-        if ((i-1) != Integer.parseInt(dataFields[0].getText())>>5) {
+        if ((i-1) != (data2>>5)) {
             JOptionPane.showMessageDialog(null, "Number of data bytes entered\n"
-                    +"does not match count in d0(OPC)",
+                    +"does not match count in d0(OPC):"+(data2>>5),
                     "CBUS Console", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -499,7 +494,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public void dataClearButtonActionPerformed(java.awt.event.ActionEvent e) {
         int i;
-        priField.setText("");
+        dynPriField.setText("2");
+        minPriField.setText("3");
         for (i=0; i<8; i++) {
             dataFields[i].setText("");
         }
@@ -531,13 +527,13 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public synchronized void message(CanMessage l) {  // receive a message and log it
         nextLine("sent: "+l.toString()+"\n",
-                "Pri:"+l.getPri()+" ID:---"+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3)+" ID:---"+" "+(l.isRtr() ? "R " : "N ")+decode(l));
         sentCountField.setText(Integer.toString(++_sent));
     }
     
     public synchronized void reply(CanReply l) {  // receive a reply message and log it
         nextLine("rcvd: "+l.toString()+"\n", 
-                "Pri:"+l.getPri()+" ID:"+l.getId()+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3)+" ID:"+l.getId()+" "+(l.isRtr() ? "R " : "N ")+decode(l));
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
     
@@ -583,6 +579,42 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             }
         }
         return (str+"\n");
+    }
+    
+    /**
+     * Parse a string for a binary or hex byte value
+     * <P>
+     * Binary values must be at least 3 digits to avoid confusion with hex.
+     * Value must be positive.
+     *
+     * @param s string to be parsed
+     * @param limit upper bound of value to be parsed
+     * @param errTitle Title of error dialogue box if Number FormatException encountered
+     * @param errMsg Message to be displayed if Number FormatException encountered
+     * @return the byte value, -1 indicates failure
+     */
+    public int parseBinHexByte(String s, int limit, String errTitle, String errMsg) {
+        int data = -1;
+        boolean error = false;
+        // Initially, assume to be hex
+        int radix = 16;
+        if (s.length() > 2) {
+            // Assumed to be binary
+            radix = 2;
+        }
+        try {
+            data = Integer.parseInt(s, radix);
+        } catch (NumberFormatException ex) {
+            error = true;
+        }
+        if ((data < 0) || (data > limit))
+            error = true;
+        if (error) {
+            JOptionPane.showMessageDialog(null, errMsg,
+                    "CBUS Console", JOptionPane.ERROR_MESSAGE);
+            data = -1;
+        }
+        return data;
     }
     
     private int _sent;
