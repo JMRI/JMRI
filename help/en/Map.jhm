@@ -22,7 +22,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel" />
 	<mapID target="package.jmri.jmrix.grapevine.nodetable.RenumberFrame" url="package/jmri/jmrix/grapevine/nodetable/RenumberFrame.shtml" />
-	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCE Turnout lock feature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCE Turnout lock feature" />
 	<mapID target="package.jmri.jmrit.ussctc.TurnoutLeverFrame" url="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Write Data" url="DecoderProManual/Basic_Programming.shtml#Write Data" />
 	<mapID target="html.hardware.acela.Names" url="html/hardware/acela/Names.shtml" />
@@ -321,6 +320,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml" />
 	<mapID target="DecoderProManual.Comp_FMap_Top" url="DecoderProManual/Comp_FMap.shtml#Top" />
 	<mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml" />
+	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCETurnoutLockFeature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCETurnoutLockFeature" />
 	<mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml" />
 	<mapID target="html.tools.signaling.index_start" url="html/tools/signaling/index.shtml#start" />
 	<mapID target="html.apps.DecoderPro.Programmer_display" url="html/apps/DecoderPro/Programmer.shtml#display" />
@@ -508,6 +508,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.secsi.index" url="html/hardware/secsi/index.shtml" />
 	<mapID target="html.apps.DecoderPro.MoreInfo" url="html/apps/DecoderPro/MoreInfo.shtml" />
 	<mapID target="DecoderProManual.index_Advanced Programmer" url="DecoderProManual/index.shtml#Advanced Programmer" />
+	<mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_FMap" url="DecoderProManual/Comp_FMap.shtml" />
 	<mapID target="html.tools.Routes_turnoutlogic" url="html/tools/Routes.shtml#turnoutlogic" />
 	<mapID target="html.hardware.XPressNet.index" url="html/hardware/XPressNet/index.shtml" />
@@ -527,7 +528,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml" />
 	<mapID target="Acknowledgements_X" url="Acknowledgements.shtml#X" />
 	<mapID target="html.tools.scripting.FAQ_windows" url="html/tools/scripting/FAQ.shtml#windows" />
-	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_Feedback" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#Feedback" />
 	<mapID target="html.doc.Technical.I8N_code" url="html/doc/Technical/I8N.shtml#code" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_SSL" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#SSL" />
 	<mapID target="html.tools.signaling.SimpleSignalExample_setup" url="html/tools/signaling/SimpleSignalExample.shtml#setup" />
