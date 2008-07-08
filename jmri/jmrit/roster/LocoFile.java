@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -198,6 +198,7 @@ class LocoFile extends XmlFile {
 
             // add top-level elements
             Element locomotive = r.store();   // the locomotive element from the RosterEntry
+
             root.addContent(locomotive);
             Element values = new Element("values");
             locomotive.addContent(values);
@@ -237,8 +238,9 @@ class LocoFile extends XmlFile {
             // mark file as OK
             variableModel.setFileDirty(false);
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (Exception ex) {
+            // need to trace this one back
+            ex.printStackTrace();
         }
     }
 
@@ -272,7 +274,8 @@ class LocoFile extends XmlFile {
             writeXML(pFile, doc);
         }
         catch (Exception ex) {
-            log.error(ex);
+            // need to trace this one back
+            ex.printStackTrace();
         }
     }
 
