@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.7.shtml,v 1.17 2008-07-07 02:03:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.7.shtml,v 1.18 2008-07-08 03:37:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -282,6 +282,18 @@ for debugging installation problems.
 Dick Bronson provided some icons for USS CTC track diagrams.  They're
 available in 
 <a href="http://jmri.sf.net/resources/icons/USS/proto">resources/icons/USS/proto</a>.
+
+<p>
+Brett Scott provided a 
+<a href="http://jmri.sf.net/jython/dccspecialties/programwabbitmasterrevh.py">script</a>
+in the 
+<a href="http://jmri.sf.net/jython/dccspecialties">jython/dccspecialities</a>
+folder for programming the Wabbit Rev H or greater.
+
+<p>
+Fixed a problem with JDOM that could cause exceptions when importing or
+exporting roster files.
+
 
 <!--#include virtual="/Footer" -->
 
