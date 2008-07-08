@@ -18,7 +18,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
@@ -81,7 +81,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     /**
      * Set the Priority
      *
-     * @param id A valid CBUS Priority
+     * @param pri A valid CBUS Priority
      */
     public void setPri(int pri) {
         setHexDigit(pri&0xF, 2);
