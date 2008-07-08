@@ -35,7 +35,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -329,7 +329,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * show their own help page if desired.
      */
     protected void addHelpMenu() {
-    	addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
+    	addHelpMenu("package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame", true);
     }
     
     public void nextLine(String line, String decoded) {
