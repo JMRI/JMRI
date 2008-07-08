@@ -119,7 +119,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
 
     /**
      * get the state of the function
-     * @returns true if the function is active.
+     * @return true if the function is active.
      */
     public boolean getState()
     {
