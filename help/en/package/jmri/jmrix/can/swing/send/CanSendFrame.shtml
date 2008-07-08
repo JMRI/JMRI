@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CanSendFrame.shtml,v 1.2 2008-07-07 14:07:31 jacobsen Exp $ -->
+<!-- $Id: CanSendFrame.shtml,v 1.3 2008-07-08 01:05:47 jacobsen Exp $ -->
 <!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
@@ -22,8 +22,7 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Send CAN Frame
-</H2>
+<H1>Send CAN Frame</H1>
     
 <a href="../../../../../../html/hardware/can/images/SendFrame.jpg">
     <img src="../../../../../../html/hardware/can/images/SendFrame.jpg"
@@ -32,11 +31,12 @@
 <br>
 
 The "Send CAN Frame" tool lets you
-directly send CAN frames.
+directly send 
+<a href="../../../../../../html/hardware/can/index.shtml">CAN frames</a>.
 
 <p>It works best in combination with the 
 "Show Raw Data" option in the 
-<a href="">Monitor</a>, 
+<a href="../../cbus/swing/console/CbusConsoleFrame.shtml">CBUS Console</a>, 
 because packets are entered here in raw hexadecimal format.
 
 <p>
