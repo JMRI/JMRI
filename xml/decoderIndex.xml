@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.5 on Sun May 18 22:01:54 PDT 2008 $Id: decoderIndex.xml,v 1.122 2008-05-19 05:02:59 jacobsen Exp $-->
+  <!--Written by JMRI version 2.1.7 on Mon Jul 07 20:32:04 PDT 2008 $Id: decoderIndex.xml,v 1.123 2008-07-08 03:35:58 jacobsen Exp $-->
   <decoderIndex version="140">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -161,6 +161,9 @@
       </family>
       <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC.xml">
         <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
+      </family>
+      <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_1fn.xml">
+        <model model="E-Z Command 1fn (36-551)" numOuts="2" numFns="1" lowVersionID="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Bachmann 4-function decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_4fn.xml">
         <model model="Bachmann 4-function decoders" numOuts="4" numFns="8" lowVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
