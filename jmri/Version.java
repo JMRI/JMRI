@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 
 public class Version {
@@ -31,5 +31,5 @@ public class Version {
      *
      * @return The current version string
      */
-    static public String name() { return "2.1.7"; }
+    static public String name() { return "2.1.7 from CVS"; }
 }
