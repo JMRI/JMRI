@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AbstractMonFrame.shtml,v 1.1 2007-12-30 04:51:11 jacobsen Exp $ -->
+<!-- $Id: AbstractMonFrame.shtml,v 1.2 2008-07-08 01:01:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -21,8 +21,8 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Communications Monitor Window
-</H2>
+<H1>Communications Monitor Window
+</H1>
     
 JMRI provides a communications monitor window so you can see what's happening
 on the communications link between the program and the layout hardware.
@@ -31,7 +31,28 @@ on the communications link between the program and the layout hardware.
 Once you open a monitor window, it will automatically
 display all traffic on the link.
 
-<h3>Logging To A File</h3>
+<h2>Controls</h2>
+
+<dl>
+<dt>Clear Screen</dt>
+  <dd>Erases the log area at the top of the screen
+  </dd>
+<dt>Freeze Screen</dt>
+  <dd>Stops acquiring new information, so that the captured information stops scrolling up
+  </dd>
+<dt>Show raw data</dt>
+  <dd>Normally, the monitor displays the program's interpretation of what it's seeing.
+  If you want to see the raw bytes, check this box.
+  </dd>
+<dt>Show timestamps</dt>
+  <dd>Normally, the program just displays the data from the communication link.
+  If you'd like each message to be preceeded by the time it was sent or
+  received, check this box.
+  </dd>
+</dl>
+
+
+<h2>Logging To A File</h2>
 
 Sometimes, it's helpful to capture what's happening. For example,
 you might encounter a bug (!!), and want to send a copy of what's 
@@ -53,26 +74,6 @@ if you pick a file that already exists, it will be overwritten.
 <li>When you're done, click "Stop logging" to store the data
 and close the file.
 </ol>
-
-<h3>Controls</h3>
-
-<dl>
-<dt>Clear Screen</dt>
-  <dd>Erases the log area at the top of the screen
-  </dd>
-<dt>Freeze Screen</dt>
-  <dd>Stops acquiring new information, so that the captured information stops scrolling up
-  </dd>
-<dt>Show raw data</dt>
-  <dd>Normally, the monitor displays the program's interpretation of what it's seeing.
-  If you want to see the raw bytes, check this box.
-  </dd>
-<dt>Show timestamps</dt>
-  <dd>Normally, the program just displays the data from the communication link.
-  If you'd like each message to be preceeded by the time it was sent or
-  received, check this box.
-  </dd>
-</dl>
 
 
 <p>
