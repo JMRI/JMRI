@@ -29,7 +29,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -62,7 +62,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         LocoFile lf = new LocoFile();  // used as a temporary
         Element lroot = null;
         try {
-            lroot = lf.rootFromFile(mFromFile);
+            lroot = (Element)lf.rootFromFile(mFromFile).clone();
         } catch (Exception e) {
             log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
             return false;

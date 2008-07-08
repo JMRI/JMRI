@@ -35,7 +35,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.roster.ImportRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -68,7 +68,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         LocoFile lf = new LocoFile();  // used as a temporary
         Element lroot = null;
         try {
-            lroot = lf.rootFromName(mFullFromFilename);
+            lroot = (Element)lf.rootFromName(mFullFromFilename).clone();
         } catch (Exception e) {
             log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
             return false;
