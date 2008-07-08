@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.6 2008-06-10 14:18:05 jacobsen Exp $ -->
+<!-- $Id: PanelTarget.shtml,v 1.7 2008-07-08 05:39:42 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -68,6 +68,15 @@ Editor, a small popup menu will appear when you right click an icon.
 Most icons allow you to rotate and remove the icon. There are other
 options depending on the type of icon, for example, you can disable a
 turnout so it doesn't actually control anything.
+
+<p>
+If enabled via the checkboxes on the 
+<a href="PanelEditor.shtml">Panel Editor</a>,
+you can move an icon by dragging it around the panel.  For more
+precise positioning, many icons can access the
+<a href="CoordinateEdit.shtml">Coordinate Editor</a> 
+to move the icon by a specific number of pixels or set it to an 
+absolute location.
 
 <P>The popup menu may also change if the configuration of an item is
 changed. For example, if you add feedback to a turnout, the popup menu
