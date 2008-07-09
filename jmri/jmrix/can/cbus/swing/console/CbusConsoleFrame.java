@@ -35,7 +35,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -81,7 +81,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     protected void init() {
         // connect to the CanTrafficController
-        tc = jmri.jmrix.can.adapters.gridconnect.GcTrafficController.instance();
+        tc = jmri.jmrix.can.TrafficController.instance();
         tc.addCanListener(this);
     }
     
