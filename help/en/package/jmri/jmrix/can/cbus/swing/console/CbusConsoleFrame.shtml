@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CbusConsoleFrame.shtml,v 1.1 2008-07-07 17:15:23 jacobsen Exp $ -->
+<!-- $Id: CbusConsoleFrame.shtml,v 1.2 2008-07-09 07:00:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -35,7 +35,15 @@ on the communications link between the program and the layout CBUS.
 
 <p>
 Once you open a monitor window, it will automatically
-display all traffic on the link.
+display all traffic on the link in the two sections
+at the top of the window.  The left part contains the
+raw CAN frames.  The right part interprets their 
+CBUS meaning.
+
+<h2>Sending Frames</h2>
+
+The lower part of the window allows you to enter and 
+send a CAN frame.
 
 <h2>Logging To A File</h2>
 
