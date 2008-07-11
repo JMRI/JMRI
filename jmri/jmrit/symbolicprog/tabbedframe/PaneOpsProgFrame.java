@@ -10,19 +10,26 @@ import javax.swing.JPanel;
 /**
  * Extend the PaneProgFrame to handle ops mode operations
  *
- * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2008
+ * @version			$Revision: 1.4 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
-                                                        implements java.beans.PropertyChangeListener  {
+                 implements java.beans.PropertyChangeListener  {
 
-    // commented out for now, as we only have the one ops mode
-    // jmri.ProgModePane   modePane        = new jmri.ProgModePane(BoxLayout.X_AXIS);
+    JPanel modePane;
 
     /**
-     * Provide no programming-mode panel to the parent class.
+     * Provide programming-mode panel to the parent class.
+     * <p>
+     * In this case, provide just an empty JPanel; we
+     * presently don't want a selection GUI to be
+     * present when in ops mode.
      */
-    JPanel getModePane() { return null; }
+    JPanel getModePane() { 
+        if (modePane == null) 
+            modePane = new JPanel();
+        return modePane;
+    }
 
     /**
      * This invokes the parent ctor to do the real work. That will

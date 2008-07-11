@@ -38,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.65 $
+ * @version   $Revision: 1.66 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -813,6 +813,15 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
+    /**
+     * Enable the read/write buttons.
+     * <p>
+     * In addition, if a programming mode pane is 
+     * present, it's "set" button is enabled.
+     * 
+     * @param stat Are reads possible? If false, so not enable
+     * the read buttons.
+     */
     void enableButtons(boolean stat) {
         if (stat) {
             enableReadButtons();
@@ -823,7 +832,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
         if (modePane != null) {
-            ((ProgDeferredServiceModePane)modePane).setButton.setEnabled(stat);
+            modePane.setEnabled(stat);
         }
     }
 
