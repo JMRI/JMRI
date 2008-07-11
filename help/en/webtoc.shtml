@@ -713,6 +713,11 @@
 <li>Digitrax<ul>
          
 <li>
+<a href="html/hardware/loconet/Addressing.shtml">LocoNet Addresses</a>
+<ul></ul>
+</li>
+         
+<li>
 <a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">LocoNet ID</a>
 <ul></ul>
 </li>

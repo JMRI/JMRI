@@ -80,6 +80,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
    </indexitem>
    <indexitem text="LocoNet">
+      <indexitem text="Addresses" target="html.hardware.loconet.Addressing"/>
       <indexitem text="Command Station Configuration Tool" target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
       <indexitem text="DS54" target="html.hardware.loconet.DS54"/>
       <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>

@@ -355,6 +355,11 @@
 <li>LocoNet<ul>
       
 <li>
+<a href="html/hardware/loconet/Addressing.shtml">Addresses</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Command Station Configuration Tool</a>
 <ul></ul>
 </li>
