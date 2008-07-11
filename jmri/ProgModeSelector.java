@@ -19,7 +19,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModeSelector object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class ProgModeSelector extends javax.swing.JPanel {
 
@@ -35,6 +35,15 @@ public abstract class ProgModeSelector extends javax.swing.JPanel {
      */
     abstract public boolean isSelected();
 
+    /**
+     * Enable/Disable the selection aspect of whatever
+     * GUI is presented
+     * <p>
+     * Default beavior is to do nothing.
+     * @param enabled false disables GUI user changes
+     */
+    public void setEnabled(boolean enabled) {}
+    
     /**
      * Clean up when done. Required.
      */

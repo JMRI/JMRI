@@ -42,14 +42,22 @@ import jmri.Programmer;
  * <P>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
     ProgServiceModePane servicePane;
     JFrame setFrame;
     JLabel currentMode = new JLabel();
-    public JButton setButton = new JButton("Set...");
+    protected JButton setButton = new JButton("Set...");
+
+    /**
+     * Enable/Disable the "set" button in GUI
+     * @param enabled false disables button
+     */
+    public void setEnabled(boolean enabled) {
+        setButton.setEnabled(enabled);
+    }
 
     /**
      * Get the configured programmer
