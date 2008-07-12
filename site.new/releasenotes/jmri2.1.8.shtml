@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.8.shtml,v 1.1 2008-07-08 05:13:38 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.8.shtml,v 1.2 2008-07-12 13:50:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -43,24 +43,20 @@ back to an earlier version.
 
 <p>This is the next in a series of test versions.
 
-It contains 
-many new features, including:
+This is the (hopefully) final test release before 
+the 
+<a href="">next JMRI production release</a>.
+As such, it has only minor changes over the 
+2.1.7 test release:
 <ul>
-<li>Support for the new model railroad controls based on the 
-    <a href="../help/en/html/hardware/can/index.shtml">CAN bus</a>,
-    including CBus.
-<li>Initial support for connecting a
-<a href="../help/en/html/hardware/raildriver/index.shtml">RailDriver console</a>
-as a JMRI throttle.
-<LI>Several new and improved decoder definitions,
-<LI>Many small improvements to the usability and reliability,
+<li>Fix for missing status field during ops-mode programming
 </ul>
-along with lots of other changes.  See the complete list below.
+along with other small improvements.  See the complete list below.
 
 
-<p>Some of the changes involved are quite extensive.
-They may require a certain amount of experience before they are working well.  
-Therefore, this test version should be considered experimental.
+<!-- <p>Some of the changes involved are quite extensive. -->
+<!-- They may require a certain amount of experience before they are working well.   -->
+<!-- Therefore, this test version should be considered experimental. -->
 
 <!-- <p>We are very pleased to announce that the 2.1 series of JMRI test releases has resulted in a  -->
 <!-- version that's good enough to be recommended for general use, including by new users.  -->
@@ -126,173 +122,18 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 <h3>Changes since test version 2.1.7:</h3>
 
-Dan Boudreau and Paul Bender have worked on the consisting tools.
-
-<p>
-With certain versions of Java, the analog clock would not display properly when first opened.
-This is believed to be fixed.
-
-<p>
-Some changes have been made to the way RPS handles polling.
+Andrew Crosland improved the 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CAN console tool</a>
+for sending CAN frames.
 
 <P>
-To make it easier to see and position them, 
-David Duchamp added an outline to a memory icon that's being put on a layout editor panel.
-
-<p>
-More improvements in making panel files portable from one computer
-to another, particularly Mac to PC and back.
-Please remember to put your own custom icons in the 
-<a href="http://jmri.sourceforge.net/help/en/html/apps/PanelPro/FAQ.shtml#location">appropriate directory</a> 
-so that this can work well.
-
-<p>
-More help updates, particular to the PanelPro help pages.
-
-<p>
-David Duchamp updated the getFacingSignalHead support.
-
-<p>
-Ken Cameron added a tooltip to the DecoderPro decoder selection window that
-shows you the decoder ID number (CV7 value) for each type.
-
-<p>
-The 
-<a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">RPS tracking display</a>
-has been updated.
-
-<p>
-Ken Cameron added a "RobotThrottle.py" example script to demonstrate his
-automated running of trains.
-
-<p>
-Ken Cameron improved formatting in the Light control.
-
-<p>
-Andrew Crosland fixed a bug that Bob Jacobsen had accidentally introduced into the SPROG downloader screens in JMRI 2.1.5
-
-<p>
-Digitrax firmware downloader updated to handle another file format.
-
-<p>
-An internal change:  Throttle messaging has been refactored. 
-If you're building your own application and now have an error with "jmrit.messager", please consult the JavaDoc.
-
-<p>
-C/MRI poll timing has been improved a little.
-
-<p>
-<a href="http://jmri.sf.net/help/en/html/hardware/can/index.shtml">Initial support</a>
-for CAN-based networks is included,
-focusing on the
-<a href="http://www.merg.org.uk/">MERG</a>
-<a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>.
-See the initial draft of the 
-<a href="http://jmri.sf.net/help/en/html/hardware/can/index.shtml">help page</a> 
-for more information.
-
-<p>
-Two scripts 
-(<a href="../jython/ParallelPortTest.py">ParallelPortTest.py</a> and 
-<a href="../jython/ParallelPortTurnouts.py">ParallelPortTurnouts.py</a>)
-show how you can connect JMRI to custom hardware via a PC parallel port.
-
-<p>
-New 
-<a href="../jython/USBThrottle.py">USBThrottle.py</a>
-script lets you use a USB HID device (joystick, scrollwheel, etc)
-as a JMRI throttle.  
+The status line at the bottom of ops-mode programming windows wasn't 
+properly displayed in JMRI 2.1.7 due to a new bug.  This has been fixed.
 
 <P>
-When in EasyDCC or SPROG mode, JMRI didn't include support for internal sensors due 
-to an oversight.  This is now fixed, so internal sensors are available
-for panels, Logix, etc.
-
-<p>
-Fixed a problem with function and forward-reverse tracking when 
-using multiple Digitrax throttles.
-
-<p>
-Introductory support for the PI Engineering 
-<a href="http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml">RailDriver throttle simulator</a>
-is included.
-
-<p>
-Ronnie Pinkerton and Peter Lloyd-Jones updated the throttle speed slider so that
-it would also respond to a mouse wheel.
-
-<p>
-Ken Cameron added several options for adding titles to throttle windows,
-and fixed a bug that kept throttle titles from saving and restoring properly.
-Also, he added internationalization to the throttle so they can be 
-translated into other languages.
-
-<p>
-John McAleely added an decoder description for the Bachmann 1fn decoder released 
-to the UK market as 36-551.
-
-<p>
-Multiple updates to the TCH Tech system by Tim Hatch and Bob Jacobsen.
-
-<p>
-There's a new "Create Entry" item in the Roster menu.  It opens 
-a window for creating and editing a new roster entry, using a panel
-very similar to a DecoderPro paned window.
-
-<p>
-For consistency with other JMRI utilities, conditionals now check the 
-"known state" of Turnouts instead of the "commanded state".  If you're not using
-<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TurnoutFeedback.shtml">turnout feedback</a>, this won't effect you.
-If you are using feedback, your conditionals will now fire when the 
-feedback comes back from the layout, rather than immediately with a 
-state change is requested.
-
-<p>
-Bruce Shanks updated the Comprehensive decoder programmer format to have
-"basic speed controls" (Vstart, Vmid, Vhigh) on a separate pane from the 
-speed table.  This greatly speeds reading and writing if you just need the
-basic information.
-
-<p>
-Turnout feedback was causing a problem with two opposing commands were issued
-very close together, for example when a Logix tries to set a turnout back when
-it is changed.  This has been fixed by logic changes in AbstractTurnout and LnTurnout.
-
-<p>
-Sometimes a panel file will have the current fast-clock time written to it in a
-format, e.g. using a timezone identifier, that's not available when the 
-file is read back.  This caused an exception, which in turn prevented the rest of the
-file from being written.  The program now protects against this error. If it happens,
-the time won't be set, but the rest of the panel file will be loaded properly.
-
-<p>
-Added a new
-<a href="http://jmri.sf.net/help/en/package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS tool</a>
-for handling the speed of sound.
-
-<p>
-Dima Stepanchuk fixed a problem that would cause recurring errors for the NCE Packet Analyzer.
-
-<p>
-Ken Cameron added InstallTest, a new application and startup test 
-for debugging installation problems.
-
-<p>
-Dick Bronson provided some icons for USS CTC track diagrams.  They're
-available in 
-<a href="http://jmri.sf.net/resources/icons/USS/proto">resources/icons/USS/proto</a>.
-
-<p>
-Brett Scott provided a 
-<a href="http://jmri.sf.net/jython/dccspecialties/programwabbitmasterrevh.py">script</a>
-in the 
-<a href="http://jmri.sf.net/jython/dccspecialties">jython/dccspecialities</a>
-folder for programming the Wabbit Rev H or greater.
-
-<p>
-Fixed a problem with JDOM that could cause exceptions when importing or
-exporting roster files.
-
+Improved
+<a href="http://jmri.sourceforge.net/help/en/webtoc.shtml">table of contents</a>
+for the help system.
 
 <!--#include virtual="/Footer" -->
 
