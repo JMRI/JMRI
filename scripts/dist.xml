@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.30 $ -->
+<!-- Revision $Revision: 1.31 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -225,11 +225,12 @@
     <!-- ensure scripts are executable -->
     <chmod perm="ugo+rx">
 		<fileset dir="Linux/JMRI/scripts" >
-      		<include name="cornwall"/>
       		<include name="DecoderPro"/>
-      		<include name="JmriDemo"/>
-      		<include name="LocoTools"/>
       		<include name="PanelPro"/>
+      		<include name="LocoTools"/>
+      		<include name="JmriDemo"/>
+      		<include name="InstallTest"/>
+      		<include name="cornwall"/>
       	</fileset>
     </chmod>
     <move todir="Linux/JMRI">
@@ -237,8 +238,9 @@
       		<include name="DecoderPro"/>
       		<include name="PanelPro"/>
       		<include name="LocoTools"/>
-      		<include name="cornwall"/>
       		<include name="JmriDemo"/>
+      		<include name="InstallTest"/>
+      		<include name="cornwall"/>
       		<include name="default.lcf"/>
       		<include name="COPYING"/>
       	</fileset>
@@ -305,7 +307,7 @@
  <target name="release3" depends=""
  					description="part 3 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
  	<echo message="upload javadocs"/>
-<!--    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" /> -->
+    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" />
  	<echo message="upload XSLT decoder files"/>
     <ant antfile="build.xml" dir="${release}/xml/XSLT" target="xslt" inheritAll="false"/>
     <ant antfile="build.xml" dir="${release}/xml/XSLT" target="upload" inheritAll="false"/>
