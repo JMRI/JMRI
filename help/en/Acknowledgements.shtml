@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.44 2008-07-07 02:03:47 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.45 2008-07-13 14:02:59 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -306,7 +306,9 @@
 	and is a jmriusers moderator.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
-    <a href="http://jmri.sourceforge.net/community/clinics/">clinic presentations</a>.
+    <a href="http://jmri.sourceforge.net/community/clinics/">clinic presentations</a>
+    and created the 
+    <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>.
 <a name="V"></A>
     <li>Didrik Voss, who provided the configuration information, including the default values, for the Hornby R8215 decoder
 <a name="W"></A>
