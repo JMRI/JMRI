@@ -312,6 +312,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.index_Getting Started" url="DecoderProManual/index.shtml#Getting Started" />
 	<mapID target="package.jmri.jmrix.rps.aligntable.AlignTableFrame" url="package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml" />
 	<mapID target="Acknowledgements_N" url="Acknowledgements.shtml#N" />
+	<mapID target="html.doc.Technical.XmlEditors" url="html/doc/Technical/XmlEditors.shtml" />
 	<mapID target="html.tools.consisttool.ConsistTool" url="html/tools/consisttool/ConsistTool.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_DCC systems" url="DecoderProManual/Getting_Started.shtml#DCC systems" />
 	<mapID target="Acknowledgements_B" url="Acknowledgements.shtml#B" />

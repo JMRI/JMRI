@@ -785,6 +785,23 @@
 </li>
    
 <li>
+<a href="html/apps/DecoderPro/IntroXML.shtml">XML</a>
+<ul>
+      
+<li>
+<a href="html/doc/Technical/XmlEditors.shtml">Editors</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/doc/Technical/XmlView.shtml">Viewing Files</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
 <a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB</a>
 <ul></ul>
 </li>

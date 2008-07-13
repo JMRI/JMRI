@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.3 2008-01-14 16:48:30 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.4 2008-07-13 21:54:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -50,10 +50,11 @@ plans for JMRI releases in the future.
 <tr><td>1.9.*</td><td>Development series </td><td></td>                           <td>1.3</td><td>1.4</td></tr>
 <tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007 <b>(done)</b></td>     <td>1.3</td><td>1.4</td></tr>
 <tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
-<tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>June 2008</td>       <td>1.4</td><td>1.5</td></tr>
-<tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.6</td></tr>
-<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>June 2009 (tentative)</td>       <td>1.5</td><td>1.6</td></tr>
+<tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>June 2008 <b>(done)</b></td><td>1.4</td><td>1.5</td></tr>
+<tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>December 2008 (tentative)</td>       <td>1.5</td><td>1.5</td></tr>
 <tr><td>2.5.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
+<tr><td>2.6</td><td>Production version, culmination of 2.5.* series </td><td>June 2009 (tentative)</td><td>?</td><td>?</td></tr>
 
 </table>
 
@@ -82,7 +83,8 @@ MacOS X, or (almost any?) version of Linux.
 
 <h4>JMRI 2.1, 2.2</h4>
 
-The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  This permits use of
+The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  
+This permits use of
 (subject to verification):
 
 <ul>
@@ -103,13 +105,12 @@ or version of Linux.
 <P>
 To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
 MacOS X 10.4 or later, 
-or (which?) version of Linux.
+or (almost any?) version of Linux.
 
 
 <h4>JMRI 2.3, 2.4</h4>
 
-The JMRI 2.1 development series moves forward to JRE 1.5, JDK 1.6
-(pending availability of development kits on all relevant platforms).  
+The JMRI 2.3 development series moves forward to JRE 1.5, JDK 1.5.
 This permits use of
 (subject to verification):
 
@@ -125,9 +126,17 @@ JMRI 2.3 and 2.4 will run on Windows 98 2nd Ed or later,
 MacOS X 10.4 or later, 
 or (almost any?) version of Linux.
 <P>
-To build JMRI 2.3 and 2.5, you will need Windows XP or later, 
-MacOS X 10.5 or later (10.4 might be possible, depending on future developments), 
-or (which?) version of Linux.
+To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
+MacOS X 10.4 or later, 
+or (almost any?) version of Linux.
+
+<h4>JMRI 2.5, 2.6</h4>
+
+Plans for the JMRI 2.5 development series are not
+final. 
+The JRE and JDK choice for JMRI 2.5 development 
+will depend on desired runtime features, and availability on 
+our popular user and development platforms.
 
 
 <h3>Java Release and Operating System Support</h3>
@@ -161,7 +170,7 @@ At some point, we should revisit that.
         </tr>
 <tr><td>1.9.*<br>2.0</td>    <td>Dec 2007</td><td>1.3</td><td>Windows 95</td><td>1.4</td><td>Windows 98 1st Ed</td></tr>
 <tr><td>2.1.*<br>2.2</td>    <td>Aug 2008</td><td>1.4</td><td>Windows 98 1st Ed</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></tr>
-<tr><td>2.3.*<br>2.4</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.6</td><td>Windows XP<br>MacOS X 10.5</td></td></tr>
+<tr><td>2.3.*<br>2.4</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.4</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
 </table>
 
 <!--#include virtual="/Footer" -->

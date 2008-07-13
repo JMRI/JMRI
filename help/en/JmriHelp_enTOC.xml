@@ -202,6 +202,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="How We Do Stuff">
          <tocitem text="The Website" target="html.doc.Technical.WebSite"/>
       </tocitem>
+      <tocitem text="XML Information" target="html.apps.DecoderPro.IntroXML">
+         <tocitem text="Viewing XML files" target="html.doc.Technical.XmlView"/>
+         <tocitem text="XML Editors" target="html.doc.Technical.XmlEditors"/>
+      </tocitem>
    </tocitem>
    <tocitem text="USB" target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
