@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.73 $)
+distribution.  ($Revision: 1.74 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -65,8 +65,9 @@ Make sure everything is up-to-date:
     version number is correct in four places (this file comes from java/, not scripts/)
     
 ( ) Update the MacOS X bundles version numbers:
-
-    bbedit scripts/MacOSXapps/V1/*.app/Contents/Info.plist
+    
+    cd scripts
+    bbedit MacOSXapps/V1/*.app/Contents/Info.plist
     (three versions, two copyright years)
 
     Commit back to CVS
