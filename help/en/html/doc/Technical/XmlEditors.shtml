@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlEditors.shtml,v 1.1 2008-07-13 14:00:55 jacobsen Exp $ -->
+<!-- $Id: XmlEditors.shtml,v 1.2 2008-07-13 14:14:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -42,6 +42,10 @@ you useful hints, and provide more powerful editing tools.
 This page lists XML editors that have been mentioned 
 on the 
 <a href="http://groups.yahoo.com/group/jmriusers/">JMRI users discussion group</a>.
+
+<p>
+For more information on XML itself, please see our
+<a href="../../apps/DecoderPro/IntroXML.shtml">introductory page</a>.
 
 <h2>Free Editors</h2>
 
