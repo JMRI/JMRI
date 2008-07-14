@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -118,7 +118,8 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     public void paint(Graphics g) {
         // draw everything else
         super.paint(g);
-
+        log.debug("paint invoked");
+        
         // Now show regions
         // First, Graphics2D setup
         Graphics2D g2 = (Graphics2D) g;
@@ -152,7 +153,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             ((MeasurementRep)measurementRepList.get(i)).draw(g2);
         }
         if (showReceivers) { // draw receivers
-            for (int i = 0; i<Engine.instance().getReceiverCount(); i++) {
+            for (int i = 1; i<Engine.instance().getReceiverCount()+1; i++) {  // indexed from 1
                 Point3d p = Engine.instance().getReceiverPosition(i);
                 g2.setPaint(Color.BLACK);
                 Shape r = new Ellipse2D.Double(p.x-RECEIVER_SIZE/2, 
@@ -185,9 +186,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         TransmitterStatus transmitter = (TransmitterStatus)transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
+        if (log.isDebugEnabled()) log.debug("notify "+xend+","+yend);
         if (transmitter == null) {
             // create Transmitter status with current measurement
             // so we can draw line next time
+            log.debug("create new TransmitterStatus for "+m.getID());
             transmitter = new TransmitterStatus();
             transmitter.measurement = m;
             transmitter.color = nextColor();
@@ -219,9 +222,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             r.rep1 = new Line2D.Double(xinit, yinit, xend, yend);
             r.measurement = m;
             measurementRepList.add(r);
-            // remember where now
-            transmitter.measurement = m;        
-        }
+            // cause repaint of whole thing for now
+            repaint(getBounds());
+        }        
+        // remember where now
+        transmitter.measurement = m;
     }
     
     /**
