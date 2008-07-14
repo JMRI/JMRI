@@ -22,7 +22,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -131,7 +131,7 @@ public class GcTrafficController extends TrafficController {
         log.debug("Encoding for hardware");
 	GridConnectMessage ret = new GridConnectMessage();
         // Prefix
-        ret.setElement(0, ';');
+        ret.setElement(0, ':');
         // Standard frame
         ret.setElement(1, 'S');
         // CBUS Priority
@@ -145,7 +145,7 @@ public class GcTrafficController extends TrafficController {
             ret.setByte(m.getElement(i), i);
         }
         // Terminator
-        ret.setElement(7 + m.getNumDataElements()*2, ':');
+        ret.setElement(7 + m.getNumDataElements()*2, ';');
         ret.setNumDataElements(8 + m.getNumDataElements()*2);
         if (log.isDebugEnabled()) log.debug("encoded as "+ret);
         return ret;
@@ -171,9 +171,9 @@ public class GcTrafficController extends TrafficController {
     boolean endNormalReply(AbstractMRReply r) {
         // Detect if the reply buffer ends with ":"
         int num = r.getNumDataElements() - 1;
-        // log.debug("endNormalReply checking "+num+" of "+(r.getNumDataElements()-1));
-        if (r.getElement(num) == ':') {
-            // log.debug("End of normal message detected");
+        log.debug("endNormalReply checking "+(num+1)+" of "+(r.getNumDataElements()));
+        if (r.getElement(num) == ';') {
+            log.debug("End of normal message detected");
             return true;
         }
         return false;

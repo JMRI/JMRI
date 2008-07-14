@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  * The GridConnect protocol encodes messages as an ASCII string of up to 24
  * characters of the form:
- *      ;ShhhhNd0d1d2d3d4d5d6d7:
+ *      :ShhhhNd0d1d2d3d4d5d6d7;
  * The S indicates a standard CAN frame
  * hhhh is the two byte header
  * N or R indicates a normal or remote frame
@@ -18,7 +18,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     

@@ -35,7 +35,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -55,6 +55,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JTextField sentCountField = new JTextField("0", 8);
     protected JTextField rcvdCountField = new JTextField("0", 8);
     protected JButton statsClearButton = new JButton();
+    protected JCheckBox decimalCheckBox = new JCheckBox();
     protected JTextField dynPriField = new JTextField();
     protected JTextField minPriField = new JTextField();
     protected JTextField[] dataFields = new JTextField[8];
@@ -171,6 +172,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         statsClearButton.setVisible(true);
         statsClearButton.setToolTipText("Clear the sent and received packet counters");
         
+        decimalCheckBox.setText("Decimal Data Entry/Display");
+        decimalCheckBox.setVisible(true);
+        decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal\n"
+                                    +"if unchecked, hexadecimal");
+        
         sendButton.setText("Send");
         sendButton.setVisible(true);
         sendButton.setToolTipText("Send packet");
@@ -232,6 +238,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         statsPane.add(sentCountField);
         statsPane.add(rcvdCountField);
         statsPane.add(statsClearButton);
+        statsPane.add(decimalCheckBox);
         getContentPane().add(statsPane);
         
         // Pane for constructing packet to send
@@ -241,10 +248,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         // Construct data fields for Priority and up to 8 bytes
         dynPriField = new JTextField("2", 4);
+        dynPriField.setToolTipText("Dynamic Priority, 0, 1 or 2");
         dynPriField.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Dyn Pri"));
         sendPane.add(dynPriField);
         minPriField = new JTextField("3", 4);
+        minPriField.setToolTipText("Minor Priority, 0, 1, 2 or 3");
         minPriField.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Min Pri"));
         sendPane.add(minPriField);
@@ -253,9 +262,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             if (i==0) {
                 dataFields[i].setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(), "d0 (OPC)"));
+                dataFields[i].setToolTipText("Byte count and Op code - BBBCCCCC");
             } else {
                 dataFields[i].setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(), "d"+i));
+                dataFields[i].setToolTipText("Data byte "+i);
             }
             sendPane.add(dataFields[i]);
         }
@@ -579,6 +590,29 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             }
         }
         return (str+"\n");
+    }
+    
+    /**
+     * Parse a string for binary, decimal or hex byte value
+     * <P>
+     * If decimal is true:
+     *      0x prefix will force parsing of hex string, e.g. 0xA or 0x12
+     *      Up to three digits will be parsed as decimal, e.g. 10 or 127
+     *      more than three digits will be parsed as binary, e.g. 0010 or 1011
+     * if decimal is clear:
+     *      0d prefix will force parsing of decimal string, e.g. 0d5
+     *      up to two digits will be treated as hex, e.g. F or B1
+     *      more than two digits will be treated as binary, e.g. 001 or 110
+     *
+     * @param s string to be parsed
+     * @param limit upper bound of value to be parsed
+     * @param decimal flag for decimnal or hex default
+     * @param errTitle Title of error dialogue box if Number FormatException encountered
+     * @param errMsg Message to be displayed if Number FormatException encountered
+     * @return the byte value, -1 indicates failure
+    */
+    public int parseBinDecHex(String s, int limit, boolean decimal, String errTitle, String errMsg) {
+        return 0;
     }
     
     /**

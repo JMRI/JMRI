@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanReply;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -60,6 +60,8 @@ public class GridConnectReply extends AbstractMRReply {
         }
     }
 
+    public int maxSize() { return 24; }
+    
     public void setData(int [] d) {
         int len = (d.length <=24) ? d.length : 24;
         for (int i = 0; i < len; i++) {
