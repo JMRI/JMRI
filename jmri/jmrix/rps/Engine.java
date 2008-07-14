@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 
 
@@ -74,6 +74,7 @@ public class Engine implements ReadingListener {
      * Set the number of receivers
      */
     public void setReceiverCount(int n) {
+        log.debug("setReceiverCount to "+n);
         if ((receivers!=null) && (n == receivers.length+1)) return;
         Receiver[] oldReceivers = receivers;
         receivers = new Receiver[n+1];  // n is highest address, so need n+1
@@ -93,6 +94,7 @@ public class Engine implements ReadingListener {
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) throw new IllegalArgumentException("Must initialize first");
         if (address>=receivers.length) throw new IllegalArgumentException("Index "+address+" is larger than expected "+receivers.length);
+        log.debug("store receiver "+address+" in "+this);
         receivers[address] = receiver;
     }
     
@@ -105,7 +107,10 @@ public class Engine implements ReadingListener {
     }
     
     public Point3d getReceiverPosition(int i) {
-        if (receivers[i] == null) return null;
+        if (receivers[i] == null) { 
+            log.debug("getReceiverPosition of null receiver index i="+i);
+            return null;
+        }
         return receivers[i].getPosition();
     }
     
