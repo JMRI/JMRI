@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.45 2008-07-13 14:02:59 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.46 2008-07-14 04:09:54 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -60,7 +60,8 @@
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
-	ZTC decoder definition files, plus the ZTC 4007.
+	ZTC decoder definition files, plus the ZTC 4007, and the
+	Lenz Standard decoder.
     <li>Rodney Black, who has worked on refining the JMRI interfaces as
     part of creating his
     <a href="http://home.comcast.net/~kb0oys/">CATS</a> system.
