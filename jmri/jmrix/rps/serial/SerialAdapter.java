@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -276,7 +276,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
 
             // create the String to display (as String has .equals)
             msgString = new String(msg);
-            System.out.println("Msg <"+msgString+">");
+            log.debug("Msg <"+msgString+">");
             
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
