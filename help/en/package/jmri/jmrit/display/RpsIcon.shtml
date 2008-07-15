@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.8 2008-07-05 02:57:25 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.9 2008-07-15 20:20:26 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -45,6 +45,12 @@ an associated transmitter.
 
 <h2>Adding an RPS Icon to a Panel</h2>
 
+Usually, each RPS icon represents one RPS transmitter, hence one 
+locomotive.  Currently, you need to add one for each RPS-equipped
+piece of equipment you want to track.  Although this is a pain, 
+it gives you very fine control over which transmitter's positions
+are displayed and how they are presented.
+
 <em>Section still needs lots of work</em><p>
 
 Click "Add RPS reporter" on the 
@@ -52,7 +58,7 @@ Click "Add RPS reporter" on the
 An RPS icon will appear on the panel at the 
 default location, but it won't work yet until it's calibrated.
 <p>
-RIght-click or option-click on the icon to see the popup menu, where
+Right-click or option-click on the icon to see the popup menu, where
 you can calibrate the icon.
 
 <h3>Calibrating an RPS Icon</h3>
@@ -117,6 +123,10 @@ reflects the location that RPS has measured.
 <dt>At (x), (y)
 <dd>Once the icon has been calibrated, the popup menu displays
 the most recent RPS location measurement.
+
+<dt>Show ID
+<dd>If checked, the icon will have it's ID information
+displayed next to it. 
 
 <dt>Set Filter
 <dd>Opens a window that lets you enter a filter value for this
