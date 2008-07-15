@@ -15,7 +15,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Signals" target="html.hardware.cmri.Signals"/>
    </indexitem>
    <indexitem text="CAN Bus" target="html.hardware.can.index"/>
-   <indexitem text="CBUS" target="html.hardware.can.CBUS"/>
+   <indexitem text="CBUS" target="html.hardware.can.cbus.index"/>
    <indexitem text="Clock">
       <indexitem text="Introduction" target="html.tools.fastclock.index"/>
       <indexitem text="LocoNet Fast Clock" target="html.tools.fastclock.LocoNetClock"/>

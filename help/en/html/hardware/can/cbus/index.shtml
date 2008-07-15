@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: index.shtml,v 1.1 2008-07-15 15:35:34 jacobsen Exp $ -->
+<title>JMRI: CAN Network Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: CBUS Support
+</h1>
+
+<em>The support on this page is rapidly evolving; the
+actual code might be ahead or behind the documentation
+on any given day.</em><p>
+
+JMRI provides support for general JMRI
+<a href="../../../tools/Sensors.shtml">Sensors</a>
+and
+<a href="../../../tools/Turnouts.shtml">Turnouts</a>
+in terms of CBUS "events". 
+
+<p>
+See also the 
+<a href="../index.shtml">main help page</a> for JMRI CAN support,
+including links to various general tools.
+
+<h2>Naming</h2>
+
+The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
+for CBUS connections is "M". Details of CBus 
+event and object names are on a
+<a href="Names.shtml">separate page</a>.
+
+<h2>Sensors</h2>
+
+<h2>Turnouts</h2>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

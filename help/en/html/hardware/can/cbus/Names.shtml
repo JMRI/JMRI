@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: CBUS.shtml,v 1.2 2008-06-22 00:32:00 jacobsen Exp $ -->
-<title>JMRI: CAN Network Support</title>
+<!-- $Id: Names.shtml,v 1.1 2008-07-15 15:35:34 jacobsen Exp $ -->
+<title>JMRI: CBus Naming</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -22,31 +22,20 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: CBUS Support
+JMRI: CBus Naming
 </h1>
 
-<em>The support on this page is rapidly evolving; the
-actual code might be ahead or behind the documentation
-on any given day.</em><p>
-
-JMRI provides 
-<a href="../../tools/Sensors.shtml">Sensor</a>
-and
-<a href="../../tools/Turnouts.shtml">Turnout</a>
-support for CBUS in terms of "events".
+MERG
+CBus
+communicates via messages with a fixed format:  
+One byte of command and length information, followed optionally
+by additional data bytes.  
+In it's most simple form, this is used to send indentifiable
+"events".  In turn, events come in two types:  "ON" and "OFF".
 
 <p>
-See also the 
-<a href="index.shtml">main help page</a> for JMRI CAN support.
 
-<h2>Naming</h2>
-
-The <a href="../../doc/Technical/Names.shtml">system letter</a> for CBUS connections is "M".
-
-<h2>Sensors</h2>
-
-<h2>Turnouts</h2>
-
+    
 <!--#include virtual="/Footer" -->
 </body>
 </html>
