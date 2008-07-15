@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanReply;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -79,7 +79,7 @@ public class GridConnectReply extends AbstractMRReply {
     }
     
     /**
-     * Get the CBus Priority as an int
+     * Get the CBUS Priority as an int
      *
      * @return int the CBUS priority
      */        

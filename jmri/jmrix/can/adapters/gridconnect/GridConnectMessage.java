@@ -18,7 +18,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
@@ -70,7 +70,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     /**
      * Set the ID as three ASCII hex digits
      *
-     * @param id A valid CBus ID
+     * @param id A valid CBUS ID
      */
     public void setID(int id) {
         setHexDigit((id>>3)&0xF, 3);
