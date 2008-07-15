@@ -7,13 +7,13 @@ import jmri.Sensor;
 /**
  * Manage the system-specific Sensor implementation.
  * <P>
- * System names are "VSnnnn", where nnnn is the sensor number without padding.
+ * System names are "PSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -36,7 +36,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     }
 
     /**
-     * Return the Oak Tree system letter
+     * Return the system letter
      */
     public char systemLetter() { return 'P'; }
 
