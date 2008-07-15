@@ -1,4 +1,4 @@
-// LnSensorAddress.java
+// LnSensorAddressTest.java
 
 package jmri.jmrix.loconet;
 
@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LnSensorAddressTest extends TestCase {
 
