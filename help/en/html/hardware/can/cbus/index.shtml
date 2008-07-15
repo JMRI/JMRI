@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-07-15 15:52:20 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-07-15 16:08:33 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -44,18 +44,25 @@ including links to various general tools.
 
 The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
 for CBUS connections is "M". Details of CBus 
-event and object names are on a
+event and object names are 
+described below, with technical details on a
 <a href="Names.shtml">separate page</a>.
 
 <h2>Sensors</h2>
 
+CBUS messages coming into JMRI applications can be accessed 
+via JMRI Sensor objects.  The Sensor's 
+<a href="">system name</a>
+determines which CBUS message(s) it corresponds to.
+
+<h3>Naming</h3>
 A sensor is defined by two events: The one that sets it ACTIVE, and
 the one that sets it INACTIVE.
 
 If these are mapped to ON and OFF frames with the same event ID number, respectively,
 only the event ID number need be specified:
 <br><code>MS18</code><br>
-The ID number is specified in decimal.
+The number is decimal.
 
 <p>
 To increase versatility, it's possible to use different event ID numbers
@@ -80,6 +87,28 @@ as a hex string:
 
 This allows the Sensor to disregard any intrinsic meaning to "ON" and "OFF"
 events, and allows it to respond to any frame on the layout.
+
+<h3>Automatic Creation</h3>
+
+JMRI automatically attempts to create Sensor objects from the 
+traffic that it hears on the CBUS.  
+<p>
+When JMRI hears an ON or OFF event on the CBUS, it creates a Sensor
+using the corresponding event ID.  
+This automatically-created sensor defaults to 
+the ON event setting the Sensor ACTIVE 
+and the OFF event setting INACTIVE.
+
+<p>
+Because events are not intrinsically associate with specific hardware
+objects, and because people can use event IDs in many ways, this
+doesn't do what's desired.  When it doesn't, you can manually
+create the proper Sensors using the 
+<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
+button on the
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
+
+<p>
 
 <h2>Turnouts</h2>
 
