@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-07-15 15:35:34 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-07-15 15:52:20 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -49,7 +49,43 @@ event and object names are on a
 
 <h2>Sensors</h2>
 
+A sensor is defined by two events: The one that sets it ACTIVE, and
+the one that sets it INACTIVE.
+
+If these are mapped to ON and OFF frames with the same event ID number, respectively,
+only the event ID number need be specified:
+<br><code>MS18</code><br>
+The ID number is specified in decimal.
+
+<p>
+To increase versatility, it's possible to use different event ID numbers
+for the ACTIVE transition (by default, an ON frame) and INACTIVE
+transition (by default, an OFF frame):
+<br><code>MS18;21</code>
+
+<p>
+The ON and OFF coding of CBUS is not entirely consistent with the event
+model, and it may be useful to connect the ACTIVE or INACTIVE 
+transition of a JMRI Sensor to an OFF or ON CBUS frame respectively.
+Leading "+" and "-" characters can do this. For example,
+<br><code>MS-18;+21</code><br>
+defines a sensor that goes ACTIVE when an OFF frame with ID number 18 is received,
+and goes INACTIVE when an ON frame with ID number 21 is received.
+
+<p>
+Finally, it's possible to connect a Sensor to 
+arbitrary can frames by specifying their data content
+as a hex string:
+<br><code>MSx9100000000000012;x9100000000000019</code><br>
+
+This allows the Sensor to disregard any intrinsic meaning to "ON" and "OFF"
+events, and allows it to respond to any frame on the layout.
+
 <h2>Turnouts</h2>
+
+(To be written, but the scheme is similar to Sensors above, 
+except JMRI is emitting the CBUS frames instead of receiving them, and
+the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 
 <!--#include virtual="/Footer" -->
 </body>
