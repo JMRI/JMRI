@@ -90,7 +90,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml" />
 	<mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml" />
-	<mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml" />
 	<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.shtml#turnouts" />
 	<mapID target="html.apps.DecoderPro.index" url="html/apps/DecoderPro/index.shtml" />
