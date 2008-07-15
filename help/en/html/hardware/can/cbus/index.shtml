@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008-07-15 16:08:33 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-07-15 20:37:50 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -43,7 +43,7 @@ including links to various general tools.
 <h2>Naming</h2>
 
 The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
-for CBUS connections is "M". Details of CBus 
+for CBUS connections is "M". Details of CBUS 
 event and object names are 
 described below, with technical details on a
 <a href="Names.shtml">separate page</a>.

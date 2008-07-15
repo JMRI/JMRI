@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Names.shtml,v 1.1 2008-07-15 15:35:34 jacobsen Exp $ -->
-<title>JMRI: CBus Naming</title>
+<!-- $Id: Names.shtml,v 1.2 2008-07-15 20:37:50 jacobsen Exp $ -->
+<title>JMRI: CBUS Naming</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -22,11 +22,11 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: CBus Naming
+JMRI: CBUS Naming
 </h1>
 
-MERG
-CBus
+<a href="http://www.merg.org.uk/">MERG</a>
+<a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>
 communicates via messages with a fixed format:  
 One byte of command and length information, followed optionally
 by additional data bytes.  
@@ -34,7 +34,8 @@ In it's most simple form, this is used to send indentifiable
 "events".  In turn, events come in two types:  "ON" and "OFF".
 
 <p>
-
+For more on JMRI's CBUS support, see the
+<a href="index.shtml">main CBUS page</a>.
     
 <!--#include virtual="/Footer" -->
 </body>
