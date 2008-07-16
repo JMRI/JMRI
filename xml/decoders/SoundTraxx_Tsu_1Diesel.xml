@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_1Diesel.xml,v 1.1 2008-07-15 20:09:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_1Diesel.xml,v 1.2 2008-07-16 11:21:31 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20080714"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20080715"
+		    comment="more horn information"/>
 
 		<!-- Some of the contents are based on info provided pre-release -->
 		<!-- by Soundtraxx, who deserve our thanks -->
@@ -677,7 +679,7 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 			
 			
-		<variable label="Analog Whistle Control" CV="47" mask="XVVVVVVV" default="0" 
+		<variable label="Analog Horn Control" CV="47" mask="XVVVVVVV" default="0" 
 		    item="Advanced Group 1 Option 4">
 			<decVal/></variable>
 
@@ -942,6 +944,43 @@
 				</enumVal>
 			</variable>
 
+		<variable label="Horn Select" CV="115" mask="XXXXXVVV" default="0"
+		    comment="Selections not yet verified in decoder"
+		    item="Sound Option 6">
+			<enumVal>
+				<enumChoice choice="ALCO 244"/>
+				<enumChoice choice="ALCO 251 Turbo"/>
+				<enumChoice choice="Baldwin 606"/>
+				<enumChoice choice="Baldwin VO1000"/>
+				<enumChoice choice="EMD 1st Generation"/>
+				<enumChoice choice="EMD 2nd Generation"/>
+				<enumChoice choice="(Choices unverified in real decoder)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Alternate Horn Select" CV="115" mask="XXVVVXXX" default="0"
+		    comment="Selections not yet verified in decoder"
+		    item="Sound Option 7">
+			<enumVal>
+				<enumChoice choice="ALCO 244"/>
+				<enumChoice choice="ALCO 251 Turbo"/>
+				<enumChoice choice="Baldwin 606"/>
+				<enumChoice choice="Baldwin VO1000"/>
+				<enumChoice choice="EMD 1st Generation"/>
+				<enumChoice choice="EMD 2nd Generation"/>
+				<enumChoice choice="(Choices unverified in real decoder)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Alternate Horn Enable" CV="115" mask="VXXXXXXX" default="0"
+		    comment="Item not yet verified in decoder"
+		    item="Sound Option 8">
+			<enumVal>
+				<enumChoice choice="Short Horn Function"/>
+				<enumChoice choice="Alternate Horn"/>
+				</enumVal>
+			</variable>
+
 		<variable label="Dynamic Brake Override Enable" CV="116" mask="VXXXXXXX" default="0"
 		    item="Sound Option 3">
 			<enumVal>
@@ -1063,7 +1102,7 @@
 		<variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Additional Reverb for Whistle"/>
+				<enumChoice choice="Additional Reverb for Horn"/>
 				<enumChoice choice="Light Reverb in Exhaust"/>
 				<enumChoice choice="Medium Reverb in Exhaust"/>
 				<enumChoice choice="heavy Reverb in Exhaust"/>
@@ -1081,7 +1120,7 @@
 		<variable label="Reverb Gain" CV="164" mask="VVVVVVVV"
 		    default="64">
 			<decVal/></variable>
-		<variable label="Whistle Reverb Level" CV="169" mask="VVVVVVVV"
+		<variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV"
 		    default="0">
 			<decVal/></variable>
 		<variable label="Bell Reverb Level" CV="170" mask="VVVVVVVV"
@@ -1137,20 +1176,20 @@
 		<variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV"
 		    default="19">
 			<decVal max="127"/></variable>
-		<variable label="Grade Crossing Whistle Sensitivity" CV="195" mask="VVVVVVVV"
+		<variable label="Grade Crossing Horn Sensitivity" CV="195" mask="VVVVVVVV"
 		    default="4">
 			<decVal/></variable>
 		<variable label="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV"
 		    default="3">
 			<decVal/></variable>
 
-		<variable label="Automatic Grade Crossing Whistle Enabled (Analog Mode)" CV="197" mask="XXXXXXXV">
+		<variable label="Automatic Grade Crossing Horn Enabled (Analog Mode)" CV="197" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Automatic Whistle Signal Enabled (Analog Mode)" CV="197" mask="XXXXXXVX">
+		<variable label="Automatic Horn Signal Enabled (Analog Mode)" CV="197" mask="XXXXXXVX">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
@@ -1175,13 +1214,13 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Automatic Grade Crossing Whistle Enabled" CV="198" mask="XXXXXXXV">
+		<variable label="Automatic Grade Crossing Horn Enabled" CV="198" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Automatic Whistle Signal Enabled" CV="198" mask="XXXXXXVX">
+		<variable label="Automatic Horn Signal Enabled" CV="198" mask="XXXXXXVX">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
@@ -1320,9 +1359,9 @@
 			</row>
 			<label label=" "/>
 			<row>
-				<display item="Whistle Reverb Level" layout="above" label=""/>
+				<display item="Horn Reverb Level" layout="above" label=""/>
 				<label label=" "/>
-				<display item="Whistle Reverb Level" layout="above" format="hslider"/>
+				<display item="Horn Reverb Level" layout="above" format="hslider"/>
 			</row>
 			<label label=" "/>
 			<row>
@@ -1463,9 +1502,9 @@
 			</row>
 			<label label=" "/>
 			<row>
-				<display item="Grade Crossing Whistle Sensitivity" layout="above" label=""/>
+				<display item="Grade Crossing Horn Sensitivity" layout="above" label=""/>
 				<label label=" "/>
-				<display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
+				<display item="Grade Crossing Horn Sensitivity" layout="above" format="hslider"/>
 			</row>
 			<label label=" "/>
 			<row>
