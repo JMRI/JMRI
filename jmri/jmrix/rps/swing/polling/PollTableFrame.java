@@ -17,7 +17,7 @@ import java.io.*;
  * Frame for control of RPS polling
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -34,6 +34,7 @@ public class PollTableFrame extends jmri.util.JmriJFrame  {
     protected String title() { return rb.getString("TitlePolling"); }  // product name, not translated
 
     public void dispose() {
+        pane.dispose(); // drop table
         super.dispose();
     }
     

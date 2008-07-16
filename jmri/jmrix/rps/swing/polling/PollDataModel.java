@@ -2,8 +2,10 @@
 
 package jmri.jmrix.rps.swing.polling;
 
+import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
+import jmri.jmrix.rps.MeasurementListener;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -20,9 +22,10 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class PollDataModel extends AbstractTableModel {
+public class PollDataModel extends AbstractTableModel
+    implements MeasurementListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
 
@@ -43,6 +46,7 @@ public class PollDataModel extends AbstractTableModel {
     public PollDataModel(jmri.ModifiedFlag flag) {
         super();
         this.modifiedFlag = flag;
+        Distributor.instance().addMeasurementListener(this);
     }
     
     public int getColumnCount () {return LAST+1;}
@@ -149,7 +153,17 @@ public class PollDataModel extends AbstractTableModel {
             System.out.println("Got "+((JComboBox)value).getSelectedItem());
         }
     }
+    
+    // When a measurement happens, mark data as changed.
+    // It would be better to just mark one line...
+    public void notify(Measurement m) {
+        fireTableDataChanged();
+    }
 
+    public void dispose() {
+        Distributor.instance().removeMeasurementListener(this);
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollDataModel.class.getName());
 
 }

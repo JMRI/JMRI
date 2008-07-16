@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -187,6 +187,10 @@ public class PollTablePane extends javax.swing.JPanel {
         int interval = Integer.parseInt(delay.getText());
         log.debug("set interval to "+interval);
         Engine.instance().setPollingInterval(interval);
+    }
+    
+    public void dispose() {
+        pollModel.dispose();
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollTablePane.class.getName());
