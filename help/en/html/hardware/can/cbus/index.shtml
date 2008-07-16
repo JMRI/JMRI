@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.4 2008-07-15 20:37:50 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-07-16 13:32:42 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -48,11 +48,22 @@ event and object names are
 described below, with technical details on a
 <a href="Names.shtml">separate page</a>.
 
+<p>
+JMRI associates CBUS events with individual
+JMRI objects (Sensors, Turnouts, etc) via the 
+JMRI system names.  A system name like
+"<code>MS+123;-345</code>"
+defines a Sensor that follows the "123 ON" and "345 OFF" CBUS events
+to change state.  
+Depending on which CBUS event-IDs are used on a particular
+layout, these system names can get very long, in which
+case the "user names" become much more useful. 
+
 <h2>Sensors</h2>
 
 CBUS messages coming into JMRI applications can be accessed 
 via JMRI Sensor objects.  The Sensor's 
-<a href="">system name</a>
+<a href="Names.shtml">system name</a>
 determines which CBUS message(s) it corresponds to.
 
 <h3>Naming</h3>
