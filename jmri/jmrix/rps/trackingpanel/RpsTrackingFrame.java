@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Frame containing the entire display tool
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     
@@ -77,7 +77,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         controls.add(line);
         
         // configure alignment control
-        RpsTrackingControlPane scale = new RpsTrackingControlPane(panel);
+        scale = new RpsTrackingControlPane(panel);
         controls.add(scale);
         controls.add(new JSeparator());
         
@@ -111,6 +111,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     JCheckBox showRecButton;
     JCheckBox showRegButton;
     RpsTrackingPanel panel;
+    public RpsTrackingControlPane scale;
     
     void showErrButtonChanged() {
         panel.setShowErrors(showErrButton.isSelected());
