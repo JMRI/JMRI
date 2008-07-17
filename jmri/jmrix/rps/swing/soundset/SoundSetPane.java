@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for control of the sound speed for the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -164,9 +164,9 @@ public class SoundSetPane extends JPanel
                 double updatedspeed = (newspeed+g*Engine.instance().getVSound())/(g+1);
                 Engine.instance().setVSound(updatedspeed);
             }
-            
         } catch (Exception e) {
-            log.warn("Error calculating speed: "+e);
+            log.debug("Error calculating speed: "+e);
+            speed.setText("");
         }
     }
 
