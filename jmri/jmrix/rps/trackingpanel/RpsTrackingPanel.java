@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -58,9 +58,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             for (int i = l.size()-1; i>=0; i--) {
                 Shape s = ((Region)l.get(i)).getPath();
                 if (s.contains(userPt)) {
-                    return "Region: "+((Region)l.get(i)).toString();
+                    return "Region: "+((Region)l.get(i)).toString()+", at "+userPt.getX()+","+userPt.getY();
                 }
             }
+            // found nothing, just display location
+            return ""+userPt.getX()+","+userPt.getY();
         } catch (Exception ex) {} // just skip to default
         // or return default
         return null;
@@ -107,7 +109,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     
     static final double MEASUREMENT_ACCURACY = 0.2; // in user units
     static final double RECEIVER_SIZE = 0.75; // in user units
-    static final Color regionFillColor = Color.BLUE.brighter();
+    static final Color regionFillColor = Color.GRAY.brighter();
     static final Color regionOutlineColor = Color.GRAY.darker();
     // static final Color measurementColor = new Color(0,0,0);
     int measurementColor = 0;
@@ -234,6 +236,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
      */
     void clear() {
         measurementRepList = new ArrayList();
+        repaint(getBounds());
     }
     
     /**
