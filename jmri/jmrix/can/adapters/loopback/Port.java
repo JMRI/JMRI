@@ -28,7 +28,7 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class Port extends AbstractPortController {
 
@@ -58,7 +58,7 @@ public class Port extends AbstractPortController {
 
 //        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
-//        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
 
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
 

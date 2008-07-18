@@ -23,7 +23,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -147,11 +147,9 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
 
 //        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
-//        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
 
-//        NceSensorManager s;
-//        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-//        NceTrafficController.instance().setSensorManager(s);
+        jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
 
 //        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
 
