@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 
 
@@ -129,6 +129,10 @@ public class Engine implements ReadingListener {
         // receiver positions are used; this should be
         // replaced with some notification system
         // to reduce the work done.
+        
+        // ok to send next poll
+        log.debug("po false "+r.getID());
+        pollOutstanding = false;
         
         int count = 0;
         for (int i = 0; i<receivers.length; i++) {
@@ -352,9 +356,13 @@ public class Engine implements ReadingListener {
                         int i = selectNextPoll();
                         log.debug("Poll "+i);
                         setOn(i);
+                        log.debug("po true "+i);
+                        pollOutstanding = true;
                         synchronized (this) { wait(20); }
                         setOff(i);
-                        synchronized (this) { wait(pollingInterval); }
+                        log.debug("start wait");
+                        waitBeforeNextPoll(pollingInterval); 
+                        log.debug("end wait");
                     } catch (InterruptedException e) { 
                         // cancel whatever is happening
                         log.debug("Polling stops");
@@ -367,6 +375,30 @@ public class Engine implements ReadingListener {
     }
     
     Thread pollThread;
+    boolean pollOutstanding;
+    
+    /**
+     * Wait before sending next poll.
+     *<P>
+     * Waits specified time, and then checks to 
+     * see if response has been returned.
+     * If not, it waits again (twice) by 1/2 the interval, 
+     * then finally polls anyway.
+     */
+    void waitBeforeNextPoll(int pollingInterval) throws InterruptedException {
+        synchronized (this) { 
+            wait(pollingInterval);
+        }
+        if (!pollOutstanding) return;
+        log.debug("--- extra wait");
+        for (int i=0; i<20; i++) {
+            synchronized(this) {
+                wait(pollingInterval/4);
+            }
+            log.debug("-------------extra wait");
+            if (!pollOutstanding) return;
+        }
+    }
     
     void stoppoll() {
         if (pollThread != null) pollThread.interrupt();
