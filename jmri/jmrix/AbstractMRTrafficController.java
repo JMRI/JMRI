@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.57 $
+ * @version         $Revision: 1.58 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -67,7 +67,11 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Forward a message to all registered listeners.
+     * Forward a Message to registered listeners.
+     *
+     * @param m Message to be forwarded intact
+     * @param notMe One (optional) listener to be skipped, usually
+     *              because it's the originating object.
      */
     protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
@@ -155,7 +159,13 @@ abstract public class AbstractMRTrafficController {
         allowUnexpectedReply=expected; 
     }
     
-    
+    /**
+     * Forward a "Reply" from layout to registered listeners.
+     *
+     * @param r Reply to be forwarded intact
+     * @param dest One (optional) listener to be skipped, usually
+     *              because it's the originating object.
+     */
     protected void notifyReply(AbstractMRReply r, AbstractMRListener dest) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector v;
