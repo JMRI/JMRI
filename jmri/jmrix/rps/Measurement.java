@@ -2,13 +2,16 @@
 
 package jmri.jmrix.rps;
 
+import javax.vecmath.Vector3d;
+import javax.vecmath.Point3d;
+
 /**
  * Encodes a single measurement point for RPS
  * <P>
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Measurement {
 
@@ -75,6 +78,14 @@ public class Measurement {
      */
     public int getCode(){
         return code;
+    }
+    
+    public Point3d getPoint() {
+        return new Point3d(x, y, z);
+    }
+    
+    public Vector3d getVector() {
+        return new Vector3d(x, y, z);
     }
     
     /**
