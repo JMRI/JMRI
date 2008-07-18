@@ -1,0 +1,37 @@
+// ConnectionConfig.java
+
+package jmri.jmrix.can.adapters.loopback;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * Definition of objects to handle configuring a layout connection
+ * via a LocoNet hexfile emulator
+ *
+ * @author      Bob Jacobsen   Copyright (C) 2008
+ * @version	$Revision: 1.1 $
+ */
+public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+
+    /**
+     * Ctor for an object being created during load process;
+     * Swing init is deferred.
+     */
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+        super(p);
+    }
+    /**
+     * Ctor for a functional Swing object with no prexisting adapter
+     */
+    public ConnectionConfig() {
+        super();
+    }
+
+    public String name() { return "CAN CBus Simulation"; }
+
+    protected void setInstance() {
+        adapter = new Port();
+    }
+}
+
