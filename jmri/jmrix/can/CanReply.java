@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * entire message.
  * <p>
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CanReply extends AbstractMRReply {
     
@@ -41,8 +41,8 @@ public class CanReply extends AbstractMRReply {
 
     // create a new one from an array
     public CanReply(int [] d) {
-	this();
-	int _nDataChars = (d.length <= 8) ? d.length : 8;
+        this();
+        _nDataChars = (d.length <= 8) ? d.length : 8;
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = d[i];
         }
@@ -53,9 +53,9 @@ public class CanReply extends AbstractMRReply {
         if (m == null)
             log.error("copy ctor of null message");
         _pri = m._pri;
-	_id = m._id;
-	_isExtended = m._isExtended;
-	_isRtr = m._isRtr;
+        _id = m._id;
+        _isExtended = m._isExtended;
+        _isRtr = m._isRtr;
         _nDataChars = m._nDataChars;
         setBinary(true);
         _dataChars = new int[_nDataChars];
