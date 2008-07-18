@@ -6,13 +6,12 @@ package jmri.jmrix;
  * Enables basic setup of a serial interface
  * for a jmrix implementation.
  *
- *<P>
- * To configure for operation, a
- * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ *
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrix.SerialConfigException
  */
-public interface SerialPortAdapter  {
+public interface SerialPortAdapter extends PortAdapter {
 
 	/** Provide a vector of valid port names, each a String. */
 	public java.util.Vector getPortNames();
@@ -48,7 +47,7 @@ public interface SerialPortAdapter  {
 	 */
 	public void configureBaudRate(String rate);
 
-        public String getCurrentBaudRate();
+    public String getCurrentBaudRate();
 
 	/**
 	 * Get an array of valid values for "option 1"; used to display valid options.
@@ -68,7 +67,7 @@ public interface SerialPortAdapter  {
 	 */
 	public void configureOption1(String value);
 
-        public String getCurrentOption1Setting();
+    public String getCurrentOption1Setting();
 
 	/**
 	 * Get an array of valid values for "option 2"; used to display valid options.
