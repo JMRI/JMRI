@@ -14,12 +14,12 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
     CbusAddress addrActive;    // go to active state
-    CbusAddress addrInactive;  // go to active state
+    CbusAddress addrInactive;  // go to inactive state
 
     public CbusSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -109,15 +109,21 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * _once_ if anything has changed state (or set the commanded state directly)
      * @param l
      */
-    public void message(CanMessage m) {
-        if (addrActive.match(m)) {
+    public void message(CanMessage f) {
+        if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
-        } else if (addrInactive.match(m)) {
+        } else if (addrInactive.match(f)) {
             setOwnState(Sensor.INACTIVE);
         }
     }
 
-    public void reply(CanReply l) {}
+    public void reply(CanReply f) {
+        if (addrActive.match(f)) {
+            setOwnState(Sensor.ACTIVE);
+        } else if (addrInactive.match(f)) {
+            setOwnState(Sensor.INACTIVE);
+        }
+    }
 
     public void dispose() {
         TrafficController.instance().removeCanListener(this);
