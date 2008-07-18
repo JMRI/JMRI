@@ -21,7 +21,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -163,7 +163,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
 
 //        jmri.InstanceManager.addClockControl(new jmri.jmrix.nce.NceClockControl());
         
-//        jmri.jmrix.can.gridconnect.canrs.ActiveFlag.setActive();
         setActive();
 
     }

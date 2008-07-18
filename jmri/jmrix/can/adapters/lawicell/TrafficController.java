@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractMRListener;
 /**
  * Traffic controller for the LAWICELL protocol.
  * <P>
- * GridConnect uses messages transmitted
+ * Lawicell adapters use messages transmitted
  * as an ASCII string of up to 24 characters of the form:
  *      ;ShhhhNd0d1d2d3d4d5d6d7:
  * The S indicates a standard CAN frame
@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     

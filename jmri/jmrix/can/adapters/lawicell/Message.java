@@ -8,7 +8,7 @@ import jmri.jmrix.can.CanMessage;
 /**
  * Class for messages for a LAWICELL CAN hardware adapter.
  * <P>
- * The GridConnect protocol encodes messages as an ASCII string of up to 24
+ * The Lawicell adapter protocol encodes messages as an ASCII string of up to 24
  * characters of the form:
  *      ;ShhhhNd0d1d2d3d4d5d6d7:
  * The S indicates a standard CAN frame
@@ -19,11 +19,10 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class Message extends AbstractMRMessage {
     
-    // Creates a new instance of GridConnectMessage
     public Message() {
         _nDataChars = 24;
         _dataChars = new int[24];

@@ -11,11 +11,11 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class Reply extends AbstractMRReply {
     
-    // Creates a new instance of GridConnectReply
+    // Creates a new instance of ConnectReply
     public Reply() {
         super();
     }
