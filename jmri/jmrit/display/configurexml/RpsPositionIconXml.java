@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -141,7 +141,7 @@ public class RpsPositionIconXml implements XmlAdapter {
             sxOrigin = element.getAttribute("sxorigin").getIntValue();
             syOrigin = element.getAttribute("syorigin").getIntValue();
         } catch ( NullPointerException e1) {
-            log.error("missing transform attribute");
+            log.error("missing transform attribute "+filter);
         } catch ( org.jdom.DataConversionException e2) {
             log.error("failed to convert transform attributes");
         }
