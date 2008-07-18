@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 
 
@@ -291,6 +291,15 @@ public class Engine implements ReadingListener {
         pf.getPollValues();
     }    
 
+    public Transmitter getTransmitterByAddress(int addr) { 
+        if (addr<0) return null;
+        if (transmitters == null) return null;
+        for (int i=0; i<getNumTransmitters(); i++)
+            if (getTransmitter(i).getAddress()==addr)
+                return getTransmitter(i);
+        return null;
+    }
+    
     public Transmitter getTransmitter(int i) { 
         if (i<0) return null;
         if (transmitters == null) return null;
