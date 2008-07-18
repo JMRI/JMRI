@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.5 2008-06-02 03:01:34 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.6 2008-07-18 22:31:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -70,13 +70,22 @@ For those, the columns of the table are:
 <p>
 If you click the "Replace" button on a sound fragment, a file
 selection window opens in which you can select a new sound file (.wav file)
-which the replaces the original fragment.  You can then
+which the replaces the original fragment.  
+The new file should contain 8-bit unsigned monaural sound sampled 
+11.025kHz.  Other formats might or might not work, but we know 
+that this one does.
+
+<p>
+After making changes, you can
 click "Save" at the top of the editor window to save the file 
 with the original name, or (better) under another name.
 You can then use the 
 <a href="LoaderFrame.shtml">Sound Downloader</a>
-tool to load the modified file into a Digitrax decoder via
-a PR2 interface.
+tool to load the modified file into a Digitrax decoder via a
+
+<a href="../../../../../html/hardware/loconet/PR2.shtml">PR2</a> or 
+<a href="../../../../../html/hardware/loconet/PR3.shtml">PR3</a> interface.
+
 <p>
 SPJ files contains some additional parts, visible at the bottom 
 of the list here:<br/>
