@@ -17,11 +17,14 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CbusSensorTest extends TestCase {
 
     public void testIncomingChange() {
+        // load dummy TrafficController
+        TestTrafficController t = new TestTrafficController();
+
         CbusSensor s = new CbusSensor("MS+1;-1");
         
         // message for Active and Inactive
