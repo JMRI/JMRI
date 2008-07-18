@@ -10,12 +10,12 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Reading class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RpsPositionIconTest extends TestCase {
 
 	public void testCtorAndID() {
-        new jmri.configurexml.ConfigXmlManager().load(new java.io.File("rps/LocationTestPanel.xml"));        
+        new jmri.configurexml.ConfigXmlManager().load(new java.io.File("java/test/jmri/jmrix/rps/LocationTestPanel.xml"));        
   	}
         
 	// from here down is testing infrastructure
