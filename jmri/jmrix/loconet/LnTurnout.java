@@ -36,8 +36,10 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
- */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
+ * @version			$Revision: 1.14 $
+ */
+ 
+ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     public LnTurnout(int number) {  // a human-readable turnout number must be specified!
         super("LT"+number);  // can't use prefix here, as still in construction
