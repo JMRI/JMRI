@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -320,7 +320,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             return;
         }
 
-        /* r.setRawData(s); */
+        r.setRawData(s);
         
         
         // forward
