@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -155,6 +155,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.blockNext.text = " "
             self.blockBeyond.text = " "
             self.currentBlock = tryBlock
+            self.blockStart.text = tryBlock.getUserName()
             self.blockNow.text = tryBlock.getUserName()
             self.nextBlock = self.findNextBlock(self.currentBlock)
             self.testAddBlockListener(self.currentBlock)
@@ -404,6 +405,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.currentThrottle.setSpeedSetting(0)
             self.msgText("doStop\n")
             self.locoSpeed.text = "0"
+            if (self.currentBlock != None) :
+                self.blockStart.text = self.currentBlock.getUserName()
         return
                
     # enable the button when OK
