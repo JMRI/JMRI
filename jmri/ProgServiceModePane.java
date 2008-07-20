@@ -33,7 +33,7 @@ import javax.swing.BoxLayout;
  * for more details.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -196,6 +196,14 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         case 0:
             // don't change anything in this case
             break;
+            // NMRA "Operations" or "Programming on the main" modes
+        case jmri.Programmer.OPSACCBITMODE:
+        case jmri.Programmer.OPSACCBYTEMODE:
+        case jmri.Programmer.OPSACCEXTBITMODE:
+        case jmri.Programmer.OPSACCEXTBYTEMODE:
+        case jmri.Programmer.OPSBITMODE:
+        case jmri.Programmer.OPSBYTEMODE:
+        	break;
         default:
             log.warn("propertyChange without valid mode value");
             break;
