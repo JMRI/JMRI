@@ -11,7 +11,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Reading {
 
@@ -72,7 +72,7 @@ public class Reading {
     /**
      * Preserve a reference to raw data for possible later logging
      */
-    void setRawData(Object o) {
+    public void setRawData(Object o) {
         rawData = o;
     }
     
