@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.1 2008-07-13 14:29:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.2 2008-07-20 05:19:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -75,11 +75,11 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-<h3>Warnings from older versions:</h3>
-
 <p>JMRI is moving toward requiring Java 1.5 or later.  Certain new features may not work if you are using an earlier
 version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
 <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<h3>Warnings from older versions:</h3>
 
 <p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
@@ -108,8 +108,20 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 <h3>Changes since test version 2.2:</h3>
 
+Several updates to CBus support, particullary when using the MERG CAN adapter.
+
+<p>
+Ian Birchenough added a decoder definition for the Lenz Standard decoder.
+
+<p>
+A decoder definition for the new Soundtraxx Diesel Tsunami is included,
+thanks to information provided by Bruce Petrarca.
+
+<p>
+More RPS support, particularly improvements to the tracking displays.
 
 
+ 
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
