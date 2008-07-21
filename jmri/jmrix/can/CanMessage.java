@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRMessage;
  * entire message.
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -30,72 +30,87 @@ public class CanMessage extends AbstractMRMessage {
     // Creates a new instance of CanMessage
     public CanMessage() {
         _pri = 0;
-	_id = 0x7a;
-	_isExtended = false;
-	_isRtr = false;
+        _id = 0x7a;
+        _isExtended = false;
+        _isRtr = false;
         _nDataChars = 8;
         setBinary(true);
         _dataChars = new int[8];
     }
-
+    
     // create a new one of given length
     public CanMessage(int i) {
-	    this();
+        this();
         _nDataChars = (i <= 8) ? i : 8;
     }
-
+    
     // create a new one from an array
     public CanMessage(int [] d) {
-	    this();
-	    _nDataChars = (d.length <= 8) ? d.length : 8;
+        this();
+        _nDataChars = (d.length <= 8) ? d.length : 8;
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = d[i];
         }
     }
-
+    
     // copy one
     public  CanMessage(CanMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
         _pri = m._pri;
-	_id = m._id;
-	_isExtended = m._isExtended;
-	_isRtr = m._isRtr;
+        _id = m._id;
+        _isExtended = m._isExtended;
+        _isRtr = m._isRtr;
         setBinary(true);
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
-
+    
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
     public void setNumDataElements(int n) { _nDataChars = n; }
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
-      _dataChars[n] = v;
+        _dataChars[n] = v;
     }
-
+    
     public void setData(int [] d) {
         int len = (d.length <=8) ? d.length : 8;
         for (int i = 0; i < len; i++) {
             _dataChars[i] = d[i];
         }
     }
-
+    
     public boolean replyExpected() { return false; }
     
+    /**
+     * Get the full 11 bit ID.
+     */
     public int getId() { return _id; }
+    
+    /**
+     * Set the full 11 bit ID for a standard frame.
+     */
     public void setId(int id) { _id = id; }
+    
+    /**
+     * Set the ID for a standard or extended frame.
+     */
     public void setId(int id, boolean b) { _id = id; _isExtended = b; }
+    
     public int getPri() { return _pri; }
     public void setPri(int pri) { _pri = pri; }
+    
     public boolean isExtended() { return _isExtended; }
     public void setExtended(boolean b) { _isExtended = b; }
+    
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
+    
     public static int getProtocol() { return _protocol; }
     public static void setProtocol(int p) { _protocol = p; }
-
+    
     // contents (private)
     protected int _pri;
     protected int _id;
@@ -104,7 +119,7 @@ public class CanMessage extends AbstractMRMessage {
     
     // CAN protocols supported
     protected static int _protocol;
-
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanMessage.class.getName());
 }
 
