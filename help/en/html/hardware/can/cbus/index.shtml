@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.5 2008-07-16 13:32:42 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-07-21 05:13:31 jacobsen Exp $ -->
 <title>JMRI: CAN Network Support</title>
 
 <!-- Style -->
@@ -38,7 +38,10 @@ in terms of CBUS "events".
 <p>
 See also the 
 <a href="../index.shtml">main help page</a> for JMRI CAN support,
-including links to various general tools.
+including links to various general tools, and the
+page on the 
+<a href="Details.shtml">technical details</a>
+of JMRI's CBUS support.
 
 <h2>Naming</h2>
 
