@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import java.io.File;
 
-import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 
@@ -23,7 +23,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -38,6 +38,7 @@ public class AddressPanel extends JInternalFrame {
 
 	private JButton releaseButton;
 	private JButton dispatchButton;
+	private JButton progButton;
 	private JButton setButton;
 	private JComboBox rosterBox;
 	private JComboBox conRosterBox;
@@ -111,6 +112,7 @@ public class AddressPanel extends JInternalFrame {
 	public void notifyThrottleDisposed() {
 		dispatchButton.setEnabled(false);
 		releaseButton.setEnabled(false);
+		progButton.setEnabled(false);
 		setButton.setEnabled(true);
 		addrSelector.setEnabled(true);
 		rosterBox.setEnabled(true);
@@ -208,6 +210,15 @@ public class AddressPanel extends JInternalFrame {
 			}
 		});
 
+		progButton = new JButton(rb.getString("ButtonProgram"));
+		buttonPanel.add(progButton);
+		progButton.setEnabled(false);
+		progButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openProgrammer();
+			}
+		});
+
 		constraints.gridx = 0;
 		constraints.gridy = GridBagConstraints.RELATIVE;
 		constraints.gridwidth = 2;
@@ -228,6 +239,7 @@ public class AddressPanel extends JInternalFrame {
 			consistAddress = null;
 			changeOfAddress();
 		}
+		progButton.setEnabled(true);
 	}
 
 	private void consistRosterSelected() {
@@ -283,6 +295,31 @@ public class AddressPanel extends JInternalFrame {
 		}
 	}
 
+    /**
+     * Open a programmer for this address
+     */
+    protected void openProgrammer() {
+        RosterEntry re = Roster.instance().entryFromTitle((String)rosterBox.getSelectedItem());
+        if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
+
+        java.util.ResourceBundle rbt 
+                    = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+        String title = java.text.MessageFormat.format(rbt.getString("FrameOpsProgrammerTitle"),
+                                                new String[]{re.getId()});
+        // find the ops-mode programmer
+        int address = Integer.parseInt(re.getDccAddress());
+        boolean longAddr = true;
+        if (address<100) longAddr = false;
+        Programmer programmer = InstanceManager.programmerManagerInstance()
+                                    .getOpsModeProgrammer(longAddr, address);
+        // and created the frame
+        JFrame p = new PaneOpsProgFrame(null, re,
+                                         title, "programmers"+File.separator+"Comprehensive.xml",
+                                         programmer);
+        p.pack();
+        p.setVisible(true);
+    }
+    
 	/**
 	 * Dispatch the current address for use by other throttles
 	 */
