@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -143,14 +143,26 @@ public class SensorTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(sysNameLabel);
-            p.add(sysName);
-            addFrame.getContentPane().add(p);
-
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(userNameLabel);
-            p.add(userName);
+            p = new JPanel(); 
+            p.setLayout(new FlowLayout());
+            p.setLayout(new java.awt.GridBagLayout());
+            java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+            c.gridwidth  = 1;
+            c.gridheight = 1;
+            c.gridx = 0;
+            c.gridy = 0;
+            c.anchor = java.awt.GridBagConstraints.EAST;
+            p.add(sysNameLabel,c);
+            c.gridy = 1;
+            p.add(userNameLabel,c);
+            c.gridx = 1;
+            c.gridy = 0;
+            c.anchor = java.awt.GridBagConstraints.WEST;
+            c.weightx = 1.0;
+            c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+            p.add(sysName,c);
+            c.gridy = 1;
+            p.add(userName,c);
             addFrame.getContentPane().add(p);
 
             JButton ok;

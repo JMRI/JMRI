@@ -5,14 +5,16 @@ package jmri.jmrit.simpleturnoutctrl;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -21,7 +23,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
-    javax.swing.JTextField adrTextField = new javax.swing.JTextField(3);
+    javax.swing.JTextField adrTextField = new javax.swing.JTextField(8);
 
     javax.swing.JButton throwButton = new javax.swing.JButton();
     javax.swing.JButton closeButton = new javax.swing.JButton();
@@ -117,35 +119,77 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         });
         // general GUI config
         setTitle("Turnout Control");
-        getContentPane().setLayout(new GridLayout(8,2));
-
+        getContentPane().setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth  = 1;
+        c.gridheight = 1;
+                
         // install items in GUI
-        getContentPane().add(textAdrLabel);
-        getContentPane().add(adrTextField);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(textAdrLabel,c);
+                
+        c.gridx = 1;
+        c.weightx = 1.0;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;  // text field will expand
+        getContentPane().add(adrTextField,c);
+        c.weightx = 0;
+        c.fill = GridBagConstraints.NONE;
 
-        getContentPane().add(textStateLabel);
-        getContentPane().add(nowStateLabel);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(textStateLabel,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(nowStateLabel,c);
         
-        getContentPane().add(textFeedbackLabel);
-        getContentPane().add(nowFeedbackLabel);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(textFeedbackLabel,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(nowFeedbackLabel,c);
 
-        getContentPane().add(throwButton);
-        getContentPane().add(closeButton);
+        c.gridx = 0;
+        c.gridy = 3;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(throwButton,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(closeButton,c);
         
-        getContentPane().add(textAdvancedLabel);
-        getContentPane().add(textFeaturesLabel);
+        c.gridx = 0;
+        c.gridy = 4;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(textAdvancedLabel,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(textFeaturesLabel,c);
         
-        getContentPane().add(lockButtonLabel);
-        getContentPane().add(lockButton);
+        c.gridx = 0;
+        c.gridy = 5;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(lockButtonLabel,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(lockButton,c);
         
-        getContentPane().add(lockPushButtonLabel);
-        getContentPane().add(lockPushButton);
+        c.gridx = 0;
+        c.gridy = 6;
+        c.anchor = GridBagConstraints.EAST;
+        getContentPane().add(lockPushButtonLabel,c);
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.WEST;
+        getContentPane().add(lockPushButton,c);
       
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl", true);
 
         pack();
-
     }
 
     public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
