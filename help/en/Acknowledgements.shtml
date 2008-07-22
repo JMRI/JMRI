@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.47 2008-07-15 15:58:55 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.48 2008-07-22 15:27:00 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -115,8 +115,10 @@
 	wrote the speedometer web page
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
 	<LI>Bob Coleman added the CTI Acela support
-	<LI>Andrew Crossland, for the SPROG implementation, SPROG programming
-	tools, and his generous contributions of time for the SPROG users
+	<LI>Andrew Crossland create the SPROG implementation, SPROG programming
+	tools, 
+	has generously contributed lots of time for SPROG users,
+	and worked on the CAN and CBUS support
 <a name="D"></A>
 	<LI>Mike Davison, who got the Linux serial connection working with Java 1.4, 
 	has helped with the EasyDCC code, helped debug the Ant compilation process,
@@ -285,7 +287,8 @@
 	<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
 	created the client/server implementation for LocoNet. He's also improved
 	the LocoNet monitor formatting and added support for a new 
-	type of accessory decoder.
+	type of accessory decoder
+	<li>Dustin Shoup, who figured out how to preserve order in XML files
 	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
 	decoder information on several models
 	<LI>Don Smith, who ran down some NCE decoder information
@@ -317,6 +320,7 @@
     <LI>Marshall Wales investigated how to display the throttle ID in the LocoNet Slot Monitor
     <LI>Jack Walton, who created the Lenz LE080 decoder definition
 	<LI>Mark Waters, who provided numerous Zimo decoder definitions
+    <LI>Howard Watkins, who helped test the CBUS support
 	<LI>Jim Wells, who created our logos
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
     <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels
