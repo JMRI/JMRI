@@ -26,7 +26,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.22 $
+ * @version		$Revision: 1.23 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -34,10 +34,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;
-    static public final int DELETECOL = 3;
+    static public final int COMMENTCOL = 3;
+    static public final int DELETECOL = 4;
 
 
-    static public final int NUMCOLUMN = 4;
+    static public final int NUMCOLUMN = 5;
 
     public BeanTableDataModel() {
         super();
@@ -86,7 +87,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 	 * Note that events will come both from the NamedBeans and also from the manager
 	 */
 	boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0);
+		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0 
+		        || e.getPropertyName().indexOf("Comment")>=0);
 	}
 
     public int getRowCount() {
@@ -101,6 +103,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case SYSNAMECOL: return "System Name";
         case USERNAMECOL: return "User Name";
         case VALUECOL: return "State";
+        case COMMENTCOL: return "Comment";
         case DELETECOL: return "";
 
         default: return "unknown";
@@ -111,6 +114,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case SYSNAMECOL:
         case USERNAMECOL:
+        case COMMENTCOL:
             return String.class;
         case VALUECOL:
         case DELETECOL:
@@ -124,6 +128,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case USERNAMECOL:
         case VALUECOL:
+        case COMMENTCOL:
         case DELETECOL:
             return true;
         default:
@@ -132,15 +137,19 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     public Object getValueAt(int row, int col) {
+        NamedBean b;
         switch (col) {
         case SYSNAMECOL:  // slot number
             return sysNameList.get(row);
         case USERNAMECOL:  // return user name
             // sometimes, the TableSorter invokes this on rows that no longer exist, so we check
-            NamedBean b = getBySystemName((String)sysNameList.get(row));
+            b = getBySystemName((String)sysNameList.get(row));
             return (b!=null) ? b.getUserName() : null;
         case VALUECOL:  //
             return getValue((String)sysNameList.get(row));
+        case COMMENTCOL:
+            b = getBySystemName((String)sysNameList.get(row));
+            return (b!=null) ? b.getComment() : null;
         case DELETECOL:  //
             return AbstractTableAction.rb.getString("ButtonDelete");
         default:
@@ -153,6 +162,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case SYSNAMECOL:
             return new JTextField(5).getPreferredSize().width;
+        case COMMENTCOL:
         case USERNAMECOL:
             return new JTextField(15).getPreferredSize().width;
         case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
@@ -190,6 +200,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 						AbstractTableAction.rb.getString("WarningTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
+        } else if (col==COMMENTCOL) {
+            getBySystemName((String) sysNameList.get(row)).setComment(
+                    (String) value);
+            fireTableRowsUpdated(row, row);
         } else if (col==VALUECOL) {
             // button fired, swap state
             NamedBean t = getBySystemName((String)sysNameList.get(row));

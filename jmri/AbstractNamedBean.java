@@ -8,7 +8,7 @@ package jmri;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -28,6 +28,24 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         this(sys);
         mUserName = user;
     }
+
+    /**
+     * Get associated comment text.  
+     */
+    public String getComment() { return this.comment; }
+    
+    /**
+     * Set associated comment text.
+     * <p>
+     * Comments can be any valid text.
+     * @param comment Null means no comment associated.
+     */
+    public void setComment(String comment) {
+        String old = this.comment;
+        this.comment = comment;
+        firePropertyChange("Comment", old, comment);
+    }
+    private String comment;
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call

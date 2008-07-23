@@ -26,7 +26,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.AbstractManager
  * @see         jmri.AbstractNamedBean
  */
@@ -115,7 +115,18 @@ public interface NamedBean {
      */
     public int getState();
 
-
+    /**
+     * Get associated comment text.  
+     */
+    public String getComment();
+    
+    /**
+     * Set associated comment text.
+     * <p>
+     * Comments can be any valid text.
+     * @param comment Null means no comment associated.
+     */
+    public void setComment(String comment);
 }
 
 /* @(#)NamedBean.java */

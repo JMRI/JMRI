@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-1.dtd,v 1.1 2008-07-13 22:08:01 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-3-1.dtd,v 1.2 2008-07-23 05:50:29 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.1.7 development.  Do not modify it       -->
 <!-- after version 2.1.7 is released.  For more information,                -->
@@ -44,6 +44,7 @@
 <!ELEMENT parameter (#PCDATA)>  <!-- Character content is parameter value -->
   <!ATTLIST parameter name CDATA #REQUIRED>
 
+<!ELEMENT comment (#PCDATA)>  <!-- Character content is comment, including newlines, etc -->
   
 <!--  Gui section identifies GUI info, e.g. look&feel info-->
 <!ELEMENT gui EMPTY>
@@ -76,7 +77,7 @@
 
   <!ATTLIST sensors class		CDATA #REQUIRED>
 
-  <!ELEMENT sensor EMPTY >
+  <!ELEMENT sensor (comment?) >
     <!ATTLIST sensor systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST sensor userName		CDATA #IMPLIED>
     <!ATTLIST sensor inverted		(true | false ) "false">
@@ -103,7 +104,7 @@
 	    <!ATTLIST operation parameter9		CDATA #IMPLIED>
 	    <!ATTLIST operation parameter10		CDATA #IMPLIED>
 	
-  <!ELEMENT turnout (operation?) >
+  <!ELEMENT turnout (operation?, comment?) >
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
     <!ATTLIST turnout feedback		CDATA #IMPLIED>
@@ -120,7 +121,7 @@
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
 
-  <!ELEMENT light EMPTY >
+  <!ELEMENT light (comment?) >
     <!ATTLIST light systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST light userName		CDATA #IMPLIED>
     <!ATTLIST light controlType		CDATA #REQUIRED>
@@ -141,7 +142,7 @@
 <!ELEMENT reporters (reporter*)>
   <!ATTLIST reporters class		CDATA #REQUIRED>
 
-  <!ELEMENT reporter EMPTY >
+  <!ELEMENT reporter (comment?) >
     <!ATTLIST reporter systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST reporter userName		CDATA #IMPLIED>
 
@@ -152,7 +153,7 @@
 <!ELEMENT memories (memory*)>
   <!ATTLIST memories class		CDATA #REQUIRED>
 
-  <!ELEMENT memory EMPTY >
+  <!ELEMENT memory (comment?) >
     <!ATTLIST memory systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST memory userName		CDATA #IMPLIED>
 
@@ -173,7 +174,7 @@
 <!ELEMENT signalheads (signalhead*)>
   <!ATTLIST signalheads class		CDATA #REQUIRED>
 
-  <!ELEMENT signalhead (turnout*) >     <!-- different actual types carry different contents -->
+  <!ELEMENT signalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
@@ -181,7 +182,7 @@
 <!ELEMENT routes (route*)>
   <!ATTLIST routes class		CDATA #REQUIRED>
 
-  <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile*, routeScriptFile*, turnoutsAlignedSensor*) >
+  <!ELEMENT route (comment?, routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile*, routeScriptFile*, turnoutsAlignedSensor*) >
     <!ATTLIST route systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST route userName		CDATA #IMPLIED>
     <!ATTLIST route controlTurnout	CDATA #IMPLIED>
@@ -243,7 +244,7 @@
 <!ELEMENT logixs (logix*)>
   <!ATTLIST logixs class		CDATA #REQUIRED>
 
-  <!ELEMENT logix (logixConditional*) >
+  <!ELEMENT logix (comment?, logixConditional*) >
     <!ATTLIST logix systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST logix userName		CDATA #IMPLIED>
     <!ATTLIST logix enabled			CDATA #IMPLIED>
