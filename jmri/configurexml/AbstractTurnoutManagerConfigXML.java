@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -121,7 +121,14 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 }
                 if (opstr != null) {
                 	elem.setAttribute("automate", opstr);
-                }                
+                }
+                // add comment, if present
+                if (t.getComment() != null) {
+                    Element c = new Element("comment");
+                    c.addContent(t.getComment());
+                    elem.addContent(c);
+                }
+                
                 // add element
                 turnouts.addContent(elem);
 
@@ -259,7 +266,7 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 			}
 			
             // operation stuff
-            List myOpList = ((Element)turnoutList.get(i)).getChildren();
+            List myOpList = ((Element)turnoutList.get(i)).getChildren("operation");
             if (myOpList.size()>0) {
             	if (myOpList.size()>1) {
             		log.warn("unexpected extra elements found in turnout-specific operations");
@@ -280,6 +287,11 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             	}
             }
 			
+			// load comment, if present
+			String c = ((Element)turnoutList.get(i)).getChildText("comment");
+			if (c != null) {
+			    t.setComment(c);
+			}
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
         }
