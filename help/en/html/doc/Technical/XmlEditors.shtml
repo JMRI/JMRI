@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlEditors.shtml,v 1.3 2008-07-13 14:58:21 jacobsen Exp $ -->
+<!-- $Id: XmlEditors.shtml,v 1.4 2008-07-25 17:21:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: Xml Editors
+ 	JMRI: XML Editors
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml editors">
@@ -71,12 +71,6 @@ For more information on XML itself, please see our
 <dt>Notepad++
 <dd><a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://notepad-plus.sourceforge.net/uk/site.htm</a>
 
-<dt>XML Notepad 2007
-<dd><a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en</a>
-<p>
-Several users have reported problems with XML Notepad 2007 writing files that can no longer
-be read by JMRI.  This appears to be a problem with its UDF output format.
-
 <dt>XML Marker
 <dd><a href="http://symbolclick.com/">http://symbolclick.com/</a>
 
@@ -97,6 +91,19 @@ be read by JMRI.  This appears to be a problem with its UDF output format.
 <dd><a href="http://www.editplus.com/">http://www.editplus.com/</a>
 </dl>
 
+<h2>Not Recommended</h2>
+
+The following tools have been reported to not work well with JMRI.
+
+<dl>
+
+<dt>XML Notepad 2007
+<dd><a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en</a>
+<p>
+Several users have reported problems with XML Notepad 2007 writing files that can no longer
+be read by JMRI.  This appears to be a problem with its UDF output format.
+
+</dl>
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
