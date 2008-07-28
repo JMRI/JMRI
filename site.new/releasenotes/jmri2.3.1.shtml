@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.2 2008-07-20 05:19:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.3 2008-07-28 22:53:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -108,20 +108,61 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 <h3>Changes since test version 2.2:</h3>
 
-Several updates to CBus support, particullary when using the MERG CAN adapter.
+Several updates to CBus support, particulary when using the MERG CAN adapter.
 
 <p>
 Ian Birchenough added a decoder definition for the Lenz Standard decoder.
 
 <p>
 A decoder definition for the new Soundtraxx Diesel Tsunami is included,
-thanks to information provided by Bruce Petrarca.
+thanks to information provided by Bruce Petrarca of Litchfield Station
+and Nancy Workman of Soundtraxx.
 
 <p>
 More RPS support, particularly improvements to the tracking displays.
 
+<p>
+Ken Cameron added a "DebounceSensor" sample script.
 
- 
+<p>
+The JMRI 
+<a href="http://jmri.sf.net/help/en/html/hardware/can/cbus/index.shtml">CBUS support</a>
+now includes Senors and Turnouts.  Also, when using a non-MERG CAN adapter, the
+CAN ID is fixed at 126.
+
+<p>
+The Turnout Control and Add Turnout window have been improved so the size of the text fields
+for system and user names expand as the window is expanded.  This lets you
+enter the really long names that some systems (RPS, CBUS) can use.  If this
+works well, it'll be done for the rest of the places.
+
+<P>
+The JMRI throttle now was a "Program" button which opens an ops-mode programmer
+window for the selected locomotive. It's only active when a roster entry
+has been selected on the throttle.
+
+<p>
+Turnouts, Sensors, Lights, etc all now have an associated "comment" field
+for recording whatever information you'd like.  You can enter the info
+via a column in the associated table. It will be stored in panel files
+along with the object's other information, and 
+can be accessed via scripts, etc.
+
+<P>
+The JMRI
+<a href="http://jmri.sf.net/help/en/html/hardware/can/cbus/index.shtml">CBUS support</a>
+now takes an easier format for specifying CBUS events in sensors
+and turnouts:  MT2e3, which means "event 3 from node 2".
+The CBUS
+<a href="http://jmri.sf.net/help/en/html/hardware/can/cbus/Names.shtml">naming page</a>
+discusses various optional forms.
+
+<P>
+The JMRI 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">editor for Digitrax SDF sound definitions</a>
+has been updated with more editing options and some layout 
+improvements.
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
