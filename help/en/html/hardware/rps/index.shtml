@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.9 2008-07-06 04:26:10 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2008-07-28 21:38:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -68,7 +68,7 @@ receivers while you're first getting the system working.
 <p>
 Next, connect your computer to the RPS using either a USB connection
 or an RS232 cable from a serial port.
-If ou use an RS232 cable, not that it should be a "straight-through"
+If you use an RS232 cable, not that it should be a "straight-through"
 or "modem" cable, <I>not</I> a "crossover" or "null-modem" cable.
 
 <P>
@@ -94,6 +94,11 @@ Next, configure the JMRI program.
   <li>The baud rate will show a fixed value of
   115200 baud.
 
+  <li>As a temporary measure during development of the system,
+  there's a "Protocol" option to select.  The valid
+  choices are "Version 1" and "Version 2"; your hardware determines which
+  to use. This will eventually be automated.
+  
   <li>Click "Save".  You'll be asked if it's OK for the program to
   quit, click "Yes".
 
