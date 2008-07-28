@@ -44,7 +44,7 @@ package jmri;
  * @author			Bob Jacobsen Copyright (C) 2007
  * @author          Simon Reader Copyright (C) 2008
  * 
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public interface Route extends NamedBean {
 
@@ -52,7 +52,7 @@ public interface Route extends NamedBean {
     static final int MAX_CONTROL_SENSORS = 3;
 
     /**
-     * Set enabled status
+     * Set enabled status.
      */
     public void setEnabled(boolean state);
     /**
@@ -61,11 +61,11 @@ public interface Route extends NamedBean {
     public boolean getEnabled();
     
     /**
-     * Set locked status
+     * Set locked status.
      */
     public void setLocked(boolean state);
     /**
-     * Get locked status
+     * Get locked status.
     */
     public boolean getLocked();
 
@@ -109,7 +109,7 @@ public interface Route extends NamedBean {
     // new interface for outputs 
 
     /**
-     * Add an output Turnout to this Route
+     * Add an output Turnout to this Route.
      * @param systemName The turnout system name
      * @param state must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
      *      which determines how the Turnout is to be switched when this Route is set
@@ -117,23 +117,23 @@ public interface Route extends NamedBean {
     public boolean addOutputTurnout(String systemName, int state);
 
     /**
-     * Delete all output Turnouts from this Route
+     * Delete all output Turnouts from this Route.
      */
     public void clearOutputTurnouts();
     
     /**
-     * Inquire if a Turnout is included in this Route as an output
+     * Inquire if a Turnout is included in this Route as an output.
      */
     public boolean isOutputTurnoutIncluded(String systemName);
 
     /**
-     * Method to get the Set State of an output Turnout
+     * Method to get the Set State of an output Turnout.
      * @return -1 if the Turnout is not found
      */
     public int getOutputTurnoutSetState(String systemName);
 
     /**
-     * Get an output Turnout system name by Index
+     * Get an output Turnout system name by Index.
      * @return null if there is no turnout with that index
      */
     public String getOutputTurnoutByIndex(int index);
@@ -151,7 +151,7 @@ public interface Route extends NamedBean {
     public int getOutputTurnoutState(int k);
 
     /**
-     * Add an output Sensor to this Route
+     * Add an output Sensor to this Route.
      * @param systemName The sensor system name
      * @param state must be Sensor.ACTIVE, Sensor.INACTIVE, or Route.TOGGLE, 
      *      which determines how the Sensor is to be switched when this Route is set
@@ -159,23 +159,23 @@ public interface Route extends NamedBean {
     public boolean addOutputSensor(String systemName, int state);
 
     /**
-     * Delete all output Sensors from this Route
+     * Delete all output Sensors from this Route.
      */
     public void clearOutputSensors();
     
     /**
-     * Inquire if a Sensor is included in this Route as an output
+     * Inquire if a Sensor is included in this Route as an output.
      */
     public boolean isOutputSensorIncluded(String systemName);
 
     /**
-     * Method to get the Set State of an output Sensor
+     * Method to get the Set State of an output Sensor.
      * @return -1 if the Sensor is not found
      */
     public int getOutputSensorSetState(String systemName);
 
     /**
-     * Get an output Sensor system name by Index
+     * Get an output Sensor system name by Index.
      * @return null if there is no sensor with that index
      */
     public String getOutputSensorByIndex(int index);
@@ -194,22 +194,22 @@ public interface Route extends NamedBean {
 
 
     /** 
-     * Set name of script file to be run when Route is fired
+     * Set name of script file to be run when Route is fired.
      */
     public void setOutputScriptName(String filename);
     
     /** 
-     * Get name of script file to be run when Route is fired
+     * Get name of script file to be run when Route is fired.
      */
     public String getOutputScriptName();
     
     /** 
-     * Set name of sound file to be played when Route is fired
+     * Set name of sound file to be played when Route is fired.
      */
     public void setOutputSoundName(String filename);
     
     /** 
-     * Get name of sound file to be played when Route is fired
+     * Get name of sound file to be played when Route is fired.
      */
     public String getOutputSoundName();
     
@@ -219,14 +219,14 @@ public interface Route extends NamedBean {
     public void setTurnoutsAlignedSensor (String sensorSystemName);
     
      /**
-     * Method to get system name of turnouts aligned sensor
+     * Method to get system name of turnouts aligned sensor.
      */
     public String getTurnoutsAlignedSensor();
 
     // Interface for control inputs
     
     /**
-     * Method to add a Sensor to the list of control Sensors for this Route
+     * Method to add a Sensor to the list of control Sensors for this Route.
      */
     public boolean addSensorToRoute(String sensorSystemName, int mode);
 
@@ -243,93 +243,99 @@ public interface Route extends NamedBean {
     static final int VETOTHROWN = 16;  // turnout must be thrown for route to fire
 
     /**
-     * Method to delete all control Sensors from this Route
+     * Method to delete all control Sensors from this Route.
      */
     public void clearRouteSensors();
 
     /**
-     * Method to get the SystemName of a control Sensor in this Route
-     *  'index' is the index in the Sensor array of the requested 
+     * Method to get the SystemName of a control Sensor in this Route.
+     *
+     *@param index The index in the Sensor array of the requested 
      *      Sensor.  
-     *  If there is no Sensor with that 'index', or if 'index'
-     *      is not in the range 0 thru MAX_SENSORS-1, null is returned.
+     *@return  null If there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1.
      */
     public String getRouteSensorName(int index);
     
     /**
-     * Method to get the mode of a particular Sensor in this Route
-     *  'index' is the index in the Sensor array of the requested 
+     * Method to get the mode of a particular Sensor in this Route.
+     *
+     *@param index The index in the Sensor array of the requested 
      *      Sensor.  
-     *  If there is no Sensor with that 'index', or if 'index'
-     *      is not in the range 0 thru MAX_SENSORS-1, ONACTIVE is returned.
+     *@return ONACTIVE if there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1
      */
     public int getRouteSensorMode(int index);
 
     /**
-     * Method to set the SystemName of a control Turnout for this Route
+     * Method to set the SystemName of a control Turnout for this Route.
      */
     public void setControlTurnout(String turnoutSystemName);
 
     /**
-     * Method to get the SystemName of a control Turnout for this Route
+     * Method to get the SystemName of a control Turnout for this Route.
      */
     public String getControlTurnout();
 
     /**
-     * Method to set the State of control Turnout that fires this Route
+     * Method to set the State of control Turnout that fires this Route.
      */
     public void setControlTurnoutState(int turnoutState);
 
     /**
-     * Method to get the State of control Turnout that fires this Route
+     * Method to get the State of control Turnout that fires this Route.
      */
     public int getControlTurnoutState();
 
     /**
-     * Method to set the SystemName of a lock control Turnout for this Route
+     * Method to set the SystemName of a lock control Turnout for this Route.
      */
     public void setLockControlTurnout(String turnoutSystemName);
 
     /**
-     * Method to get the SystemName of a lock control Turnout for this Route
+     * Method to get the SystemName of a lock control Turnout for this Route.
      */
     public String getLockControlTurnout();
 
     /**
-     * Method to set the State of the lock control Turnout that locks this Route
+     * Method to set the State of the lock control Turnout that locks this Route.
      */
     public void setLockControlTurnoutState(int turnoutState);
 
     /**
-     * Method to get the State of the lock control Turnout that locks this Route
+     * Method to get the State of the lock control Turnout that locks this Route.
      */
     public int getLockControlTurnoutState();
 
     /**
-     * Method to set delay (milliseconds) between issuing Turnout commands
+     * Method to set delay (milliseconds) between issuing Turnout commands.
      */
     public void setRouteCommandDelay(int delay);
 
     /**
-     * Method to get delay (milliseconds) between issuing Turnout commands
+     * Method to get delay (milliseconds) between issuing Turnout commands.
      */
     public int getRouteCommandDelay();
 
     /**
-     * Method to set the Route
-     * Sets all Route Turnouts to the state shown in the Route definition
+     * Method to set the Route.
+     *<p>
+     * Sets all Route Turnouts to the state shown in the Route definition.
      */
     public void setRoute();
 
     /**
-     * Activate the Route, which
-     * starts route processing by connecting to inputs, etc.
+     * Activate the Route.
+     *<p>
+     * This starts route processing by connecting to inputs, etc.
      * A Route must be activated before it will fire.
      */
     public void activateRoute();
 
     /**
-     * Deactivate the Route. This disconnects it from
+     * Deactivate the Route. 
+     * <p>
+     * This disconnects the Route from
      * all other objects and stops it from processing.
      * A Route must be deactivated before it's input
      * and output definitions are changed.
