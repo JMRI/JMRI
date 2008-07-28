@@ -3,16 +3,18 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.VirtualSignalHead;
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for VirtualSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.3 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
+ * @version $Revision: 1.4 $
  */
-public class VirtualSignalHeadXml implements XmlAdapter {
+public class VirtualSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public VirtualSignalHeadXml() {}
 
@@ -30,8 +32,9 @@ public class VirtualSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
+        storeCommon(p, element);
+        
         return element;
     }
 
@@ -48,6 +51,9 @@ public class VirtualSignalHeadXml implements XmlAdapter {
             h = new VirtualSignalHead(sys);
         else
             h = new VirtualSignalHead(sys, a.getValue());
+
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

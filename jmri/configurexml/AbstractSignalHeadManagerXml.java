@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import jmri.AbstractSignalHeadManager;
 import jmri.InstanceManager;
+import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import java.util.List;
 import org.jdom.Element;
@@ -19,17 +20,22 @@ import org.jdom.Element;
  * <P>
  * Based on AbstractTurnoutManagerConfigXML
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
+ * @version $Revision: 1.9 $
  */
-public class AbstractSignalHeadManagerXml implements XmlAdapter {
+public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractSignalHeadManagerXml() {
     }
 
     /**
      * Default implementation for storing the contents of a
-     * SignalHeadManager
+     * SignalHeadManager.
+     * <P>
+     * Unlike most other managers, the individual
+     * SignalHead objects are stored separately via the
+     * configuration system so they can have separate type
+     * information.
      * @param o Object to store, of type SignalHeadManager
      * @return Element containing the complete info
      */
@@ -49,7 +55,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                Object sub = sm.getBySystemName(sname);
+                SignalHead sub = sm.getBySystemName(sname);
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                     if (e!=null) signalheads.addContent(e);

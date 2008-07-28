@@ -5,6 +5,8 @@ import jmri.SignalHead;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.loconet.SE8cSignalHead;
 
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -13,10 +15,10 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
+ * @version $Revision: 1.3 $
  */
-public class SE8cSignalHeadXml implements XmlAdapter {
+public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public SE8cSignalHeadXml() {
     }
@@ -35,8 +37,9 @@ public class SE8cSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
+        storeCommon(p, element);
+        
         // store the turnout number, not a name, as that's needed when recreating
         element.addContent(addTurnoutElement(p.getNumber()));
 
@@ -64,6 +67,9 @@ public class SE8cSignalHeadXml implements XmlAdapter {
             h = new SE8cSignalHead(turnout);
         else
             h = new SE8cSignalHead(turnout, a.getValue());
+
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

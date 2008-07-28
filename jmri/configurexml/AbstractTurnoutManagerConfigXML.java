@@ -24,9 +24,9 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
-public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
+public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractTurnoutManagerConfigXML() {
     }
@@ -57,12 +57,12 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Turnout t = tm.getBySystemName(sname);
-                String uname = t.getUserName();
                 Element elem = new Element("turnout")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
-                log.debug("store turnout "+sname+":"+uname);
-                
+                log.debug("store turnout "+sname);
+
+                storeCommon(t, elem);
+                                
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());
                 Sensor s;
@@ -122,12 +122,6 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 if (opstr != null) {
                 	elem.setAttribute("automate", opstr);
                 }
-                // add comment, if present
-                if (t.getComment() != null) {
-                    Element c = new Element("comment");
-                    c.addContent(t.getComment());
-                    elem.addContent(c);
-                }
                 
                 // add element
                 turnouts.addContent(elem);
@@ -172,39 +166,40 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
     	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
 
         for (int i=0; i<turnoutList.size(); i++) {
-            if ( ((Element)(turnoutList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(turnoutList.get(i)))+" "+((Element)(turnoutList.get(i))).getAttributes());
+            Element elem = (Element)(turnoutList.get(i));
+            if ( elem.getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+elem+" "+elem.getAttributes());
                 break;
             }
-            String sysName = ((Element)(turnoutList.get(i))).getAttribute("systemName").getValue();
+            String sysName = elem.getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(turnoutList.get(i))).getAttribute("userName") != null)
-            userName = ((Element)(turnoutList.get(i))).getAttribute("userName").getValue();
+            if ( elem.getAttribute("userName") != null)
+            userName = elem.getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Turnout t = tm.newTurnout(sysName, userName);
             
+            // Load common parts
+            loadCommon(t, elem);
+            
             // now add feedback if needed
             Attribute a;
-            a = ((Element)(turnoutList.get(i))).getAttribute("feedback");
+            a = elem.getAttribute("feedback");
             if (a!=null) {
             	t.setFeedbackMode(a.getValue());
             }
-            a = ((Element)(turnoutList.get(i))).getAttribute("sensor1");
+            a = elem.getAttribute("sensor1");
             if (a!=null) { 
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
                 t.provideFirstFeedbackSensor(s);
             }
-            a = ((Element)(turnoutList.get(i))).getAttribute("sensor2");
+            a = elem.getAttribute("sensor2");
             if (a!=null) { 
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
                 t.provideSecondFeedbackSensor(s);
             }
             
             // check for turnout inverted
-            a = ((Element)(turnoutList.get(i))).getAttribute("inverted");
-            if (a!=null) { 
-            	t.setInverted(a.getValue().equals("true"));
-            }
+            t.setInverted(getAttributeBool(elem, "inverted", false));
              
             // check for turnout decoder
             a = ((Element)(turnoutList.get(i))).getAttribute("decoder");
@@ -287,11 +282,6 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             	}
             }
 			
-			// load comment, if present
-			String c = ((Element)turnoutList.get(i)).getChildText("comment");
-			if (c != null) {
-			    t.setComment(c);
-			}
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
         }

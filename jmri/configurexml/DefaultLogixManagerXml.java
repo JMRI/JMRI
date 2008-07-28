@@ -15,9 +15,9 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class DefaultLogixManagerXml implements XmlAdapter {
+public class DefaultLogixManagerXml extends AbstractNamedBeanManagerConfigXML {
 
     public DefaultLogixManagerXml() {
     }
@@ -45,11 +45,13 @@ public class DefaultLogixManagerXml implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("logix system name is "+sname);
                 Logix x = tm.getBySystemName(sname);
-                String uname = x.getUserName();
 				boolean enabled = x.getEnabled();
                 Element elem = new Element("logix")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+                
+                // store common part
+                storeCommon(x, elem);
+                
 				if (enabled) elem.setAttribute("enabled","yes");
 				else elem.setAttribute("enabled","no");
 				// save child Conditionals
@@ -128,6 +130,9 @@ public class DefaultLogixManagerXml implements XmlAdapter {
 										(userName==null?"<null>":userName)+")");
             Logix x = tm.createNewLogix(sysName, userName);
             if (x!=null) {
+                // load common part
+                loadCommon(x, ((Element)(logixList.get(i))));
+                
 				// set enabled/disabled if attribute was present
 				if ( (yesno!=null) && (!yesno.equals("")) ) {
 					if (yesno.equals("yes")) x.setEnabled(true);

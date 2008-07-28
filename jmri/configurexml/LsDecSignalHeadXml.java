@@ -1,23 +1,13 @@
 // LsDecSignalHeadXml.java
 
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under 
-// the terms of version 2 of the GNU General Public License as published 
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-// 
-// JMRI is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
-// for more details.
-
 package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.LsDecSignalHead;
 import jmri.Turnout;
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -25,11 +15,23 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for LsDecSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * This file is part of JMRI.
+ * 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ *
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class LsDecSignalHeadXml implements XmlAdapter {
+public class LsDecSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public LsDecSignalHeadXml() {}
 
@@ -47,8 +49,9 @@ public class LsDecSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
+        storeCommon(p, element);
+        
         element.addContent(addTurnoutElement(p.getGreen(), p.getGreenState()));
         element.addContent(addTurnoutElement(p.getYellow(), p.getYellowState()));
         element.addContent(addTurnoutElement(p.getRed(), p.getRedState()));
@@ -107,6 +110,9 @@ public class LsDecSignalHeadXml implements XmlAdapter {
             h = new LsDecSignalHead(sys, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
         else
             h = new LsDecSignalHead(sys, a.getValue(), green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
+
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

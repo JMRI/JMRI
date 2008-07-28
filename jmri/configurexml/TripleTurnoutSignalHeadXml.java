@@ -4,6 +4,8 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.TripleTurnoutSignalHead;
 import jmri.Turnout;
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -11,10 +13,10 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
+ * @version $Revision: 1.7 $
  */
-public class TripleTurnoutSignalHeadXml implements XmlAdapter {
+public class TripleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public TripleTurnoutSignalHeadXml() {}
 
@@ -32,8 +34,9 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
+        storeCommon(p, element);
+        
         element.addContent(addTurnoutElement(p.getGreen()));
         element.addContent(addTurnoutElement(p.getYellow()));
         element.addContent(addTurnoutElement(p.getRed()));
@@ -69,6 +72,9 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
             h = new TripleTurnoutSignalHead(sys, green, yellow, red);
         else
             h = new TripleTurnoutSignalHead(sys, a.getValue(), green, yellow, red);
+
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

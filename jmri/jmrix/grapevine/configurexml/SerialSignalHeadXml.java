@@ -6,6 +6,8 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.grapevine.SerialSignalHead;
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -13,10 +15,10 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007
- * @version $Revision: 1.1 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
+ * @version $Revision: 1.2 $
  */
-public class SerialSignalHeadXml implements XmlAdapter {
+public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public SerialSignalHeadXml() {}
 
@@ -34,7 +36,8 @@ public class SerialSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
+
+        storeCommon(p, element);
 
         return element;
     }
@@ -52,6 +55,9 @@ public class SerialSignalHeadXml implements XmlAdapter {
             h = new SerialSignalHead(sys);
         else
             h = new SerialSignalHead(sys, a.getValue());
+        
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

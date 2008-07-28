@@ -21,10 +21,10 @@ import org.jdom.Element;
  * <P>
  * Based on AbstractSensorManagerConfigXML.java
  *
- * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.13 $
+ * @author Dave Duchamp Copyright (c) 2004, 2008
+ * @version $Revision: 1.14 $
  */
-public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
+public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractLightManagerConfigXML() {
     }
@@ -52,10 +52,12 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Light lgt = tm.getBySystemName(sname);
-                String uname = lgt.getUserName();
                 Element elem = new Element("light")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+
+                // store common parts
+                storeCommon(lgt, elem);
+                
                 int type = lgt.getControlType();
                 elem.setAttribute("controlType", ""+type);
                 if (type==Light.SENSOR_CONTROL) {
@@ -84,7 +86,7 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 // write transition attribute
                 elem.setAttribute("transitionTime", "" + lgt.getTransitionTime());
 
-                log.debug("store light "+sname+":"+uname);
+                log.debug("store light "+sname);
                 lights.addContent(elem);
 
             }
@@ -131,6 +133,9 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                                                             (userName==null?"<null>":userName)+")");
             Light lgt = tm.newLight(sysName, userName);
             if (lgt!=null) {
+                // load common parts
+                loadCommon(lgt, ((Element)(lightList.get(i))));
+                
                 String temString = ((Element)(lightList.get(i))).getAttribute("controlType").getValue();
                 int type = Integer.parseInt(temString);
                 lgt.setControlType(type);

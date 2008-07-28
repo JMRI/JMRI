@@ -4,6 +4,8 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.DoubleTurnoutSignalHead;
 import jmri.Turnout;
+import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
+
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -11,10 +13,10 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
+ * @version $Revision: 1.3 $
  */
-public class DoubleTurnoutSignalHeadXml implements XmlAdapter {
+public class DoubleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public DoubleTurnoutSignalHeadXml() {}
 
@@ -32,8 +34,9 @@ public class DoubleTurnoutSignalHeadXml implements XmlAdapter {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
+        storeCommon(p, element);
+        
         element.addContent(addTurnoutElement(p.getGreen()));
         element.addContent(addTurnoutElement(p.getRed()));
 
@@ -67,6 +70,9 @@ public class DoubleTurnoutSignalHeadXml implements XmlAdapter {
             h = new DoubleTurnoutSignalHead(sys, green, red);
         else
             h = new DoubleTurnoutSignalHead(sys, a.getValue(), green, red);
+
+        loadCommon(h, element);
+        
         InstanceManager.signalHeadManagerInstance().register(h);
         return;
     }

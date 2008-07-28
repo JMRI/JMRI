@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @since 2.1.2
  *
  */
@@ -66,11 +66,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 Block b = tm.getBySystemName(sname);
-                String uname = b.getUserName();
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
-                if (log.isDebugEnabled()) log.debug("initial store Block "+sname+":"+uname);
+                if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
                 
                 // and put this element out
                 blocks.addContent(elem);
@@ -87,6 +85,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                             .setAttribute("systemName", sname);
                 if (uname!=null) elem.setAttribute("userName", uname);
                 if (log.isDebugEnabled()) log.debug("second store Block "+sname+":"+uname);
+                
+                // store common parts
+                storeCommon(b, elem);
                 
                 // Add content. First, the sensor.
                 Sensor s = b.getSensor();
@@ -172,6 +173,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                 InstanceManager.blockManagerInstance().createNewBlock(sysName, userName);
                 block = InstanceManager.blockManagerInstance().getBlock(sysName);
             }
+            
+            // load common parts
+            loadCommon(block, element);
             
             // load sensor if present
             List sensors = element.getChildren("sensor");

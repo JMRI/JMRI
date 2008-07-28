@@ -18,10 +18,10 @@ import org.jdom.Element;
  * resolution mechanism doesn't need to see *Xml classes for each
  * specific Sensor or AbstractSensor subclass at store time.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
+ * @version $Revision: 1.6 $
  */
-public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
+public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractSensorManagerConfigXML() {
     }
@@ -48,13 +48,18 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                String uname = tm.getBySystemName(sname).getUserName();
-                String inverted = tm.getBySystemName(sname).getInverted() ? "true" : "false";
+                Sensor s = tm.getBySystemName(sname);
+
+                String inverted = s.getInverted() ? "true" : "false";
+
                 Element elem = new Element("sensor")
                             .setAttribute("systemName", sname)
                             .setAttribute("inverted", inverted);
-                if (uname!=null) elem.setAttribute("userName", uname);
-                log.debug("store sensor "+sname+":"+uname);
+                log.debug("store sensor "+sname);
+
+                // store common part
+                storeCommon(s, elem);
+                
                 sensors.addContent(elem);
 
             }
@@ -94,9 +99,9 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
                 break;
             }
             String sysName = ((Element)(sensorList.get(i))).getAttribute("systemName").getValue();
-            String userName = null;
             boolean inverted = false;
             
+            String userName = null;
             if ( ((Element)(sensorList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(sensorList.get(i))).getAttribute("userName").getValue();
 
@@ -104,8 +109,12 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
                 if (((Element)(sensorList.get(i))).getAttribute("inverted").getValue().equals("true"))
                     inverted = true;
 
-            if (log.isDebugEnabled()) log.debug("create sensor: ("+sysName+")("+(userName==null?"<null>":userName)+")");
+            if (log.isDebugEnabled()) log.debug("create sensor: ("+sysName+")");
             Sensor s = tm.newSensor(sysName, userName);
+
+            // load common parts
+            loadCommon(s, ((Element)(sensorList.get(i))));
+            
             s.setInverted(inverted);
         }
     }

@@ -20,9 +20,9 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
-public class DefaultRouteManagerXml implements XmlAdapter {
+public class DefaultRouteManagerXml extends AbstractNamedBeanManagerConfigXML {
 
     public DefaultRouteManagerXml() {
     }
@@ -50,7 +50,6 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Route r = tm.getBySystemName(sname);
-                String uname = r.getUserName();
                 String cTurnout = r.getControlTurnout();
 				int addedDelay = r.getRouteCommandDelay();
 				boolean routeLocked = r.getLocked();
@@ -58,7 +57,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 				
                 Element elem = new Element("route")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+                
+                // store common parts
+                storeCommon(r, elem);
+
                 if (cTurnout!=null && cTurnout!="") {
                     elem.setAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
@@ -176,7 +178,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     elem.addContent(rsElem);
                 }
                 
-                log.debug("store route "+sname+":"+uname);
+                log.debug("store route "+sname);
                 routes.addContent(elem);
             }
         }
@@ -238,6 +240,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 			int addedDelay = 0;
             if ( ((Element)(routeList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(routeList.get(i))).getAttribute("userName").getValue();
+
             if ( ((Element)(routeList.get(i))).getAttribute("controlTurnout") != null)
                 cTurnout = ((Element)(routeList.get(i))).getAttribute("controlTurnout").getValue();
             if ( ((Element)(routeList.get(i))).getAttribute("controlTurnoutState") != null)
@@ -258,6 +261,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             if (log.isDebugEnabled()) log.debug("create route: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Route r = tm.createNewRoute(sysName, userName);
+
+            // load common parts
+            loadCommon(r, ((Element)(routeList.get(i))));
+
             if (r!=null) {
 				// add control turnout if there is one
 				if (cTurnout != null) {

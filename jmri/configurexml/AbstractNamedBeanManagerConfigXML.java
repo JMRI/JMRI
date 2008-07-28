@@ -1,3 +1,5 @@
+// AbstractNamedBeanManagerConfigXML.java
+
 package jmri.configurexml;
 
 import jmri.NamedBean;
@@ -15,7 +17,7 @@ import org.jdom.Attribute;
  * to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML implements XmlAdapter {
@@ -23,6 +25,35 @@ public abstract class AbstractNamedBeanManagerConfigXML implements XmlAdapter {
     public AbstractNamedBeanManagerConfigXML() {
     }
 
+    /**
+     * Store common items:
+     * <ul>
+     * <li>user name
+     * <li>comment
+     * </ul>
+     * @param t The NamedBean being stored
+     * @param elem The JDOM element for storing the NamedBean
+     */
+    protected void storeCommon(NamedBean t, Element elem) {
+        storeUserName(t, elem);
+        storeComment(t, elem);
+    }
+    
+    /**
+     * Load common items:
+     * <ul>
+     * <li>comment
+     * </ul>
+     * The username is not loaded, because it 
+     * had to be provided in the ctor earlier.
+     *
+     * @param t The NamedBean being loaded
+     * @param elem The JDOM element containing the NamedBean
+     */
+    protected void loadCommon(NamedBean t, Element elem) {
+        loadComment(t, elem);
+    }
+    
     /**
      * Store the comment parameter from a NamedBean
      * @param t The NamedBean being stored
@@ -95,17 +126,6 @@ public abstract class AbstractNamedBeanManagerConfigXML implements XmlAdapter {
     }
     
     /**
-     * Get an attribute string value from one element of
-     * a list of Elements defining NamedBeans
-     * @param beanList List, where each entry is an Element
-     * @param i index of Element in list to examine
-     * @param name name of desired Attribute
-     */
-    String getAttributeString(List beanList, int i, String name) {
-        return getAttributeString((Element)(beanList.get(i)), name);
-    }
-
-    /**
      * Get an attribute string value from an Element defining a NamedBean
      * @param elem The existing Element
      * @param name name of desired Attribute
@@ -118,18 +138,6 @@ public abstract class AbstractNamedBeanManagerConfigXML implements XmlAdapter {
             return null;
     }
     
-    /**
-     * Get an attribute boolean value from one element of
-     * a list of Elements defining NamedBeans
-     * @param beanList List, where each entry is an Element
-     * @param i Index of Element in list to examine
-     * @param name Name of desired Attribute
-     * @param def Default value for attribute
-     */
-    boolean getAttributeBool(List beanList, int i, String name, boolean def) {
-        return getAttributeBool((Element)(beanList.get(i)), name, def);
-    }
-
     /**
      * Get an attribute boolean value from an Element defining a NamedBean
      * @param elem The existing Element
@@ -147,4 +155,5 @@ public abstract class AbstractNamedBeanManagerConfigXML implements XmlAdapter {
                 return v.equals("true");
             }
     }
+
 }

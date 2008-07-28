@@ -15,9 +15,9 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class DefaultConditionalManagerXml implements XmlAdapter {
+public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfigXML {
 
     public DefaultConditionalManagerXml() {
     }
@@ -45,10 +45,12 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("conditional system name is "+sname);
                 Conditional c = tm.getBySystemName(sname);
-                String uname = c.getUserName();
                 Element elem = new Element("conditional")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+                
+                // store common parts
+                storeCommon(c, elem);
+
 				// save child state variables
 				int numStateVariables = c.getNumStateVariables();
 				if (numStateVariables>0) {
@@ -153,6 +155,9 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 										(userName==null?"<null>":userName)+")");
             Conditional c = tm.createNewConditional(sysName, userName);
             if (c!=null) {
+                // load common parts
+                loadCommon(c, (Element)(conditionalList.get(i)));
+                
 				// load state variables, if there are any
                 List conditionalVarList = ((Element)(conditionalList.get(i))).
 												getChildren("conditionalStateVariable");

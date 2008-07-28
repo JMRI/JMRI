@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import jmri.InstanceManager;
+import jmri.Reporter;
 import jmri.ReporterManager;
 import java.util.List;
 import org.jdom.Element;
@@ -16,10 +17,10 @@ import org.jdom.Element;
  * resolution mechanism doesn't need to see *Xml classes for each
  * specific Reporter or AbstractReporter subclass at store time.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
+ * @version $Revision: 1.4 $
  */
-public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
+public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractReporterManagerConfigXML() {
     }
@@ -46,11 +47,13 @@ public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                String uname = tm.getBySystemName(sname).getUserName();
+                Reporter r = tm.getBySystemName(sname);
                 Element elem = new Element("reporter")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
-                log.debug("store Reporter "+sname+":"+uname);
+                // store common parts
+                storeCommon(r, elem);
+                
+                log.debug("store Reporter "+sname);
                 reporters.addContent(elem);
 
             }
@@ -94,7 +97,8 @@ public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
             if ( ((Element)(reporterList.get(i))).getAttribute("userName") != null)
             userName = ((Element)(reporterList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create Reporter: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            tm.newReporter(sysName, userName);
+            Reporter r = tm.newReporter(sysName, userName);
+            loadCommon(r, ((Element)(reporterList.get(i))));
         }
     }
 

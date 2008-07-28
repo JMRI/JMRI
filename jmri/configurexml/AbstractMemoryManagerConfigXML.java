@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import jmri.InstanceManager;
+import jmri.Memory;
 import jmri.MemoryManager;
 import java.util.List;
 import org.jdom.Element;
@@ -16,10 +17,10 @@ import org.jdom.Element;
  * resolution mechanism doesn't need to see *Xml classes for each
  * specific Memory or AbstractMemory subclass at store time.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
+ * @version $Revision: 1.6 $
  */
-public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
+public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractMemoryManagerConfigXML() {
     }
@@ -46,11 +47,14 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                String uname = tm.getBySystemName(sname).getUserName();
+                Memory m = tm.getBySystemName(sname);
                 Element elem = new Element("memory")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
-                log.debug("store Memory "+sname+":"+uname);
+                            
+                // store common part
+                storeCommon(m, elem);
+
+                log.debug("store Memory "+sname);
                 memories.addContent(elem);
 
             }
@@ -98,7 +102,10 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
             if ( ((Element)(memoryList.get(i))).getAttribute("userName") != null)
             userName = ((Element)(memoryList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create Memory: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            tm.newMemory(sysName, userName);
+            Memory m = tm.newMemory(sysName, userName);
+            
+            // load common parts
+            loadCommon(m, ((Element)(memoryList.get(i))) );
         }
     }
 
