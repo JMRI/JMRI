@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -198,6 +198,27 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
 	protected String [] validSpeeds = new String[]{"115,200 baud"};
 	protected int [] validSpeedValues = new int[]{115200};
 
+    public String[] validOption1() { return new String[]{"Version 1", "Version 2"}; }
+
+    /**
+     * Get a String that says what Option 1 represents
+     * May be an empty string, but will not be null
+     */
+    public String option1Name() { return "Protocol"; }
+
+    /**
+     * Set the second port option.
+     */
+    public void configureOption1(String value) { 
+        mOpt1 = value;
+        if (value.equals(validOption1()[0])) version = 1;
+        else if (value.equals(validOption1()[0])) version = 1;
+    }
+    public String getCurrentOption1Setting() {
+        if (mOpt1 == null) return validOption1()[0];
+        return mOpt1;
+    }
+
     // private control members
     private boolean opened = false;
     DataInputStream serialStream = null;
@@ -214,6 +235,8 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     // code for handling the input characters
     Thread readerThread;
 
+    // flag for protocol version
+    int version = 1;
 
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
@@ -364,24 +387,50 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     }
         
     static private int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    private boolean first = true;
     
     /**
      * Convert input line to Reading object
      */
     Reading makeReading(String s) throws IOException {
-        // parse string
-        java.io.StringReader b = new java.io.StringReader(s);
-        com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-        c.readRecord();
-
-        int count = c.getColumnCount()-SKIPCOLS;
-        double[] vals = new double[count];
-        for (int i=0; i<count; i++) {
-            vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
+        if (first) {
+            log.info("RPS starts, using protocol version "+version);
+            first = false;
         }
-        Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
         
-        return r;
+        if (version == 1) {
+            // parse string
+            java.io.StringReader b = new java.io.StringReader(s);
+            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
+            c.readRecord();
+    
+            int count = c.getColumnCount()-SKIPCOLS;
+            double[] vals = new double[count];
+            for (int i=0; i<count; i++) {
+                vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
+            }
+            
+            Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
+            return r;
+        } else if (version == 2) {
+            // parse string
+            java.io.StringReader b = new java.io.StringReader(s);
+            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
+            c.readRecord();
+    
+            int count = (c.getColumnCount()-2)/2;  // skip 'ADR, DAT,'
+            double[] vals = new double[Engine.instance().getReceiverCount()];
+            for (int i=0; i<count; i++) {
+                int index = Integer.parseInt(c.get(2+i*2))-1;  // numbers in message are from one
+                vals[index] = Double.valueOf(c.get(2+i*2+1)).doubleValue();
+            }
+            
+            Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
+            return r;
+        } else {
+            log.error("can't handle version "+version);
+            return null;
+        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAdapter.class.getName());
