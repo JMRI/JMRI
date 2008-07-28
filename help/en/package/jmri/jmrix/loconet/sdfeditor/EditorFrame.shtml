@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.8 2008-05-30 15:21:15 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.9 2008-07-28 18:35:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -119,8 +119,10 @@ operations to take then it's started.
 The operations can be things like starting to play a particular sound,
 or modifying how a sound is played, or changing various information internal to the 
 decoder. When the sequence is started, it runs right to the end, leaving behind
-things for the decoder to do in the future. For example, it can define which sound
-fragment to play next when the current one is done, or stop the sound that's currently being played
+things for the decoder to do in the future. 
+For example, it can define which sound
+fragment to play next when the current one is done, 
+or stop the sound that's currently being played
 by the channel and start a new one.
 
 <p>
@@ -142,8 +144,9 @@ Some examples include:
     <li>when an input connection goes active
     </ul>
 </ul>
-There are a lot of possibilities, which are listed in the selection box.
-(We need to put the entire list on a separate page!)
+There are a lot of possibilities, which are listed in the selection box
+and (partially) documented on a 
+<a href="TriggerConditions.shtml">separate page</a>.
 
 <p>
 There are also four options that can be selected to change when the

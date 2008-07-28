@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TriggerConditions.shtml,v 1.1 2008-03-31 03:17:52 jacobsen Exp $ -->
+<!-- $Id: TriggerConditions.shtml,v 1.2 2008-07-28 18:35:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -27,32 +27,35 @@ This page documents the meaning of the trigger conditions that
 can defined in a Digitrax SDF instruction.
 
 <dl>
-<dt>TRIG_NEVER<dd>
+<dt>TRIG_NEVER<dd>Never triggers. This can be used
+to disable part of a SDF file.
 <dt>TRIG_MODE_CHNG<dd>
 <dt>TRIG_MATH<dd>
 <dt>TRIG_DISTANCE<dd>
-<dt>TRIG_SPD_INC<dd>
-<dt>TRIG_SPD_DEC<dd>
-<dt>TRIG_CAM<dd>
+<dt>TRIG_SPD_INC<dd>Triggers when the motor speed is increased.
+<dt>TRIG_SPD_DEC<dd>Triggers when the motor speed is decreased.
+<dt>TRIG_CAM<dd>Triggers on either the actual cam input, or the
+autochuff mechanism.
 <dt>TRIG_NOT_TRIG<dd>
 
-<dt>Function 0 On<dd>
+<dt>Function 0 On<dd>Triggers when DCC function 0 is on.
 <dt>Function 28 On<dd>
 
-<dt>TRIG_DIRNOW_CHNG<dd>
-<dt>TRIG_MOVING<dd>
-<dt>TRIG_SND_ACTV11<dd>
+<dt>TRIG_DIRNOW_CHNG<dd>Triggers when the direction of the motor is changed.
+<dt>TRIG_MOVING<dd>If the motor is currently running at a non-zero speed.
+<dt>TRIG_SND_ACTV11<dd>Function 11
 
-<dt>TRIG_BSC0<dd>
+<dt>TRIG_BSC0<dd>Triggers when a "binary state change" DCC packet is received for BSC 0.
 <dt>TRIG_BSC7<dd>
 
-<dt>TRIG_IN_0<dd>
+<dt>TRIG_IN_0<dd>Trigger when the input connection goes active, usually used
+for a chuff input.
 <dt>TRIG_IN_7<dd>
 
 <dt>TRIG_NOTCH_CHNG<dd>
-<dt>TRIG_TIME_16PPS<dd>
+<dt>TRIG_TIME_16PPS<dd>Triggers 16 times per second.
 <dt>TRIG_FACTORY_CVRESET<dd>
-<dt>TRIG_OPSPROGWR_CV<dd>
+<dt>TRIG_OPSPROGWR_CV<dd>Triggers when a CV is written in ops mode (on the main).
 
 <dt>TRIG_SCAT0<dd>
 <dt>TRIG_SCAT7<dd>
