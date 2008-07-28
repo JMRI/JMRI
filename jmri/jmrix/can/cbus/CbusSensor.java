@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
@@ -101,13 +101,8 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * implementing classes will typically have a function/listener to get
-     * updates from the layout, which will then call
-     *      public void firePropertyChange(String propertyName,
-     *      					Object oldValue,
-     *                                          Object newValue)
-     * _once_ if anything has changed state (or set the commanded state directly)
-     * @param l
+     * Track layout status from messages being sent to CAN
+     * @param f
      */
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
@@ -117,6 +112,10 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         }
     }
 
+    /**
+     * Track layout status from messages being received from CAN
+     * @param f
+     */
     public void reply(CanReply f) {
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
