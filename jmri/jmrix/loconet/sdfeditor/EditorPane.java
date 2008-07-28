@@ -24,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.8 $
+ * @version	    $Revision: 1.9 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -48,8 +48,6 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     JComponent newTree() {
         topNode = new DefaultMutableTreeNode("file");
         tree = new JTree(topNode);
-        tree.setMinimumSize(new Dimension(250,600));
-        tree.setPreferredSize(new Dimension(250,600));
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);        
 
         // Listen for when the selection changes.
@@ -57,6 +55,8 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         
         // install in scroll area
         JScrollPane treeView = new JScrollPane(tree);
+        treeView.setMinimumSize(new Dimension(250,600));
+        treeView.setPreferredSize(new Dimension(250,600));
         return treeView;
     }
     
