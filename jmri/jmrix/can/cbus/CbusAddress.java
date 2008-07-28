@@ -16,14 +16,14 @@ import jmri.jmrix.can.CanMessage;
  * <p>
  * Forms:
  * <dl>
- * <dt>Full hex string<dd>Needs to be pairs of digits:  0123, not 123
- * <dt>+/-ddd
- * <dt>
+ * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits:  0123, not 123
+ * <dt>+/-ddd<dd>ddd is node*100,000 (a.k.a NODEFACTOR) + event
+ * <dt>+/-nNNNeEEE<dd>where NNN is a node number and EEE is an event number
  * </dl>
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CbusAddress {
 
@@ -31,7 +31,12 @@ public class CbusAddress {
     // 1: +ddd/-ddd  where ddd is node*NODEFACTOR + event
     // 2: the +/- from that
     // 3: xhhhhhh
-    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})";
+    // 5: NE form
+    // 6: the +/- from that
+    // 7: optional "N"
+    // 8: node number
+    // 9: event number
+    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
 	private Matcher nCodes = Pattern.compile("^("+singleAddressPattern+")(;"
@@ -82,6 +87,27 @@ public class CbusAddress {
                     String two = l.substring(1+2*i, 1+2*i+2);
                     aFrame[i] = Integer.parseInt(two, 16);
                 }
+            } else if (hCode.group(5)!=null) {
+                // hit on EN form
+                aFrame = new int[5];
+
+                int node = Integer.parseInt(hCode.group(8));
+                int event = Integer.parseInt(hCode.group(9));
+
+                aFrame[4] = event&0xff;
+                aFrame[3] = (event>>8)&0xff;
+                aFrame[2] = node&0xff;
+                aFrame[1] = (node>>8)&0xff;
+                
+                 // add command
+                if (hCode.group(6)==null)
+                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                else if (hCode.group(6).equals("+"))
+                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                else if (hCode.group(6).equals("-"))
+                    aFrame[0] = CbusConstants.CBUS_OP_EV_OFF;
+                else // default
+                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
             }
         } else {
             // no match, leave match false and aFrame null
