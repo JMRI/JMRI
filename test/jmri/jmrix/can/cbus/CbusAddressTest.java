@@ -14,25 +14,47 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CbusAddressTest extends TestCase {
 
     public void testCbusAddressOK() {
+        // +/- form
         assertTrue(new CbusAddress("+001").check());
         assertTrue(new CbusAddress("-001").check());
-        assertTrue(new CbusAddress("x0ABC").check());        
-        assertTrue(new CbusAddress("x0abc").check());        
-        assertTrue(new CbusAddress("xa1b2c3").check());        
-        assertTrue(new CbusAddress("x123456789ABCDEF0").check());        
+        
+        // hex form
+        assertTrue(new CbusAddress("x0ABC").check());
+        assertTrue(new CbusAddress("x0abc").check());
+        assertTrue(new CbusAddress("xa1b2c3").check());
+        assertTrue(new CbusAddress("x123456789ABCDEF0").check());
+        
+        // n0e0 form
+        assertTrue(new CbusAddress("+n1e2").check());
+        assertTrue(new CbusAddress("+n01e002").check());
+        assertTrue(new CbusAddress("+1e2").check());
+        assertTrue(new CbusAddress("-n1e2").check());
+        assertTrue(new CbusAddress("-n01e002").check());
+        assertTrue(new CbusAddress("-1e2").check());
+        assertTrue(new CbusAddress("n1e2").check());
+        assertTrue(new CbusAddress("n01e002").check());
+        assertTrue(new CbusAddress("1e2").check());
+        
     }
 
     public void testCbusAddressNotOK() {
         assertTrue(!new CbusAddress("+0A1").check());
         assertTrue(!new CbusAddress("- 001").check());
-        assertTrue(!new CbusAddress("ABC").check());        
+        assertTrue(!new CbusAddress("ABC").check());
+
         assertTrue(!new CbusAddress("xABC").check());    // odd number of digits     
-        assertTrue(!new CbusAddress("xprs0").check());        
+        assertTrue(!new CbusAddress("xprs0").check());
+
+        assertTrue(!new CbusAddress("+n1e").check());
+        assertTrue(!new CbusAddress("+ne1").check());
+        assertTrue(!new CbusAddress("+e1").check());
+        assertTrue(!new CbusAddress("+n1").check());
+
         // multiple address not OK
         assertTrue(!new CbusAddress("+1;+1;+1").check());
     }
@@ -66,6 +88,33 @@ public class CbusAddressTest extends TestCase {
                 new CanMessage(
                     new int[]{0x12,0x34,0x56,0x78,
                               0x9A,0xBC,0xDE,0xF0}
+        )));
+    }
+    
+    public void testNEformMatch() {
+        assertTrue(new CbusAddress("+n12e34").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_OP_EV_ON,0x00,12,0x00,34}
+        )));
+
+        assertTrue(new CbusAddress("+12e34").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_OP_EV_ON,0x00,12,0x00,34}
+        )));
+
+        assertTrue(new CbusAddress("12e34").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_OP_EV_ON,0x00,12,0x00,34}
+        )));
+
+        assertTrue(new CbusAddress("n12e34").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_OP_EV_ON,0x00,12,0x00,34}
+        )));
+
+        assertTrue(new CbusAddress("-n12e34").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_OP_EV_OFF,0x00,12,0x00,34}
         )));
     }
     
