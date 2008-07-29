@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.3 2008-04-04 15:17:53 rcoleman Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-07-29 23:02:08 rcoleman Exp $ -->
 <title>JMRI: Connecting the CTI Acela System</title>
 
 <!-- Style -->
@@ -44,13 +44,13 @@ there are several CTI modules available:
 <UL>
 <LI>A CTI Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.
 <LI>A CTI SmartCAB module which when used on a non-DCC model railroad, controls the trains in a traditional CAB system.  The CTI SmartCAB module is not supported by JMRI.
-<LI>A CTI TrainBrain (4 output bits and 4 input bits).
-<LI>A CTI Dash-8 (8 output bits, no input bits).
-<LI>A CTI Watchman (8 input bits, no output bits).
-<LI>A CTI SignalMan (16 output bits, no input bits).
-<LI>A CTI SwitchMan (16 output bits, no input bits).
-<LI>A CTI YardMaster (16 output bits, no input bits).
-<LI>A CTI Sentry (no output bits, 16 input bits).
+<LI>A CTI TrainBrain (4 output relays and 4 input circuits).
+<LI>A CTI Dash-8 (8 output relays, no input circuits).
+<LI>A CTI Watchman (8 input circuits, no output circuits).
+<LI>A CTI SignalMan (16 output circuits, no input circuits).
+<LI>A CTI SwitchMan (16 output circuits, no input circuits).
+<LI>A CTI YardMaster (16 output circuits, no input circuits).
+<LI>A CTI Sentry (no output circuits, 16 input circuits).
 </UL>
  
 <H3>Limitations</h3>
@@ -58,8 +58,8 @@ there are several CTI modules available:
 <UL>
 <LI>A CTI network is usually connected to a computer via a CTI to serial (or CTI to USB) interface.  In this configuration all of the CTI network management must be performed by the computer.  CTI also offers an Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.  JMRI only supports the CTI Acela interface (it does not support the direct serial -- nor USB interface).
 <LI>A CTI network can be used on either a non-DCC or a DCC model railroad.  When used on a non-DCC model railroad, CTI uses SmartCAB modules to control the trains in a traditional CAB system.  JMRI only supports the CTI system when used on a DCC railroad and does not support SmartCAB modules.
-<LI>CTI input sensor modules (Train-Brain, Watchman, Sentry) support five different types of input sensors: Infrared, Current Detection, Push-Button, Magnetic Reed Switches, and Photocell.  JMRI currently only supports Infrared sensors -- but this is just a matter of designer priorities.
-<LI>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI currently has this hardcoded -- but this is just a matter of designer priorities.
+<LI>CTI input sensor modules (Train-Brain, Watchman, Sentry) support five different types of input sensors: Infrared, Current Detection, Push-Button, Magnetic Reed Switches, and Photocell.  JMRI now supports all of these sensors.
+<LI>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI now allows you to <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">configure</a> this.
 </UL>
 
 <h3>Background Information</h3>
@@ -76,7 +76,7 @@ Once powered on and started, if the red LEDs on each module are not
 flashing then the ring is broken (either no power to one or more modules or a 
 bad cable or the cables are dasiy chained wrong or a cable has become loose).
 <p>
-For completeness, on power up, each CTI module has a solid RED led. 
+For completeness, on power up, each CTI module has a solid RED led lighted. 
 <p>
 Once the Acela network is up, the red LED on each module will flash as a packet 
 passes by (so you basically see all of the nodes flashing rapidly -- almost in sync).

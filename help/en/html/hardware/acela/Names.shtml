@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.2 2008-04-04 15:17:28 rcoleman Exp $ -->
+<!-- $Id: Names.shtml,v 1.3 2008-07-29 23:01:32 rcoleman Exp $ -->
 <title>JMRI: CTI Acela System Names</title>
 
 <!-- Style -->
@@ -24,7 +24,7 @@ JMRI: CTI Acela System Names
 
 Individual inputs (Sensors) and outputs (Turnouts and Lights)
 in JMRI are accessed via names.  
-For information on the general scheme, please see
+For information on the general naming scheme, please see
 the 
 <a href="../../doc/Technical/Names.shtml">naming page</a>
 in the
@@ -42,7 +42,7 @@ sections on inputs and outputs below for the specific meanings
 of these various formats.
 
 <p>
-For example, the 1st Acela Sensor input pin on the second WatchMan module would be
+For example, the first Acela Sensor input pin on the second WatchMan module would be
 named AS8 or AS08.  The 5th Turnout on the third Dash-8 module would be AT17. 
 
 <h3>Module Numbering</h3>
@@ -78,21 +78,27 @@ As described in the Acela documentation on the
 <a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, 
 sensors are addressed starting from 0.
 <p>
-Each CTI module can contain zero (Dash-8, SignalMan, YardMaster), four (Train-Brain), eight (WatchMan), or sixteen (Sentry) sensors depending upomn the type of the module.
+Each CTI module can contain zero (Dash-8, SignalMan, SwitchMan, YardMaster), four (Train-Brain), eight (WatchMan), or sixteen (Sentry) sensors depending upon the type of the module.
 <p>
 Addresses are assigned, starting at zero, from the first module on the RED side of the CTI Acela module.
 <p>
 As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster moldule.
 <p>
 The Train-Brain module supports four sensors so its sensors are at absolute input addresses 0 through 3 inclusive.  The Watchman module supports eight sensors so its sensors are at absolute input addresses 4 through 11 inclusive.  The YardMaster module supports zero sensors so it uses none of the absolute input addresses. 
-
+<p>
+The sensors can be configured with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool. If you do configure your sensors, don't forget to save them with the
+"Save" button on the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu).
 <h3>Outputs</h3>
 
 Although the CTI Acela network uses absolute addresses, it does have a separate address space for all of the inputs and a separate address space for all of the outputs.
 
 <p>
 
-As far as outputs are concerned, JMRI supports CTI  
+As far as CTI Acela outputs are concerned, JMRI supports  
 <a href="../../tools/Turnouts.shtml">Turnouts</a>, 
 or
 <a href="../../tools/Lights.shtml">Lights</a>.
@@ -112,6 +118,13 @@ As an example, let us assume we have a CTI Acela network consisting of: an Acela
 The Train-Brain module supports four outputs so its outputs are at absolute output addresses 0 through 3 inclusive.  The Watchman module supports zero outputs so it uses none of the absolute output addresses.  The YardMaster supports sixteen outputs so its outputs are at absolute output addresses 4 through 19 inclusive.
 <p>
 Any of these outputs can be a turnout or a light.  But a given output can only be a light or a turnout -- not both.
+<p>
+The turnouts can be configured with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool. If you do configure your turnouts (outputs), don't forget to save them with the
+"Save" button on the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu).
 
 <h4>Lights</h4>
 
@@ -121,10 +134,18 @@ turnouts or lights are addressed starting from 0.
 <p>
 Each CTI module can contain zero, four, eight, or sixteen outputs depending upomn the type of the module.
 <p>
+As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster moldule.
+<p>
 The Train-Brain module supports four outputs so its outputs are at absolute output addresses 0 through 3 inclusive.  The Watchman module supports zero outputs so it uses none of the absolute output addresses.  The YardMaster supports sixteen outputs so its outputs are at absolute output addresses 4 through 19 inclusive.
 <p>
 Any of these outputs can be a turnout or a light.  But a given output can only be a light or a turnout -- not both.
-
+<p>
+The lights can be configured with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool. If you do configure your lights (outputs), don't forget to save them with the
+"Save" button on the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu).
 <H3>Limitations</h3>
 
 <UL>
