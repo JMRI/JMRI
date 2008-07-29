@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -49,12 +49,6 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     public void setOpCode(int i) { _dataChars[0]=i;}
     public int getOpCode() {return _dataChars[0];}
     public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
-    
-    // accessors to the bulk data
-    public void setElement(int n, int v) {
-        if (!QsiTrafficController.instance().isSIIBootMode()) {v &= 0x7f;}
-        _dataChars[n] = v;
-    }
     
     public void setLength(int i) { _dataChars[1]=i;}
     
