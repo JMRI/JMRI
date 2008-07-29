@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -42,6 +42,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
         super.init(0, 1024); // 1024 is an artifical limit but economically reasonable
         
+        reallyReadyToPoll = false; // Need to not start polling until we are ready
         needToPollNodes = true;   // Need to poll and create corresponding nodes
         needToInitAcelaNetwork = true;   // Need to poll and create corresponding nodes
         needToCreateNodesState = 0; // Need to initialize system and then poll
@@ -70,6 +71,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in: 
                                                             //  false == Initiallizing Acela Network
                                                             //  true == Polling Sensors
+    private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll
     private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
     private boolean needToInitAcelaNetwork = true;   //  Flag to indicate that Acela network must be initialized
     private int needToCreateNodesState = 0;     //  Need to do a few things:
@@ -121,6 +123,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         needToPollNodes = newstate;
     }
     
+    public boolean getReallyReadyToPoll() {
+        return reallyReadyToPoll;
+    }
+    
+    public void setReallyReadyToPoll(boolean newstate) {
+        reallyReadyToPoll = newstate;
+    }
+    
     /**
      *  Public method to register a Acela node
      */
@@ -163,6 +173,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
             setMustInit(node, true);
+            node.initNode();
         }
     }
 
@@ -220,6 +231,13 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     	mSensorManager = m;
     }
 
+    AcelaTurnoutManager mTurnoutManager = null;
+
+    public void setTurnoutManager(AcelaTurnoutManager m) { 
+    	mTurnoutManager = m;
+    }
+
+
     int curAcelaNodeIndex = -1;   // cycles over defined nodes when pollMessage is called
 
     /**
@@ -227,10 +245,16 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      *      from within the running thread
      */
     protected synchronized AbstractMRMessage pollMessage() {
+        // Need to wait until we have read config file
+        if (!reallyReadyToPoll) {
+            return null;
+        }
+        
         if (needToInitAcelaNetwork) {
             if (needToCreateNodesState == 0) {
                 if (needToPollNodes) {
         		AcelaNode specialnode = new AcelaNode(0, AcelaNode.AC);
+                        log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
                 }
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
@@ -279,15 +303,17 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         AcelaNode node = (AcelaNode) getNode(curAcelaNodeIndex);       
         if (node.hasActiveSensors) {
             for (int s = 0; s < node.sensorbitsPerCard; s++) {
-                if (node.sensorInit[s]) {
+                if (node.sensorNeedInit[s] && !node.sensorHasBeenInit[s]) {
                     AcelaMessage m = AcelaMessage.getAcelaConfigSensorMsg();
                     int tempiaddr = s + node.getStartingSensorAddress();
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
+                    m.setElement(3, node.sensorConfigArray[s]);
                     log.debug("send Config Sesnsor message: "+m);
                     m.setTimeout(2000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
-                    node.sensorInit[s] = false;
+                    node.sensorHasBeenInit[s] = true;
+                    node.sensorNeedInit[s] = false;
                     return m;
                 }
             }

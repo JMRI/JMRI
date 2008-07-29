@@ -23,7 +23,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -47,8 +47,50 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
-            n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
-
+            n.addContent(makeParameter("nodetype", ""+node.getNodeTypeString()));
+            if (node.getNodeType() == AcelaNode.TB) {
+                for (int s = 0; s<4; s++) {
+                    n.addContent(makeParameter("sensortype"+s, ""+node.getSensorTypeString(s)));
+                    n.addContent(makeParameter("sensorpolarity"+s, ""+node.getSensorPolarityString(s)));
+//                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThresholdString(s)));
+                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThreshold(s)));
+                }
+                for (int o = 0; o<4; o++) {
+                    n.addContent(makeParameter("outputwired"+o, ""+node.getOutputWiredString(o)));
+                    n.addContent(makeParameter("outputinit"+o, ""+node.getOutputInitString(o)));
+                }
+            } else if (node.getNodeType() == AcelaNode.D8) {
+                for (int o = 0; o<8; o++) {
+                    n.addContent(makeParameter("outputwired"+o, ""+node.getOutputWiredString(o)));
+                    n.addContent(makeParameter("outputinit"+o, ""+node.getOutputInitString(o)));
+                }
+            } else if (node.getNodeType() == AcelaNode.WM) {
+                for (int s = 0; s<8; s++) {
+                    n.addContent(makeParameter("sensortype"+s, ""+node.getSensorTypeString(s)));
+                    n.addContent(makeParameter("sensorpolarity"+s, ""+node.getSensorPolarityString(s)));
+//                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThresholdString(s)));
+                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThreshold(s)));
+                }
+            } else if (node.getNodeType() == AcelaNode.SM) {
+                for (int o = 0; o<16; o++) {
+                    n.addContent(makeParameter("outputinit"+o, ""+node.getOutputInitString(o)));
+                }
+            } else if (node.getNodeType() == AcelaNode.SW) {
+                for (int o = 0; o<16; o++) {
+                    n.addContent(makeParameter("outputinit"+o, ""+node.getOutputInitString(o)));
+                }
+            } else if (node.getNodeType() == AcelaNode.YM) {
+                for (int o = 0; o<16; o++) {
+                    n.addContent(makeParameter("outputinit"+o, ""+node.getOutputInitString(o)));
+                }
+            } else if (node.getNodeType() == AcelaNode.SY) {
+                for (int s = 0; s<16; s++) {
+                    n.addContent(makeParameter("sensortype"+s, ""+node.getSensorTypeString(s)));
+                    n.addContent(makeParameter("sensorpolarity"+s, ""+node.getSensorPolarityString(s)));
+//                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThresholdString(s)));
+                    n.addContent(makeParameter("sensorthreshold"+s, ""+node.getSensorThreshold(s)));
+                }
+            }
             // look for the next node
             node = (AcelaNode) AcelaTrafficController.instance().getNode(index);
             index ++;
@@ -75,17 +117,108 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         for (int i = 0; i<l.size(); i++) {
             Element n = (Element) l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
-            int type = Integer.parseInt(findParmValue(n,"nodetype"));            
+            String nodetypestring = findParmValue(n,"nodetype");            
+            int type = AcelaNode.moduleTypes.lastIndexOf(nodetypestring) / 2;
 
             // create node (they register themselves)
             AcelaNode node = new AcelaNode(addr, type);
+            log.info("Created a new Acela Node [" + addr + "] as a result of a configuration file of type: " + type);
+            
+            if (type == AcelaNode.TB) {
+                for (int s = 0; s<4; s++) {
+                    String sensortype = findParmValue(n,"sensortype"+s);            
+                    String sensorpolarity = findParmValue(n,"sensorpolarity"+s);            
+//                    String sensorthreshold = findParmValue(n,"sensorthreshold"+s);            
+                    int sensorthreshold = Integer.parseInt(findParmValue(n,"sensorthreshold"+s));            
+                    node.setSensorTypeString(s, sensortype);
+                    node.setSensorPolarityString(s, sensorpolarity);
+//                    node.setSensorThresholdString(s, sensorthreshold);
+
+                    if (sensorthreshold < 0) {
+                        sensorthreshold = 0;
+                    }
+                    if (sensorthreshold > 31) {
+                        sensorthreshold = 31;
+                    }
+                    node.setSensorThreshold(s, sensorthreshold);
+
+                }
+                for (int o = 0; o<4; o++) {
+                    String outputwired = findParmValue(n,"outputwired"+o);            
+                    String outputinit = findParmValue(n,"outputinit"+o);            
+                    node.setOutputWiredString(o, outputwired);
+                    node.setOutputInitString(o, outputinit);
+                }
+            } else if (type == AcelaNode.D8) {
+                for (int o = 0; o<8; o++) {
+                    String outputwired = findParmValue(n,"outputwired"+o);            
+                    String outputinit = findParmValue(n,"outputinit"+o);            
+                    node.setOutputWiredString(o, outputwired);
+                    node.setOutputInitString(o, outputinit);
+                }
+            } else if (type == AcelaNode.WM) {
+                for (int s = 0; s<8; s++) {
+                    String sensortype = findParmValue(n,"sensortype"+s);            
+                    String sensorpolarity = findParmValue(n,"sensorpolarity"+s);            
+//                    String sensorthreshold = findParmValue(n,"sensorthreshold"+s);            
+                    int sensorthreshold = Integer.parseInt(findParmValue(n,"sensorthreshold"+s));            
+                    node.setSensorTypeString(s, sensortype);
+                    node.setSensorPolarityString(s, sensorpolarity);
+//                    node.setSensorThresholdString(s, sensorthreshold);
+
+                    if (sensorthreshold < 0) {
+                        sensorthreshold = 0;
+                    }
+                    if (sensorthreshold > 31) {
+                        sensorthreshold = 31;
+                    }
+                    node.setSensorThreshold(s, sensorthreshold);
+
+                }
+            } else if (type == AcelaNode.SM) {
+                for (int o = 0; o<16; o++) {
+                    String outputinit = findParmValue(n,"outputinit"+o);            
+                    node.setOutputInitString(o, outputinit);
+                }
+            } else if (type == AcelaNode.SW) {
+                for (int o = 0; o<16; o++) {
+                    String outputinit = findParmValue(n,"outputinit"+o);            
+                    node.setOutputInitString(o, outputinit);
+                }
+            } else if (type == AcelaNode.YM) {
+                for (int o = 0; o<16; o++) {
+                    String outputinit = findParmValue(n,"outputinit"+o);            
+                    node.setOutputInitString(o, outputinit);
+                }
+            } else if (type == AcelaNode.SY) {
+                for (int s = 0; s<16; s++) {
+                    String sensortype = findParmValue(n,"sensortype"+s);            
+                    String sensorpolarity = findParmValue(n,"sensorpolarity"+s);            
+//                    String sensorthreshold = findParmValue(n,"sensorthreshold"+s);            
+                    int sensorthreshold = Integer.parseInt(findParmValue(n,"sensorthreshold"+s));            
+                    node.setSensorTypeString(s, sensortype);
+                    node.setSensorPolarityString(s, sensorpolarity);
+//                    node.setSensorThresholdString(s, sensorthreshold);
+
+                    if (sensorthreshold < 0) {
+                        sensorthreshold = 0;
+                    }
+                    if (sensorthreshold > 31) {
+                        sensorthreshold = 31;
+                    }
+                    node.setSensorThreshold(s, sensorthreshold);
+
+                }
+            }
             
             // Do not poll for Acela network nodes
             AcelaTrafficController.instance().setNeedToPollNodes(false);
-            
+
             // Trigger initialization of this Node to reflect these parameters
             AcelaTrafficController.instance().initializeAcelaNode(node);
         }
+        // Do not let the Acela network poll until we are really ready
+        AcelaTrafficController.instance().setReallyReadyToPoll(true);
     }
 
     /**

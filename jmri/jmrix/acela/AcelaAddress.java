@@ -14,7 +14,7 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -62,8 +62,12 @@ public class AcelaAddress {
         }
 	int nodeaddress = -1;
 	if (systemName.charAt(1) == 'S') {
+            // Acela has two address spaces: true == sensor address space; false == output address space
             nodeaddress = AcelaTrafficController.instance().lookupAcelaNodeAddress(num, true);
+//            log.info("For this sensor, we want to use node: " + nodeaddress);
+
         } else {
+            // Acela has two address spaces: true == sensor address space; false == output address space
             nodeaddress = AcelaTrafficController.instance().lookupAcelaNodeAddress(num, false);
         }
         return (nodeaddress);
@@ -76,12 +80,22 @@ public class AcelaAddress {
     public static AcelaNode getNodeFromSystemName(String systemName) {
         // get the node address
         int ua;
+        int tempaddress;
+//        log.info("Trying to register sensor "+ systemName );
+
         ua = getNodeAddressFromSystemName(systemName);
-        if (ua == -1)
+        if (ua == -1) {
             // error messages have already been issued by getNodeAddressFromSystemName
             return null;
+        }
         
-        return (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
+        AcelaNode tempnode;
+        tempnode = (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
+        tempaddress = tempnode.getNodeAddress();
+
+//        log.info("Got back node of type (expecting 1,3, or 9): " + tempnode.nodeType + " for node: " + tempaddress);
+        return tempnode;
+        //        return (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
     }
     
     /**
@@ -292,7 +306,7 @@ public class AcelaAddress {
         }
         if ((type.equalsIgnoreCase("L") || type.equalsIgnoreCase("T")) && ( (bitNum < 0) || (bitNum > MAXOUTPUTADDRESS) )) {
             // here if an illegal bit number 
-            log.error("illegal bit number proposed for Acela Turnout or Lighr");
+            log.error("illegal bit number proposed for Acela Turnout or Light");
             return (nName);
         }
 	// construct the address
@@ -323,7 +337,7 @@ public class AcelaAddress {
 			}
 		}
 		// check for a turnout
-/*
+
 		else if (systemName.charAt(1) == 'T') {
 			jmri.Turnout t = null;
 			t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
@@ -334,7 +348,7 @@ public class AcelaAddress {
 				return ("");
 			}
 		}
-*/
+
 		// check for a light
 		else if (systemName.charAt(1) == 'L') {
 			jmri.Light lgt = null;

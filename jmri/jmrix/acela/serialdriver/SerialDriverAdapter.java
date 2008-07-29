@@ -4,6 +4,7 @@ package jmri.jmrix.acela.serialdriver;
 
 import jmri.jmrix.acela.AcelaPortController;
 import jmri.jmrix.acela.AcelaSensorManager;
+import jmri.jmrix.acela.AcelaTurnoutManager;
 import jmri.jmrix.acela.AcelaTrafficController;
 
 import java.io.DataInputStream;
@@ -25,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
@@ -136,6 +137,10 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
         AcelaSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.acela.AcelaSensorManager());
         AcelaTrafficController.instance().setSensorManager(s);	
+
+        AcelaTurnoutManager t;
+        jmri.InstanceManager.setTurnoutManager(t = new jmri.jmrix.acela.AcelaTurnoutManager());
+        AcelaTrafficController.instance().setTurnoutManager(t);	
 
         // start operation
         // packets.startThreads();

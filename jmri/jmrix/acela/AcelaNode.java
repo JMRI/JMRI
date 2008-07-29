@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -52,16 +52,34 @@ public class AcelaNode extends AbstractNode {
     public static final byte YM = 0x07;	// YardMaster (16 output bits. no input bits)
     public static final byte SY = 0x08;	// Sentry (no output bits. 16 input bits)
     public static final byte UN = 0x09;	// Unidentified module -- should be FF
+    public static final String moduleTypes = "ACTBD8WMSMSCSWYMSYUN";
+
+    public static final String[] nodeNames = new String[]{"0", "1", "2", "3", "4",
+                                                          "5", "6", "7", "8", "9",
+                                                        "10", "11", "12", "13", "14",
+                                                        "15", "16", "17", "18", "19"
+                                        };
 
     public static final String[] moduleNames = new String[]{"Acela",
-                                        "TrainBrain (4 output bits and 4 input bits)",
-                                        "Dash-8 (8 output bits, no input bits)",
-                                        "Watchman (8 input bits, no input bits)",
-                                        "SignalMan (16 output bits, no input bits)",
-                                        "SmartCab (1 output bit, no input bits)",
-                                        "SwitchMan (16 output bits, no input bits)",
-                                        "YardMaster (16 output bits, no input bits)",
-                                        "Sentry (no output bits, 16 input bits)"
+                                        "TrainBrain",
+                                        "Dash-8",
+                                        "Watchman",
+                                        "SignalMan",
+                                        "SmartCab",
+                                        "SwitchMan",
+                                        "YardMaster",
+                                        "Sentry"
+                                        };
+
+    public static final String[] moduleTips = new String[]{"Acela",
+                                        "TrainBrain has 4 output circuits and 4 input circuits",
+                                        "Dash-8 has 8 output circuits and no input circuits",
+                                        "Watchman has no output circuits and 8 input circuits",
+                                        "SignalMan has 16 output circuits and no input circuits",
+                                        "SmartCab has 1 output circuit and no input circuits",
+                                        "SwitchMan has 16 output circuits and no input circuits",
+                                        "YardMaster has 16 output circuits and no input circuits",
+                                        "Sentry has no output circuits and 16 input circuits"
                                         };
 
     // node definition instance variables (must persist between runs)
@@ -78,9 +96,21 @@ public class AcelaNode extends AbstractNode {
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = -1;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORBITS];
-    protected boolean[] sensorInit = new boolean[MAXSENSORBITS];    // used to indicate if sensor needs to be configured
+    protected boolean[] sensorNeedInit = new boolean[MAXSENSORBITS];    // used to indicate if sensor needs to be configured
+    protected boolean[] sensorHasBeenInit = new boolean[MAXSENSORBITS]; // used to indicate if sensor has been configured
     protected int[] sensorLastSetting = new int[MAXSENSORBITS];
     protected int[] sensorTempSetting = new int[MAXSENSORBITS];
+    protected int[] sensorType = new int[MAXSENSORBITS];
+    protected int[] sensorPolarity = new int[MAXSENSORBITS];
+    protected int[] sensorThreshold = new int[MAXSENSORBITS];
+    protected byte[] sensorConfigArray = new byte[MAXSENSORBITS]; // configuration values of the sensor circuits for this node
+    protected int[] outputWired = new int[MAXOUTPUTBITS];
+    protected int[] outputInit = new int[MAXOUTPUTBITS];
+    public static final String sensorTypes = "NFSBCGDT";
+    public static final String sensorPolarities = "ACTINV";
+//    public static final String sensorThresholds = "MINLOWNORHIGMAX";
+    public static final String outputWireds = "NONC";
+    public static final String outputInits = "OFFACT";
 
     protected int startingOutputAddress = -1;           // used to aid linear address search
     protected int endingOutputAddress = -1;           // used to aid linear address search
@@ -112,14 +142,21 @@ public class AcelaNode extends AbstractNode {
         // clear the Sensor arrays
         for (int i = 0; i<MAXSENSORBITS; i++) {
             sensorArray[i] = null;
-            sensorInit[i] = false;
+            sensorNeedInit[i] = false;
+            sensorHasBeenInit[i] = false;
             sensorLastSetting[i] = Sensor.UNKNOWN;
             sensorTempSetting[i] = Sensor.UNKNOWN;
+            sensorType[i] = 2; // Car Gap
+            sensorPolarity[i] = 1; // Inverse
+            sensorThreshold[i] = 4; // Normal -- 0010 0
+            sensorConfigArray[i] = 0x00; // Normal
         }
 
         // clear all output bits
         for (int i = 0; i<MAXOUTPUTBITS; i++) {
             outputArray[i] = 0;
+            outputInit[i] = 0;  // Off
+            outputWired[i] = 0; // NO (Normally Open)
         }
 
         // initialize other operational instance variables
@@ -130,6 +167,26 @@ public class AcelaNode extends AbstractNode {
         // register this node
         AcelaTrafficController.instance().registerAcelaNode(this);
     }
+
+    public void initNode() {
+        if (outputbitsPerCard >0) {
+            // Initialize all output circuits
+            for (int i = 0; i<MAXOUTPUTBITS; i++) {
+                outputArray[i] = (byte) outputInit[i];
+                //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
+            }
+            setMustSend();
+        }
+        if (sensorbitsPerCard >0) {
+            // Initialize all sensor circuits
+            for (int i = 0; i<MAXSENSORBITS; i++) {
+                sensorConfigArray[i] = (byte) ((byte) (sensorThreshold[i] << 3) + (byte) (sensorType[i] << 1) + (byte) (sensorPolarity[i]));
+//                sensorConfigArray[i] = (byte) ((byte) (sensorType[i] << 1));
+                sensorNeedInit[i] = true;
+            }
+            hasActiveSensors = true;
+        }
+    }	
 
     /**
      * Public method setting starting output addresss
@@ -242,7 +299,107 @@ public class AcelaNode extends AbstractNode {
     	return hasActiveSensors;
     }
 
+    /**
+     * Public method to set and return Output configuration values
+     */
+    public int getOutputWired(int circuitnum) {
+        return outputWired[circuitnum];
+    }
 
+    public String getOutputWiredString(int circuitnum) {
+        int sensortype = outputWired[circuitnum];
+        String value = outputWireds.substring(sensortype*2, sensortype*2+2);
+        return value;
+    }
+
+    public void setOutputWired(int circuitnum, int type) {
+        outputWired[circuitnum] = type;
+    }
+    
+    public void setOutputWiredString(int circuitnum, String stringtype) {
+        int type = outputWireds.lastIndexOf(stringtype) / 2;
+        outputWired[circuitnum] = type;
+    }
+    
+    public int getOutputInit(int circuitnum) {
+        return outputInit[circuitnum];
+    }
+
+    public String getOutputInitString(int circuitnum) {
+        int sensortype = outputInit[circuitnum];
+        String value = outputInits.substring(sensortype*3, sensortype*3+3);
+        return value;
+    }
+
+    public void setOutputInit(int circuitnum, int type) {
+        outputInit[circuitnum] = type;
+    }
+    
+    public void setOutputInitString(int circuitnum, String stringtype) {
+        int type = outputInits.lastIndexOf(stringtype) / 3;
+        outputInit[circuitnum] = type;
+    }
+    
+    /**
+     * Public method to set and return Sensor configuration values
+     */
+    public int getSensorType(int circuitnum) {
+        return sensorType[circuitnum];
+    }
+
+    public String getSensorTypeString(int circuitnum) {
+        int sensortype = sensorType[circuitnum];
+        String value = sensorTypes.substring(sensortype*2, sensortype*2+2);
+        return value;
+    }
+
+    public void setSensorType(int circuitnum, int type) {
+        sensorType[circuitnum] = type;
+    }
+    
+    public void setSensorTypeString(int circuitnum, String stringtype) {
+        int type = sensorTypes.lastIndexOf(stringtype) / 2;
+        sensorType[circuitnum] = type;
+    }
+    
+    public int getSensorPolarity(int circuitnum) {
+        return sensorPolarity[circuitnum];
+    }
+
+    public String getSensorPolarityString(int circuitnum) {
+        int sensorpolarity = sensorPolarity[circuitnum];
+        String value = sensorPolarities.substring(sensorpolarity*3, sensorpolarity*3+3);
+        return value;
+    }
+
+    public void setSensorPolarity(int circuitnum, int polarity) {
+        sensorPolarity[circuitnum] = polarity;
+    }
+    
+    public void setSensorPolarityString(int circuitnum, String stringpolarity) {
+        int polarity = sensorPolarities.lastIndexOf(stringpolarity) / 3;
+        sensorPolarity[circuitnum] = polarity;
+    }
+    
+    public int getSensorThreshold(int circuitnum) {
+        return sensorThreshold[circuitnum];
+    }
+/*
+    public String getSensorThresholdString(int circuitnum) {
+        int sensorthreshold = sensorThreshold[circuitnum];
+        String value = sensorThresholds.substring(sensorthreshold*3, sensorthreshold*3+3);
+        return value;
+    }
+*/
+    public void setSensorThreshold(int circuitnum, int threshold) {
+        sensorThreshold[circuitnum] = threshold;
+    }
+/*    
+    public void setSensorThresholdString(int circuitnum, String stringthreshold) {
+        int threshold = sensorThresholds.lastIndexOf(stringthreshold) / 3;
+        sensorThreshold[circuitnum] = threshold;
+    }
+*/    
     /**
      * Public method to return node type
      */
@@ -250,9 +407,19 @@ public class AcelaNode extends AbstractNode {
         return (nodeType);
     }
 
+    public String getNodeTypeString() {
+        String value = moduleTypes.substring(nodeType*2, nodeType*2+2);
+        return value;
+    }
+
     /**
      * Public method to set node type
      */
+    public void setNodeTypeString(String stringtype) {
+        int type = moduleTypes.lastIndexOf(stringtype) / 2;
+        setNodeType (type);
+    }
+    
     public void setNodeType(int type) {
         nodeType = type;
         // set default values for other instance variables
@@ -377,7 +544,7 @@ public class AcelaNode extends AbstractNode {
         addr = tempint.byteValue();
 
         if (nodeType == TB) {         
-            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
+            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
             byte newsettings = (byte) (tempsettings);
             AcelaMessage m = new AcelaMessage(4);
             m.setElement(0, 0x07);
@@ -388,8 +555,10 @@ public class AcelaNode extends AbstractNode {
             return m;
     	}
     	if (nodeType == D8) {         
-            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
-            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
+//            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
+//            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
+            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
+            tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
             byte newsettings = (byte) (tempsettings);
             AcelaMessage m = new AcelaMessage(4);
             m.setElement(0, 0x08);
@@ -416,11 +585,17 @@ public class AcelaNode extends AbstractNode {
             return m;
     	}
     	if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
-            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
-            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
+//            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
+//            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
+//            byte newsettings = (byte) (tempsettings);
+//            int tempsettings2 = outputArray[11] * 8 + outputArray[10] * 4 + outputArray[9] * 2 + outputArray[8] * 1;
+//            tempsettings2 = outputArray[15] * 128 + outputArray[14] * 64 + outputArray[13] * 32 + outputArray[12] * 16 + tempsettings2;
+//            byte newsettings2 = (byte) (tempsettings2);
+            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
+            tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
             byte newsettings = (byte) (tempsettings);
-            int tempsettings2 = outputArray[11] * 8 + outputArray[10] * 4 + outputArray[9] * 2 + outputArray[8] * 1;
-            tempsettings2 = outputArray[15] * 128 + outputArray[14] * 64 + outputArray[13] * 32 + outputArray[12] * 16 + tempsettings2;
+            int tempsettings2 = (outputArray[11] ^ outputWired[11]) * 8 + (outputArray[10] ^ outputWired[10]) * 4 + (outputArray[9] ^ outputWired[9]) * 2 + (outputArray[8] ^ outputWired[8]) * 1;
+            tempsettings2 = (outputArray[15] ^ outputWired[15]) * 128 + (outputArray[14] ^ outputWired[14]) * 64 + (outputArray[13] ^ outputWired[13]) * 32 + (outputArray[12] ^ outputWired[12]) * 16 + tempsettings2;
             byte newsettings2 = (byte) (tempsettings2);
             AcelaMessage m = new AcelaMessage(5);
             m.setElement(0, 0x09);
@@ -590,13 +765,20 @@ public class AcelaNode extends AbstractNode {
 
        	hasActiveSensors = true;
         AcelaTrafficController.instance().setAcelaSensorsState(true);
-        if (sensorArray[addr] == null) {
-            sensorArray[addr] = s;
-            sensorInit[addr] = true;
-        }
-        else {
-            // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: CS"+ rawaddr );
+        if (startingSensorAddress < 0) {
+            log.info("Trying to register sensor too early: AS"+ rawaddr );
+        } else {
+
+            if (sensorArray[addr] == null) {
+                sensorArray[addr] = s;
+                if (!sensorHasBeenInit[addr]) {
+                    sensorNeedInit[addr] = true;
+                }
+            }
+            else {
+                // multiple registration of the same sensor
+                log.warn("Multiple registration of same sensor: CS"+ rawaddr );
+            }
         }
     }
 

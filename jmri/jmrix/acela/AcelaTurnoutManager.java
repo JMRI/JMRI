@@ -1,9 +1,9 @@
-// AcelaLightManager.java
+// AcelaTurnoutManager.java
 
 package jmri.jmrix.acela;
 
-import jmri.AbstractLightManager;
-import jmri.Light;
+import jmri.AbstractTurnoutManager;
+import jmri.Turnout;
 
 /**
  * Implement light manager for Acela systems
@@ -13,14 +13,14 @@ import jmri.Light;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008
+ * @author	Bob Coleman Copyright (C) 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
-public class AcelaLightManager extends AbstractLightManager {
+public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
-    public AcelaLightManager() {
+    public AcelaTurnoutManager() {
         _instance = this;
     }
 
@@ -37,8 +37,8 @@ public class AcelaLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this
      *    system name does not already exist
      */
-    public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
+    public Turnout createNewTurnout(String systemName, String userName) {
+        Turnout trn = null;
 	// check if the output bit is available
 	int nAddress = -1;
 	nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName);
@@ -58,24 +58,24 @@ public class AcelaLightManager extends AbstractLightManager {
 */
 
         // Validate the systemName
-        if ( AcelaAddress.validSystemNameFormat(systemName,'L') ) {
-            lgt = new AcelaLight(systemName,userName); 
-            if (!AcelaAddress.validSystemNameConfig(systemName,'L')) {
-                log.warn("Light system Name does not refer to configured hardware: "
+        if ( AcelaAddress.validSystemNameFormat(systemName,'T') ) {
+            trn = new AcelaTurnout(systemName,userName); 
+            if (!AcelaAddress.validSystemNameConfig(systemName,'T')) {
+                log.warn("Turnout system Name does not refer to configured hardware: "
                                                             +systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: "+systemName);
+            log.error("Invalid Turnout system Name format: "+systemName);
         }
-        return lgt;
+        return trn;
     }    
 
     /**
      * Public method to notify user of Light creation error.
      */
-	public void notifyLightCreationError(String conflict,int bitNum) {
+	public void notifyTurnoutCreationError(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
-			", is currently assigned to "+conflict+". Light cannot be created as "+
+			", is currently assigned to "+conflict+". Turnout cannot be created as "+
 					"you specified.","Acela Assignment Conflict",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);	
 	}
@@ -85,7 +85,7 @@ public class AcelaLightManager extends AbstractLightManager {
      *   returns 'true' if system name has a valid format, else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName,'L'));
+        return (AcelaAddress.validSystemNameFormat(systemName,'T'));
         }
 
     /**
@@ -94,7 +94,7 @@ public class AcelaLightManager extends AbstractLightManager {
      *      else returns 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName,'L'));
+        return (AcelaAddress.validSystemNameConfig(systemName,'T'));
     }
     
     /**
@@ -120,13 +120,13 @@ public class AcelaLightManager extends AbstractLightManager {
     /** 
      * Allow access to AcelaLightManager
      */
-    static public AcelaLightManager instance() {
-        if (_instance == null) _instance = new AcelaLightManager();
+    static public AcelaTurnoutManager instance() {
+        if (_instance == null) _instance = new AcelaTurnoutManager();
         return _instance;
     }
-    static AcelaLightManager _instance = null;
+    static AcelaTurnoutManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaLightManager.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnoutManager.class.getName());
 }
 
-/* @(#)AcelaLightManager.java */
+/* @(#)AcelaTurnoutManager.java */
