@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -212,7 +212,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     public void configureOption1(String value) { 
         mOpt1 = value;
         if (value.equals(validOption1()[0])) version = 1;
-        else if (value.equals(validOption1()[0])) version = 1;
+        else if (value.equals(validOption1()[1])) version = 2;
     }
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[0];
