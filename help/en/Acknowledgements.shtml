@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.48 2008-07-22 15:27:00 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.49 2008-07-29 07:29:09 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -289,6 +289,8 @@
 	the LocoNet monitor formatting and added support for a new 
 	type of accessory decoder
 	<li>Dustin Shoup, who figured out how to preserve order in XML files
+	<li>Pekka Siiskonen, who suggested we add error numbers to error messages to 
+	    make it easier to discuss which specific error is happening
 	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
 	decoder information on several models
 	<LI>Don Smith, who ran down some NCE decoder information
