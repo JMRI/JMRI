@@ -45,6 +45,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Throttle Messages" target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
    </indexitem>
    <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+   <indexitem text="Error Codes" target="html.Errors"/>
    <indexitem text="Hardware" target="html.hardware.index">
       <indexitem text="Acela (CTI)" target="html.hardware.acela.index"/>
       <indexitem text="C/MRI" target="html.hardware.cmri.CMRI">
@@ -176,10 +177,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
-   <indexitem text="XML" target="html.apps.DecoderPro.IntroXML">
-      <indexitem text="Editors" target="html.doc.Technical.XmlEditors"/>
-      <indexitem text="Viewing Files" target="html.doc.Technical.XmlView"/>
-   </indexitem>
    <indexitem text="USB" target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
    <indexitem text="USS CTC Tools" target="html.tools.uss.index">
       <indexitem text="Code  Button" target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
@@ -187,6 +184,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="OS Indicator" target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
       <indexitem text="Signal Lever" target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
       <indexitem text="Turnout Lever" target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
+   </indexitem>
+   <indexitem text="XML" target="html.apps.DecoderPro.IntroXML">
+      <indexitem text="Editors" target="html.doc.Technical.XmlEditors"/>
+      <indexitem text="Viewing Files" target="html.doc.Technical.XmlView"/>
    </indexitem>
 
 </index>

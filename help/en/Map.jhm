@@ -75,6 +75,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_intro" url="package/jmri/jmrit/display/LayoutEditor.shtml#intro" />
 	<mapID target="html.apps.DecoderPro.XML" url="html/apps/DecoderPro/XML.shtml" />
 	<mapID target="html.apps.DecoderPro.FAQ_lb-xp" url="html/apps/DecoderPro/FAQ.shtml#lb-xp" />
+	<mapID target="html.Errors" url="html/Errors.shtml" />
 	<mapID target="html.hardware.MacintoshSerialPorts" url="html/hardware/MacintoshSerialPorts.shtml" />
 	<mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml" />
 	<mapID target="html.tools.Signals_table" url="html/tools/Signals.shtml#table" />
@@ -259,6 +260,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter2_FunctionPanel" url="html/tools/throttle/ThrottleChapter2.shtml#FunctionPanel" />
 	<mapID target="DecoderProManual.index_index" url="DecoderProManual/index.shtml#index" />
 	<mapID target="html.apps.DecoderPro.FAQ_newdecoder" url="html/apps/DecoderPro/FAQ.shtml#newdecoder" />
+	<mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml" />
 	<mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml" />
 	<mapID target="package.jmri.jmrix.powerline.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_block" url="package/jmri/jmrit/display/LayoutEditor.shtml#block" />
@@ -378,10 +380,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml" />
 	<mapID target="DecoderProManual.index_Setting up" url="DecoderProManual/index.shtml#Setting up" />
 	<mapID target="html.apps.PanelPro.PanelPro" url="html/apps/PanelPro/PanelPro.shtml" />
+	<mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml" />
 	<mapID target="package.jmri.jmrix.acela.serialmon.SerialMonFrame" url="package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml" />
 	<mapID target="html.tools.Lights_lightcontrol" url="html/tools/Lights.shtml#lightcontrol" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolsmenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolsmenu" />
 	<mapID target="html.tools.throttle.ThrottleChapter4_Merging" url="html/tools/throttle/ThrottleChapter4.shtml#Merging" />
+	<mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml" />
 	<mapID target="package.jmri.jmrit.display.EditTurntable" url="package/jmri/jmrit/display/EditTurntable.shtml" />
 	<mapID target="html.doc.Technical.WebSite" url="html/doc/Technical/WebSite.shtml" />
 	<mapID target="package.jmri.jmrit.messager.MessageFrame" url="package/jmri/jmrit/messager/MessageFrame.shtml" />

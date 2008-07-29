@@ -192,6 +192,11 @@
 </li>
    
 <li>
+<a href="html/Errors.shtml">Error Codes</a>
+<ul></ul>
+</li>
+   
+<li>
 <a href="html/hardware/index.shtml">Hardware</a>
 <ul>
       
@@ -785,23 +790,6 @@
 </li>
    
 <li>
-<a href="html/apps/DecoderPro/IntroXML.shtml">XML</a>
-<ul>
-      
-<li>
-<a href="html/doc/Technical/XmlEditors.shtml">Editors</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/doc/Technical/XmlView.shtml">Viewing Files</a>
-<ul></ul>
-</li>
-   
-</ul>
-</li>
-   
-<li>
 <a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB</a>
 <ul></ul>
 </li>
@@ -832,6 +820,23 @@
       
 <li>
 <a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
+<a href="html/apps/DecoderPro/IntroXML.shtml">XML</a>
+<ul>
+      
+<li>
+<a href="html/doc/Technical/XmlEditors.shtml">Editors</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/doc/Technical/XmlView.shtml">Viewing Files</a>
 <ul></ul>
 </li>
    

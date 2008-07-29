@@ -77,6 +77,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="XPressNet (Lenz)" target="html.hardware.XPressNet.index"/>
       <tocitem text="Zimo" target="html.hardware.zimo.Zimo"/>
    </tocitem>
+   <tocitem text="Error Codes" target="html.Errors"/>
    <tocitem text="Tools" target="html.tools.index">
       <tocitem text="Consist Tool" target="html.tools.consisttool.ConsistTool"/>
       <tocitem text="Clocks" target="html.tools.fastclock.index">
