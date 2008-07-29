@@ -8,27 +8,31 @@ import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
+import java.util.ResourceBundle;
+
 /**
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.ProgrammingError");
+    
     public String decodeErrorCode(int code) {
-        if (code == ProgListener.OK) return "OK";
+        if (code == ProgListener.OK) return rb.getString("OK");
         StringBuffer sbuf = new StringBuffer("");
         // add each code; terminate each string with "; " please.
-        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append("no locomotive detected; ");
-        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append("programmer busy; ");
-        if ((code & ProgListener.NotImplemented) != 0) sbuf.append("requested not implemented in command station; ");
-        if ((code & ProgListener.UserAborted) != 0) sbuf.append("aborted by user; ");
-        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append("confirm failed; ");
-        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append("timeout talking to command station; ");
-        if ((code & ProgListener.UnknownError) != 0) sbuf.append("Unknown error; ");
-        if ((code & ProgListener.NoAck) != 0) sbuf.append("No acknowledge from locomotive; ");
-	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append("Short Circuit on Programming Track; ");
+        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append(rb.getString("NoLocoDetected"));
+        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append(rb.getString("ProgrammerBusy"));
+        if ((code & ProgListener.NotImplemented) != 0) sbuf.append(rb.getString("NotImplemented"));
+        if ((code & ProgListener.UserAborted) != 0) sbuf.append(rb.getString("UserAborted"));
+        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append(rb.getString("ConfirmFailed"));
+        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append(rb.getString("FailedTimeout"));
+        if ((code & ProgListener.UnknownError) != 0) sbuf.append(rb.getString("UnknownError"));
+        if ((code & ProgListener.NoAck) != 0) sbuf.append(rb.getString("NoAck"));
+	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(rb.getString("ProgrammingShort"));
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
