@@ -14,13 +14,12 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.19 2008-07-06 16:15:04 jacobsen Exp $ -->
-		<version author="Bruce Shanks"
-					version="13" lastUpdated="20080614"/>
-		<version author="Howard G. Penny"
-					version="11" lastUpdated="20050713"/>
-		<version author="Michael Mosher" version="12" lastUpdated="20070717"/>
-
+<!-- $Id: Comprehensive.xml,v 1.20 2008-07-29 17:19:59 jacobsen Exp $ -->
+        <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
+        <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
+		<version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
+        <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
+        
       <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
       <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
       <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
@@ -31,6 +30,7 @@
       <!-- Version 11 - updated tooltip for Decoder Version -->
       <!-- Version 12 - added sound group 3  -->
       <!-- Version 13 - two panes for speed control -->
+      <!-- Version 14 - added EMF fields to Motor pane and more sound options-->
 
 <programmer decoderFilePanes="yes" showEmptyPanes="default">
 
@@ -82,13 +82,16 @@
 			<label label=" "/>
 			<display item="DC Brake Momentum"
 				tooltip="Governs how loco responds in DC powered track block" />
-			<display item="Total PWM Period"
+			<display item="Motor PWM Frequency"
 				tooltip="Sets the motor drive frequency" />
 			<display item="Dither frequency"
 				tooltip="Sets the frequency of starting voltage pulses" />
 			<display item="Dither option"
 				tooltip="Sets the amplitude of the starting voltage pulses" />
 			<label label=" "/>
+                        <display item="Load Control" />
+                        <display item="EMF Control Reference" 
+                                tooltip="If the engine doesn't reach maximum speed, reduce this value" />
 			<display item="EMF Static Config"
 				tooltip="EMF Static Config" />
 			<display item="EMF Dynamic Config"
@@ -200,116 +203,118 @@
 		</column>
 	</pane>
 
-	<pane name="Lights">
-		<column>
-			<display item="Directional Headlights"/>
-			<display item="Global lighting option 1"/>
-			<display item="Global lighting option 2"/>
-			<display item="Global lighting option 3"/>
-			<display item="Global lighting option 4"/>
-			<label label=" "/>
+<pane name="Lights">
+    
+    <column>
+        <display item="Directional Headlights"/>
+        <display item="Global lighting option 1"/>
+        <display item="Global lighting option 2"/>
+        <display item="Global lighting option 3"/>
+        <display item="Global lighting option 4"/>
+        <label label=" "/>
+        <label label=" "/>
 
-			<display item="Function F0F effect generated"/>
-			<display item="Function F0F behavior"/>
-			<display item="Function F0F options"/>
-			<display item="Function F0F option 2"/>
-			<display item="Function F0F option 3"/>
-			<display item="Function F0F option 4"/>
-			<label label=" "/>
+        <display item="Function F0F effect generated"/>
+        <display item="Function F0F behavior"/>
+        <display item="Function F0F options"/>
+        <display item="Function F0F option 2"/>
+        <display item="Function F0F option 3"/>
+        <display item="Function F0F option 4"/>
+        <label label=" "/>
 
-			<display item="Function F0R effect generated"/>
-			<display item="Function F0R behavior"/>
-			<display item="Function F0R options"/>
-			<display item="Function F0R option 2"/>
-			<display item="Function F0R option 3"/>
-			<display item="Function F0R option 4"/>
-			<label label=" "/>
+        <display item="Function F0R effect generated"/>
+        <display item="Function F0R behavior"/>
+        <display item="Function F0R options"/>
+        <display item="Function F0R option 2"/>
+        <display item="Function F0R option 3"/>
+        <display item="Function F0R option 4"/>
+        <label label=" "/>
 
-			<display item="Function 1 effect generated"/>
-			<display item="Function 1 behavior"/>
-			<display item="Function 1 options"/>
-			<display item="Function 1 option 2"/>
-			<display item="Function 1 option 3"/>
-			<display item="Function 1 option 4"/>
-			<label label=" "/>
+        <display item="Function 1 effect generated"/>
+        <display item="Function 1 behavior"/>
+        <display item="Function 1 options"/>
+        <display item="Function 1 option 2"/>
+        <display item="Function 1 option 3"/>
+        <display item="Function 1 option 4"/>
+        <label label=" "/>
 
-			<display item="Function 2 effect generated"/>
-			<display item="Function 2 behavior"/>
-			<display item="Function 2 options"/>
-			<display item="Function 2 option 2"/>
-			<display item="Function 2 option 3"/>
-			<display item="Function 2 option 4"/>
-			<label label=" "/>
+        <display item="Function 2 effect generated"/>
+        <display item="Function 2 behavior"/>
+        <display item="Function 2 options"/>
+        <display item="Function 2 option 2"/>
+        <display item="Function 2 option 3"/>
+        <display item="Function 2 option 4"/>
+        <label label=" "/>
 
-			<display item="Function 3 effect generated"/>
-			<display item="Function 3 behavior"/>
-			<display item="Function 3 options"/>
-			<label label=" "/>
+        <display item="Function 3 effect generated"/>
+        <display item="Function 3 behavior"/>
+        <display item="Function 3 options"/>
+        <label label=" "/>
 
-			<display item="Function 4 effect generated"/>
-			<display item="Function 4 behavior"/>
-			<display item="Function 4 options"/>
-			<label label=" "/>
+        <display item="Function 4 effect generated"/>
+        <display item="Function 4 behavior"/>
+        <display item="Function 4 options"/>
+        <label label=" "/>
 
-			<display item="Function 5 effect generated"/>
-			<display item="Function 5 behavior"/>
-			<display item="Function 5 options"/>
-			<label label=" "/>
+        <display item="Function 5 effect generated"/>
+        <display item="Function 5 behavior"/>
+        <display item="Function 5 options"/>
+        <label label=" "/>
 
-			<display item="Function 6 effect generated"/>
-			<display item="Function 6 behavior"/>
-			<display item="Function 6 options"/>
-			<label label=" "/>
+        <display item="Function 6 effect generated"/>
+        <display item="Function 6 behavior"/>
+        <display item="Function 6 options"/>
+        <label label=" "/>
 
-			<display item="Function 7 effect generated"/>
-			<display item="Function 7 behavior"/>
-			<display item="Function 7 options"/>
-			<label label=" "/>
+        <display item="Function 7 effect generated"/>
+        <display item="Function 7 behavior"/>
+        <display item="Function 7 options"/>
+        <label label=" "/>
 
-			<display item="Function 8 effect generated"/>
-			<display item="Function 8 behavior"/>
-			<display item="Function 8 options"/>
-		</column>
-		<column>
-			<display item="Output 1 effect generated"/>
-			<display item="Output 1 behavior"/>
-			<display item="Output 1 options"/>
-			<label label=" "/>
+        <display item="Function 8 effect generated"/>
+        <display item="Function 8 behavior"/>
+        <display item="Function 8 options"/>
+    </column>
+    <column>
+        <display item="Output 1 effect generated"/>
+        <display item="Output 1 behavior"/>
+        <display item="Output 1 options"/>
+        <label label=" "/>
 
-			<display item="Output 2 effect generated"/>
-			<display item="Output 2 behavior"/>
-			<display item="Output 2 options"/>
-			<label label=" "/>
+        <display item="Output 2 effect generated"/>
+        <display item="Output 2 behavior"/>
+        <display item="Output 2 options"/>
+        <label label=" "/>
 
-			<display item="Output 3 effect generated"/>
-			<display item="Output 3 behavior"/>
-			<display item="Output 3 options"/>
-			<label label=" "/>
+        <display item="Output 3 effect generated"/>
+        <display item="Output 3 behavior"/>
+        <display item="Output 3 options"/>
+        <label label=" "/>
 
-			<display item="Output 4 effect generated"/>
-			<display item="Output 4 behavior"/>
-			<display item="Output 4 options"/>
-			<label label=" "/>
+        <display item="Output 4 effect generated"/>
+        <display item="Output 4 behavior"/>
+        <display item="Output 4 options"/>
+        <label label=" "/>
 
-			<display item="Output 5 effect generated"/>
-			<display item="Output 5 behavior"/>
-			<display item="Output 5 options"/>
-			<label label=" "/>
+        <display item="Output 5 effect generated"/>
+        <display item="Output 5 behavior"/>
+        <display item="Output 5 options"/>
+        <label label=" "/>
 
-			<display item="Output 6 effect generated"/>
-			<display item="Output 6 behavior"/>
-			<display item="Output 6 options"/>
-			<label label=" "/>
+        <display item="Output 6 effect generated"/>
+        <display item="Output 6 behavior"/>
+        <display item="Output 6 options"/>
+        <label label=" "/>
 
-			<display item="Output 7 effect generated"/>
-			<display item="Output 7 behavior"/>
-			<display item="Output 7 options"/>
-			<label label=" "/>
+        <display item="Output 7 effect generated"/>
+        <display item="Output 7 behavior"/>
+        <display item="Output 7 options"/>
+        <label label=" "/>
 
-			<display item="Output 8 effect generated"/>
-			<display item="Output 8 behavior"/>
-			<display item="Output 8 options"/>
-		</column>
+        <display item="Output 8 effect generated"/>
+        <display item="Output 8 behavior"/>
+        <display item="Output 8 options"/>
+    </column>
 </pane>
 
 <pane name="Analog Controls">
@@ -539,6 +544,16 @@
 			<display item="Sound Option 6" />
 			<display item="Sound Option 7" />
 			<display item="Sound Option 8" />
+                        <label label=" "/> 
+                        <display item="Sound Option 9" />
+			<display item="Sound Option 10" />
+			<display item="Sound Option 11" />
+			<display item="Sound Option 12" />
+			<display item="Sound Option 13" />
+			<display item="Sound Option 14" />
+			<display item="Sound Option 15" />
+			<display item="Sound Option 16" />
+                        
 		</column>
 		<column>
 			<display item="Sound Group 1 Control" format="checkbox" />
@@ -550,6 +565,15 @@
 			<display item="Sound Group 1 Option 6" />
 			<display item="Sound Group 1 Option 7" />
 			<display item="Sound Group 1 Option 8" />
+                        <label label=" "/>
+                        <display item="Sound Group 1 Option 9" />
+			<display item="Sound Group 1 Option 10" />
+			<display item="Sound Group 1 Option 11" />
+			<display item="Sound Group 1 Option 12" />
+			<display item="Sound Group 1 Option 13" />
+			<display item="Sound Group 1 Option 14" />
+			<display item="Sound Group 1 Option 15" />
+			<display item="Sound Group 1 Option 16" />
 		</column>
 		<column>
 			<display item="Sound Group 2 Control" format="checkbox" />
@@ -561,6 +585,15 @@
 			<display item="Sound Group 2 Option 6" />
 			<display item="Sound Group 2 Option 7" />
 			<display item="Sound Group 2 Option 8" />
+                        <label label=" "/>
+                        <display item="Sound Group 2 Option 9" />
+			<display item="Sound Group 2 Option 10" />
+			<display item="Sound Group 2 Option 11" />
+			<display item="Sound Group 2 Option 12" />
+			<display item="Sound Group 2 Option 13" />
+			<display item="Sound Group 2 Option 14" />
+			<display item="Sound Group 2 Option 15" />
+			<display item="Sound Group 2 Option 16" />
 		</column>
 		<column>
 			<row>
@@ -813,5 +846,4 @@
 
 </programmer>
 </programmer-config>
-
 
