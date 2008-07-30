@@ -14,7 +14,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -53,7 +53,20 @@ public class AcelaLight extends AbstractLight {
         // Extract the Bit from the name
         mBit = AcelaAddress.getBitFromSystemName(systemName);
         // Set initial state
-        setState( OFF );
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+
+        if (mNode!=null) {
+            int initstate;
+            int initbit;
+            initbit = mBit - mNode.getStartingOutputAddress();
+            initstate = mNode.getOutputInit(initbit);
+            if (initstate == 1) {
+                setState( ON );
+            } else {
+                setState( OFF );
+            }
+        }
+        //  setState( OFF );
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );
         setControlSensor( null );
