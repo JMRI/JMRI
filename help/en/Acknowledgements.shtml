@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.49 2008-07-29 07:29:09 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.50 2008-07-30 02:28:02 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -333,6 +333,8 @@
     made multiple small improvements to LocoNet internals, especially including the LocoNet monitor, 
     fixed a nasty problem with looping LocoNet throttles, and 
     added a command station option to the TCP connection.
+    <li>Jos Wils updated the ESU decoder definitions, and extended
+    the Comprehensive programmer format for really-high-functionality decoders.
 <a name="X"></A>
 <a name="Y"></A>
 	<LI>Mike Yawn, who provided the instructions for building under Eclipse

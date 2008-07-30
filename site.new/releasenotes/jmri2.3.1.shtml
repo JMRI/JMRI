@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.3 2008-07-28 22:53:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.4 2008-07-30 02:26:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -157,11 +157,31 @@ The CBUS
 <a href="http://jmri.sf.net/help/en/html/hardware/can/cbus/Names.shtml">naming page</a>
 discusses various optional forms.
 
+<p>
+Jos Wils provided updated ESU decoder definitions, and extended the Comprehensive
+programmer format to work well with them.
+
 <P>
 The JMRI 
 <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">editor for Digitrax SDF sound definitions</a>
 has been updated with more editing options and some layout 
 improvements.
+
+<p>
+Pekka Siiskonen suggested that we add "error numbers" to e.g. the
+programming error messages, so that when people report a problem
+it's really clear which error they've hit.  We've started to do this, 
+including a 
+<a href="http://jmri.sf.net/help/en/html/Errors.shtml">page that serves as a central registry</a>
+of error numbers.
+
+<p>
+Bob Coleman updated the CTI Acela support to include
+all types of sensors and initial configuration of sensors and outputs.
+He's also added the start of formal support for Acela Turnouts.
+
+<p>
+Ronnie Pinkerton updated the throttle so it uses screen space more efficiently.
 
 <!--#include virtual="/Footer" -->
 
