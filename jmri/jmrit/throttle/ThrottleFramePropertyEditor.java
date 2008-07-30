@@ -1,16 +1,18 @@
 package jmri.jmrit.throttle;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
+import javax.swing.JInternalFrame;
 
 /**
  * A very specific dialog for editing the properties of a ThrottleFrame
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -21,6 +23,8 @@ public class ThrottleFramePropertyEditor extends JDialog
 	private JTextField titleField;
 	
 	private JList titleType;
+	
+	private JCheckBox borderOff;
 
     private String [] titleTextTypes = {"address", "text", "textAddress", "addressText"};
     private String [] titleTextTypeNames = {
@@ -41,7 +45,7 @@ public class ThrottleFramePropertyEditor extends JDialog
     }
 
     /**
-     * Create, initilize, and place the GUI objects.
+     * Create, initialize, and place the GUI objects.
      */
     private void initGUI()
     {
@@ -87,7 +91,14 @@ public class ThrottleFramePropertyEditor extends JDialog
         propertyPanel.add(new JLabel(rb.getString("SelectTitleTypePrompt")), constraints);
         constraints.gridx++;
         propertyPanel.add(titleType, constraints);
-        
+
+		borderOff = new JCheckBox(rb.getString("FrameBorderOffTitle"), false);
+        constraints.gridy++;
+        constraints.gridx = 0;
+        propertyPanel.add(new JLabel(rb.getString("FrameDecorationsTitle")), constraints);
+        constraints.gridx++;
+        propertyPanel.add(borderOff, constraints);
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
@@ -123,11 +134,15 @@ public class ThrottleFramePropertyEditor extends JDialog
      */
     public void setThrottleFrame(ThrottleFrame f)
     {
+    	Dimension bSize = new Dimension (0,0);
         this.frame = f;
         initGUI();
         pack();
         titleField.setText(frame.titleText);
 		titleField.selectAll();
+		bSize=((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getControlPanel().getUI()).getNorthPane().getPreferredSize();
+		if (bSize.height == 0) borderOff.setSelected(true);
+		else borderOff.setSelected(false);
     }
 
     /**
@@ -137,9 +152,30 @@ public class ThrottleFramePropertyEditor extends JDialog
     {
         if (isDataValid())
         {
+        	int bSize = Integer.parseInt(rb.getString("FrameSize"));
+        	JInternalFrame myFrame;
         	frame.titleText = titleField.getText();
             frame.titleTextType = titleTextTypes[titleType.getSelectedIndex()];
             frame.setFrameTitle();
+            if (borderOff.isSelected()) bSize = 0;
+            myFrame = frame.getControlPanel();
+            ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+            if (myFrame.isVisible()) {
+            	myFrame.setVisible(false);
+            	myFrame.setVisible(true);
+            }
+            myFrame = frame.getFunctionPanel();
+            ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+            if (myFrame.isVisible()) {
+            	myFrame.setVisible(false);
+            	myFrame.setVisible(true);
+            }
+            myFrame = frame.getAddressPanel();
+            ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+            if (myFrame.isVisible()) {
+            	myFrame.setVisible(false);
+            	myFrame.setVisible(true);
+            }
             finishEdit();
         }
     }

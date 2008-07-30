@@ -45,7 +45,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.38 $
+ * @version    $Revision: 1.39 $
  */
 /**
  * @author DSM
@@ -76,6 +76,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     private JMenuItem viewAllButtons;
     
     private DccThrottle throttle;
+    private Dimension bDim;
     
     PowerPane powerControl  = new PowerPane();
     PowerManager powerMgr = null;
@@ -577,9 +578,12 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public Element getXml()
     {
+    	bDim = new Dimension (0,0);
         Element me = new Element("ThrottleFrame");
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);
+        bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI)controlPanel.getUI()).getNorthPane().getPreferredSize();
+        me.setAttribute("border",Integer.toString(bDim.height));
         java.util.ArrayList children =
             new java.util.ArrayList(1);
         WindowPreferences wp = new WindowPreferences();
@@ -607,6 +611,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public void setXml(Element e)
     {
+    	int bSize = 23;
+        this.setTitle(e.getAttribute("title").getValue());
+        // Get InternalFrame border size
+        if (e.getAttribute("border") != null) bSize = Integer.parseInt((e.getAttribute("border").getValue()));
+
         titleText = e.getAttribute("title").getValue();
         titleTextType = e.getAttribute("titleType").getValue();
         
@@ -615,10 +624,13 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         wp.setPreferences(this, window);
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         Element functionPanelElement = e.getChild("FunctionPanel");
         functionPanel.setXml(functionPanelElement);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) functionPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         
         setFrameTitle();
     }
