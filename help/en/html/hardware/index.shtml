@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.21 2008-07-01 04:22:41 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.22 2008-07-30 02:28:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -160,6 +160,11 @@
 	        <p class="dl">Configure: <A HREF="tmcc/index.shtml">TMCC Command Base</a></p>
 	    </dd>
 
+
+	    <dt class="im"><a href="http://www.merg.org.uk/">
+	    <img src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100"></a></dt>
+	    <dt>MERG CBUS</dt>
+	    <dd><p class="dl">Configure: <A HREF="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
 	    <dt class="im"><a href="http://www.ncedcc.com/">
 	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
