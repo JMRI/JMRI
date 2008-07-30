@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -259,7 +259,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
             	log.debug("send init message: "+m);
-            	m.setTimeout(8000);  // wait for init to finish (milliseconds)
+            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
             	return m;
@@ -267,7 +267,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if (needToCreateNodesState == 1) {
             	AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
             	log.debug("send init2 message: "+m);
-            	m.setTimeout(8000);  // wait for init to finish (milliseconds)
+            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
         	return m;

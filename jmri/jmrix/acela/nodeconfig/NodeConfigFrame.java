@@ -18,7 +18,7 @@ import jmri.jmrix.acela.AcelaSensorManager;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -1355,10 +1355,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText3.setText(infoStatus3);
         
         d8outputConfigModel.setEditMode(false);
+        swswitchConfigModel.setEditMode(false);
+        ymswitchConfigModel.setEditMode(false);
         TBoutputConfigModel.setEditMode(false);
         TBsensorConfigModel.setEditMode(false);
-        wmsensorConfigModel.setEditMode(false);
         smswitchConfigModel.setEditMode(false);
+        wmsensorConfigModel.setEditMode(false);
+        sysensorConfigModel.setEditMode(false);
         contentPane.repaint();
     }
 
@@ -1470,10 +1473,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText3.setText(editStatus3);
 
         d8outputConfigModel.setEditMode(true);
+        swswitchConfigModel.setEditMode(true);
+        ymswitchConfigModel.setEditMode(true);
         TBoutputConfigModel.setEditMode(true);
         TBsensorConfigModel.setEditMode(true);
-        wmsensorConfigModel.setEditMode(true);
         smswitchConfigModel.setEditMode(true);
+        wmsensorConfigModel.setEditMode(true);
+        sysensorConfigModel.setEditMode(true);
         contentPane.repaint();
 
     }
@@ -1595,12 +1601,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                                     Integer.toString(nodeAddress));
         errorInStatus1 = true;
 
-            
         d8outputConfigModel.setEditMode(false);
+        swswitchConfigModel.setEditMode(false);
+        ymswitchConfigModel.setEditMode(false);
         TBoutputConfigModel.setEditMode(false);
         TBsensorConfigModel.setEditMode(false);
-        wmsensorConfigModel.setEditMode(false);
         smswitchConfigModel.setEditMode(false);
+        wmsensorConfigModel.setEditMode(false);
+        sysensorConfigModel.setEditMode(false);
+
         contentPane.repaint();
 
     }
@@ -1727,10 +1736,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText3.setText(infoStatus3);
         
         d8outputConfigModel.setEditMode(false);
+        swswitchConfigModel.setEditMode(false);
+        ymswitchConfigModel.setEditMode(false);
         TBoutputConfigModel.setEditMode(false);
         TBsensorConfigModel.setEditMode(false);
-        wmsensorConfigModel.setEditMode(false);
         smswitchConfigModel.setEditMode(false);
+        wmsensorConfigModel.setEditMode(false);
+        sysensorConfigModel.setEditMode(false);
+
         contentPane.repaint();
     }
 
