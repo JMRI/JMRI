@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.5 2008-03-09 20:27:30 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.6 2008-07-31 18:59:59 djduchamp Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -89,35 +89,38 @@ to control the signal. This will vary depending on your hardware, and must match
 	<dt class="left"><a name="table"><h3>Signal Table</h3></a></dt>
 	<dd class="top">
 
-<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
-All the signals that JMRI knows about can be referenced
+<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="750" HEIGHT="332" HSPACE="0" VSPACE="0"></A>
+<p>All the signals that JMRI knows about can be referenced
 using the "Signal Table" tool in the Tools menu of most JMRI programs.
-There are five columns in the table:
+There are eight columns in the table:
 <UL>
-<LI>The <b>system name</b> is assigned to the signal when it's created, 
+<LI>The system name is assigned to the signal when it's created, 
 and can't be changed.
 <LI>If you're interested in having your signals carry "human readable"
-names, you can click in the <b>User Name</b> column and change that information
+names, you can click in the "User Name" column and change that information
 to whatever you want.
 <LI>As the signal changes, for whatever reason, the current
-appearance will show in the <b>State</b> column of the table.  You can also click on the
-appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark. The 
-system hardware will follow these changes.
-
-<LI>The check box in the <b>Lit</b> column lets you see whether the
-signal head on the layout is lit (checked) or stays dark (unchecked). This may 
-also be controlled automatically with the SSL "approach" lighting option or 
-from Logix. <i>Note:</i> This only affects the actual layout hardware, not any 
-panel indications nor signal state logic.
- <LI>The check box in the <b>Held</b> column shows the "held" property of the
-signal, and allows you to change it.  This property may be used by CTC
-machine logic or Logix to say "Don't change this signal head from red, even if it 
+appearance will show in the table in the "State" column.  You can also click on the
+appearance button to cycle through the available appearances:
+red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
+<LI> The "Comment" column is for your use to record any comment you may want
+to help keep track of your signal heads. It is for information only.
+<LI>Click the "Delete" button in a specific row to delete the signal head. 
+Remember to remove any signal head icons associated with this signal head 
+and all references to this signal head. Use this button with caution!
+<LI>The check box in the "Lit" column lets you control whether the
+signal head on the layout is lit (checked) or stays dark (unchecked).
+<LI>The check box in the "Held" column shows the "held" property of the
+signal, and allows you to change it.  This property is used by e.g. CTC
+machine logic to say "Don't change this signal head from red, even if it 
 would be safe to do so, because I want to hold a train here".
+<LI>Click the "Edit" button in a row to view or change optional information
+for a signal head. Notes: System name and type cannot be changed. Only one 
+signal head may be edited at a time.
 </UL>
 <A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<P>To define a new signal, click on the <b>Add New Signal</b> button.  It will
-prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
+<P>To define a new signal, click on the <b>Add...</b> button.  It will
+prompt you for the signal type (Triple Output; Double Output; SE8c; etc), and
 whatever setup information is needed for your choice.
 <P> This information is saved with the configuration in an XML file, along
 with control panel setup, Logix, Routes, and similar stuff.  For more information

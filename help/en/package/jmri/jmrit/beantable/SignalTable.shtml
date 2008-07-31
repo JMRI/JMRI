@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalTable.shtml,v 1.7 2008-07-31 16:03:27 djduchamp Exp $ -->
+<!-- $Id: SignalTable.shtml,v 1.8 2008-07-31 18:58:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,9 +24,9 @@
 <H1>The Signal Table
 </H1>
 
-<A href="../../../../html/tools/images/SigTable.gif"><IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="149" HEIGHT="179" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<A href="../../../../html/tools/images/SigTable.gif"><IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
-All the signals that JMRI knows about can be referenced
+<p>All the signals that JMRI knows about can be referenced
 using the "Signal Table" tool in the Tools menu of most JMRI programs.
 There are eight columns in the table:
 <UL>
