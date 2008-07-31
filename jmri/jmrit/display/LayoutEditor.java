@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1433,7 +1433,7 @@ public class LayoutEditor extends JmriJFrame {
 		Point pt = getLocationOnScreen();
 		upperLeftX = pt.x;
 		upperLeftY = pt.y;
-		log.debug("Position - "+upperLeftX+","+upperLeftY+" Size - "+panelWidth+","+panelHeight);		
+		log.debug("Position - "+upperLeftX+","+upperLeftY+" Size - "+panelWidth+","+panelHeight);	
 		setDirty(true);
 	}
 
@@ -4423,9 +4423,10 @@ public class LayoutEditor extends JmriJFrame {
 	}
 	
 	private void drawPanelGrid(Graphics2D g2) {
+		Dimension dim = getSize();
 		double pix = 10.0;
-		double maxX = width;
-		double maxY = height;
+		double maxX = dim.width;
+		double maxY = dim.height;
 		Point2D startPt = new Point2D.Double(0.0, 10.0);
 		Point2D stopPt = new Point2D.Double(maxX, 10.0);
 		BasicStroke narrow = new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
