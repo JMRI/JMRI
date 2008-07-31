@@ -17,7 +17,7 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class TripleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -102,6 +102,9 @@ public class TripleTurnoutSignalHead extends DefaultSignalHead {
     public Turnout getRed() {return mRed;}
     public Turnout getYellow() {return mYellow;}
     public Turnout getGreen() {return mGreen;}
+	public void setRed(Turnout t) {mRed=t;}
+	public void setYellow(Turnout t) {mYellow=t;}
+	public void setGreen(Turnout t) {mGreen=t;}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TripleTurnoutSignalHead.class.getName());
 }

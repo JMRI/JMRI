@@ -170,6 +170,20 @@ public class LsDecSignalHead extends DefaultSignalHead {
     public int getFlashYellowState() {return mFlashYellowState;}
     public int getFlashGreenState() {return mFlashGreenState;}
     public int getDarkState() {return mDarkState;}
+    public void setRed(Turnout t) {mRed = t;}
+    public void setYellow(Turnout t) {mYellow = t;}
+    public void setGreen(Turnout t) {mGreen = t;}
+    public void setFlashRed(Turnout t) {mFlashRed = t;}
+    public void setFlashYellow(Turnout t) {mFlashYellow = t;}
+    public void setFlashGreen(Turnout t) {mFlashGreen = t;}
+    public void setDark(Turnout t) {mDark = t;}
+    public void setRedState(int i) {mRedState = i;}
+    public void setYellowState(int i) {mYellowState = i;}
+    public void setGreenState(int i) {mGreenState = i;}
+    public void setFlashRedState(int i) {mFlashRedState = i;}
+    public void setFlashYellowState(int i) {mFlashYellowState = i;}
+    public void setFlashGreenState(int i) {mFlashGreenState = i;}
+    public void setDarkState(int i) {mDarkState = i;}
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LsDecSignalHead.class.getName());
     
