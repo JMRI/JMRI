@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.4 2008-07-30 02:26:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.5 2008-08-01 05:53:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -108,10 +108,11 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 <h3>Changes since test version 2.2:</h3>
 
-Several updates to CBus support, particulary when using the MERG CAN adapter.
+
+Ian Birchenough added a decoder definition for the Lenz Standard decoder.
 
 <p>
-Ian Birchenough added a decoder definition for the Lenz Standard decoder.
+Dan Boudreau added some support for accessory programming modes.
 
 <p>
 A decoder definition for the new Soundtraxx Diesel Tsunami is included,
@@ -182,6 +183,18 @@ He's also added the start of formal support for Acela Turnouts.
 
 <p>
 Ronnie Pinkerton updated the throttle so it uses screen space more efficiently.
+
+<p>
+David Duchamp fixed a bug in the screen grid of the Layout Editor.
+
+<p>
+A problem with indexed CVs (as in QSI decoders) and adding new entries
+to decoder definitions has been fixed.
+
+<p>
+David Duchamp added an "edit" capability to the Signal Table, so
+you can now change the details (but not the type) of a signal definition.
+He also updated the help pages for signals and the Signal Table.
 
 <!--#include virtual="/Footer" -->
 
