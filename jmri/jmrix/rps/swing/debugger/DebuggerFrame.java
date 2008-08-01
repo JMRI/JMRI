@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 
@@ -25,14 +25,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     public DebuggerFrame() {
         super();
         
-        times = new JTextField[NUMSENSORS];
-        residuals = new JLabel[NUMSENSORS];
-        
-        for (int i = 0; i < NUMSENSORS; i++) {
-            times[i] = new JTextField(10);
-            times[i].setText("");
-            residuals[i] = new JLabel("          ");
-        }
+        NUMSENSORS = Engine.instance().getReceiverCount();
+
         setTitle(title());
     }
 
@@ -50,13 +44,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     JComboBox mode;
     JButton doButton;
-    
-    static final int NUMSENSORS = 6;
-    
-    JTextField[] times;
-    JLabel[] residuals;
-    
-    
+
     JTextField vs = new JTextField(18);
     JTextField offset = new JTextField(10);
 
@@ -67,7 +55,12 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     
     JTextField id = new JTextField(5);
     
+    DebuggerTimePane timep = new DebuggerTimePane();
+    
+    int NUMSENSORS;
+    
     public void initComponents() {
+        
         nf = java.text.NumberFormat.getInstance();
         nf.setMinimumFractionDigits(1);
         nf.setMaximumFractionDigits(1);
@@ -84,21 +77,9 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         
         p.add(new JLabel("Time measurements: "));
         
-        JPanel p3 = new JPanel();
-        p3.setLayout(new java.awt.GridLayout(NUMSENSORS, 2));
-        
-        for (int i = 0; i< NUMSENSORS; i++) {
-            p1 = new JPanel();
-            p1.setLayout(new FlowLayout());
-            p1.add(new JLabel("r"+(i+1)+":"));
-            p1.add(times[i]);   
-            p3.add(p1);
-            p1 = new JPanel();
-            p1.add(new JLabel("r-t: "));
-            p1.add(residuals[i]);
-            p3.add(p1);         
-        }
-        p.add(p3);
+        timep.initComponents();
+        JScrollPane sc = new JScrollPane(timep);
+        p.add(sc);
 
         // add id field at bottom
         JPanel p5 = new JPanel();
@@ -216,7 +197,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         }
         // item 0 is the ID, not used right now
         for (int i = 0; i< Math.min(NUMSENSORS, readingInput.getColumnCount()+1); i++) {
-            times[i].setText(readingInput.get(i+1));
+            timep.times[i].setText(readingInput.get(i+1));
         }
     }
     
@@ -277,15 +258,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
                                         measurementFileChooser.getSelectedFile());
         measurementInput = new com.csvreader.CsvReader(reader);
     }
-
-    void setResidual(int i, Measurement m) {
-        Point3d p = Engine.instance().getReceiverPosition(i+1);
-        Point3d x = new Point3d((float)m.getX(), (float)m.getY(), (float)m.getZ());
-        
-        double rt = p.distance(x)/Engine.instance().getVSound();
-        int res = (int) (rt-m.getReading().getValue(i));
-        residuals[i].setText(""+res);
-    }
     
     Measurement lastPoint = null;
     
@@ -293,15 +265,15 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // parse input
         int count = 0;
         for (int i = 0; i<NUMSENSORS; i++) {
-            if (!times[i].getText().equals("")) count++;
+            if (!timep.times[i].getText().equals("")) count++;
         }
         
         double[] values = new double[count];
         
         int index = 0;
         for (int i = 0; i<NUMSENSORS; i++) {
-            if (!times[i].getText().equals("")) {
-                values[index] = Double.valueOf(times[i].getText()).doubleValue();
+            if (!timep.times[i].getText().equals("")) {
+                values[index] = Double.valueOf(timep.times[i].getText()).doubleValue();
                 index++;
             }
         }
@@ -332,12 +304,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // to reduce the work used.
 
         id.setText(""+r.getID());
-        
-        // Display this set of time values
-        for (int i = 0; i<Math.min(r.getNSample(), times.length); i++) {
-            times[i].setText(nf.format(r.getValue(i)));
-        }
-        
     }
 
     void doMeasurementFromPositionFields() {
@@ -368,12 +334,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         y.setText(nf.format(m.getY()));
         z.setText(nf.format(m.getZ()));
         code.setText(""+m.getCode());
-        try {
-            for (int i=0; i<NUMSENSORS; i++) 
-                setResidual(i, m);
-        } catch (Exception e) {
-            log.error("Error setting residual: "+e);
-        }
     }
     
     // to find and remember the input files
