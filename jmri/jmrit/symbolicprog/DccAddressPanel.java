@@ -10,7 +10,7 @@ import javax.swing.*;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -33,11 +33,7 @@ public class DccAddressPanel extends JPanel {
     public DccAddressPanel(VariableTableModel mod, String label) {
         variableModel = mod;
 
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-        add(new JLabel(label));
-        val.setToolTipText("This field shows the DCC address currently in use. CV1 provides the short address; CV17 & 18 provide the long address");
-        add(val);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // arrange for the field to be updated when any of the variables change
         java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
@@ -61,6 +57,11 @@ public class DccAddressPanel extends JPanel {
         if (addMode != null) {
             add(addMode.getRep("radiobuttons"));
         }
+
+        // show address field
+        add(new JLabel(label));
+        val.setToolTipText("This field shows the DCC address currently in use. CV1 provides the short address; CV17 & 18 provide the long address");
+        add(val);
 
         // update initial contents & color
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
