@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 
 
@@ -283,12 +283,14 @@ public class Engine implements ReadingListener {
     }
     
     public void loadPollConfig(File file) throws org.jdom.JDOMException, IOException {
-        PollingFile pf = new PollingFile();
-        pf.loadFile(file);  
-        // first make sure transmitters defined      
-        pf.getTransmitters(this);
-        // and possibly start polling
-        pf.getPollValues();
+        if (file.exists()) {
+            PollingFile pf = new PollingFile();
+            pf.loadFile(file);  
+            // first make sure transmitters defined      
+            pf.getTransmitters(this);
+            // and possibly start polling
+            pf.getPollValues();
+        }
     }    
 
     public Transmitter getTransmitterByAddress(int addr) { 
