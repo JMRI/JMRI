@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -33,12 +33,16 @@ public class IndexedVariableValue extends VariableValue
                                 int cvNum, String mask, int minVal, int maxVal,
                                 Vector v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        if (log.isDebugEnabled())
+            log.debug("ctor with cvName "+cvName+", cvNum "+cvNum);
         _row    = row;
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 3);
         _defaultColor = _value.getBackground();
         CvValue cv = ((CvValue)_cvVector.elementAt(_row));
+        if (log.isDebugEnabled())
+            log.debug("cv found as "+cv);        
         cv.addPropertyChangeListener(this);
         if (cv.getInfoOnly()) {
             cv.setState(CvValue.READ);
@@ -89,6 +93,8 @@ public class IndexedVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("enter updatedTextField");
         // called for new values - set the Indexed CV as needed
         CvValue cv = (CvValue)_cvVector.elementAt(_row);
+        if (log.isDebugEnabled())
+            log.debug("updatedTextField refs CV "+cv);
         //
         int oldVal = cv.getValue();
         int newVal;  // entered value
@@ -469,7 +475,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.11 $
+     * @version     $Revision: 1.12 $
      */
     public class VarTextField extends JTextField {
 
