@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
@@ -84,7 +84,8 @@ public class CatalogPane extends JPanel {
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel,BoxLayout.X_AXIS));
         previewPanel.add(new JLabel("File Preview:   "));
-        previewPanel.add(preview);
+        JScrollPane js = new JScrollPane(preview);
+        previewPanel.add(js);
         add(previewPanel);
     }
 
