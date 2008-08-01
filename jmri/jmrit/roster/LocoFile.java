@@ -25,10 +25,10 @@ import java.util.List;
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *
- * @author    Bob Jacobsen     Copyright (C) 2001, 2002
+ * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -112,7 +112,11 @@ class LocoFile extends XmlFile {
                 String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
-                cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                // cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                cvObject = iCvModel.getMatchingIndexedCV(name);
+                if (log.isDebugEnabled())
+                    log.debug("Matched name "+name+" with CV "+cvObject);
+                    
                 if (cvObject == null) {
                     log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
                     iCvModel.addIndxCV(i, name, piCv, piVal, siCv, siVal, iCv, false, false, false);
