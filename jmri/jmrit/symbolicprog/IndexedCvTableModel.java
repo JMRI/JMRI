@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -60,6 +60,19 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         for (int i=0; i<=MAXCVNUM; i++) _indxCvAllVector.addElement(null);
     }
 
+    /**
+     * FInd the existing IndexedCV
+     * that matches a particular name
+     */
+    public CvValue getMatchingIndexedCV(String name) {
+        for (int i = 0; i<_indxCvAllVector.size(); i++) {
+            CvValue cv = (CvValue)_indxCvAllVector.get(i);
+            if (cv.cvName().equals(name))
+                return cv;
+        }
+        return null;
+    }
+    
     /**
      * Gives access to the programmer used to reach these Indexed CVs,
      * so you can check on mode, capabilities, etc.
