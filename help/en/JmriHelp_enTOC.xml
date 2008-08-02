@@ -155,13 +155,17 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
       <tocitem text="Layout Editor" target="package.jmri.jmrit.display.LayoutEditor"/>
    </tocitem>
-   <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="System-Specific">
       <tocitem text="C/MRI">
          <tocitem text="Check Pin Assignments" target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
          <tocitem text="Configure Nodes" target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame"/>
          <tocitem text="Diagnostics" target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
          <tocitem text="Signals" target="html.hardware.cmri.Signals"/>
+      </tocitem>
+      <tocitem text="CBUS" target="html.hardware.rps.index">
+         <tocitem text="Console" target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+         <tocitem text="Config Tool" target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+         <tocitem text="CAN Bus" target="html.hardware.can.index"/>
       </tocitem>
       <tocitem text="Digitrax">
          <tocitem text="LocoNet Addresses" target="html.hardware.loconet.Addressing"/>
@@ -192,6 +196,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       </tocitem>
       <tocitem text="SRCP" target="html.hardware.SRCP.index"/>
    </tocitem>
+   <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="Technical Info" target="html.doc.Technical.index">
       <tocitem text="Getting the Source Code">
          <tocitem text="Via CVS" target="html.doc.Technical.getcode"/>
