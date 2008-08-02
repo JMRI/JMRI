@@ -18,7 +18,7 @@ import jmri.util.com.sun.TableSorter;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JTableUtil {
@@ -33,7 +33,16 @@ public class JTableUtil {
 	    	return new JTable(dataModel);
 	    }
 	    
-    	JTable dataTable = new JTable(sorter);
+    	JTable dataTable = new JTable(sorter)  {
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                java.awt.Component c = this.getEditorComponent();
+                if (c instanceof javax.swing.JTextField) {
+                    ( (JTextField) c).selectAll();
+                }            
+                return res;
+            }
+        };
     	
         try {   // following might fail due to a missing method on Mac Classic
                 sorter.setTableHeader(dataTable.getTableHeader());
