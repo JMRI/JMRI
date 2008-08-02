@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
+import jmri.jmrix.can.cbus.TestTrafficController;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -10,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.configtool package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class ConfigToolActionTest extends TestCase {
 
@@ -21,6 +23,8 @@ public class ConfigToolActionTest extends TestCase {
     }
 
     public void testAction() {
+        // load dummy TrafficController
+        TestTrafficController t = new TestTrafficController();
         new ConfigToolAction().actionPerformed(null);
     }
 
