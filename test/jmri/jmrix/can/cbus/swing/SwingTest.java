@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus.swing package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class SwingTest extends TestCase {
 
@@ -33,7 +33,7 @@ public class SwingTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.can.cbus.swing.SwingTest");
-        suite.addTest(jmri.jmrix.can.cbus.swing.configtool.ConfigToolTest.suite());
+        suite.addTest(jmri.jmrix.can.cbus.swing.configtool.ConfigToolActionTest.suite());
         return suite;
     }
 
