@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -44,7 +44,10 @@ public class LayoutEditorXml implements XmlAdapter {
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
         panel.setAttribute("animating", ""+(p.isAnimating()?"yes":"no"));
 		panel.setAttribute("showhelpbar", ""+(p.getShowHelpBar()?"yes":"no"));
-        panel.setAttribute("mainlinetrackwidth", ""+p.getMainlineTrackWidth());
+		panel.setAttribute("drawgrid", ""+(p.getDrawGrid()?"yes":"no"));
+		panel.setAttribute("snaponadd", ""+(p.getSnapOnAdd()?"yes":"no"));
+		panel.setAttribute("snaponmove", ""+(p.getSnapOnMove()?"yes":"no"));
+		panel.setAttribute("mainlinetrackwidth", ""+p.getMainlineTrackWidth());
 		panel.setAttribute("xscale", Float.toString((float)p.getXScale()));
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
         panel.setAttribute("sidetrackwidth", ""+p.getSideTrackWidth());
@@ -311,6 +314,18 @@ public class LayoutEditorXml implements XmlAdapter {
         if ((a = element.getAttribute("showhelpbar"))!=null && a.getValue().equals("no"))
             hbValue = false;
 
+       boolean dgValue = false;
+        if ((a = element.getAttribute("drawgrid"))!=null && a.getValue().equals("yes"))
+            dgValue = true;
+
+       boolean sgaValue = false;
+        if ((a = element.getAttribute("snaponadd"))!=null && a.getValue().equals("yes"))
+            sgaValue = true;
+
+       boolean sgmValue = false;
+        if ((a = element.getAttribute("snaponmove"))!=null && a.getValue().equals("yes"))
+            sgmValue = true;
+
 		// set default track color
 		if ((a = element.getAttribute("defaultTrackColor"))!=null) {
 			panel.setDefaultTrackColor(a.getValue());
@@ -321,6 +336,9 @@ public class LayoutEditorXml implements XmlAdapter {
 			
         // display the results
         panel.setShowHelpBar(hbValue);
+		panel.setDrawGrid(dgValue);
+		panel.setSnapOnAdd(sgaValue);
+		panel.setSnapOnMove(sgmValue);
 		panel.setLayoutDimensions(width,height,x,y);
         panel.pack();
         panel.show();

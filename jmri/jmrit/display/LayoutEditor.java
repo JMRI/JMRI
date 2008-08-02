@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -167,6 +167,8 @@ public class LayoutEditor extends JmriJFrame {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
+	private JCheckBoxMenuItem snapToGridOnAddItem = null;
+	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
     private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
@@ -236,6 +238,8 @@ public class LayoutEditor extends JmriJFrame {
 	private boolean animatingLayout = true;
 	private boolean showHelpBar = true;
 	private boolean drawGrid = false;
+	private boolean snapToGridOnAdd = false;
+	private boolean snapToGridOnMove = false;
 	// turnout size parameters - saved with panel
 	private double turnoutBX = turnoutBXDefault;  // RH, LH, WYE
 	private double turnoutCX = turnoutCXDefault;
@@ -734,6 +738,26 @@ public class LayoutEditor extends JmriJFrame {
                 }
             });                    
         showGridItem.setSelected(drawGrid);
+		// snap to grid on add item
+		snapToGridOnAddItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnAdd"));
+        optionMenu.add(snapToGridOnAddItem);
+        snapToGridOnAddItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    snapToGridOnAdd = snapToGridOnAddItem.isSelected();
+					repaint();
+                }
+            });                    
+        snapToGridOnAddItem.setSelected(snapToGridOnAdd);
+		// snap to grid on move item
+		snapToGridOnMoveItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnMove"));
+        optionMenu.add(snapToGridOnMoveItem);
+        snapToGridOnMoveItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    snapToGridOnMove = snapToGridOnMoveItem.isSelected();
+					repaint();
+                }
+            });                    
+        snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 		// title item
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(rb.getString("NewTitle")+"...");
@@ -1971,7 +1995,11 @@ public class LayoutEditor extends JmriJFrame {
             yLabel.setText(Integer.toString(yLoc));
 			currentPoint = event.getPoint();
             if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
-                Point p = event.getPoint();
+				if (snapToGridOnAdd) {
+					xLoc = ((xLoc+4)/10)*10;
+					yLoc = ((yLoc+4)/10)*10;
+					currentPoint.setLocation(xLoc,yLoc);
+				}
                 if (turnoutRHBox.isSelected()) {
 					addLayoutTurnout(LayoutTurnout.RH_TURNOUT);
                 }
@@ -2120,6 +2148,11 @@ public class LayoutEditor extends JmriJFrame {
 				Point2D newPos = new Point2D.Double(
 						startLocation.getX() + p.getX() - startPoint.getX(),
 						startLocation.getY() + p.getY() - startPoint.getY());
+				if (snapToGridOnMove) {
+					int xx = (((int)newPos.getX()+4)/10)*10;
+					int yy = (((int)newPos.getY()+4)/10)*10;
+					newPos.setLocation(xx,yy);
+				}
 				switch (selectedPointType) {
 					case POS_POINT:
 						((PositionablePoint)selectedObject).setCoords(newPos);
@@ -3323,6 +3356,9 @@ public class LayoutEditor extends JmriJFrame {
 	public String getDefaultTrackColor() {return colorToString(defaultTrackColor);}
 	public String getLayoutName() {return layoutName;}
 	public boolean getShowHelpBar() {return showHelpBar;}
+	public boolean getDrawGrid() {return drawGrid;}
+	public boolean getSnapOnAdd() {return snapToGridOnAdd;}
+	public boolean getSnapOnMove() {return snapToGridOnMove;}
 	public void setLayoutDimensions(int w, int h, int x, int y) {
 		upperLeftX = x;
 		upperLeftY = y;
@@ -3348,6 +3384,24 @@ public class LayoutEditor extends JmriJFrame {
 			if (editMode) {
 				helpBar.setVisible(showHelpBar);
 			}
+		}
+	}
+	public void setDrawGrid(boolean state) {
+		if (drawGrid != state) {
+			drawGrid = state;
+			showGridItem.setSelected(drawGrid);
+		}
+	}
+	public void setSnapOnAdd(boolean state) {
+		if (snapToGridOnAdd != state) {
+			snapToGridOnAdd = state;
+			snapToGridOnAddItem.setSelected(snapToGridOnAdd);
+		}
+	}
+	public void setSnapOnMove(boolean state) {
+		if (snapToGridOnMove != state) {
+			snapToGridOnMove = state;
+			snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 		}
 	}
 	// accessor routines for turnout size parameters	

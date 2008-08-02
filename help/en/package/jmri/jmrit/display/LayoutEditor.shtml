@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.6 2008-03-09 19:57:56 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.7 2008-08-02 17:12:54 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -354,8 +354,20 @@ selection is described below.
 	<li><b>Show Help Bar in Edit Mode</b> - If this item is checked, the help 
 	bar is displayed when the tool bar is displayed.</li>
 	<li><b>Show Grid in Edit Mode</b> - If this item is checked, a background 
-	grid is displayed in edit  mode. This is a temporary item. When a panel is 
-	loaded, it is automatically unchecked.</li>
+	grid is displayed in edit  mode.</li>
+	<li><b>Snap to Grid when Adding</b> - If this item is checked, when an item is 
+	added to the panel, its coordinates are constrained to grid points. For 
+	track diagram items (turnouts, anchor points, end bumpers, and level crossings,
+	the coordinates of center points are constrained to grid points. For icons 
+	and labels, the coordinates of upper left corners are constrained to grid 
+	points.</li>
+	<li><b>Snap to Grid when Moving</b> - If this item is checked, when an item is 
+	moved on the panel, its coordinates are constrained to grid points. For 
+	track diagram items (turnouts, anchor points, end bumpers, and level crossings),
+	the coordinates of center points are constrained to grid points. If connection 
+	points of turnouts or level crossings are moved, their coordinates are also 
+	constrained to grid points. For icons and labels, the coordinates of upper 
+	left corners are constrained to grid points.</li>
 	<li><b>New Title...</b> - Selecting this item brings up a small window that 
 	allows a new panel window title to be entered.</li>
 	<li><b>Add Background Image...</b> - Selecting this item shows a dialog
@@ -380,7 +392,8 @@ selection is described below.
 	<li><b>Set Default Track Color</b> - This item's submenu allows one of 
 	thirteen colors to be selected as the default track color. If a part of the 
 	track is in a block, the color set by the block is used instead of the default
-	track color when drawing that track.</li>
+	track color when drawing that track. This color is also used for lines of 
+	the selection rectangle.</li>
 </ul></p>
 
 <a name="toolsmenu"><h3>Using Layout Editor's Tools Menu

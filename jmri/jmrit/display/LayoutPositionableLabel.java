@@ -36,9 +36,12 @@ import java.util.ResourceBundle;
  * <P>
  * The positionable parameter is a global, set from outside.
  * The 'fixed' parameter is local, set from the popup here.
+ * <P>
+ * Since Layout Editor does not currently use turnout icons, tristate code is 
+ * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -169,6 +172,13 @@ public class LayoutPositionableLabel extends JLabel
             // update object position by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
+			if (layoutPanel.getSnapOnMove()) {
+				xObj = ((xObj+4)/10)*10;
+				yObj = ((yObj+4)/10)*10;
+			}
+            // don't allow negative placement, icon can become unreachable
+            if (xObj < 0) xObj = 0;
+            if (yObj < 0) yObj = 0;
             this.setLocation(xObj, yObj);
             // and show!
             this.repaint();
@@ -383,6 +393,18 @@ public class LayoutPositionableLabel extends JLabel
             }
         });
     }
+    
+//    JCheckBoxMenuItem tristateItem = null;
+//    void addTristateEntry(JPopupMenu popup) {
+//    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
+//    	tristateItem.setSelected(getTristate());
+//        popup.add(tristateItem);
+//        tristateItem.addActionListener(new ActionListener(){
+//            public void actionPerformed(java.awt.event.ActionEvent e) {
+//                setTristate(tristateItem.isSelected());
+//            }
+//        });
+//    }
         
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
@@ -445,6 +467,13 @@ public class LayoutPositionableLabel extends JLabel
     }
     public boolean getForceControlOff() { return forceControlOff; }
     private boolean forceControlOff = false;
+    
+//    public void setTristate(boolean set) {
+//    	tristate = set;
+//    }
+    
+//    public boolean getTristate() { return tristate; }	
+//    private boolean tristate = false;
 
     public void setShowTooltip(boolean set) {
         if (set)
