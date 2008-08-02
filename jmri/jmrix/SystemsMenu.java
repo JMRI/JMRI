@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -62,7 +62,7 @@ public class SystemsMenu extends JMenu {
         try {
             j = (JMenu) Class.forName(className).newInstance();
         } catch (Exception e) {
-            log.debug("Could menu from class "+className+"; "+e);
+            log.warn("Could not make menu from class "+className+"; "+e);
         }
         if (j!=null) add(j);
     }
