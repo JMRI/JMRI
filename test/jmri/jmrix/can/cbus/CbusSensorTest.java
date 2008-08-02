@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CbusSensorTest extends TestCase {
 
@@ -84,20 +84,4 @@ public class CbusSensorTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
-    class TestTrafficController extends TrafficController {
-        jmri.jmrix.can.CanMessage rcvMessage = null;
-        public void sendCanMessage(jmri.jmrix.can.CanMessage m,jmri.jmrix.can.CanListener l) {
-           rcvMessage = m;   
-        }
-    
-        // dummies
-        public jmri.jmrix.AbstractMRMessage encodeForHardware(jmri.jmrix.can.CanMessage m) { return null; }
-        public jmri.jmrix.can.CanReply decodeFromHardware(jmri.jmrix.AbstractMRReply r){ return null; }
-        public jmri.jmrix.AbstractMRMessage newMessage() { return null; }
-        public boolean endOfMessage(jmri.jmrix.AbstractMRReply r) { return true; }
-        public jmri.jmrix.AbstractMRReply newReply() { return null; }
-        public void forwardReply(jmri.jmrix.AbstractMRListener l,jmri.jmrix.AbstractMRReply r) {}
-        public void forwardMessage(jmri.jmrix.AbstractMRListener l,jmri.jmrix.AbstractMRMessage r) {}
-    }
 }
