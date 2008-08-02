@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.5 2008-08-01 05:53:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.6 2008-08-02 06:57:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -195,6 +195,29 @@ to decoder definitions has been fixed.
 David Duchamp added an "edit" capability to the Signal Table, so
 you can now change the details (but not the type) of a signal definition.
 He also updated the help pages for signals and the Signal Table.
+
+<p>
+It was possible to select e.g. a background image while browsing panel
+icons, which then was so large that it made the window unusable.  
+This was fixed by adding scroll bars to the preview part of the window.
+
+<p>
+The layout for "Active DCC Address" was changed in DecoderPro to make it
+more self-explanatory.
+
+<p>
+New 
+<a href="">setup tool</a>
+for CBUS users.
+
+<p>
+Editing text fields in tables has been a little frustrating because
+when you tab into the field, a table didn't behave like everything
+else in the program.  With most fields, if you start typing, it 
+replaces the prior content.  In tables, the typing has been appended to 
+the prior content.  This is now fixed; when you tab into a 
+table cell, the current content is selected.  If you type e.g. without
+setting the cursor, you'll replace the prior content.
 
 <!--#include virtual="/Footer" -->
 
