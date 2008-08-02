@@ -15,7 +15,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class ConfigToolFrame extends jmri.util.JmriJFrame {
@@ -25,7 +25,11 @@ public class ConfigToolFrame extends jmri.util.JmriJFrame {
     ConfigToolPane pane;
     
     public ConfigToolFrame() {
-        super();
+        this(ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle").getString("Title"));
+    }
+    
+    public ConfigToolFrame(String Name) {
+        super(Name);
         
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
