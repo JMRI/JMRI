@@ -11,7 +11,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Andrew Crosland 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CanMenu extends JMenu {
     public CanMenu(String name) {
@@ -29,6 +29,7 @@ public class CanMenu extends JMenu {
 
         add(new jmri.jmrix.can.cbus.swing.console.CbusConsoleAction(rb.getString("MenuItemConsole")));
         add(new jmri.jmrix.can.swing.send.CanSendAction(rb.getString("MenuItemSendFrame")));
+        add(new jmri.jmrix.can.cbus.swing.configtool.ConfigToolAction(rb.getString("MenuItemConfigTool")));
 
     }
 
