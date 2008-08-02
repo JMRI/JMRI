@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRMessage;
  * entire message.
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -65,6 +65,24 @@ public class CanMessage extends AbstractMRMessage {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+    }
+    
+    /**
+     * The following is really CBUS. 
+     * It should be refactored to a separate CBUS place,
+     * and also combined with the CanMessage version
+     */
+    public String toAddress() {
+        if (getElement(0) == 0x90) {
+            // + form
+            return "+n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
+        } else if (getElement(0) == 0x91) {
+            // - form
+            return "-n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
+        } else {
+            // hex form
+            return "x"+toString().replaceAll(" ","");
+        }      
     }
     
     // accessors to the bulk data

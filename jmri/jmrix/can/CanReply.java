@@ -15,13 +15,10 @@ import jmri.jmrix.AbstractMRReply;
  * entire message.
  * <p>
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class CanReply extends AbstractMRReply {
-    
-    // *** Needs toString() method to handle _id etc
-    
-    
+        
     // Creates a new instance of CanMessage
     public CanReply() {
         _pri = 0;
@@ -61,6 +58,24 @@ public class CanReply extends AbstractMRReply {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++)
             _dataChars[i] = m._dataChars[i];
+    }
+    
+    /**
+     * The following is really CBUS. 
+     * It should be refactored to a separate CBUS place,
+     * and also combined with the CanMessage version
+     */
+    public String toAddress() {
+        if (getElement(0) == 0x90) {
+            // + form
+            return "+n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
+        } else if (getElement(0) == 0x90) {
+            // - form
+            return "-n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
+        } else {
+            // hex form
+            return "x"+toString().replaceAll(" ","");
+        }      
     }
     
     protected int skipPrefix(int index) { return index; }
