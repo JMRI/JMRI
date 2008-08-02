@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CbusAddress {
 
@@ -39,8 +39,6 @@ public class CbusAddress {
     static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
-	private Matcher nCodes = Pattern.compile("^("+singleAddressPattern+")(;"
-	                                    +singleAddressPattern+")*$").matcher("");
 
     String aString = null;
     int[] aFrame = null;
@@ -157,22 +155,27 @@ public class CbusAddress {
      * @return null if entire string can't be parsed.
      */
     public CbusAddress[] split() {  
-        // check validity at start
-        if (!checkSplit()) return null;
+        // reject strings ending in ";"
+        if (aString.endsWith(";")) return null;
         
         // split string at ";" points
         String[] pStrings = aString.split(";");
-        
+
         CbusAddress[] retval = new CbusAddress[pStrings.length];
-        
+
         for (int i = 0; i<pStrings.length; i++) {
+            // check validity of each
+            if (pStrings[i].equals("")) return null;
+            if (!hCode.reset(pStrings[i]).matches()) return null;
+            
             retval[i] = new CbusAddress(pStrings[i]);
+            if (retval[i] == null) return null;
         }
         return retval;
     }
     
     public boolean checkSplit() {
-        return nCodes.reset(aString).matches();
+        return (split()!=null);
     }
     
     int[] elements() {

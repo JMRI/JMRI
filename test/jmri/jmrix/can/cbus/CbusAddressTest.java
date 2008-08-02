@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CbusAddressTest extends TestCase {
 
@@ -39,6 +39,8 @@ public class CbusAddressTest extends TestCase {
         assertTrue(new CbusAddress("n1e2").check());
         assertTrue(new CbusAddress("n01e002").check());
         assertTrue(new CbusAddress("1e2").check());
+        assertTrue(new CbusAddress("+n12e34").check());
+        assertTrue(new CbusAddress("+n12e35").check());
         
     }
 
@@ -159,6 +161,12 @@ public class CbusAddressTest extends TestCase {
     
     public void testMultiTermSplitCheckOK() {
         assertTrue(new CbusAddress("+1;+1;+1").checkSplit());
+        assertTrue(new CbusAddress("+1;+1").checkSplit());
+        assertTrue(new CbusAddress("+n12e34;+1").checkSplit());
+        assertTrue(new CbusAddress("+1;x1234").checkSplit());
+        assertTrue(new CbusAddress("+1;n12e34").checkSplit());
+        assertTrue(new CbusAddress("+1;+n12e34").checkSplit());
+        assertTrue(new CbusAddress("+n12e34;+n12e35").checkSplit());
     }
         
     public void testSplitCheckNotOK() {
@@ -167,8 +175,10 @@ public class CbusAddressTest extends TestCase {
         assertTrue(!new CbusAddress("ABC").check());        
         assertTrue(!new CbusAddress("xprs0").check());        
 
+        assertTrue(!new CbusAddress("+1;;+1").checkSplit());
         assertTrue(!new CbusAddress("+001;").checkSplit());
         assertTrue(!new CbusAddress("-001;").checkSplit());
+        assertTrue(!new CbusAddress("-001;;").checkSplit());
         assertTrue(!new CbusAddress("xABC;").checkSplit());
         assertTrue(!new CbusAddress("xabc;").checkSplit());
         assertTrue(!new CbusAddress("xa1b2c3;").checkSplit());
