@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: FrameServlet.shtml,v 1.1 2008-08-03 03:59:06 jacobsen Exp $ -->
+<!-- $Id: FrameServlet.shtml,v 1.2 2008-08-03 04:07:51 jacobsen Exp $ -->
 <title>JMRI: Frame Servlet</title>
 
 <!-- Style -->
@@ -41,7 +41,7 @@ a frame is requested.
 <p>
 Please note that this servlet has only been used with 
 the 
-<a href="MiniServer.shtml">JMRi mini-server</a>, and may 
+<a href="MiniServer.shtml">JMRI mini-server</a>, and may 
 not work with other servlet containers.  We're committed to
 making it work, however, so just get in touch with 
 the JMRI developers if you encounter any problems.
