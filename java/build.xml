@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.27 $ -->
+<!-- Revision $Revision: 1.28 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -64,6 +64,7 @@
     <pathelement location="../lib/vecmath.jar" />
     <pathelement location="../lib/jinput.jar" />
     <pathelement location="../lib/ch.ntb.usb.jar" />
+    <pathelement location="../lib/servlet.jar" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
