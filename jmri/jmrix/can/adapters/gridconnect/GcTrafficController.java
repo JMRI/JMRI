@@ -15,14 +15,14 @@ import jmri.jmrix.can.TrafficController;
  * <P>
  * GridConnect uses messages transmitted
  * as an ASCII string of up to 24 characters of the form:
- *      ;ShhhhNd0d1d2d3d4d5d6d7:
+ *      :ShhhhNd0d1d2d3d4d5d6d7;
  * The S indicates a standard CAN frame
  * hhhh is the two byte header
  * N or R indicates a normal or remote frame
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -159,7 +159,7 @@ public class GcTrafficController extends TrafficController {
     }
     
     /*
-     * Normal CAN-RS replies will end with ":"
+     * Normal CAN-RS replies will end with ";"
      * Bootloader will end with ETX with no preceding DLE
      */
     protected boolean endOfMessage(AbstractMRReply r) {
@@ -169,7 +169,7 @@ public class GcTrafficController extends TrafficController {
     }
     
     boolean endNormalReply(AbstractMRReply r) {
-        // Detect if the reply buffer ends with ":"
+        // Detect if the reply buffer ends with ";"
         int num = r.getNumDataElements() - 1;
         log.debug("endNormalReply checking "+(num+1)+" of "+(r.getNumDataElements()));
         if (r.getElement(num) == ';') {
