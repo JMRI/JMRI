@@ -185,6 +185,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Signal Lever" target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
       <indexitem text="Turnout Lever" target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
    </indexitem>
+   <indexitem text="Web" target="html.web.index"/>
    <indexitem text="XML" target="html.apps.DecoderPro.IntroXML">
       <indexitem text="Editors" target="html.doc.Technical.XmlEditors"/>
       <indexitem text="Viewing Files" target="html.doc.Technical.XmlView"/>

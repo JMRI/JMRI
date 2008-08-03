@@ -128,6 +128,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="Acknowledgements_R" url="Acknowledgements.shtml#R" />
 	<mapID target="html.tools.Sensors_add" url="html/tools/Sensors.shtml#add" />
 	<mapID target="html.apps.PanelPro.FAQ_multifile" url="html/apps/PanelPro/FAQ.shtml#multifile" />
+	<mapID target="html.web.MiniServer" url="html/web/MiniServer.shtml" />
 	<mapID target="html.apps.LocoTools.index" url="html/apps/LocoTools/index.shtml" />
 	<mapID target="html.hardware.loconet.LocoNetSim" url="html/hardware/loconet/LocoNetSim.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c_Top" url="DecoderProManual/Comp_PrintData_c.shtml#Top" />
@@ -181,6 +182,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.CVSFAQ_tags" url="html/doc/Technical/CVSFAQ.shtml#tags" />
 	<mapID target="package.jmri.jmrix.tchtech.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/tchtech/serial/serialmon/SerialMonFrame.shtml" />
 	<mapID target="html.tools.Logix" url="html/tools/Logix.shtml" />
+	<mapID target="html.web.index" url="html/web/index.shtml" />
 	<mapID target="html.tools.signaling.Logic_face" url="html/tools/signaling/Logic.shtml#face" />
 	<mapID target="html.apps.DecoderPro.Files_location" url="html/apps/DecoderPro/Files.shtml#location" />
 	<mapID target="DecoderProManual.Comp_Speed_Top" url="DecoderProManual/Comp_Speed.shtml#Top" />
@@ -277,8 +279,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="Acknowledgements_O" url="Acknowledgements.shtml#O" />
 	<mapID target="html.hardware.nce.NCE_phpro" url="html/hardware/nce/NCE.shtml#phpro" />
 	<mapID target="DecoderProManual.Comp_PrintData_a_Top" url="DecoderProManual/Comp_PrintData_a.shtml#Top" />
-	<mapID target="html.tools.Signals_add" url="html/tools/Signals.shtml#add" />
 	<mapID target="package.jmri.jmrit.beantable.MemoryTable" url="package/jmri/jmrit/beantable/MemoryTable.shtml" />
+	<mapID target="html.tools.Signals_add" url="html/tools/Signals.shtml#add" />
 	<mapID target="DecoderProManual.Comp_Speed" url="DecoderProManual/Comp_Speed.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Save Data" url="DecoderProManual/Basic_Programming.shtml#Save Data" />
 	<mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml" />
@@ -393,6 +395,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame" url="package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml" />
+	<mapID target="html.web.FrameServlet" url="html/web/FrameServlet.shtml" />
 	<mapID target="html.doc.Technical.NetBeans_patch" url="html/doc/Technical/NetBeans.shtml#patch" />
 	<mapID target="package.jmri.jmrit.beantable.RouteTable" url="package/jmri/jmrit/beantable/RouteTable.shtml" />
 	<mapID target="html.tools.signaling.index_contents" url="html/tools/signaling/index.shtml#contents" />
