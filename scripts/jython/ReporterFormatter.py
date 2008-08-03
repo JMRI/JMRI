@@ -5,16 +5,17 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 # The Reporter and Memory names are hardcoded in the example
 # near the bottom.  Change those to something that makes
 # sense for your layout
 #
 
-# First, define the listener.  This one just prints some
-# information on the change, but more complicated code is
-# of course possible.
+# First, define the listener class.  This gets messages
+# from the reporter, uses them to keep track of the decoders
+# in a block, and writes that list to a memory for display.
+#
 class ReporterFormatter(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     if (event.propertyName == "currentReport") :
