@@ -34,7 +34,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.64 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -262,10 +262,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         d.add(new JSeparator());
         d.add(new jmri.jmrix.pricom.PricomMenu());
         d.add(new JSeparator());
+
         d.add(new jmri.jmrix.jinput.treecontrol.TreeAction());
         d.add(new jmri.jmrix.libusb.UsbViewAction());
+
         d.add(new JSeparator());
         d.add(new jmri.jmrit.jython.RunJythonScript("RailDriver Throttle", new java.io.File("jython/RailDriver.py")));
+
+        // also add some tentative items from webserver
+        d.add(new JSeparator());
+        d.add(new jmri.web.miniserver.MiniServerAction());
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
