@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.31 $ -->
+<!-- Revision $Revision: 1.32 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -135,6 +135,7 @@
       		<include name="LibusbJava.dll"/>
       		<include name="MRJAdapter.jar"/>
       		<include name="Serialio.jar"/>
+      		<include name="servlet.jar"/>
       		<include name="vecmath.jar"/>
       	</fileset>
 	</move>
