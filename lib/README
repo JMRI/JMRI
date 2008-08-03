@@ -45,6 +45,9 @@ jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
   from <https://jinput.dev.java.net/>
   2008-01-09 combined binaries (most recent as of 3/20/2008)
 
+servlet.jar:
+  jakarta-servletapi-3.2.3-src/lib/servlet.jar
+  
 libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
