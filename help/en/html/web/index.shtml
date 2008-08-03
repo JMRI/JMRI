@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id: index.shtml,v 1.1 2008-08-03 03:59:07 jacobsen Exp $ -->
+<title>JMRI: Web Access</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Web Access
+</h1>
+
+JMRI can provide web access to your model railroad. 
+
+<p>
+The basic method was developed by Konrad Froetzheim and colleagues 
+in the early 1990's for their "Internet Model Railroad". 
+A standard web server communicates with the user's normal web browser, accepting 
+HTTP requests in the usual way. 
+These requests are handed to a small "JMRI connector", which interprets 
+them and returns the information from JMRI back to the browser.
+
+<p>
+For example, the user can have their browser request the current 
+contents of a JMRI panel, which is 
+returned back to the browser as animage to be displayed. 
+Or the user can click on the image of a JMRI panel, 
+which causes the browser to request a click in the same position on a JMRI panel. 
+JMRI acts on that click, 
+and also sends back an image of the updated panel.
+
+<a id="Start"/>
+<h2>Starting Web Access</h2>
+
+JMRI web access is included in the usual JMRI downloads.
+To use it, you just have to start it.
+
+<p>
+Before attempting to use web access, 
+please make sure that the basic configuration of your JMRI application 
+is working. 
+Check that you can properly communicate with and operate your layout. 
+
+<p>
+<img src="images/StartUp.jpg" align="right" height="117" width="312"/>
+To start web access from the menus, select "Start Mini Web Server"
+under the "Debug" menu. A small window will open to confirm that
+it started, and to show you the URL that it's using.
+
+<p>
+Next, check the connection. 
+Enter the starting URL from the window
+(or if you're browsing on the same computer right now, 
+<a href="http://localhost:12080/index.html">click here</a>).
+You should see a welcome screen.
+
+<p>
+Next, let's make sure you can access JMRI functions.
+From the JMRI Tools menu select "Power Control", which should open a new window. 
+Then click on 
+<a href="http://localhost:12080/panel/Power%20Control.html">this link</a> 
+or enter the URL 
+<code><pre>
+http://localhost:12080/panel/Power%20Control.html
+</pre></code>
+This should display the Power Control window on your web browser. 
+(Note: "localhost" is an alias for your 
+computer; if you want to access the computer running JMRI from some other computer, 
+replace "localhost" 
+with the IP address displayed on the main screen, e.g. 
+<code><pre>
+http://127.0.0.1:12080/panel/Power%20Control.html
+</pre></code>
+or something similar) 
+If everything is working, you should see the Power Control window on your browser screen. 
+Click the "On" button to turn layout power on.
+
+<a id="Configure"/>
+<h2>Configuring</h2>
+
+You can use the 
+"<a href="../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a>"
+to set JMRI to 
+start the server each time you start the program.
+<p>
+To do this, open the preferences window, check the 
+"Show Advanced Preferences" box, and 
+click "Add Action".  In the new selection box that
+appears, select "Start Web Miniserver".  
+Don't forget to save your changes!
+
+<p>
+There are also more advanced settings that can be configured;
+see the links on the sidebar for more information.
+
+<a id="URLs"/>
+<h2>Access URLs</h2>
+You can create your own web pages using any tool you'd like. 
+To access JMRI from those pages, you just 
+need to know how the proper URLs to request the services you'd like. 
+Several examples are available in the "web" directory of the distribution. 
+
+<h3>To Display a JMRI Window</h3>
+
+To display the contents of any <i>open</i> JMRI window, use
+a URL like:
+<code><pre>
+<a href="http://localhost:12080/panel/Power%20Control">http://localhost:12080/panel/Power%20Control</a>
+</pre></code>
+where the last part of the URL is the name
+of the desired window.  Note that you have to 
+replace spaces by "%20" to make the name a 
+valid URL.
+
+<h3>To Display a Clickable JMRI Window</h3>
+
+To display any <i>open</i> JMRI window as a clickable
+image that periodically refreshes, use a URL like:
+<code><pre>
+<a href="http://localhost:12080/panel/Power%20Control.html">http://localhost:12080/panel/Power%20Control.html</a>
+</pre></code>
+where the last part of the URL is the name
+of the desired window.  Note that you have to 
+replace spaces by "%20" to make the name a 
+valid URL, and that the name ends in ".html".
+
+
+<h3>To Display a Local File</h3>
+A local HTML file (web page), graphic or text file can be 
+displayed using the appropriate URL.
+<p>
+Files in your JMRI preferences directory can be
+accessed via a URL that starts with "prefs":
+<code><pre>
+<a href="http://localhost:12080/prefs/index.html">http://localhost:12080/prefs/index.html</a>
+</pre></code>
+(The index.html file is in your preferences directory)
+<p>
+Files in certain directories in the JMRI program directory can be
+accessed via a URL that starts with "dist":
+<code><pre>
+<a href="http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
+</pre></code>
+will reference the index to the help system, while
+<code><pre>
+<a href="http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
+</pre></code>
+will load a JMRI logo graphic from the resources directory.
+"dist/web" and "dist/xml" also work as prefixes.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
