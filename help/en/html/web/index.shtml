@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-08-03 03:59:07 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-08-03 04:07:40 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -43,7 +43,7 @@ which causes the browser to request a click in the same position on a JMRI panel
 JMRI acts on that click, 
 and also sends back an image of the updated panel.
 
-<a id="Start"/>
+<a id="Start">
 <h2>Starting Web Access</h2>
 
 JMRI web access is included in the usual JMRI downloads.
@@ -89,7 +89,7 @@ or something similar)
 If everything is working, you should see the Power Control window on your browser screen. 
 Click the "On" button to turn layout power on.
 
-<a id="Configure"/>
+<a id="Configure">
 <h2>Configuring</h2>
 
 You can use the 
@@ -107,7 +107,7 @@ Don't forget to save your changes!
 There are also more advanced settings that can be configured;
 see the links on the sidebar for more information.
 
-<a id="URLs"/>
+<a id="URLs">
 <h2>Access URLs</h2>
 You can create your own web pages using any tool you'd like. 
 To access JMRI from those pages, you just 
