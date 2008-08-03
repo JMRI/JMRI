@@ -1,5 +1,5 @@
 # runtime target - top level project runtime contents
-runtime -a xml lib resources help jython
+runtime -a xml lib resources help jython web
 # jython target moves it from the scripts part of repository to top level
 jython -d jython scripts/jython
 
