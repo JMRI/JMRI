@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.text.*;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 import jmri.util.JmriJFrame;
 
@@ -35,7 +36,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -49,6 +50,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JButton startLogButton = new JButton();
     protected JButton stopLogButton = new JButton();
     protected JCheckBox timeCheckBox = new JCheckBox();
+    protected JCheckBox priCheckBox = new JCheckBox();
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
@@ -56,6 +58,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JTextField rcvdCountField = new JTextField("0", 8);
     protected JButton statsClearButton = new JButton();
     protected JCheckBox decimalCheckBox = new JCheckBox();
+    protected JTextField lastDynPriField = new JTextField();
+    protected JTextField lastMinPriField = new JTextField();
+    protected JTextField[] lastRxDataFields = new JTextField[8];
+    protected JButton copyButton = new JButton();
     protected JTextField dynPriField = new JTextField();
     protected JTextField minPriField = new JTextField();
     protected JTextField[] dataFields = new JTextField[8];
@@ -156,6 +162,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText("If checked, show timestamps before each message");
         
+        priCheckBox.setText("Show priorities");
+        priCheckBox.setVisible(true);
+        priCheckBox.setToolTipText("If checked, show CBUS priorities before each message");
+        
         openFileChooserButton.setText("Choose log file");
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText("Click here to select a new output log file");
@@ -176,6 +186,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         decimalCheckBox.setVisible(true);
         decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal\n"
                                     +"if unchecked, hexadecimal");
+        _decimal = false;
+        decimalCheckBox.setSelected(_decimal);
         
         sendButton.setText("Send");
         sendButton.setVisible(true);
@@ -184,6 +196,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         dataClearButton.setText("Clear");
         dataClearButton.setVisible(true);
         dataClearButton.setToolTipText("Clear all data fields");
+        
+        copyButton.setText("Copy");
+        copyButton.setVisible(true);
+        copyButton.setToolTipText("Copy most recently received packet");
         
         setTitle(title());
         // Panels will be added downwards
@@ -213,6 +229,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(timeCheckBox);
+        pane1.add(priCheckBox);
         paneA.add(pane1);
         
         JPanel pane2 = new JPanel();
@@ -240,6 +257,39 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         statsPane.add(statsClearButton);
         statsPane.add(decimalCheckBox);
         getContentPane().add(statsPane);
+        
+        // Pane for most recently recived packet
+        JPanel rxPane = new JPanel();
+        rxPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Most Recently Received Packet"));
+
+        // Construct data fields for Priority and up to 8 bytes
+        lastDynPriField = new JTextField("", 4);
+        lastDynPriField.setToolTipText("Dynamic Priority, 0, 1 or 2");
+        lastDynPriField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Dyn Pri"));
+        rxPane.add(lastDynPriField);
+        lastMinPriField = new JTextField("", 4);
+        lastMinPriField.setToolTipText("Minor Priority");
+        lastMinPriField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Min Pri"));
+        rxPane.add(lastMinPriField);
+        for (i=0; i<8; i++) {
+            lastRxDataFields[i] = new JTextField("", 6);
+            if (i==0) {
+                lastRxDataFields[i].setBorder(BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(), "d0 (OPC)"));
+                lastRxDataFields[i].setToolTipText("Byte count and Op code - BBBCCCCC");
+            } else {
+                lastRxDataFields[i].setBorder(BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(), "d"+i));
+                lastRxDataFields[i].setToolTipText("Data byte "+i);
+            }
+            rxPane.add(lastRxDataFields[i]);
+        }
+        rxPane.add(copyButton);
+        getContentPane().add(rxPane);
+        
         
         // Pane for constructing packet to send
         JPanel sendPane = new JPanel();
@@ -303,6 +353,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             }
         });
         
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                copyButtonActionPerformed(e);
+            }
+        });
+        
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
@@ -318,6 +374,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         statsClearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 statsClearButtonActionPerformed(e);
+            }
+        });
+        
+        decimalCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                decimalCheckBoxActionPerformed(e);
             }
         });
         
@@ -348,7 +410,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     	addHelpMenu("package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame", true);
     }
     
-    public void nextLine(String line, String decoded) {
+    public void nextLine(String line, String decoded, String priorities) {
         // handle display of traffic
         // line is the traffic in 'normal form', decoded is the decoded,
         // protocol specific, form
@@ -361,6 +423,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if ( timeCheckBox.isSelected() ) {
             sbCan.append(df.format(new Date())).append( ": " ) ;
             sbCbus.append(df.format(new Date())).append( ": " ) ;
+        }
+        
+        // display CBUS the priorities if requested
+        if ( priCheckBox.isSelected() ) {
+            sbCbus.append(priorities+" ");
         }
         
         // display decoded data
@@ -464,20 +531,23 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     }
     
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText() + "\n", entryField.getText() + "\n");
+        nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "");
     }
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         int i;
         int data, data2;
         CanMessage m = new CanMessage();
-        data = parseBinHexByte(dynPriField.getText(), 2, "CBUS Console", "Invalid Dynamic Priority Value");
-        data2 = parseBinHexByte(minPriField.getText(), 3, "CBUS Console", "Invalid Minor Priority Value");
+        data = parseBinDecHexByte(dynPriField.getText(), 2, _decimal, "CBUS Console", "Invalid Dynamic Priority Value");
+        if (data == -1) return;
+        data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, "CBUS Console", "Invalid Minor Priority Value");
+        if (data2 == -1) return;
         m.setPri(data*4 + data2);
         for (i=0; i<8; i++) {
             if (!dataFields[i].getText().equals("")) {
-                data = parseBinHexByte(dataFields[i].getText(), 255, "CBUS Console", 
+                data = parseBinDecHexByte(dataFields[i].getText(), 255, _decimal, "CBUS Console", 
                         "Invalid Data Value in d"+i);
+                if (data == -1) return;
                 m.setElement(i, data);
                 if (i==0) data2 = data;     // save OPC(d0) for later
             } else {
@@ -519,6 +589,22 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         rcvdCountField.setText("0");
     }
     
+    public void decimalCheckBoxActionPerformed(java.awt.event.ActionEvent e) {
+        if (decimalCheckBox.isSelected()) {
+            _decimal = true;
+        } else {
+            _decimal = false;
+        }
+    }
+    
+    public void copyButtonActionPerformed(java.awt.event.ActionEvent e) {
+        dynPriField.setText(lastDynPriField.getText());
+        minPriField.setText(lastMinPriField.getText());
+        for (i=0; i<8; i++) {
+            dataFields[i].setText(lastRxDataFields[i].getText());
+        }
+    }
+    
     public synchronized String getCanFrameText() {
         return new String(linesBufferCan);
     }
@@ -538,13 +624,32 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public synchronized void message(CanMessage l) {  // receive a message and log it
         nextLine("sent: "+l.toString()+"\n",
-                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3)+" ID:---"+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+                "ID:---"+" "+(l.isRtr() ? "R " : "N ")+decode(l),
+                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3));
         sentCountField.setText(Integer.toString(++_sent));
     }
     
     public synchronized void reply(CanReply l) {  // receive a reply message and log it
+        int i;
+        // Capture most recent received packet
+        if (_decimal) {
+            lastDynPriField.setText(Integer.toString(l.getPri()/4));
+            lastMinPriField.setText(Integer.toString(l.getPri()&3));
+        } else {
+            lastDynPriField.setText(Integer.toHexString(l.getPri()/4));
+            lastMinPriField.setText(Integer.toHexString(l.getPri()%3));
+        }
+        // Pay attention to data length in op-code
+        for(i=0; i<(l.getElement(0)>>5)+1; i++){
+            if (_decimal) {
+                lastRxDataFields[i].setText(Integer.toString(l.getElement(i)));
+            } else {
+                lastRxDataFields[i].setText(Integer.toHexString(l.getElement(i)));
+            }
+        }
         nextLine("rcvd: "+l.toString()+"\n", 
-                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3)+" ID:"+l.getId()+" "+(l.isRtr() ? "R " : "N ")+decode(l));
+                "ID:"+l.getId()+" "+(l.isRtr() ? "R " : "N ")+decode(l),
+                "Dyn Pri:"+l.getPri()/4+" Min Pri:"+(l.getPri()&3));
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
     
@@ -595,12 +700,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     /**
      * Parse a string for binary, decimal or hex byte value
      * <P>
-     * If decimal is true:
-     *      0x prefix will force parsing of hex string, e.g. 0xA or 0x12
+     * 0b, 0d or 0x prefix will force parsing of binary, decimal or hex,
+     * respectively. Otherwies, if decimal is true:
      *      Up to three digits will be parsed as decimal, e.g. 10 or 127
      *      more than three digits will be parsed as binary, e.g. 0010 or 1011
      * if decimal is clear:
-     *      0d prefix will force parsing of decimal string, e.g. 0d5
      *      up to two digits will be treated as hex, e.g. F or B1
      *      more than two digits will be treated as binary, e.g. 001 or 110
      *
@@ -611,31 +715,39 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * @param errMsg Message to be displayed if Number FormatException encountered
      * @return the byte value, -1 indicates failure
     */
-    public int parseBinDecHex(String s, int limit, boolean decimal, String errTitle, String errMsg) {
-        return 0;
-    }
-    
-    /**
-     * Parse a string for a binary or hex byte value
-     * <P>
-     * Binary values must be at least 3 digits to avoid confusion with hex.
-     * Value must be positive.
-     *
-     * @param s string to be parsed
-     * @param limit upper bound of value to be parsed
-     * @param errTitle Title of error dialogue box if Number FormatException encountered
-     * @param errMsg Message to be displayed if Number FormatException encountered
-     * @return the byte value, -1 indicates failure
-     */
-    public int parseBinHexByte(String s, int limit, String errTitle, String errMsg) {
+    public int parseBinDecHexByte(String s, int limit, boolean decimal, String errTitle, String errMsg) {
         int data = -1;
         boolean error = false;
-        // Initially, assume to be hex
         int radix = 16;
-        if (s.length() > 2) {
-            // Assumed to be binary
+
+        if ((s.length() > 3) && s.substring(0, 2).equalsIgnoreCase("0x")) {
+            // hex, remove the prefix
+            s = s.substring(2);
+            radix = 16;
+        } else if ((s.length() > 3) && s.substring(0, 2).equalsIgnoreCase("0d")) {
+            // decimal, remove the prefix
+            s = s.substring(2);
+            radix = 10;
+        } else if ((s.length() > 3) && s.substring(0, 2).equalsIgnoreCase("0b")) {
+            // binary, remove the prefix
+            s = s.substring(2);
             radix = 2;
+        } else if (decimal) {
+            if (s.length() > 3) {
+                // Assumed to be binary
+                radix = 2;
+            } else {
+                radix = 10;
+            }
+        } else {
+            if (s.length() > 2) {
+                // Assumed to be binary
+                radix = 2;
+            } else {
+                radix = 16;
+            }
         }
+
         try {
             data = Integer.parseInt(s, radix);
         } catch (NumberFormatException ex) {
@@ -643,6 +755,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         if ((data < 0) || (data > limit))
             error = true;
+
         if (error) {
             JOptionPane.showMessageDialog(null, errMsg,
                     "CBUS Console", JOptionPane.ERROR_MESSAGE);
@@ -653,6 +766,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     private int _sent;
     private int _rcvd;
+    private boolean _decimal;
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusConsoleFrame.class.getName());
 }
