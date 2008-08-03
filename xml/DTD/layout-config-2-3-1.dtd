@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-1.dtd,v 1.2 2008-07-23 05:50:29 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-3-1.dtd,v 1.3 2008-08-03 10:25:54 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.1.7 development.  Do not modify it       -->
 <!-- after version 2.1.7 is released.  For more information,                -->
@@ -544,6 +544,9 @@
   <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
   <!ATTLIST LayoutEditor animating		(yes|no) "yes" >
   <!ATTLIST LayoutEditor showhelpbar		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor drawgrid		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor snaponadd		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor snaponmove		(yes|no) "yes" >
 
 <!-- memoryicon defined above already -->
 <!-- memorystate defined above already -->
