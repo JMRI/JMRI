@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.5 2008-06-30 04:54:49 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.6 2008-08-03 18:19:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -107,6 +107,7 @@ but will also allow us to version control the DTD files. We're going to
 need that capability eventually, and this is a way to get to it.
 
 
+<a id="xslt">
 <h2>Formatting with XSLT</h2>
 
 The 
