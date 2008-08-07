@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class RpsTest extends TestCase {
 
@@ -41,6 +41,7 @@ public class RpsTest extends TestCase {
         suite.addTest(Ash1_1AlgorithmTest.suite());
         suite.addTest(Ash2_0AlgorithmTest.suite());
         suite.addTest(Ash2_1AlgorithmTest.suite());
+        suite.addTest(Ash2_2AlgorithmTest.suite());
         suite.addTest(jmri.jmrix.rps.rpsmon.RpsMonTest.suite());
         suite.addTest(jmri.jmrix.rps.RpsSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
