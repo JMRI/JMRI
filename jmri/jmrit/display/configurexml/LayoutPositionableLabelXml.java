@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -62,6 +62,24 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         return element;
     }
 
+    /**
+     * Store the text formatting information.
+     * <p>
+     * This is always stored, even if the icon isn't in text mode,
+     * because some uses (subclasses) of LayoutPositionableLabel flip
+     * back and forth between icon and text, and want to remember their
+     * formatting.
+     */
+    protected void storeTextInfo(LayoutPositionableLabel p, Element element) {
+        if (p.getText()!=null) element.setAttribute("text", p.getText());
+        element.setAttribute("size", ""+p.getFont().getSize());
+        element.setAttribute("style", ""+p.getFont().getStyle());
+        if (!p.getForeground().equals(Color.black)) {
+            element.setAttribute("red", ""+p.getForeground().getRed());
+            element.setAttribute("green", ""+p.getForeground().getGreen());
+            element.setAttribute("blue", ""+p.getForeground().getBlue());
+        }
+    }
 
     public void load(Element element) {
         log.error("Invalid method called");
@@ -159,7 +177,33 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putLabel(l);
-    }
+	}
+   
+    protected void loadTextInfo(LayoutPositionableLabel l, Element element) {
+        Attribute a = element.getAttribute("size");
+        try {
+            if (a!=null) l.setFontSize(a.getFloatValue());
+        } catch (DataConversionException ex) {
+            log.warn("invalid size attribute value");
+        }
+        a = element.getAttribute("style");
+        try {
+            if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+        } catch (DataConversionException ex) {
+            log.warn("invalid style attribute value");
+        }
+
+        // set color if needed
+        try {
+            int red = element.getAttribute("red").getIntValue();
+            int blue = element.getAttribute("blue").getIntValue();
+            int green = element.getAttribute("green").getIntValue();
+            l.setForeground(new Color(red, green, blue));
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+	}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutPositionableLabelXml.class.getName());
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.7 2008-08-02 17:12:54 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.8 2008-08-08 01:32:40 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -46,6 +46,8 @@ sections in detail.</p>
 	<li><a href="#turn">Turntables</a>	
 	<li><a href="#background">Backgrounds</a>
 	<li><a href="#block">Blocks</a>
+	<li><a href="#tracking">Blocks, Memory Labels, and Train Tracking</a>
+	<li><a href="#tips">Tips</a>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
 
@@ -379,6 +381,13 @@ selection is described below.
 	<li><b>Add Turntable</b> - Selecting this item adds a turntable to the 
 	panel at the center of the panel. You can then drag it with the meta key 
 	pressed to any location on the panel.</li>
+	<li><b>Add Reporter Label...</b> - Selecting this item brings up a dialog that 
+	allows entry of a Reporter name (system name or user name) and x, y coordinates 
+	of where the label is to be placed initially. The x,y coordinates apply to 
+	the upper left corner of the label. To create a Reporter Label, enter the 
+	name and coordinates, then click <b>Add New Label</b>. After a label is added 
+	the Add Reporter Label window remains open to allow entry of more Reporter Labels. 
+	To close the window, click <b>Cancel</b> or use the close button at the top.</li>
 	<li><b>Save Location and Size</b> - When this item is selected, the current 
 	panel window size and location replace the default size and location of the 
 	panel window. If the panel is saved to disk after this item is selected, when 
@@ -418,7 +427,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	reverses the previous <b>Translate Selection...</b>. Only one level of undo
 	is supported. If a selection has not been translated, this item is ignored.</li>
 	<li><b>Use Program Default Turnout Size</b> - Selecting this item sets default 
-	sizes of new turnouts to Layout Editor program defaults, cancelling any 
+	sizes of new turnouts to Layout Editor program defaults, canceling any 
 	changes to turnout default sizes that may have been made. See 
 	<a href="#turnouts">Turnouts</a> for more information on turnout sizes.</li>
 	<li><b>Set Signals at Turnout...</b> - This item provides an automated 
@@ -827,9 +836,6 @@ building CTC backgrounds with slices are that 1) you can make virtually any
 length CTC panel, and 2) the plates will be precisely located automatically.</P>
 
 
-
-
-
 <a name="block"><h3>Blocks
 </h3></a>
 <p>
@@ -878,6 +884,12 @@ select the unoccupied track color in the <b>Track Color:</b> selection box,
 and select the occupied track color in the <b>Occupied Track Color:</b> 
 selection box.</p>
 <p>
+Optionally a Memory Variable may be assigned to a block by entering its name 
+(system name or user name) in the <b>Memory Variable Name:</b> 
+field. This is useful when setting up Train Tracking (<a href="#tracking">see 
+below</a>). Make sure a memory variable is in the Memory Variables Table before 
+it is entered here.
+<p>
 Since blocks are items on the physical layout, the same block may be used in 
 more than one panel. Consequently, block information is saved in the non-panel 
 specific portion of the layout information, when panels are saved to a
@@ -888,6 +900,93 @@ keeps track of the number of track items (turnouts, track segments,
 and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
+
+<a name="tracking"><h3>Blocks, Memory Labels, and Train Tracking
+</h3></a>
+<p>
+<b>Train Tracking</b> is an animation technique that allows us to display 
+dynamically which train is in an occupied 
+Block.  So, for one train, or for several trains transiting a layout at the same
+time, we can show where each train is at any given time. <b>Train Tracking</b> uses 
+the JMRI Block software. Each occupied block has a <i>value</i>, which is automatically
+passed from block to block as a train moves from block to block. A block's <i>value</i> 
+is cleared when the block is no longer occupied. So the <i>value</i> follows the 
+train around the layout. Setting <i>value</i> to a train name, passes the train 
+name around from block to block.</p>
+<p>
+Layout Editor has a built-in tool that automatically initializes each Block, 
+creating needed Paths and BeanSettings. This initialization (previously done 
+in scripts only) is needed to allow block software to track trains. Since 
+Layout Editor captures the full connectivity of its panel, it has the information 
+needed to perform this initialization. Block initialization is 
+automatically performed when blocks are changed and when a Layout Editor panel 
+is loaded. Since the initialization is automatic, Layout Editor users don't 
+need to be concerned about Paths and Bean Settings.</p>
+<p>
+Layout Editor allows a Memory Variable to be assigned to each block. When the 
+<b>value</b> of a Block changes, Layout Editor automatically copies the new 
+<i>value</i> of the Block into its assigned Memory Variable (if there is one). 
+So, by using a Memory Label near each block, be can display the name of the train 
+in that block.</p>
+<p>
+This might sound complicated, but it's very easy to set up because JMRI's Block 
+and Layout Editor software does almost everything automatically. There is even 
+software to automatically save and restore Block <i>values</i> between sessions.
+<p>
+If your panel is blocked and each block has a hardware occupancy sensor, to set 
+up Train Tracking do the following:
+<p>
+<UL> <li>
+1. Create a memory variable in the Memory Variable Table for each block.</li>
+<li>2. Edit each block, adding its memory variable name (<a href="#block">see above
+</a>).</li>
+<li>3. Place a Memory Label for its assigned memory variable near each block 
+in the panel.</li>
+<li>4. Open the Block Table, and enter the name of each train in the "Value" 
+column of the block it is occupying. <b>Remember to click somewhere outside the 
+value entry box after entering a train name to make Java read what was 
+entered.</b></li>
+</UL>
+<p>
+Note: If the program detects a block is unoccupied <i>before</i> the block's 
+<i>value</i> is passed 
+on to the next block, the train name will be lost. So it's important to have 
+wheels and track clean, and to have enough cars in each train with current 
+drawing wheels to ensure a block doesn't loose detection before the train 
+enters the next block.
+</p>
+
+<a name="tips"><h3>Tips
+</h3></a>
+<p>
+Because of the way a Layout Editor panel is refreshed, the drawn track schematic 
+will be on top of all icons and labels. It is possible to have a label or icon 
+appear to be "on top of" a section of track, as is commonly done in Panel Editor. 
+To create a break in visible track, without breaking connectivity, place an 
+Anchor Point at each end of the break. Connect these anchor points with a 
+track segment. Make the connecting track segment invisible by editing it and 
+checking <b>Hide Track</b>. The track segment will show as a narrow line when 
+in edit mode, but will be invisible when edit mode is turned off.</p>
+<p>
+Remember that "system names" of items (turnouts, sensors, signal heads, etc.) may 
+not be changed, but "user names" may be changed. If there is any chance that 
+you might want to change an item's user name, use its system name when entering 
+the name of the item. If you use the user name, and then change the user name, all 
+assignments using the old user name will break, until you edit all occurrences 
+of the old user name to the new user name.</p>
+<p>
+Since Panel Editor panels are fully icon based, their track schematic has the 
+possibility of looking more prototypical. Layout Editor panels have more animation 
+possibilities and automated tools for setting up signals, train tracking, etc. 
+If you would like both worlds, consider building both Panel Editor and Layout 
+Editor panels for your layout. You can switch between them easily using the 
+<b>Panels</b> menu. Since both type of panels share the same configuration items 
+(turnouts, sensors, memory variables, signal heads, etc.), whatever is done in 
+one panel is reflected in the other if the same items are displayed. After they 
+are loaded, panels continue to function, whether they are displayed or not--
+they just need to show up in the <b>Show Panel</b> submenu. So, for example, if 
+you set up a Layout Editor panel for train tracking as described above, you can 
+track trains in a companion Panel Editor panel just by adding Memory Labels.</p>
 
 <a name="finish"><h3>Putting Finishing Touches on your Panel
 </h3></a>

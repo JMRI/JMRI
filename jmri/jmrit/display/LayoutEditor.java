@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.Memory;
+import jmri.Reporter;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
@@ -47,7 +48,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -59,7 +60,7 @@ public class LayoutEditor extends JmriJFrame {
     // Defined constants
     final public static Integer BKG       = new Integer(1);  // must be lower than all others below
     final public static Integer ICONS     = new Integer(3);
-    final public static Integer LABELS    = new Integer(5);  // also used for Memories
+    final public static Integer LABELS    = new Integer(5);  // also used for Memories and Reporters
     final public static Integer SECURITY  = new Integer(6);
     final public static Integer TURNOUTS  = new Integer(7);
 	final public static Integer POINTS    = new Integer(8);
@@ -809,6 +810,16 @@ public class LayoutEditor extends JmriJFrame {
 					repaint();
                 }
             });
+		// add reporter
+        JMenuItem reporterItem = new JMenuItem(rb.getString("AddReporter")+"...");
+        optionMenu.add(reporterItem);
+        reporterItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					enterReporter(panelWidth/2,panelHeight/2);
+					setDirty(true);
+					repaint();
+                }
+            });
 		// set location and size
         JMenuItem locationItem = new JMenuItem(rb.getString("SetLocation"));
         optionMenu.add(locationItem);
@@ -979,6 +990,157 @@ public class LayoutEditor extends JmriJFrame {
 			repaint();
 			setDirty(true);
 		}
+	}
+	
+	// operational variables for enter reporter pane
+	private JmriJFrame enterReporterFrame = null;
+	private boolean reporterOpen = false;
+	private JTextField xPositionField = new JTextField(6);
+	private JTextField yPositionField = new JTextField(6);
+	private JTextField reporterNameField = new JTextField(6);
+	private JButton reporterDone;
+	private JButton reporterCancel;
+
+	// display dialog for entering Reporters
+	protected void enterReporter(int defaultX, int defaultY) {
+		if (reporterOpen) {
+			enterReporterFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (enterReporterFrame == null) {
+            enterReporterFrame = new JmriJFrame( rb.getString("AddReporter") );
+//            enterReporterFrame.addHelpMenu("package.jmri.jmrit.display.AddReporterLabel", true);
+            enterReporterFrame.setLocation(70,30);
+            Container theContentPane = enterReporterFrame.getContentPane();        
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			// setup reporter entry
+            JPanel panel2 = new JPanel(); 
+            panel2.setLayout(new FlowLayout());
+			JLabel reporterLabel = new JLabel( rb.getString("ReporterName")+":");
+            panel2.add(reporterLabel);
+            panel2.add(reporterNameField);
+            reporterNameField.setToolTipText( rb.getString("ReporterNameHint") );
+            theContentPane.add(panel2);
+			// setup coordinates entry
+            JPanel panel3 = new JPanel(); 
+            panel3.setLayout(new FlowLayout());
+			JLabel xCoordLabel = new JLabel( rb.getString("ReporterLocationX"));
+            panel3.add(xCoordLabel);
+            panel3.add(xPositionField);
+            xPositionField.setToolTipText( rb.getString("ReporterLocationXHint") );
+ 			JLabel yCoordLabel = new JLabel( rb.getString("ReporterLocationY"));
+            panel3.add(yCoordLabel);
+            panel3.add(yPositionField);
+            yPositionField.setToolTipText( rb.getString("ReporterLocationYHint") );
+			theContentPane.add(panel3);
+			// set up Add and Cancel buttons
+            JPanel panel5 = new JPanel();
+            panel5.setLayout(new FlowLayout());
+            panel5.add(reporterDone = new JButton(rb.getString("AddNewLabel")));
+            reporterDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    reporterDonePressed(e);
+                }
+            });
+            reporterDone.setToolTipText( rb.getString("ReporterDoneHint") );
+			// Cancel
+            panel5.add(reporterCancel = new JButton(rb.getString("Cancel")));
+            reporterCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    reporterCancelPressed(e);
+                }
+            });
+            reporterCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel5);
+			
+		}
+		// Set up for Entry of Reporter Icon
+		xPositionField.setText(""+defaultX);
+		yPositionField.setText(""+defaultY);
+		enterReporterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					reporterCancelPressed(null);
+				}
+			});
+        enterReporterFrame.pack();
+        enterReporterFrame.setVisible(true);	
+//		trackWidthChange = false;	
+		reporterOpen = true;
+	}	
+	void reporterDonePressed(ActionEvent a) {
+		// get x coordinate
+		String newX = "";
+		int xx = 0;
+		newX = xPositionField.getText().trim();
+		try {
+			xx = Integer.parseInt(newX);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(enterReporterFrame,rb.getString("EntryError")+": "+
+					e+" "+rb.getString("TryAgain"),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+            return;
+		}
+		if ( ( xx<=0) || (xx>panelWidth) ) {
+			JOptionPane.showMessageDialog(enterReporterFrame,
+					java.text.MessageFormat.format(rb.getString("Error2a"),
+					new String[]{" "+xx+" "}),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// get y coordinate
+		String newY = "";
+		int yy = 0;
+		newY = yPositionField.getText().trim();
+		try {
+			yy = Integer.parseInt(newY);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(enterReporterFrame,rb.getString("EntryError")+": "+
+					e+" "+rb.getString("TryAgain"),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+            return;
+		}
+		if ( ( yy<=0) || (yy>panelHeight) ) {
+			JOptionPane.showMessageDialog(enterReporterFrame,
+					java.text.MessageFormat.format(rb.getString("Error2a"),
+					new String[]{" "+yy+" "}),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// get reporter name
+		Reporter reporter = null;
+		String rName = reporterNameField.getText().trim();
+        if (InstanceManager.reporterManagerInstance()!=null) {
+            reporter = InstanceManager.reporterManagerInstance().
+                provideReporter(rName);
+            if (reporter == null) {
+				JOptionPane.showMessageDialog(enterReporterFrame,
+					java.text.MessageFormat.format(rb.getString("Error18"),
+					new String[]{rName}),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if ( !rName.equals(reporter.getUserName()) ) 
+				rName = rName.toUpperCase();
+		}
+		else {
+			JOptionPane.showMessageDialog(enterReporterFrame,
+					rb.getString("Error17"),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// add the reporter icon
+		addReporter(rName,xx,yy);
+		// success - repaint the panel
+		repaint();
+        enterReporterFrame.setVisible(true);	
+	}
+	void reporterCancelPressed(ActionEvent a) {
+		reporterOpen = false;
+		enterReporterFrame.setVisible(false);
+		repaint();
 	}
 
 	// operational variables for scale/translate track diagram pane
@@ -3099,6 +3261,19 @@ public class LayoutEditor extends JmriJFrame {
 		setDirty(true);
         putLabel(l);
     }
+   
+	/**
+	 * Add a Reporter Icon to the panel
+	 */
+    void addReporter(String textReporter,int xx,int yy) {
+        LayoutReporterIcon l = new LayoutReporterIcon();
+        l.setReporter(textReporter);
+        l.setLocation(xx,yy);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(LABELS);
+		setDirty(true);
+        putLabel(l);
+   }
 
     /**
      * Add an icon to the target
@@ -3366,6 +3541,7 @@ public class LayoutEditor extends JmriJFrame {
 		panelWidth = w;
 		panelHeight = h;
 		targetPanel.setSize(w-18,h-60);
+		setSize(w,h);		
 		log.debug("Position - "+upperLeftX+","+upperLeftY+" SetSize - "+panelWidth+","+panelHeight);		
 	}
 	public void setMainlineTrackWidth(int w) {mainlineTrackWidth = w;}
