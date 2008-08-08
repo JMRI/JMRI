@@ -35,7 +35,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditorAuxTools 
@@ -48,7 +48,7 @@ public class LayoutEditorAuxTools
 	
 	// operational instance variables 
 	private LayoutEditor layoutEditor = null;
-	private ArrayList cList = null; //LayoutConnectivity list
+	private ArrayList cList = new ArrayList(); //LayoutConnectivity list
 	private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
 	private boolean initialized = false;
 	
@@ -70,7 +70,7 @@ public class LayoutEditorAuxTools
 	public ArrayList getConnectivityList(LayoutBlock blk) {
 		if (blockConnectivityChanged) {
 			updateBlockConnectivity();
-		}	
+		}
 		ArrayList retList = new ArrayList();
 		for (int i = 0;i<cList.size();i++) {
 			LayoutConnectivity lc = (LayoutConnectivity)cList.get(i);
@@ -659,7 +659,10 @@ public class LayoutEditorAuxTools
 						curConnection = lt.getConnectB();
 					}
 					typeCurConnection = LayoutEditor.TRACK;
-					p.addSetting(bs);
+					if ( (bs != null) && (bs.getBean() != null) ) 
+						p.addSetting(bs);
+					else
+						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 				}
 			}
 		}
@@ -680,7 +683,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
 					else
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
-					p.addSetting(bs);
+					if ( (bs != null) && (bs.getBean() != null) ) 
+						p.addSetting(bs);
+					else
+						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 					prevConnection = curConnection;
 					curConnection = ((LayoutTurnout)curConnection).getConnectA();
 					typeCurConnection = LayoutEditor.TRACK;
@@ -691,7 +697,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
 					else
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
-					p.addSetting(bs);
+					if ( (bs != null) && (bs.getBean() != null) ) 
+						p.addSetting(bs);
+					else
+						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 					prevConnection = curConnection;
 					curConnection = ((LayoutTurnout)curConnection).getConnectA();
 					typeCurConnection = LayoutEditor.TRACK;
@@ -741,7 +750,10 @@ public class LayoutEditorAuxTools
 						curConnection = lt.getConnectD();
 					}
 					typeCurConnection = LayoutEditor.TRACK;
-					p.addSetting(bs);
+					if ( (bs != null) && (bs.getBean() != null) ) 
+						p.addSetting(bs);
+					else
+						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 				}
 			}
 		}
@@ -813,7 +825,10 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 							else
 								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectA();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -824,7 +839,10 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
 							else
 								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectA();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -850,7 +868,10 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectA();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -864,7 +885,10 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectC();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -886,7 +910,10 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectB();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -900,7 +927,10 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							p.addSetting(bs);
+							if ( (bs != null) && (bs.getBean() != null) ) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectD();
 							typeCurConnection = LayoutEditor.TRACK;

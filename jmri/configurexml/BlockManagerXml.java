@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @since 2.1.2
  *
  */
@@ -124,6 +124,10 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
         e.addContent(pe);
     }
     void addBeanSetting(Element e, BeanSetting bs) {
+		if (bs.getBean() == null) {
+			log.error("Invalid BeanSetting - did not save");
+			return;
+		}
         // persist bean name, type and value
         Element bse = new Element("beansetting");
         // for now, assume turnout

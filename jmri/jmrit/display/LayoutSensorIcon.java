@@ -15,7 +15,7 @@ import javax.swing.JCheckBoxMenuItem;
 import java.util.ResourceBundle;
 
 /**
- * This module provides an icon to display a status of a Sensor on a LayoutEditor.
+ * This module provides an icon to display a status of a Sensor on a LayoutEditor panel.
  *   This routine is almost identical to SensorIcon.java, written by Bob Jacobsen.  
  *   Differences are related to the hard interdependence between SensorIconXml.java and 
  *   PanelEditor.java, which made it impossible to use SensorIcon.java directly with 
@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */

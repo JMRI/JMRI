@@ -10,6 +10,9 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks
@@ -21,9 +24,11 @@ import java.util.ArrayList;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class LayoutBlockManager extends AbstractManager {
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
     public LayoutBlockManager() {
         super();
@@ -138,6 +143,7 @@ public class LayoutBlockManager extends AbstractManager {
 	 * This routine should be called when loading panels, after all Layout Editor panels have been loaded.
 	 */
 	public void initializeLayoutBlockPaths() {
+		badBeanErrors = 0;
 		// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
 		java.util.Iterator iter = getSystemNameList().iterator();
 		while (iter.hasNext()) {
@@ -147,6 +153,10 @@ public class LayoutBlockManager extends AbstractManager {
 			LayoutBlock b = getBySystemName(sName); 
 			b.updatePaths();
 		}
+		if (badBeanErrors>0) {
+			JOptionPane.showMessageDialog(null,""+badBeanErrors+" "+rb.getString("Warn2"),
+					rb.getString("WarningTitle"),JOptionPane.ERROR_MESSAGE);
+		}			
 		try {
 			new BlockValueFile().readBlockValues();
 		} 
@@ -161,6 +171,8 @@ public class LayoutBlockManager extends AbstractManager {
 //		layoutEditorTests.runClinicTests();
 //		layoutEditorTests.runTestPanel3Tests();
 	}
+	private int badBeanErrors = 0;
+	public void addBadBeanError() {badBeanErrors ++;}
 	
 	/**
 	 * Method to return the Signal Head facing into a specified Block from a specified protected Block.

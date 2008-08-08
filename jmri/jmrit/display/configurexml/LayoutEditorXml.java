@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -339,8 +339,8 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setDrawGrid(dgValue);
 		panel.setSnapOnAdd(sgaValue);
 		panel.setSnapOnMove(sgmValue);
-		panel.setLayoutDimensions(width,height,x,y);
         panel.pack();
+		panel.setLayoutDimensions(width,height,x,y);
         panel.show();
         panel.setVisible(true);    // always show the panel
         panel.setEditable(edValue);
