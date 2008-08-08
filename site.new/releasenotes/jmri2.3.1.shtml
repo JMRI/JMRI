@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.6 2008-08-02 06:57:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.7 2008-08-08 03:44:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -192,6 +192,10 @@ A problem with indexed CVs (as in QSI decoders) and adding new entries
 to decoder definitions has been fixed.
 
 <p>
+JMRI windows can now be
+<a href="http://jmri.sf.net/help/en/html/web/index.shtml">accessed from a web browser</a>.
+
+<p>
 David Duchamp added an "edit" capability to the Signal Table, so
 you can now change the details (but not the type) of a signal definition.
 He also updated the help pages for signals and the Signal Table.
@@ -207,7 +211,7 @@ more self-explanatory.
 
 <p>
 New 
-<a href="">setup tool</a>
+<a href="http://jmri.sf.net/help/en/package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">setup tool</a>
 for CBUS users.
 
 <p>
@@ -218,6 +222,25 @@ replaces the prior content.  In tables, the typing has been appended to
 the prior content.  This is now fixed; when you tab into a 
 table cell, the current content is selected.  If you type e.g. without
 setting the cursor, you'll replace the prior content.
+
+<p>
+David Duchamp added a snap-to-grid option to the layout editor.
+
+<p>
+The Digitrax slot tracking has been updated to 
+track F9 through F28.  These are not actually in the command station's
+slot's state information, since they're handled by transient 
+LocoNet messages, but we're able to track their status reasonably
+well.  This allows LocoNet throttles to properly share the 
+status of F9 through F28.
+
+<p>
+David Duchamp fixed a number of minor bugs in the Layout Editor.
+
+<p>
+David Duchamp and Peter Rushworth added a Reporter icon to the 
+Layout editor.
+
 
 <!--#include virtual="/Footer" -->
 
