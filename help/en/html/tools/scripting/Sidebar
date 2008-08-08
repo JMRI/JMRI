@@ -19,7 +19,7 @@
 		<dt><h3><a href="http://www.python.org">Python</a></h3></dt>
 		<dd>JMRI scripts are in Python, a popular general-purpose computer language
 		    <UL>
-		    <LI><dfn><a href="Python.html">Python & JMRI</a></dfn>
+		    <LI><dfn><a href="Python.shtml">Python & JMRI</a></dfn>
 		    <LI><dfn><a href="http://www.python.org">Python home page</a></dfn>
 		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Python tutorial for non-programmers</a></dfn>
 		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python tutorial for programmers</a></dfn>
