@@ -20,17 +20,17 @@ import java.util.List;
  * to XML.  "Layout" refers to the hardware:  Specific communcation
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
- * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @author Bob Jacobsen  Copyright (c) 2002, 2008
+ * @version $Revision: 1.34 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
 
     /**
-     * Define the current DTD version string.
-     * {@see <A HREF="package-summary.html#DTD">DTD versioning</a>
+     * Define the current DTD version string for the layout-config DTD.
+     * See the <A HREF="package-summary.html#DTD">DTD versioning discussion</a>
      */
-    static final String dtdVersion = "2-3-1";
+    static final public String dtdVersion = "2-3-1";
     
     public ConfigXmlManager() {
     }
@@ -212,7 +212,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
             java.util.Map m = new java.util.HashMap();
             m.put("type", "text/xsl");
-            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl");
+            m.put("href", xsltLocation+"panelfile.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
 
