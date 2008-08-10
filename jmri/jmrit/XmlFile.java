@@ -25,13 +25,22 @@ import org.jdom.output.XMLOutputter;
  * Further, our code assumes that default values for attributes will
  * be provided, and it's necessary to read the DTD for that to work.
  *<p>
- * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
+ * We implement this using our own EntityResolvor, the 
+ * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  */
 public abstract class XmlFile {
 
+    /**
+     * Define root part of URL for 
+     * XSLT style page processing instructions.
+     *<p>
+     * See the <A HREF="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlUsage.shtml#xslt">XSLT versioning discussion</a>
+     */
+    static final public String xsltLocation = "/xml/XSLT/";
+    
     /**
      * Read the contents of an XML file from its filename.  
      * The name is expanded by the {@link #findFile}
@@ -359,7 +368,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.34 2008-01-24 04:15:41 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.35 2008-08-10 14:42:21 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
