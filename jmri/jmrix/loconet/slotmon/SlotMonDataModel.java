@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -280,7 +280,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F6COLUMN:
         case F7COLUMN:
         case F8COLUMN:
-            return new JLabel(" off ").getPreferredSize().width;
+            return new JLabel(" off    ").getPreferredSize().width;
         default:
             return new JLabel(" <unknown> ").getPreferredSize().width;
         }

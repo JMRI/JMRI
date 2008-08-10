@@ -10,6 +10,17 @@ import java.util.Vector;
  * A SlotListener can be registered to hear of changes in this slot.  All
  * changes in values will result in notification.
  * <P>
+ * Strictly speaking, functions 9 through 28 are not in the
+ * actual slot, but it's convenient to imagine there's an 
+ * "extended slot" and keep track of them here.  This is a 
+ * partial implementation, though, because setting is still
+ * done directly in {@link LocoNetThrottle}. In particular, 
+ * if this slot has not been read from the command station,
+ * the first message directly setting F9 through F28 will
+ * not have a place to store information. Instead, it will
+ * trigger a slot read, so the following messages
+ * will be properly handled.
+ * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
  * does not extend to uses in other software products.  If you wish to
@@ -18,7 +29,7 @@ import java.util.Vector;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class LocoNetSlot {
 
@@ -51,6 +62,27 @@ public class LocoNetSlot {
     public boolean isF7()	{ return 0!=(snd&LnConstants.SND_F7); }
     public boolean isF8()	{ return 0!=(snd&LnConstants.SND_F8); }
 
+    public boolean isF9()	{ return localF9; }
+    public boolean isF10()	{ return localF10; }
+    public boolean isF11()	{ return localF11; }
+    public boolean isF12()	{ return localF12; }
+    public boolean isF13()	{ return localF13; }
+    public boolean isF14()	{ return localF14; }
+    public boolean isF15()	{ return localF15; }
+    public boolean isF16()	{ return localF16; }
+    public boolean isF17()	{ return localF17; }
+    public boolean isF18()	{ return localF18; }
+    public boolean isF19()	{ return localF19; }
+    public boolean isF20()	{ return localF20; }
+    public boolean isF21()	{ return localF21; }
+    public boolean isF22()	{ return localF22; }
+    public boolean isF23()	{ return localF23; }
+    public boolean isF24()	{ return localF24; }
+    public boolean isF25()	{ return localF25; }
+    public boolean isF26()	{ return localF26; }
+    public boolean isF27()	{ return localF27; }
+    public boolean isF28()	{ return localF28; }
+
     // loco address, speed
     public int locoAddr()   	{ return addr; }
     public int speed()      	{ return spd; }
@@ -71,6 +103,27 @@ public class LocoNetSlot {
         setSlot(l);
     }
 
+    boolean localF9 = false;
+    boolean localF10 = false;
+    boolean localF11 = false;
+    boolean localF12 = false;
+    boolean localF13 = false;
+    boolean localF14 = false;
+    boolean localF15 = false;
+    boolean localF16 = false;
+    boolean localF17 = false;
+    boolean localF18 = false;
+    boolean localF19 = false;
+    boolean localF20 = false;
+    boolean localF21 = false;
+    boolean localF22 = false;
+    boolean localF23 = false;
+    boolean localF24 = false;
+    boolean localF25 = false;
+    boolean localF26 = false;
+    boolean localF27 = false;
+    boolean localF28 = false;
+    
     // methods to interact with LocoNet
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
@@ -142,6 +195,45 @@ public class LocoNetSlot {
         }
     }
 
+    /**
+     * Load functions 9 through 28 from loconet "Set Direct"
+     * message.
+     */
+    public void functionMessage(long pkt) {
+        System.out.println("slot "+getSlot()+" msg "+pkt);
+        // parse for which set of functions
+        if ( (pkt&0xFFFFFF0) == 0xA0) {
+            // F9-12
+            localF9  = ((pkt&0x01) != 0);
+            localF10 = ((pkt&0x02) != 0);
+            localF11 = ((pkt&0x04) != 0);
+            localF12 = ((pkt&0x08) != 0);
+            notifySlotListeners();
+        } else if ( (pkt&0xFFFFFF00) == 0xDE00) {
+            // check F13-20
+            localF13 = ((pkt&0x01) != 0);
+            localF14 = ((pkt&0x02) != 0);
+            localF15 = ((pkt&0x04) != 0);
+            localF16 = ((pkt&0x08) != 0);
+            localF17 = ((pkt&0x10) != 0);
+            localF18 = ((pkt&0x20) != 0);
+            localF19 = ((pkt&0x40) != 0);
+            localF20 = ((pkt&0x80) != 0);
+            notifySlotListeners();
+        } else if ( (pkt&0xFFFFFF00) == 0xDF00) {
+            // check F21-28
+            localF21 = ((pkt&0x01) != 0);
+            localF22 = ((pkt&0x02) != 0);
+            localF23 = ((pkt&0x04) != 0);
+            localF24 = ((pkt&0x08) != 0);
+            localF25 = ((pkt&0x10) != 0);
+            localF26 = ((pkt&0x20) != 0);
+            localF27 = ((pkt&0x40) != 0);
+            localF28 = ((pkt&0x80) != 0);
+            notifySlotListeners();
+        }
+    }
+    
     /**
      * Update the status bits in STAT1 (D5, D4)
      * @param status New values for STAT1 (D5, D4)

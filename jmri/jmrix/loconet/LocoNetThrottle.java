@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -61,13 +61,29 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         this.f7           = slot.isF7();
         this.f8           = slot.isF8();
 
-        // f9 through 12 are not in the slot; we have to maintain them
-        // locally
+        // extended values
+        this.f8           = slot.isF8();
+        this.f9           = slot.isF9();
+        this.f10          = slot.isF10();
+        this.f11          = slot.isF11();
+        this.f12          = slot.isF12();
+        this.f13          = slot.isF13();
+        this.f14          = slot.isF14();
+        this.f15          = slot.isF15();
+        this.f16          = slot.isF16();
+        this.f17          = slot.isF17();
+        this.f18          = slot.isF18();
+        this.f19          = slot.isF19();
+        this.f20          = slot.isF20();
+        this.f21          = slot.isF21();
+        this.f22          = slot.isF22();
+        this.f23          = slot.isF23();
+        this.f24          = slot.isF24();
+        this.f25          = slot.isF25();
+        this.f26          = slot.isF26();
+        this.f27          = slot.isF27();
+        this.f28          = slot.isF28();
 
-        this.f9  = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
         this.address      = slot.locoAddr();
         this.isForward    = slot.isForward();
 
@@ -347,8 +363,108 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             notifyPropertyChangeListener("F8", new Boolean(temp), new Boolean(slot.isF8()));
         }
 
-        // f9 through f12 are not in the slot
-
+        // extended slot
+        if (this.f9 != slot.isF9()) {
+            temp = this.f9;
+            this.f9 = slot.isF9();
+            notifyPropertyChangeListener("F9", new Boolean(temp), new Boolean(slot.isF9()));
+        }
+        if (this.f10 != slot.isF10()) {
+            temp = this.f10;
+            this.f10 = slot.isF10();
+            notifyPropertyChangeListener("F10", new Boolean(temp), new Boolean(slot.isF10()));
+        }
+        if (this.f11 != slot.isF11()) {
+            temp = this.f11;
+            this.f11 = slot.isF11();
+            notifyPropertyChangeListener("F11", new Boolean(temp), new Boolean(slot.isF11()));
+        }
+        if (this.f12 != slot.isF12()) {
+            temp = this.f12;
+            this.f12 = slot.isF12();
+            notifyPropertyChangeListener("F12", new Boolean(temp), new Boolean(slot.isF12()));
+        }
+        if (this.f13 != slot.isF13()) {
+            temp = this.f13;
+            this.f13 = slot.isF13();
+            notifyPropertyChangeListener("F13", new Boolean(temp), new Boolean(slot.isF13()));
+        }
+        if (this.f14 != slot.isF14()) {
+            temp = this.f14;
+            this.f14 = slot.isF14();
+            notifyPropertyChangeListener("F14", new Boolean(temp), new Boolean(slot.isF14()));
+        }
+        if (this.f15 != slot.isF15()) {
+            temp = this.f15;
+            this.f15 = slot.isF15();
+            notifyPropertyChangeListener("F15", new Boolean(temp), new Boolean(slot.isF15()));
+        }
+        if (this.f16 != slot.isF16()) {
+            temp = this.f16;
+            this.f16 = slot.isF16();
+            notifyPropertyChangeListener("F16", new Boolean(temp), new Boolean(slot.isF16()));
+        }
+        if (this.f17 != slot.isF17()) {
+            temp = this.f17;
+            this.f17 = slot.isF17();
+            notifyPropertyChangeListener("F17", new Boolean(temp), new Boolean(slot.isF17()));
+        }
+        if (this.f18 != slot.isF18()) {
+            temp = this.f18;
+            this.f18 = slot.isF18();
+            notifyPropertyChangeListener("F18", new Boolean(temp), new Boolean(slot.isF18()));
+        }
+        if (this.f19 != slot.isF19()) {
+            temp = this.f19;
+            this.f19 = slot.isF19();
+            notifyPropertyChangeListener("F19", new Boolean(temp), new Boolean(slot.isF19()));
+        }
+        if (this.f20 != slot.isF20()) {
+            temp = this.f20;
+            this.f20 = slot.isF20();
+            notifyPropertyChangeListener("F20", new Boolean(temp), new Boolean(slot.isF20()));
+        }
+        if (this.f21 != slot.isF21()) {
+            temp = this.f21;
+            this.f21 = slot.isF21();
+            notifyPropertyChangeListener("F21", new Boolean(temp), new Boolean(slot.isF21()));
+        }
+        if (this.f22 != slot.isF22()) {
+            temp = this.f22;
+            this.f22 = slot.isF22();
+            notifyPropertyChangeListener("F22", new Boolean(temp), new Boolean(slot.isF22()));
+        }
+        if (this.f23 != slot.isF23()) {
+            temp = this.f23;
+            this.f23 = slot.isF23();
+            notifyPropertyChangeListener("F23", new Boolean(temp), new Boolean(slot.isF23()));
+        }
+        if (this.f24 != slot.isF24()) {
+            temp = this.f24;
+            this.f24 = slot.isF24();
+            notifyPropertyChangeListener("F24", new Boolean(temp), new Boolean(slot.isF24()));
+        }
+        if (this.f25 != slot.isF25()) {
+            temp = this.f25;
+            this.f25 = slot.isF25();
+            notifyPropertyChangeListener("F25", new Boolean(temp), new Boolean(slot.isF25()));
+        }
+        if (this.f26 != slot.isF26()) {
+            temp = this.f26;
+            this.f26 = slot.isF26();
+            notifyPropertyChangeListener("F26", new Boolean(temp), new Boolean(slot.isF26()));
+        }
+        if (this.f27 != slot.isF27()) {
+            temp = this.f27;
+            this.f27 = slot.isF27();
+            notifyPropertyChangeListener("F27", new Boolean(temp), new Boolean(slot.isF27()));
+        }
+        if (this.f28 != slot.isF28()) {
+            temp = this.f28;
+            this.f28 = slot.isF28();
+            notifyPropertyChangeListener("F28", new Boolean(temp), new Boolean(slot.isF28()));
+        }
+        
     }
 
     public LocoAddress getLocoAddress() {

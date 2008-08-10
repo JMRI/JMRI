@@ -20,6 +20,17 @@ import java.util.Vector;
  * is saying that it wants to be notified of a change in any slot.  Alternately,
  * the SlotListener can register with some specific slot, done via the LocoNetSlot
  * object itself.
+ * <p>
+ * Strictly speaking, functions 9 through 28 are not in the
+ * actual slot, but it's convenient to imagine there's an 
+ * "extended slot" and keep track of them here.  This is a 
+ * partial implementation, though, because setting is still
+ * done directly in {@link LocoNetThrottle}. In particular, 
+ * if this slot has not been read from the command station,
+ * the first message directly setting F9 through F28 will
+ * not have a place to store information. Instead, it will
+ * trigger a slot read, so the following messages
+ * will be properly handled.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -33,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -241,6 +252,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param m incoming message
      */
     public void message(LocoNetMessage m) {
+        // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
             forwardMessageToSlot(m,i);
@@ -248,12 +260,112 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             programmerOpMessage(m,i);
         }
 
+        // see if extended function message
+        if (isExtFunctionMessage(m)) {
+            // yes, get address
+            int addr = getDirectFunctionAddress(m);
+            // find slot(s) containing this address
+            // and route message to them
+            boolean found = false;
+            for (int j = 0; j < 120; j++) {
+                LocoNetSlot slot = slot(j);
+                if ( slot == null ) continue;
+                if ( (slot.locoAddr() != addr) 
+                    || (slot.slotStatus() == LnConstants.LOCO_FREE) ) continue;
+                // found!
+                slot.functionMessage(getDirectDccPacket(m));
+                found = true;
+            }
+            if (!found) {
+                // rats! Slot not loaded since program start.  Request it be 
+                // reloaded for later, but that'll be too late
+                // for this one.
+                LocoNetMessage mo = new LocoNetMessage(4);
+                mo.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
+                mo.setElement(1, (addr/128)&0x7F);
+                mo.setElement(2, addr&0x7F);
+                LnTrafficController.instance().sendLocoNetMessage(mo);             
+            }
+        }
+        
         // save this message for context next time
         // unless it is a OPC_GPBUSY AJS 28-Mar-03
         if( m.getOpCode() != LnConstants.OPC_GPBUSY )
             lastMessage = m.getOpCode();
     }
 
+    /**
+     * If this is a direct function command, return -1, 
+     * otherwise return DCC address word
+     */
+    int getDirectFunctionAddress(LocoNetMessage m) {
+        if (m.getElement(0) != 0xED) return -1;
+        if (m.getElement(1) != 0x0B) return -1;
+        if (m.getElement(2) != 0x7F) return -1;
+        // Direct packet, check length
+        if ( (m.getElement(3)&0x70) < 0x20) return -1;
+        int addr = -1;
+        // check long address
+        if ( (m.getElement(5)&0x40) != 0) {
+            addr = (m.getElement(5)&0x3F)*256 + (m.getElement(6)&0xFF);
+            if ( (m.getElement(4)&0x02) != 0 ) addr+=128;  // and high bit
+        } else {
+            addr = (m.getElement(5)&0xFF);
+            if ( (m.getElement(4)&0x01) != 0 ) addr+=128;  // and high bit
+        }
+        return addr;
+    }
+    
+    /* if this is a direct DCC packet, return as one long
+     * else return -1. Packet does not include
+     * address bytes.
+     */
+    int getDirectDccPacket(LocoNetMessage m) {
+        if (m.getElement(0) != 0xED) return -1;
+        if (m.getElement(1) != 0x0B) return -1;
+        if (m.getElement(2) != 0x7F) return -1;
+        // Direct packet, check length
+        if ( (m.getElement(3)&0x70) < 0x20) return -1;
+        int result = 0;
+        int n = (m.getElement(3)&0xF0)/16;
+        int start;
+        int high = m.getElement(4);
+        // check long or short address
+        if ( (m.getElement(5)&0x40) != 0) {
+            start = 7;
+            high = high>>2;
+            n = n-2;
+        } else {
+            start = 6;
+            high = high>>1;
+            n = n-1;
+        }
+        // get result
+        for (int i = 0; i<n; i++) {
+            result = result*256+(m.getElement(start+i)&0x7F);
+            if ((high & 0x01) !=0 ) result += 128;
+            high = high >> 1;
+        }
+        return result;
+    }
+
+    /** 
+     * True if the message is an external DCC packet
+     * request for F9-F28
+     */
+    boolean isExtFunctionMessage(LocoNetMessage m) {
+        int pkt = getDirectDccPacket(m);
+        if (pkt<0) return false;
+        // check F9-12
+        if ( (pkt&0xFFFFFF0) == 0xA0) return true;
+        // check F13-28
+        if ( (pkt&0xFFFFFE00) == 0xDE00) return true;
+        return false;
+    }
+    
+    /**
+     * FInd the slot number that a message references
+     */
     public int findSlotFromMessage(LocoNetMessage m) {
 
         int i = -1;  // find the slot index in the message and store here

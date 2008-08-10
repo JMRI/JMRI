@@ -3,9 +3,7 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
 import jmri.Programmer;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import junit.framework.*;
 
 public class SlotManagerTest extends TestCase {
 
@@ -18,6 +16,76 @@ public class SlotManagerTest extends TestCase {
      */
     private LocoNetSlot testSlot;
 
+    public void testGetDirectFunctionAddressOK() {
+        SlotManager slotmanager = new SlotManager();
+        LocoNetMessage m1;
+        
+        m1 = new LocoNetMessage(11);
+        m1.setElement(0, 0xED);  // short 03 sets F9
+        m1.setElement(1, 0x0B);
+        m1.setElement(2, 0x7F);
+        m1.setElement(3, 0x24);
+        m1.setElement(4, 0x02);
+        m1.setElement(5, 0x03);
+        m1.setElement(6, 0x21);
+        m1.setElement(7, 0x00);
+        m1.setElement(8, 0x00);
+        m1.setElement(9, 0x00);
+        m1.setElement(10, 0x62);
+        Assert.assertEquals("short 3 sets F9", 3, 
+            slotmanager.getDirectFunctionAddress(m1));
+            
+        m1 = new LocoNetMessage(11);
+        m1.setElement(0, 0xED);  // long 513 sets F9
+        m1.setElement(1, 0x0B);
+        m1.setElement(2, 0x7F);
+        m1.setElement(3, 0x34);
+        m1.setElement(4, 0x05);
+        m1.setElement(5, 0x42);
+        m1.setElement(6, 0x01);
+        m1.setElement(7, 0x21);
+        m1.setElement(8, 0x00);
+        m1.setElement(9, 0x00);
+        m1.setElement(10, 0x35);
+        Assert.assertEquals("long 513 sets F9", 513, 
+            slotmanager.getDirectFunctionAddress(m1));
+    }
+    
+    public void testGetDirectDccPacketOK() {
+        SlotManager slotmanager = new SlotManager();
+        LocoNetMessage m1;
+        
+        m1 = new LocoNetMessage(11);
+        m1.setElement(0, 0xED);  // short 03 sets F9
+        m1.setElement(1, 0x0B);
+        m1.setElement(2, 0x7F);
+        m1.setElement(3, 0x24);
+        m1.setElement(4, 0x02);
+        m1.setElement(5, 0x03);
+        m1.setElement(6, 0x21);
+        m1.setElement(7, 0x00);
+        m1.setElement(8, 0x00);
+        m1.setElement(9, 0x00);
+        m1.setElement(10, 0x62);
+        Assert.assertEquals("short 3 sets F9", 0xA1, 
+            slotmanager.getDirectDccPacket(m1));
+            
+        m1 = new LocoNetMessage(11);
+        m1.setElement(0, 0xED);  // long 513 sets F9
+        m1.setElement(1, 0x0B);
+        m1.setElement(2, 0x7F);
+        m1.setElement(3, 0x34);
+        m1.setElement(4, 0x05);
+        m1.setElement(5, 0x42);
+        m1.setElement(6, 0x01);
+        m1.setElement(7, 0x21);
+        m1.setElement(8, 0x00);
+        m1.setElement(9, 0x00);
+        m1.setElement(10, 0x35);
+        Assert.assertEquals("long 513 sets F9", 0xA1, 
+            slotmanager.getDirectDccPacket(m1));
+    }
+    
     public void testGetSlotSend()  {
         SlotManager slotmanager = new SlotManager();
         testSlot = null;
@@ -187,6 +255,18 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 67 00 00 16 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
+
+	// Main entry point
+	static public void main(String[] args) {
+		String[] testCaseName = {SlotManagerTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
+	}
+
+	// test suite from all defined tests
+	public static Test suite() {
+		TestSuite suite = new TestSuite(SlotManagerTest.class);
+		return suite;
+	}
 
     // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
