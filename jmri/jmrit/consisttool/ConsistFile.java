@@ -19,7 +19,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -241,7 +241,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
            // add XSLT processing instruction
            java.util.Map m = new java.util.HashMap();
            m.put("type", "text/xsl");
-           m.put("href", "http://jmri.sourceforge.net/xml/XSLT/consistRoster.xsl");
+           m.put("href", xsltLocation+"consistRoster.xsl");
            org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
            doc.addContent(0,p);
            

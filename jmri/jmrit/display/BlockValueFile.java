@@ -18,7 +18,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -105,7 +105,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 			// <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
 			java.util.Map m = new java.util.HashMap();
 			m.put("type", "text/xsl");
-			m.put("href", "http://jmri.sourceforge.net/xml/XSLT/blockValues.xsl");
+			m.put("href", xsltLocation+"blockValues.xsl");
 			org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 			

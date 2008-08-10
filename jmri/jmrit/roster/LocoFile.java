@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.26 $
+ * @version   $Revision: 1.27 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -162,7 +162,7 @@ class LocoFile extends XmlFile {
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
             java.util.Map m = new java.util.HashMap();
             m.put("type", "text/xsl");
-            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/locomotive.xsl");
+            m.put("href", xsltLocation+"locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
         

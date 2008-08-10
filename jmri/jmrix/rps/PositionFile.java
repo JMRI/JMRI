@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class PositionFile extends XmlFile {
 
@@ -31,7 +31,7 @@ public class PositionFile extends XmlFile {
         // <?xml-stylesheet type="text/xsl" href="XSLT/rpsfile.xsl"?>
         java.util.Map m = new java.util.HashMap();
         m.put("type", "text/xsl");
-        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/rpsfile.xsl");
+        m.put("href", xsltLocation+"rpsfile.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         

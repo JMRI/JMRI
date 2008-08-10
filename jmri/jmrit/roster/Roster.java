@@ -48,7 +48,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -228,7 +228,7 @@ public class Roster extends XmlFile {
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
         java.util.Map m = new java.util.HashMap();
         m.put("type", "text/xsl");
-        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/roster.xsl");
+        m.put("href", xsltLocation+"roster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         

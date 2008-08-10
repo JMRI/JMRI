@@ -16,7 +16,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -54,7 +54,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
             java.util.Map m = new java.util.HashMap();
             m.put("type", "text/xsl");
-            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/throttle.xsl");
+            m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
         

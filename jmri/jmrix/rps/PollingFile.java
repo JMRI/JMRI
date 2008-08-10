@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class PollingFile extends XmlFile {
 
@@ -31,7 +31,7 @@ public class PollingFile extends XmlFile {
         // <?xml-stylesheet type="text/xsl" href="XSLT/rpsroster.xsl"?>
         java.util.Map m = new java.util.HashMap();
         m.put("type", "text/xsl");
-        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/rpsroster.xsl");
+        m.put("href", xsltLocation+"rpsroster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         

@@ -18,7 +18,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -399,7 +399,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
             java.util.Map m = new java.util.HashMap();
             m.put("type", "text/xsl");
-            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/locomotive.xsl");
+            m.put("href", jmri.jmrit.XmlFile.xsltLocation+"locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
             
