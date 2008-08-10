@@ -7,12 +7,15 @@ import java.awt.event.ActionEvent;
 
 import java.awt.*;
 import javax.swing.*;
+import jmri.util.JmriInsets;
 
 /**
  * Swing action to display the JMRI context for the user
  *
- * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.12 $
+ * @author	Bob Jacobsen    Copyright (C) 2007
+ * @author  Matt Harris Copyright (C) 2008
+ *
+ * @version         $Revision: 1.13 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -142,6 +145,17 @@ public class ReportContextAction extends AbstractAction {
             }
         } catch (Throwable e1) {
             addString("Exception getting max window bounds "+e1.getMessage());
+        }
+        // Return the insets using a custom class
+        // which should return the correct values under
+        // various Linux window managers
+        try {
+            Insets jmriInsets = JmriInsets.getInsets();
+            addString("JmriInsets t:"+jmriInsets.top+", b:"+jmriInsets.bottom
+                     +"; l:"+jmriInsets.left+", r:"+jmriInsets.right);
+        }
+        catch (Throwable e) {
+            addString("Exception getting JmriInsets" + e.getMessage());
         }
     }
 }
