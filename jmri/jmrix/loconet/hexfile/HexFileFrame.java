@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.21 $
+ * @version                     $Revision: 1.22 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -115,9 +115,8 @@ public class HexFileFrame extends JmriJFrame {
     boolean connected = false;
 
     public void dispose() {
-        // disconnect from LnTrafficManager if connected
-        if (connected) packets.disconnectPort(port);
-        connected = false;
+        // leaves the LocoNet Packetizer (e.g. the simulated connection)
+        // running.
 
         super.dispose();
     }
