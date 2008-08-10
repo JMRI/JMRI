@@ -6,12 +6,12 @@ import java.io.BufferedReader;
  * Encapsulate a request.
  * <p>
  * Although not the same as 
- * {@link javax.servlet.HttpServletRequest},
+ * javax.servlet.HttpServletRequest,
  * this is meant to be method-signature compatible, so that
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class MiniServletRequest implements javax.servlet.ServletRequest {
