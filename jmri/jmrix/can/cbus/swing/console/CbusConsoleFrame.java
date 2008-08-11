@@ -42,7 +42,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -311,9 +311,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane to select display type
         JPanel showPane = new JPanel();
-        showPane.add(showStatsButton);
-        showPane.add(showPacketButton);
-        showPane.add(showEventButton);
+//        showPane.add(showStatsButton);
+//        showPane.add(showPacketButton);
+//        showPane.add(showEventButton);
         showPane.add(decimalCheckBox);
         showPane.add(filterButton);
         getContentPane().add(showPane);
@@ -393,26 +393,26 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         sendPane.add(dataClearButton);
         getContentPane().add(sendPane);
         
-        // PAne for constructing event to send
-        JPanel evPane = new JPanel();
-        evPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Send Event"));
-
-        nnField = new JTextField("0", 5);
-        evPane.add(nnLabel);
-        evPane.add(nnField);
-        evField = new JTextField("0", 5);
-        evPane.add(evLabel);
-        evPane.add(evField);
-        
-        onOffGroup.add(onButton);
-        onOffGroup.add(offButton);
-        evPane.add(onButton);
-        evPane.add(offButton);
-
-        evPane.add(sendEvButton);
-        evPane.add(clearEvButton);
-        getContentPane().add(evPane);
+        // Pane for constructing event to send
+//        JPanel evPane = new JPanel();
+//        evPane.setBorder(BorderFactory.createTitledBorder(
+//                BorderFactory.createEtchedBorder(), "Send Event"));
+//
+//        nnField = new JTextField("0", 5);
+//        evPane.add(nnLabel);
+//        evPane.add(nnField);
+//        evField = new JTextField("0", 5);
+//        evPane.add(evLabel);
+//        evPane.add(evField);
+//        
+//        onOffGroup.add(onButton);
+//        onOffGroup.add(offButton);
+//        evPane.add(onButton);
+//        evPane.add(offButton);
+//
+//        evPane.add(sendEvButton);
+//        evPane.add(clearEvButton);
+//        getContentPane().add(evPane);
        
         // connect actions to buttons
         clearButton.addActionListener(new java.awt.event.ActionListener() {
