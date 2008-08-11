@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag {
@@ -139,7 +139,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 Dimension screen = getToolkit().getScreenSize();
 
                 // Next, ask for any insets on the screen.
-                Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+                Insets insets = JmriInsets.getInsets();
                 int widthInset = insets.right+insets.left;
                 int heightInset = insets.top+insets.bottom;
                 
