@@ -22,7 +22,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -128,7 +128,7 @@ public class GcTrafficController extends TrafficController {
      * Encode a CanMessage for the hardware
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
-        log.debug("Encoding for hardware");
+        //log.debug("Encoding for hardware");
 	GridConnectMessage ret = new GridConnectMessage();
         // Prefix
         ret.setElement(0, ':');
@@ -171,7 +171,7 @@ public class GcTrafficController extends TrafficController {
     boolean endNormalReply(AbstractMRReply r) {
         // Detect if the reply buffer ends with ";"
         int num = r.getNumDataElements() - 1;
-        log.debug("endNormalReply checking "+(num+1)+" of "+(r.getNumDataElements()));
+        //log.debug("endNormalReply checking "+(num+1)+" of "+(r.getNumDataElements()));
         if (r.getElement(num) == ';') {
             log.debug("End of normal message detected");
             return true;
