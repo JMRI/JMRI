@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.51 2008-08-08 03:53:48 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.52 2008-08-12 06:19:41 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -141,6 +141,9 @@
 	<LI>Joe Ellis provided the DecoderPro configuration files for the Lenz LE077XF decoder
 	    and has done a fantastic job on the manual
 	<LI>Wayne Eric, who provided the MRC AD370 decoder definition
+	<li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer
+	on Windows and wrote
+	<a href="http://jmri.sourceforge.net/install/qsidriver/">great instructions</a>.
 <a name="F"></A>
 	<LI>Dave Falkenburg created the original DecoderPro application (and
 	found the perfect name for it!)
@@ -173,8 +176,10 @@
 	has been patiently testing
 	<LI>Jim Hanna, who helped with instructions for NCE units
 	<LI>David Harris fixed some bugs in the Lenz decoder definitions
-	<li>Matthew Harris, who provided instructions for installing JMRI on EeePCs
-	and updated the roster pane to work on small screens
+	<li>Matthew Harris, who provided instructions for installing JMRI on EeePCs,
+	updated the roster pane to work on small screens,
+	improved handling of screen insets,
+	and provided a shutdown task.
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
 	<LI>Rob Heikens, who created ESU decoder definitions and programmer pages

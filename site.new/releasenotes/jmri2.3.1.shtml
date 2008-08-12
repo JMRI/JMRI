@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.7 2008-08-08 03:44:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.8 2008-08-12 06:21:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -240,6 +240,29 @@ David Duchamp fixed a number of minor bugs in the Layout Editor.
 <p>
 David Duchamp and Peter Rushworth added a Reporter icon to the 
 Layout editor.
+
+<p>
+When using the "LocoNet simulator", you can now close the simulator window
+with that stopping the program.
+
+<p>
+Andrew Crosland added a filter to the CBUS event display, which lets
+you pay attention to just the events you're interested in.
+
+<p>
+Matthew Harris updated how the insets are handled in JMRI windows.
+
+<p>
+There as a bug with programming "confirm" operations on LocoNet, now fixed.
+
+<p>
+Matthew Harris added a "QuietShutDownTask" to enable a task to be run at shutdown without any user prompt.
+
+<p>
+There's a new "CMRI simulator" choice, which should be used if e.g. your 
+C/MRI system is not working or not connected. In that case, you can still
+work with your panel definitions, etc without needing to connect.  For normal
+operation, the existing "C/MRI" choice is now called "C/MRI serial".
 
 
 <!--#include virtual="/Footer" -->
