@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class JmriInsets {
 
@@ -63,7 +63,7 @@ public class JmriInsets {
      * Determine the current Linux Window Manager
      */
     private static int getLinuxWindowManager(){
-        if(!OS_NAME.toLowerCase().startsWith("windows")||
+        if(!OS_NAME.toLowerCase().startsWith("windows")&&
            !OS_NAME.toLowerCase().startsWith("mac")) {
             try {
                 Process p = Runtime.getRuntime().exec("ps ax");
@@ -168,13 +168,13 @@ public class JmriInsets {
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if(!OS_NAME.toLowerCase().startsWith("windows")||
+        if(!OS_NAME.toLowerCase().startsWith("windows")&&
            !OS_NAME.toLowerCase().startsWith("mac"))
             // MS Windows & Mac OS will always end-up here, so no need to log.
-            return getDefaultInsets(true);
+            return getDefaultInsets(false);
         else
             // any other OS ends up here
-            return getDefaultInsets(false);
+            return getDefaultInsets(true);
     }
     
     private static Insets getDefaultInsets(boolean logOS) {
