@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -762,14 +762,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
         mServiceMode = false;
-        doConfirm(CV, val, p, 0x2C);
+        doConfirm(CV, val, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
     }
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
         mServiceMode = true;
         // parse the programming command
-        int pcmd = 0x40;  // write command
+        int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
         if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
         else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
         else if (getMode() == jmri.Programmer.REGISTERMODE
