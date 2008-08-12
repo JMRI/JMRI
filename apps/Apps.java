@@ -34,7 +34,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.64 $
+ * @version     $Revision: 1.65 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -598,6 +598,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 	static java.awt.event.AWTEventListener debugListener = null;
 	static boolean debugFired = false;
     static protected void splash(boolean show) {
+        if (!log4JSetUp) initLog4J();
 		if (debugListener == null) {
 			// set a global listener for debug options
 			debugFired = false;
@@ -632,7 +633,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         InstanceManager.shutDownManagerInstance().shutdown();
     }
     
+    static protected boolean log4JSetUp = false;
+    
     static protected void initLog4J() {
+        log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
         String logFile = "default.lcf";
