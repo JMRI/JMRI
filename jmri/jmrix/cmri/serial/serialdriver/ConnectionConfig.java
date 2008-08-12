@@ -6,11 +6,11 @@ import javax.swing.*;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
+ * Definition of objects to handle configuring a layout connection
  * via an C/MRI SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -48,7 +48,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
 	JFrame frame;
 	
-    public String name() { return "C/MRI"; }
+    public String name() { return "C/MRI serial"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
