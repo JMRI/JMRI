@@ -19,11 +19,11 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class JmriInsets {
 
-    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin";
+    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm";
     
     private static final String GNOME_CONFIG = "%gconf.xml";
     private static final String GNOME_PANEL = "_panel_screen";
@@ -34,6 +34,11 @@ public class JmriInsets {
     private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
     
     private static final String OS_NAME = System.getProperty("os.name");
+    
+    // Set this to -2 initially (out of the normal range)
+    // which can then be used to determine if we need to
+    // determine the window manager in use.
+    private static int linuxWM = -2;
 
     
     /**
@@ -41,30 +46,25 @@ public class JmriInsets {
      */
     public static Insets getInsets() {
     
-        //JFrame dummy = new JFrame();
+        if(linuxWM==-2) linuxWM=getLinuxWindowManager();
         
-        //Insets insets = dummy.getToolkit().getScreenInsets(dummy.getGraphicsConfiguration());
-        
-        //if ( OS_NAME == "Linux" ) {
-        //    insets.top = 36;
-        //    insets.bottom = 36;
-        //}
-        //return insets;
-        switch (isCompatibleOS()) {
+        switch (linuxWM) {
             case 0: return getKDEInsets();
             case 1: return getGnomeInsets();
             case 2: return getXfceInsets();
             case 3: return getDarwinInsets();
+            case 4: return getIcewmInsets();
             default: return getDefaultInsets();
         }
 
     }
     
     /*
-     * Determine the current non-MS Windows Operating System
+     * Determine the current Linux Window Manager
      */
-    private static int isCompatibleOS(){
-        if(!OS_NAME.toLowerCase().startsWith("windows")) {
+    private static int getLinuxWindowManager(){
+        if(!OS_NAME.toLowerCase().startsWith("windows")||
+           !OS_NAME.toLowerCase().startsWith("mac")) {
             try {
                 Process p = Runtime.getRuntime().exec("ps ax");
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -108,7 +108,7 @@ public class JmriInsets {
         int size = (iniCustomSize==-1 || iniSize!=4)?iniSize:iniCustomSize;
         size = size<24?sizes[size]:size;
         i[position]=size;
-        return new Insets(i[2],i[0],i[3],i[1]);
+        return new Insets(i[2], i[0], i[3], i[1]);
     }
     
     /*
@@ -153,12 +153,24 @@ public class JmriInsets {
     }
     
     /*
+     * Get insets for IceWM
+     */
+    private static Insets getIcewmInsets() {
+        // OK, this is being a bit lazy but the vast majority of 
+        // IceWM themes do not seem to modify the taskbar height
+        // from the default 25 pixels nor do they change the
+        // position of being along the bottom
+        return new Insets(0, 0, 25, 0);
+    }
+    
+    /*
      * Default insets (Java standard)
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if(!OS_NAME.toLowerCase().startsWith("windows"))
-            // MS Windows will always end-up here, so no need to log.
+        if(!OS_NAME.toLowerCase().startsWith("windows")||
+           !OS_NAME.toLowerCase().startsWith("mac"))
+            // MS Windows & Mac OS will always end-up here, so no need to log.
             return getDefaultInsets(true);
         else
             // any other OS ends up here
@@ -166,7 +178,7 @@ public class JmriInsets {
     }
     
     private static Insets getDefaultInsets(boolean logOS) {
-        if (logOS) log.error("Trying default insets for " + OS_NAME);
+        if (logOS) log.debug("Trying default insets for " + OS_NAME);
         try {
             GraphicsDevice gs[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
             for(int i = 0; i < gs.length; i++) {
@@ -177,9 +189,9 @@ public class JmriInsets {
             }
         }
         catch (HeadlessException h) {
-            log.error("Error: Headless error - no GUI available");
+            log.debug("Warning: Headless error - no GUI available");
         }
-        return new Insets(0,0,0,0);
+        return new Insets(0, 0, 0, 0);
     }
     
     /*
