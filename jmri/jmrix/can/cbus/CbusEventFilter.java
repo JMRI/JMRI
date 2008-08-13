@@ -1,7 +1,4 @@
-/*
- * CbusEventFilterAction.java
- *
- */
+// CbusEventFilterAction.java
 
 package jmri.jmrix.can.cbus;
 
@@ -10,10 +7,10 @@ import jmri.jmrix.can.CanReply;
 import java.awt.Color;
 
 /**
- * Class to implement filtering of CBUS events
+ * Class to implement filtering of CBUS events.
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CbusEventFilter {
     
@@ -22,11 +19,8 @@ public class CbusEventFilter {
     }
     
     /**
-     * filter an event
-     *
-     * @param nn Node number
-     * @param ev Event
-     * @param type ON, OFF or EITHER
+     * Filter an event, based on previous settings.
+     * @param m CanMessage to filter.
      * @return true if event matches
      */
     public boolean filter(CanMessage m) {
@@ -52,10 +46,17 @@ public class CbusEventFilter {
     }
     
     // control terms to be included in filter
+    
+    /**
+     * Set whether NN (Node Number) will be included in filter.
+     */
     public void setNnEnable(boolean b) { 
         log.debug("Filter NN enable: "+b);
         _nnEnabled = b;
     }
+    /**
+     * Set whether Ev (event number) will be included in filter.
+     */
     public void setEvEnable(boolean b) { 
         log.debug("Filter EV enable: "+b);
         _evEnabled = b;
@@ -70,6 +71,12 @@ public class CbusEventFilter {
         log.debug("Filter EV set: "+n);
         _ev = n;
     }
+    
+    /**
+     * Set value of type to match. Type is the ON, OFF, etc. value
+     * in the CBUS frame. See {@link CbusConstants} for
+     * values; CbusConstants.EVENT_EITHER matches either ON or OFF.
+     */
     public void setType(int n) { 
         log.debug("Filter EV type set: "+n);
         _type = n;

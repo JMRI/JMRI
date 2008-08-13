@@ -48,7 +48,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -59,7 +59,7 @@ public class Roster extends XmlFile {
     public synchronized static void resetInstance() { _instance = null; }
 
     /**
-     * Locate the single instance of Roster, loading it if need be
+     * Locate the single instance of Roster, loading it if need be.
      * @return The valid Roster object
      */
     public static synchronized Roster instance() {
@@ -108,14 +108,14 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * @return Number of entries in the Roster
+     * @return Number of entries in the Roster.
      */
     public int numEntries() { return _list.size(); }
 
     /**
-     * Return a combo box containing the entire roster.
+     * Return a JComboBox containing the entire roster.
      * <P>
-     * This is based on a single model, so it can be updated
+     * The JComboBox is based on a common model object, so it updates
      * when the roster changes.
      *
      */
@@ -125,7 +125,10 @@ public class Roster extends XmlFile {
 
     /**
      * Get a JComboBox representing the choices that match
-     * some information
+     * some information.
+     * <P>
+     * The JComboBox is based on a common model object, so it updates
+     * when the roster changes.
      */
     public JComboBox matchingComboBox(String roadName, String roadNumber, String dccAddress,
                                       String mfg, String decoderMfgID, String decoderVersionID, String id ) {
@@ -148,7 +151,7 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Return RosterEntry from a "title" string, ala selection in matchingComboBox
+     * Return RosterEntry from a "title" string, ala selection in matchingComboBox.
      */
     public RosterEntry entryFromTitle(String title ) {
         for (int i = 0; i < numEntries(); i++) {
@@ -159,7 +162,7 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Return filename from a "title" string, ala selection in matchingComboBox
+     * Return filename from a "title" string, ala selection in matchingComboBox.
      * @return The filename matching this "title", or null if none exists
      */
     public String fileFromTitle(String title ) {
@@ -169,13 +172,14 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * List of contained RosterEntry elements.
+     * List of contained {@link RosterEntry} elements.
      */
     protected List _list = new ArrayList();
 
     /**
-     *	Get a List of entries matching some information. The list may have
-     *  null contents.
+     *	Get a List of {@link RosterEntry} objects in Roster matching some information. 
+     * The list may have
+     *  null contents if there are no matches.
      */
     public List matchingList(String roadName, String roadNumber, String dccAddress,
                              String mfg, String decoderMfgID, String decoderVersionID, String id ) {
@@ -188,7 +192,9 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Check if an entry consistent with specific properties. A null String entry
+     * Check if an entry is consistent with specific properties. 
+     *<P>
+     * A null String entry
      * always matches. Strings are used for convenience in GUI building.
      *
      */
@@ -208,7 +214,7 @@ public class Roster extends XmlFile {
 
     /**
      * Write the entire roster to a file. This does not do backup; that has
-     * to be done separately. See writeRosterFile() for a function that
+     * to be done separately. See writeRosterFile() for a public function that
      * finds the default location, does a backup and then calls this.
      * @param name Filename for new file, including path info as needed.
      * @throws IOException
@@ -331,7 +337,7 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Name a valid filename from an entry name
+     * Name a valid roster entry filename from an entry name.
      * <p>
      * <ul>
      * <li>Replaces all problematic characters with "_".
@@ -355,7 +361,9 @@ public class Roster extends XmlFile {
     }
     
     /**
-     * Read the contents of a roster XML file into this object. Note that this does not
+     * Read the contents of a roster XML file into this object. 
+     * <P>
+     * Note that this does not
      * clear any existing entries.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
@@ -434,7 +442,10 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Store the roster in the default place, including making a backup if needed
+     * Store the roster in the default place, including making a backup if needed.
+     * <p>
+     * Uses writeFile(String), a protected method that can write to
+     * a specific location.
      */
     public static void writeRosterFile() {
         Roster.instance().makeBackupFile(defaultRosterFilename());
@@ -446,10 +457,9 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * update the in-memory Roster to be consistent with
-     * the current roster file.  This removes the existing roster entries!
+     * Update the in-memory Roster to be consistent with
+     * the current roster file.  This removes any existing roster entries!
      */
-
     public void reloadRosterFile() {
         // clear existing
         _list.clear();
@@ -491,14 +501,13 @@ public class Roster extends XmlFile {
         resetInstance();
     }
 
-    public static String getFileLocation() { return fileLocation; }
-
     /**
      * Absolute path to roster file location.
      * <P>
      * Default is in the prefsDir, but can be set to anything.
-     * @see XmlFile.prefsDir()
+     * @see XmlFile#prefsDir()
      */
+    public static String getFileLocation() { return fileLocation; }
     private static String fileLocation  = XmlFile.prefsDir();
 
     public static void setRosterFileName(String name) { rosterFileName = name; }
