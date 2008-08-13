@@ -19,12 +19,13 @@ import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
 /**
- * Provide access to C/MRI via a simulated port.
- * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
+ * Extends the serialdriver.SerialDriverAdapter class to 
+ * act as simulated connection.
+ *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -309,12 +310,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public SerialDriverAdapter instance() {
+    static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
         if (mInstance == null) mInstance = new SerialDriverAdapter();
         return mInstance;
     }
-    static SerialDriverAdapter mInstance = null;
-
+    static SerialDriverAdapter mInstance;
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 
 }
