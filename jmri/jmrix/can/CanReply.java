@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * entire message.
  * <p>
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -69,7 +69,7 @@ public class CanReply extends AbstractMRReply {
         if (getElement(0) == 0x90) {
             // + form
             return "+n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
-        } else if (getElement(0) == 0x90) {
+        } else if (getElement(0) == 0x91) {
             // - form
             return "-n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
         } else {

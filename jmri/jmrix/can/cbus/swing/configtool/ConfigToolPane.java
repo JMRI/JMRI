@@ -19,7 +19,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {
@@ -172,11 +172,11 @@ public class ConfigToolPane extends JPanel implements CanListener {
         
         public void reply(jmri.jmrix.can.CanReply m) {
             if (b1.isSelected()) {
-                f1.setText(m.toString());
+                f1.setText(m.toAddress());
                 b1.setSelected(false);
             }
             if (b2.isSelected()) {
-                f2.setText(m.toString());
+                f2.setText(m.toAddress());
                 b2.setSelected(false);
             }
         }
