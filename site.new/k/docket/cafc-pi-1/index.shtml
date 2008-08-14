@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.15 2008-05-21 03:46:32 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.16 2008-08-14 02:58:36 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -35,6 +35,12 @@ Papers from there are available on our
 On this page, we're providing copies of the court papers from
 our appeal to the Court of Appeals for the Federal Circuit, located in
 Washington DC.
+
+<h4>Court of Appeals Decision</h4>
+
+On August 13, 2008, the Court of Appeals ruled in favor of 
+JMRI.  The entire ruling is available as a
+<a href="08-1001.pdf">PDF file</a>.
 
 <h4>Key Appeal Documents</h4>
 
@@ -74,6 +80,8 @@ Yet Another Society and Wikimedia Foundation in support of Plaintiff-Appellant U
     <li>Amici's <a href="40.pdf">response</a>
     <li>Katzer's <a href="41.pdf">response</a>
     </ul>
+<li>The CAFC's 
+<a href="08-1001.pdf">ruling in favor of JMRI</a>.
 </UL><!-- end of summary index -->
 
 <A ID="docketlisting"/>
