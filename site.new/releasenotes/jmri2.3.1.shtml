@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.8 2008-08-12 06:21:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.9 2008-08-15 02:33:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -264,6 +264,12 @@ C/MRI system is not working or not connected. In that case, you can still
 work with your panel definitions, etc without needing to connect.  For normal
 operation, the existing "C/MRI" choice is now called "C/MRI serial".
 
+<p>
+Michael Mosher updated the QSI decoder definitions to add new models and
+newly located CVs.
+
+<p>
+Michael Mosher added a decoder definition for the Soundtraxx Tsunami EMD 567 and 645.
 
 <!--#include virtual="/Footer" -->
 
