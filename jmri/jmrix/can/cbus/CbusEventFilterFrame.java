@@ -7,6 +7,7 @@ package jmri.jmrix.can.cbus;
 
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,16 +24,16 @@ import jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
     // Fields to enter Node Number range
-    protected JRadioButton nnEnButton = new JRadioButton();
+    protected JCheckBox nnEnButton = new JCheckBox();
     protected JTextField nnLowField = new JTextField("", 5);
     protected JTextField nnHighField = new JTextField("", 5);
     // Fields to enter Event range
-    protected JRadioButton evEnButton = new JRadioButton();
+    protected JCheckBox evEnButton = new JCheckBox();
     protected JTextField evLowField = new JTextField("", 5);
     protected JTextField evHighField = new JTextField("", 5);
     // Buttons to select event type

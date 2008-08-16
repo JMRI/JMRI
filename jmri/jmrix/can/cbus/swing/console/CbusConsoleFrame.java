@@ -42,7 +42,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -83,15 +83,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JButton sendButton = new JButton();
     protected JButton dataClearButton = new JButton();
 
-    protected JRadioButton onButton = new JRadioButton();
-    protected JRadioButton offButton = new JRadioButton();
-    protected ButtonGroup onOffGroup = new ButtonGroup();
-    protected JLabel nnLabel = new JLabel("Node Number:");
-    protected JLabel evLabel = new JLabel("Event:");
-    protected JTextField nnField = new JTextField();
-    protected JTextField evField = new JTextField();
-    protected JButton sendEvButton = new JButton();
-    protected JButton clearEvButton = new JButton();
+//    protected JRadioButton onButton = new JRadioButton();
+//    protected JRadioButton offButton = new JRadioButton();
+//    protected ButtonGroup onOffGroup = new ButtonGroup();
+//    protected JLabel nnLabel = new JLabel("Node Number:");
+//    protected JLabel evLabel = new JLabel("Event:");
+//    protected JTextField nnField = new JTextField();
+//    protected JTextField evField = new JTextField();
+//    protected JButton sendEvButton = new JButton();
+//    protected JButton clearEvButton = new JButton();
 
     protected int i;
     
@@ -210,7 +210,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showEventButton.setVisible(true);
         showEventButton.setToolTipText("Select to show events");
 
-        filterButton.setText("Filter");
+        filterButton.setText("Filter...");
         filterButton.setVisible(true);
         filterButton.setToolTipText("Click for a new event filter");
 
@@ -228,8 +228,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         decimalCheckBox.setText("Decimal Data Entry/Display");
         decimalCheckBox.setVisible(true);
-        decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal\n"
-                                    +"if unchecked, hexadecimal");
+        decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal."
+                                    +" If unchecked, hexadecimal");
         _decimal = false;
         decimalCheckBox.setSelected(_decimal);
         
@@ -245,22 +245,22 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         copyButton.setVisible(true);
         copyButton.setToolTipText("Copy most recently received packet");
         
-        onButton.setText("ON");
-        onButton.setVisible(true);
-        onButton.setToolTipText("Send an ON event");
-        onButton.setSelected(true);
-
-        offButton.setText("OFF");
-        offButton.setVisible(true);
-        offButton.setToolTipText("Send an OFF event");
-
-        sendEvButton.setText("Send");
-        sendEvButton.setVisible(true);
-        sendEvButton.setToolTipText("Send event");
-        
-        clearEvButton.setText("Clear");
-        clearEvButton.setVisible(true);
-        clearEvButton.setToolTipText("Clear all event fields");
+//        onButton.setText("ON");
+//        onButton.setVisible(true);
+//        onButton.setToolTipText("Send an ON event");
+//        onButton.setSelected(true);
+//
+//        offButton.setText("OFF");
+//        offButton.setVisible(true);
+//        offButton.setToolTipText("Send an OFF event");
+//
+//        sendEvButton.setText("Send");
+//        sendEvButton.setVisible(true);
+//        sendEvButton.setToolTipText("Send event");
+//        
+//        clearEvButton.setText("Clear");
+//        clearEvButton.setVisible(true);
+//        clearEvButton.setToolTipText("Clear all event fields");
         
         setTitle(title());
         // Panels will be added downwards
@@ -311,9 +311,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane to select display type
         JPanel showPane = new JPanel();
-//        showPane.add(showStatsButton);
-//        showPane.add(showPacketButton);
-//        showPane.add(showEventButton);
+        showPane.add(showStatsButton);
+        showPane.add(showPacketButton);
+        showPane.add(showEventButton);
         showPane.add(decimalCheckBox);
         showPane.add(filterButton);
         getContentPane().add(showPane);
@@ -394,10 +394,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         getContentPane().add(sendPane);
         
         // Pane for constructing event to send
-//        JPanel evPane = new JPanel();
-//        evPane.setBorder(BorderFactory.createTitledBorder(
-//                BorderFactory.createEtchedBorder(), "Send Event"));
-//
+        JPanel evPane = new JPanel();
+        evPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Send Event"));
+
 //        nnField = new JTextField("0", 5);
 //        evPane.add(nnLabel);
 //        evPane.add(nnField);
@@ -538,7 +538,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             linesBuffer[CBUS].append( sbCbus.toString() );
         }
         
-                        final int start = monTextPaneCbus.getText().length();
+        final int start = monTextPaneCbus.getText().length();
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
@@ -654,10 +654,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             log.error("Exception: "+ex.toString());
         }
         frame.setVisible(true);
+        nextLine("Filter on\n", "Filter on\n", "", true);
     }
     
     public void filterClosed() {
         _filter = null;
+        nextLine("Filter off\n", "Filter off\n", "", true);
         log.debug("Filter closed");
     }
     
