@@ -40,9 +40,9 @@ import jmri.jmrix.can.cbus.CbusConstants;
 
 /**
  * Frame for Cbus Console
- * 
+ *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -61,7 +61,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-
+    
     protected JRadioButton showStatsButton = new JRadioButton();
     protected JRadioButton showPacketButton = new JRadioButton();
     protected JRadioButton showEventButton = new JRadioButton();
@@ -76,13 +76,13 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JTextField lastMinPriField = new JTextField();
     protected JTextField[] lastRxDataFields = new JTextField[8];
     protected JButton copyButton = new JButton();
-
+    
     protected JTextField dynPriField = new JTextField();
     protected JTextField minPriField = new JTextField();
     protected JTextField[] dataFields = new JTextField[8];
     protected JButton sendButton = new JButton();
     protected JButton dataClearButton = new JButton();
-
+    
 //    protected JRadioButton onButton = new JRadioButton();
 //    protected JRadioButton offButton = new JRadioButton();
 //    protected ButtonGroup onOffGroup = new ButtonGroup();
@@ -92,22 +92,22 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 //    protected JTextField evField = new JTextField();
 //    protected JButton sendEvButton = new JButton();
 //    protected JButton clearEvButton = new JButton();
-
+    
     protected int i;
     
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-
+    
     // members for handling the CBUS interface
     CanMessage msg;
     
     AbstractCanTrafficController tc = null;
     
     String replyString;
-
+    
     public CbusConsoleFrame() {
         super();
-        _filter = null;
+        _filterFrame = null;
     }
     
     protected String title() { return "CBUS Console"; }
@@ -200,20 +200,20 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showStatsButton.setText("Show Statistics");
         showStatsButton.setVisible(true);
         showStatsButton.setToolTipText("Select to show packet statistics");
-
+        
         showPacketButton.setText("Show Packets");
         showPacketButton.setVisible(true);
         showPacketButton.setToolTipText("Select to show packets");
         showPacketButton.setSelected(true);
-
+        
         showEventButton.setText("Show Events");
         showEventButton.setVisible(true);
         showEventButton.setToolTipText("Select to show events");
-
+        
         filterButton.setText("Filter...");
         filterButton.setVisible(true);
         filterButton.setToolTipText("Click for a new event filter");
-
+        
         sentCountField.setToolTipText("The number of packet sent");
         sentCountField.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Sent"));
@@ -229,7 +229,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         decimalCheckBox.setText("Decimal Data Entry/Display");
         decimalCheckBox.setVisible(true);
         decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal."
-                                    +" If unchecked, hexadecimal");
+                +" If unchecked, hexadecimal");
         _decimal = false;
         decimalCheckBox.setSelected(_decimal);
         
@@ -257,7 +257,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 //        sendEvButton.setText("Send");
 //        sendEvButton.setVisible(true);
 //        sendEvButton.setToolTipText("Send event");
-//        
+//
 //        clearEvButton.setText("Clear");
 //        clearEvButton.setVisible(true);
 //        clearEvButton.setToolTipText("Clear all event fields");
@@ -331,7 +331,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         JPanel rxPane = new JPanel();
         rxPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Most Recently Received Packet"));
-
+        
         // Construct data fields for Priority and up to 8 bytes
         lastDynPriField = new JTextField("", 4);
         lastDynPriField.setToolTipText("Dynamic Priority, 0, 1 or 2");
@@ -364,7 +364,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         JPanel sendPane = new JPanel();
         sendPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Packet"));
-
+        
         // Construct data fields for Priority and up to 8 bytes
         dynPriField = new JTextField("2", 4);
         dynPriField.setToolTipText("Dynamic Priority, 0, 1 or 2");
@@ -397,14 +397,14 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         JPanel evPane = new JPanel();
         evPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Event"));
-
+        
 //        nnField = new JTextField("0", 5);
 //        evPane.add(nnLabel);
 //        evPane.add(nnField);
 //        evField = new JTextField("0", 5);
 //        evPane.add(evLabel);
 //        evPane.add(evField);
-//        
+//
 //        onOffGroup.add(onButton);
 //        onOffGroup.add(offButton);
 //        evPane.add(onButton);
@@ -413,7 +413,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 //        evPane.add(sendEvButton);
 //        evPane.add(clearEvButton);
 //        getContentPane().add(evPane);
-       
+        
         // connect actions to buttons
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -495,20 +495,20 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         linesBuffer[CAN] = new StringBuffer();
         linesBuffer[CBUS] = new StringBuffer();
     }
-
+    
     /**
      * Define help menu for this window.
      * <p>
      * By default, provides a generic help page
      * that covers general features.  Specific
-     * implementations can override this to 
+     * implementations can override this to
      * show their own help page if desired.
      */
     protected void addHelpMenu() {
-    	addHelpMenu("package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame", true);
+        addHelpMenu("package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame", true);
     }
     
-    public void nextLine(String line, String decoded, String priorities, boolean filtered) {
+    public void nextLine(String line, String decoded, String priorities, int filter) {
         // handle display of traffic
         // line is the traffic in 'normal form', decoded is the decoded,
         // protocol specific, form
@@ -516,7 +516,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         // with \n
         StringBuffer sbCan = new StringBuffer(80);
         StringBuffer sbCbus = new StringBuffer(80);
-        final boolean filterFlag = filtered;
+        final int filterIndex = filter;
+        log.debug("_filterFrame: "+_filterFrame+" filter: "+filter);
+        if (filterIndex > 0) {
+            final Color filterColor = _filterFrame.getColor(filter);
+        }
         
         // display the timestamp if requested
         if ( timeCheckBox.isSelected() ) {
@@ -527,6 +531,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         // display CBUS the priorities if requested
         if ( priCheckBox.isSelected() ) {
             sbCbus.append(priorities+" ");
+        }
+        
+        if (filterIndex > 0) {
+            sbCan.append("Filter "+(filterIndex-1)+": ") ;
+            sbCbus.append("Filter "+(filterIndex-1)+": ") ;
         }
         
         // display decoded data
@@ -559,7 +568,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                             }
                         }
                         try {
-                            if (filterFlag) {
+                            if (filterIndex > 0) {
                                 log.debug("Add highlight start: "+start+" end: "+end);
                                 cbusHighlighter.addHighlight(start, end-1, cbusHighlightPainter);
                             }
@@ -573,7 +582,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             };
             javax.swing.SwingUtilities.invokeLater(r);
         }
-
+        
         // if requested, log to a file.
         if (logStream != null) {
             String logLine = sbCbus.toString();
@@ -593,9 +602,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             logStream.print(logLine);
         }
     }
-
+    
     String newline = System.getProperty("line.separator");
-
+    
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
         synchronized( linesBuffer ) {
@@ -642,25 +651,49 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     }
     
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", false);
+        nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", 0);
     }
     
     public void filterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        _filter = new CbusEventFilter();
-        CbusEventFilterFrame frame = new CbusEventFilterFrame(this, _filter);
+        log.debug("Cbus Console filter button action performed");
+        _filterFrame = new CbusEventFilterFrame(this);
         try {
-            frame.initComponents();
+            _filterFrame.initComponents();
         } catch (Exception ex) {
             log.error("Exception: "+ex.toString());
         }
-        frame.setVisible(true);
-        nextLine("Filter on\n", "Filter on\n", "", true);
+        _filterFrame.setVisible(true);
     }
     
-    public void filterClosed() {
-        _filter = null;
-        nextLine("Filter off\n", "Filter off\n", "", true);
-        log.debug("Filter closed");
+    public void filterFrameClosed() {
+        log.debug("Cbus Console filter frame closed");
+        _filterFrame = null;
+    }
+    
+    public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
+        log.debug("Cbus Console filter applied");
+        StringBuffer sb = new StringBuffer(80);
+        sb.append("Filter "+(index+1)+" on ");
+        if (nnEn) {
+            sb.append("Node "+nn+" ");
+        }
+        if (evEn) {
+            sb.append("Event "+ev+" ");
+        }
+        if (ty == CbusConstants.EVENT_ON) {
+            sb.append("ON");
+        } else if (ty == CbusConstants.EVENT_OFF) {
+            sb.append("OFF");
+        } else {
+            sb.append("On or OFF");
+        }
+        sb.append("\n");
+        nextLine(sb.toString(), sb.toString(), "", index+1);
+    }
+    
+    public void filterOff(int index) {
+       log.debug("Cbus Console filter removed");
+       nextLine("Filter "+(index+1)+" closed\n", "Filter "+index+" closed\n", "", index+1);
     }
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -674,7 +707,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         m.setPri(data*4 + data2);
         for (i=0; i<8; i++) {
             if (!dataFields[i].getText().equals("")) {
-                data = parseBinDecHexByte(dataFields[i].getText(), 255, _decimal, "CBUS Console", 
+                data = parseBinDecHexByte(dataFields[i].getText(), 255, _decimal, "CBUS Console",
                         "Invalid Data Value in d"+i);
                 if (data == -1) return;
                 m.setElement(i, data);
@@ -756,7 +789,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         nextLine("sent: "+m.toString()+"\n",
                 "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m),
                 "Dyn Pri:"+m.getPri()/4+" Min Pri:"+(m.getPri()&3),
-                (_filter != null) ? _filter.filter(m) : false);
+                (_filterFrame != null) ? _filterFrame.filter(m) : 0);
         sentCountField.setText(Integer.toString(++_sent));
     }
     
@@ -778,10 +811,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 lastRxDataFields[i].setText(Integer.toHexString(r.getElement(i)));
             }
         }
-        nextLine("rcvd: "+r.toString()+"\n", 
+        nextLine("rcvd: "+r.toString()+"\n",
                 "ID:"+r.getId()+" "+(r.isRtr() ? "R " : "N ")+decode(r),
                 "Dyn Pri:"+r.getPri()/4+" Min Pri:"+(r.getPri()&3),
-                (_filter != null) ? _filter.filter(r) : false);
+                (_filterFrame != null) ? _filterFrame.filter(r) : 0);
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
     
@@ -803,18 +836,18 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 str = str+"Event ON NN:"+node+" Ev:"+event;
                 break;
             }
-               
+            
             case CbusConstants.CBUS_OP_EV_OFF: {
                 // OFF event
                 str = str+"Event OFF NN:"+node+" Ev:"+event;
                 break;
             }
-             case CbusConstants.CBUS_OP_EV_ON_DATA: {
+            case CbusConstants.CBUS_OP_EV_ON_DATA: {
                 // ON event
                 str = str+"Event ON NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
                 break;
             }
-               
+            
             case CbusConstants.CBUS_OP_EV_OFF_DATA: {
                 // OFF event
                 str = str+"Event OFF NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
@@ -846,12 +879,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * @param errTitle Title of error dialogue box if Number FormatException encountered
      * @param errMsg Message to be displayed if Number FormatException encountered
      * @return the byte value, -1 indicates failure
-    */
+     */
     public int parseBinDecHexByte(String s, int limit, boolean decimal, String errTitle, String errMsg) {
         int data = -1;
         boolean error = false;
         int radix = 16;
-
+        
         if ((s.length() > 3) && s.substring(0, 2).equalsIgnoreCase("0x")) {
             // hex, remove the prefix
             s = s.substring(2);
@@ -879,7 +912,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 radix = 16;
             }
         }
-
+        
         try {
             data = Integer.parseInt(s, radix);
         } catch (NumberFormatException ex) {
@@ -887,7 +920,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         if ((data < 0) || (data > limit))
             error = true;
-
+        
         if (error) {
             JOptionPane.showMessageDialog(null, errMsg,
                     errTitle, JOptionPane.ERROR_MESSAGE);
@@ -909,7 +942,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     private int _sent;
     private int _rcvd;
     private boolean _decimal;
-    private CbusEventFilter _filter;
+    private CbusEventFilterFrame _filterFrame;
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusConsoleFrame.class.getName());
 }
