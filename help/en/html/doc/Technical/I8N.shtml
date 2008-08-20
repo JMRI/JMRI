@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.4 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.5 2008-08-20 14:29:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -284,9 +284,9 @@ problem and improve the instructions.
 <A name="code"><h2>Coding for Internationalization</h2></a>
 
 Some web references on how to do this:
-<UL><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
+<UL>
+<li><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
 <LI><A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
-<LI>
 </UL>
 
 <P>
