@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
     Timebase clock;
@@ -111,6 +111,19 @@ public class AnalogClock2Display extends PositionableJComponent {
 
     ButtonGroup rateButtonGroup = null;
     JMenuItem runMenu = null;
+	LayoutEditor layoutPanel = null;
+    /**
+     * Set panel (called from Layout Editor)
+     */
+    protected void setPanel(LayoutEditor panel) {
+		super.setPanel(panel);
+		layoutPanel = panel;
+    }
+	protected int getFaceWidth() {return faceSize;}
+	protected int getFaceHeight() {return faceSize;}
+	protected void showPopUp(MouseEvent event) {
+		super.showPopUp(event);
+	}	
 
     protected void addToPopup() {
         if (popup != null) {
@@ -155,7 +168,6 @@ public class AnalogClock2Display extends PositionableJComponent {
     }
 
     public void paint(Graphics g) {
-
         // overridden Paint method to draw the clock
         g.translate(centreX, centreY);
 

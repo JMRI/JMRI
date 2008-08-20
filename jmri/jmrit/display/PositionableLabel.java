@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class PositionableLabel extends JLabel
@@ -72,6 +72,14 @@ public class PositionableLabel extends JLabel
         addMouseListener(this);
     }
 
+   	LayoutEditor layoutPanel = null;
+    /**
+     * Set panel (called from Layout Editor)
+     */
+    protected void setPanel(LayoutEditor panel) {
+		layoutPanel = panel;
+    }
+
     /**
      * Update the AWT and Swing size information due to change in internal
      * state, e.g. if one or more of the icons that might be displayed
@@ -98,6 +106,11 @@ public class PositionableLabel extends JLabel
     int yClick = 0;
 
     public void mousePressed(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse pressed event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
+			return;
+		}	
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -109,6 +122,11 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseReleased(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse released event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseReleased(e,getX(),getY());
+			return;
+		}
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
@@ -133,9 +151,16 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseMoved(MouseEvent e) {
+		if (layoutPanel!=null) layoutPanel.setLoc((int)((getX()+e.getX())/layoutPanel.getZoomScale()),
+							(int)((getY()+e.getY())/layoutPanel.getZoomScale())); 
         //if (debug) log.debug("Moved:   "+where(e));
     }
     public void mouseDragged(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse dragged event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseDragged(e,getX(),getY());
+			return;
+		}
         if (e.isMetaDown()) {
             if (!getPositionable() || getFixed()) return;
             // update object postion by how far dragged

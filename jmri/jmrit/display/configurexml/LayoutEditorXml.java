@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -37,8 +37,11 @@ public class LayoutEditorXml implements XmlAdapter {
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", ""+p.getUpperLeftX());
         panel.setAttribute("y", ""+p.getUpperLeftY());
-        panel.setAttribute("height", ""+p.getLayoutHeight());
-        panel.setAttribute("width", ""+p.getLayoutWidth());
+		// From this version onwards separate sizes for window and panel are stored
+        panel.setAttribute("windowheight", ""+p.getWindowHeight());
+        panel.setAttribute("windowwidth", ""+p.getWindowWidth());
+        panel.setAttribute("panelheight", ""+p.getLayoutHeight());
+        panel.setAttribute("panelwidth", ""+p.getLayoutWidth());
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
@@ -47,6 +50,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setAttribute("drawgrid", ""+(p.getDrawGrid()?"yes":"no"));
 		panel.setAttribute("snaponadd", ""+(p.getSnapOnAdd()?"yes":"no"));
 		panel.setAttribute("snaponmove", ""+(p.getSnapOnMove()?"yes":"no"));
+		panel.setAttribute("antialiasing", ""+(p.getAntialiasingOn()?"yes":"no"));
 		panel.setAttribute("mainlinetrackwidth", ""+p.getMainlineTrackWidth());
 		panel.setAttribute("xscale", Float.toString((float)p.getXScale()));
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
@@ -165,18 +169,42 @@ public class LayoutEditorXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      */
     public void load(Element element) {
+		Attribute a;
         // find coordinates
         int x = 0;
         int y = 0;
-        int height = 400;
-        int width = 300;
+		// From this version onwards separate sizes for window and panel are used
+        int windowHeight = 400;
+        int windowWidth = 300;
+        int panelHeight = 340;
+        int panelWidth = 280;
 		int sidetrackwidth = 3;
 		int mainlinetrackwidth = 3;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-            height = element.getAttribute("height").getIntValue();
-            width = element.getAttribute("width").getIntValue();
+			// For compatibility with previous versions, try and see if height and width tags are contained in the file
+			if((a = element.getAttribute("height")) != null) {
+				windowHeight = a.getIntValue();
+				panelHeight = windowHeight - 60;
+			}
+			if((a = element.getAttribute("width")) != null) {
+				windowWidth = a.getIntValue();
+				panelWidth = windowWidth - 18;
+			}
+			// For files created by the new version, retrieve window and panel sizes
+			if((a = element.getAttribute("windowheight")) != null) {
+				windowHeight = a.getIntValue();
+			}
+			if((a = element.getAttribute("windowwidth")) != null) {
+				windowWidth = a.getIntValue();
+			}
+			if((a = element.getAttribute("panelheight")) != null) {
+				panelHeight = a.getIntValue();
+			}
+			if((a = element.getAttribute("panelwidth")) != null) {
+				panelWidth = a.getIntValue();
+			}
 			mainlinetrackwidth = element.getAttribute("mainlinetrackwidth").getIntValue();
 			sidetrackwidth = element.getAttribute("sidetrackwidth").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -184,7 +212,7 @@ public class LayoutEditorXml implements XmlAdapter {
         }
 		double xScale = 1.0;
 		double yScale = 1.0;
-		Attribute a = element.getAttribute("xscale");
+		a = element.getAttribute("xscale");
 		if (a!=null) {
 			try {
 				xScale = (double)(Float.parseFloat(a.getValue()));
@@ -326,6 +354,10 @@ public class LayoutEditorXml implements XmlAdapter {
         if ((a = element.getAttribute("snaponmove"))!=null && a.getValue().equals("yes"))
             sgmValue = true;
 
+       boolean aaValue = false;
+        if ((a = element.getAttribute("antialiasing"))!=null && a.getValue().equals("yes"))
+            aaValue = true;
+
 		// set default track color
 		if ((a = element.getAttribute("defaultTrackColor"))!=null) {
 			panel.setDefaultTrackColor(a.getValue());
@@ -339,8 +371,9 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setDrawGrid(dgValue);
 		panel.setSnapOnAdd(sgaValue);
 		panel.setSnapOnMove(sgmValue);
+		panel.setAntialiasingOn(aaValue);
         panel.pack();
-		panel.setLayoutDimensions(width,height,x,y);
+		panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.show();
         panel.setVisible(true);    // always show the panel
         panel.setEditable(edValue);

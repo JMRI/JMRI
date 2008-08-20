@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -106,6 +106,15 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (e.getPropertyName().equals("KnownState")) {
             displayState();
         }
+    }
+
+   	LayoutEditor layoutPanel = null;
+    /**
+     * Set panel (called from Layout Editor)
+     */
+    protected void setPanel(LayoutEditor panel) {
+		super.setPanel(panel);
+		layoutPanel = panel;
     }
 
     public void setProperToolTip() {
@@ -246,18 +255,27 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
         super.mouseClicked(e);
+		// if using Layout Editor, let Layout Editor handle mouse clicked event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseClicked(e,getX(),getY());
+			return;
+		}
         if (e.isAltDown() || e.isMetaDown()) return;
+		performMouseClicked(e, e.getX(), e.getY() );
+	}
+		
+	protected void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
         if (!buttonLive()) return;
         if (entries == null || entries.size() < 1) return;
         
         // here, find the click and change state
-        
+       
         // find if we want to increment or decrement
         boolean dec = false;
         if (updown) {
-            if (e.getY() > (inactive.getIconHeight()/2)) dec = true;
+            if (yy > (inactive.getIconHeight()/2)) dec = true;
         } else {
-            if (e.getX() < (inactive.getIconWidth()/2)) dec = true;
+            if (xx < (inactive.getIconWidth()/2)) dec = true;
         }
         
         // get new index

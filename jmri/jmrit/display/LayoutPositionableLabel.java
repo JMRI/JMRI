@@ -27,12 +27,13 @@ import java.util.ResourceBundle;
  * LayoutPositionableLabel is a JLabel that can be dragged around the
  * inside of the Layout Editor panel using a right-drag.
  * <P>
- * This module is derived with only a few changes from PositionalLabel.java by 
- *   Bob Jacobsen Copyright (c) 2002, Revision 1.30
+ * This module is derived from PositionalLabel.java by 
+ *   Bob Jacobsen Copyright (c) 2002, Revision 1.30 
  * <P>
  * A name change was needed to work around the hard dependence on PanelEditor
  *   in PositionaleLabelXml.java, without the possibility of compromising any
- *   existing PanelEditor panels. 
+ *   existing PanelEditor panels. The two routines have diverged as new features
+ *	 were added to each.
  * <P>
  * The positionable parameter is a global, set from outside.
  * The 'fixed' parameter is local, set from the popup here.
@@ -40,8 +41,8 @@ import java.util.ResourceBundle;
  * Since Layout Editor does not currently use turnout icons, tristate code is 
  * included here, but commented out.
  *
- * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @author Dave Duchamp Copyright (c) 2007, 2008
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -128,32 +129,18 @@ public class LayoutPositionableLabel extends JLabel
     int yClick = 0;
 
     public void mousePressed(MouseEvent e) {
-        // remember where we are
-        xClick = e.getX();
-        yClick = e.getY();
-        // if (debug) log.debug("Pressed: "+where(e));
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
+		// allow Layout Editor to handle the mouse pressed event
+		layoutPanel.handleMousePressed(e, this.getX(), this.getY());
     }
 
     public void mouseReleased(MouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
     }
 
     public void mouseClicked(MouseEvent e) {
         if (debug) log.debug("Clicked: "+where(e));
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
     }
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
@@ -163,26 +150,13 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     public void mouseMoved(MouseEvent e) {
-		layoutPanel.setLoc(getX()+e.getX(),getY()+e.getY()); 
-        //if (debug) log.debug("Moved:   "+where(e));
+		// update coordinates in Layout Editor tool bar
+		layoutPanel.setLoc((int)((getX()+e.getX())/layoutPanel.getZoomScale()),
+							(int)((getY()+e.getY())/layoutPanel.getZoomScale())); 
     }
     public void mouseDragged(MouseEvent e) {
-        if (e.isMetaDown()) {
-            if (!getPositionable() || getFixed()) return;
-            // update object position by how far dragged
-            int xObj = getX()+(e.getX()-xClick);
-            int yObj = getY()+(e.getY()-yClick);
-			if (layoutPanel.getSnapOnMove()) {
-				xObj = ((xObj+4)/10)*10;
-				yObj = ((yObj+4)/10)*10;
-			}
-            // don't allow negative placement, icon can become unreachable
-            if (xObj < 0) xObj = 0;
-            if (yObj < 0) yObj = 0;
-            this.setLocation(xObj, yObj);
-            // and show!
-            this.repaint();
-        }
+		// allow Layout Editor to handle the mouse dragged event
+		layoutPanel.handleMouseDragged(e, this.getX(), this.getY());
     }
 
     JPopupMenu popup = null;

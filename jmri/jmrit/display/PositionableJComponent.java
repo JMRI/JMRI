@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -51,7 +51,15 @@ abstract class PositionableJComponent extends JComponent
         removeMouseListener(this);
     }
 
-    private Integer displayLevel;
+   	LayoutEditor layoutPanel = null;
+    /**
+     * Set panel (called from Layout Editor)
+     */
+    protected void setPanel(LayoutEditor panel) {
+		layoutPanel = panel;
+    }
+
+	private Integer displayLevel;
     public void setDisplayLevel(Integer l) { displayLevel = l; }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
     public Integer getDisplayLevel() { return displayLevel; }
@@ -61,6 +69,11 @@ abstract class PositionableJComponent extends JComponent
     int yClick = 0;
 
     public void mousePressed(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse pressed event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
+			return;
+		}
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -72,6 +85,11 @@ abstract class PositionableJComponent extends JComponent
     }
 
     public void mouseReleased(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse released event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseReleased(e,getX(),getY());
+			return;
+		}
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
@@ -83,10 +101,10 @@ abstract class PositionableJComponent extends JComponent
         if (debug) log.debug("Clicked: "+where(e));
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
+//        if (e.isPopupTrigger()) {
+//            if (debug) log.debug("show popup");
+//            showPopUp(e);
+//        }
     }
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
@@ -96,9 +114,16 @@ abstract class PositionableJComponent extends JComponent
     }
 
     public void mouseMoved(MouseEvent e) {
+		if (layoutPanel!=null) layoutPanel.setLoc((int)((getX()+e.getX())/layoutPanel.getZoomScale()),
+							(int)((getY()+e.getY())/layoutPanel.getZoomScale())); 
         //if (debug) log.debug("Moved:   "+where(e));
     }
     public void mouseDragged(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse dragged event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseDragged(e,getX(),getY());
+			return;
+		}
         if (e.isMetaDown()) {
             if (!getPositionable()) return;
             // update object postion by how far dragged
@@ -122,7 +147,7 @@ abstract class PositionableJComponent extends JComponent
      */
     protected void addToPopup() { }
 
-    private void showPopUp(MouseEvent e) {
+    protected void showPopUp(MouseEvent e) {
 //        if (!getPopupEnabled()) return;  // We need to distinguish between popup and editable
         if (!getEditable()) return;
         if (popup == null) {
