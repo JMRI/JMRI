@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlPersistance.shtml,v 1.6 2008-05-03 17:34:04 jacobsen Exp $ -->
+<!-- $Id: XmlPersistance.shtml,v 1.7 2008-08-20 15:04:26 jacobsen Exp $ -->
 <html lang="en">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
 <head>
@@ -152,13 +152,12 @@ directory.
 A rudimentary version control system is provided by DTD naming, i.e.
 <ul>
 <li>layout-config.dtd - the original, not to be changed any more.
-<li>layout-config-2-1-5.dtd - manually created when the first XML content 
-change was made after the release of JMRI 2.1.4, this accumulates changes
-until 2.1.5 is released.
+<li>layout-config-2-1-5.dtd - manually created as part of the release of JMRI 2.1.4, 
+this accumulates changes until 2.1.5 is released.
 </ul>
 
-The first time a change is made to XML persistance after a release,
-the following steps are needed:
+To make this work, the following steps are part of the release procedure, after
+the released content has been tagged:
 <ul>
 <li>Copy the existing DTD to one with the next version name (e.g.
 after 2.1.5 is released, copy layout-config-2-1-5.dtd to layout-config-2-1-6.dtd)
