@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.88 2008-08-02 17:11:31 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.89 2008-08-20 14:00:34 djduchamp Exp $ -->
 
 <!-- This version is now frozen.  Make no changes to it!  -->
 <!-- For more information, see http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlPersistance.shtml#DTD -->
@@ -500,8 +500,14 @@
 			tracksegment | fastclock)* >
   <!ATTLIST LayoutEditor class			CDATA #REQUIRED>
   <!ATTLIST LayoutEditor name			CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor x			CDATA #REQUIRED>
-  <!ATTLIST LayoutEditor y			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor x				CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor y				CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor panelheight	CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor panelwidth		CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor windowheight	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor windowwidth	CDATA #REQUIRED>
+  <!-- the next two lines, height and width are obsolete and are kept only -->
+  <!-- for compatibility with previous versions (2.2 and previous) -->
   <!ATTLIST LayoutEditor height			CDATA #REQUIRED>
   <!ATTLIST LayoutEditor width			CDATA #REQUIRED>
   <!ATTLIST LayoutEditor mainlinetrackwidth	CDATA #REQUIRED>
@@ -516,13 +522,14 @@
   <!ATTLIST LayoutEditor xoverhwid		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor xovershort		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor positionable	(yes|no) "yes" >
+  <!ATTLIST LayoutEditor controlling	(yes|no) "yes" >
   <!ATTLIST LayoutEditor animating		(yes|no) "yes" >
-  <!ATTLIST LayoutEditor showhelpbar		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor showhelpbar	(yes|no) "yes" >
   <!ATTLIST LayoutEditor drawgrid		(yes|no) "yes" >
   <!ATTLIST LayoutEditor snaponadd		(yes|no) "yes" >
   <!ATTLIST LayoutEditor snaponmove		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor antialiasing	(yes|no) "yes" >
 
 <!-- memoryicon defined above already -->
 <!-- memorystate defined above already -->

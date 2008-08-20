@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.8 2008-08-08 01:32:40 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.9 2008-08-20 13:56:13 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -39,6 +39,7 @@ sections in detail.</p>
 	<li><a href="#filemenu">Using a Panel's File Menu</a>
 	<li><a href="#option">Using Layout Editor's Options Menu</a></li>
 	<li><a href="#toolsmenu">Using Layout Editor's Tools Menu</a></li>
+	<li><a href="#zoommenu">Using Layout Editor's Zoom Menu</a></li>
 	<li><a href="#editing">Editing and Removing Items</a></li>
 	<li><a href="#turnouts">Turnouts</a></li>
 	<li><a href="#track">Track Segments and Connection Points</a></li>
@@ -89,6 +90,18 @@ Panel</b> in the Panels menu. You can minimize or close a panel window, and brin
 it back as the front most window by selecting it in this submenu. Multiple monitors 
 are supported to the extent that the operating system allows, and a single panel 
 may be stretched to occupy more than one monitor.</p>
+<p>
+To save your Layout Editor panel, select <b>Store panels...</b> in the <b>File</b> 
+menu of your Layout Editor panel, or in the Panels menu. When you do this, all 
+panels listed in the submenu of <b>Show Panel</b> are saved, along with all 
+shared configuration items (sensors, turnouts, signal heads, etc.). To make it easier 
+to save your panel often, Layout Editor provides the menu item, <b>Save Location 
+and Size</b>, in the <b>Options</b> menu. Once you have sized and positioned 
+your panel exactly as you would like it to come up when loaded, select this item 
+and save your panel. You need not be concerned about the position and size of 
+your panel changing during subsequent saves! The position and size of your panel will 
+only change when you select <b>Save Location and Size</b>. So save your panel often to 
+preserve your work.</p>
 
 <a name="start"><H3>Getting Started with Layout Editor
 </H3></a>
@@ -370,6 +383,11 @@ selection is described below.
 	points of turnouts or level crossings are moved, their coordinates are also 
 	constrained to grid points. For icons and labels, the coordinates of upper 
 	left corners are constrained to grid points.</li>
+	<li> <b>Enable antialiasing (Smoother lines)</b> - If this item is selected,
+	the panel is displayed (rendered) with antialiasing enabled. Antialiasing 
+	smoothes out lines in the drawn panel, but it does take longer to refresh
+	the panel. Check antialiasing for a better looking panel. Uncheck antialiasing 
+	for faster refresh.</li>
 	<li><b>New Title...</b> - Selecting this item brings up a small window that 
 	allows a new panel window title to be entered.</li>
 	<li><b>Add Background Image...</b> - Selecting this item shows a dialog
@@ -536,6 +554,25 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	reached a turnout's popup menu. (For more information, see the help page for 
 	the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
 </ul></p>
+
+<a name="zoommenu"><h3>Using Layout Editor's Zoom Menu
+</h3></a>
+<p>
+The Zoom menu allows you to temporarily magnify a panel. The menu provides a 
+choice of several magnification factors, and a <b>No Zoom</b> item to return to 
+normal size. When a magnification 
+factor is selected the panel is magnified by that factor. Scroll bars are 
+automatically set to reasonable positions. Move scroll bars to focus on 
+various parts of the panel.</p>
+<p>
+When a panel is magnified, all standard functions work, except for tooltips of 
+icons. Items may be added, moved, or removed. Popup menus are available. Turnouts 
+and Multi-sensors behave as they do at normal scale. If the grid is shown in edit 
+mode, it is also magnified. All displayed coordinates are those of the 
+unmagnified panel. A panel may be saved while magnified.</p>
+<p>
+When a panel is loaded, it always come up with <b>No Zoom</b> selected. Since 
+zooming is temporary, the zoom factor is not preserved when a panel is saved.</p>
 
 <a name="editing"><h3>Editing and Removing Items
 </h3></a>
