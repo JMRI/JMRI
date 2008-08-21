@@ -12,6 +12,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -45,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -269,7 +270,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         setTitle(title());
         // Panels will be added downwards
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+//        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BorderLayout());
         
         // add items to GUI
         // Pane to hold packet history
@@ -312,7 +314,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         paneA.add(pane3);
         
         historyPane.add(paneA);
-        getContentPane().add(historyPane);
+//        getContentPane().add(historyPane);
+        getContentPane().add(historyPane, BorderLayout.CENTER);
+        
+        JPanel southPane = new JPanel();
+        southPane.setLayout(new BoxLayout(southPane, BoxLayout.Y_AXIS));
         
         // Pane to select display type
         JPanel showPane = new JPanel();
@@ -321,7 +327,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showPane.add(showEventCheckBox);
         showPane.add(decimalCheckBox);
         showPane.add(filterButton);
-        getContentPane().add(showPane);
+//        getContentPane().add(showPane);
+        southPane.add(showPane);
         
         // Pane for network statistics
         statsPane = new JPanel();
@@ -331,7 +338,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         statsPane.add(rcvdCountField);
         statsPane.add(statsClearButton);
         statsPane.setVisible(false);
-        getContentPane().add(statsPane);
+//        getContentPane().add(statsPane);
+        southPane.add(statsPane);
         showStatsCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (showStatsCheckBox.isSelected()) {
@@ -379,7 +387,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             rxPane.add(lastRxDataFields[i]);
         }
         rxPane.add(copyButton);
-        getContentPane().add(rxPane);
+//        getContentPane().add(rxPane);
+        southPane.add(rxPane);
         
         
         // Pane for constructing packet to send
@@ -413,7 +422,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         sendPane.add(sendButton);
         sendPane.add(dataClearButton);
-        getContentPane().add(sendPane);
+//        getContentPane().add(sendPane);
+        southPane.add(sendPane);
         
         showPacketCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -457,7 +467,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         evPane.add(sendEvButton);
         evPane.setVisible(false);
-        getContentPane().add(evPane);
+//        getContentPane().add(evPane);
+        southPane.add(evPane);
+        getContentPane().add(southPane, BorderLayout.SOUTH);
         
         showEventCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
