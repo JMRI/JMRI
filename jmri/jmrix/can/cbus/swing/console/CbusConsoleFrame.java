@@ -29,6 +29,8 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import jmri.util.JmriJFrame;
 
@@ -42,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -62,9 +64,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
     
-    protected JRadioButton showStatsButton = new JRadioButton();
-    protected JRadioButton showPacketButton = new JRadioButton();
-    protected JRadioButton showEventButton = new JRadioButton();
+    protected JCheckBox showStatsCheckBox = new JCheckBox();
+    protected JCheckBox showPacketCheckBox = new JCheckBox();
+    protected JCheckBox showEventCheckBox = new JCheckBox();
     protected JButton filterButton = new JButton();
     protected JCheckBox decimalCheckBox = new JCheckBox();
     
@@ -83,15 +85,19 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     protected JButton sendButton = new JButton();
     protected JButton dataClearButton = new JButton();
     
-//    protected JRadioButton onButton = new JRadioButton();
-//    protected JRadioButton offButton = new JRadioButton();
-//    protected ButtonGroup onOffGroup = new ButtonGroup();
-//    protected JLabel nnLabel = new JLabel("Node Number:");
-//    protected JLabel evLabel = new JLabel("Event:");
-//    protected JTextField nnField = new JTextField();
-//    protected JTextField evField = new JTextField();
-//    protected JButton sendEvButton = new JButton();
-//    protected JButton clearEvButton = new JButton();
+    protected JPanel statsPane;
+    protected JPanel rxPane;
+    protected JPanel sendPane;
+    protected JPanel evPane;
+    
+    protected JRadioButton onButton = new JRadioButton();
+    protected JRadioButton offButton = new JRadioButton();
+    protected ButtonGroup onOffGroup = new ButtonGroup();
+    protected JLabel nnLabel = new JLabel("Node Number:");
+    protected JLabel evLabel = new JLabel("Event:");
+    protected JTextField nnField = new JTextField();
+    protected JTextField evField = new JTextField();
+    protected JButton sendEvButton = new JButton();
     
     protected int i;
     
@@ -197,18 +203,18 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText("Click here to select a new output log file");
         
-        showStatsButton.setText("Show Statistics");
-        showStatsButton.setVisible(true);
-        showStatsButton.setToolTipText("Select to show packet statistics");
+        showStatsCheckBox.setText("Show Statistics");
+        showStatsCheckBox.setVisible(true);
+        showStatsCheckBox.setToolTipText("Select to show packet statistics");
         
-        showPacketButton.setText("Show Packets");
-        showPacketButton.setVisible(true);
-        showPacketButton.setToolTipText("Select to show packets");
-        showPacketButton.setSelected(true);
+        showPacketCheckBox.setText("Show Packets");
+        showPacketCheckBox.setVisible(true);
+        showPacketCheckBox.setToolTipText("Select to show packets");
+        showPacketCheckBox.setSelected(true);
         
-        showEventButton.setText("Show Events");
-        showEventButton.setVisible(true);
-        showEventButton.setToolTipText("Select to show events");
+        showEventCheckBox.setText("Show Events");
+        showEventCheckBox.setVisible(true);
+        showEventCheckBox.setToolTipText("Select to show events");
         
         filterButton.setText("Filter...");
         filterButton.setVisible(true);
@@ -245,23 +251,19 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         copyButton.setVisible(true);
         copyButton.setToolTipText("Copy most recently received packet");
         
-//        onButton.setText("ON");
-//        onButton.setVisible(true);
-//        onButton.setToolTipText("Send an ON event");
-//        onButton.setSelected(true);
-//
-//        offButton.setText("OFF");
-//        offButton.setVisible(true);
-//        offButton.setToolTipText("Send an OFF event");
-//
-//        sendEvButton.setText("Send");
-//        sendEvButton.setVisible(true);
-//        sendEvButton.setToolTipText("Send event");
-//
-//        clearEvButton.setText("Clear");
-//        clearEvButton.setVisible(true);
-//        clearEvButton.setToolTipText("Clear all event fields");
-        
+        onButton.setText("ON");
+        onButton.setVisible(true);
+        onButton.setToolTipText("Send an ON event");
+        onButton.setSelected(true);
+
+        offButton.setText("OFF");
+        offButton.setVisible(true);
+        offButton.setToolTipText("Send an OFF event");
+
+        sendEvButton.setText("Send");
+        sendEvButton.setVisible(true);
+        sendEvButton.setToolTipText("Send event");
+
         setTitle(title());
         // Panels will be added downwards
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -311,24 +313,41 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane to select display type
         JPanel showPane = new JPanel();
-        showPane.add(showStatsButton);
-        showPane.add(showPacketButton);
-        showPane.add(showEventButton);
+        showPane.add(showStatsCheckBox);
+        showPane.add(showPacketCheckBox);
+        showPane.add(showEventCheckBox);
         showPane.add(decimalCheckBox);
         showPane.add(filterButton);
         getContentPane().add(showPane);
         
         // Pane for network statistics
-        JPanel statsPane = new JPanel();
+        statsPane = new JPanel();
         statsPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Statistics"));
         statsPane.add(sentCountField);
         statsPane.add(rcvdCountField);
         statsPane.add(statsClearButton);
+        statsPane.setVisible(false);
         getContentPane().add(statsPane);
+        showStatsCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (showStatsCheckBox.isSelected()) {
+                    statsPane.setVisible(true);
+                    statsPane.validate();
+                    pack();
+                    statsPane.repaint();
+                }
+                else {
+                    statsPane.setVisible(false);
+                    statsPane.validate();
+                    pack();
+                    statsPane.repaint();
+                }
+            }
+        });
         
         // Pane for most recently recived packet
-        JPanel rxPane = new JPanel();
+        rxPane = new JPanel();
         rxPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Most Recently Received Packet"));
         
@@ -361,7 +380,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         
         // Pane for constructing packet to send
-        JPanel sendPane = new JPanel();
+        sendPane = new JPanel();
         sendPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Packet"));
         
@@ -393,27 +412,67 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         sendPane.add(dataClearButton);
         getContentPane().add(sendPane);
         
+        showPacketCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (showPacketCheckBox.isSelected()) {
+                    rxPane.setVisible(true);
+                    rxPane.validate();
+                    sendPane.setVisible(true);
+                    sendPane.validate();
+                    pack();
+                    rxPane.repaint();
+                    sendPane.repaint();
+                }
+                else {
+                    rxPane.setVisible(false);
+                    rxPane.validate();
+                    sendPane.setVisible(false);
+                    sendPane.validate();
+                    pack();
+                    rxPane.repaint();
+                    sendPane.repaint();
+                }
+            }
+        });
+
         // Pane for constructing event to send
-        JPanel evPane = new JPanel();
+        evPane = new JPanel();
         evPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Event"));
         
-//        nnField = new JTextField("0", 5);
-//        evPane.add(nnLabel);
-//        evPane.add(nnField);
-//        evField = new JTextField("0", 5);
-//        evPane.add(evLabel);
-//        evPane.add(evField);
-//
-//        onOffGroup.add(onButton);
-//        onOffGroup.add(offButton);
-//        evPane.add(onButton);
-//        evPane.add(offButton);
-//
-//        evPane.add(sendEvButton);
-//        evPane.add(clearEvButton);
-//        getContentPane().add(evPane);
+        nnField = new JTextField("0", 5);
+        evPane.add(nnLabel);
+        evPane.add(nnField);
+        evField = new JTextField("0", 5);
+        evPane.add(evLabel);
+        evPane.add(evField);
+
+        onOffGroup.add(onButton);
+        onOffGroup.add(offButton);
+        evPane.add(onButton);
+        evPane.add(offButton);
+
+        evPane.add(sendEvButton);
+        evPane.setVisible(false);
+        getContentPane().add(evPane);
         
+        showEventCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (showEventCheckBox.isSelected()) {
+                    evPane.setVisible(true);
+                    evPane.validate();
+                    pack();
+                    evPane.repaint();
+                }
+                else {
+                    evPane.setVisible(false);
+                    evPane.validate();
+                    pack();
+                    evPane.repaint();
+                }
+            }
+        });
+
         // connect actions to buttons
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -475,6 +534,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         decimalCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 decimalCheckBoxActionPerformed(e);
+            }
+        });
+        
+        sendEvButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendEvButtonActionPerformed(e);
             }
         });
         
@@ -673,7 +738,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
         log.debug("Cbus Console filter applied");
         StringBuffer sb = new StringBuffer(80);
-        sb.append("Filter "+(index+1)+" on ");
+//        sb.append("Filter "+(index+1)+" on ");
         if (nnEn) {
             sb.append("Node "+nn+" ");
         }
@@ -765,6 +830,29 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         for (i=0; i<8; i++) {
             dataFields[i].setText(lastRxDataFields[i].getText());
         }
+    }
+    
+    public void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
+        int nn, ev;
+        CanMessage m = new CanMessage();
+        nn = parseBinDecHexByte(nnField.getText(), 65536, _decimal, "CBUS Console", "Invalid Node Number");
+        if (nn == -1) return;
+        ev = parseBinDecHexByte(evField.getText(), 65536, _decimal, "CBUS Console", "Invalid Event");
+        if (ev == -1) return;
+        m.setPri(CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        if (onButton.isSelected()) {
+            m.setElement(0, CbusConstants.CBUS_OP_EV_ON);
+        } else {
+            m.setElement(0, CbusConstants.CBUS_OP_EV_OFF);
+        }
+        m.setElement(1, nn>>8);
+        m.setElement(2, nn&0xff);
+        m.setElement(3, ev>>8);
+        m.setElement(4, ev&0xff);
+        m.setNumDataElements(5);
+        // Messages sent by us will not be forwarded back so add to display manually
+        message(m);
+        tc.sendCanMessage(m, this);
     }
     
     public synchronized String getCanFrameText() {

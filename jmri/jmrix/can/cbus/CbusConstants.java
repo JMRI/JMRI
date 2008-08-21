@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public final class CbusConstants {
     
@@ -26,6 +26,12 @@ public final class CbusConstants {
     public static final int EVENT_ON = 0;
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
+    
+    /**
+     * CBUS Priorities
+     */
+    public static final int DEFAULT_DYNAMIC_PRIORITY = 2;
+    public static final int DEFAULT_MINOR_PRIORITY = 3;
 }
 
 /* @(#)CbusConstants.java */
