@@ -13,7 +13,7 @@ import jmri.jmrix.can.CanReply;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class CbusMessage {
     
@@ -42,7 +42,7 @@ public class CbusMessage {
             return CbusConstants.EVENT_ON;
     }
     public static boolean isEvent(CanMessage m) {
-        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 91))
+        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91))
             return true;
         else
             return false;
@@ -73,7 +73,7 @@ public class CbusMessage {
             return CbusConstants.EVENT_ON;
     }
     public static boolean isEvent(CanReply r) {
-        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 91))
+        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 0x91))
             return true;
         else
             return false;
