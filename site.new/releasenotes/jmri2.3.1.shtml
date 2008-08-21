@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.9 2008-08-15 02:33:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.10 2008-08-21 14:38:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -246,8 +246,10 @@ When using the "LocoNet simulator", you can now close the simulator window
 with that stopping the program.
 
 <p>
-Andrew Crosland added a filter to the CBUS event display, which lets
-you pay attention to just the events you're interested in.
+Andrew Crosland added a filter to the 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CBUS console</a>
+(event display), which lets
+you pay attention to just the events you're interested in, and made a lot of other refinements.
 
 <p>
 Matthew Harris updated how the insets are handled in JMRI windows.
@@ -270,6 +272,12 @@ newly located CVs.
 
 <p>
 Michael Mosher added a decoder definition for the Soundtraxx Tsunami EMD 567 and 645.
+
+<p>
+Fixed a problem with F11 and F12 in the Digitrax DG383/DG583 definitions.
+
+<p>
+Giorgio Terdina and Dave Duchamp added zooming and antialiasing to Layout Editor.
 
 <!--#include virtual="/Footer" -->
 
