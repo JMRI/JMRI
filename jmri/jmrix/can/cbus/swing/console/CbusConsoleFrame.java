@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -585,8 +585,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         StringBuffer sbCbus = new StringBuffer(80);
         final int filterIndex = filter;
         log.debug("_filterFrame: "+_filterFrame+" filter: "+filter);
-        if (filterIndex > 0) {
+        if (filterIndex >= 0) {
             final Color filterColor = _filterFrame.getColor(filter);
+            cbusHighlightPainter = new cbusHighlightPainter(filterColor);
         }
         
         // display the timestamp if requested
@@ -600,9 +601,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             sbCbus.append(priorities+" ");
         }
         
-        if (filterIndex > 0) {
-            sbCan.append("Filter "+(filterIndex-1)+": ") ;
-            sbCbus.append("Filter "+(filterIndex-1)+": ") ;
+        if (filterIndex >= 0) {
+            sbCan.append("Filter "+(filterIndex)+": ") ;
+            sbCbus.append("Filter "+(filterIndex)+": ") ;
         }
         
         // display decoded data
@@ -635,7 +636,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                             }
                         }
                         try {
-                            if (filterIndex > 0) {
+                            if (filterIndex >= 0) {
                                 log.debug("Add highlight start: "+start+" end: "+end);
                                 cbusHighlighter.addHighlight(start, end-1, cbusHighlightPainter);
                             }
@@ -740,7 +741,6 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
         log.debug("Cbus Console filter applied");
         StringBuffer sb = new StringBuffer(80);
-//        sb.append("Filter "+(index+1)+" on ");
         if (nnEn) {
             sb.append("Node "+nn+" ");
         }
@@ -755,12 +755,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             sb.append("On or OFF");
         }
         sb.append("\n");
-        nextLine(sb.toString(), sb.toString(), "", index+1);
+        nextLine(sb.toString(), sb.toString(), "", index);
     }
     
     public void filterOff(int index) {
        log.debug("Cbus Console filter removed");
-       nextLine("Filter "+(index+1)+" closed\n", "Filter "+index+" closed\n", "", index+1);
+       nextLine(" closed\n", " closed\n", "", index);
     }
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -879,7 +879,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         nextLine("sent: "+m.toString()+"\n",
                 "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+m.toAddress()+"]\n",
                 "Dyn Pri:"+m.getPri()/4+" Min Pri:"+(m.getPri()&3),
-                (_filterFrame != null) ? _filterFrame.filter(m) : 0);
+                (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
     }
     
@@ -904,7 +904,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         nextLine("rcvd: "+r.toString()+"\n",
                 "ID:"+r.getId()+" "+(r.isRtr() ? "R " : "N ")+decode(r)+" ["+r.toAddress()+"]\n",
                 "Dyn Pri:"+r.getPri()/4+" Min Pri:"+(r.getPri()&3),
-                (_filterFrame != null) ? _filterFrame.filter(r) : 0);
+                (_filterFrame != null) ? _filterFrame.filter(r) : -1);
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
     
@@ -1021,7 +1021,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     }
     
     // An instance of the private subclass of the default highlight painter
-    Highlighter.HighlightPainter cbusHighlightPainter = new cbusHighlightPainter(Color.red);
+    Highlighter.HighlightPainter cbusHighlightPainter;
     
     // A private subclass of the default highlight painter
     class cbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {

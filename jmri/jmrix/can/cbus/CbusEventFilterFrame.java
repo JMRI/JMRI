@@ -20,12 +20,12 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
     protected static final int FILTERS = 4;
-    protected static Color[] filterColors = {Color.BLACK, Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW}; 
+    protected static Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW}; 
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
 
     // member to hold reference to my filters
@@ -95,17 +95,17 @@ public class CbusEventFilterFrame extends JmriJFrame {
     public int filter(CanMessage m) {
         int i;
         for (i = 0; i < FILTERS; i++) {
-            if (_filterActive[i] && _filter[i].filter(m)) return i+1;
+            if (_filterActive[i] && _filter[i].filter(m)) return i;
         }
-        return 0;
+        return -1;
     }
     
     public int filter(CanReply r) {
         int i;
         for (i = 0; i < FILTERS; i++) {
-            if (_filterActive[i] && _filter[i].filter(r)) return i+1;
+            if (_filterActive[i] && _filter[i].filter(r)) return i;
         }
-        return 0;
+        return -1;
     }
     
     public Color getColor(int i) {
