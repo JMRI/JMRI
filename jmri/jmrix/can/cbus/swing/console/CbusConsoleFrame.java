@@ -31,6 +31,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Frame;
 
 import jmri.util.JmriJFrame;
 
@@ -44,7 +45,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -719,18 +720,22 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     }
     
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", 0);
+        nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", -1);
     }
     
     public void filterButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.debug("Cbus Console filter button action performed");
-        _filterFrame = new CbusEventFilterFrame(this);
-        try {
-            _filterFrame.initComponents();
-        } catch (Exception ex) {
-            log.error("Exception: "+ex.toString());
+        if (_filterFrame == null) {
+            _filterFrame = new CbusEventFilterFrame(this);
+            try {
+                _filterFrame.initComponents();
+            } catch (Exception ex) {
+                log.error("Exception: "+ex.toString());
+            }
+            _filterFrame.setVisible(true);
+        } else {
+            _filterFrame.setState(Frame.NORMAL);
         }
-        _filterFrame.setVisible(true);
     }
     
     public void filterFrameClosed() {
@@ -809,6 +814,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         for (i=0; i<8; i++) {
             dataFields[i].setText("");
         }
+
     }
     
     public void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {

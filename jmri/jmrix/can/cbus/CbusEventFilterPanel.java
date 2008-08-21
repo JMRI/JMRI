@@ -69,7 +69,7 @@ public class CbusEventFilterPanel extends JPanel {
         nnEnButton.setToolTipText("Select to enable filtering on Node Number");
         nnPane.add(nnEnButton);
         
-        nnLowField.setToolTipText("Enter the Node Number to be filtered");
+        nnLowField.setToolTipText("Enter the Node Number (decimal) to be filtered");
         nnPane.add(nnLowField);
         
         this.add(nnPane);
@@ -86,7 +86,7 @@ public class CbusEventFilterPanel extends JPanel {
         evEnButton.setToolTipText("Select to enable filtering on Event");
         evPane.add(evEnButton);
         
-        evLowField.setToolTipText("Enter the Event to be filtered");
+        evLowField.setToolTipText("Enter the Event (decimal) to be filtered");
         evPane.add(evLowField);
         
         this.add(evPane);
