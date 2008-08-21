@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -159,6 +159,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // fix a width for raw field for current character set
         JTextField tCan = new JTextField(30);
+        tCan.setDragEnabled(true);
         int x = jScrollPane1Can.getPreferredSize().width+tCan.getPreferredSize().width;
         int y = jScrollPane1Can.getPreferredSize().height+10*tCan.getPreferredSize().height;
         
@@ -172,6 +173,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // fix a width for Cbus field for current character set
         JTextField tCbus = new JTextField(30);
+        tCbus.setDragEnabled(true);
         x = jScrollPane1Cbus.getPreferredSize().width+tCbus.getPreferredSize().width;
         y = jScrollPane1Cbus.getPreferredSize().height+10*tCbus.getPreferredSize().height;
         
@@ -875,7 +877,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public synchronized void message(CanMessage m) {  // receive a message and log it
         nextLine("sent: "+m.toString()+"\n",
-                "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m),
+                "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+m.toAddress()+"]\n",
                 "Dyn Pri:"+m.getPri()/4+" Min Pri:"+(m.getPri()&3),
                 (_filterFrame != null) ? _filterFrame.filter(m) : 0);
         sentCountField.setText(Integer.toString(++_sent));
@@ -900,7 +902,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             }
         }
         nextLine("rcvd: "+r.toString()+"\n",
-                "ID:"+r.getId()+" "+(r.isRtr() ? "R " : "N ")+decode(r),
+                "ID:"+r.getId()+" "+(r.isRtr() ? "R " : "N ")+decode(r)+" ["+r.toAddress()+"]\n",
                 "Dyn Pri:"+r.getPri()/4+" Min Pri:"+(r.getPri()&3),
                 (_filterFrame != null) ? _filterFrame.filter(r) : 0);
         rcvdCountField.setText(Integer.toString(++_rcvd));
@@ -947,7 +949,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 break;
             }
         }
-        return (str+"\n");
+//        return (str+"\n");
+        return (str);
     }
     
     /**
