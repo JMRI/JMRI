@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.10 2008-08-21 14:38:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.11 2008-08-21 17:24:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -278,6 +278,9 @@ Fixed a problem with F11 and F12 in the Digitrax DG383/DG583 definitions.
 
 <p>
 Giorgio Terdina and Dave Duchamp added zooming and antialiasing to Layout Editor.
+
+<p>
+Giorgio Terdina fixed a long-standing problem with international time zones.
 
 <!--#include virtual="/Footer" -->
 
