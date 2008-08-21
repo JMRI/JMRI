@@ -5,14 +5,17 @@ import jmri.Timebase;
 import jmri.InstanceManager;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import org.jdom.Element;
 
 /**
  * Handle XML persistance of SimpleTimebase objects
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
+ * @version $Revision: 1.10 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -113,10 +116,10 @@ public class SimpleTimebaseXml implements XmlAdapter {
 				if (element.getAttribute("time")!=null) {
 					val2 = element.getAttributeValue("time");
 					try {
-						clock.setStartSetTime(true,new Date(val2));
-						clock.setTime(new Date(val2));
-					} catch (IllegalArgumentException e) {
-						// if non-invertable date format, just skip
+						clock.setStartSetTime(true, format.parse(val2));
+						clock.setTime(format.parse(val2));
+					} catch(ParseException e) {
+ 						// if non-invertable date format, just skip
 						log.warn("Cannot set date using value stored in file: "+val2);
 					}
 				}
@@ -125,8 +128,8 @@ public class SimpleTimebaseXml implements XmlAdapter {
 				if (element.getAttribute("time")!=null) {
 					val2 = element.getAttributeValue("time");
 					try {
-						clock.setStartSetTime(false,new Date(val2));
-					} catch (IllegalArgumentException e) {
+						clock.setStartSetTime(false, format.parse(val2));
+					} catch(ParseException e) {
 						// if non-invertable date format, just skip
 						log.warn("Cannot set date using value stored in file: "+val2);
 					}
@@ -137,9 +140,9 @@ public class SimpleTimebaseXml implements XmlAdapter {
 			// this only to preserve previous behavior for preexisting files
             val2 = element.getAttributeValue("time");
 			try {
-                clock.setStartSetTime(true,new Date(val2));
-                clock.setTime(new Date(val2));
-            } catch (IllegalArgumentException e) {
+                clock.setStartSetTime(true, format.parse(val2));
+                clock.setTime(format.parse(val2));
+            } catch (ParseException e) {
                 // if non-invertable date format, just skip
                 log.warn("Cannot set date using value stored in file: "+val2);
             }
@@ -152,6 +155,10 @@ public class SimpleTimebaseXml implements XmlAdapter {
 	    }
 		clock.initializeHardwareClock();					
     }
+
+	// Conversion format for dates created by Java Date.toString().
+	// The Locale needs to be always US, irrelevant from computer's and program's settings!
+	static final SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
     /**
      * Update static data from XML file
