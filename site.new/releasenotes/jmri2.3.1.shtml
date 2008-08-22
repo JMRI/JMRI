@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.11 2008-08-21 17:24:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.12 2008-08-22 12:39:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -138,7 +138,7 @@ enter the really long names that some systems (RPS, CBUS) can use.  If this
 works well, it'll be done for the rest of the places.
 
 <P>
-The JMRI throttle now was a "Program" button which opens an ops-mode programmer
+The JMRI throttle now has a "Program" button which opens an ops-mode programmer
 window for the selected locomotive. It's only active when a roster entry
 has been selected on the throttle.
 
