@@ -8,6 +8,7 @@ package jmri.jmrix.can.cbus;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import java.awt.Color;
 
 import jmri.util.JmriJFrame;
@@ -20,7 +21,7 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
@@ -42,6 +43,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
             _filterActive[i] = false;
         }
         _console = console;
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         log.debug("CbusEventFilterFrame(CbusEventFilter) ctor done");
     }
     
@@ -52,7 +54,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
     
     public void dispose() {
         super.dispose();
-        _console.filterFrameClosed();
+//        _console.filterFrameClosed();
     }
     
     public void initComponents() throws Exception {
@@ -65,7 +67,7 @@ public class CbusEventFilterFrame extends JmriJFrame {
             // Pane to hold a filter
             filterPanes[i] = new CbusEventFilterPanel(this, i);
             filterPanes[i].setBorder(BorderFactory.createTitledBorder(
-                    BorderFactory.createEtchedBorder(), "Filter "+i));
+                    BorderFactory.createEtchedBorder(), "Filter "+(i+1)));
             filterPanes[i].initComponents(i);
             getContentPane().add(filterPanes[i]);
         }

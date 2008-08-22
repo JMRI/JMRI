@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -320,16 +320,6 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         JPanel southPane = new JPanel();
         southPane.setLayout(new BoxLayout(southPane, BoxLayout.Y_AXIS));
         
-        // Pane to select display type
-        JPanel showPane = new JPanel();
-        showPane.add(showStatsCheckBox);
-        showPane.add(showPacketCheckBox);
-        showPane.add(showEventCheckBox);
-        showPane.add(decimalCheckBox);
-        showPane.add(filterButton);
-//        getContentPane().add(showPane);
-        southPane.add(showPane);
-        
         // Pane for network statistics
         statsPane = new JPanel();
         statsPane.setBorder(BorderFactory.createTitledBorder(
@@ -469,6 +459,17 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         evPane.setVisible(false);
 //        getContentPane().add(evPane);
         southPane.add(evPane);
+
+        // Pane to select display type
+        JPanel showPane = new JPanel();
+        showPane.add(showStatsCheckBox);
+        showPane.add(showPacketCheckBox);
+        showPane.add(showEventCheckBox);
+        showPane.add(decimalCheckBox);
+        showPane.add(filterButton);
+//        getContentPane().add(showPane);
+        southPane.add(showPane);
+        
         getContentPane().add(southPane, BorderLayout.SOUTH);
         
         showEventCheckBox.addActionListener(new ActionListener() {
@@ -626,8 +627,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         
         if (filterIndex >= 0) {
-            sbCan.append("Filter "+(filterIndex)+": ") ;
-            sbCbus.append("Filter "+(filterIndex)+": ") ;
+            sbCan.append("Filter "+(filterIndex+1)+": ") ;
+            sbCbus.append("Filter "+(filterIndex+1)+": ") ;
         }
         
         // display decoded data
@@ -758,13 +759,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             _filterFrame.setVisible(true);
         } else {
             _filterFrame.setState(Frame.NORMAL);
+            _filterFrame.setVisible(true);
         }
     }
     
-    public void filterFrameClosed() {
-        log.debug("Cbus Console filter frame closed");
-        _filterFrame = null;
-    }
+//    public void filterFrameClosed() {
+//        log.debug("Cbus Console filter frame closed");
+//        nextLine("All filters removed\n", "All filters removed\n", "", -1);
+//        _filterFrame = null;
+//    }
     
     public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
         log.debug("Cbus Console filter applied");
