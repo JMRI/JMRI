@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -160,7 +160,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         entryField.setToolTipText("Enter text here, then click button to include it in log");
         
         // fix a width for raw field for current character set
-        JTextField tCan = new JTextField(30);
+        JTextField tCan = new JTextField(35);
         tCan.setDragEnabled(true);
         int x = jScrollPane1Can.getPreferredSize().width+tCan.getPreferredSize().width;
         int y = jScrollPane1Can.getPreferredSize().height+10*tCan.getPreferredSize().height;
@@ -344,15 +344,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             public void actionPerformed(ActionEvent e) {
                 if (showStatsCheckBox.isSelected()) {
                     statsPane.setVisible(true);
-                    statsPane.validate();
-                    pack();
-                    statsPane.repaint();
+                    //statsPane.validate();
+                    packInside();
+                    //statsPane.repaint();
                 }
                 else {
                     statsPane.setVisible(false);
-                    statsPane.validate();
-                    pack();
-                    statsPane.repaint();
+                    //statsPane.validate();
+                    packInside();
+                    //statsPane.repaint();
                 }
             }
         });
@@ -374,7 +374,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 BorderFactory.createEtchedBorder(), "Min Pri"));
         rxPane.add(lastMinPriField);
         for (i=0; i<8; i++) {
-            lastRxDataFields[i] = new JTextField("", 6);
+            lastRxDataFields[i] = new JTextField("", 4);
             if (i==0) {
                 lastRxDataFields[i].setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(), "d0 (OPC)"));
@@ -408,7 +408,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 BorderFactory.createEtchedBorder(), "Min Pri"));
         sendPane.add(minPriField);
         for (i=0; i<8; i++) {
-            dataFields[i] = new JTextField("", 6);
+            dataFields[i] = new JTextField("", 4);
             if (i==0) {
                 dataFields[i].setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(), "d0 (OPC)"));
@@ -429,21 +429,21 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             public void actionPerformed(ActionEvent e) {
                 if (showPacketCheckBox.isSelected()) {
                     rxPane.setVisible(true);
-                    rxPane.validate();
+                    //rxPane.validate();
                     sendPane.setVisible(true);
-                    sendPane.validate();
-                    pack();
-                    rxPane.repaint();
-                    sendPane.repaint();
+                    //sendPane.validate();
+                    packInside();
+                    //rxPane.repaint();
+                    //sendPane.repaint();
                 }
                 else {
                     rxPane.setVisible(false);
-                    rxPane.validate();
+                    //rxPane.validate();
                     sendPane.setVisible(false);
-                    sendPane.validate();
-                    pack();
-                    rxPane.repaint();
-                    sendPane.repaint();
+                    //sendPane.validate();
+                    packInside();
+                    //rxPane.repaint();
+                    //sendPane.repaint();
                 }
             }
         });
@@ -475,15 +475,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             public void actionPerformed(ActionEvent e) {
                 if (showEventCheckBox.isSelected()) {
                     evPane.setVisible(true);
-                    evPane.validate();
-                    pack();
-                    evPane.repaint();
+                    //evPane.validate();
+                    packInside();
+                    //evPane.repaint();
                 }
                 else {
                     evPane.setVisible(false);
-                    evPane.validate();
-                    pack();
-                    evPane.repaint();
+                    //evPane.validate();
+                    packInside();
+                    //evPane.repaint();
                 }
             }
         });
@@ -574,6 +574,17 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         linesBuffer[CAN] = new StringBuffer();
         linesBuffer[CBUS] = new StringBuffer();
+    }
+    
+    /**
+     * Special version of pack that holds the overall frame size constant.
+     */
+    void packInside() {
+        Dimension d;
+        d = getSize();
+        setMinimumSize(d);
+        setPreferredSize(d);
+        pack();
     }
     
     /**
