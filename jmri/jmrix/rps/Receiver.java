@@ -8,7 +8,7 @@ import javax.vecmath.Point3d;
  * Holds all the state information for a single receiver.
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Receiver {
 
@@ -25,6 +25,9 @@ public class Receiver {
     }
     private Point3d position;
     
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
+    boolean active = false;
 }
 
 /* @(#)Receiver.java */

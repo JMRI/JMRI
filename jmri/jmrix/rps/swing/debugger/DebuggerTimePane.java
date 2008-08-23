@@ -13,7 +13,7 @@ import java.io.*;
  * Pane for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -75,12 +75,14 @@ public class DebuggerTimePane extends JPanel
     }
         
     void setResidual(int i, Measurement m) {
-        Point3d p = Engine.instance().getReceiverPosition(i+1);
-        Point3d x = new Point3d((float)m.getX(), (float)m.getY(), (float)m.getZ());
-        
-        double rt = p.distance(x)/Engine.instance().getVSound();
-        int res = (int) (rt-m.getReading().getValue(i));
-        residuals[i].setText(""+res);
+        try {
+            Point3d p = Engine.instance().getReceiverPosition(i+1);
+            Point3d x = new Point3d((float)m.getX(), (float)m.getY(), (float)m.getZ());
+            
+            double rt = p.distance(x)/Engine.instance().getVSound();
+            int res = (int) (rt-m.getReading().getValue(i))-Engine.instance().getOffset();
+            residuals[i].setText(""+res);
+        } catch (Exception e) {} // just skip filling in
     }
     
     Measurement lastPoint = null;

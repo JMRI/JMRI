@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -420,11 +420,30 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     
             int count = (c.getColumnCount()-2)/2;  // skip 'ADR, DAT,'
             double[] vals = new double[Engine.instance().getReceiverCount()];
-            for (int i=0; i<count; i++) {
-                int index = Integer.parseInt(c.get(2+i*2))-1;  // numbers in message are from one
-                vals[index] = Double.valueOf(c.get(2+i*2+1)).doubleValue();
+            for (int i=0; i<vals.length; i++) vals[i] = 0.0;
+            try {
+                for (int i=0; i<count; i++) {
+                    int index = Integer.parseInt(c.get(2+i*2))-1;  
+                    System.out.println("index "+index);
+                    // numbers in message are from one for valid receivers
+                    // the null message starts with index zero
+                    if (index<0) continue; 
+                    if (index>=vals.length) { // data for undefined Receiver
+                        log.warn("Data from unexpected receiver "+index+", creating receiver");
+                        Engine.instance().setReceiverCount(index+1);
+                        // make vals longer
+                        double[] temp = new double[index+1];
+                        for (int j = 0; j<vals.length; j++) temp[j] = vals[j];
+                        vals = temp;
+                    } 
+                    vals[index] = Double.valueOf(c.get(2+i*2+1)).doubleValue();
+                }
+            } catch (Exception e) {
+                log.warn("Exception handling input: "+e);
+                System.out.flush();System.err.flush();
+                e.printStackTrace();
+                System.out.flush();System.err.flush();
             }
-            
             Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
             return r;
         } else {

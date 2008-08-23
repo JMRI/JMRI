@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Measurement {
 
@@ -80,6 +80,21 @@ public class Measurement {
         return code;
     }
     
+    /** 
+     * Should this be considered a valid measurement?
+     */
+    public boolean isOkPoint() {
+        if (getCode()>0) return true;
+        return false;
+    }
+    
+    /** 
+     * Get the error code as a human-readable string
+     */
+    public String textCode() {
+        return ""+getCode();
+    }
+    
     public Point3d getPoint() {
         return new Point3d(x, y, z);
     }
@@ -96,7 +111,7 @@ public class Measurement {
     }
     
     double x,y,z, vsound;
-    int code;
+    protected int code;
     String source;
     
     Reading r;  // a Reading object is by definition immutable

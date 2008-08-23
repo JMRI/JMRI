@@ -125,7 +125,7 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Ash2_0Algorithm implements Calculator {
 
@@ -187,8 +187,26 @@ public class Ash2_0Algorithm implements Calculator {
         Zt = result.z;
         Vs = result.vs;
         
-        log.debug("x = "+Xt+" y = "+Yt+" z0 = "+Zt+" code = "+result.code);
-        return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash2_0Algorithm");
+        // must convert to new code 
+        int code;
+        switch (result.code) {
+        case 0: // ok
+            code = 4;
+            break;
+        case 1: // less than 3 receivers
+            code = 0;
+            break;
+        case 2: // variance too large
+            code = -Tr.length;
+            break;
+        default:
+            log.error("Unexpected error code: "+result.code);
+            code = 0;
+        }
+        log.debug("old code="+result.code+" new code="+code);
+        
+        log.debug("x = "+Xt+" y = "+Yt+" z0 = "+Zt+" code = "+code);
+        return new Measurement(r, Xt, Yt, Zt, Vs, code, "Ash2_0Algorithm");
     }
 
     /**

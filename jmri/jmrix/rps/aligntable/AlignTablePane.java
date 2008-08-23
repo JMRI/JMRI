@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.aligntable;
 
+import jmri.jmrix.rps.Algorithms;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Receiver;
 
@@ -24,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -113,6 +114,9 @@ public class AlignTablePane extends javax.swing.JPanel {
         offset.setText(""+Engine.instance().getOffset());
         p.add(offset);
         
+        p.add(new JLabel(rb.getString("LabelAlgorithm")));
+        p.add(algorithmBox);
+        
         b = new JButton(rb.getString("ButtonSet"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -121,6 +125,8 @@ public class AlignTablePane extends javax.swing.JPanel {
                     Integer.parseInt(offset.getText()));
                 Engine.instance().setVSound(
                     Double.parseDouble(vsound.getText()));
+                Engine.instance().setAlgorithm(
+                    (String)algorithmBox.getSelectedItem());
                 // mark modification
                 flag.setModifiedFlag(true);
             }
@@ -167,6 +173,7 @@ public class AlignTablePane extends javax.swing.JPanel {
     JTextField num      = new JTextField(4);
     JTextField vsound   = new JTextField(8);
     JTextField offset   = new JTextField(4);
+    JComboBox algorithmBox = Algorithms.algorithmBox();
     
     /**
      * Set up table for showing individual recievers
@@ -182,7 +189,9 @@ public class AlignTablePane extends javax.swing.JPanel {
         static private final int YCOL = 2;
         static private final int ZCOL = 3;
         
-        static private final int LAST = 3;
+        static private final int ACTIVECOL = 4;
+
+        static private final int LAST = 4;
         
         public int getColumnCount () {return LAST+1;}
 
@@ -200,6 +209,8 @@ public class AlignTablePane extends javax.swing.JPanel {
                 return rb.getString("TitleColY");
             case ZCOL:
                 return rb.getString("TitleColZ");
+            case ACTIVECOL:
+                return rb.getString("TitleColActive");
             default:
                 return "";
             }
@@ -210,12 +221,14 @@ public class AlignTablePane extends javax.swing.JPanel {
                 return Double.class;
             else if (c == NUMCOL)
                 return Double.class;
+            else if (c == ACTIVECOL)
+                return Boolean.class;
             else 
                 return String.class;
         }
 
         public boolean isCellEditable(int r,int c) {
-            if (c == XCOL || c == YCOL || c == ZCOL)
+            if (c == XCOL || c == YCOL || c == ZCOL || c == ACTIVECOL)
                 return true;
             else 
                 return false;
@@ -239,6 +252,10 @@ public class AlignTablePane extends javax.swing.JPanel {
                 rc = Engine.instance().getReceiver(r+1);
                 if (rc==null) return null;
                 return new Double(rc.getPosition().z);
+            case ACTIVECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Boolean(rc.isActive());              
             default:
                 return null;
             }
@@ -280,6 +297,15 @@ public class AlignTablePane extends javax.swing.JPanel {
                 p = rc.getPosition();
                 p.z = ((Double)val).doubleValue();
                 Engine.instance().setReceiverPosition(r+1, p);
+                flag.setModifiedFlag(true);
+                break;
+            case ACTIVECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                rc.setActive(((Boolean)val).equals(Boolean.TRUE));
                 flag.setModifiedFlag(true);
                 break;
             default:

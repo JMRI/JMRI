@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class PositionFile extends XmlFile {
 
@@ -37,7 +37,7 @@ public class PositionFile extends XmlFile {
         
     }
 
-    public void setConstants(double vSound, int offset) {
+    public void setConstants(double vSound, int offset, String algorithm) {
         Element v = new Element("vsound");
         v.addContent(""+vSound);
         root.addContent(v);
@@ -45,18 +45,24 @@ public class PositionFile extends XmlFile {
         Element o = new Element("offset");
         o.addContent(""+offset);
         root.addContent(o);
+
+        Element a = new Element("algorithm");
+        a.addContent(algorithm);
+        root.addContent(a);
     }
     
     public void setReceiver(int n, Receiver r) {
         Element e = new Element("receiver");
         e.setAttribute("number", ""+n);
+        e.setAttribute("active", ""+(r.isActive()?"true":"false"));
         e.addContent(positionElement(r.getPosition()));
         root.addContent(e);
     }
 
-    public void setReceiver(int n, Point3d p) {
+    public void setReceiver(int n, Point3d p, boolean active) {
         Element e = new Element("receiver");
         e.setAttribute("number", ""+n);
+        e.setAttribute("active", ""+(active?"true":"false"));
         e.addContent(positionElement(p));
         root.addContent(e);
     }
@@ -152,6 +158,11 @@ public class PositionFile extends XmlFile {
         return Integer.parseInt(e.getText());
     }
     
+    public String getAlgorithm() {
+        Element e = root.getChild("algorithm");
+        return e.getText();
+    }
+    
     /**
      * FInd the highest numbered receiver in the file
      */
@@ -185,6 +196,28 @@ public class PositionFile extends XmlFile {
             if (num == n) return positionFromElement(e.getChild("position"));
         }
         return null;
+    }
+        
+    /**
+     * Get the nth receiver active state in the file.
+     * @return null if not present
+     */
+    public boolean getReceiverActive(int n) {
+        List kids = root.getChildren("receiver");
+        for (int i = 0; i<kids.size(); i++) {
+            Element e = (Element) kids.get(i);
+            Attribute a = e.getAttribute("number");
+            if (a == null) continue;
+            int num = -1;
+            try { num = a.getIntValue(); }
+            catch (org.jdom.DataConversionException ex) {}
+            if (num != n) continue;
+            a = e.getAttribute("active");
+            if (a==null) return true; // default value
+            if (a.getValue().equals("false")) return false;
+            return true;
+        }
+        return true;
     }
         
     /**

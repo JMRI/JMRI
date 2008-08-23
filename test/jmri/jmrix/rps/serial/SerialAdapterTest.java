@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialAdapterTest extends TestCase {
 
@@ -39,17 +39,32 @@ public class SerialAdapterTest extends TestCase {
 	    Assert.assertTrue("val 3", 0.001 > Math.abs(r.getValue(2)-3.));
 	}
 
-	public void testStringParsingV2() throws java.io.IOException {
+	public void testStringParsingV2A() throws java.io.IOException {
         // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
-        String input = "DAT, TIME, 3,100,4,200,2,300";
+        String input = "DAT, TIME, 3,300,4,400,2,200";
         SerialAdapter s = new SerialAdapter();
         s.version=2;
-	    Reading r = s.makeReading(input);
+	    Reading r;
+	    r = s.makeReading(input);
+	    // getValue indexed from 1
 	    Assert.assertTrue("val 1", 0.001 > Math.abs(r.getValue(0)-0.));
-	    Assert.assertTrue("val 2", 0.001 > Math.abs(r.getValue(1)-300.));
-	    Assert.assertTrue("val 3", 0.001 > Math.abs(r.getValue(2)-100.));
-	    Assert.assertTrue("val 4", 0.001 > Math.abs(r.getValue(3)-200.));
-	    Assert.assertTrue("val 5", 0.001 > Math.abs(r.getValue(4)-0));
+	    Assert.assertTrue("val 2", 0.001 > Math.abs(r.getValue(1)-200.));
+	    Assert.assertTrue("val 3", 0.001 > Math.abs(r.getValue(2)-300.));
+	    Assert.assertTrue("val 4", 0.001 > Math.abs(r.getValue(3)-400.));
+	}
+
+	public void testStringParsingV2B() throws java.io.IOException {
+        // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
+        String input = "DAT, TIME, 1,100,2,200,3,300,4,400";
+        SerialAdapter s = new SerialAdapter();
+        s.version=2;
+	    Reading r;
+	    r = s.makeReading(input);
+	    // getValue indexed from 1
+	    Assert.assertTrue("val 1", 0.001 > Math.abs(r.getValue(0)-100.));
+	    Assert.assertTrue("val 2", 0.001 > Math.abs(r.getValue(1)-200.));
+	    Assert.assertTrue("val 3", 0.001 > Math.abs(r.getValue(2)-300.));
+	    Assert.assertTrue("val 4", 0.001 > Math.abs(r.getValue(3)-400.));
 	}
 	// from here down is testing infrastructure
 

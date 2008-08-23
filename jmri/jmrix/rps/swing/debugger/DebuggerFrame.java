@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 
@@ -304,6 +304,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // to reduce the work used.
 
         id.setText(""+r.getID());
+        timep.notify(r);
     }
 
     void doMeasurementFromPositionFields() {
@@ -333,7 +334,9 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         x.setText(nf.format(m.getX()));
         y.setText(nf.format(m.getY()));
         z.setText(nf.format(m.getZ()));
-        code.setText(""+m.getCode());
+        code.setText(m.textCode());
+        
+        timep.notify(m);
     }
     
     // to find and remember the input files

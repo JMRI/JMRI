@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * flip the sign of Z coordinates to keep this bias working for us.
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {
@@ -163,10 +163,10 @@ public class AlignmentPanel extends javax.swing.JPanel
                 // handle the file
                 PositionFile pf = new PositionFile();
                 pf.prepare();
-                pf.setReceiver(1,getPoint(x1l,y1l,z1l));
-                pf.setReceiver(2,getPoint(x2l,y1l,z2l));
-                pf.setReceiver(3,getPoint(x3l,y1l,z3l));
-                pf.setReceiver(4,getPoint(x4l,y1l,z4l));
+                pf.setReceiver(1,getPoint(x1l,y1l,z1l), true);
+                pf.setReceiver(2,getPoint(x2l,y1l,z2l), true);
+                pf.setReceiver(3,getPoint(x3l,y1l,z3l), true);
+                pf.setReceiver(4,getPoint(x4l,y1l,z4l), true);
                 
                 // save the measurements too
                 for (int i=0; i<NREADINGS; i++) {
@@ -341,7 +341,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             x1l.setText(nf.format(m.getX()));
             y1l.setText(nf.format(m.getY()));
             z1l.setText(nf.format(-m.getZ()));
-            stat1.setText(""+m.getCode());
+            stat1.setText(m.textCode());
        }
         {
             // create a Reading
@@ -355,7 +355,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             x2l.setText(nf.format(m.getX()));
             y2l.setText(nf.format(m.getY()));
             z2l.setText(nf.format(-m.getZ()));
-            stat2.setText(""+m.getCode());
+            stat2.setText(m.textCode());
        }
         {
             // create a Reading
@@ -369,7 +369,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             x3l.setText(nf.format(m.getX()));
             y3l.setText(nf.format(m.getY()));
             z3l.setText(nf.format(-m.getZ()));
-            stat3.setText(""+m.getCode());
+            stat3.setText(m.textCode());
        }
         {
             // create a Reading
@@ -383,7 +383,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             x4l.setText(nf.format(m.getX()));
             y4l.setText(nf.format(m.getY()));
             z4l.setText(nf.format(-m.getZ()));
-            stat4.setText(""+m.getCode());
+            stat4.setText(m.textCode());
        }
     }
     

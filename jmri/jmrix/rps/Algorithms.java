@@ -10,7 +10,7 @@ import javax.vecmath.Point3d;
  * Provide central access to the RPS algorithms
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class Algorithms implements Constants {
 
@@ -26,7 +26,7 @@ public class Algorithms implements Constants {
     
     public static JComboBox algorithmBox() {
         JComboBox j = new JComboBox(names);
-        j.setSelectedIndex(DEFAULTALGORITHMINDEX);
+        j.setSelectedItem(Engine.instance().getAlgorithm());
         return j;
     }
 

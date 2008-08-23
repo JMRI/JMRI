@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class PositionFileTest extends TestCase {
 
@@ -62,7 +62,7 @@ public class PositionFileTest extends TestCase {
     public void testRW() throws IOException, org.jdom.JDOMException {
         PositionFile fout = new PositionFile();
         fout.prepare();
-        fout.setReceiver(2,new Point3d(1.0f,2.0f,3.0f));
+        fout.setReceiver(2,new Point3d(1.0f,2.0f,3.0f), true);
         
         Reading rout = new Reading(21, new double[]{11,12,13,14});
         fout.setCalibrationPoint(new Point3d(-1.0f,-2.0f,-3.0f), rout);

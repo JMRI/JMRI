@@ -23,7 +23,7 @@ import javax.vecmath.Point3d;
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Ash2_1Algorithm implements Calculator {
 
@@ -90,12 +90,7 @@ public class Ash2_1Algorithm implements Calculator {
         Yt = result.y;
         Zt = result.z;
         Vs = result.vs;
-        
-        // nr (result.code) has switched from 0 good, 1, 2 bad to
-        // 3 or more being good, 0,1,2 bad. Temporily remap here _ONLY_
-        
-        result.code = 3 - result.code;
-        
+                
         log.debug("x = "+Xt+" y = "+Yt+" z0 = "+Zt+" code = "+result.code);
         return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash2_1Algorithm");
     }

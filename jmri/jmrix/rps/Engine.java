@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 
 
@@ -142,15 +142,18 @@ public class Engine implements ReadingListener {
         int index = 0;
         Point3d list[] = new Point3d[count];
         for (int i = 0; i<receivers.length; i++) {
+            if (receivers[i]==null) continue;  // skip receivers not present
             Point3d p = getReceiverPosition(i);
             if ( p != null ) {
                 list[index] = p;
                 index++;
+            } else {
+                log.error("Unexpected null position for receiver "+i);
             }
         }
         
         Calculator c = Algorithms.newCalculator(list, getVSound(), 
-                            getOffset(), algorithm);
+                            getOffset(), getAlgorithm());
 
         Measurement m = c.convert(r, lastPoint);
 
@@ -174,7 +177,7 @@ public class Engine implements ReadingListener {
     public void storeAlignment(File file) throws org.jdom.JDOMException, IOException {
         PositionFile pf = new PositionFile();
         pf.prepare();
-        pf.setConstants(getVSound(), getOffset());
+        pf.setConstants(getVSound(), getOffset(), getAlgorithm());
         
         for (int i = 1; i<=getReceiverCount(); i++) {
             if (getReceiver(i) == null) continue;
@@ -194,14 +197,21 @@ public class Engine implements ReadingListener {
         // get offset
         setOffset(pf.getOffset());
         
+        // get algorithm
+        setAlgorithm(pf.getAlgorithm());
+        
         // get receivers
         setReceiverCount(pf.maxReceiver());  // count from 1
         Point3d p;
+        boolean a;
         for (int i = 1; i<=getReceiverCount(); i++) {    
             p = pf.getReceiverPosition(i);
+            a = pf.getReceiverActive(i);
             if (p == null) continue;
             log.debug("load "+i+" with "+p);
-            setReceiver(i, new Receiver(p));
+            Receiver r = new Receiver(p);
+            r.setActive(a);
+            setReceiver(i, r);
         }
         
     }

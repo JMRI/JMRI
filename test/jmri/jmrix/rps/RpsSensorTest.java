@@ -14,7 +14,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the RPS Sensor class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RpsSensorTest extends TestCase {
 
@@ -41,11 +41,11 @@ public class RpsSensorTest extends TestCase {
         Assert.assertTrue("1: not active",s.getKnownState()==Sensor.UNKNOWN);
 	
         Reading loco = new Reading(21, null);
-        Measurement m = new Measurement(loco, 0.5, 0.5, 0.0, 0.133, 0, "source");
+        Measurement m = new Measurement(loco, 0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("2: active",s.getKnownState()==Sensor.ACTIVE);
         
-        m = new Measurement(loco, -0.5, 0.5, 0.0, 0.133, 0, "source");
+        m = new Measurement(loco, -0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("3: inactive",s.getKnownState()==Sensor.INACTIVE);
     }
@@ -58,21 +58,21 @@ public class RpsSensorTest extends TestCase {
         Reading loco1 = new Reading(21, null);
         Reading loco2 = new Reading(34, null);
 	
-        Measurement m = new Measurement(loco1, 0.5, 0.5, 0.0, 0.133, 0, "source");
+        Measurement m = new Measurement(loco1, 0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("2: active",s.getKnownState()==Sensor.ACTIVE);
         
-        m = new Measurement(loco2, 0.5, 0.5, 0.0, 0.133, 0, "source");
+        m = new Measurement(loco2, 0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("3: active",s.getKnownState()==Sensor.ACTIVE);
 	
         // one loco leaves, but other is still present
-        m = new Measurement(loco1, -0.5, 0.5, 0.0, 0.133, 0, "source");
+        m = new Measurement(loco1, -0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("4: active",s.getKnownState()==Sensor.ACTIVE);
         
         // second leaves
-        m = new Measurement(loco2, -0.5, 0.5, 0.0, 0.133, 0, "source");
+        m = new Measurement(loco2, -0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("5: inactive",s.getKnownState()==Sensor.INACTIVE);
     }

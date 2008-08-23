@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -40,7 +40,7 @@ public class RpsSensor extends AbstractSensor
         Integer id = new Integer(r.getReading().getID());
         
         // ignore if code not OK
-        if (r.getCode() > 0 ) return;
+        if (!r.isOkPoint()) return;
         
         // ignore if not in Z fiducial volume
         if (r.getZ() > 20 || r.getZ() < -20) return;

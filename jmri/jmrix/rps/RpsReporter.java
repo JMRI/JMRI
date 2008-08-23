@@ -13,7 +13,7 @@ import jmri.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -37,7 +37,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         Integer id = new Integer(r.getReading().getID());
         
         // ignore if code not OK
-        if (r.getCode() > 0 ) return;
+        if (!r.isOkPoint()) return;
         
         // ignore if not in Z fiducial volume
         if (r.getZ() > 20 || r.getZ() < -20) return;
