@@ -21,7 +21,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -256,7 +256,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         lastMeasurement = m;
 
         // update state based on if valid measurement, fiducial volume
-        if (m.getCode() > 0 || m.getZ() < -20 || m.getZ() > 20)
+        if (m.isOkPoint() || m.getZ() < -20 || m.getZ() > 20)
             state = false;
         else 
             state = true;
