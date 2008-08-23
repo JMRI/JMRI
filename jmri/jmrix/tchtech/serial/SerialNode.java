@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Tim Hatch for TCH Technology nodes
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialNode {
 
@@ -669,18 +669,7 @@ public class SerialNode {
         if (nodeType==MEGA) initBytes[0] = 0x47; //"G" for meGa
         if (nodeType==PICO) initBytes[0] = 0x50;  // "P" for Pico
         if (nodeType==MICRO) initBytes[0] = 0x4D;  //'M' for Micro
-        else if (nodeType==TERA) {
-            if (bitsPerCard==24) initBytes[0] = 78;  // 78 = 'N'  110 = "n"
-            else
-            if (bitsPerCard==32) initBytes[0] = 0x54;  // "T" for Tera
-        }
-// Here add code for other type of card
-        // add Transmission Delay bytes (same for MIRCO and NICS)
-        //int firstByte = transmissionDelay / 256;
-        //int secondByte = transmissionDelay - ( firstByte*256 );
-        //if (firstByte>255) firstByte = 255;
-        //initBytes[1] = (byte)firstByte;
-        //initBytes[2] = (byte)secondByte;
+        else if (nodeType==TERA) initBytes[0] = 0x54;  // "T" for Tera
 
         // MICRO sereis specific part of initialization byte array
         if (nodeType==MICRO) {

@@ -39,15 +39,15 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
 	// configured node information
 	protected int numConfigNodes = 0;
-	protected SerialNode[] configNodes = new SerialNode[256];//128
-	protected int[] configNodeAddresses = new int[256];//128
+	protected SerialNode[] configNodes = new SerialNode[256];
+	protected int[] configNodeAddresses = new int[256];
 	protected boolean inputSelected = false;  // true if displaying input assignments, false for output
 	protected SerialNode selNode = null;
 	protected String selNodeID = "x"; // text address of selected Node
-	public int selNodeNum = 0;  // Address (na) of selected Node
-	public int numBits = 48;  // number of bits in assignment table
-	public int numInputBits = 16;  // number of input bits for selected node
-	public int numOutputBits = 32; // number of output bits for selected node
+	public int selNodeNum = 0;  // Address (NA) of selected Node
+	public int numBits = 96;  // number of bits in assignment table
+	public int numInputBits = 48;  // number of input bits for selected node
+	public int numOutputBits = 96; // number of output bits for selected node
 	
 	// node select pane items
 	JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel")+" ");
@@ -81,7 +81,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));
-        setSize(1000,2000);
+        setSize(1000,2500);
         Container contentPane = getContentPane();        
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -150,7 +150,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			assignmentListModel = new AssignmentTableModel();        
 			assignmentTable = new JTable(assignmentListModel);
 			assignmentTable.setRowSelectionAllowed(false);
-			assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300,350));
+			assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(400,350));
 			TableColumnModel assignmentColumnModel = assignmentTable.getColumnModel();
 			TableColumn bitColumn = assignmentColumnModel.getColumn(AssignmentTableModel.BIT_COLUMN);
 			bitColumn.setMinWidth(20);
@@ -260,23 +260,40 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			// prepare the information line
 			int type = selNode.getNodeType();
 			if (type == SerialNode.MICRO) {
-				nodeInfoText.setText("MICRO - 16 "+rb.getString("InputBitsAnd")+" 32 "+
+				nodeInfoText.setText("Micro - 16 "+rb.getString("InputBitsAnd")+" 32 "+
 													rb.getString("OutputBits"));
 				numInputBits = 16;
 				numOutputBits = 32;
 			}
-			else if (type == SerialNode.TERA) {
+
+			if (type == SerialNode.TERA) {
+
+			
 				int bitsPerCard = selNode.getNumBitsPerCard();
 				int numInputCards = selNode.numInputCards();
 				int numOutputCards = selNode.numOutputCards();
 				numInputBits = bitsPerCard*numInputCards;
 				numOutputBits = bitsPerCard*numOutputCards;
-				nodeInfoText.setText("NIC - "+bitsPerCard+rb.getString("BitsPerCard")+
+				nodeInfoText.setText("Tera -  " +bitsPerCard+rb.getString("BitsPerCard")+
 						", "+numInputBits+" "+rb.getString("InputBitsAnd")+" "+
 							numOutputBits+" "+rb.getString("OutputBits"));
 			}
-// here insert code for new types of TCH Technology nodes
+                        if (type == SerialNode.PICO) {
+				nodeInfoText.setText("Pico - 8 "+rb.getString("InputBitsAnd")+" 16 "+
+													rb.getString("OutputBits"));
+				numInputBits = 8;
+				numOutputBits = 16;
+			
 		}
+                        else if (type == SerialNode.MEGA) {
+				nodeInfoText.setText("Mega - 48 "+rb.getString("InputBitsAnd")+" 96 "+
+													rb.getString("OutputBits"));
+				numInputBits = 48;
+				numOutputBits = 96;
+			}
+                }
+// here insert code for new types of TCH Technology nodes
+		
 		// initialize for input or output assignments
 		if (inputSelected) {
 			numBits = numInputBits;
