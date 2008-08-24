@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class PositionableLabel extends JLabel
@@ -58,9 +58,9 @@ public class PositionableLabel extends JLabel
     }
 
     public boolean isIcon() { return icon; }
-    boolean icon = false;
+    protected boolean icon = false;
     public boolean isText() { return text; }
-    boolean text = false;
+    protected boolean text = false;
 
     NamedIcon namedIcon = null;
 
@@ -175,8 +175,8 @@ public class PositionableLabel extends JLabel
         }
     }
 
-    JPopupMenu popup = null;
-    JLabel ours;
+    protected JPopupMenu popup = null;
+    protected JLabel ours;
     /**
      * For over-riding in the using classes: only provides icon rotation
      */
@@ -252,7 +252,7 @@ public class PositionableLabel extends JLabel
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    JMenu makeFontSizeMenu() {
+    protected JMenu makeFontSizeMenu() {
         JMenu sizeMenu = new JMenu("Font size");
         fontButtonGroup = new ButtonGroup();
         addFontMenuEntry(sizeMenu, 6);
@@ -287,7 +287,7 @@ public class PositionableLabel extends JLabel
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
-    JMenu makeFontStyleMenu() {
+    protected JMenu makeFontStyleMenu() {
         JMenu styleMenu = new JMenu("Font style");
         styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
             public void actionPerformed(ActionEvent e) {
@@ -326,7 +326,7 @@ public class PositionableLabel extends JLabel
 	}
  
     
-    JMenu makeFontColorMenu() {
+    protected JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu("Font color");
         colorButtonGroup = new ButtonGroup();
         addColorMenuEntry(colorMenu, "Black", Color.black);
@@ -487,7 +487,7 @@ public class PositionableLabel extends JLabel
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) popup.removeAll();
         fontButtonGroup = null;
         colorButtonGroup = null;
@@ -500,7 +500,7 @@ public class PositionableLabel extends JLabel
     /**
      * Removes this object from display and persistance
      */
-    void remove() {
+    public void remove() {
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();
