@@ -1,9 +1,9 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-1.dtd,v 1.4 2008-08-21 15:34:37 djduchamp Exp $ -->
+<!-- $Id: layout-config-2-3-1.dtd,v 1.5 2008-08-24 08:07:25 jacobsen Exp $ -->
 
-<!-- This DTD is part of version 2.1.7 development.  Do not modify it       -->
-<!-- after version 2.1.7 is released.  For more information,                -->
+<!-- This DTD is part of version 2.3.1 development.  Do not modify it       -->
+<!-- after version 2.3.1 is released.  For more information,                -->
 <!-- see http://jmri.sf.net/help/en/html/doc/Technical/XmlPersistance.shtml -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2008.                         -->
