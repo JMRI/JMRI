@@ -48,7 +48,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3612,6 +3612,30 @@ public class LayoutEditor extends JmriJFrame {
         l.setDisplayLevel(ICONS);
 		setDirty(true);
         putLabel(l);
+    }
+    
+    /**
+     * Add a loco marker to the target
+     */
+    public LocoIcon addLocoIcon (String name){
+    	LocoIcon l = new LocoIcon();
+        setNextLocation(l);
+        l.setText(name);
+        putLocoIcon(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
+        return l;
+     }
+    
+    public void putLocoIcon(LocoIcon l) {
+    	l.invalidate();
+        l.setHorizontalTextPosition(SwingConstants.CENTER);
+    	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        targetPanel.add(l, l.getDisplayLevel());
+ 		labelImage.add(l);
+        contents.add(l);
+        // reshow the panel
+        targetPanel.validate();
     }
     
     JFileChooser inputFileChooser;
