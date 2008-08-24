@@ -18,15 +18,15 @@ import javax.vecmath.Point3d;
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RpsTrackingPanelTest extends TestCase {
 
     public void testShow() {
         new Engine(){ void reset() { _instance = null; }}.reset();
         Engine.instance().setReceiverCount(2);
-        Engine.instance().setReceiver(0, new Receiver(new Point3d(12.,12.,0.)));
-        Engine.instance().setReceiver(1, new Receiver(new Point3d(13.,13.,0.)));
+        Engine.instance().setReceiver(1, new Receiver(new Point3d(12.,12.,0.)));
+        Engine.instance().setReceiver(2, new Receiver(new Point3d(13.,13.,0.)));
         
         JmriJFrame f = new JmriJFrame("Test Tracking Panel");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
