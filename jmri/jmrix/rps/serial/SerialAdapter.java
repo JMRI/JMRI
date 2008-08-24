@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -424,8 +424,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             try {
                 for (int i=0; i<count; i++) {
                     int index = Integer.parseInt(c.get(2+i*2))-1;  
-                    System.out.println("index "+index);
-                    // numbers in message are from one for valid receivers
+                    // numbers are from one for valid receivers
                     // the null message starts with index zero
                     if (index<0) continue; 
                     if (index>=vals.length) { // data for undefined Receiver
