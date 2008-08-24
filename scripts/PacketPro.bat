@@ -1,12 +1,12 @@
 
 REM ##############################################################################
 
-REM Invoke the the PacketPro JMRI 2.2 application, which provide a Jython
+REM Invoke the the PacketPro JMRI 2.3.1 application, which provide a Jython
 REM command line.
 
 REM There must be a local jython interpreter and JMRI libraries available
 
-REM $Revision: 1.14 $ (CVS maintains this line, do not edit please)
+REM $Revision: 1.15 $ (CVS maintains this line, do not edit please)
 
 SET CLASSPATH=.;classes;jmriplugins.jar;jmri.jar;comm.jar;Serialio.jar;log4j.jar;jhall.jar;crimson.jar;jdom.jar;jython.jar;javacsv.jar;MRJAdapter.jar;jakarta-regexp-1.5.jar;servlet.jar;vecmath.jar
      
