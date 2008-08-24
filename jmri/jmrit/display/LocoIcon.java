@@ -23,12 +23,19 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public LocoIcon() {
+    private static final String WHITE = "White";		//loco background colors
+    private static final String GREEN = "Green";
+    private static final String GRAY = "Gray";
+    private static final String RED = "Red";
+    private static final String BLUE = "Blue";
+    private static final String YELLOW = "Yellow";
+	
+	public LocoIcon() {
         // super ctor call to make sure this is an icon label
     	super(new NamedIcon("resources/icons/markers/loco-white.gif",
                             "resources/icons/markers/loco-white.gif"));
@@ -84,14 +91,14 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     
     ButtonGroup locoButtonGroup = null;
     
-    JMenu makeLocoIconMenu(){
+    protected JMenu makeLocoIconMenu(){
     	JMenu iconMenu = new JMenu("Loco color");
     	locoButtonGroup = new ButtonGroup();
-    	addLocoMenuEntry(iconMenu, "White");
-    	addLocoMenuEntry(iconMenu, "Green");
-    	addLocoMenuEntry(iconMenu, "Gray");
-    	addLocoMenuEntry(iconMenu, "Red");
-    	return iconMenu;
+    	String[] colors = getLocoColors();
+    	for (int i=0; i<colors.length; i++){
+    		addLocoMenuEntry(iconMenu, colors[i]);
+    	}
+     	return iconMenu;
     }
     
     // loco icons
@@ -103,6 +110,10 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     								"resources/icons/markers/loco-gray.gif");
     NamedIcon red = new NamedIcon("resources/icons/markers/loco-red.gif",
     								"resources/icons/markers/loco-red.gif");
+    NamedIcon blue = new NamedIcon("resources/icons/markers/loco-blue.gif",
+									"resources/icons/markers/loco-blue.gif");
+    NamedIcon yellow = new NamedIcon("resources/icons/markers/loco-yellow.gif",
+									"resources/icons/markers/loco-yellow.gif");
     
     
     public void addLocoMenuEntry (JMenu iconMenu, final String color){
@@ -117,25 +128,38 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     
     public void setLocoColor(String color){
     	log.debug("Set loco color to " + color);
-    	if(color.equals("White")){
+    	if(color.equals(WHITE)){
     		super.setIcon (white);
     		setForeground (Color.black);
     	}
-    	if(color.equals("Green")){
+    	if(color.equals(GREEN)){
     		super.setIcon (green);
     		setForeground (Color.black);
     	}
-    	if(color.equals("Gray")){
+    	if(color.equals(GRAY)){
     		super.setIcon (gray);
     		setForeground (Color.white);
     	}
-    	if(color.equals("Red")){
+    	if(color.equals(RED)){
     		super.setIcon (red);
     		setForeground (Color.white);
     	}
+    	if(color.equals(BLUE)){
+    		super.setIcon (blue);
+    		setForeground (Color.white);
+    	}
+    	if(color.equals(YELLOW)){
+    		super.setIcon (yellow);
+    		setForeground (Color.black);
+    	}
     }
     
-    RosterEntry entry = null;
+    public String[] getLocoColors(){
+    	String[] colors = {WHITE,GREEN,GRAY,RED,BLUE,YELLOW};
+    	return colors;
+    }
+                  
+    protected RosterEntry entry = null;
     
     public void setRosterEntry (RosterEntry entry){
     	this.entry = entry;
