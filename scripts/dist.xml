@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.32 $ -->
+<!-- Revision $Revision: 1.33 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -97,6 +97,7 @@
     <cvs command="export" reallyquiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="jython" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" reallyquiet="true" package="web" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="scripts" dest="Windows/JMRI" tag="${release}"/>
     <delete defaultexcludes="no" dir="Windows/JMRI" includes="**/.cvsignore"/>
     <move todir="Windows/JMRI">
@@ -167,6 +168,8 @@
     <cvs command="export" reallyquiet="true" package="resources" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/help" />
     <cvs command="export" reallyquiet="true" package="help" dest="MacOSX/JMRI" tag="${release}"/>
+    <delete dir="MacOSX/JMRI/web" />
+    <cvs command="export" reallyquiet="true" package="web" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/jython" />
     <cvs command="export" reallyquiet="true" package="jython" dest="MacOSX/JMRI" tag="${release}"/>
     
@@ -219,6 +222,8 @@
     <cvs command="export" reallyquiet="true" package="resources" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/help" />
     <cvs command="export" reallyquiet="true" package="help" dest="Linux/JMRI" tag="${release}"/>
+    <delete dir="Linux/JMRI/web" />
+    <cvs command="export" reallyquiet="true" package="web" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/jython" />
     <cvs command="export" reallyquiet="true" package="jython" dest="Linux/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="scripts" dest="Linux/JMRI" tag="${release}"/>
