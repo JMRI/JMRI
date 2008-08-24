@@ -35,6 +35,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="Acknowledgements_G" url="Acknowledgements.shtml#G" />
 	<mapID target="html.hardware.rps.sensors" url="html/hardware/rps/sensors.shtml" />
 	<mapID target="html.hardware.XPressNet.XNetSystemInformationtool" url="html/hardware/XPressNet/XNetSystemInformationtool.shtml" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_zoommenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#zoommenu" />
 	<mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml" />
 	<mapID target="Acknowledgements_M" url="Acknowledgements.shtml#M" />
@@ -78,6 +79,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.apps.DecoderPro.FAQ_lb-xp" url="html/apps/DecoderPro/FAQ.shtml#lb-xp" />
 	<mapID target="html.Errors" url="html/Errors.shtml" />
 	<mapID target="html.hardware.MacintoshSerialPorts" url="html/hardware/MacintoshSerialPorts.shtml" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_tips" url="package/jmri/jmrit/display/LayoutEditor.shtml#tips" />
 	<mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml" />
 	<mapID target="html.tools.Signals_table" url="html/tools/Signals.shtml#table" />
 	<mapID target="html.tools.consisttool.ConsistTool_tool" url="html/tools/consisttool/ConsistTool.shtml#tool" />
@@ -270,6 +272,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml" />
 	<mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml" />
 	<mapID target="html.hardware.XPressNet.LI101Configurationtool" url="html/hardware/XPressNet/LI101Configurationtool.shtml" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_tracking" url="package/jmri/jmrit/display/LayoutEditor.shtml#tracking" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_start" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#start" />
 	<mapID target="html.apps.PanelPro.ColorTrack" url="html/apps/PanelPro/ColorTrack.shtml" />
 	<mapID target="Acknowledgements_Y" url="Acknowledgements.shtml#Y" />
