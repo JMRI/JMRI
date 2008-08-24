@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.88 $
+ * @version $Revision: 1.89 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -738,7 +738,7 @@ public class PanelEditor extends JmriJFrame {
         target.validate();
     }
     
-    private LocoIcon addLocoIcon (String name){
+    public LocoIcon addLocoIcon (String name){
     	LocoIcon l = new LocoIcon();
         setNextLocation(l);
         l.setText(name);
