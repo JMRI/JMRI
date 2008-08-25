@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.1.shtml,v 1.13 2008-08-24 10:13:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.1.shtml,v 1.14 2008-08-25 04:14:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -46,15 +46,15 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<LI>TBP
-<!-- <li>Support for the new model railroad controls based on the  -->
-<!--     <a href="../help/en/html/hardware/can/index.shtml">CAN bus</a>, -->
-<!--     including CBus. -->
-<!-- <li>Initial support for connecting a -->
-<!-- <a href="../help/en/html/hardware/raildriver/index.shtml">RailDriver console</a> -->
-<!-- as a JMRI throttle. -->
-<!-- <LI>Several new and improved decoder definitions, -->
-<!-- <LI>Many small improvements to the usability and reliability, -->
+<LI>Comment fields in the Turnout, Sensor, etc tables so you can document your work
+<LI>Much improved support for
+<li>Improved handling of F9-F28 on Digitrax systems,
+<li>New features in the Layout Editor,
+<li><a href="http://jmri.sf.net/help/en/html/web/index.shtml">Web access</a> for JMRI windows,
+<li>A new "C/MRI simulator" selection for when you really need to play with JMRI, but
+aren't near the layout,
+<LI>Several new and improved decoder definitions,
+<LI>Many small improvements to the usability and reliability,
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -106,7 +106,7 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 
 
-<h3>Changes since test version 2.2:</h3>
+<h3>Changes since production version 2.2:</h3>
 
 
 Ian Birchenough added a decoder definition for the Lenz Standard decoder.
