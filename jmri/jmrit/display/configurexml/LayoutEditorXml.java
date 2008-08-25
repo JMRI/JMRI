@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -37,6 +37,10 @@ public class LayoutEditorXml implements XmlAdapter {
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", ""+p.getUpperLeftX());
         panel.setAttribute("y", ""+p.getUpperLeftY());
+		// From this version onwards separate sizes for window and panel are stored the 
+		// following two statements allow files written here to be read in 2.2 and before
+        panel.setAttribute("height", ""+p.getLayoutHeight());
+        panel.setAttribute("width", ""+p.getLayoutWidth());
 		// From this version onwards separate sizes for window and panel are stored
         panel.setAttribute("windowheight", ""+p.getWindowHeight());
         panel.setAttribute("windowwidth", ""+p.getWindowWidth());
