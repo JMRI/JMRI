@@ -1,0 +1,40 @@
+<!-- Defines XML documenting a location roster -->
+<!-- $Id: operations-locations.dtd,v 1.1 2008-08-26 02:39:48 dan_boudreau Exp $ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (locations)*>
+
+<!ELEMENT locations (location)*>
+<!ELEMENT location (secondary)*>
+<!ELEMENT secondary EMPTY>
+
+<!ATTLIST location id				CDATA #REQUIRED>          
+<!ATTLIST location name				CDATA #IMPLIED>
+<!ATTLIST location ops				CDATA #IMPLIED>       
+<!ATTLIST location dir				CDATA #IMPLIED> 
+<!ATTLIST location carTypes			CDATA #IMPLIED> 
+<!ATTLIST location switchList		(true | false) "false">
+<!ATTLIST location comment			CDATA #IMPLIED>
+
+<!ATTLIST secondary id				CDATA #REQUIRED>          
+<!ATTLIST secondary name			CDATA #IMPLIED>
+<!ATTLIST secondary locType			CDATA #IMPLIED>       
+<!ATTLIST secondary dir				CDATA #IMPLIED> 
+<!ATTLIST secondary carTypes		CDATA #IMPLIED> 
+<!ATTLIST secondary carRoadOperation		CDATA #IMPLIED> 
+<!ATTLIST secondary carRoads		CDATA #IMPLIED> 
+<!ATTLIST secondary length			CDATA #IMPLIED> 
+<!ATTLIST secondary moves			CDATA #IMPLIED> 
+<!ATTLIST secondary comment			CDATA #IMPLIED>
+

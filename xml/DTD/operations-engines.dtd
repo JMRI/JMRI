@@ -1,0 +1,46 @@
+<!-- Defines XML documenting a engine roster -->
+<!-- $Id: operations-engines.dtd,v 1.1 2008-08-26 02:39:49 dan_boudreau Exp $ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (engines | engineTypes | engineLengths | consists)*>
+
+<!ELEMENT engineTypes (#PCDATA)>
+<!ELEMENT engineLengths (#PCDATA)>
+<!ELEMENT consists (#PCDATA)>
+
+<!ELEMENT engines (engine*)>
+<!ELEMENT engine EMPTY>
+
+<!ATTLIST engine id						CDATA #REQUIRED>          
+<!ATTLIST engine roadNumber				CDATA #IMPLIED>
+<!ATTLIST engine roadName				CDATA #IMPLIED>       
+<!ATTLIST engine type					CDATA #IMPLIED> 
+<!ATTLIST engine color					CDATA #IMPLIED> 
+<!ATTLIST engine length					CDATA #IMPLIED>
+<!ATTLIST engine weight					CDATA #IMPLIED>
+<!ATTLIST engine built					CDATA #IMPLIED>                                     
+<!ATTLIST engine location				CDATA #IMPLIED>
+<!ATTLIST engine locationId				CDATA #IMPLIED>    
+<!ATTLIST engine secLocationId			CDATA #IMPLIED> 
+<!ATTLIST engine secDestinationId		CDATA #IMPLIED> 
+<!ATTLIST engine destination			CDATA #IMPLIED> 
+<!ATTLIST engine destinationId			CDATA #IMPLIED> 
+<!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST engine routeDestinationId		CDATA #IMPLIED> 
+<!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST engine train					CDATA #IMPLIED>  
+<!ATTLIST engine owner					CDATA #IMPLIED>  
+<!ATTLIST engine moves					CDATA #IMPLIED>                    
+<!ATTLIST engine comment				CDATA #IMPLIED>
+

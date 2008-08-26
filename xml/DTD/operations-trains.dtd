@@ -1,0 +1,44 @@
+<!-- Defines XML documenting a train roster -->
+<!-- $Id: operations-trains.dtd,v 1.1 2008-08-26 02:39:49 dan_boudreau Exp $ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (trains | options)*>
+
+<!ELEMENT options (trainOptions)>
+<!ELEMENT trainOptions EMPTY>
+<!ATTLIST trainOptions buildReport		(true | false) "false">
+<!ATTLIST trainOptions printPreview 	(true | false) "false">
+
+<!ELEMENT trains (train)*>
+
+<!ELEMENT train EMPTY>
+
+<!ATTLIST train id					CDATA #REQUIRED>          
+<!ATTLIST train name				CDATA #IMPLIED>
+<!ATTLIST train description			CDATA #IMPLIED>       
+<!ATTLIST train route				CDATA #IMPLIED> 
+<!ATTLIST train carTypes			CDATA #IMPLIED> 
+<!ATTLIST train carRoadOperation	CDATA #IMPLIED>
+<!ATTLIST train carRoads			CDATA #IMPLIED>
+<!ATTLIST train numberEngines		CDATA #IMPLIED> 
+<!ATTLIST train engineRoad			CDATA #IMPLIED>
+<!ATTLIST train engineType			CDATA #IMPLIED>
+<!ATTLIST train requires			CDATA #IMPLIED>
+<!ATTLIST train cabooseRoad			CDATA #IMPLIED>
+<!ATTLIST train built				(true | false) "false">
+<!ATTLIST train build				(true | false) "false">
+<!ATTLIST train status				CDATA #IMPLIED>
+<!ATTLIST train skip				CDATA #IMPLIED>
+<!ATTLIST train comment				CDATA #IMPLIED>
+
