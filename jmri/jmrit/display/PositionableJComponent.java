@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -101,10 +101,10 @@ abstract class PositionableJComponent extends JComponent
         if (debug) log.debug("Clicked: "+where(e));
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
-//        if (e.isPopupTrigger()) {
-//            if (debug) log.debug("show popup");
-//            showPopUp(e);
-//        }
+        if (e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
@@ -224,6 +224,7 @@ abstract class PositionableJComponent extends JComponent
      * Removes this object from display and persistance
      */
     void remove() {
+		if (layoutPanel!=null) layoutPanel.removeObject((Object)this);
         // cleanup before "this" is removed
         cleanup();
         Point p = this.getLocation();

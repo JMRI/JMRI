@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -246,7 +246,11 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
-        super.mouseClicked(e);
+//		if (layoutPanel!=null) layoutPanel.handleMouseClicked(e, getX(), getY());
+		super.layoutPanel.handleMouseClicked(e, getX(), getY());	
+	}
+	
+	protected void performMouseClicked(java.awt.event.MouseEvent e) {
         if (e.isAltDown() || e.isMetaDown()) return;
         if (getMomentary()) return; // click is only for non-momentary
         if (!buttonLive()) return;

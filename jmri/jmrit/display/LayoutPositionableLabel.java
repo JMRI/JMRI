@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -84,7 +84,7 @@ public class LayoutPositionableLabel extends JLabel
     boolean text = false;
 
     NamedIcon namedIcon = null;
-	LayoutEditor layoutPanel = null;
+	protected LayoutEditor layoutPanel = null;
 
     /**
      * Connect listeners - called from Layout Editor
@@ -134,7 +134,8 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     public void mouseReleased(MouseEvent e) {
-        // if (debug) log.debug("Release: "+where(e));
+		// allow Layout Editor to handle the mouse released event
+		layoutPanel.handleMouseReleased(e, this.getX(), this.getY());
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -478,9 +479,7 @@ public class LayoutPositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     void remove() {
-		if (isBackground()) {
-			layoutPanel.removeBackground(this);
-		}
+		if (layoutPanel!=null) layoutPanel.removeObject((Object)this);
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();

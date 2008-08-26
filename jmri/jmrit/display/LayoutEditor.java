@@ -48,7 +48,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2386,7 +2386,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			else if (s.isText()) {
 				h = s.getFont().getSize();
-				w = h*2;
+				w = h*4;
 			}
 			Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
 			// Test this detection rectangle
@@ -2536,6 +2536,73 @@ public class LayoutEditor extends JmriJFrame {
 				selectedObject = null;
                 repaint();
             }
+			else if (event.isPopupTrigger()) {
+				if (checkSelect(dLoc, false)) {
+					// show popup menu
+					switch (foundPointType) {
+						case POS_POINT:
+							((PositionablePoint)foundObject).showPopUp(event);
+							break;
+						case TURNOUT_CENTER:
+							((LayoutTurnout)foundObject).showPopUp(event);
+							break;
+						case LEVEL_XING_CENTER:
+							((LevelXing)foundObject).showPopUp(event);								
+							break;
+						case TURNTABLE_CENTER:
+							((LayoutTurntable)foundObject).showPopUp(event);								
+							break;
+					}
+				}
+				else {
+					TrackSegment tr = checkTrackSegments(dLoc);
+					if (tr!=null) {
+						tr.showPopUp(event);
+					}
+					else {
+						LayoutSensorIcon s = checkSensorIcons(dLoc);
+						if (s!=null) {
+							s.showPopUp(event);
+							s = null;
+						}
+						else {
+							LayoutPositionableLabel b = checkBackgrounds(dLoc);
+							if (b!=null) {
+								b.showPopUp(event);
+								b = null;							
+							}
+							else {
+								LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
+								if (sh!=null) {
+									sh.showPopUp(event);
+									sh = null;
+								}
+								else {
+									LayoutPositionableLabel lb = checkLabelImages(dLoc);
+									if (lb!=null) {
+										lb.showPopUp(event);
+										lb = null;
+									}
+									else {
+										AnalogClock2Display c = checkClocks(dLoc);
+										if (c!=null) {
+											c.showPopUp(event);
+											c = null;
+										}
+										else {
+											MultiSensorIcon ms = checkMultiSensors(dLoc);
+											if (ms!=null) {
+												ms.showPopUp(event);
+												ms = null;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			// check if controlling turnouts
 			else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
 					controlLayout && (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
@@ -2577,6 +2644,11 @@ public class LayoutEditor extends JmriJFrame {
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
+				repaint();
+			}
+			LayoutSensorIcon s = checkSensorIcons(dLoc);
+			if (s!=null) {
+				s.performMouseClicked(event);
 				repaint();
 			}
 		}
@@ -3133,6 +3205,80 @@ public class LayoutEditor extends JmriJFrame {
 		return blk;
 	}
 	
+	/** 
+	 * Remove object from all Layout Editor temmporary lists of items not part of track schematic
+	 */
+	protected void removeObject (Object s) {
+		boolean found = false;
+		for (int i = 0; i<sensorImage.size();i++) {
+			if (s == sensorImage.get(i)) {
+				sensorImage.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<backgroundImage.size();i++) {
+			if (s == backgroundImage.get(i)) {
+				backgroundImage.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<memoryLabelList.size();i++) {
+			if (s == memoryLabelList.get(i)) {
+				memoryLabelList.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<signalList.size();i++) {
+			if (s == signalList.get(i)) {
+				signalList.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<multiSensors.size();i++) {
+			if (s == multiSensors.get(i)) {
+				multiSensors.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<clocks.size();i++) {
+			if (s == clocks.get(i)) {
+				clocks.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<signalHeadImage.size();i++) {
+			if (s == signalHeadImage.get(i)) {
+				signalHeadImage.remove(i);
+				found = true;
+				break;
+			}
+		}
+		for (int i = 0; i<labelImage.size();i++) {
+			if (s == labelImage.get(i)) {
+				labelImage.remove(i);
+				found = true;
+				break;
+			}
+		}		
+		for (int i = 0; i<contents.size();i++) {
+			if (s == contents.get(i)) {
+				contents.remove(i);
+				found = true;
+				break;
+			}
+		}		
+		if (found) {
+			setDirty(true);
+			repaint();
+		}
+	}
+
 	boolean noWarnPositionablePoint = false;
 	
     /**
@@ -3516,7 +3662,8 @@ public class LayoutEditor extends JmriJFrame {
         l.setSignalHead(nextSignalHead.getText().trim());
 		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
-			if ( !(xSignal.getUserName().equals(nextSignalHead.getText().trim())) ) {
+			if ( (xSignal.getUserName()==null) || (xSignal.getUserName()=="") || 
+						(!(xSignal.getUserName().equals(nextSignalHead.getText().trim()))) ) {
 				nextSignalHead.setText(xSignal.getSystemName());
 			}
 		}

@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class PositionableLabel extends JLabel
@@ -501,6 +501,7 @@ public class PositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     public void remove() {
+		if (layoutPanel!=null) layoutPanel.removeObject((Object)this);
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();
