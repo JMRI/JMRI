@@ -15,7 +15,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class RosterConfigPaneXml implements XmlAdapter {
 
@@ -28,10 +28,16 @@ public class RosterConfigPaneXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+
         RosterConfigPane p = (RosterConfigPane) o;
-        if (p.getSelectedItem()==null) return null;  // nothing to write!
+        // any reason to write?
+        if  ( (p.getSelectedItem()==null || p.getSelectedItem().equals(""))
+            && p.getDefaultOwner().equals("") )  return null;
+        
+        // create and write element
         Element roster = new Element("roster");
-        roster.setAttribute("directory", p.getSelectedItem());
+        if (p.getSelectedItem()!=null && !p.getSelectedItem().equals("")) 
+            roster.setAttribute("directory", p.getSelectedItem());
         roster.setAttribute("class", this.getClass().getName());
         roster.setAttribute("ownerDefault", p.getDefaultOwner());
         return roster;
@@ -42,8 +48,10 @@ public class RosterConfigPaneXml implements XmlAdapter {
      * @param element Top level Element to unpack.
       */
     public void load(Element element) {
-        if (log.isDebugEnabled()) log.debug("set roster location (1): "+element.getAttribute("directory").getValue());
-        Roster.setFileLocation(element.getAttribute("directory").getValue());
+        if (element.getAttribute("directory")!=null) {
+            Roster.setFileLocation(element.getAttribute("directory").getValue());
+            if (log.isDebugEnabled()) log.debug("set roster location (1): "+element.getAttribute("directory").getValue());
+        }
         if (element.getAttribute("ownerDefault")!=null) RosterEntry.setDefaultOwner(element.getAttribute("ownerDefault").getValue());
     }
 
@@ -54,7 +62,8 @@ public class RosterConfigPaneXml implements XmlAdapter {
      */
     public void load(Element element, Object o) {
         if (log.isDebugEnabled()) log.debug("set roster location (2): "+element.getAttribute("directory").getValue());
-        Roster.setFileLocation(element.getAttribute("directory").getValue());
+        if (element.getAttribute("directory")!=null)
+            Roster.setFileLocation(element.getAttribute("directory").getValue());
     }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterConfigPaneXml.class.getName());
