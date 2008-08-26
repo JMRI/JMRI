@@ -125,9 +125,9 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class Ash2_0Algorithm implements Calculator {
+public class Ash2_0Algorithm extends AbstractCalculator {
 
     public Ash2_0Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
@@ -166,21 +166,8 @@ public class Ash2_0Algorithm implements Calculator {
     
     public Measurement convert(Reading r) {
     
-        int nr = r.getNSample();
-        if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
-        nr = Math.min(nr, sensors.length); // accept the shortest
-        
-        double [] Tr = new double[nr];
-        double [] Xr = new double[nr];
-        double [] Yr = new double[nr];
-        double [] Zr = new double[nr];
-        for (int i = 0; i<nr; i++) {
-            Tr[i] = r.getValue(i);
-            Xr[i] = sensors[i].x;
-            Yr[i] = sensors[i].y;
-            Zr[i] = sensors[i].z;
-        }
-        
+        prep(r);
+                
         RetVal result = RPSpos(nr, Tr, Xr, Yr, Zr, Vs, Xt, Yt, Zt);
         Xt = result.x;
         Yt = result.y;
@@ -237,9 +224,6 @@ public class Ash2_0Algorithm implements Calculator {
         
         return convert(r);        
     }
-
-    // Sensor position objects
-    Point3d sensors[];
     
 
 // ----------------------------------------------------

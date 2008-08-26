@@ -61,9 +61,9 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class Ash2_2Algorithm implements Calculator {
+public class Ash2_2Algorithm extends AbstractCalculator {
 
     public Ash2_2Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
@@ -108,20 +108,7 @@ public class Ash2_2Algorithm implements Calculator {
             if (sensors.length>=1) log.debug("Sensor[0]: "+sensors[0].x+","+sensors[0].y+","+sensors[0].z);
         }
         
-        int nr = r.getNSample();
-        if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
-        nr = Math.min(nr, sensors.length); // accept the shortest
-        
-        double [] Tr = new double[nr];
-        double [] Xr = new double[nr];
-        double [] Yr = new double[nr];
-        double [] Zr = new double[nr];
-        for (int i = 0; i<nr; i++) {
-            Tr[i] = r.getValue(i);
-            Xr[i] = sensors[i].x;
-            Yr[i] = sensors[i].y;
-            Zr[i] = sensors[i].z;
-        }
+        prep(r);
         
         RetVal result = RPSpos(nr, Tr, Xr, Yr, Zr, Vs, Xt, Yt, Zt);
         Xt = result.x;
@@ -162,9 +149,6 @@ public class Ash2_2Algorithm implements Calculator {
         return convert(r);        
     }
 
-    // Sensor position objects
-    Point3d sensors[];
-    
 
 static int offset	= 0;			//  Offset (usec), add to delay
 static final int TMAX	= 35000;			//  Max. allowable delay (usec)

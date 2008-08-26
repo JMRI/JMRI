@@ -23,9 +23,9 @@ import javax.vecmath.Point3d;
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class Ash2_1Algorithm implements Calculator {
+public class Ash2_1Algorithm extends AbstractCalculator {
 
     public Ash2_1Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
@@ -70,20 +70,7 @@ public class Ash2_1Algorithm implements Calculator {
             if (sensors.length>=1) log.debug("Sensor[0]: "+sensors[0].x+","+sensors[0].y+","+sensors[0].z);
         }
         
-        int nr = r.getNSample();
-        if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
-        nr = Math.min(nr, sensors.length); // accept the shortest
-        
-        double [] Tr = new double[nr];
-        double [] Xr = new double[nr];
-        double [] Yr = new double[nr];
-        double [] Zr = new double[nr];
-        for (int i = 0; i<nr; i++) {
-            Tr[i] = r.getValue(i);
-            Xr[i] = sensors[i].x;
-            Yr[i] = sensors[i].y;
-            Zr[i] = sensors[i].z;
-        }
+        prep(r);
         
         RetVal result = RPSpos(nr, Tr, Xr, Yr, Zr, Vs, Xt, Yt, Zt);
         Xt = result.x;
@@ -124,8 +111,6 @@ public class Ash2_1Algorithm implements Calculator {
         return convert(r);        
     }
 
-    // Sensor position objects
-    Point3d sensors[];
     
 
 //	RPS  POSITION  SOLVER	Version 2.1	by R. C. Ashenfelter    2-02-07
@@ -295,8 +280,6 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
 
 // ----------------------------------------------------
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash2_1Algorithm.class.getName());
-
     /**
      * Internal class to handle return value.
      *
@@ -313,6 +296,9 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
         int code;
         double x, y, z, t, vs;
     }
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash2_2Algorithm.class.getName());
+
 }
 
 /* @(#)Ash2_0Algorithm.java */

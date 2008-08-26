@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * is (0,0,12)
  * 
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Ash2_0AlgorithmTest extends AbstractAlgorithmTest {
         
@@ -41,4 +41,7 @@ public class Ash2_0AlgorithmTest extends AbstractAlgorithmTest {
             return suite;
 	}
 
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 
 
@@ -144,7 +144,6 @@ public class Engine implements ReadingListener {
                 
         int index = 0;
         Point3d list[] = new Point3d[count];
-        Point3d zero = new Point3d(0.,0.,0.);
         for (int i = 0; i<receivers.length; i++) {
             if (receivers[i]==null) continue;  // skip receivers not present
             Point3d p = getReceiverPosition(i);
@@ -152,7 +151,7 @@ public class Engine implements ReadingListener {
                 if (receivers[i].isActive())
                     list[index] = p;
                 else
-                    list[index] = zero;
+                    list[index] = null;
                 index++;
             } else {
                 log.error("Unexpected null position for receiver "+i);
