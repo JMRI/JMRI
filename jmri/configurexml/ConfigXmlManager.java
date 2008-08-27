@@ -21,7 +21,7 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -30,7 +30,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Define the current DTD version string for the layout-config DTD.
      * See the <A HREF="package-summary.html#DTD">DTD versioning discussion</a>
      */
-    static final public String dtdVersion = "2-3-1";
+    static final public String dtdVersion = "2-3-2";
     
     public ConfigXmlManager() {
     }
