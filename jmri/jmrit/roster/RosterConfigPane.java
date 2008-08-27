@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class RosterConfigPane extends JPanel {
 
@@ -50,8 +50,14 @@ public class RosterConfigPane extends JPanel {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Roster info location:"));
+
         p.add(filename = new JLabel(Roster.getFileLocation()));
+        // don't show default location, so it's not deemed a user selection
+        // and saved
+        if (jmri.jmrit.XmlFile.prefsDir().equals(Roster.getFileLocation()))
+            filename.setText("");
         JButton b = new JButton("Set ...");
+
         parent = this;
         b.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
