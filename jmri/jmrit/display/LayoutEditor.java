@@ -48,7 +48,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1957,56 +1957,10 @@ public class LayoutEditor extends JmriJFrame {
 								selectedNeedsConnect = false;
 							}
 						}
-					}
-					
+					}					
 				}
 				else if (event.isPopupTrigger()) {
-					TrackSegment tr = checkTrackSegments(dLoc);
-					if (tr!=null) {
-						tr.showPopUp(event);
-					}
-					else {
-						LayoutSensorIcon s = checkSensorIcons(dLoc);
-						if (s!=null) {
-							s.showPopUp(event);
-							s = null;
-						}
-						else {
-							LayoutPositionableLabel b = checkBackgrounds(dLoc);
-							if (b!=null) {
-								b.showPopUp(event);
-								b = null;							
-							}
-							else {
-								LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
-								if (sh!=null) {
-									sh.showPopUp(event);
-									sh = null;
-								}
-								else {
-									LayoutPositionableLabel lb = checkLabelImages(dLoc);
-									if (lb!=null) {
-										lb.showPopUp(event);
-										lb = null;
-									}
-									else {
-										AnalogClock2Display c = checkClocks(dLoc);
-										if (c!=null) {
-											c.showPopUp(event);
-											c = null;
-										}
-										else {
-											MultiSensorIcon ms = checkMultiSensors(dLoc);
-											if (ms!=null) {
-												ms.showPopUp(event);
-												ms = null;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
+					checkPopUp(event);
 				}
 			}
 			else if (event.isShiftDown() && trackBox.isSelected()) {
@@ -2537,71 +2491,9 @@ public class LayoutEditor extends JmriJFrame {
                 repaint();
             }
 			else if (event.isPopupTrigger()) {
-				if (checkSelect(dLoc, false)) {
-					// show popup menu
-					switch (foundPointType) {
-						case POS_POINT:
-							((PositionablePoint)foundObject).showPopUp(event);
-							break;
-						case TURNOUT_CENTER:
-							((LayoutTurnout)foundObject).showPopUp(event);
-							break;
-						case LEVEL_XING_CENTER:
-							((LevelXing)foundObject).showPopUp(event);								
-							break;
-						case TURNTABLE_CENTER:
-							((LayoutTurntable)foundObject).showPopUp(event);								
-							break;
-					}
-				}
-				else {
-					TrackSegment tr = checkTrackSegments(dLoc);
-					if (tr!=null) {
-						tr.showPopUp(event);
-					}
-					else {
-						LayoutSensorIcon s = checkSensorIcons(dLoc);
-						if (s!=null) {
-							s.showPopUp(event);
-							s = null;
-						}
-						else {
-							LayoutPositionableLabel b = checkBackgrounds(dLoc);
-							if (b!=null) {
-								b.showPopUp(event);
-								b = null;							
-							}
-							else {
-								LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
-								if (sh!=null) {
-									sh.showPopUp(event);
-									sh = null;
-								}
-								else {
-									LayoutPositionableLabel lb = checkLabelImages(dLoc);
-									if (lb!=null) {
-										lb.showPopUp(event);
-										lb = null;
-									}
-									else {
-										AnalogClock2Display c = checkClocks(dLoc);
-										if (c!=null) {
-											c.showPopUp(event);
-											c = null;
-										}
-										else {
-											MultiSensorIcon ms = checkMultiSensors(dLoc);
-											if (ms!=null) {
-												ms.showPopUp(event);
-												ms = null;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				selectedObject = null;
+				selectedPointType = NONE;
+				checkPopUp(event);
 			}
 			// check if controlling turnouts
 			else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
@@ -2634,9 +2526,77 @@ public class LayoutEditor extends JmriJFrame {
 		}
     }
 	
+	private void checkPopUp(MouseEvent event) {
+		if (checkSelect(dLoc, false)) {
+			// show popup menu
+			switch (foundPointType) {
+				case POS_POINT:
+					((PositionablePoint)foundObject).showPopUp(event);
+					break;
+				case TURNOUT_CENTER:
+					((LayoutTurnout)foundObject).showPopUp(event);
+					break;
+				case LEVEL_XING_CENTER:
+					((LevelXing)foundObject).showPopUp(event);								
+					break;
+				case TURNTABLE_CENTER:
+					((LayoutTurntable)foundObject).showPopUp(event);								
+					break;
+			}
+		}
+		else {
+			TrackSegment tr = checkTrackSegments(dLoc);
+			if (tr!=null) {
+				tr.showPopUp(event);
+			}
+			else {
+				LayoutSensorIcon s = checkSensorIcons(dLoc);
+				if (s!=null) {
+					s.showPopUp(event);
+					s = null;
+				}
+				else {
+					LayoutPositionableLabel b = checkBackgrounds(dLoc);
+					if (b!=null) {
+						b.showPopUp(event);
+						b = null;							
+					}
+					else {
+						LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
+						if (sh!=null) {
+							sh.showPopUp(event);
+							sh = null;
+						}
+						else {
+							LayoutPositionableLabel lb = checkLabelImages(dLoc);
+							if (lb!=null) {
+								lb.showPopUp(event);
+								lb = null;
+							}
+							else {
+								AnalogClock2Display c = checkClocks(dLoc);
+								if (c!=null) {
+									c.showPopUp(event);
+									c = null;
+								}
+								else {
+									MultiSensorIcon ms = checkMultiSensors(dLoc);
+									if (ms!=null) {
+										ms.showPopUp(event);
+										ms = null;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	protected void handleMouseClicked(MouseEvent event, int dX, int dY)
 	{
-		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
+		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
 									(!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, dX, dY);
 			// check if on a multi sensor icon
@@ -2651,6 +2611,12 @@ public class LayoutEditor extends JmriJFrame {
 				s.performMouseClicked(event);
 				repaint();
 			}
+		}
+		else if (event.isPopupTrigger()) {
+			calcLocation(event, dX, dY);
+			selectedObject = null;
+			selectedPointType = NONE;
+			checkPopUp(event);
 		}
 	}
 

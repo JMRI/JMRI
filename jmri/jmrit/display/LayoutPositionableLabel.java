@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -139,10 +139,10 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (debug) log.debug("Clicked: "+where(e));
-        if (debug && e.isMetaDown()) log.debug("meta down");
-        if (debug && e.isAltDown()) log.debug(" alt down");
+		// allow Layout Editor to handle the mouse clicked event
+		layoutPanel.handleMouseClicked(e, this.getX(), this.getY());
     }
+	
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
     }
