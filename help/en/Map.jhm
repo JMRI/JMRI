@@ -555,24 +555,25 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.images.spacer" url="html/tools/throttle/images/spacer.gif" />
 	<mapID target="images.tracksegments.WhiteLine" url="images/tracksegments/WhiteLine.gif" />
 	<mapID target="images.tracksegments.TranTOc" url="images/tracksegments/TranTOc.gif" />
-	<mapID target="package.jmri.jmrit.operations.CarAttributeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.CarsEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.CarsSetFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.CarsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.EngineAttributeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.EnginesEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.EnginesSetFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.EnginesTableFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.InterchangeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.LocationsEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.SidingEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.YardEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.StagingEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.RouteEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.RoutesTableFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.OperationsSetupFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.TrainEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.TrainsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.TrainSwitchListEditFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
-	<mapID target="package.jmri.jmrit.operations.LocationsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml" />
+	<mapID target="html.tools.Operations" url="package/jmri/jmrit/operations/Operations.shtml" />
+	<mapID target="package.jmri.jmrit.operations.CarAttributeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes" />
+	<mapID target="package.jmri.jmrit.operations.CarsEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#CarsEdit" />
+	<mapID target="package.jmri.jmrit.operations.CarsSetFrame" url="package/jmri/jmrit/operations/Operations.shtml#CarsSet" />
+	<mapID target="package.jmri.jmrit.operations.CarsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml#Cars" />
+	<mapID target="package.jmri.jmrit.operations.EngineAttributeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes" />
+	<mapID target="package.jmri.jmrit.operations.EnginesEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#EnginesEdit" />
+	<mapID target="package.jmri.jmrit.operations.EnginesSetFrame" url="package/jmri/jmrit/operations/Operations.shtml#EnginesSet" />
+	<mapID target="package.jmri.jmrit.operations.EnginesTableFrame" url="package/jmri/jmrit/operations/Operations.shtml#Engines" />
+	<mapID target="package.jmri.jmrit.operations.InterchangeEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Interchange" />
+	<mapID target="package.jmri.jmrit.operations.LocationsEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Locations" />
+	<mapID target="package.jmri.jmrit.operations.SidingEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Sidings" />
+	<mapID target="package.jmri.jmrit.operations.YardEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Yards" />
+	<mapID target="package.jmri.jmrit.operations.StagingEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Staging" />
+	<mapID target="package.jmri.jmrit.operations.RouteEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Routes" />
+	<mapID target="package.jmri.jmrit.operations.RoutesTableFrame" url="package/jmri/jmrit/operations/Operations.shtml#Routes" />
+	<mapID target="package.jmri.jmrit.operations.OperationsSetupFrame" url="package/jmri/jmrit/operations/Operations.shtml#Settings" />
+	<mapID target="package.jmri.jmrit.operations.TrainEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#Trains" />
+	<mapID target="package.jmri.jmrit.operations.TrainsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml#Trains" />
+	<mapID target="package.jmri.jmrit.operations.TrainSwitchListEditFrame" url="package/jmri/jmrit/operations/Operations.shtml#SwitchList" />
+	<mapID target="package.jmri.jmrit.operations.LocationsTableFrame" url="package/jmri/jmrit/operations/Operations.shtml#Locations" />
 </map>

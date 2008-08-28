@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.1 2008-08-27 18:49:07 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.2 2008-08-28 03:29:14 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -43,10 +43,11 @@ the panel along with the train from location to location.
 
 <H3>Quick Start Help</H3>
 
-In the top level menu for JMRI find the "Operations" menu. There are
-five items in this menu. We recommend that you start with "Settings" and
-work your way down to "Trains".
+In the top level menu for JMRI find the "Tools->Operations" menu. There
+are five items in this menu. We recommend that you start with "Settings"
+and work your way down to "Trains".
 
+<A NAME="Settings"></A>
 <H2>Settings</H2>
 
 This is where you provide the name of your railroad and the direction
@@ -103,21 +104,27 @@ And finally enter your name in the "Owner" field and push the "Save"
 button to save your settings. Use the close (red X upper right corner)
 button to hide the settings panel.
 
+<A NAME="Locations"></A>
 <H2>Locations</H2>
 
 Locations are places on your railroad that trains visit to pickup or
-drop off cars. Select "Operations->Locations" to edit the locations on
-your railroad. Press the "Add" button located on the bottom of the
-"Locations" panel. Enter the name of the location in box across from
-"Name". The location name must be unique; the program will not allow two
-locations with identical names. Each location can have several yard,
-siding, interchange and staging tracks. Yards are where cars are placed
+drop off cars. Select "Tools->Operations->Locations" to add or edit the
+locations on your railroad. To add a location, press the "Add" button
+located on the bottom of the "Locations" panel. A new panel should
+appear. In the "Add Location" panel, enter the name of the location in
+box across from "Name". The location name must be unique; the program
+will not allow two locations with identical names. Now press the "Add
+Location" button at the bottom of the panel. The various fields that
+were disabled should now appear. 
+
+<p>Each location can have several yard,
+siding, interchange or staging tracks. Yards are where cars are placed
 for temporary storage. A siding can be an industry or any place where a
 car is loaded or unloaded. For a train to service a location, there must
 be at least one track for that location. See below how to add tracks to
 your location.
 
-<H3>Service Direction</H3>
+<H3>Location Service Direction</H3>
 
 You can decide which train direction the location can service. For
 example, if only south bound trains can access the location select
@@ -126,27 +133,32 @@ want to only support trailing point switching for a given location. If a
 location can support multiple directions then select the ones that are
 appropriate.
 
-<H3>Car Types</H3>
+<H3>Location Car Types</H3>
 
-You can control the type of cars a location can service. Push to the
+You can control the type of cars a location can service. Push the
 "Clear All" to deselect all car types, or "Select All" to select all car
 types, then select or deselect the car types you wish the location to
 accept.
 
+<A NAME="Yards"></A>
 <H3>Yards</H3>
 
-To add a yard, press the "Add Yard" button. Now enter the name of the
+To add a yard, press the "Add Yard Track" button. Now enter the name of the
 yard along with the length of the track in scale feet or in actual
 inches. Append a double quote (") to the length when entering actual
-inches and the program will convert the length into scale feet.
+inches and the program will convert the length into scale feet.  Press the "Add
+Yard Track" button at the bottom of the panel and the disabled fields should now
+appear.
 
 <H3>Car Types Serviced</H3>
 
-You can control what type of cars the yard can service. If a car type
+You can control what type of cars the yard can service. Note that the yard
+car types
+are restricted to the ones that the location can service.  If a car type
 that you wish doesn't appear for a yard, confirm that the location's car
 types are properly selected. If the car type you want doesn't exist for
 a location, you will have to create the car type using the "Cars"
-panels, see "Cars" below.
+panels, see <a href="#Cars">Cars</a> below.
 
 <H3>Car Road Names Serviced</H3>
 
@@ -164,10 +176,11 @@ You can enter an optional comment for the yard.
 Press the "Save Yard Track" to save your work. The program will create a
 file in your JMRI directory in a folder called "operations".
 
+<A NAME="Sidings"></A>
 <H3>Sidings</H3>
 
 To add a siding, press the "Add Siding" button. Siding are very simular
-to yards so see above for more infomation.
+to <a href="#Yards">Yards</a>, so see above for more infomation.
 
 <H3>Local Switcher</H3>
 
@@ -184,6 +197,7 @@ The program when generating a switch list for a single location (local
 switcher) will never move a car from a siding to a siding or yard to a
 yard, only yard to siding or siding to yard.
 
+<A NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
 
 If you want the program to force the exchange of cars between trains you
@@ -196,6 +210,7 @@ interchange, once the branch line train setouts cars, they will remain
 there until the main line train stops to service the terminal's
 interchange track.
 
+<A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
 
 A staging track allows you to have all cars in a train delivered to one
@@ -218,9 +233,10 @@ this is to terminate the train into staging at location A. Then create a
 "virtual" train that simply moves the cars from location A staging to
 location B staging. Doing this causes the program to "move" the train
 and its cars from A to B which is really the same physical track. Later
-you can build a train that departs location B., and the manifest will
+you can build a train that departs location B, and the manifest will
 show that the train originated from B and not A.
 
+<A NAME="Cars"></A>
 <H2>Cars</H2>
 
 The cars panel allows you to edit your car roster. You must enter a
@@ -234,11 +250,11 @@ kernel will fit.
 
 <H3>Importing Cars from a File</H3>
 
-<P>If you already have a list of cars in a database, you can import the
-cars into the program. The import function requires an ACSII text file,
-with one line for each car. The import order is car number, car road
-name, car type, car length, car weight, car color. The following shows
-two examples of the correct format:</P>
+<P>If you already have a list of cars in a database, you can import
+the cars into the program. The import function requires an ACSII text
+file, with one line for each car. The import order is car number, car
+road name, car type, car length, car weight, car color. The following
+shows two examples of the correct format:</P>
 
 <BR>
 336 GCR Flat 40 3.8 Tuscan
@@ -258,25 +274,28 @@ correct format:</P>
 655578 UP Boxcar 40 3.8 Yellow DB 1934 York - York Freight
 
 <P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Operations->Cars menu. Select "Tools->Roster->Import from
-file". Note that the program will only add cars that don't exist in the
-program's car roster. It the car already exists, the import will be
-skipped by the program.</P>
+corner of the Tools->Operations->Cars menu. Then select
+"Tools->Roster->Import from file". Note that the program will only add
+cars that don't exist in the program's car roster. It the car already
+exists, the import will be skipped by the program.  You must also create the
+locations before importing the cars into the operations program.</P>
 
+<A NAME=CarsEdit></A>
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
-the bottom of the "Operations->Cars" panel. Then select the road for the
-car. If the desired road doesn't exist, press the "Edit" button across
-from the road select menu box. This will allow you to add a new road or
-delete any that you don't need.
+the bottom of the "Tools->Operations->Cars" panel. Then select the road
+for the car. If the desired road doesn't exist, press the "Edit" button
+across from the road select menu box. This will allow you to add a new
+road or delete any that you don't need.
 
 <H3>Car Number</H3>
 
 Now enter the car's number in the text box. The program requires a
 unique road name and road number for each car. If you have cars with
 identical roads and numbers, simply add a -1, -2, etc. to each of the
-car numbers. The program when printing out the switch list will drop the
+car numbers. The program when printing out the manifest or switch list 
+will drop the
 -1, -2, etc. from the car's road number.
 
 <H3>Car Type, Length, Color, Weigth</H3>
@@ -317,24 +336,44 @@ this car.
 Press "Save" to store the car's settings. The program will create a file
 in your JMRI directory in a folder called "operations".
 
+<A NAME="EditCarAttributes">
+<H3>Edit Car Attributes</H3>
+
+To the left of each of the car attributes (Road, Type, Length, Color,
+Kernel, Owner) is an "Edit" button.  Use this to add, delete, or replace
+the available attributes for a car.
+
+<H3>Add Button</H3>
+
+To add a new car attribute, enter the desired text in the text box and
+press the "Add" button.
+
+<H3>Delete Button</H3>
+
+To delete a car attribute, select the attribute you want to delete in
+the menu box and press the "Delete" button.
+
 <H3>Replace Button</H3>
 
 If you need to change a specific car attribute (road, type, color, etc)
 in your entire car roster, you can use the "Replace" button found at the
-bottom of the "Edit Car Road" panel. For example, if you wish to change
+bottom right of the edit car attribute panel. For example, if you wish to change
 the car road name attribute "UP" to "UPS" for all of your cars. Press
-"Edit" for any of your cars, and then press "Edit" across from Road in
-the "Car Edit" panel. Enter the new road "UPS" in the top box, select
-"UP" in the menu box, and press "Replace". All cars with "UP" as their
-road will now have "UPS" as their road name.
+the "Edit" button for any of your cars in the Cars panel, and then press
+the "Edit" button across from Road in the "Car Edit" panel. Enter the
+new road "UPS" in the top box, select "UP" in the menu box, and press
+"Replace". All cars with "UP" as their road will now have "UPS" as their
+road name.
 
-<H3>Car Set Button</H3>
+<A NAME=CarsSet></A>
+<H3>Car Set Location Button</H3>
 
 After creating a car, you can set the car's location, and optionally the
 car's destination and train. Normally the car's destination and assigned
 train are generated by the program, but you can use these fields to
-force a car to a specific location using a specified train.
+force a car to a specific location using a specified train. 
 
+<A NAME="Engines"></A>
 <H2>Engines</H2>
 
 The engines panel allows you to edit your engine roster. You must enter
@@ -349,23 +388,22 @@ picked up and or stored at the various locations on your layout.
 If you already have a list of engines in your JMRI roster or in a
 database, you can import the engines into the program. To get your
 engines from your JMRI roster, select "Import from JMRI roster" from the
-Operations->Engines->Tools menu. Only engines that don't exist will be
-added to the programs engine roster. This way you can use this tool
-anytime you add engines to your JMRI engine roster. The JMRI engine
+Tools->Operations->Engines->Tools menu. Only engines that don't exist
+will be added to the programs engine roster. This way you can use this
+tool anytime you add engines to your JMRI engine roster. The JMRI engine
 roster doesn't have the length field, so a default length is entered for
 you. You should correct the engine length if you want the program to
 correctly calculate your train lengths.
 
 <H3>Import Engines from a File</H3>
 
-<p>The import from file function requires an ACSII text file, with one line
-for each engine. The import order is engine number, engine road name,
-engine model, engine length, engine weight, engine color. The following
-shows two examples of the correct format:</p>
+<P>The import from file function requires an ACSII text file, with
+one line for each engine. The import order is engine number, engine road
+name, engine model, engine length, engine weight, engine color. The
+following shows two examples of the correct format:</P>
 
 <BR>
-236 UP RS4 40
-<BR>
+236 UP RS4 40 <BR>
 5578 SP SW1200 42
 
 <P>Each line can start with a space and multiple spaces between
@@ -376,16 +414,16 @@ yard name separated by a hyphen. The following shows two examples of the
 correct format:</P>
 
 <BR>
-236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal
-<BR>
+236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal <BR>
 5578 SP SW1200 42 DB 1934 York - York Engine Yard
 
 <P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Operations->Engines menu. Select "Tools->Roster->Import.
-Note that the program will only add engines that don't exist in the
-program's engine roster. It the engine already exists, it will be
-skipped by the program.</P>
+corner of the Tools->Operations->Engines menu. Select
+"Tools->Roster->Import. Note that the program will only add engines that
+don't exist in the program's engine roster. It the engine already
+exists, it will be skipped by the program.</P>
 
+<A NAME="EnginesEdit"></A>
 <H3>Adding Engines to your Roster</H3>
 
 To manually add an engine to your roster, press the "Add" button located
@@ -398,24 +436,34 @@ engine is off the layout, set the location to none (blank space). If
 wish this engine to be part of a consist, press "Edit" across from
 "Consist" and enter a consist name. Then select the consist name from
 the menu box. Finally you can optionally enter the build date, owner and
-comment for this engine. Press "Save" to store the engine's settings.
+comment for this engine. Press "Save" to store the engine's settings. 
 
+<A NAME=EnginesSet></A>
+<H3>Engine Set Location Button</H3>
+
+After creating an engine, you can set the engine's location, and optionally the
+engine's destination and train. Normally the engine's destination and assigned
+train are generated by the program, but you can use these fields to
+force an engine to a specific location using a specified train. 
+
+<A	NAME="Routes"></A>
 <H2>Routes</H2>
 
 A route is a list of locations that a train will visit. Later you can
 decide if the train stops at a location for work. Routes can be point to
-point or out and back. To build a route, select "Operations->Routes".
-Then press the "Add" button located at the bottom of the page. Enter the
-route name. Each route must have unique name. Then press the "Add Route"
-button located at the bottom of the panel. Now select the location the
-train will depart by selecting the location in the menu box located at
-the left bottom side of the panel. Press "Add Location". Now build your
-route by selecting the next location the train will visit, select all
-locations that the train will pass through even if the train will not
-work the location. This way your train's engineer will know when reading
-his manifest the towns he will be traveling through. Each time you add a
-location to the route, the table shows the order in which the train will
-visit. You can move a location up or down in the sequence if needed.
+point or out and back. To build a route, select
+"Tools->Operations->Routes". Then press the "Add" button located at the
+bottom of the page. Enter the route name. Each route must have unique
+name. Then press the "Add Route" button located at the bottom of the
+panel. Now select the location the train will depart by selecting the
+location in the menu box located at the left bottom side of the panel.
+Press "Add Location". Now build your route by selecting the next
+location the train will visit, select all locations that the train will
+pass through even if the train will not work the location. This way your
+train's engineer will know when reading his manifest the towns he will
+be traveling through. Each time you add a location to the route, the
+table shows the order in which the train will visit. You can move a
+location up or down in the sequence if needed.
 
 <H3>Route Moves, Train Length, X and Y</H3>
 
@@ -428,24 +476,25 @@ is at the specified location. Leave the X and Y coordinates at zero if
 you want to manually move the icon or you're not using the icon feature.
 After setting the number of moves, maximum length, or coordinates, click
 on the table to make sure it is recognized by the program, then hit
-"Save Route."
+"Save Route." 
 
+<A NAME="Trains"></A>
 <H2>Trains</H2>
 
 Now that we've created our routes we need trains to move cars! Create a
-train by selecting "Operations->Trains" from the top level menu. Press
-the "Add" button to create a train. Enter the train's name and optional
-description, and then press the "Add Train" button. Both will show up on
-the train's manifest. The train's name will also show up on the train
-icon, so short names work best. Then select the route that this train
-will travel. There's an Edit button to the right of the route that
-allows you to directly edit the selected route. Once a route is selected
-a list of locations that the train will visit should appear. You can
-deselect any location that you don't want the train to work.
+train by selecting "Tools->Operations->Trains" from the top level menu.
+Press the "Add" button to create a train. Enter the train's name and
+optional description, and then press the "Add Train" button. Both will
+show up on the train's manifest. The train's name will also show up on
+the train icon, so short names work best. Then select the route that
+this train will travel. There's an Edit button to the right of the route
+that allows you to directly edit the selected route. Once a route is
+selected a list of locations that the train will visit should appear.
+You can deselect any location that you don't want the train to work.
 
 <H3>Train Car Types</H3>
 
-You can control what type of cars the train will service. Select the
+You can determine what type of cars the train will service. Select the
 types of cars the train will carry by clicking on the appropriate check
 boxes. A checked box means the train will service this type of car.
 
@@ -457,9 +506,7 @@ If you want to accept only some road names, select "Accept only" radio
 button. Then use the menu of road names and "Add Road" button to make a
 list of road names that the train will service. To remove a road name
 from your list, select the road name from the menu and use the "Delete
-Road" button.
-
-<BR>
+Road" button. <BR>
 To build a list of road names that the train will not service, select
 the "Exclude" radio button. Use the menu of road names and the "Add
 Road" button to build a list of roads that this train will not service.
@@ -492,9 +539,16 @@ program will generate the build report and manifest and present them in
 preview frames. If you want to build several trains without having to
 press individual buttons for each train, select the trains that you want
 builds and press the "Build Selected Trains" button. Only the manifest
-for each train will be generated. Press the "Print Switch List" button
-if you want a switch list for a given location. A menu will appear that
-allows you to select which locations to print.
+for each train will be generated. 
+
+<A NAME="SwitchList"></A>
+<H3>Switch Lists</H3>
+
+Press the "Print Switch List" button if you want a switch list for a
+given location. A menu will appear that allows you to select which
+locations to preview or print. Once you've determined which locations
+you want to print or preview, press the "Save" button to keep your
+selections.
 
 <H3>Moving Trains</H3>
 
@@ -519,6 +573,7 @@ when building new trains. Each time a location has a car picked up or
 dropped, the program increments a count associated with that location.
 The program tries to move cars to locations that have experienced the
 least number of car operations.</P>
+</A>
 </BODY>
 </HTML>
 
