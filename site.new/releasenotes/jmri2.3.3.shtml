@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.1 2008-09-01 02:35:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.2 2008-09-01 06:33:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -111,6 +111,12 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 Fix a problem that prevents DecoderPro from working with certain large decoder
 definitions when using Java 1.6 in Linux.
 
+<p>
+Team Digital provided a definition for their SRC16 card.
+
+<p>
+Giorgio Terdina added a "Window" menu which shows the name of open windows, and lets
+you go directly to any window that's open.
 
 
 <!--#include virtual="/Footer" -->
