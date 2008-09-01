@@ -15,7 +15,7 @@ import javax.swing.event.MenuEvent;
  * and allows to bring one in front
  * <P>
  * @author	Giorgio Terdina   Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
@@ -27,7 +27,10 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         super("Window");
 		parentFrame = frame;
 		addMenuListener(this);
+		// make sure selected at least once
+		setSelected(true); setSelected(false);
     }
+    
 
 	public void menuSelected(MenuEvent e) {
 		framesList = JmriJFrame.getFrameList();
