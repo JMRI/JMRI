@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.64 $
+ * @version   $Revision: 1.65 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1945,11 +1945,6 @@ public class PaneProgPane extends javax.swing.JPanel
 
         return l;
     }
-
-    // handle outgoing parameter notification for the Busy parameter
-    //java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
-    //public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
-    //public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgPane.class.getName());
 
