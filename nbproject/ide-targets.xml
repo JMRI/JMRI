@@ -11,8 +11,6 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <jvmarg value="-Xms10m"/>
-            <!-- <jvmarg value="-Xmx60m"/> -->
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->

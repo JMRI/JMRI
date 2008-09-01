@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.28 $ -->
+<!-- Revision $Revision: 1.29 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -162,8 +162,6 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="java.library.path" path=".:lib/"/>
-       <jvmarg value="-Xms10m"/>
-       <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
@@ -242,8 +240,6 @@
        <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
        <sysproperty key="user.country" value="001"/> 
        <arg line="LocaleTestConfig2.xml"/>
-       <jvmarg value="-Xms10m"/>
-       <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
@@ -293,8 +289,6 @@
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="java.library.path" path=".:lib/"/>       
-            <jvmarg value="-Xms10m"/>
-            <!-- <jvmarg value="-Xmx60m"/> -->
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
@@ -322,8 +316,6 @@
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="java.library.path" path=".:lib/"/>       
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
-       <jvmarg value="-Xms10m"/>
-       <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
