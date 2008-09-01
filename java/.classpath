@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/Serialio.jar"/>
 	<classpathentry kind="lib" path="lib/vecmath.jar"/>
+	<classpathentry kind="lib" path="lib/servlet.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
