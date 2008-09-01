@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.63 $
+ * @version   $Revision: 1.64 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1027,7 +1027,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (!busy && !_parentFrame.isBusy()) {
             enableButtons(true);
         }
-        if (oldBusy != busy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
+        if (oldBusy != busy) firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
     }
 
     private int retry = 0;
@@ -1575,7 +1575,6 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_programmingCV != null) _programmingCV.removePropertyChangeListener(this);
         if (_programmingIndexedCV != null) _programmingIndexedCV.removePropertyChangeListener(this);
 
-        prop = null;
         _programmingVar = null;
         _programmingCV  = null;
         _programmingIndexedCV = null;
@@ -1948,9 +1947,9 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     // handle outgoing parameter notification for the Busy parameter
-    java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
+    //java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
+    //public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
+    //public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgPane.class.getName());
 
