@@ -8,6 +8,8 @@ import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.ConnectionStatus;
 
+import jmri.util.WindowMenu; // * GT 28-AUG-2008 Added window menu
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -32,9 +34,10 @@ import net.roydesign.mac.MRJAdapter;
 /**
  * Base class for Jmri applications.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
+ * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.66 $
+ * @author Giorgio Terdina Copyright 2008
+ * @version     $Revision: 1.67 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -160,7 +163,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         scriptMenu(menuBar, frame);
         debugMenu(menuBar, frame);
         helpMenu(menuBar, frame);
-        // windowMenu(menuBar, frame);
+        menuBar.add(new WindowMenu(frame)); // * GT 28-AUG-2008 Added window menu
         log.debug("end building menus");
     }
 
@@ -299,17 +302,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
-    }
-
-    protected void windowMenu(JMenuBar menuBar, final JFrame frame) {
-        JMenu devMenu = new JMenu("Window");
-        menuBar.add(devMenu);
-        devMenu.add(new AbstractAction("Minimize"){
-            public void actionPerformed(ActionEvent e) {
-                // the next line works on Java 2, but not 1.1.8
-                // frame.setState(Frame.ICONIFIED);
-            }
-        });
     }
 
     static HelpSet globalHelpSet;
