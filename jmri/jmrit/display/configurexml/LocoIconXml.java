@@ -4,6 +4,7 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
@@ -14,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -63,8 +64,22 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        PanelEditor p = (PanelEditor)o;
+ 		// get object class and determine editor being used
+		String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
+       // create the objects
         String name = "error";
 
         LocoIcon l = new LocoIcon();
@@ -89,7 +104,11 @@ public class LocoIconXml extends PositionableLabelXml {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.MARKERS.intValue();
+		int level = 0;
+		if (pe!=null)
+			level = PanelEditor.MARKERS.intValue();
+		else if (le!=null)
+			level = LayoutEditor.MARKERS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -113,8 +132,11 @@ public class LocoIconXml extends PositionableLabelXml {
 			log.debug("no roster entry");
 		}
         
-        p.putLocoIcon(l);
-    }
+ 		if (pe!=null)
+			pe.putLocoIcon(l);
+		else if (le!=null)
+			le.putLocoIcon(l);
+     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIconXml.class.getName());
 }

@@ -9,6 +9,8 @@ import jmri.Memory;
 import jmri.Reporter;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;
@@ -48,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -67,7 +69,8 @@ public class LayoutEditor extends JmriJFrame {
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
-    // size of point boxes
+	final public static Integer MARKERS   = new Integer(10); 		
+   // size of point boxes
 	private static final double SIZE = 3.0;
 	private static final double SIZE2 = 6.0;  // must be twice SIZE
 	// connection types
@@ -87,7 +90,8 @@ public class LayoutEditor extends JmriJFrame {
 	final public static  int TURNTABLE_CENTER = 13;
 	final public static  int LAYOUT_POS_LABEL = 14;
 	final public static  int LAYOUT_POS_JCOMP = 15;
-	final public static  int MULTI_SENSOR = 16;  
+	final public static  int MULTI_SENSOR = 16;
+	final public static  int MARKER = 17;
 	final public static  int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 	// dashed line parameters
 	private static int minNumDashes = 3;
@@ -102,6 +106,7 @@ public class LayoutEditor extends JmriJFrame {
     public ArrayList backgroundImage = new ArrayList();  // background images
     public ArrayList sensorImage = new ArrayList();  // sensor images
     public ArrayList signalHeadImage = new ArrayList();  // signal head images
+	public ArrayList markerImage = new ArrayList(); // marker images
 	public ArrayList labelImage = new ArrayList(); // layout positionable label images
 	public ArrayList clocks = new ArrayList();  // fast clocks
 	public ArrayList multiSensors = new ArrayList(); // multi-sensor images
@@ -312,6 +317,8 @@ public class LayoutEditor extends JmriJFrame {
 		setupToolsMenu(menuBar);
 		// setup Zoom menu
 		setupZoomMenu(menuBar);
+		// setup Zoom menu
+		setupMarkerMenu(menuBar);
 		// setup Help menu
         addHelpMenu("package.jmri.jmrit.display.LayoutEditor", true);
 		
@@ -982,6 +989,113 @@ public class LayoutEditor extends JmriJFrame {
 		pt.y /= zoomScale;
 		return (Point2D)pt;
 	}
+	private void setupMarkerMenu(JMenuBar menuBar) {
+        JMenu markerMenu = new JMenu(rbx.getString("MenuMarker"));
+        menuBar.add(markerMenu);
+        markerMenu.add(new AbstractAction(rbx.getString("AddLoco")+"..."){
+        	public void actionPerformed(ActionEvent e) {
+        		locoMarkerFromInput();
+            }
+        });
+        markerMenu.add(new AbstractAction(rbx.getString("AddLocoRoster")+"..."){
+        	public void actionPerformed(ActionEvent e) {
+        		locoMarkerFromRoster();
+            }
+        });
+        markerMenu.add(new AbstractAction(rbx.getString("RemoveMarkers")){
+        	public void actionPerformed(ActionEvent e) {
+        		removeMarkers();
+            }
+        });
+	}
+    /**
+     * Remove marker icons from panel
+     */
+    private void removeMarkers() {
+		for (int i = markerImage.size(); i >0 ; i--) {
+			LocoIcon il = (LocoIcon) markerImage.get(i-1);
+			if ( (il != null) && (il.isActive()) ) {
+				markerImage.remove(i-1);
+				il.remove();
+				il.dispose();
+				setDirty(true);
+			}
+		}
+		repaint();
+	}
+	// operational variables for marker from roster
+    javax.swing.JLabel mtext = new javax.swing.JLabel();
+    javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
+    JmriJFrame locoRosterFrame = null;    
+    private void locoMarkerFromRoster(){
+    	if (locoRosterFrame == null) {
+			locoRosterFrame = new JmriJFrame();
+			locoRosterFrame.getContentPane().setLayout(new FlowLayout());
+			locoRosterFrame.setTitle(rbx.getString("LocoFromRoster"));
+			mtext.setText(rbx.getString("SelectLoco")+":");
+			locoRosterFrame.getContentPane().add(mtext);
+			rosterBox.insertItemAt("", 0);
+			rosterBox.setSelectedIndex(0);
+			rosterBox.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					selectLoco();
+				}
+			});
+			locoRosterFrame.getContentPane().add(rosterBox);
+			locoRosterFrame.pack();
+		}
+    	locoRosterFrame.setVisible(true);	
+    }
+    private void selectLoco(){
+		String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+		if (rosterEntryTitle == "")
+			return;
+		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+		// try getting road number, else use DCC address
+		String rn = entry.getRoadNumber();
+		if ((rn==null) || rn.equals("")) 
+			rn = entry.getDccAddress();
+		if (rn != null){
+			LocoIcon l = addLocoIcon(rn);
+			l.setRosterEntry(entry);
+		}
+	}
+	// operational variables for add loco from input
+    javax.swing.JLabel textId = new javax.swing.JLabel();
+    javax.swing.JButton okay = new javax.swing.JButton();
+    javax.swing.JTextField locoId = new javax.swing.JTextField(7);
+    JmriJFrame locoFrame = null;
+    private void locoMarkerFromInput() {
+		if (locoFrame == null) {
+			locoFrame = new JmriJFrame();
+			locoFrame.getContentPane().setLayout(new FlowLayout());
+			locoFrame.setTitle(rbx.getString("EnterLocoMarker"));
+			textId.setText(rbx.getString("LocoID")+":");
+			locoFrame.getContentPane().add(textId);
+			locoFrame.getContentPane().add(locoId);
+			locoId.setText("");
+			locoId.setToolTipText(rbx.getString("EnterLocoID"));
+			okay.setText(rbx.getString("OK"));
+			okay.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					inputLoco();
+				}
+			});
+			locoFrame.getContentPane().add(okay);
+			locoFrame.pack();
+		}
+		locoFrame.setVisible(true);
+    }    
+    public void inputLoco() {
+    	String nameID = locoId.getText();
+		if ( (nameID!=null) && !(nameID.trim().equals("")) ) {			
+			LocoIcon l = addLocoIcon(nameID.trim());
+		}
+		else {
+			JOptionPane.showMessageDialog(locoFrame,rb.getString("ErrorEnterLocoID"),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);			
+		}
+     }    
 
 	// operational variables for enter track width pane
 	private JmriJFrame enterTrackWidthFrame = null;
@@ -1893,7 +2007,7 @@ public class LayoutEditor extends JmriJFrame {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 			// if asking for menu, or moving a point, check if on known point
-			if ( event.isPopupTrigger() || (event.isMetaDown() && positionable) ) {	
+			if ( event.isPopupTrigger() || event.isMetaDown() ) {	
 				selectedObject = null;
 				selectedPointType = NONE;
 				if (checkSelect(dLoc, false)) {
@@ -1955,6 +2069,15 @@ public class LayoutEditor extends JmriJFrame {
 								startDel.setLocation((((MultiSensorIcon)selectedObject).getX()-dLoc.getX()), 
 												(((MultiSensorIcon)selectedObject).getY()-dLoc.getY()));
 								selectedNeedsConnect = false;
+							}
+							else {
+								selectedObject = (Object)checkMarkers(dLoc);
+								if (selectedObject!=null) {
+									selectedPointType = MARKER;
+									startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
+												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
+									selectedNeedsConnect = false;
+								}
 							}
 						}
 					}					
@@ -2023,6 +2146,23 @@ public class LayoutEditor extends JmriJFrame {
 					break;
 				}
 			}
+		}
+		else if (event.isMetaDown() && (!event.isPopupTrigger()) && 
+							(!event.isShiftDown()) && (!event.isControlDown()) ) {
+			// check if moving a marker if there are any
+			selectedObject = (Object)checkMarkers(dLoc);
+			if (selectedObject!=null) {
+				selectedPointType = MARKER;
+				startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
+												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
+				selectedNeedsConnect = false;
+			}
+		}
+		else if (event.isPopupTrigger() && (!event.isMetaDown()) &&			
+							(!event.isShiftDown()) ) {
+			// check if a marker popup menu is being requested
+			LocoIcon lo = checkMarkers(dLoc);
+			if (lo!=null) lo.showPopUp(event);
 		}
     }
 	
@@ -2387,6 +2527,24 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		return null;
 	}
+	
+	private LocoIcon checkMarkers(Point2D loc) {
+		// check marker icons, if any
+		for (int i=markerImage.size()-1; i>=0; i--) {
+			LocoIcon l = (LocoIcon)markerImage.get(i);
+			double x = l.getX();
+			double y = l.getY();
+			double w = l.maxWidth();
+			double h = l.maxHeight();
+			Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
+			// Test this detection rectangle
+			if (r.contains(loc)) {
+				// mouse was pressed in marker icon
+				return l;
+			}
+		}
+		return null;
+	}
 
 	private Point2D getEndCoords(Object o, int type) {
 		switch (type) {
@@ -2490,7 +2648,7 @@ public class LayoutEditor extends JmriJFrame {
 				selectedObject = null;
                 repaint();
             }
-			else if (event.isPopupTrigger()) {
+			else if (event.isPopupTrigger() && !isDragging) {
 				selectedObject = null;
 				selectedPointType = NONE;
 				checkPopUp(event);
@@ -2519,11 +2677,17 @@ public class LayoutEditor extends JmriJFrame {
 			LayoutTurnout t = (LayoutTurnout)selectedObject;
 			t.toggleTurnout();
 		}
+		// check if requesting marker popup out of edit mode
+		else if (event.isPopupTrigger() && !isDragging) {
+			LocoIcon lo = checkMarkers(dLoc);
+			if (lo!=null) lo.showPopUp(event);
+		}
 		if (selectedObject!=null) {
 			// An object was selected, deselect it
 			prevSelectedObject = selectedObject;
 			selectedObject = null;
 		}
+		isDragging = false;
     }
 	
 	private void checkPopUp(MouseEvent event) {
@@ -2553,37 +2717,37 @@ public class LayoutEditor extends JmriJFrame {
 				LayoutSensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					s.showPopUp(event);
-					s = null;
 				}
 				else {
 					LayoutPositionableLabel b = checkBackgrounds(dLoc);
 					if (b!=null) {
 						b.showPopUp(event);
-						b = null;							
 					}
 					else {
 						LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
 						if (sh!=null) {
 							sh.showPopUp(event);
-							sh = null;
 						}
 						else {
 							LayoutPositionableLabel lb = checkLabelImages(dLoc);
 							if (lb!=null) {
 								lb.showPopUp(event);
-								lb = null;
 							}
 							else {
 								AnalogClock2Display c = checkClocks(dLoc);
 								if (c!=null) {
 									c.showPopUp(event);
-									c = null;
 								}
 								else {
 									MultiSensorIcon ms = checkMultiSensors(dLoc);
 									if (ms!=null) {
 										ms.showPopUp(event);
-										ms = null;
+									}								
+									else {
+										LocoIcon lo = checkMarkers(dLoc);
+										if (lo!=null) {
+											lo.showPopUp(event);
+										}
 									}
 								}
 							}
@@ -2614,9 +2778,15 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		else if (event.isPopupTrigger()) {
 			calcLocation(event, dX, dY);
-			selectedObject = null;
-			selectedPointType = NONE;
-			checkPopUp(event);
+			if (editMode) {
+				selectedObject = null;
+				selectedPointType = NONE;
+				checkPopUp(event);
+			}
+			else {
+				LocoIcon lo = checkMarkers(dLoc);
+				if (lo!=null) lo.showPopUp(event);
+			}		
 		}
 	}
 
@@ -2629,6 +2799,7 @@ public class LayoutEditor extends JmriJFrame {
         }
     }
 
+	private boolean isDragging = false;
     protected void handleMouseDragged(MouseEvent event, int dX, int dY)
     {
 		// initialize mouse position
@@ -2636,10 +2807,25 @@ public class LayoutEditor extends JmriJFrame {
         if (editMode) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-			if ( (selectedObject!=null) && event.isMetaDown() ) {
-				// moving a point
-				Point2D newPos = new Point2D.Double(dLoc.getX() + startDel.getX(),
+		}
+		Point2D newPos = new Point2D.Double(dLoc.getX() + startDel.getX(),
 						dLoc.getY() + startDel.getY());
+		if ((selectedObject!=null) && event.isMetaDown() && (selectedPointType==MARKER)) {
+			// marker moves regardless of editMode or positionable
+			PositionableLabel pl = (PositionableLabel)selectedObject;
+			int xint = (int)newPos.getX();
+			int yint = (int)newPos.getY();
+			// don't allow negative placement, object could become unreachable
+			if (xint<0) xint = 0;
+			if (yint<0) yint = 0;
+			pl.setLocation(xint, yint);
+			isDragging = true;
+			repaint();
+			return;
+		}
+		if (editMode) {	
+			if ((selectedObject!=null) && event.isMetaDown() && positionable) {
+				// moving a point
 				if (snapToGridOnMove) {
 					int xx = (((int)newPos.getX()+4)/10)*10;
 					int yy = (((int)newPos.getY()+4)/10)*10;
@@ -2648,9 +2834,11 @@ public class LayoutEditor extends JmriJFrame {
 				switch (selectedPointType) {
 					case POS_POINT:
 						((PositionablePoint)selectedObject).setCoords(newPos);
+						isDragging = true;
 						break;
 					case TURNOUT_CENTER:
 						((LayoutTurnout)selectedObject).setCoordsCenter(newPos);
+						isDragging = true;
 						break;
 					case TURNOUT_A:
 						LayoutTurnout o = (LayoutTurnout)selectedObject;
@@ -2670,6 +2858,7 @@ public class LayoutEditor extends JmriJFrame {
 						break;
 					case LEVEL_XING_CENTER:
 						((LevelXing)selectedObject).setCoordsCenter(newPos);
+						isDragging = true;
 						break;
 					case LEVEL_XING_A:
 						LevelXing x = (LevelXing)selectedObject;
@@ -2689,6 +2878,7 @@ public class LayoutEditor extends JmriJFrame {
 						break;
 					case TURNTABLE_CENTER:
 						((LayoutTurntable)selectedObject).setCoordsCenter(newPos);
+						isDragging = true;
 						break;
 					case LAYOUT_POS_LABEL:
 						LayoutPositionableLabel l = (LayoutPositionableLabel)selectedObject;
@@ -2699,6 +2889,7 @@ public class LayoutEditor extends JmriJFrame {
 							if (xint<0) xint = 0;
 							if (yint<0) yint = 0;
 							l.setLocation(xint, yint);
+							isDragging = true;
 						}
 						break;
 					case LAYOUT_POS_JCOMP:
@@ -2710,6 +2901,7 @@ public class LayoutEditor extends JmriJFrame {
 							if (xint<0) xint = 0;
 							if (yint<0) yint = 0;
 							c.setLocation(xint, yint);
+							isDragging = true;
 						}
 						break;
 					case MULTI_SENSOR:
@@ -2721,6 +2913,7 @@ public class LayoutEditor extends JmriJFrame {
 							if (xint<0) xint = 0;
 							if (yint<0) yint = 0;
 							pl.setLocation(xint, yint);
+							isDragging = true;
 						}
 						break;
 					default:
@@ -2731,7 +2924,7 @@ public class LayoutEditor extends JmriJFrame {
 						}
 				}
 				// if point is unconnected, check proximity of an unconnected point
-				if (selectedNeedsConnect) {
+				if (editMode && selectedNeedsConnect) {
 					boolean needResetCursor = (foundObject!=null);
 					if (checkSelect(newPos, true)) {
 						// have match to free connection point, change cursor
@@ -2742,7 +2935,7 @@ public class LayoutEditor extends JmriJFrame {
 					}
 				}
 				repaint();
-			}
+			}			
 			else if ( (beginObject!=null) && event.isShiftDown() 
 											&& trackBox.isSelected() ) {
 				// dragging from first end of Track Segment
@@ -3628,7 +3821,7 @@ public class LayoutEditor extends JmriJFrame {
         l.setSignalHead(nextSignalHead.getText().trim());
 		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
-			if ( (xSignal.getUserName()==null) || (xSignal.getUserName()=="") || 
+			if ( (xSignal.getUserName()==null) || (xSignal.getUserName().equals("")) || 
 						(!(xSignal.getUserName().equals(nextSignalHead.getText().trim()))) ) {
 				nextSignalHead.setText(xSignal.getSystemName());
 			}
@@ -3732,11 +3925,13 @@ public class LayoutEditor extends JmriJFrame {
      */
     public LocoIcon addLocoIcon (String name){
     	LocoIcon l = new LocoIcon();
-        setNextLocation(l);
+		Point2D pt = windowCenter();
+        l.setLocation( (int)pt.getX(), (int)pt.getY() );
         l.setText(name);
         putLocoIcon(l);
         // always allow new items to be moved
         l.setPositionable(true);
+		repaint();
         return l;
      }
     
@@ -3745,8 +3940,9 @@ public class LayoutEditor extends JmriJFrame {
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         targetPanel.add(l, l.getDisplayLevel());
- 		labelImage.add(l);
+		markerImage.add(l);  
         contents.add(l);
+		l.setPanel(this);
         // reshow the panel
         targetPanel.validate();
     }
@@ -3914,6 +4110,7 @@ public class LayoutEditor extends JmriJFrame {
 
     /**
      *  Control whether panel items are positionable.
+	 *  Markers are always positionable.
      * @param state true for positionable.
      */
     public void setAllPositionable(boolean state) {
@@ -3922,6 +4119,9 @@ public class LayoutEditor extends JmriJFrame {
         for (int i = 0; i<contents.size(); i++) {
             ((Positionable)contents.get(i)).setPositionable(state);
         }
+		for (int i = 0; i<markerImage.size(); i++) {
+			((Positionable)markerImage.get(i)).setPositionable(true);
+		}
     }
 
     /**

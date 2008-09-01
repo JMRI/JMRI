@@ -23,7 +23,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -170,6 +170,11 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     }
     
     public void mouseDragged(MouseEvent e) {
+		// if using LayoutEditor, let LayoutEditor handle the mouse dragged event
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseDragged(e,getX(),getY());
+			return;
+		}
     	enablePopUp = false;
     	super.setPositionable(true);
     	super.mouseDragged(e);
