@@ -14,7 +14,7 @@ import java.util.*;
  * out of this class and into the contructors themselves.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -98,7 +98,11 @@ public class ToolsMenu extends JMenu {
 
         add(new JSeparator());
         // US&S CTC subsystem tools
-        add(new jmri.jmrit.ussctc.ToolsMenu());		
+        add(new jmri.jmrit.ussctc.ToolsMenu());	
+        
+        add(new JSeparator());
+        // operations menu
+        add(new jmri.jmrit.operations.OperationsMenu());
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ToolsMenu.class.getName());

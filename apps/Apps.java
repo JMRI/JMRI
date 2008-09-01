@@ -34,7 +34,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.65 $
+ * @version     $Revision: 1.66 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -154,6 +154,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         toolsMenu(menuBar, frame);
         rosterMenu(menuBar, frame);
         panelMenu(menuBar, frame);
+        // add line below to have operations in main menu
+        //operationsMenu(menuBar, frame);
         systemsMenu(menuBar, frame);
         scriptMenu(menuBar, frame);
         debugMenu(menuBar, frame);
@@ -230,6 +232,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrit.ToolsMenu(rb.getString("MenuTools")));
+    }
+    
+    protected void operationsMenu(JMenuBar menuBar, JFrame frame) {
+        menuBar.add(new jmri.jmrit.operations.OperationsMenu(rb.getString("MenuOperations")));
     }
 
     protected void rosterMenu(JMenuBar menuBar, JFrame frame) {
