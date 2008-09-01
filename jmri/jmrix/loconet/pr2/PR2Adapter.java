@@ -10,7 +10,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -106,7 +106,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     /**
      * Option 1 controls flow control option
      */
-    public String option1Name() { return "LocoBuffer connection uses "; }
+    public String option1Name() { return "PR2 connection uses "; }
     public String[] validOption1() { return validOption1; }
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
