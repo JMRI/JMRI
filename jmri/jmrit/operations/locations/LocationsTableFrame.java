@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
  
 import jmri.jmrit.operations.cars.CarManagerXml;
+import jmri.jmrit.operations.engines.EngineManagerXml;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,7 +24,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	
@@ -87,8 +88,9 @@ public class LocationsTableFrame extends JmriJFrame {
     	pack();
     	if ( (getWidth()<650)) setSize(650, getHeight());
     	
-     	// now load the cars
+     	// now load the cars and engines
     	CarManagerXml.instance();
+    	EngineManagerXml.instance();
     }
     
 	private void addRadioButtonAction(JRadioButton b) {
