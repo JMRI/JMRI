@@ -66,7 +66,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutTurnout
@@ -930,7 +930,7 @@ public class LayoutTurnout
 					disabled = disableItem.isSelected();
 				}
 			});
-		if (blockName=="") popup.add(rb.getString("NoBlock"));
+		if (blockName.equals("")) popup.add(rb.getString("NoBlock"));
 		else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
 		if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
 			// check if extra blocks have been entered

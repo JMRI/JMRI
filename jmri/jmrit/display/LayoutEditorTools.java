@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutEditorTools 
@@ -519,7 +519,7 @@ public class LayoutEditorTools
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
-			else if ( (turnout.getUserName()==null) || (turnout.getUserName()=="") ||
+			else if ( (turnout.getUserName()==null) || (turnout.getUserName().equals("")) ||
 									!turnout.getUserName().equals(str) ) {
 				str = str.toUpperCase();
 				if (!crossover) 
@@ -1026,7 +1026,7 @@ public class LayoutEditorTools
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
 		}
-		else if ( (head.getUserName()==null) || (head.getUserName()=="") ||
+		else if ( (head.getUserName()==null) || (head.getUserName().equals("")) ||
 									!head.getUserName().equals(str) ) {
 			str = str.toUpperCase();
 			signalName.setText(str);
@@ -4281,7 +4281,7 @@ public class LayoutEditorTools
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
-			if ( (turnout2.getUserName()==null) || (turnout2.getUserName()=="") ||
+			if ( (turnout2.getUserName()==null) || (turnout2.getUserName().equals("")) ||
 									!turnout2.getUserName().equals(str) ) {
 				str = str.toUpperCase();
 				turnout2NameField.setText(str);
@@ -4332,7 +4332,7 @@ public class LayoutEditorTools
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
-			if ( (turnout1.getUserName()==null) || (turnout1.getUserName()=="") ||
+			if ( (turnout1.getUserName()==null) || (turnout1.getUserName().equals("")) ||
 									!turnout1.getUserName().equals(str) ) {
 				str = str.toUpperCase();
 				turnout1NameField.setText(str);
@@ -4388,7 +4388,7 @@ public class LayoutEditorTools
 									JOptionPane.ERROR_MESSAGE);
 					return false ;
 				}
-				if ( (turnout2.getUserName()==null) || (turnout2.getUserName()=="") ||
+				if ( (turnout2.getUserName()==null) || (turnout2.getUserName().equals("")) ||
 									!turnout2.getUserName().equals(str) ) {
 					str = str.toUpperCase();
 					turnout2NameField.setText(str);

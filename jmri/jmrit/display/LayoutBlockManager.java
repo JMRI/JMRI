@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -242,7 +242,7 @@ public class LayoutBlockManager extends AbstractManager {
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 				case LayoutConnectivity.XOVER_BOUNDARY_AC:
 					if (facingIsBlock1) {
-						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name()=="") )
+						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
 							//there is no signal head for diverging (crossed over)
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 						else
@@ -250,14 +250,14 @@ public class LayoutBlockManager extends AbstractManager {
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));						
 					}
 					else {
-						if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name()=="") )
+						if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
 						else
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));						
 					}
 				case LayoutConnectivity.XOVER_BOUNDARY_BD:
 					if (facingIsBlock1) {
-						if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name()=="") )
+						if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
 							//there is no signal head for diverging (crossed over)
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
 						else
@@ -265,7 +265,7 @@ public class LayoutBlockManager extends AbstractManager {
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));						
 					}
 					else {
-						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name()=="") )
+						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 						else
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));						
@@ -295,7 +295,7 @@ public class LayoutBlockManager extends AbstractManager {
 			// block boundary is at the facing point of a turnout or A connection of a crossover turnout
 			lt = (LayoutTurnout)connected;
 			if (facingIsBlock1) {
-				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name()=="") )
+				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
 					//there is no signal head for diverging 
 					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 				else {
@@ -356,7 +356,7 @@ public class LayoutBlockManager extends AbstractManager {
 						else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 							// diverging, check for second head
-							if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name()=="") )
+							if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
 								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
 							else 
 								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));							
@@ -372,7 +372,7 @@ public class LayoutBlockManager extends AbstractManager {
 				// track segment connected at B is not in block 1
 				if ( ((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName()) ) {
 					// track segment connected at C is in block 1, return diverging signal head, check for second head
-					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name()=="") )
+					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
 					else 
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
@@ -394,7 +394,7 @@ public class LayoutBlockManager extends AbstractManager {
 			if ( ((lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
 						(lt.getTurnoutType()==LayoutTurnout.LH_XOVER)) ) {
 				if (facingIsBlock1) {
-					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name()=="") ) 
+					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) ) 
 					// there is only one signal at B, return it
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
 					// check if track segments at A or D are in protected block (block 2)
@@ -453,7 +453,7 @@ public class LayoutBlockManager extends AbstractManager {
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 								// diverging, check for second head
-								if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name()=="") )
+								if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
 									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 								else 
 									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));							
@@ -469,7 +469,7 @@ public class LayoutBlockManager extends AbstractManager {
 					// track segment connected at A is not in block 1
 					if ( ((TrackSegment)lt.getConnectD()).getBlockName().equals(facingBlock.getUserName()) ) {
 						// track segment connected at D is in block 1, return diverging signal head, check for second head
-						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name()=="") )
+						if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 						else 
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD2Name()));
@@ -499,7 +499,7 @@ public class LayoutBlockManager extends AbstractManager {
 			if ( (lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
 						(lt.getTurnoutType()==LayoutTurnout.RH_XOVER) ) {
 				if (facingIsBlock1) {
-					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name()=="") )
+					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
 						// there is only one head at C, return it
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));						
 					// check if track segments at A or D are in protected block (block 2)
@@ -558,7 +558,7 @@ public class LayoutBlockManager extends AbstractManager {
 							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 								// diverging, check for second head
-								if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name()=="") )
+								if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
 									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 								else 
 									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));							
@@ -574,7 +574,7 @@ public class LayoutBlockManager extends AbstractManager {
 					// track segment connected at D is not in block 1
 					if ( ((TrackSegment)lt.getConnectA()).getBlockName().equals(facingBlock.getUserName()) ) {
 						// track segment connected at A is in block 1, return diverging signal head, check for second head
-						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name()=="") )
+						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 						else 
 							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
@@ -597,7 +597,7 @@ public class LayoutBlockManager extends AbstractManager {
 				return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 			else {
 				// RH, LH or WYE turnout, this is diverging track for A connection
-				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name()=="") )
+				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
 					// there is no signal head at the throat for diverging 
 					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 				else 
@@ -616,7 +616,7 @@ public class LayoutBlockManager extends AbstractManager {
 					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
 			}
 			if (facingIsBlock1) {
-				if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name()=="") )
+				if ( (lt.getSignalD2Name()==null) || (lt.getSignalD2Name().equals("")) )
 					//there is no signal head for diverging 
 					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
 				else {
@@ -677,7 +677,7 @@ public class LayoutBlockManager extends AbstractManager {
 						else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
 									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
 							// diverging, check for second head
-							if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name()=="") )
+							if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
 								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
 							else 
 								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));							
@@ -693,7 +693,7 @@ public class LayoutBlockManager extends AbstractManager {
 				// track segment connected at C is not in block 1
 				if ( ((TrackSegment)lt.getConnectB()).getBlockName().equals(facingBlock.getUserName()) ) {
 					// track segment connected at B is in block 1, return diverging signal head, check for second head
-					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name()=="") )
+					if ( (lt.getSignalB2Name()==null) || (lt.getSignalB2Name().equals("")) )
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
 					else 
 						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));

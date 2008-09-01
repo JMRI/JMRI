@@ -37,7 +37,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LevelXing 
@@ -323,12 +323,12 @@ public class LevelXing
 		popup.add(rb.getString("LevelCrossing"));
 		boolean blockACAssigned = false;
 		boolean blockBDAssigned = false;
-		if ( (blockNameAC==null) || (blockNameAC=="") ) popup.add(rb.getString("NoBlock1"));
+		if ( (blockNameAC==null) || (blockNameAC.equals("")) ) popup.add(rb.getString("NoBlock1"));
 		else {
 			popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
 			blockACAssigned = true;
 		}
-		if ( (blockNameBD==null) || (blockNameBD=="") ) popup.add(rb.getString("NoBlock2"));
+		if ( (blockNameBD==null) || (blockNameBD.equals("")) ) popup.add(rb.getString("NoBlock2"));
 		else {
 			popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
 			blockBDAssigned = true;

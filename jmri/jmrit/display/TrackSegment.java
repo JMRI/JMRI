@@ -27,7 +27,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrackSegment 
@@ -219,7 +219,7 @@ public class TrackSegment
 		else popup.add(rb.getString("Style")+" - "+rb.getString("Dashed"));
 		if (!mainline) popup.add(rb.getString("NotMainline"));
 		else popup.add(rb.getString("Mainline"));
-		if (blockName=="") popup.add(rb.getString("NoBlock"));
+		if (blockName.equals("")) popup.add(rb.getString("NoBlock"));
 		else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
 		if (hidden) popup.add(rb.getString("Hidden"));
 		else popup.add(rb.getString("NotHidden"));

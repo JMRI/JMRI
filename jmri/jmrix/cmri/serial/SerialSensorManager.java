@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -53,7 +53,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
-        if (sName=="") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid C/MRI Sensor system name - "+systemName);
             return null;

@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -25,7 +25,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // validate the system name, and normalize it
         String sName = "";
 		sName = SerialAddress.normalizeSystemName(systemName);
-        if (sName=="") {
+        if (sName.equals("")) {
             // system name is not valid
             return null;
         }
