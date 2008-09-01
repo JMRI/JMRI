@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.9 2008-08-20 13:56:13 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.10 2008-09-01 23:32:14 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -40,6 +40,7 @@ sections in detail.</p>
 	<li><a href="#option">Using Layout Editor's Options Menu</a></li>
 	<li><a href="#toolsmenu">Using Layout Editor's Tools Menu</a></li>
 	<li><a href="#zoommenu">Using Layout Editor's Zoom Menu</a></li>
+	<li><a href="#markermenu">Using Layout Editor's Marker Menu</a></li>
 	<li><a href="#editing">Editing and Removing Items</a></li>
 	<li><a href="#turnouts">Turnouts</a></li>
 	<li><a href="#track">Track Segments and Connection Points</a></li>
@@ -180,7 +181,9 @@ ALIGN=CENTER WIDTH="563" HEIGHT="169" HSPACE="0" VSPACE="0"></A>
 <P>
 10. Select <b>Edit Mode</b> in the Options menu to hide the tool bar (and the 
 help bar) and see how your track diagram of a simple oval layout would look in a 
-final panel. You should see connection points and edit circles disappear.</P>
+final panel. You should see connection points and edit circles disappear. Also note
+that, when not in Edit Mode, items may not be repositioned and popup menus are not 
+active.</P>
 <P>
 The above steps demonstrated the basic steps needed to draw a track diagram. You can
 clear this demonstration panel by selecting <b>Delete this panel...</b> in the panel's
@@ -356,8 +359,10 @@ selection is described below.
 	is displayed.</li>
 	<li><b>Allow Repositioning</b> - When this item is checked, items on the panel
 	can be repositioned by dragging on the item with the meta key pressed. Track
-	diagram items can only be repositioned when Edit Mode is checked, but icon-
-	based items can be repositioned any time this item is checked.</li>
+	diagram items and icon-based items can only be repositioned when Edit Mode 
+	is checked. Markers are an exception; markers may be repositioned at any 
+	time irrespective of whether Edit Mode and/or Allow Repositioning are checked.
+	</li>
 	<li><b>Allow Layout Control</b> - When this item is checked, clicking on 
 	active turnout items in the track diagram or on active icon items, such as
 	sensor icons, and signal icons, will toggle the state of the represented 
@@ -574,12 +579,54 @@ unmagnified panel. A panel may be saved while magnified.</p>
 When a panel is loaded, it always come up with <b>No Zoom</b> selected. Since 
 zooming is temporary, the zoom factor is not preserved when a panel is saved.</p>
 
+<a name="markermenu"><h3>Using Layout Editor's Marker Menu
+</h3></a>
+<p>
+The Marker menu provides <b>Markers</b> that may be used to keep track of the 
+location of trains on Layout Editor panels. Markers are small colored icons that 
+display a train ID, usually the locomotive number. When running trains, a marker 
+is created for each train, and that marker is moved around the panel as the train
+traverses the layout. This feature is especially useful to those who do not have 
+block detection hardware, and therefore cannot use the <b>Train Tracking</b> 
+feature of Layout Editor (<a href="#tracking">see below</a>).</p>
+<p>
+Markers are different from other items on Layout Editor panels. in that all 
+functions are active when the panel is not in edit mode. Markers may be created, 
+repositioned, and removed at any time. The Marker menu and popup menus of 
+individual Markers are always active. Markers that are present on a panel are 
+saved to disk when the panel is saved to disk.
+</p>
+<p><ul>
+	<li><b>Add loco...</b> - Selecting this item brings up a small window that 
+	allows a Marker to be created from an entered Loco ID. The Marker icon is 
+	not very large, so no more than 6 characters should be entered. Usually the 
+	locomotive number is entered. After entering a Loco ID, click OK, and your 
+	a new white marker will appear at the center of the panel window. Use the 
+	marker's popup menu to change its color, etc. Dismiss this window by clicking 
+	the close icon in its title bar.</li>
+	<li><b>Add loco from roster...</b> - Selecting this item brings up a small 
+	window that allows a Marker to be created for a locomotive in the JMRI 
+	roster. To use this item, the locomotive  must be in the JMRI roster before 
+	the panel is opened. When a locomotive is selected in the roster menu, a 
+	marker for that locomotive immediately appears in the center of the panel. 
+	If it is present in the Roster Entry, the "Road number" is used as the Loco 
+	ID. Otherwise, the locomotive's dcc address is used. Use the marker's popup 
+	menu to change its color, etc. For markers created from a roster entry, 
+	the marker's popup menu has a <b>Throttle</b> item, that may be used to open a 
+	JMRI throttle for that locomotive. Dismiss this window by clicking the close icon 
+	in its title bar.</li>
+	<li><b>Remove markers</b> - Selecting this item removes <b>all</b> markers from 
+	the Layout Editor panel.  This item may not be undone. Note: A single 
+	marker may be removed by selecting <b>Remove</b> in its popup menu.
+</ul></p>
+
 <a name="editing"><h3>Editing and Removing Items
 </h3></a>
 <p>
-Every item on a panel has a popup menu. To access the popup menu of an icon-based 
-item (sensor icon, signal icon, text label, memory label, multi-sensor, fast clock,
-icon label or background): on Windows systems, right-click on the icon; on Macintosh 
+Every item on a panel has a popup menu. <b>Except for Markers, popup menus are only 
+active in edit mode.</b> To access the popup menu of an icon-based item (sensor icon, 
+signal icon, text label, memory label, multi-sensor, fast clock, icon label, marker, 
+recorder, or background): on Windows systems, right-click on the icon; on Macintosh 
 systems, control-click on the icon (hold down the control key and click the mouse 
 button on any point within the icon). Drawn items are similar, except for where you 
 click. For turnouts, level crossings, or track segments, control-click or right-click 
