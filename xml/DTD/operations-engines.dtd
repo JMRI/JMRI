@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.1 2008-08-26 02:39:49 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.2 2008-09-01 01:37:11 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -15,7 +15,7 @@
 
 <!ELEMENT operations-config (engines | engineTypes | engineLengths | consists)*>
 
-<!ELEMENT engineTypes (#PCDATA)>
+<!ELEMENT engineModels (#PCDATA)>
 <!ELEMENT engineLengths (#PCDATA)>
 <!ELEMENT consists (#PCDATA)>
 
@@ -24,8 +24,9 @@
 
 <!ATTLIST engine id						CDATA #REQUIRED>          
 <!ATTLIST engine roadNumber				CDATA #IMPLIED>
-<!ATTLIST engine roadName				CDATA #IMPLIED>       
-<!ATTLIST engine type					CDATA #IMPLIED> 
+<!ATTLIST engine roadName				CDATA #IMPLIED>  
+<!ATTLIST engine type					CDATA #IMPLIED>      
+<!ATTLIST engine model					CDATA #IMPLIED> 
 <!ATTLIST engine color					CDATA #IMPLIED> 
 <!ATTLIST engine length					CDATA #IMPLIED>
 <!ATTLIST engine weight					CDATA #IMPLIED>

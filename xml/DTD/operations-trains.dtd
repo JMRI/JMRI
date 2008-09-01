@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.1 2008-08-26 02:39:49 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.2 2008-09-01 01:37:11 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -34,6 +34,7 @@
 <!ATTLIST train numberEngines		CDATA #IMPLIED> 
 <!ATTLIST train engineRoad			CDATA #IMPLIED>
 <!ATTLIST train engineType			CDATA #IMPLIED>
+<!ATTLIST train engineModel			CDATA #IMPLIED>
 <!ATTLIST train requires			CDATA #IMPLIED>
 <!ATTLIST train cabooseRoad			CDATA #IMPLIED>
 <!ATTLIST train built				(true | false) "false">
