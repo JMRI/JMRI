@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.67 $
+ * @version     $Revision: 1.68 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -162,8 +162,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         systemsMenu(menuBar, frame);
         scriptMenu(menuBar, frame);
         debugMenu(menuBar, frame);
-        helpMenu(menuBar, frame);
         menuBar.add(new WindowMenu(frame)); // * GT 28-AUG-2008 Added window menu
+        helpMenu(menuBar, frame);
         log.debug("end building menus");
     }
 
