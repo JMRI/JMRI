@@ -65,11 +65,11 @@ public class Setup {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	private static int scale = 0;
-	private static int ratio = 0;
+	private static int scale = HO_SCALE;	// Default scale	
+	private static int ratio = HO_RATIO;
 	private static int ratioTons = 0;
-	private static int initWeight = 0;
-	private static int addWeight = 0;
+	private static int initWeight = HO_INITIAL_WEIGHT;
+	private static int addWeight = HO_ADD_WEIGHT;
 	private static String railroadName ="";
 	private static int traindir = EAST+WEST+NORTH+SOUTH;
 	private static int trainLength = 1000;
