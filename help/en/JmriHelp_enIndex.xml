@@ -103,6 +103,18 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    </indexitem>
    <indexitem text="Multi-Decoder Control" target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
    <indexitem text="Names" target="html.doc.Technical.Names"/>
+   <indexitem text="Operations" target="package.jmri.jmrit.operations.Operations">
+      <indexitem text="Cars" target="package.jmri.jmrit.operations.Operations_Cars"/>
+      <indexitem text="Engines" target="package.jmri.jmrit.operations.Operations_Engines"/>
+      <indexitem text="Interchange" target="package.jmri.jmrit.operations.Operations_Interchange"/>
+      <indexitem text="Locations" target="package.jmri.jmrit.operations.Operations_Locations"/>
+      <indexitem text="Settings" target="package.jmri.jmrit.operations.Operations_Settings"/>
+      <indexitem text="Sidings" target="package.jmri.jmrit.operations.Operations_Sidings"/>
+      <indexitem text="Staging" target="package.jmri.jmrit.operations.Operations_Staging"/>
+      <indexitem text="Switch List" target="package.jmri.jmrit.operations.Operations_SwitchList"/>
+      <indexitem text="Trains" target="package.jmri.jmrit.operations.Operations_Trains"/>
+      <indexitem text="Yards" target="package.jmri.jmrit.operations.Operations_Yards"/>
+   </indexitem>
    <indexitem text="PanelPro" target="html.apps.PanelPro.Panels">
       <indexitem text="Intro" target="html.apps.PanelPro.Panels"/>
       <indexitem text="Layout Editor" target="package.jmri.jmrit.display.LayoutEditor"/>

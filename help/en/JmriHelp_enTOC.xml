@@ -108,7 +108,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Routes" target="package.jmri.jmrit.operations.RoutesTableFrame"/>
          <tocitem text="Trains" target="package.jmri.jmrit.operations.TrainsTableFrame"/>
       </tocitem>
-      
       <tocitem text="Programmers">
          <tocitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
          <tocitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming"/>
@@ -206,6 +205,19 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="SRCP" target="html.hardware.SRCP.index"/>
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
+   <tocitem text="Operations" target="package.jmri.jmrit.operations.Operations">
+      <tocitem text="Settings" target="package.jmri.jmrit.operations.Operations_Settings"/>
+      <tocitem text="Locations" target="package.jmri.jmrit.operations.Operations_Locations">
+         <tocitem text="Yards" target="package.jmri.jmrit.operations.Operations_Yards"/>
+         <tocitem text="Sidings" target="package.jmri.jmrit.operations.Operations_Sidings"/>
+         <tocitem text="Interchange" target="package.jmri.jmrit.operations.Operations_Interchange"/>
+         <tocitem text="Staging" target="package.jmri.jmrit.operations.Operations_Staging"/>
+      </tocitem>
+      <tocitem text="Cars" target="package.jmri.jmrit.operations.Operations_Cars"/>
+      <tocitem text="Engines" target="package.jmri.jmrit.operations.Operations_Engines"/>
+      <tocitem text="Trains" target="package.jmri.jmrit.operations.Operations_Trains"/>
+      <tocitem text="Switch List" target="package.jmri.jmrit.operations.Operations_SwitchList"/>
+   </tocitem>
    <tocitem text="Technical Info" target="html.doc.Technical.index">
       <tocitem text="Getting the Source Code">
          <tocitem text="Via CVS" target="html.doc.Technical.getcode"/>

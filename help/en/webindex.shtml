@@ -458,6 +458,63 @@
 </li>
    
 <li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">Operations</a>
+<ul>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
 <a href="html/apps/PanelPro/Panels.shtml">PanelPro</a>
 <ul>
       

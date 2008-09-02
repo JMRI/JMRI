@@ -446,6 +446,43 @@
 </ul>
 </li>
       
+<li>
+<a href="">Operations</a>
+<ul>
+         
+<li>
+<a href="">Settings</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="">Locations</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="">Cars</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="">Engines</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="">Routes</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="">Trains</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
 <li>Programmers<ul>
          
 <li>
@@ -862,6 +899,65 @@
 <li>
 <a href="html/doc/Technical/Names.shtml">Names</a>
 <ul></ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">Operations</a>
+<ul>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List</a>
+<ul></ul>
+</li>
+   
+</ul>
 </li>
    
 <li>
