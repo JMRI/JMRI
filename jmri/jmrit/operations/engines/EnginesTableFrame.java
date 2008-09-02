@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -141,7 +141,7 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
 		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.EnginesTableFrame", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
     	
     	pack();
     	if ((getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());

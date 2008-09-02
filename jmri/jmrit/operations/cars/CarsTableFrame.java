@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -141,7 +141,7 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.CarsTableFrame", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	
     	pack();
     	if ((getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());

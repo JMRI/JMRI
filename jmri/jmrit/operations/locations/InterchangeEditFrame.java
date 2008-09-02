@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location interchanges
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class InterchangeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -227,7 +227,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.InterchangeEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);
 
 		//	 get notified if combo box gets modified
 		

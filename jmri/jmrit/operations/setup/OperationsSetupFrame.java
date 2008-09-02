@@ -22,7 +22,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -257,7 +257,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addCheckBoxAction(northCheckBox);
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.OperationsSetupFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		// set frame size and location for display
 		pack();

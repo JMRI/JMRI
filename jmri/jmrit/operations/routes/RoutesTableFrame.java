@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class RoutesTableFrame extends JmriJFrame {
 	
@@ -81,7 +81,7 @@ public class RoutesTableFrame extends JmriJFrame {
 		addRadioButtonAction (sortById);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.RoutesTableFrame", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
     	
     	pack();
     	setSize(350, getHeight());

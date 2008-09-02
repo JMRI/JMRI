@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location yards
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -225,7 +225,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.YardEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true);
 
 		//	 get notified if combo box gets modified
 		

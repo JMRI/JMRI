@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -138,7 +138,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		addHelpMenu("package.jmri.jmrit.operations.CarsSetFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
 
 		//	 get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);

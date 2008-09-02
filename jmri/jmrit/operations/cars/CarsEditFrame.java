@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -272,7 +272,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.CarsEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);

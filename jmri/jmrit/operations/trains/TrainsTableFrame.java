@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -130,7 +130,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		addCheckBoxAction(printPreviewBox);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.TrainsTableFrame", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     	
     	pack();
     	if ( (getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());

@@ -31,7 +31,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -99,7 +99,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		addButtonAction(replaceButton);
  
         // add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.EngineAttributeEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
 		
     	pack();
     	if ((getWidth()<150)) 

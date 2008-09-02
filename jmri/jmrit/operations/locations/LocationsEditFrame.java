@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -317,7 +317,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.LocationsEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
 
 		//	 get notified if combo box gets modified
 		

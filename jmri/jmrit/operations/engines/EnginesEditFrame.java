@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -257,7 +257,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.EnginesEditFrame", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);

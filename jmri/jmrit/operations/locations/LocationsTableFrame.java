@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	
@@ -83,7 +83,7 @@ public class LocationsTableFrame extends JmriJFrame {
 		addRadioButtonAction (sortById);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.LocationsTableFrame", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
     	
     	pack();
     	if ( (getWidth()<650)) setSize(650, getHeight());
