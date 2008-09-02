@@ -1,6 +1,3 @@
-# Windows batch file to launch JHelpDex with the current directory set
-#
-#($Revision: 1.1 $)
-#
+REM Windows batch file to launch JHelpDev with the current 
 
-java -jar jhelpdev.jar 
+java   -Djava.class.path=".;classes;jhelpdev.jar; hall.jar; sax.jar;  xercesImpl.jar; jaxp-api.jar " net.sourceforge.jhelpdev.JHelpDevFrame 
