@@ -216,6 +216,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.automation.index" url="html/tools/automation/index.shtml" />
 	<mapID target="html.tools.signaling.index_terms" url="html/tools/signaling/index.shtml#terms" />
 	<mapID target="html.tools.throttle.ThrottleChapter4" url="html/tools/throttle/ThrottleChapter4.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Routes" url="package/jmri/jmrit/operations/Operations.shtml#Routes" />
 	<mapID target="package.jmri.jmrit.beantable.ReporterTable" url="package/jmri/jmrit/beantable/ReporterTable.shtml" />
 	<mapID target="TemplateBar" url="TemplateBar.shtml" />
 	<mapID target="html.doc.Technical.NewSystem" url="html/doc/Technical/NewSystem.shtml" />
