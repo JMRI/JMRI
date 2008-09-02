@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.3 2008-09-02 01:49:53 jacobsen Exp $ -->
+<!-- $Id: Operations.shtml,v 1.4 2008-09-02 02:47:54 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -339,7 +339,7 @@ in your JMRI directory in a folder called "operations".
 <A NAME="EditCarAttributes">
 <H3>Edit Car Attributes</H3>
 
-To the left of each of the car attributes (Road, Type, Length, Color,
+To the right of each of the car attributes (Road, Type, Length, Color,
 Kernel, Owner) is an "Edit" button.  Use this to add, delete, or replace
 the available attributes for a car.
 
@@ -573,6 +573,9 @@ when building new trains. Each time a location has a car picked up or
 dropped, the program increments a count associated with that location.
 The program tries to move cars to locations that have experienced the
 least number of car operations.</P>
+
+<P>The end of operations help.</P>
+
 </A>
 </BODY>
 </HTML>
