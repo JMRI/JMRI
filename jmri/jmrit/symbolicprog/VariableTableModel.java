@@ -22,7 +22,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.34 $
+ * @version   $Revision: 1.35 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -424,17 +424,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public int siCv() {return _siCv;}
 
     boolean isIncluded(String include, String productID) {
-        int i = 0;
-        while (i < include.length()) {
-            if (include.startsWith(productID, i)) {
-                return true;
-            }
-            i = include.indexOf(',',i) + 1;
-            if (i == 0) {
-                i = include.length();
-            }
-        }
-        return false;
+        String test = ","+include+",";
+        return test.contains(","+productID+",");
     }
 
     public int setIndxRow(int row, Element e, String productID) {
