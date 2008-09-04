@@ -22,7 +22,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -36,6 +36,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	javax.swing.JLabel textMaxTrain = new javax.swing.JLabel();
 	javax.swing.JLabel textMaxEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textOwner = new javax.swing.JLabel();
+	javax.swing.JLabel textPrinter = new javax.swing.JLabel();
 	javax.swing.JLabel textPanel = new javax.swing.JLabel();
 	javax.swing.JLabel textIconNorth = new javax.swing.JLabel();
 	javax.swing.JLabel textIconSouth = new javax.swing.JLabel();
@@ -63,7 +64,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     javax.swing.JRadioButton scaleO = new javax.swing.JRadioButton("O");
     javax.swing.JRadioButton scaleG = new javax.swing.JRadioButton("G");
 		
-	// check boxes
+    javax.swing.JRadioButton mono = new javax.swing.JRadioButton(rb.getString("Monospaced"));
+    javax.swing.JRadioButton sanSerif = new javax.swing.JRadioButton(rb.getString("SansSerif"));
+    
+    // check boxes
     
     javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
@@ -133,6 +137,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		textOwner.setText(" "+rb.getString("Owner"));
 		textOwner.setVisible(true);
 		ownerTextField.setText(Setup.getOwnerName());
+		
+		textPrinter.setText(rb.getString("PrinterFont"));
+		textPrinter.setVisible(true);
 		
 		textIconNorth.setText(rb.getString("IconNorth"));
 		textIconSouth.setText(rb.getString("IconSouth"));
@@ -205,8 +212,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// row 6
 		addItem (panel, textOwner, 0, 6);
 		addItemLeft (panel, ownerTextField, 1, 6);
+		
+		// Printer panel
+		ButtonGroup printerGroup = new ButtonGroup();
+		printerGroup.add(mono);
+		printerGroup.add(sanSerif);
+		addItem (panel, textPrinter, 0, 8);
+		addItemLeft (panel, mono, 1, 8);
+		addItemLeft (panel, sanSerif, 2, 8);
+		setPrinterFontRadioButton();
 
-		// row 7
+		// Icon panel
 		JPanel pIcon = new JPanel();
 		pIcon.setLayout(new GridBagLayout());
 		Border border = BorderFactory.createEtchedBorder();
@@ -240,11 +256,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		localComboBox.setSelectedItem(Setup.getTrainIconColorLocal());
 		terminateComboBox.setSelectedItem(Setup.getTrainIconColorTerminate());
 				
-		// row 8
+		// row 11
 		JPanel pControl = new JPanel();
 		addItem(pControl, space1, 0, 8);
 		
-		// row 9
+		// row 13
 		addItem(pControl, saveButton, 2, 9);
 		
 		getContentPane().add(panel);
@@ -289,6 +305,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setOwnerName(addOwner);
 			// add owner name to list
 			CarOwners.instance().addName(addOwner);
+			// set printer font
+			if (mono.isSelected())
+				Setup.setFontName(Setup.MONOSPACED);
+			else
+				Setup.setFontName(Setup.SANSERIF);
 			// add panel name to setup
 			Setup.setPanelName(panelTextField.getText());
 			// train Icon X&Y
@@ -431,6 +452,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     	for (int i=0; i<colors.length; i++){
     		comboBox.addItem(colors[i]);
     	}
+	}
+	
+	private void setPrinterFontRadioButton(){
+		mono.setSelected(Setup.getFontName().equals(Setup.MONOSPACED));
+		sanSerif.setSelected(Setup.getFontName().equals(Setup.SANSERIF));
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

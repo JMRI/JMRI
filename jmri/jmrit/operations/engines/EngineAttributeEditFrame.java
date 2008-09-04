@@ -31,7 +31,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -329,7 +329,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		log.debug ("EnginesAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS))
 			CarRoads.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineModels.ENGINETYPES))
+		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS))
 			EngineModels.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS))
 			EngineLengths.instance().updateComboBox(comboBox);

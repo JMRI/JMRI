@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -63,14 +63,16 @@ public class PrintCarRosterAction  extends AbstractAction {
         // Loop through the Roster, printing as needed
         String newLine = "\n";
         String location;
-        String type;		
+        String type;
+        String weight;
         String color;
+        String built;
         List cars = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
 					+ "\t" + rb.getString("Type") + "\t"
-					+ rb.getString("Length") + "\t" + rb.getString("Weight") +" "
-					+ rb.getString("Color") + "\t" + rb.getString("Owner") +" "
+					+ rb.getString("Length") + " " + rb.getString("Weight") +" "
+					+ rb.getString("Color") + "    " + rb.getString("Owner") +" "
 					+ rb.getString("Built") + "\t" + rb.getString("Location")
 					+ newLine;
         	writer.write(s, 0, s.length());
@@ -82,39 +84,55 @@ public class PrintCarRosterAction  extends AbstractAction {
         		}
          		type = car.getType();
         		switch (type.length()){
-        		case 0: type = type+" ";
-        		case 1: type = type+" ";
-        		case 2: type = type+" ";
-        		case 3: type = type+" ";
-        		case 4: type = type+" ";
-        		case 5: type = type+" ";
-        		case 6: type = type+" ";
-        		case 7: type = type+" ";
-        		case 8: type = type+" ";
-        		case 9: type = type+" ";
-        		case 10: type = type+" ";
-        		case 11: type = type+" ";
+        		case 0: type += " ";
+        		case 1: type += " ";
+        		case 2: type += " ";
+        		case 3: type += " ";
+        		case 4: type += " ";
+        		case 5: type += " ";
+        		case 6: type += " ";
+        		case 7: type += " ";
+        		case 8: type += " ";
+        		case 9: type += " ";
+        		case 10: type += " ";
+        		case 11: type += " ";
         		}
         		color = car.getColor();
         		switch (color.length()){
-        		case 0: color = color+" ";
-        		case 1: color = color+" ";
-        		case 2: color = color+" ";
-        		case 3: color = color+" ";
-        		case 4: color = color+" ";
-        		case 5: color = color+" ";
-        		case 6: color = color+" ";
-        		case 7: color = color+" ";
-        		case 8: color = color+" ";
-        		case 9: color = color+" ";
-        		case 10: color = color+" ";
-        		case 11: color = color+" ";
+        		case 0: color += " ";
+        		case 1: color += " ";
+        		case 2: color += " ";
+        		case 3: color += " ";
+        		case 4: color += " ";
+        		case 5: color += " ";
+        		case 6: color += " ";
+        		case 7: color += " ";
+        		case 8: color += " ";
+        		case 9: color += " ";
+        		case 10: color += " ";
+        		case 11: color += " ";
         		}
+        		
+        		weight = car.getWeight();
+           		switch (weight.length()){
+        		case 0: weight += " ";
+        		case 1: weight += " ";
+        		case 2: weight += " ";
+        		case 3: weight += " ";
+           		}
+           		
+           		built = car.getBuilt();
+           		switch (built.length()){
+        		case 0: built += " ";
+        		case 1: built += " ";
+        		case 2: built += " ";
+        		case 3: built += " ";
+           		}
         		
 				s = car.getNumber() + "\t" + car.getRoad() + "\t"
 						+ type + " " + car.getLength() + " "
-						+ car.getWeight() + " " + color + " "
-						+ car.getOwner() + " " + car.getBuilt() + " "
+						+ weight + " " + color + " "
+						+ car.getOwner() + " " + built + " "
 						+ location + newLine;
         		writer.write(s, 0, s.length());
         	}

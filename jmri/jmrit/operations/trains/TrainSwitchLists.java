@@ -121,7 +121,7 @@ public class TrainSwitchLists {
 	
 	public void printSwitchList(Location location, boolean preview){
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-		Train.printReport(buildFile, "Switchlist ", preview);
+		Train.printReport(buildFile, "Switchlist ", preview, Setup.getFontName());
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category

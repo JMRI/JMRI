@@ -65,6 +65,9 @@ public class Setup {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
+	public static final String MONOSPACED = "Monospaced"; // printer fonts
+	public static final String SANSERIF = "SansSerif";
+	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
 	private static int ratioTons = 0;
@@ -76,6 +79,7 @@ public class Setup {
 	private static int engineSize = 6;
 	private static int carMoves = 5;
 	private static String ownerName ="";
+	private static String fontName = MONOSPACED;
 	private static String panelName ="Panel";
 	private static String iconNorthColor ="";
 	private static String iconSouthColor ="";
@@ -197,6 +201,14 @@ public class Setup {
 	
 	public static String getTrainIconColorTerminate(){
 		return iconTerminateColor;
+	}
+	
+	public static String getFontName(){
+		return fontName;
+	}
+	
+	public static void setFontName(String name){
+		fontName = name;
 	}
 	
 	public static String getOwnerName(){
@@ -328,10 +340,13 @@ public class Setup {
     	values.setAttribute("name", getPanelName());
     	values.setAttribute("trainIconXY", isTrainIconCordEnabled()?"true":"false");
     	values.setAttribute("trainIconAppend", isTrainIconAppendEnabled()?"true":"false");
+ 
+       	e.addContent(values = new Element("fontName"));
+    	values.setAttribute("name", getFontName());
     	
-    	e.addContent(values = new Element("owner"));
+       	e.addContent(values = new Element("owner"));
     	values.setAttribute("name", getOwnerName());
-    	
+     	
     	e.addContent(values = new Element("iconColor"));
     	values.setAttribute("north", getTrainIconColorNorth());
     	values.setAttribute("south", getTrainIconColorSouth());
@@ -391,6 +406,11 @@ public class Setup {
         	String enable = a.getValue();
            	if (log.isDebugEnabled()) log.debug("TrainIconAppend: "+enable);
            	Setup.setTrainIconAppendEnabled(enable.equals("true"));
+        }
+        if ((a = operations.getChild("fontName").getAttribute("name"))!= null){
+        	String font = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("fontName: "+font);
+           	Setup.setFontName(font);
         }
         if ((a = operations.getChild("owner").getAttribute("name"))!= null){
         	String owner = a.getValue();

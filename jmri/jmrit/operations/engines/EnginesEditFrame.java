@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -293,7 +293,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 		if (!EngineModels.instance().containsName(engine.getModel())){
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's type \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine type?",
+					"This engine's model \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine model?",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				EngineModels.instance().addName(engine.getModel());
 			}
@@ -566,7 +566,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			if (_engine != null)
 			roadComboBox.setSelectedItem(_engine.getRoad());
 		}
-		if (e.getPropertyName().equals(EngineModels.ENGINETYPES)){
+		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS)){
 			EngineModels.instance().updateComboBox(modelComboBox);
 			if (_engine != null)
 				modelComboBox.setSelectedItem(_engine.getType());

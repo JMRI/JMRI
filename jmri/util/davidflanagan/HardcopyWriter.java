@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -34,11 +34,14 @@ public class HardcopyWriter extends Writer {
     protected PrintJob job;
     protected Graphics page;
     protected String jobname;
+    protected String line;
     protected int fontsize;
     protected String time;
     protected Dimension pagesize;
     protected int pagedpi;
     protected Font font, headerfont;
+    protected String fontName = "Monospaced";
+    protected int fontStyle = Font.PLAIN;
     protected FontMetrics metrics;
     protected FontMetrics headermetrics;
     protected int x0, y0;
@@ -50,6 +53,7 @@ public class HardcopyWriter extends Writer {
     protected int chars_per_line;
     protected int lines_per_page;
     protected int charnum = 0, linenum = 0;
+    protected int charoffset =0;
     protected int pagenum = 0;
     
     protected static boolean isPreview;
@@ -82,6 +86,7 @@ public class HardcopyWriter extends Writer {
                     throws HardcopyWriter.PrintCanceledException {
         
     	isPreview = preview;
+    	this.frame = frame;
     	
         Toolkit toolkit = frame.getToolkit();
         synchronized(printprops) {
@@ -104,7 +109,7 @@ public class HardcopyWriter extends Writer {
         height = pagesize.height - (int)((topmargin + bottommargin)*pagedpi);
 
         // get body font and font size
-        font = new Font("Monospaced", Font.PLAIN, fontsize);
+        font = new Font(fontName, fontStyle, fontsize);
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
         lineascent = metrics.getAscent();
@@ -142,7 +147,7 @@ public class HardcopyWriter extends Writer {
             // use a scroll pane to handle print images bigger than the window
             previewFrame.getContentPane().add(new JScrollPane(previewPanel),
                     BorderLayout.CENTER);
-            previewFrame.setSize(425, 425);
+            previewFrame.setSize(650, 425);
             previewFrame.setVisible(true);         
         }
 
@@ -217,6 +222,7 @@ public class HardcopyWriter extends Writer {
     public void write(char[] buffer, int index, int len) {
         synchronized(this.lock) {
             // loop through all characters passed to us
+        	line = "";
             for (int i = index; i<index+len; i++) {
                 // if we haven't begun a new page, do that now
                 if (page == null) newpage();
@@ -224,7 +230,9 @@ public class HardcopyWriter extends Writer {
                 // if the character is a line terminator, begin a new line
                 // unless its \n after \r
                 if (buffer[i] == '\n') {
-                    if (!last_char_was_return) newline();
+                    if (!last_char_was_return) {
+                    	newline();
+                    }
                     continue;
                 }
                 if (buffer[i] == '\r') {
@@ -240,8 +248,8 @@ public class HardcopyWriter extends Writer {
                         (buffer[i] != '\t') )
                     continue;
                 // if no more characters will fit on the line, start new line
-                if (charnum >= chars_per_line) {
-                    newline();
+                if (charoffset >= width) {
+                     newline();
                     // also start a new page if needed
                     if (page == null) newpage();
                 }
@@ -252,17 +260,25 @@ public class HardcopyWriter extends Writer {
                 // otherwise print the character
                 // We need to position each character one-at-a-time to
                 // match the FontMetrics
-                if (Character.isSpaceChar(buffer[i])) charnum++;
-                else if (buffer[i] == '\t') charnum += 8 - (charnum % 8);
+     
+                if (buffer[i] == '\t') {
+                	int tab = 8 - (charnum % 8);
+                	charnum += tab;
+                	charoffset = charnum*metrics.charWidth('m');
+                	for (int t=0; t<tab; t++){
+                		line += " ";
+                	}
+                }
                 else {
-                    page.drawChars(buffer, i , 1,
-                                    x0 + charnum*charwidth,
-                                    y0 + (linenum*lineheight) + lineascent);
+                	line += buffer[i];
                     charnum++;
+                    charoffset += metrics.charWidth(buffer[i]);
                 }
             }
+            page.drawString(line, x0, y0 + (linenum*lineheight) + lineascent);
         }
     }
+    
 
     public void flush() {}
 
@@ -282,15 +298,45 @@ public class HardcopyWriter extends Writer {
     }
 
     public void setFontStyle(int style) {
-        synchronized (this.lock) {
-            // try to set a new font, but restore current one if it fails
-            Font current = font;
-            try { font = new Font("Monospaced", style, fontsize); }
-            catch (Exception e) { font = current; }
-            // if a page is pending, set the new font, else newpage() will
-            if (page != null) page.setFont(font);
-        }
-    }
+		synchronized (this.lock) {
+			// try to set a new font, but restore current one if it fails
+			Font current = font;
+			try {
+				font = new Font(fontName, style, fontsize);
+				fontStyle = style;
+			} catch (Exception e) {
+				font = current;
+			}
+			// if a page is pending, set the new font, else newpage() will
+			if (page != null)
+				page.setFont(font);
+		}
+	}
+    
+
+    public void setFontName(String name) {
+		synchronized (this.lock) {
+			// try to set a new font, but restore current one if it fails
+			Font current = font;
+			try {
+				font = new Font(name, fontStyle, fontsize);
+				fontName = name;
+		        metrics = frame.getFontMetrics(font);
+		        lineheight = metrics.getHeight();
+		        lineascent = metrics.getAscent();
+		        charwidth = metrics.charWidth('m');
+
+		        // compute lines and columns within margins
+		        chars_per_line = width / charwidth;
+		        lines_per_page = height / lineheight;
+			} catch (Exception e) {
+				font = current;
+			}
+			// if a page is pending, set the new font, else newpage() will
+			if (page != null)
+				page.setFont(font);
+		}
+	}
 
     /** End the current page. Subsequent output will be on a new page */
     public void pageBreak() { synchronized(this.lock) { newpage(); } }
@@ -305,7 +351,10 @@ public class HardcopyWriter extends Writer {
      *  method modified by Dennis Miller to add preview capability
      */
     protected void newline() {
+    	page.drawString(line, x0, y0 + (linenum*lineheight) + lineascent);
+    	line = "";
         charnum = 0;
+        charoffset =0;
         linenum++;
         if (linenum >= lines_per_page) {
             if (isPreview) pageImages.addElement(previewImage);

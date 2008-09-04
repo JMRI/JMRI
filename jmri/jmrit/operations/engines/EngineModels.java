@@ -13,12 +13,12 @@ import javax.swing.JComboBox;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
-	private static final String TYPES = "";
-	public static final String ENGINETYPES = "EngineTypes";
+	private static final String MODELS = "E8%%F7%%F8%%GP20%%GP30%%GP35%%RS18%%RS19%%RS27%%RS3%%RSD4%%SD26%%SD45%%SW1200%%SW1500%%SW8%%TRAINMASTER%%U28B";
+	public static final String ENGINEMODELS = "EngineModels";
 	private static final String LENGTH = "Length";
     
 	public EngineModels() {
@@ -29,13 +29,13 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 
 	public static synchronized EngineModels instance() {
 		if (_instance == null) {
-			if (log.isDebugEnabled()) log.debug("EngineTypes creating instance");
+			if (log.isDebugEnabled()) log.debug("EngineModels creating instance");
 			// create and load
 			_instance = new EngineModels();
 			// load cars
 			EngineManagerXml.instance();
 		}
-		if (log.isDebugEnabled()) log.debug("EngineTypes returns instance "+_instance);
+		if (log.isDebugEnabled()) log.debug("EngineModels returns instance "+_instance);
 		return _instance;
 	}
 
@@ -56,7 +56,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     
     public String[] getNames(){
      	if (list.size() == 0){
-     		String[] types = TYPES.split("%%");
+     		String[] types = MODELS.split("%%");
      		for (int i=0; i<types.length; i++)
      			list.add(types[i]);
     	}
@@ -78,12 +78,12 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (ENGINETYPES, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS, null, LENGTH);
     }
     
     public void deleteName(String type){
     	list.remove(type);
-    	firePropertyChange (ENGINETYPES, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS, null, LENGTH);
      }
     
     public boolean containsName(String type){

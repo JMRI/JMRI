@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1292,8 +1292,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
-	public static void printReport(File file, String name, boolean isPreview){
-        // obtain a HardcopyWriter to do this
+	public static void printReport (File file, String name, boolean isPreview, String fontName){
+	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
         try {
@@ -1303,9 +1303,8 @@ public class Train implements java.beans.PropertyChangeListener {
             return;
         }
         // set font
-        //DAB still debugging this
- //       writer.setFontStyle(Font.ITALIC);
- //       writer.setFontName("SansSerif");
+        if (!fontName.equals(""))
+        	writer.setFontName(fontName);
         
         // now get the build file to print
 
@@ -1341,6 +1340,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.debug("Print close failed");
 		}
         writer.close();
+	}
+	
+	public static void printReport(File file, String name, boolean isPreview){
+		printReport(file, name, isPreview, "");
  	}
 	
 	public void makeManifest() {
@@ -1446,7 +1449,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if(_built){
 			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest", isPreview);
+			printReport(file, "Train Manifest", isPreview, Setup.getFontName());
 		}else{
 			String string = "Need to build train (" +getName()+ ") before printing manifest";
 			log.debug(string);
