@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.2 2008-09-01 01:37:11 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.3 2008-09-04 17:59:15 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (engines | engineTypes | engineLengths | consists)*>
+<!ELEMENT operations-config (engines | engineModels | engineLengths | consists)*>
 
 <!ELEMENT engineModels (#PCDATA)>
 <!ELEMENT engineLengths (#PCDATA)>
@@ -30,7 +30,9 @@
 <!ATTLIST engine color					CDATA #IMPLIED> 
 <!ATTLIST engine length					CDATA #IMPLIED>
 <!ATTLIST engine weight					CDATA #IMPLIED>
-<!ATTLIST engine built					CDATA #IMPLIED>                                     
+<!ATTLIST engine built					CDATA #IMPLIED>  
+<!ATTLIST engine consist				CDATA #IMPLIED> 
+<!ATTLIST engine leadConsist			CDATA #IMPLIED>                                       
 <!ATTLIST engine location				CDATA #IMPLIED>
 <!ATTLIST engine locationId				CDATA #IMPLIED>    
 <!ATTLIST engine secLocationId			CDATA #IMPLIED> 
@@ -40,6 +42,7 @@
 <!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
 <!ATTLIST engine routeDestinationId		CDATA #IMPLIED> 
 <!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST engine lastRouteId			CDATA #IMPLIED> 
 <!ATTLIST engine train					CDATA #IMPLIED>  
 <!ATTLIST engine owner					CDATA #IMPLIED>  
 <!ATTLIST engine moves					CDATA #IMPLIED>                    
