@@ -100,14 +100,20 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Add/Edit Memories" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
       </tocitem>
-      <tocitem text="Operations" target="html.tools.Operations">
-         <tocitem text="Settings" target="package.jmri.jmrit.operations.OperationsSetupFrame"/>
-         <tocitem text="Locations" target="package.jmri.jmrit.operations.LocationsTableFrame"/>
-         <tocitem text="Cars" target="package.jmri.jmrit.operations.CarsTableFrame"/>
-         <tocitem text="Engines" target="package.jmri.jmrit.operations.EnginesTableFrame"/>
-         <tocitem text="Routes" target="package.jmri.jmrit.operations.RoutesTableFrame"/>
-         <tocitem text="Trains" target="package.jmri.jmrit.operations.TrainsTableFrame"/>
+        <tocitem text="Operations" target="package.jmri.jmrit.operations.Operations">
+      <tocitem text="Settings" target="package.jmri.jmrit.operations.Operations_Settings"/>
+      <tocitem text="Locations" target="package.jmri.jmrit.operations.Operations_Locations">
+         <tocitem text="Yards" target="package.jmri.jmrit.operations.Operations_Yards"/>
+         <tocitem text="Sidings" target="package.jmri.jmrit.operations.Operations_Sidings"/>
+         <tocitem text="Interchange" target="package.jmri.jmrit.operations.Operations_Interchange"/>
+         <tocitem text="Staging" target="package.jmri.jmrit.operations.Operations_Staging"/>
       </tocitem>
+      <tocitem text="Cars" target="package.jmri.jmrit.operations.Operations_Cars"/>
+      <tocitem text="Engines" target="package.jmri.jmrit.operations.Operations_Engines"/>
+      <tocitem text="Routes" target="package.jmri.jmrit.operations.Operations_Routes"/>
+      <tocitem text="Trains" target="package.jmri.jmrit.operations.Operations_Trains"/>
+      <tocitem text="Switch List" target="package.jmri.jmrit.operations.Operations_SwitchList"/>
+   </tocitem>
       <tocitem text="Programmers">
          <tocitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
          <tocitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming"/>
