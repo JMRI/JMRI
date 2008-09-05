@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2038,20 +2038,11 @@ public class LayoutEditor extends JmriJFrame {
 					foundObject = null;
 				}
 				else if (event.isMetaDown()) {
-					selectedObject = (Object)checkSensorIcons(dLoc);
-					if (selectedObject==null) {
-						selectedObject = (Object)checkBackgrounds(dLoc);
-						if (selectedObject==null) {
-							selectedObject = (Object)checkSignalHeadIcons(dLoc);
-							if (selectedObject==null) {
-								selectedObject = (Object)checkLabelImages(dLoc);
-							}
-						}
-					}
+					selectedObject = (Object)checkMarkers(dLoc);
 					if (selectedObject!=null) {
-						selectedPointType = LAYOUT_POS_LABEL;
-						startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
-												(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
+						selectedPointType = MARKER;
+						startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
+												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
 						selectedNeedsConnect = false;
 					}
 					else {
@@ -2070,14 +2061,29 @@ public class LayoutEditor extends JmriJFrame {
 												(((MultiSensorIcon)selectedObject).getY()-dLoc.getY()));
 								selectedNeedsConnect = false;
 							}
-							else {
-								selectedObject = (Object)checkMarkers(dLoc);
-								if (selectedObject!=null) {
-									selectedPointType = MARKER;
-									startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
-												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
-									selectedNeedsConnect = false;
-								}
+						}
+					}
+					if (selectedObject==null) {
+						selectedObject = (Object)checkSensorIcons(dLoc);
+						if (selectedObject==null) {
+							selectedObject = (Object)checkSignalHeadIcons(dLoc);
+							if (selectedObject==null) {
+								selectedObject = (Object)checkLabelImages(dLoc);
+							}
+						}
+						if (selectedObject!=null) {
+							selectedPointType = LAYOUT_POS_LABEL;
+							startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
+												(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
+							selectedNeedsConnect = false;
+						}
+						else {
+							selectedObject = (Object)checkBackgrounds(dLoc);
+							if (selectedObject!=null) {
+								selectedPointType = LAYOUT_POS_LABEL;
+								startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
+													(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
+								selectedNeedsConnect = false;
 							}
 						}
 					}					
@@ -2480,7 +2486,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			else if (s.isText()) {
 				h = s.getFont().getSize();
-				w = h*4;
+				w = (h*2*(s.getText().length()))/3;
 			}
 			Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
 			// Test this detection rectangle
@@ -2719,9 +2725,9 @@ public class LayoutEditor extends JmriJFrame {
 					s.showPopUp(event);
 				}
 				else {
-					LayoutPositionableLabel b = checkBackgrounds(dLoc);
-					if (b!=null) {
-						b.showPopUp(event);
+					LocoIcon lo = checkMarkers(dLoc);
+					if (lo!=null) {
+						lo.showPopUp(event);
 					}
 					else {
 						LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
@@ -2729,24 +2735,24 @@ public class LayoutEditor extends JmriJFrame {
 							sh.showPopUp(event);
 						}
 						else {
-							LayoutPositionableLabel lb = checkLabelImages(dLoc);
-							if (lb!=null) {
-								lb.showPopUp(event);
+							AnalogClock2Display c = checkClocks(dLoc);
+							if (c!=null) {
+								c.showPopUp(event);
 							}
 							else {
-								AnalogClock2Display c = checkClocks(dLoc);
-								if (c!=null) {
-									c.showPopUp(event);
-								}
+								MultiSensorIcon ms = checkMultiSensors(dLoc);
+								if (ms!=null) {
+									ms.showPopUp(event);
+								}								
 								else {
-									MultiSensorIcon ms = checkMultiSensors(dLoc);
-									if (ms!=null) {
-										ms.showPopUp(event);
-									}								
+									LayoutPositionableLabel lb = checkLabelImages(dLoc);
+									if (lb!=null) {
+										lb.showPopUp(event);
+									}
 									else {
-										LocoIcon lo = checkMarkers(dLoc);
-										if (lo!=null) {
-											lo.showPopUp(event);
+										LayoutPositionableLabel b = checkBackgrounds(dLoc);
+										if (b!=null) {
+											b.showPopUp(event);
 										}
 									}
 								}
