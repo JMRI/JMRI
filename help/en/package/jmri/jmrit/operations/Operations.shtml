@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.4 2008-09-02 02:47:54 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.5 2008-09-06 17:20:23 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -221,6 +221,14 @@ yards, etc. Note if you are running a train to and from the same staging
 track, you must define two staging tracks for the program, one to depart
 on and one to return on. Physically the two staging tracks can be the
 same one.
+
+<p>If you require a train leaving staging to have a certain number
+of engines, engine model, or road name; the program will search all
+staging tracks at the departure location for a train meeting those
+requirements. If you set the engine requirements to 0, the program will
+select the next available train from staging; and will ignore the number
+of engines leaving that staging track. See <a href="#TrainRequires">Train
+Requires</a> for more info.</p>
 
 <H3>Looping Trains through Staging</H3>
 
@@ -511,6 +519,7 @@ To build a list of road names that the train will not service, select
 the "Exclude" radio button. Use the menu of road names and the "Add
 Road" button to build a list of roads that this train will not service.
 
+<A NAME="TrainRequires"></A>
 <H3>Train Requires</H3>
 
 You can control the number of engines that will be assigned to this
