@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -46,15 +46,23 @@ public class MemoryFrameAction extends AbstractAction {
 	JButton gcButton = new JButton("Collect memory");
 	JButton testButton = new JButton("Test");
 
+    java.text.NumberFormat nf;
+
     public void actionPerformed(ActionEvent e) {
+
+        nf = java.text.NumberFormat.getInstance();
+        nf.setMinimumFractionDigits(3);
+        nf.setMaximumFractionDigits(3);
+        nf.setGroupingUsed(false);
+
 		JFrame f = new JFrame("Memory usage");
 
 		Container p = f.getContentPane();
 		p.setLayout(new GridLayout(5,3));
 
-		p.add(new JLabel("used (kB)"));
-		p.add(new JLabel("free (kB)"));
-		p.add(new JLabel("total (kB)"));
+		p.add(new JLabel("used (MB)"));
+		p.add(new JLabel("free (MB)"));
+		p.add(new JLabel("total (MB, of "+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
 
 		p.add(used3);
 		p.add(free3);
@@ -104,11 +112,11 @@ public class MemoryFrameAction extends AbstractAction {
 		free2.setText(free1.getText());
 		total2.setText(total1.getText());
 
-		long free  = Runtime.getRuntime().freeMemory()/1024;
-		long total = Runtime.getRuntime().totalMemory()/1024;
-		used1.setText(Long.toString(total-free));
-		free1.setText(Long.toString(free));
-		total1.setText(Long.toString(total));
+		double free  = Runtime.getRuntime().freeMemory()/(1024.*1024.);
+		double total = Runtime.getRuntime().totalMemory()/(1024.*1024.);
+		used1.setText(nf.format(total-free));
+		free1.setText(nf.format(free));
+		total1.setText(nf.format(total));
 	}
 
 	// initialize logging
