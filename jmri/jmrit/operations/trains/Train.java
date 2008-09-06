@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -490,12 +490,15 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	// build variables shared between local routines
 	int numberCars;		// how many cars are moved by this train
+	int numberEngines;	// the number of engines assigned to this train
 	int carIndex;		// index for carList
 	List carList;		// list of cars available for this train
 	List routeList;		// list of locations from departure to termination served by this train
 	int moves;			// the number of pickup car moves for a location
 	double maxWeight;	// the maximum weight of cars in train
 	int reqNumOfMoves;	// the requested number of car moves for a location
+	Location departLocation;	// train departs this location
+	Location terminateLocation; // train terminate at this location
 	boolean success;	// true when enough cars have been picked up from a location
 	
 	// managers 
@@ -546,13 +549,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		}
 		// train departs
-		Location departLocation = locationManager.getLocationByName(getTrainDepartsName());
+		departLocation = locationManager.getLocationByName(getTrainDepartsName());
 		if (departLocation == null){
 			buildFailed(fileOut, "Route departure location missing for train ("+getName()+")");
 			return;
 		}
 		// train terminates
-		Location terminateLocation = locationManager.getLocationByName(getTrainTerminatesName());
+		terminateLocation = locationManager.getLocationByName(getTrainTerminatesName());
 		if (terminateLocation == null){
 			buildFailed(fileOut, "Route terminate location missing for train ("+getName()+")");
 			return;
@@ -603,123 +606,23 @@ public class Train implements java.beans.PropertyChangeListener {
 			for (int i=0; i<slStage.size(); i++ ){
 				departStage = departLocation.getSecondaryLocationById((String)slStage.get(i));
 				addLine(fileOut, "Staging track ("+departStage.getName()+") has "+departStage.getNumberCars()+" cars");
-				if (departStage.getNumberCars()>0){
-					break;
-				}
-			}
-		}
-		// show engine requirements for this train
-		addLine(fileOut, "Train requires "+getNumberEngines()+" engine(s) type ("+getEngineModel()+") road (" +getEngineRoad()+")");
-		
-		int reqEngines = 0; 	
-		int numEngines = 0;
-		int engineLength = 0;
-
-		// get list of engines for this route
-		List engineList = engineManager.getEnginesAvailableTrainList(this);
-		// remove engines not at departure, wrong road name, or part of consist
-		for (int i=0; i<engineList.size(); i++){
-			Engine engine = engineManager.getEngineById((String) engineList.get(i));
-			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") type ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getSecondaryLocationName()+")");
-			if(engine.getLocationName().equals(getTrainDepartsName()) && (departStage == null || engine.getSecondaryLocationName().equals(departStage.getName()))){
-				if ((getEngineRoad().equals("") || engine.getRoad().equals(getEngineRoad())) && (getEngineModel().equals("") || engine.getModel().equals(getEngineModel()))){
-					// is this engine part of a consist?  Keep only lead engines in consist.
-					if (engine.getConsist() != null)
-						addLine(fileOut, "Engine ("+engine.getId()+") is part of consist ("+engine.getConsist().getName()+")");
-					if (engine.getConsist() == null || engine.getConsist().isLeadEngine(engine))
-						continue;
-				} else {
-					addLine(fileOut, "Exclude engine ("+engine.getId()+")");
-				}
-			}
-			engineList.remove(i);
-			i--;
-		}
-		// determine the number of engines required for this train
-		if (departStage != null){
-			reqEngines = 1;			// need to move all engines in staging
-		} else if (getNumberEngines().equals(AUTO)){
-			// how many engines required last time?
-
-			// determine number of engines required by train weight!
-			double tons = maxWeight*Setup.getScaleRatio();
-
-		} else {
-			reqEngines = Integer.parseInt(getNumberEngines());
-		}
-
-		// now load the number of engines into the train
-		SecondaryLocation terminateSecondary = null;
-		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
-			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
-			iconEngine = engine;		//load Icon
-			// find secondary location for engines at destination
-			List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
-			for (int s = 0; s < sls.size(); s++){
-				terminateSecondary = terminateLocation.getSecondaryLocationById((String)sls.get(s));
-				if (terminateSecondary.getLocType().equals(terminateSecondary.STAGING) && terminateSecondary.getNumberCars()>0){
-					terminateSecondary = null;
-					continue;
-				}
-				String status = engine.testDestination(terminateLocation, terminateSecondary);
-				if(status == engine.OKAY){
+				if (departStage.getNumberCars()>0 && getEngines(fileOut, departStage)){
 					break;
 				} else {
-					terminateSecondary = null;
-				}
-			}
-			if (terminateSecondary == null && indexEng == engineList.size()-1 && reqEngines>0){
-				buildFailed(fileOut, "Could not find valid destination for engines at (" +terminateLocation.getName()+ ") for train (" +getName()+ ")");
-				return;
-			}
-			if (terminateSecondary != null){
-				if (engine.getConsist() != null){
-					List cEngines = engine.getConsist().getEngines();
-					if (cEngines.size() == reqEngines || departStage != null){
-						engineLength = engine.getConsist().getLength();
-						for (int j=0; j<cEngines.size(); j++){
-							numEngines++;
-							Engine cEngine = (Engine)cEngines.get(j);
-							addLine(fileOut, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
-							cEngine.setTrain(this);
-							cEngine.setRouteLocation(getTrainDepartsRouteLocation());
-							cEngine.setRouteDestination(getTrainTerminatesRouteLocation());
-							cEngine.setDestination(terminateLocation, terminateSecondary);
-						}
-						break;  // done with loading engines
-						// consist has the wrong number of engines, remove 	
-					} else {
-						addLine(fileOut, "Exclude engine ("+engine.getId()+") consist ("+engine.getConsist().getName()+") number of engines (" +cEngines.size()+ ")");
-						engineList.remove(indexEng);
-						indexEng--;
-					}
-					// engine isn't part of a consist
-				} else if (reqEngines ==1){
-					numEngines++;
-					addLine(fileOut, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
-					engine.setTrain(this);
-					engine.setRouteLocation(getTrainDepartsRouteLocation());
-					engine.setRouteDestination(getTrainTerminatesRouteLocation());
-					engine.setDestination(terminateLocation, terminateSecondary);
-					break;  // done with loading engine
+					departStage = null;
 				}
 			}
 		}
-
-		if (numEngines < reqEngines && departStage == null){
-			buildFailed(fileOut, "Could not find the proper engines at departure location");
+		if (slStage.size()>0 && departStage == null){
+			buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
 			return;
 		}
-		// terminating into staging?
-		if (terminateSecondary != null && terminateSecondary.getLocType().equals(terminateSecondary.STAGING)){
-			getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
+		// load engines for this train
+		if (departStage == null && !getEngines(fileOut, null)){
+			buildFailed(fileOut, "Could not get the required engines for this train");
+			return;
 		}
 
-		// set the engine length for locations
-		for (int i=0; i<routeList.size(); i++){
-			RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
-			rl.setTrainLength(engineLength);		// load the engine(s) length
-		}
 		// get list of cars for this route
 		carList = carManager.getCarsAvailableTrainList(this);
 		// DAB this needs to be controled by each train
@@ -820,7 +723,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 			// error if all of the cars in staging aren't available
-			if (numberCarsFromStaging+numEngines != departStage.getNumberCars()){
+			if (numberCarsFromStaging+numberEngines != departStage.getNumberCars()){
 				buildFailed(fileOut, "Not all cars in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars have road or types that can't be serviced");
 				return;
 			}
@@ -1098,6 +1001,134 @@ public class Train implements java.beans.PropertyChangeListener {
 		moveTrainIcon(getTrainDepartsRouteLocation());
 
 	}
+	
+	// get the engines for this train, if secondary != null, then engines must
+	// come from that secondary location (staging).  Returns true if engines found, else false.
+	// This routine will also setup the secondary location if the train is
+	// terminating into staging, therefore this routine should only be called once when return is true.
+	private boolean getEngines(PrintWriter fileOut, SecondaryLocation secondary){
+		// show engine requirements for this train
+		addLine(fileOut, "Train requires "+getNumberEngines()+" engine(s) type ("+getEngineModel()+") road (" +getEngineRoad()+")");
+				
+		numberEngines = 0;
+		int reqEngines = 0; 	
+		int engineLength = 0;
+		
+		// DAB this doesn't work yet!
+		if (getNumberEngines().equals(AUTO)){
+			// how many engines required last time?
+
+			// determine number of engines required by train weight!
+			double tons = maxWeight*Setup.getScaleRatio();
+
+		} else {
+			reqEngines = Integer.parseInt(getNumberEngines());
+		}
+
+		// get list of engines for this route
+		List engineList = engineManager.getEnginesAvailableTrainList(this);
+		// remove engines not at departure, wrong road name, or part of consist
+		for (int i=0; i<engineList.size(); i++){
+			Engine engine = engineManager.getEngineById((String) engineList.get(i));
+			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") type ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getSecondaryLocationName()+")");
+			if(engine.getLocationName().equals(getTrainDepartsName()) && (secondary == null || engine.getSecondaryLocationName().equals(secondary.getName()))){
+				if ((getEngineRoad().equals("") || engine.getRoad().equals(getEngineRoad())) && (getEngineModel().equals("") || engine.getModel().equals(getEngineModel()))){
+					// is this engine part of a consist?  Keep only lead engines in consist.
+					if (engine.getConsist() != null){
+						addLine(fileOut, "Engine ("+engine.getId()+") is part of consist ("+engine.getConsist().getName()+")");
+						if (!engine.getConsist().isLeadEngine(engine)){
+							// only use lead engines
+							engineList.remove(i);
+							i--;
+						}
+					}
+					continue;
+				} 
+			}
+			addLine(fileOut, "Exclude engine ("+engine.getId()+")");
+			engineList.remove(i);
+			i--;
+		}
+		// if leaving staging, use any number of engines if required number is 0
+		boolean leavingStaging = false;
+		if (secondary != null && reqEngines == 0)
+			leavingStaging = true;
+
+		// now load the number of engines into the train
+		SecondaryLocation terminateSecondary = null;
+		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
+			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
+			iconEngine = engine;		//load Icon
+			// find secondary location for engines at destination
+			List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
+			for (int s = 0; s < sls.size(); s++){
+				terminateSecondary = terminateLocation.getSecondaryLocationById((String)sls.get(s));
+				if (terminateSecondary.getLocType().equals(terminateSecondary.STAGING) && terminateSecondary.getNumberCars()>0){
+					terminateSecondary = null;
+					continue;
+				}
+				String status = engine.testDestination(terminateLocation, terminateSecondary);
+				if(status == engine.OKAY){
+					break;
+				} else {
+					terminateSecondary = null;
+				}
+			}
+			if (terminateSecondary == null && indexEng == engineList.size()-1 && (reqEngines>0 || leavingStaging)){
+				addLine(fileOut, "Could not find valid destination for engines at (" +terminateLocation.getName()+ ") for train (" +getName()+ ")");
+				return false;
+			}
+			if (terminateSecondary != null){
+				if (engine.getConsist() != null){
+					List cEngines = engine.getConsist().getEngines();
+					if (cEngines.size() == reqEngines || leavingStaging){
+						engineLength = engine.getConsist().getLength();
+						for (int j=0; j<cEngines.size(); j++){
+							numberEngines++;
+							Engine cEngine = (Engine)cEngines.get(j);
+							addLine(fileOut, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
+							cEngine.setTrain(this);
+							cEngine.setRouteLocation(getTrainDepartsRouteLocation());
+							cEngine.setRouteDestination(getTrainTerminatesRouteLocation());
+							cEngine.setDestination(terminateLocation, terminateSecondary);
+						}
+						break;  // done with loading engines
+						// consist has the wrong number of engines, remove 	
+					} else {
+						addLine(fileOut, "Exclude engine ("+engine.getId()+") consist ("+engine.getConsist().getName()+") number of engines (" +cEngines.size()+ ")");
+						engineList.remove(indexEng);
+						indexEng--;
+					}
+					// engine isn't part of a consist
+				} else if (reqEngines ==1 || leavingStaging){
+					numberEngines++;
+					addLine(fileOut, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
+					engine.setTrain(this);
+					engine.setRouteLocation(getTrainDepartsRouteLocation());
+					engine.setRouteDestination(getTrainTerminatesRouteLocation());
+					engine.setDestination(terminateLocation, terminateSecondary);
+					engineLength = Integer.parseInt(engine.getLength());
+					break;  // done with loading engine
+				}
+			}
+		}
+		if (numberEngines < reqEngines){
+			addLine(fileOut, "Could not find the proper engines at departure location");
+			return false;
+		}
+		
+		// set the engine length for locations
+		for (int i=0; i<routeList.size(); i++){
+			RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
+			rl.setTrainLength(engineLength);		// load the engine(s) length
+		}
+		// terminating into staging?
+		if (terminateSecondary != null && terminateSecondary.getLocType().equals(terminateSecondary.STAGING)){
+			getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
+		}
+		return true;
+	}
+	
 	/**
 	 * Add car to train
 	 * @param file
@@ -1362,7 +1393,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		// build header
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		addLine(fileOut, "Manifest for train (" + getName() + ") "+ getDescription());
+		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + getName() + ") "+ getDescription());
 		addLine(fileOut, "Valid " + new Date());
 		if (!getComment().equals("")){
 			addLine(fileOut, getComment());
@@ -1372,7 +1403,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		Engine engine = null;
 		for (int i =0; i < engineList.size(); i++){
 			engine = engineManager.getEngineById((String) engineList.get(i));
-			addLine(fileOut, "Engine "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") assigned to this train");
+			addLine(fileOut, rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain"));
 		}
 		
 		if (engine != null)
@@ -1385,7 +1416,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < routeList.size(); i++) {
 			RouteLocation rl = getRoute().getLocationById((String) routeList.get(i));
 			newLine(fileOut);
-			addLine(fileOut, "Scheduled work in " + rl.getName());
+			addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName());
 			// block cars by destination
 			for (int j = i; j < routeList.size(); j++) {
 				RouteLocation rld = getRoute().getLocationById((String) routeList.get(j));
@@ -1406,12 +1437,12 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 			if (i != routeList.size() - 1) {
-				addLine(fileOut, "Train departs " + rl.getName() +" "+ rl.getTrainDirection()
-						+ "bound with " + cars + " cars, " +rl.getTrainLength()+" feet");
+				addLine(fileOut, rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirection()
+						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()+" "+rb.getString("feet"));
 			} else {
 				if(engine != null)
-					addLine(fileOut, "Drop engine(s) to "+ engine.getSecondaryDestinationName()); 
-				addLine(fileOut, "Train terminates in " + rl.getName());
+					addLine(fileOut, rb.getString("DropEngineTo")+ " "+ engine.getSecondaryDestinationName()); 
+				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + rl.getName());
 			}
 		}
 		fileOut.flush();
@@ -1420,21 +1451,21 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	private void  pickupCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		addLine(file, "Pickup " + car.getRoad() + " "
+		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + car.getType() + " "
-				+ car.getLength() + "' " + car.getColor()
-				+ (car.isHazardous() ? " (Hazardous)" : "")
-				+ (car.hasFred() ? " (FRED)" : "") + " from "
+				+ car.getLength() + " " + car.getColor()
+				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
+				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
 				+ car.getSecondaryLocationName());
 	}
 	
 	private void dropCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		addLine(file, "Drop " + car.getRoad() + " "
+		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + car.getType() + " "
-				+ car.getLength() + "' " + car.getColor()
-				+ (car.isHazardous() ? " (Hazardous)" : "")
-				+ " to " + car.getSecondaryDestinationName());
+				+ car.getLength() + " " + car.getColor()
+				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
+				+ rb.getString("to") + " " + car.getSecondaryDestinationName());
 	}
 	
 	public void printBuildReport(){
