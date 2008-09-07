@@ -23,6 +23,11 @@
 </li>
    
 <li>
+<a href="html/tools/scripting/AppleScript.shtml">AppleScript</a>
+<ul></ul>
+</li>
+   
+<li>
 <a href="html/tools/tracker/index.shtml">Block</a>
 <ul></ul>
 </li>
@@ -244,6 +249,11 @@
       
 <li>
 <a href="html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/ecos/index.shtml">ECoS</a>
 <ul></ul>
 </li>
       

@@ -62,6 +62,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
       <tocitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
       <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
+      <tocitem text="ECoS" target="html.hardware.ecos.index"/>
       <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
       <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>
       <tocitem text="NCE" target="html.hardware.nce.NCE"/>

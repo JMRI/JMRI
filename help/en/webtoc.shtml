@@ -272,6 +272,11 @@
 </li>
       
 <li>
+<a href="html/hardware/ecos/index.shtml">ECoS</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/hardware/grapevine/index.shtml">Grapevine (ProTrak)</a>
 <ul></ul>
 </li>
@@ -445,68 +450,68 @@
       
 </ul>
 </li>
-        
+      
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">Operations</a>
 <ul>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
 <ul></ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
 <ul>
-         
+            
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards</a>
 <ul></ul>
 </li>
-         
+            
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
 <ul></ul>
 </li>
-         
+            
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
 <ul></ul>
 </li>
-         
+            
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging</a>
 <ul></ul>
 </li>
-      
+         
 </ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
 <ul></ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
 <ul></ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes</a>
 <ul></ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
 <ul></ul>
 </li>
-      
+         
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List</a>
 <ul></ul>
 </li>
-   
+      
 </ul>
 </li>
       
@@ -553,6 +558,33 @@
          
 <li>
 <a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>
+<a href="html/tools/scripting/index.shtml">Scripting</a>
+<ul>
+         
+<li>
+<a href="html/tools/scripting/Start.shtml">Getting Started</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/tools/scripting/FAQ.shtml">Frequently Asked Questions</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/tools/scripting/Python.shtml">Python</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/tools/scripting/AppleScript.shtml">AppleScript</a>
 <ul></ul>
 </li>
       
