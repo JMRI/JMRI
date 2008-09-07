@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.52 2008-08-12 06:19:41 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.53 2008-09-07 04:00:37 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -124,7 +124,9 @@
 	has helped with the EasyDCC code, helped debug the Ant compilation process,
 	and has been working on decoder files
 	<LI>Ray deBlieck, who let us test on his Empire Builder
-	<LI>Eddie Delozier, who write the TCS M1 decoder file
+	<LI>Eddie Delozier, who write the TCS M1 decoder file.
+	<LI>Kevin Dickerson, who figured out the ECoS protocol so JMRI
+	could connect to one.
 	<LI>Robert Doss, who provided ID information for the MRC 330 decoder
 	<LI>David Duchamp, who has added diagnostics to the C/MRI code, 
 	did much of the customization work for the fast clock, 
