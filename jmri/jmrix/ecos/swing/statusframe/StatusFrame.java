@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Frame for ECoS status
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame {
 
@@ -31,7 +31,7 @@ public class StatusFrame extends jmri.util.JmriJFrame {
 
         statusPane = new StatusPane();
         
-        setTitle("ECoS status");
+        setTitle("ECoS Info");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(statusPane);
