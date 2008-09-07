@@ -11,7 +11,7 @@ package jmri.jmrix;
  * needed.  The length is given by the largest index written so far.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -20,7 +20,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public  AbstractMRReply() {
         setBinary(false);
         unsolicited = false;
-        _dataChars = new int[DEFAULTMAXSIZE];
+        _dataChars = new int[maxSize()];
     }
 
     // copy one
