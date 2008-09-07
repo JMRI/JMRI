@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.22 2008-07-30 02:28:27 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.23 2008-09-07 04:05:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -74,7 +74,7 @@
 
 	    <dt class="im">
 		<a href="http://www.dccspecialties.com">
-		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="CVP"></a>
+		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="DCC Specialties"></a>
 	    </dt>
 	    <dt>DCC Specialties</dt>
 	    <dd><p class="dl">Configure:  
@@ -112,6 +112,16 @@
 		<A HREF="loconet/PR3.shtml">PR3 interface</a>.</p>
 		    <p class="dl">Configure: Directly connecting to an
 		<a href="loconet/Uhlenbrock.shtml">Intellibox serial port</a>.
+	    </dd>
+
+	    <dt class="im">
+		<a href="http://www.loksound.de/us/index.php?showId=205">
+		<img src="http://www.esu.eu/fileadmin/template/gfx/banner1.jpg" width="70" height="50" alt="ESU"></a>
+	    </dt>
+	    <dt>ESU</dt>
+	    <dd><p class="dl">Configure connection to 
+		<A HREF="ecos/index.shtml">ECoS</a> command station.</p>
+		<p>&nbsp;</p>
 	    </dd>
 
 	    <dt class="im">

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: index.shtml,v 1.1 2008-09-07 04:05:45 jacobsen Exp $ -->
+<title>JMRI: ESU ECoS Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: ESU ECoS Support
+</h1>
+
+To configure:
+<ul>
+<li>Select "ESU ECoS" as the connection type
+<li>Enter the IP address for your ECoS unit
+<li>Leave the port number at 14157
+<li>Click "Save"
+</ul>
+
+<p>
+Initially, only turnout and power support is available for 
+a JMRI-connected ECoS unit.
+
+<p>
+ECoS-connected turnouts have names like "UT123", where "U"
+is the system name for esU ecos, "T" means turnout, and
+"123" is the address.
+
+<p>
+When JMRI first starts up, it reads the turnout information
+from the ECoS, which might take a couple seconds.
+
+<p>
+Additional information on the ECoS can be found
+on the 
+<a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
+
+<p>
+Support for ECoS was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
