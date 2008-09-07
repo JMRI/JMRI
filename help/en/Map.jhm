@@ -262,6 +262,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_PrintData" url="DecoderProManual/Comp_PrintData.shtml" />
 	<mapID target="package.jmri.jmrix.lenz.stackmon.StackMonFrame" url="package/jmri/jmrix/lenz/stackmon/StackMonFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Basic" url="DecoderProManual/Comp_Basic.shtml" />
+	<mapID target="html.tools.scripting.AppleScript" url="html/tools/scripting/AppleScript.shtml" />
 	<mapID target="html.apps.DecoderPro.FAQ_update" url="html/apps/DecoderPro/FAQ.shtml#update" />
 	<mapID target="package.jmri.jmrit.operations.Operations_Cars" url="package/jmri/jmrit/operations/Operations.shtml#Cars" />
 	<mapID target="package.jmri.jmrit.ToolsMenu" url="package/jmri/jmrit/ToolsMenu.shtml" />

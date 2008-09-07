@@ -100,20 +100,20 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Add/Edit Memories" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
       </tocitem>
-        <tocitem text="Operations" target="package.jmri.jmrit.operations.Operations">
-      <tocitem text="Settings" target="package.jmri.jmrit.operations.Operations_Settings"/>
-      <tocitem text="Locations" target="package.jmri.jmrit.operations.Operations_Locations">
-         <tocitem text="Yards" target="package.jmri.jmrit.operations.Operations_Yards"/>
-         <tocitem text="Sidings" target="package.jmri.jmrit.operations.Operations_Sidings"/>
-         <tocitem text="Interchange" target="package.jmri.jmrit.operations.Operations_Interchange"/>
-         <tocitem text="Staging" target="package.jmri.jmrit.operations.Operations_Staging"/>
+      <tocitem text="Operations" target="package.jmri.jmrit.operations.Operations">
+         <tocitem text="Settings" target="package.jmri.jmrit.operations.Operations_Settings"/>
+         <tocitem text="Locations" target="package.jmri.jmrit.operations.Operations_Locations">
+            <tocitem text="Yards" target="package.jmri.jmrit.operations.Operations_Yards"/>
+            <tocitem text="Sidings" target="package.jmri.jmrit.operations.Operations_Sidings"/>
+            <tocitem text="Interchange" target="package.jmri.jmrit.operations.Operations_Interchange"/>
+            <tocitem text="Staging" target="package.jmri.jmrit.operations.Operations_Staging"/>
+         </tocitem>
+         <tocitem text="Cars" target="package.jmri.jmrit.operations.Operations_Cars"/>
+         <tocitem text="Engines" target="package.jmri.jmrit.operations.Operations_Engines"/>
+         <tocitem text="Routes" target="package.jmri.jmrit.operations.Operations_Routes"/>
+         <tocitem text="Trains" target="package.jmri.jmrit.operations.Operations_Trains"/>
+         <tocitem text="Switch List" target="package.jmri.jmrit.operations.Operations_SwitchList"/>
       </tocitem>
-      <tocitem text="Cars" target="package.jmri.jmrit.operations.Operations_Cars"/>
-      <tocitem text="Engines" target="package.jmri.jmrit.operations.Operations_Engines"/>
-      <tocitem text="Routes" target="package.jmri.jmrit.operations.Operations_Routes"/>
-      <tocitem text="Trains" target="package.jmri.jmrit.operations.Operations_Trains"/>
-      <tocitem text="Switch List" target="package.jmri.jmrit.operations.Operations_SwitchList"/>
-   </tocitem>
       <tocitem text="Programmers">
          <tocitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
          <tocitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming"/>
@@ -125,6 +125,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Routes" target="html.tools.Routes">
          <tocitem text="Adding/Editing Routes" target="package.jmri.jmrit.beantable.RouteAddEdit"/>
          <tocitem text="Route Table" target="package.jmri.jmrit.beantable.RouteTable"/>
+      </tocitem>
+      <tocitem text="Scripting" target="html.tools.scripting.index">
+         <tocitem text="Getting Started" target="html.tools.scripting.Start"/>
+         <tocitem text="Frequently Asked Questions" target="html.tools.scripting.FAQ"/>
+         <tocitem text="Python" target="html.tools.scripting.Python"/>
+         <tocitem text="AppleScript" target="html.tools.scripting.AppleScript"/>
       </tocitem>
       <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
       <tocitem text="Sensors" target="html.tools.Sensors">
