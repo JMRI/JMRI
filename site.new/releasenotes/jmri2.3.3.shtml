@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.4 2008-09-02 05:20:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.5 2008-09-07 04:29:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -47,7 +47,8 @@ It contains
 many new features, including:
 <ul>
 <li>new <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">support for operations</a>
-<li>a new Window menu, making it easier to move around in the programs
+<li>a new Window menu, making it easier to move around in the programs,
+<li><a href="http://jmri.sf.net/help/en/html/hardware/ecos/index.shtml">support for the ESU ECoS system</a>
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -135,6 +136,22 @@ Fixed a problem with read-only split variables in DecoderPro still being writabl
 David Duchamp added
 <a href="http://jmri.sf.net/help/en/package/jmri/jmrit/display/LayoutEditor.shtml#markermenu">markers</a>
 to the Layout Editor.
+
+<p>
+Dan Boucreau provided improvements and fixes to the operations code, 
+including better print control.
+
+<p>
+David Duchamp fixes a problem with moving labels on top of certain Layout Editors backgrounds.
+
+<p>
+The memory monitor panel (under debug) now shows in MB units, and
+shows total available memory in the title for the right column.
+
+<P>
+Initial
+<a href="http://jmri.sf.net/help/en/html/hardware/ecos/index.shtml">ESU ECoS support</a>
+is available.
 
 <!--#include virtual="/Footer" -->
 
