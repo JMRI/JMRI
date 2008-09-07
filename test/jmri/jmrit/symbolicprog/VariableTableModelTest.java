@@ -15,7 +15,7 @@ import java.util.Vector;
  *
  * Description:
  * @author			Bob Jacobsen Copyright 2005
- * @version    $Revision: 1.9 $
+ * @version    $Revision: 1.10 $
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -239,6 +239,24 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
+    public void testIsIncluded() {
+        // create dummy OIT
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null){
+            void reportBogus(){}
+        };
+
+        // test some examples
+        Assert.assertTrue("1 in 1,2",t.isIncluded("1,2","1"));
+        Assert.assertTrue("2 in 1,2",t.isIncluded("1,2","2"));
+        Assert.assertTrue("3 in 1,2",!t.isIncluded("1,2","3"));
+        Assert.assertTrue("105 in 105,205",t.isIncluded("105,205","105"));
+        Assert.assertTrue("105 in 205,105",t.isIncluded("205,105","105"));
+        Assert.assertTrue("105 not in 1050,205",!t.isIncluded("1050,205","105"));
+        Assert.assertTrue("105 not in 50,1050",!t.isIncluded("50,1050","105"));
+        
+    }
+    
     // from here down is testing infrastructure
 
     public VariableTableModelTest(String s) {
