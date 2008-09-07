@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.5 2008-09-07 04:29:47 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.6 2008-09-07 04:45:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,10 +69,7 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-<P>There may be a problem with automatic identification of QSI decoders in this
-version.  We're still trying to determine what's going on.
-If you find that DecoderPro can't identify a QSI decoder type,
-please select the right decoder manually.
+
 
 <h3>Warnings from older versions:</h3>
 
@@ -152,6 +149,10 @@ shows total available memory in the title for the right column.
 Initial
 <a href="http://jmri.sf.net/help/en/html/hardware/ecos/index.shtml">ESU ECoS support</a>
 is available.
+
+<p>
+Michael Mosher fixed the recent ID problem with QSI decoders.
+
 
 <!--#include virtual="/Footer" -->
 
