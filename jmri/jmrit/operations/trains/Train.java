@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -724,7 +724,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			// error if all of the cars in staging aren't available
 			if (numberCarsFromStaging+numberEngines != departStage.getNumberCars()){
-				buildFailed(fileOut, "Not all cars in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars have road or types that can't be serviced");
+				buildFailed(fileOut, "ERROR not all cars in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars have road or types that can't be serviced");
 				return;
 			}
 		}
@@ -749,7 +749,12 @@ public class Train implements java.beans.PropertyChangeListener {
 				addLine(fileOut, "Car (" + c.getId()+ ") has a destination (" +c.getDestination().getName()+ ")");
 				RouteLocation rld = getRoute().getLocationByName(c.getDestination().getName());
 				if (rld == null){
-					addLine(fileOut, "Car (" + c.getId()+ ") destination (" +c.getDestination().getName()+ ") not part of this train's route (" +getRoute().getName() +"), removed from car list");
+					addLine(fileOut, "Exclude car (" + c.getId()+ ") destination (" +c.getDestination().getName()+ ") not part of this train's route (" +getRoute().getName() +")");
+					// is this car departing staging?
+					if (c.getLocationName().equals(departLocation.getName()) && departStage != null){
+						buildFailed(fileOut, "Car (" + c.getId()+ ") departing staging with destination that isn't part of this train's route");
+						return;
+					}
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
 				}
@@ -774,8 +779,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			// find a caboose or card with FRED for this train if needed
 			if (c.isCaboose() && !foundCaboose || c.hasFred() && !foundFred){	
 				if(c.getLocationName().equals(getTrainDepartsName())){
-					if (c.getDestination() == null || c.getDestination() == terminateLocation){
-						if (getCabooseRoad().equals("") || getCabooseRoad().equals(c.getRoad())){
+					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStage != null){
+						if (getCabooseRoad().equals("") || getCabooseRoad().equals(c.getRoad()) || departStage != null){
 							// find a secondary location
 							if (getTrainTerminatesRouteLocation().getSecondaryLocation() == null){
 								List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
@@ -1004,8 +1009,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	// get the engines for this train, if secondary != null, then engines must
 	// come from that secondary location (staging).  Returns true if engines found, else false.
-	// This routine will also setup the secondary location if the train is
+	// This method will also setup the secondary location if the train is
 	// terminating into staging, therefore this routine should only be called once when return is true.
+	// Note, this method ignores the user's engine destination and train assignments,
+	// Maybe this should change?
 	private boolean getEngines(PrintWriter fileOut, SecondaryLocation secondary){
 		// show engine requirements for this train
 		addLine(fileOut, "Train requires "+getNumberEngines()+" engine(s) type ("+getEngineModel()+") road (" +getEngineRoad()+")");
@@ -1027,10 +1034,11 @@ public class Train implements java.beans.PropertyChangeListener {
 
 		// get list of engines for this route
 		List engineList = engineManager.getEnginesAvailableTrainList(this);
-		// remove engines not at departure, wrong road name, or part of consist
+		// remove engines not at departure, wrong road name, or part of consist (not lead)
 		for (int i=0; i<engineList.size(); i++){
 			Engine engine = engineManager.getEngineById((String) engineList.get(i));
 			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") type ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getSecondaryLocationName()+")");
+			// determine if engine is departing from staging track (secondary != null) 
 			if(engine.getLocationName().equals(getTrainDepartsName()) && (secondary == null || engine.getSecondaryLocationName().equals(secondary.getName()))){
 				if ((getEngineRoad().equals("") || engine.getRoad().equals(getEngineRoad())) && (getEngineModel().equals("") || engine.getModel().equals(getEngineModel()))){
 					// is this engine part of a consist?  Keep only lead engines in consist.
