@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -100,6 +100,9 @@ public class SerialTrafficControllerTest extends TestCase {
             tistream.write(0x0d);
             tistream.write(0x02);
 
+            // wait for state transition
+            synchronized  (this) { wait(100); }
+            
             // drive the mechanism
             c.handleOneIncomingReply();
             Assert.assertTrue("reply received ", waitForReply());
@@ -134,6 +137,9 @@ public class SerialTrafficControllerTest extends TestCase {
             // now send reply
             tistream.write(0xF0);
 
+            // wait for state transition
+            synchronized  (this) { wait(100); }
+            
             // drive the mechanism
             c.handleOneIncomingReply();
             Assert.assertTrue("reply received ", waitForReply());
