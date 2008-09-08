@@ -3,6 +3,7 @@
 package jmri.jmrix.rps.serial;
 
 import jmri.jmrix.rps.*;
+import jmri.util.JUnitAppender;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -12,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialAdapterTest extends TestCase {
 
@@ -46,6 +47,8 @@ public class SerialAdapterTest extends TestCase {
         s.version=2;
 	    Reading r;
 	    r = s.makeReading(input);
+	    JUnitAppender.assertWarnMessage("Data from unexpected receiver 2, creating receiver");
+	    JUnitAppender.assertWarnMessage("Data from unexpected receiver 3, creating receiver");
 	    // getValue indexed from 1
 	    Assert.assertTrue("val 1", 0.001 > Math.abs(r.getValue(0)-0.));
 	    Assert.assertTrue("val 2", 0.001 > Math.abs(r.getValue(1)-200.));
@@ -80,8 +83,12 @@ public class SerialAdapterTest extends TestCase {
 
 	// test suite from all defined tests
 	public static Test suite() {
-            TestSuite suite = new TestSuite(SerialAdapterTest.class);
-            return suite;
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite(SerialAdapterTest.class);
+        return suite;
 	}
 
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }
