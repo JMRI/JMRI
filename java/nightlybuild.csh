@@ -12,35 +12,36 @@
 #   Run JUnit tests in jmri.HeadLessTest
 #
 # Errors, warnings and failures are reported via email 
-# to the jmri-builds@lists.sourceforge.net list by
-# default, but for debugging they can be left in the log 
-# with a message to the console.
+# to the jmri-builds@lists.sourceforge.net list in production use, 
+# but for debugging they are left in the log with a message to the console.
 #
 #
 
-# Make sure env variable is defined
+# Make sure env variables are defined
+setenv normal_destination
 setenv error_destination
 
 # Place to send email. If null, errors are not sent as email.
-# Comment out next line when debugging!
-set error_destination = jmri-builds@lists.sourceforge.net
-
+# Uncomment next line for production use
+# setenv error_destination jmri-builds@lists.sourceforge.net
+# setenv normal_destination jmri-builds@lists.sourceforge.net
 
 rm -f nightlybuildlog.txt
 date > nightlybuildlog.txt
 
 setenv CVS_RSH ssh
+
 if ( { (cd ..; cvs -q update -d >>& java/nightlybuildlog.txt) } ) then
 # probably OK
 
 else
   # CVS did not terminate OK
-  if ( $error_destination != "" ) then
+  if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Error in CVS checkout" ${error_destination}
   else
     echo Error in CVS checkout, see log in nightlybuildlog.txt
   endif
-  exit
+  exit 1
 endif
 
 if ( { ((ant init clean && ant init tests) >>& nightlybuildlog.txt) } ) then
@@ -48,12 +49,12 @@ if ( { ((ant init clean && ant init tests) >>& nightlybuildlog.txt) } ) then
 
 else
   # Ant did not terminate OK
-  if ( $error_destination != "" ) then
+  if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Did not build successfully" ${error_destination}
   else
     echo Did not build successfully, see log in nightlybuildlog.txt
   endif
-  exit
+  exit 2
 endif
 
 if ( { (./runtest.csh jmri.HeadLessTest >>& nightlybuildlog.txt) } ) then
@@ -61,21 +62,29 @@ if ( { (./runtest.csh jmri.HeadLessTest >>& nightlybuildlog.txt) } ) then
 
 else
   # Tests did not run and terminate OK
-  if ( $error_destination != "" ) then
+  if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Tests did not run successfully" ${error_destination}
   else
     echo Did not run successfully, see log in nightlybuildlog.txt
   endif
-  exit
+  exit 3
 endif
 
 # Check the log for error messages (searches cvs, build log too, but those shouldn't trip the comparison
 if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null } ) then
   # Errors found, mail the log
-  if ( $error_destination != "" ) then
+  if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Errors found in log" ${error_destination}
   else
     echo Errors found in test log, see nightlybuildlog.txt
   endif
-  exit
+  exit 4
 endif
+
+# Success!
+if ( { (test "$normal_destination") } ) then
+  cat nightlybuildlog.txt | mail -s "Build completed OK" ${normal_destination}
+else
+  echo Build completed OK
+endif
+exit 0
