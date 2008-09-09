@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -189,9 +189,14 @@ public class AlignTablePane extends javax.swing.JPanel {
         static private final int YCOL = 2;
         static private final int ZCOL = 3;
         
-        static private final int ACTIVECOL = 4;
+        static private final int LASTTIMECOL = 4;
 
-        static private final int LAST = 4;
+        static private final int ACTIVECOL = 5;
+
+        static private final int MINTIMECOL = 6;
+        static private final int MAXTIMECOL = 7;
+
+        static private final int LAST = MAXTIMECOL;
         
         public int getColumnCount () {return LAST+1;}
 
@@ -209,8 +214,14 @@ public class AlignTablePane extends javax.swing.JPanel {
                 return rb.getString("TitleColY");
             case ZCOL:
                 return rb.getString("TitleColZ");
+            case LASTTIMECOL:
+                return rb.getString("TitleColLast");
             case ACTIVECOL:
                 return rb.getString("TitleColActive");
+            case MINTIMECOL:
+                return rb.getString("TitleColMin");
+            case MAXTIMECOL:
+                return rb.getString("TitleColMax");
             default:
                 return "";
             }
@@ -220,15 +231,18 @@ public class AlignTablePane extends javax.swing.JPanel {
             if (c == XCOL || c == YCOL || c == ZCOL)
                 return Double.class;
             else if (c == NUMCOL)
-                return Double.class;
+                return Integer.class;
             else if (c == ACTIVECOL)
                 return Boolean.class;
+            if (c == MINTIMECOL || c == MAXTIMECOL || c == LASTTIMECOL)
+                return Integer.class;
             else 
                 return String.class;
         }
 
         public boolean isCellEditable(int r,int c) {
-            if (c == XCOL || c == YCOL || c == ZCOL || c == ACTIVECOL)
+            if (c == XCOL || c == YCOL || c == ZCOL || c == ACTIVECOL
+                    || c == MINTIMECOL || c == MAXTIMECOL )
                 return true;
             else 
                 return false;
@@ -256,6 +270,18 @@ public class AlignTablePane extends javax.swing.JPanel {
                 rc = Engine.instance().getReceiver(r+1);
                 if (rc==null) return null;
                 return new Boolean(rc.isActive());              
+            case LASTTIMECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Integer(rc.getLastTime());
+            case MINTIMECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Integer(rc.getMinTime());
+            case MAXTIMECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc==null) return null;
+                return new Integer(rc.getMaxTime());
             default:
                 return null;
             }
@@ -306,6 +332,26 @@ public class AlignTablePane extends javax.swing.JPanel {
                     Engine.instance().setReceiver(r+1, rc);
                 }
                 rc.setActive(((Boolean)val).equals(Boolean.TRUE));
+                flag.setModifiedFlag(true);
+                break;
+            case MINTIMECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                int min = ((Integer)val).intValue();
+                Engine.instance().getReceiver(r+1).setMinTime(min);
+                flag.setModifiedFlag(true);
+                break;
+            case MAXTIMECOL:
+                rc = Engine.instance().getReceiver(r+1);
+                if (rc == null) {
+                    rc = new Receiver(new Point3d(0.,0.,0.));
+                    Engine.instance().setReceiver(r+1, rc);
+                }
+                int max = ((Integer)val).intValue();
+                Engine.instance().getReceiver(r+1).setMaxTime(max);
                 flag.setModifiedFlag(true);
                 break;
             default:
