@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EcosTurnoutManager extends jmri.AbstractTurnoutManager
                                 implements EcosListener {
@@ -59,7 +59,7 @@ public class EcosTurnoutManager extends jmri.AbstractTurnoutManager
                     int end = lines[i].indexOf(' ');
                     int object = Integer.parseInt(lines[i].substring(start, end));
 
-                    if ( (20000<=addr) && (addr<30000)) { // only physical turnouts
+                    if ( (20000<=object) && (object<30000)) { // only physical turnouts
                         start = lines[i].indexOf('[')+1;
                         end = lines[i].indexOf(']');
                         int addr = Integer.parseInt(lines[i].substring(start, end));
