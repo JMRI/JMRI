@@ -13,13 +13,14 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialAdapterTest extends TestCase {
 
 	public void testStringParsing3() throws java.io.IOException {
         // String input = "DATA,TIME,4105,3751,1423,2835";
         String input = "4105,3751,1423,2835";
+        new Engine(){ {_instance = this; setDefaultAlignment();} protected void setInitialAlignment(){setDefaultAlignment();}};
         SerialAdapter s = new SerialAdapter();
 	    Reading r = s.makeReading(input);
 	    Assert.assertEquals("n sample OK", 4, r.getNSample());
@@ -32,6 +33,7 @@ public class SerialAdapterTest extends TestCase {
 	public void testStringParsing12() throws java.io.IOException {
         // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
         String input = "1,2,3,4,5,6,7,8,9,10,11,12";
+        new Engine(){ {_instance = this; setDefaultAlignment();} protected void setInitialAlignment(){setDefaultAlignment();}};
         SerialAdapter s = new SerialAdapter();
 	    Reading r = s.makeReading(input);
 	    Assert.assertEquals("n sample OK", 12, r.getNSample());
@@ -43,6 +45,7 @@ public class SerialAdapterTest extends TestCase {
 	public void testStringParsingV2A() throws java.io.IOException {
         // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
         String input = "DAT, TIME, 3,300,4,400,2,200";
+        new Engine(){ {_instance = this; setDefaultAlignment();} protected void setInitialAlignment(){setDefaultAlignment();}};
         SerialAdapter s = new SerialAdapter();
         s.version=2;
 	    Reading r;
@@ -59,10 +62,13 @@ public class SerialAdapterTest extends TestCase {
 	public void testStringParsingV2B() throws java.io.IOException {
         // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
         String input = "DAT, TIME, 1,100,2,200,3,300,4,400";
+        new Engine(){ {_instance = this; setDefaultAlignment();} protected void setInitialAlignment(){setDefaultAlignment();}};
         SerialAdapter s = new SerialAdapter();
         s.version=2;
 	    Reading r;
 	    r = s.makeReading(input);
+	    JUnitAppender.assertWarnMessage("Data from unexpected receiver 2, creating receiver");
+	    JUnitAppender.assertWarnMessage("Data from unexpected receiver 3, creating receiver");
 	    // getValue indexed from 1
 	    Assert.assertTrue("val 1", 0.001 > Math.abs(r.getValue(0)-100.));
 	    Assert.assertTrue("val 2", 0.001 > Math.abs(r.getValue(1)-200.));
