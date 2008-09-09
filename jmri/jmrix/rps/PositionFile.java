@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class PositionFile extends XmlFile {
 
@@ -55,11 +55,14 @@ public class PositionFile extends XmlFile {
         Element e = new Element("receiver");
         e.setAttribute("number", ""+n);
         e.setAttribute("active", ""+(r.isActive()?"true":"false"));
+        e.setAttribute("mintime", ""+r.getMinTime());
+        e.setAttribute("maxtime", ""+r.getMaxTime());
         e.addContent(positionElement(r.getPosition()));
         root.addContent(e);
     }
 
     public void setReceiver(int n, Point3d p, boolean active) {
+        // allows defaults for min, max time
         Element e = new Element("receiver");
         e.setAttribute("number", ""+n);
         e.setAttribute("active", ""+(active?"true":"false"));
@@ -200,7 +203,7 @@ public class PositionFile extends XmlFile {
         
     /**
      * Get the nth receiver active state in the file.
-     * @return null if not present
+     * @return true if not present
      */
     public boolean getReceiverActive(int n) {
         List kids = root.getChildren("receiver");
@@ -218,6 +221,56 @@ public class PositionFile extends XmlFile {
             return true;
         }
         return true;
+    }
+        
+    /**
+     * Get the nth receiver min time.
+     * @return 0 if not present
+     */
+    public int getReceiverMin(int n) {
+        List kids = root.getChildren("receiver");
+        for (int i = 0; i<kids.size(); i++) {
+            Element e = (Element) kids.get(i);
+            Attribute a = e.getAttribute("number");
+            if (a == null) continue;
+            int num = -1;
+            try { num = a.getIntValue(); }
+            catch (org.jdom.DataConversionException ex1) {}
+            if (num != n) continue;
+            a = e.getAttribute("mintime");
+            if (a==null) return 0; // default value
+            try {
+                return a.getIntValue();
+            } catch (org.jdom.DataConversionException ex2) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+        
+    /**
+     * Get the nth receiver max time.
+     * @return 0 if not present
+     */
+    public int getReceiverMax(int n) {
+        List kids = root.getChildren("receiver");
+        for (int i = 0; i<kids.size(); i++) {
+            Element e = (Element) kids.get(i);
+            Attribute a = e.getAttribute("number");
+            if (a == null) continue;
+            int num = -1;
+            try { num = a.getIntValue(); }
+            catch (org.jdom.DataConversionException ex1) {}
+            if (num != n) continue;
+            a = e.getAttribute("maxtime");
+            if (a==null) return 99999; // default value
+            try {
+                return a.getIntValue();
+            } catch (org.jdom.DataConversionException ex2) {
+                return 99999;
+            }
+        }
+        return 99999;
     }
         
     /**
