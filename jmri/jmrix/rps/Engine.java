@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 
 
@@ -143,12 +143,19 @@ public class Engine implements ReadingListener {
         }
                 
         int index = 0;
+        log.debug("count is "+count);
+        
         Point3d list[] = new Point3d[count];
         for (int i = 0; i<receivers.length; i++) {
             if (receivers[i]==null) continue;  // skip receivers not present
             Point3d p = getReceiverPosition(i);
             if ( p != null ) {
-                if (receivers[i].isActive())
+                receivers[i].setLastTime((int)r.getValue(i-1));  // recievers numbered from 1
+                log.debug(" values "+receivers[i].getMinTime()+" "
+                                    +r.getValue(i-1)+" "
+                                    +receivers[i].getMaxTime());
+                if (receivers[i].isActive() && (receivers[i].getMinTime()<=r.getValue(i-1)) 
+                                            && (r.getValue(i-1) <= receivers[i].getMaxTime()))
                     list[index] = p;
                 else
                     list[index] = null;
@@ -210,13 +217,21 @@ public class Engine implements ReadingListener {
         setReceiverCount(pf.maxReceiver());  // count from 1
         Point3d p;
         boolean a;
+        int min;
+        int max;
         for (int i = 1; i<=getReceiverCount(); i++) {    
             p = pf.getReceiverPosition(i);
-            a = pf.getReceiverActive(i);
             if (p == null) continue;
+
+            a = pf.getReceiverActive(i);
+            min = pf.getReceiverMin(i);
+            max = pf.getReceiverMax(i);
+            
             log.debug("load "+i+" with "+p);
             Receiver r = new Receiver(p);
             r.setActive(a);
+            r.setMinTime(min);
+            r.setMaxTime(max);
             setReceiver(i, r);
         }
         
