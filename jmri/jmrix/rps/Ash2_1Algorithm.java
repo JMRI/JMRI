@@ -21,7 +21,7 @@ import javax.vecmath.Point3d;
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
@@ -64,7 +64,6 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     
         if (log.isDebugEnabled()) {
             log.debug("Reading: "+r.toString());
-            new Exception().printStackTrace();
             log.debug("Sensors: "+sensors.length);
             if (sensors.length>=1 && sensors[0]!=null) log.debug("Sensor[0]: "+sensors[0].x+","+sensors[0].y+","+sensors[0].z);
             if (sensors.length>=2 && sensors[1]!=null) log.debug("Sensor[1]: "+sensors[1].x+","+sensors[1].y+","+sensors[1].z);
