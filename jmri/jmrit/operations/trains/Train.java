@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -724,7 +724,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			// error if all of the cars in staging aren't available
 			if (numberCarsFromStaging+numberEngines != departStage.getNumberCars()){
-				buildFailed(fileOut, "ERROR not all cars in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars have road or types that can't be serviced");
+				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars or engines can't be serviced");
 				return;
 			}
 		}
@@ -862,7 +862,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								}
 							// car does not have a destination, search for one	
 							} else {
-								addLine(fileOut, "Find destinations for car ("+c.getId()+") with " + c.getMoves() + " car moves at location (" +c.getLocationName()+", " +c.getSecondaryLocationName()+ ")");
+								addLine(fileOut, "Find destinations for car ("+c.getId()+") at location (" +c.getLocationName()+", " +c.getSecondaryLocationName()+ ")");
 								int start = locationIndex;				// start looking after car's current location
 								RouteLocation rld = null;				// the route location destination being checked for the car
 								RouteLocation rldSave = null;			// holds the best route location destination for the car
@@ -1007,12 +1007,10 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	}
 	
-	// get the engines for this train, if secondary != null, then engines must
+	// get the engines for this train. If secondary != null, then engines must
 	// come from that secondary location (staging).  Returns true if engines found, else false.
 	// This method will also setup the secondary location if the train is
 	// terminating into staging, therefore this routine should only be called once when return is true.
-	// Note, this method ignores the user's engine destination and train assignments,
-	// Maybe this should change?
 	private boolean getEngines(PrintWriter fileOut, SecondaryLocation secondary){
 		// show engine requirements for this train
 		addLine(fileOut, "Train requires "+getNumberEngines()+" engine(s) type ("+getEngineModel()+") road (" +getEngineRoad()+")");
@@ -1035,9 +1033,16 @@ public class Train implements java.beans.PropertyChangeListener {
 		// get list of engines for this route
 		List engineList = engineManager.getEnginesAvailableTrainList(this);
 		// remove engines not at departure, wrong road name, or part of consist (not lead)
-		for (int i=0; i<engineList.size(); i++){
-			Engine engine = engineManager.getEngineById((String) engineList.get(i));
+		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
+			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
 			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") type ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getSecondaryLocationName()+")");
+			// remove engines that have been assigned destinations
+			if (engine.getDestination() != null && !engine.getDestination().equals(terminateLocation)){
+				addLine(fileOut, "Exclude engine ("+engine.getId()+") it has an assigned destination ("+engine.getDestination().getName()+")");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
 			// determine if engine is departing from staging track (secondary != null) 
 			if(engine.getLocationName().equals(getTrainDepartsName()) && (secondary == null || engine.getSecondaryLocationName().equals(secondary.getName()))){
 				if ((getEngineRoad().equals("") || engine.getRoad().equals(getEngineRoad())) && (getEngineModel().equals("") || engine.getModel().equals(getEngineModel()))){
@@ -1046,16 +1051,16 @@ public class Train implements java.beans.PropertyChangeListener {
 						addLine(fileOut, "Engine ("+engine.getId()+") is part of consist ("+engine.getConsist().getName()+")");
 						if (!engine.getConsist().isLeadEngine(engine)){
 							// only use lead engines
-							engineList.remove(i);
-							i--;
+							engineList.remove(indexEng);
+							indexEng--;
 						}
 					}
 					continue;
 				} 
 			}
 			addLine(fileOut, "Exclude engine ("+engine.getId()+")");
-			engineList.remove(i);
-			i--;
+			engineList.remove(indexEng);
+			indexEng--;
 		}
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
@@ -1186,7 +1191,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			// now adjust train length and weight for each location that car is in the train
 			boolean carInTrain = false;
 			for (int i=0; i<routeList.size(); i++){
-				double weight = 0;
+				int weightTons = 0;
 				RouteLocation rlt = getRoute().getLocationById((String)routeList.get(i));
 				if (rl == rlt){
 					carInTrain = true;
@@ -1198,18 +1203,18 @@ public class Train implements java.beans.PropertyChangeListener {
 					// car could be part of a kernel
 					int length = Integer.parseInt(car.getLength())+ car.COUPLER;
 					try {
-						weight = weight + Double.parseDouble(car.getWeight());
+						weightTons = weightTons + Integer.parseInt(car.getWeightTons());
 					} catch (Exception e){
 						log.debug ("car ("+car.getId()+") weight not set");
 					}
 					if (car.getKernel() != null){
 						length = car.getKernel().getLength();
-						weight = car.getKernel().getWeight();
+						weightTons = car.getKernel().getWeightTons();
 					}
 					rlt.setTrainLength(rlt.getTrainLength()+length);
 				}
-				if (weight > maxWeight){
-					maxWeight = weight;		// used for AUTO engines
+				if (weightTons > maxWeight){
+					maxWeight = weightTons;		// used for AUTO engines
 				}
 			}
 			firePropertyChange(NUMBERCARS, Integer.toString(oldNum), Integer.toString(moves));

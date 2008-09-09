@@ -48,6 +48,19 @@ public class Setup {
 	private static final int O_ADD_WEIGHT = 1000;
 	private static final int G_ADD_WEIGHT = 2000;		// not specified by NMRA
 	
+	// actual weight to tons conversion ratios (based on 40' boxcar at ~80 tons)
+	private static final int Z_RATIO_TONS = 130;
+	private static final int N_RATIO_TONS = 80;
+	private static final int TT_RATIO_TONS = 36;
+	private static final int HOn3_RATIO_TONS = 20;
+	private static final int OO_RATIO_TONS = 20;
+	private static final int HO_RATIO_TONS = 20;		// 20 tons per oz
+	private static final int Sn3_RATIO_TONS = 16;
+	private static final int S_RATIO_TONS = 14;
+	private static final int On3_RATIO_TONS = 8;
+	private static final int O_RATIO_TONS = 5;
+	private static final int G_RATIO_TONS = 2;			
+	
 	public static final int Z_SCALE = 1;
 	public static final int N_SCALE = 2;
 	public static final int TT_SCALE = 3;
@@ -70,7 +83,7 @@ public class Setup {
 	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
-	private static int ratioTons = 0;
+	private static int ratioTons = HO_RATIO_TONS;
 	private static int initWeight = HO_INITIAL_WEIGHT;
 	private static int addWeight = HO_ADD_WEIGHT;
 	private static String railroadName ="";
@@ -255,56 +268,67 @@ public class Setup {
 			ratio = Z_RATIO;
 			initWeight = Z_INITIAL_WEIGHT;
 			addWeight = Z_ADD_WEIGHT;
+			ratioTons = Z_RATIO_TONS;
 			break;
 		case N_SCALE:
 			ratio = N_RATIO;
 			initWeight = N_INITIAL_WEIGHT;
 			addWeight = N_ADD_WEIGHT;
+			ratioTons = N_RATIO_TONS;
 			break;
 		case TT_SCALE:
 			ratio = TT_RATIO;
 			initWeight = TT_INITIAL_WEIGHT;
 			addWeight = TT_ADD_WEIGHT;
+			ratioTons = TT_RATIO_TONS;
 			break;
 		case HOn3_SCALE:
 			ratio = HO_RATIO;
 			initWeight = HOn3_INITIAL_WEIGHT;
 			addWeight = HOn3_ADD_WEIGHT;
+			ratioTons = HOn3_RATIO_TONS;
 			break;
 		case OO_SCALE:
 			ratio = OO_RATIO;
 			initWeight = OO_INITIAL_WEIGHT;
 			addWeight = OO_ADD_WEIGHT;
+			ratioTons = OO_RATIO_TONS;
 			break;
 		case HO_SCALE:
 			ratio = HO_RATIO;
 			initWeight = HO_INITIAL_WEIGHT;
 			addWeight = HO_ADD_WEIGHT;
+			ratioTons = HO_RATIO_TONS;
 			break;
 		case Sn3_SCALE:
 			ratio = S_RATIO;
 			initWeight = Sn3_INITIAL_WEIGHT;
 			addWeight = Sn3_ADD_WEIGHT;
+			ratioTons = Sn3_RATIO_TONS;
 			break;
 		case S_SCALE:
 			ratio = S_RATIO;
 			initWeight = S_INITIAL_WEIGHT;
 			addWeight = S_ADD_WEIGHT;
+			ratioTons = S_RATIO_TONS;
 			break;
 		case On3_SCALE:
 			ratio = O_RATIO;
 			initWeight = On3_INITIAL_WEIGHT;
 			addWeight = On3_ADD_WEIGHT;
+			ratioTons = On3_RATIO_TONS;
 			break;
 		case O_SCALE:
 			ratio = O_RATIO;
 			initWeight = O_INITIAL_WEIGHT;
 			addWeight = O_ADD_WEIGHT;
+			ratioTons = O_RATIO_TONS;
 			break;
 		case G_SCALE:
 			ratio = G_RATIO;
 			initWeight = G_INITIAL_WEIGHT;
 			addWeight = G_ADD_WEIGHT;
+			ratioTons = G_RATIO_TONS;
 			break;
 		default:
 			log.error ("Unknown scale");

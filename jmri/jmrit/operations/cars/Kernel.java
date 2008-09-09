@@ -8,6 +8,7 @@ public class Kernel {
 	protected String _name ="";
 	protected int _length = 0;
 	protected double _weight = 0;
+	protected int _weightTons = 0;
 	protected Car _leadCar = null;
 	
 	public Kernel(String name){
@@ -34,6 +35,7 @@ public class Kernel {
 		setLength(getLength()+ Integer.parseInt(car.getLength()) + Car.COUPLER);
 		try {
 			setWeight(getWeight()+ Double.parseDouble(car.getWeight()));
+			setWeightTons(getWeightTons()+ Integer.parseInt(car.getWeightTons()));
 		} catch (Exception e){
 			log.debug ("car ("+car.getId()+") weight not set");
 		}
@@ -45,6 +47,7 @@ public class Kernel {
 		int oldSize = _cars.size();
 		setLength(getLength()- (Integer.parseInt(car.getLength()) + Car.COUPLER));
 		setWeight(getWeight()- Double.parseDouble(car.getWeight()));
+		setWeightTons(getWeightTons()- Integer.parseInt(car.getWeightTons()));
 		_cars.remove(car);
 		if(isLeadCar(car) && _cars.size()>0){
 			// need a new lead car
@@ -74,6 +77,14 @@ public class Kernel {
 	
 	public double getWeight() {
 		return _weight;
+	}
+	
+	public void setWeightTons(int weight){
+		_weightTons = weight;
+	}
+	
+	public int getWeightTons() {
+		return _weightTons;
 	}
 	
 	public boolean isLeadCar(Car car){

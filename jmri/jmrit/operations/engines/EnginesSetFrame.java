@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -121,15 +121,10 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 		addItem(textDestination, 0, 6);
 		addItem(destinationBox, 1, 6);
 		addItem(secondaryDestinationBox, 2, 6);
-		// FFU, see Train.getEngines 
-		destinationBox.setEnabled(false);
-		secondaryDestinationBox.setEnabled(false);
 
 		// row 8
 		addItem(textTrain, 0, 8);
 		addItem(trainBox, 1, 8);
-		// FFU, see Train.getEngines 
-		trainBox.setEnabled(false);
 
 		// row 10
 		addItem(saveButton, 2, 10);

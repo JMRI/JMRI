@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.SecondaryLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Setup;
 
 import org.jdom.Element;
 
@@ -16,7 +17,7 @@ import org.jdom.Element;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Car implements java.beans.PropertyChangeListener{
 
@@ -27,6 +28,7 @@ public class Car implements java.beans.PropertyChangeListener{
 	protected String _length = "";
 	protected String _color = "";
 	protected String _weight = "";
+	protected String _weightTons = "";
 	protected String _built = "";
 	protected String _owner = "";
 	protected String _comment = "";
@@ -181,6 +183,27 @@ public class Car implements java.beans.PropertyChangeListener{
 
 	public String getWeight() {
 		return _weight;
+	}
+	
+	public void setWeightTons(String weight) {
+		String old = _weight;
+		_weightTons = weight;
+		if (!old.equals(weight))
+			firePropertyChange("car weight tons", old, weight);
+	}
+
+	public String getWeightTons() {
+		if (!_weightTons.equals(""))
+			return _weightTons;
+		else {
+			double weight = 0;
+			try{
+				weight = Double.parseDouble(getWeight());
+			}catch (Exception e){
+				log.debug("Weight not set for car ("+getId()+")");
+			}
+			return Integer.toString((int)(weight*Setup.getScaleTonRatio()));
+		}
 	}
 
 	public void setBuilt(String built) {
@@ -584,6 +607,8 @@ public class Car implements java.beans.PropertyChangeListener{
 			_fred = a.getValue().equals("true");
 		if ((a = e.getAttribute("weight")) != null)
 			_weight = a.getValue();
+		if ((a = e.getAttribute("weightTons")) != null)
+			_weightTons = a.getValue();
 		if ((a = e.getAttribute("built")) != null)
 			_built = a.getValue();
 		Location location = null;
@@ -640,6 +665,8 @@ public class Car implements java.beans.PropertyChangeListener{
 		e.setAttribute("length", getLength());
 		e.setAttribute("color", getColor());
 		e.setAttribute("weight", getWeight());
+		if (!_weightTons.equals(""))
+			e.setAttribute("weightTons", getWeightTons());
 		e.setAttribute("built", getBuilt());
 		if (isHazardous())
 			e.setAttribute("hazardous", isHazardous()?"true":"false");
@@ -676,7 +703,8 @@ public class Car implements java.beans.PropertyChangeListener{
 				e.setAttribute("leadKernel", "true");
 		}
 		e.setAttribute("owner", getOwner());
-		e.setAttribute("comment", getComment());
+		if (!getComment().equals("") )
+			e.setAttribute("comment", getComment());
 
 		return e;
 	}

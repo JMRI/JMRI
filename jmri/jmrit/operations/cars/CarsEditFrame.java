@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,6 +47,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	javax.swing.JLabel textLength = new javax.swing.JLabel();
 	javax.swing.JLabel textType = new javax.swing.JLabel();
 	javax.swing.JLabel textWeight = new javax.swing.JLabel();
+	javax.swing.JLabel textWeightTons = new javax.swing.JLabel();
 	javax.swing.JLabel textLocation = new javax.swing.JLabel();
 	javax.swing.JLabel textOptional = new javax.swing.JLabel();
 	javax.swing.JLabel textKernel = new javax.swing.JLabel();
@@ -78,6 +79,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	javax.swing.JTextField roadNumberTextField = new javax.swing.JTextField(8);
 	javax.swing.JTextField builtTextField = new javax.swing.JTextField(8);
 	javax.swing.JTextField weightTextField = new javax.swing.JTextField(4);
+	javax.swing.JTextField weightTonsTextField = new javax.swing.JTextField(4);
 	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
 
 	// for padding out panel
@@ -128,6 +130,10 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		textLength.setVisible(true);
 		textWeight.setText(rb.getString("Weight"));
 		textWeight.setVisible(true);
+		weightTextField.setToolTipText(rb.getString("carWeightOz"));
+		textWeightTons.setText(rb.getString("WeightTons"));
+		textWeightTons.setVisible(true);
+		weightTonsTextField.setToolTipText(rb.getString("carWeightTons"));
 		autoCheckBox.setText(rb.getString("Auto"));
 		autoCheckBox.setSelected(true);
 		cabooseCheckBox.setText(rb.getString("Caboose"));
@@ -160,10 +166,11 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		editLengthButton.setText(rb.getString("Edit"));
 		editLengthButton.setVisible(true);
 		fillWeightButton.setText(rb.getString("Calculate"));
-		fillWeightButton.setToolTipText("Calculate car weight based on NMRA recommendations for scale and car length");
+		fillWeightButton.setToolTipText(rb.getString("calculateCarWeight"));
 		fillWeightButton.setVisible(true);
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
+		builtTextField.setToolTipText(rb.getString("buildDate"));
 		editOwnerButton.setText(rb.getString("Edit"));
 		editOwnerButton.setVisible(true);
 		deleteButton.setText(rb.getString("Delete"));
@@ -206,17 +213,21 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addItem(autoCheckBox, 3, 7);
 		
 		// row 8
-		addItem(cabooseCheckBox, 1, 8);
-		addItem(fredCheckBox, 2, 8);
-		addItem(hazardousCheckBox, 3, 8);
+		addItem(textWeightTons, 0, 8);
+		addItem(weightTonsTextField, 1, 8);
+		
+		// row 10
+		addItem(cabooseCheckBox, 1, 10);
+		addItem(fredCheckBox, 2, 10);
+		addItem(hazardousCheckBox, 3, 10);
 
-		// row 9
-		addItem(textLocation, 0, 9);
-		addItem(locationBox, 1, 9);
-		addItem(secondaryLocationBox, 2, 9);
+		// row 11
+		addItem(textLocation, 0, 11);
+		addItem(locationBox, 1, 11);
+		addItem(secondaryLocationBox, 2, 11);
 
-		// Separator row 10
-		addItemWidth (textOptional, 3, 0, 10);
+		// Separator row 12
+		addItemWidth (textOptional, 3, 0, 12);
 		
 		// row 13
 		addItem(textKernel, 0, 13);
@@ -335,6 +346,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 		colorComboBox.setSelectedItem(car.getColor());
 		weightTextField.setText(car.getWeight());
+		weightTonsTextField.setText(car.getWeightTons());
 		cabooseCheckBox.setSelected(car.isCaboose());
 		fredCheckBox.setSelected(car.hasFred());
 		hazardousCheckBox.setSelected(car.isHazardous());
@@ -438,7 +450,26 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					return;
 				}
 			}
-
+			// check car's weight has proper format
+			try{
+				Double.parseDouble(weightTextField.getText());
+			}catch (Exception e){
+				JOptionPane.showMessageDialog(this,
+						"Car's weight must be in the format of xx.x oz",
+						"Car's actual weight incorrect",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			// check car's weight in tons has proper format
+			try{
+				Integer.parseInt(weightTonsTextField.getText());
+			}catch (Exception e){
+				JOptionPane.showMessageDialog(this,
+						"Car's weight must be in the format of xx tons",
+						"Car weight in tons incorrect",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			// delete car if edit and road or road number has changed
 			if (_car != null){
 				if (_car.getRoad() != null && !_car.getRoad().equals("")){
@@ -510,6 +541,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				NumberFormat nf = NumberFormat.getNumberInstance();
 				nf.setMaximumFractionDigits(1);
 				weightTextField.setText((nf.format(carWeight)));
+				weightTonsTextField.setText(Integer.toString((int)(carWeight*Setup.getScaleTonRatio())));
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this,
 						"Car length must be a number in feet",
@@ -532,6 +564,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			if (colorComboBox.getSelectedItem() != null)
 				c.setColor(colorComboBox.getSelectedItem().toString());
 			c.setWeight(weightTextField.getText());
+			c.setWeightTons(weightTonsTextField.getText());
 			c.setCaboose(cabooseCheckBox.isSelected());
 			c.setFred(fredCheckBox.isSelected());
 			c.setHazardous(hazardousCheckBox.isSelected());
