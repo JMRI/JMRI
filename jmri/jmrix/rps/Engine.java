@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 
 
@@ -237,17 +237,21 @@ public class Engine implements ReadingListener {
         
     }
     
-    void setInitialAlignment() {
+    protected void setInitialAlignment() {
         File defaultFile = new File(PositionFile.defaultFilename());
         try {
             loadAlignment(defaultFile);
         } catch (Exception e) {
             log.debug("load exception"+e);
             // load dummy values
-            setReceiverCount(2);
-            setReceiver(0, new Receiver(new Point3d(0.0,0.0,72.0)));
-            setReceiver(1, new Receiver(new Point3d(72.0,0.0,72.0)));
+            setDefaultAlignment();
         }                
+    }
+    
+    protected void setDefaultAlignment() {
+        setReceiverCount(2);
+        setReceiver(0, new Receiver(new Point3d(0.0,0.0,72.0)));
+        setReceiver(1, new Receiver(new Point3d(72.0,0.0,72.0)));
     }
     
     //**************************************
