@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.29 $ -->
+<!-- Revision $Revision: 1.30 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -378,6 +378,14 @@
     </exec>
   </target>
 
+  <target name="mark" depends="init" 
+            description="mark the Version.java file with today's date">
+    <replaceregexp file="${source}/jmri/Version.java"
+        match="static public String name(.*)"
+        replace="  static public String name() { return &quot;Test build ${DSTAMP}${TSTAMP}(${user.name})&quot;;} // automatically inserted by mark target in ant build"
+            />
+  </target>
+  
  <!-- dist target forces the jar file to be built without test classes -->
  <!-- Note production builds should use compile, not debug, prereq  -->
  <target name="dist" depends="clean, init, debug, rmic, jar"
