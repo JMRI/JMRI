@@ -125,7 +125,7 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -351,8 +351,6 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
 
 // ----------------------------------------------------
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash2_0Algorithm.class.getName());
-
     /**
      * Internal class to handle return value.
      *
@@ -369,6 +367,8 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
         int code;
         double x, y, z, t, vs;
     }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash2_0Algorithm.class.getName());
 }
 
 /* @(#)Ash2_0Algorithm.java */
