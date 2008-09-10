@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -32,7 +32,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("EngineModels creating instance");
 			// create and load
 			_instance = new EngineModels();
-			// load cars
+			// load engines
 			EngineManagerXml.instance();
 		}
 		if (log.isDebugEnabled()) log.debug("EngineModels returns instance "+_instance);
