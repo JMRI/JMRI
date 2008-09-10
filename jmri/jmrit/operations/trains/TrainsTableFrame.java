@@ -5,6 +5,7 @@ package jmri.jmrit.operations.trains;
 import jmri.jmrit.operations.cars.CarManagerXml;
 import jmri.jmrit.operations.engines.EngineManagerXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 
 import java.awt.Dimension;
@@ -28,17 +29,19 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
+	CarManagerXml carMangerXml = CarManagerXml.instance();			
+	EngineManagerXml engineMangerXml = EngineManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	LocationManagerXml locationManagerXml = LocationManagerXml.instance();
-	CarManagerXml carMangerXml = CarManagerXml.instance();
-	EngineManagerXml engineMangerXml = EngineManagerXml.instance();
+	RouteManagerXml routeManagerXml = RouteManagerXml.instance();
+
 	
 	TrainsTableModel trainsModel = new TrainsTableModel();
 	javax.swing.JTable trainsTable = new javax.swing.JTable(trainsModel);
@@ -197,9 +200,11 @@ public class TrainsTableFrame extends JmriJFrame {
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton){
+			engineMangerXml.writeOperationsEngineFile();
 			carMangerXml.writeOperationsCarFile();
 			locationManagerXml.writeOperationsLocationFile();
 			trainManagerXml.writeOperationsTrainFile();
+			routeManagerXml.writeOperationsRouteFile();
 		}
 	}
 	
