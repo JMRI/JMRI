@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -396,6 +396,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public int getNumberCarsWorked(){
     	int NumCars = 0;
+    	CarManager carManager = CarManager.instance();
     	List cars = carManager.getCarsByTrainList();
     	for (int i=0; i<cars.size(); i++){
     		Car car = carManager.getCarById((String)cars.get(i));
@@ -502,9 +503,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	boolean success;	// true when enough cars have been picked up from a location
 	
 	// managers 
-	CarManager carManager = CarManager.instance();
+	// WARNING DO NOT LOAD MANAGERS WHEN train.java IS CREATED
+	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME
+	// CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
-	EngineManager engineManager = EngineManager.instance();
+	//EngineManager engineManager = EngineManager.instance();
 		
 	/**
 	 * Build rules:
@@ -624,6 +627,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 
 		// get list of cars for this route
+		CarManager carManager = CarManager.instance();
 		carList = carManager.getCarsAvailableTrainList(this);
 		// DAB this needs to be controled by each train
 		if (requested > carList.size() && Control.fullTrainOnly){
@@ -1019,18 +1023,14 @@ public class Train implements java.beans.PropertyChangeListener {
 		int reqEngines = 0; 	
 		int engineLength = 0;
 		
-		// DAB this doesn't work yet!
 		if (getNumberEngines().equals(AUTO)){
-			// how many engines required last time?
-
-			// determine number of engines required by train weight!
-			double tons = maxWeight*Setup.getScaleRatio();
-
+			reqEngines = getAutoEngines(fileOut);
 		} else {
 			reqEngines = Integer.parseInt(getNumberEngines());
 		}
 
 		// get list of engines for this route
+		EngineManager engineManager = EngineManager.instance();
 		List engineList = engineManager.getEnginesAvailableTrainList(this);
 		// remove engines not at departure, wrong road name, or part of consist (not lead)
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
@@ -1140,6 +1140,34 @@ public class Train implements java.beans.PropertyChangeListener {
 			getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
 		}
 		return true;
+	}
+	
+	// returns the number of engines needed for this train, minimum 1, 
+	// maximum user specified in setup.
+	// Based on maximum allowable train length and grade between locations,
+	// and the maximum cars that the train can have at the maximum train length.
+	// Currently ignores the cars weight and engine horsepower
+	private int getAutoEngines(PrintWriter fileOut){
+		int numberEngines = 1;
+		int moves = 0;
+		int carDivisor = 12;	// number of cars per engine 0 grade
+		for (int i=0; i<routeList.size()-1; i++){
+			RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
+			moves += rl.getMaxCarMoves();
+			if (rl.getMaxTrainLength()/(carDivisor*40) > numberEngines){
+				numberEngines = rl.getMaxTrainLength()/(carDivisor*40);
+				if (numberEngines > moves/carDivisor)
+					numberEngines = moves/carDivisor;
+				if (numberEngines < 1)
+					numberEngines = 1;
+			}
+		}
+		addLine(fileOut, "Auto engines calculates that "+numberEngines+ " engines are required for this train");
+		if (numberEngines > Setup.getEngineSize()){
+			addLine(fileOut, "The maximum number of engines that can be assigned is "+Setup.getEngineSize());
+			numberEngines = Setup.getEngineSize();
+		} 
+		return numberEngines;
 	}
 	
 	/**
@@ -1411,7 +1439,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getComment().equals("")){
 			addLine(fileOut, getComment());
 		}
-		
+		EngineManager engineManager = EngineManager.instance();
 		List engineList = engineManager.getEnginesByTrainList(this);
 		Engine engine = null;
 		for (int i =0; i < engineList.size(); i++){
@@ -1421,9 +1449,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		
 		if (engine != null)
 			addLine(fileOut, "Pickup engine(s) at "+engine.getLocationName()+", "+engine.getSecondaryLocationName());
-		
+		CarManager carManager = CarManager.instance();
 		List carList = carManager.getCarsByTrainList(this);
-		log.debug("Train will move " + carList.size() + " cars");
+		log.debug("Train has " + carList.size() + " cars assigned to it");
 		int cars = 0;
 		List routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
@@ -1625,6 +1653,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	private void moveEngines(RouteLocation old, RouteLocation next){
+		EngineManager engineManager = EngineManager.instance();
 		List engines = engineManager.getEnginesByTrainList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = engineManager.getEngineById((String)engines.get(i));
@@ -1647,6 +1676,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void moveCars(RouteLocation old, RouteLocation next){
 		int oldNum = getNumberCarsWorked();
+		CarManager carManager = CarManager.instance();
 		List cars = carManager.getCarsByTrainList();
 		int dropCars = 0;
 		int pickupCars = 0;
@@ -1695,6 +1725,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		}
 		// remove engines assigned to this train
+		EngineManager engineManager = EngineManager.instance();
 		List engines = engineManager.getEnginesByTrainList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = engineManager.getEngineById((String)engines.get(i));
@@ -1704,6 +1735,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		// remove all cars assigned to this train
+		CarManager carManager = CarManager.instance();
 		List cars = carManager.getCarsByTrainList();
 		int oldNum = getNumberCarsWorked();
 		for (int i=0; i<cars.size(); i++){
