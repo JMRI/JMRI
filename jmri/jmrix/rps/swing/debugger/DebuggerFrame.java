@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
 
@@ -144,7 +144,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export CSV..."));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export Readings as CSV..."));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportMeasurementAction("Export Measurements as CSV..."));
         setJMenuBar(menuBar);
 
         // add help
