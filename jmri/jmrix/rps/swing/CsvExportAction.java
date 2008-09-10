@@ -15,7 +15,7 @@ import jmri.jmrix.rps.Reading;
  * Action to export the incoming raw data to a CSV-format file
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since 2.3.1
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {
@@ -25,7 +25,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
     }
 
     public CsvExportAction() {
-        this("Start CSV Export...");
+        this("Start CSV Export Reading...");
     }
 
     JFrame mParent ;
@@ -43,7 +43,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         Distributor.instance().removeReadingListener(this);
         
         // reset menu item
-        ((JMenuItem)(e.getSource())).setText("Start CSV Export...");
+        ((JMenuItem)(e.getSource())).setText("Start CSV Export Reading...");
         
         logging = false;
         
@@ -54,7 +54,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
     void startLogging(ActionEvent e) {
         
         System.out.println(""+e);
-        ((JMenuItem)(e.getSource())).setText("Stop CSV Export...");
+        ((JMenuItem)(e.getSource())).setText("Stop CSV Export Reading...");
 
         // initialize chooser
         if ( fileChooser == null ){
@@ -86,10 +86,11 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
 
     public void notify(Reading r) {
         if (!logging || str == null) return;
-        if (r.getRawData() == null)
-            str.println("<no valid line>");
-        else
-            str.println(r.getRawData());
+        str.print(r.getID()+",");
+        for (int i = 0; i<r.getNSample()-1; i++) {
+            str.print(r.getValue(i)+",");
+        }
+        str.println(r.getValue(r.getNSample()-1));
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CsvExportAction.class.getName());
