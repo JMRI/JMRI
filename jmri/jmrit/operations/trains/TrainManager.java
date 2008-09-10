@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH = "listLength";
@@ -83,6 +83,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     		if (l.getName().equals(name))
     			return l;
       	}
+    	log.debug("train "+name+" doesn't exist");
         return null;
     }
     
