@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -367,7 +367,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and train for display
 		pack();
-		setLocation(10, 20);
+		//setLocation(10, 20);
 		setVisible(true);
 	}
 	
@@ -537,7 +537,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			JOptionPane.showMessageDialog(this,
 					"Auto Engines not available", "Future feature!",
 					JOptionPane.INFORMATION_MESSAGE);
-			return;
+			//return;
 		}
 		_train.setNumberEngines((String)numEnginesBox.getSelectedItem());
 		_train.setEngineRoad((String)roadEngineBox.getSelectedItem());

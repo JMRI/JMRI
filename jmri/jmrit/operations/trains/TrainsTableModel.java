@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -171,7 +171,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	Train train = manager.getTrainById((String)sysList.get(row));
         switch (col) {
         case IDCOLUMN: return train.getId();
-        case NAMECOLUMN: return train.getName();
+        case NAMECOLUMN: return train.getIconName();
         case DESCRIPTIONCOLUMN: return train.getDescription();
         case BUILDBOXCOLUMN: {
             boolean val = train.getBuild();

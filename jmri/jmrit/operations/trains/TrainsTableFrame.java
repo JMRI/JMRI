@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -136,7 +136,7 @@ public class TrainsTableFrame extends JmriJFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     	
     	pack();
-    	if ( (getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());
+    	if ( (getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight()-50);
     
     }
     
