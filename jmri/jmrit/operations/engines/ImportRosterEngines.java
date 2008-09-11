@@ -74,7 +74,7 @@ public class ImportRosterEngines extends Thread {
 		}
 
 		// kill status panel
-		fstatus.setVisible (false);
+		fstatus.dispose();
 
 		if (enginesAdded>0) {
 			JOptionPane.showMessageDialog(null, enginesAdded+" engines added to operations roster",

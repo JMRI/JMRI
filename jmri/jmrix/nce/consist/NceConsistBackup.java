@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -165,7 +165,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		fileOut.close();
 		
 		// kill status panel
-		fstatus.setVisible (false);
+		fstatus.dispose();
 
 		if (fileValid) {
 			JOptionPane.showMessageDialog(null, "Successful Backup!",

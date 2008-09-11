@@ -248,7 +248,7 @@ public class ImportEngines extends Thread {
 		}
 
 		// kill status panel
-		fstatus.setVisible (false);
+		fstatus.dispose();
 
 		if (importOkay) {
 			JOptionPane.showMessageDialog(null, enginesAdded+" engines added to roster",

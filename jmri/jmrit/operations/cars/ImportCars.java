@@ -269,7 +269,7 @@ public class ImportCars extends Thread {
 		}
 
 		// kill status panel
-		fstatus.setVisible (false);
+		fstatus.dispose();
 
 		if (importOkay) {
 			JOptionPane.showMessageDialog(null, carsAdded+" cars added to roster",
