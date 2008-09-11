@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.58 $
+ * @version         $Revision: 1.59 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -390,7 +390,7 @@ abstract public class AbstractMRTrafficController {
     
     private static boolean timeoutFlag = false;
     private int timeouts = 0;
-    private boolean flushReceiveChars = false;
+    protected boolean flushReceiveChars = false;
     protected void handleTimeout(AbstractMRMessage msg) {
         log.warn("Timeout on reply to message: "+msg.toString()+
                  " consecutive timeouts = "+timeouts);
