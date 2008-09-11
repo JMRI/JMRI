@@ -4,6 +4,8 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.*;
 
+import java.io.DataInputStream;
+
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +24,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -107,15 +109,15 @@ public class GcTrafficController extends TrafficController {
      */
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.warn("Decoding from hardware");
-	GridConnectReply gc = (GridConnectReply)m;
+	    GridConnectReply gc = (GridConnectReply)m;
         CanReply ret = new CanReply();
 
-	// Get the Priority
+	    // Get the Priority
         ret.setPri(gc.getPri());
-	// and ID
+	    // and ID
         ret.setId(gc.getID());
         // Is it an RTR frame
-	if (gc.getElement(6) == 'R') ret.setRtr(true);
+	    if (gc.getElement(6) == 'R') ret.setRtr(true);
         // Get the data
         for (int i = 0; i < gc.getNumBytes(); i++) {
             ret.setElement(i, gc.getByte(i));
@@ -129,7 +131,7 @@ public class GcTrafficController extends TrafficController {
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-	GridConnectMessage ret = new GridConnectMessage();
+	    GridConnectMessage ret = new GridConnectMessage();
         // Prefix
         ret.setElement(0, ':');
         // Standard frame
@@ -192,6 +194,49 @@ public class GcTrafficController extends TrafficController {
 //        } else return false;
 //    }
     
+    /**
+     * Get characters from the input source, and file a message.
+     * <P>
+     * Returns only when the message is complete.
+     * <P>
+     * This is over-ridden from AbstractMRTrafficController so we can 
+     * add suppression of the characters before ':'. We can't use 
+     * waitForStartOfReply() because that strips the 1st character also.
+     * <P>
+     * Handles timeouts on read by ignoring zero-length reads.
+     *
+     * @param msg message to fill
+     * @param istream character source.
+     * @throws IOException when presented by the input source.
+     */
+    protected void loadChars(AbstractMRReply msg, DataInputStream istream)
+                           throws java.io.IOException {
+        int i;
+        for (i = 0; i < msg.maxSize(); i++) {
+            byte char1 = readByteProtected(istream);
+            if (i == 0 && char1 !=':') {
+                // skip until you find ':'
+                while (char1 != ':') char1 = readByteProtected(istream);
+            }
+            //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
+            // if there was a timeout, flush any char received and start over
+            if(flushReceiveChars){
+                log.warn("timeout flushes receive buffer: "+ msg.toString());
+                msg.flush();
+                i = 0;  // restart
+                flushReceiveChars = false;
+            }
+            if (canReceive()) {
+                msg.setElement(i, char1);
+                if (endOfMessage(msg))
+                    break;
+            } else {
+                i--; // flush char
+                log.error("unsolicited character received: "+ Integer.toHexString(char1));
+            }
+        }
+    }
+
     private boolean unsolicited;
     private int gcState;
     
