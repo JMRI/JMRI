@@ -53,23 +53,20 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class TrainBuilder{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-	// Train status
+	// build status
 	private static final String BUILDFAILED = rb.getString("BuildFailed");
 	private static final String BUILDING = rb.getString("Building");
 	private static final String BUILT = rb.getString("Built") + " ";
 	private static final String PARTIALBUILT = rb.getString("Partial") + " ";
-	private static final String TERMINATED = rb.getString("Terminated");
-	private static final String TRAINRESET = rb.getString("TrainReset");
-	
 	
 	// build variables shared between local routines
-	Train train;
+	Train train;		// the train being built
 	int numberCars;		// how many cars are moved by this train
 	int numberEngines;	// the number of engines assigned to this train
 	int carIndex;		// index for carList
@@ -942,61 +939,11 @@ public class TrainBuilder{
 		}
 	}
 	
-	public static void printReport (File file, String name, boolean isPreview, String fontName){
-	    // obtain a HardcopyWriter to do this
-		HardcopyWriter writer = null;
-		Frame mFrame = new Frame();
-        try {
-            writer = new HardcopyWriter(mFrame, name, 10, .5, .5, .5, .5, isPreview);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-        // set font
-        if (!fontName.equals(""))
-        	writer.setFontName(fontName);
-        
-        // now get the build file to print
-
-		BufferedReader in;
-		try {
-			in = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e) {
-			return;
-		}
-		String newLine = "\n";
-		String line = " ";
-
-		while (line != null) {
-			try {
-				line = in.readLine();
-			} catch (IOException e) {
-				log.debug("Print read failed");
-				break;
-			}
-			if (line == null)
-				break;
-			try {
-				writer.write(line + newLine);
-			} catch (IOException e) {
-				log.debug("Print write failed");
-				break;
-			}
-		}
-        // and force completion of the printing
-		try {
-			in.close();
-		} catch (IOException e) {
-			log.debug("Print close failed");
-		}
-        writer.close();
-	}
-	
-	public static void printReport(File file, String name, boolean isPreview){
-		printReport(file, name, isPreview, "");
+	private static void printReport(File file, String name, boolean isPreview){
+		Train.printReport(file, name, isPreview, "");
  	}
 	
-	public void makeManifest() {
+	private void makeManifest() {
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(
 				train.getName());
@@ -1087,20 +1034,6 @@ public class TrainBuilder{
 				+ rb.getString("to") + " " + car.getSecondaryDestinationName());
 	}
 	
-	public void printManifest(){
-		if(train.getBuilt()){
-			File file = TrainManagerXml.instance().getTrainManifestFile(train.getName());
-			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest", isPreview, Setup.getFontName());
-		}else{
-			String string = "Need to build train (" +train.getName()+ ") before printing manifest";
-			log.debug(string);
-			JOptionPane.showMessageDialog(null, string,
-					"Can not print manifest",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
 	private RouteLocation getTrainDepartsRouteLocation(){
     	if (train.getRoute() == null){
     		return null;

@@ -53,9 +53,14 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class Train implements java.beans.PropertyChangeListener {
+	
+	// WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED
+	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME
+	//CarManager carManager = CarManager.instance();
+	//EngineManager engineManager = EngineManager.instance();
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
@@ -484,11 +489,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.debug("Train ("+getName()+") not selected or already built, skipping build");
 	}
 
-	// WARNING DO NOT LOAD MANAGERS WHEN Train.java IS CREATED
-	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME
-	//CarManager carManager = CarManager.instance();
-	//EngineManager engineManager = EngineManager.instance();
-		
 	public void build(){
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);

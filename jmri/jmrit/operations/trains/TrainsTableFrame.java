@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -181,6 +181,8 @@ public class TrainsTableFrame extends JmriJFrame {
 		}
 		if (ae.getSource() == buildButton){
 			List trains = trainManager.getTrainsByNameList();
+			if (sortById.isSelected())
+				trains = trainManager.getTrainsByIdList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById((String)trains.get(i));
 				train.buildIfSelected();
