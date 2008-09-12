@@ -156,6 +156,11 @@ public class RouteManagerXml extends XmlFile {
         }
     }
     
+    public void writeOperationsRouteFileIfDirty(){
+    	if(isDirty())
+    		writeOperationsRouteFile();
+    }
+    
     /**
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
@@ -213,9 +218,9 @@ public class RouteManagerXml extends XmlFile {
         }
     }
 
-    private boolean dirty = false;
-    void setDirty(boolean b) {dirty = b;}
-    boolean isDirty() {return dirty;}
+    private static boolean dirty = false;
+    public static void setDirty(boolean b) {dirty = b;}
+    public static boolean isDirty() {return dirty;}
 
     
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}

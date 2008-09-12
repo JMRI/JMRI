@@ -20,10 +20,10 @@ import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.RouteManagerXml;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -244,6 +244,24 @@ public class Train implements java.beans.PropertyChangeListener {
 	// Train's current route location
 	public RouteLocation getCurrent(){
 		return _current;
+	}
+	
+	// Train's next route location name
+	public String getNextLocationName(){
+		List routeList = getRoute().getLocationsBySequenceList();
+		for (int i=0; i<routeList.size(); i++){
+			RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
+			if (rl == getCurrent()){
+				i++;
+				if (i < routeList.size()){
+					rl = getRoute().getLocationById((String)routeList.get(i));
+					return rl.getName();
+				} else {
+					break;
+				}
+			}
+		}
+		return getCurrentName();	// At end of route
 	}
 	
 	// Train status
@@ -578,7 +596,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.debug("Train ("+getName()+") not selected, skipping printing manifest");
 	}
 
-	
 	/**
 	 * Sets the panel position for the train icon   
 	 * for the current route location.
@@ -587,6 +604,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (Setup.isTrainIconCordEnabled()){
 			trainIconRl.setTrainIconX(_locoIcon.getX());
 			trainIconRl.setTrainIconY(_locoIcon.getY());
+			RouteManagerXml.setDirty(true);
 		} else{
 			JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
 					"Set X&Y is disabled",
@@ -629,9 +647,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (_locoIcon != null && _locoIcon.isActive()){
 			setTrainIconColor();
 			if (getCurrentName().equals(""))
-				_locoIcon.setToolTipText(getDescription() + " terminated");
+				_locoIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
 			else
-				_locoIcon.setToolTipText(getDescription() + " at " + getCurrentName());
+				_locoIcon.setToolTipText(getDescription() + " at " + getCurrentName() + " next "+getNextLocationName());
 			if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
 				_locoIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
 			}

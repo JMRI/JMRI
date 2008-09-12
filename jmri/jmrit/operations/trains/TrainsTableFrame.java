@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -202,11 +202,11 @@ public class TrainsTableFrame extends JmriJFrame {
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton){
-			engineMangerXml.writeOperationsEngineFile();
-			carMangerXml.writeOperationsCarFile();
-			locationManagerXml.writeOperationsLocationFile();
-			trainManagerXml.writeOperationsTrainFile();
-			routeManagerXml.writeOperationsRouteFile();
+			engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
+			carMangerXml.writeOperationsCarFile();				//Need to save train assignments
+			trainManagerXml.writeOperationsTrainFile();			//Need to save train status
+			locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for secondary loc 
+			routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
 		}
 	}
 	
