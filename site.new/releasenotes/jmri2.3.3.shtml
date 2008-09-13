@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.6 2008-09-07 04:45:08 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.7 2008-09-13 14:05:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -148,11 +148,25 @@ shows total available memory in the title for the right column.
 <P>
 Initial
 <a href="http://jmri.sf.net/help/en/html/hardware/ecos/index.shtml">ESU ECoS support</a>
-is available.
+is available. This first version can control layout power and operate turnouts.
+We're very interested in feedback before moving on to the support for sensors and
+throttles.
 
 <p>
 Michael Mosher fixed the recent ID problem with QSI decoders.
 
+<p>
+Additional RPS improvements and fixes: <ul>
+<li>Improvements to handling missing recievers.
+<li>You can now set limits on valid times from each receiver.
+<li>Improved help.
+</ul>
+
+<p>
+Giorgio Terdina fixed an error that could occur when a Block went active and a neighbor block had no sensor defined.
+
+<p>
+Matt Harris fixed the ASUS EEPC install for RXTX. (Not really a release 2.3.3 item, but needed to be recorded somewhere)
 
 <!--#include virtual="/Footer" -->
 
