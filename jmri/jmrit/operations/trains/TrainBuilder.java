@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class TrainBuilder{
 	
@@ -140,7 +140,7 @@ public class TrainBuilder{
 			return;
 		}
 		// DAB this needs to be controled by each train
-		if (getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberCars() && Control.fullTrainOnly){
+		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberCars() && Control.fullTrainOnly){
 			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberCars()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
 			return;
 		}
@@ -286,7 +286,7 @@ public class TrainBuilder{
 		// adjust carlist to only have cars from one staging track
 		if (departStage != null){
 			// Make sure that all cars in staging are moved
-			getTrainDepartsRouteLocation().setCarMoves(getTrainDepartsRouteLocation().getMaxCarMoves()-departStage.getNumberCars());  // neg number moves more cars
+			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStage.getNumberCars());  // neg number moves more cars
 			int numberCarsFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
@@ -362,12 +362,12 @@ public class TrainBuilder{
 					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStage != null){
 						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStage != null){
 							// find a secondary location
-							if (getTrainTerminatesRouteLocation().getSecondaryLocation() == null){
+							if (train.getTrainTerminatesRouteLocation().getSecondaryLocation() == null){
 								List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
 								for (int s = 0; s < sls.size(); s++){
 									SecondaryLocation sld = terminateLocation.getSecondaryLocationById((String)sls.get(s));
 									if (c.testDestination(terminateLocation, sld).equals(c.OKAY)){
-										addCarToTrain(fileOut, c, getTrainDepartsRouteLocation(), getTrainTerminatesRouteLocation(), terminateLocation, sld);
+										addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, sld);
 										if (c.isCaboose())
 											foundCaboose = true;
 										if (c.hasFred())
@@ -377,8 +377,8 @@ public class TrainBuilder{
 								}
 								addLine(fileOut,"Could not find a destination for ("+c.getId()+")");
 							// terminate into staging	
-							} else if (c.testDestination(terminateLocation, getTrainTerminatesRouteLocation().getSecondaryLocation()).equals(c.OKAY)){
-								addCarToTrain(fileOut, c, getTrainDepartsRouteLocation(), getTrainTerminatesRouteLocation(), terminateLocation, getTrainTerminatesRouteLocation().getSecondaryLocation());
+							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getSecondaryLocation()).equals(c.OKAY)){
+								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getSecondaryLocation());
 								if (c.isCaboose())
 									foundCaboose = true;
 								if (c.hasFred())
@@ -566,7 +566,7 @@ public class TrainBuilder{
 			}
 		}
 
-		train.setCurrent(getTrainDepartsRouteLocation());
+		train.setCurrent(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested){
 			train.setStatus(PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("moves"));
 			addLine(fileOut, PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("moves"));
@@ -583,7 +583,7 @@ public class TrainBuilder{
 		// now build manifest
 		makeManifest();
 		// now create and place train icon
-		train.moveTrainIcon(getTrainDepartsRouteLocation());
+		train.moveTrainIcon(train.getTrainDepartsRouteLocation());
 
 	}
 	
@@ -677,8 +677,8 @@ public class TrainBuilder{
 							Engine cEngine = (Engine)cEngines.get(j);
 							addLine(fileOut, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
 							cEngine.setTrain(train);
-							cEngine.setRouteLocation(getTrainDepartsRouteLocation());
-							cEngine.setRouteDestination(getTrainTerminatesRouteLocation());
+							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
+							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 							cEngine.setDestination(terminateLocation, terminateSecondary);
 						}
 						break;  // done with loading engines
@@ -693,8 +693,8 @@ public class TrainBuilder{
 					numberEngines++;
 					addLine(fileOut, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
 					engine.setTrain(train);
-					engine.setRouteLocation(getTrainDepartsRouteLocation());
-					engine.setRouteDestination(getTrainTerminatesRouteLocation());
+					engine.setRouteLocation(train.getTrainDepartsRouteLocation());
+					engine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 					engine.setDestination(terminateLocation, terminateSecondary);
 					engineLength = Integer.parseInt(engine.getLength());
 					break;  // done with loading engine
@@ -713,7 +713,7 @@ public class TrainBuilder{
 		}
 		// terminating into staging?
 		if (terminateSecondary != null && terminateSecondary.getLocType().equals(terminateSecondary.STAGING)){
-			getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
+			train.getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
 		}
 		return true;
 	}
@@ -885,7 +885,7 @@ public class TrainBuilder{
 	
 	private boolean checkDropTrainDirection (PrintWriter file, Car car, RouteLocation rld, Location destination, SecondaryLocation secondary){
 		// is the destination the last location on the route? 
-		if (rld == getTrainTerminatesRouteLocation())
+		if (rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
 		String trainDirection = rld.getTrainDirection();	// train direction North, South, East and West
 		int trainDir = 0;
@@ -1033,34 +1033,6 @@ public class TrainBuilder{
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getSecondaryDestinationName());
 	}
-	
-	private RouteLocation getTrainDepartsRouteLocation(){
-    	if (train.getRoute() == null){
-    		return null;
-    	}else{
-    		List list = train.getRoute().getLocationsBySequenceList();
-    		if (list.size()>0){
-    			RouteLocation rl = train.getRoute().getLocationById((String)list.get(0));
-    			return rl;
-    		}else{
-    			return null;
-    		}
-    	}
-    }
-	
-	private RouteLocation getTrainTerminatesRouteLocation(){
-    	if (train.getRoute() == null){
-    		return null;
-    	}else{
-    		List list = train.getRoute().getLocationsBySequenceList();
-    		if (list.size()>0){
-    			RouteLocation rl = train.getRoute().getLocationById((String)list.get(list.size()-1));
-    			return rl;
-    		}else{
-    			return null;
-    		}
-    	}
-    }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category
 			.getInstance(TrainBuilder.class.getName());

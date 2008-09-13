@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -188,7 +188,7 @@ public class Train implements java.beans.PropertyChangeListener {
     	}
     }
 	
-	private RouteLocation getTrainDepartsRouteLocation(){
+	protected RouteLocation getTrainDepartsRouteLocation(){
     	if (_route == null){
     		return null;
     	}else{
@@ -210,7 +210,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
-	private RouteLocation getTrainTerminatesRouteLocation(){
+	protected RouteLocation getTrainTerminatesRouteLocation(){
     	if (_route == null){
     		return null;
     	}else{
