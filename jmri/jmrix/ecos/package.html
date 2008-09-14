@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.1 2008-09-07 04:10:50 jacobsen Exp $
+  $Id: package.html,v 1.2 2008-09-14 02:30:27 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -26,7 +26,15 @@ Additional information on the ECoS can be found
 on the 
 <a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
 
-
+<p>
+The ECoS contains a "database" of information, which must be
+asynchronously maintained with respect to the JMRI internal
+state.
+The
+<a href="model/package.html">model</a>
+subpackage maintains a local copy of the
+ECoS local state, which is then manipulated
+by JMRI objects.
 <!-- Put @see and @since tags down here. -->
 <!-- @see jmri.InstanceManager -->
 
