@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -448,7 +448,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
-	 * @return
+	 * @return Ordered list of engines not assigned to a train
 	 */
     public List getEnginesAvailableTrainList(Train train) {
     	Route route = train.getRoute();
@@ -505,7 +505,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	 * Caboose or engine with FRED will be the last engine in the list 
 	 * 
 	 * @param train
-	 * @return
+	 * @return Ordered list of assigned engines
 	 */
     public List getEnginesByTrainList(Train train) {
     	// get engines available list

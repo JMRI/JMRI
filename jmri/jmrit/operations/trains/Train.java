@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -374,7 +374,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Provides a list of road names that the train will
      * either service or exclude.  See setRoadOption
-     * @return
+     * @return Array of road names as Strings
      */
     public String[] getRoadNames(){
       	String[] roads = new String[_roadList.size()];
@@ -410,7 +410,6 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     /**
      * The number of cars worked by this train
-     * @return
      */
     public int getNumberCarsWorked(){
     	int NumCars = 0;
