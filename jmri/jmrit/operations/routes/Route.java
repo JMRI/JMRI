@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -100,7 +100,7 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Add a route location at a specific place (sequence) in the route
      * Allowable sequence numbers are 0 to max size of route;
-     * @param name
+     * @param location
      * @param sequence
      * @return route location
      */
