@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -36,7 +36,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private static final int TRAINCOLUMN = NAMECOLUMN +1;
     private static final int MAXMOVESCOLUMN = TRAINCOLUMN +1;
     private static final int MAXLENGTHCOLUMN = MAXMOVESCOLUMN +1;
-    private static final int TRAINICONX = MAXLENGTHCOLUMN +1;
+    private static final int GRADE = MAXLENGTHCOLUMN +1;
+    private static final int TRAINICONX = GRADE +1;
     private static final int TRAINICONY = TRAINICONX + 1;
     private static final int UPCOLUMN = TRAINICONY +1;
     private static final int DOWNCOLUMN = UPCOLUMN +1;
@@ -89,6 +90,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(80);
 		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
+		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
 		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(40);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
@@ -110,6 +112,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case TRAINCOLUMN: return rb.getString("Train");
         case MAXMOVESCOLUMN: return rb.getString("MaxMoves");
         case MAXLENGTHCOLUMN: return rb.getString("MaxLength");
+        case GRADE: return rb.getString("Grade");
         case TRAINICONX: return rb.getString("X");
         case TRAINICONY: return rb.getString("Y");
         case UPCOLUMN: return "";
@@ -126,6 +129,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case TRAINCOLUMN: return JComboBox.class;
         case MAXMOVESCOLUMN: return String.class;
         case MAXLENGTHCOLUMN: return String.class;
+        case GRADE: return String.class;
         case TRAINICONX: return String.class;
         case TRAINICONY: return String.class;
         case UPCOLUMN: return JButton.class;
@@ -141,6 +145,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case TRAINCOLUMN:
         case MAXMOVESCOLUMN:
         case MAXLENGTHCOLUMN:
+        case GRADE:
         case TRAINICONX:
         case TRAINICONY:
         case UPCOLUMN:
@@ -163,6 +168,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         }
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
         case MAXLENGTHCOLUMN: return Integer.toString(rl.getMaxTrainLength());
+        case GRADE: return Integer.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
         case TRAINICONY: return Integer.toString(rl.getTrainIconY());
         case UPCOLUMN: return "Up";
@@ -189,6 +195,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 			break;
 		case MAXLENGTHCOLUMN:
 			setMaxTrainLength(value, row);
+			break;
+		case GRADE:
+			setGrade(value, row);
 			break;
 		case TRAINICONX:
 			setTrainIconX(value, row);
@@ -262,6 +271,25 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
      		log.error("Location length can not exceed max train length");
 			JOptionPane.showMessageDialog(null,
 					"Location length can not exceed max train length", "Can not change max train length!",
+					JOptionPane.ERROR_MESSAGE);
+     	}
+    }
+    
+    private void setGrade (Object value, int row){
+    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	int grade;
+    	try{
+     		grade = Integer.parseInt(value.toString());
+    	} catch(NumberFormatException e) {
+    		log.error("grade must be a number");
+    		return;
+    	}
+     	if (grade <= 6){
+     		location.setGrade(grade);
+     	}else{
+     		log.error("Maximum grade is 6 percent");
+			JOptionPane.showMessageDialog(null,
+					"Maximum grade is 6 percent", "Can not change grade!",
 					JOptionPane.ERROR_MESSAGE);
      	}
     }

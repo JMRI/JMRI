@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -637,7 +637,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 		
 	RouteLocation trainIconRl = null;  // saves the icon current route location
-	public void moveTrainIcon(RouteLocation rl){
+	protected void moveTrainIcon(RouteLocation rl){
 		trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
 		if (rl == getTrainDepartsRouteLocation() || _locoIcon == null){

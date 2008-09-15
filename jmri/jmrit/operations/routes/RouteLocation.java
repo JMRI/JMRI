@@ -20,7 +20,7 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -33,7 +33,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _trainLength = 0;			// used during build
 	protected int _maxCarMoves = Setup.getCarMoves();
 	protected int _carMoves = 0;			// used during build
-	protected int _sequenceId = 0;
+	protected int _sequenceId = 0;			// used to determine location order
+	protected int _grade = 0;				// maximum grade between locations
 	protected int _trainIconX = 0;			// the x & y coordinates for the train icon
 	protected int _trainIconY = 0;
 	
@@ -149,6 +150,17 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _carMoves;
 	}
 	
+	public void setGrade(int grade){
+		int old = _grade;
+		_grade = grade;
+		if (old != grade)
+			firePropertyChange("grade", Integer.toString(old), Integer.toString(grade));
+	}
+	
+	public int getGrade(){
+		return _grade;
+	}
+	
 	public void setTrainIconX(int x){
 		int old = _trainIconX;
 		_trainIconX = x;
@@ -204,6 +216,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         }
         if ((a = e.getAttribute("trainDirection")) != null )  _trainDir = a.getValue();
         if ((a = e.getAttribute("maxTrainLength")) != null )  _maxTrainLength = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("grade")) != null )  _grade = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("maxCarMoves")) != null )  _maxCarMoves = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconX")) != null )  _trainIconX = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconY")) != null )  _trainIconY = Integer.parseInt(a.getValue());
@@ -223,6 +236,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
     	e.setAttribute("trainDirection", getTrainDirection());
     	e.setAttribute("maxTrainLength", Integer.toString(getMaxTrainLength()));
+    	e.setAttribute("grade", Integer.toString(getGrade()));
        	e.setAttribute("maxCarMoves", Integer.toString(getMaxCarMoves()));
       	e.setAttribute("trainIconX", Integer.toString(getTrainIconX()));
       	e.setAttribute("trainIconY", Integer.toString(getTrainIconY()));

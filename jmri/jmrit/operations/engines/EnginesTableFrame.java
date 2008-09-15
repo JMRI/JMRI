@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -28,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -139,6 +140,7 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu("Tools");
 		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
+		toolMenu.add(new NceConsistEngineAction(rb.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);

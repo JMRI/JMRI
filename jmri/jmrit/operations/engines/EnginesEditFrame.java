@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	javax.swing.JLabel textBuilt = new javax.swing.JLabel();
 	javax.swing.JLabel textLength = new javax.swing.JLabel();
 	javax.swing.JLabel textModel = new javax.swing.JLabel();
+	javax.swing.JLabel textHp = new javax.swing.JLabel();
 	javax.swing.JLabel textType = new javax.swing.JLabel();
 	javax.swing.JLabel textEngineType = new javax.swing.JLabel();
 	javax.swing.JLabel textWeight = new javax.swing.JLabel();
@@ -80,6 +81,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	// text field
 	javax.swing.JTextField roadNumberTextField = new javax.swing.JTextField(8);
 	javax.swing.JTextField builtTextField = new javax.swing.JTextField(8);
+	javax.swing.JTextField hpTextField = new javax.swing.JTextField(8);
 	javax.swing.JTextField weightTextField = new javax.swing.JTextField(4);
 	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
 
@@ -130,6 +132,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		textBuilt.setVisible(true);
 		textLength.setText(rb.getString("Length"));
 		textLength.setVisible(true);
+		textHp.setText(rb.getString("Hp"));
+		textHp.setVisible(true);
 		textLocation.setText(rb.getString("Location"));
 		textLocation.setVisible(true);
 		textOptional.setText("-------------------------------- Optional ------------------------------------");
@@ -194,6 +198,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		addItem(editLengthButton, 2, 5);
 
 		// row 7
+		addItem(textHp, 0, 7);
+		addItem(hpTextField, 1, 7);
 
 		// row 8
 
@@ -270,9 +276,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		// set frame size and location for display
 		pack();
 		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+20);
+			setSize(450, getHeight()+50);
 		else
-			setSize(getWidth()+50, getHeight()+20);
+			setSize(getWidth()+50, getHeight()+50);
 		setLocation(500, 300);
 		setVisible(true);	
 	}
@@ -309,6 +315,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			}
 		}
 		lengthComboBox.setSelectedItem(engine.getLength());
+		hpTextField.setText(engine.getHp());
 
 		locationBox.setSelectedItem(engine.getLocation());
 		Location l = locationManager.getLocationById(engine.getLocationId());
@@ -476,6 +483,17 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 					engine.setConsist(null);
 				else
 					engine.setConsist(manager.getConsistByName((String)consistComboBox.getSelectedItem()));
+			}
+			// confirm that horsepower is a number
+			if (!hpTextField.getText().equals("") ){
+				try{
+					Integer.parseInt(hpTextField.getText());
+					engine.setHp(hpTextField.getText());
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(this,
+							"Engine horsepower must be a number", "Can not save engine horsepower!",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")) {
