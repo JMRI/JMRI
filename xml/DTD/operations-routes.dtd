@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a route roster -->
-<!-- $Id: operations-routes.dtd,v 1.1 2008-08-26 02:39:48 dan_boudreau Exp $ -->
+<!-- $Id: operations-routes.dtd,v 1.2 2008-09-16 03:07:10 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -29,6 +29,7 @@
 <!ATTLIST location trainDirection	CDATA #IMPLIED> 
 <!ATTLIST location maxTrainLength	CDATA #IMPLIED> 
 <!ATTLIST location maxCarMoves		CDATA #IMPLIED> 
+<!ATTLIST location grade			CDATA #IMPLIED> 
 <!ATTLIST location trainIconX		CDATA #IMPLIED> 
 <!ATTLIST location trainIconY		CDATA #IMPLIED> 
 <!ATTLIST location comment			CDATA #IMPLIED>
