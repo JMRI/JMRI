@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-3.dtd,v 1.1 2008-08-27 07:15:52 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-3-3.dtd,v 1.2 2008-09-17 19:24:03 djduchamp Exp $ -->
 
 <!-- This DTD is part of version 2.3.2 development.  Do not modify it       -->
 <!-- after version 2.3.2 is released.  For more information,                -->
@@ -494,6 +494,43 @@
 
         <!ELEMENT beansetting (turnout) >
             <!ATTLIST beansetting setting	CDATA #REQUIRED>
+
+<!ELEMENT sections (section*) >
+  <!ATTLIST sections class CDATA #REQUIRED> <!-- selects XML class that will handle -->
+
+<!ELEMENT section (blockentry*, entrypoint*) >
+    <!ATTLIST section systemName	CDATA #REQUIRED>
+    <!ATTLIST section userName		CDATA #IMPLIED>
+    <!ATTLIST section fsensorname	CDATA #IMPLIED>
+    <!ATTLIST section rsensorname	CDATA #IMPLIED>
+    <!ATTLIST section fstopsensorname	CDATA #IMPLIED>
+    <!ATTLIST section rstopsensorname	CDATA #IMPLIED>
+
+    <!ELEMENT blockentry >
+	<!ATTLIST blockentry sName	CDATA #REQUIRED> 
+	<!ATTLIST blockentry order	CDATA #REQUIRED> 
+
+    <!ELEMENT entrypoint >
+        <!ATTLIST entrypoint fromblock	CDATA #REQUIRED> 
+        <!ATTLIST entrypoint toblock	CDATA #REQUIRED> 
+        <!ATTLIST entrypoint fixed	CDATA #REQUIRED>
+        <!ATTLIST entrypoint direction	CDATA #REQUIRED>
+        <!ATTLIST entrypoint fromblockdirection	CDATA #IMPLIED> 
+
+<!ELEMENT transits (transit*) >
+  <!ATTLIST transits class CDATA #REQUIRED> <!-- selects XML class that will handle -->
+
+<!ELEMENT transit (transitsection*) >
+    <!ATTLIST transit systemName	CDATA #REQUIRED>
+    <!ATTLIST transit userName		CDATA #IMPLIED>
+
+    <!ELEMENT transitsection >
+	<!ATTLIST transitsection sectionname	CDATA #REQUIRED> 
+	<!ATTLIST transitsection sequence	CDATA #REQUIRED> 
+	<!ATTLIST transitsection direction	CDATA #REQUIRED> 
+	<!ATTLIST transitsection action		CDATA #REQUIRED> 
+	<!ATTLIST transitsection data		CDATA #REQUIRED> 
+	<!ATTLIST transitsection alternate	CDATA #REQUIRED> 
 
 <!-- Simple Signal Logic (jmrit.blockboss) storage -->
 <!ELEMENT signalelements (signalelement*) >
