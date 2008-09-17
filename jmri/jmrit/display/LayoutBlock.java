@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -437,7 +437,7 @@ public class LayoutBlock extends AbstractNamedBean
 		for (int i = 0;i<paths.size();i++) {
 			jmri.Path p = (jmri.Path)paths.get(i);
 			// cycle over LayoutConnectivity matching to this Path
-			for (int j = 0;j<c.size();j++) {
+			for (int j = 0;((j<c.size())&&(need[i]==-1));j++) {
 				if (!used[j]) {
 					// this LayoutConnectivity not used yet
 					LayoutConnectivity lc = (LayoutConnectivity)c.get(j);
