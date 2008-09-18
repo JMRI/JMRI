@@ -2,6 +2,15 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -17,7 +26,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsLocations class
  * @author	Bob Coleman
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -30,6 +39,22 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("New Location Name", "New Test Name", l.getName());
 		l.setComment("Test Location Comment");
 		Assert.assertEquals("Location Comment", "Test Location Comment", l.getComment());
+	}
+
+	// test public constants
+	public void testConstants() {
+		Location l = new Location("Test id", "Test Name");
+		Assert.assertEquals("Location id", "Test id", l.getId());
+		Assert.assertEquals("Location Name", "Test Name", l.getName());
+
+		Assert.assertEquals("Location Constant NORMAL", 1, l.NORMAL);
+		Assert.assertEquals("Location Constant STAGING", 2, l.STAGING);
+
+		Assert.assertEquals("Location Constant EAST", 1, l.EAST);
+		Assert.assertEquals("Location Constant WEST", 2, l.WEST);
+		Assert.assertEquals("Location Constant NORTH", 4, l.NORTH);
+		Assert.assertEquals("Location Constant SOUTH", 8, l.SOUTH);
+
 	}
 
 	// test length attributes
@@ -230,6 +255,50 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Used Length one car", 0, l.getUsedLength()); // Drawbar length is 4
 	}
 
+	// test location Xml create support
+	public void testXMLCreate() {
+// slash-star here to remove this attempt
+//	BOB C: This is how you should do it -- I think.  If you remove the slash-star comments then this code will run
+//			but it will run too late.  The instance has already been created and will be based upon
+//			your live OperationLocationRoster.xml
+
+		// this uses explicit filenames intentionally, to ensure that
+		// the resulting files go into the test tree area.
+
+		LocationManagerXml lx = new LocationManagerXml();
+
+		// store files in "temp"
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+
+		// change file name to OperationsTestLocationRoster
+		lx.setOperationsFileName("OperationsTestLocationRoster");
+
+		// remove existing Operations file if its there
+		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+		f.delete();
+// slash-star here to remove this attempt      
+
+            LocationManager manager = LocationManager.instance();
+            List locationList = manager.getLocationsByIdList();
+
+//	BOB C: You need to uncomment the following test.  If you have more than 0 locations defined in your
+//			live OperationLocationRoster.xml then this test will fail since that is the file that
+//			will get read versus the test one we just tried to create. 
+//
+//          Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+	        
+	      for (int i=0; i<locationList.size(); i++){
+	      	String locationId = (String)locationList.get(i);
+	        	Location loc = manager.getLocationById(locationId);
+		}
+// slash-star here to remove this attempt
+//	BOB C: You need to remove these slash-stars too.
+		// change file name to OperationsTestLocationRoster
+		lx.setOperationsFileName("OperationsLocationRoster");
+// slash-star here to remove this attempt
+	}
+
 	// TODO: Add tests for adding + deleting the same cars
 
 	// TODO: Add tests for secondary locations
@@ -237,7 +306,6 @@ public class OperationsLocationsTest extends TestCase {
 	// TODO: Add test to create xml file
 
 	// TODO: Add test to read xml file
-
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
@@ -254,7 +322,29 @@ public class OperationsLocationsTest extends TestCase {
     */
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        
+
+/*
+//	BOB C: This doesn't seem right -- but it almost works.  If you remove the slash-star comments then this code will run
+//			and it will run in time.  The test will pass, BUT, you get a warning that something else is still
+//			trying to use the test OperationsTestLocationRoster.xml rather than OperationsLocationRoster.xml
+
+		// this uses explicit filenames intentionally, to ensure that
+		// the resulting files go into the test tree area.
+
+		LocationManagerXml lx = new LocationManagerXml();
+
+		// store files in "temp"
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+
+		// change file name to OperationsTestLocationRoster
+		lx.setOperationsFileName("OperationsTestLocationRoster");
+
+		// remove existing Operations file if its there
+		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+		f.delete();
+*/     
+
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
             protected void init() {
@@ -303,5 +393,13 @@ public class OperationsLocationsTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+/*
+//	BOB C: You need to remove these slash-stars too.
+		// change file name to OperationsTestLocationRoster
+		LocationManagerXml lx = new LocationManagerXml();
+		lx.setOperationsFileName("OperationsLocationRoster");
+*/
+        apps.tests.Log4JFixture.tearDown();
+    }
 }
