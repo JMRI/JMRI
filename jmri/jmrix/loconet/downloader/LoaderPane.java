@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.12 $
+ * @version	    $Revision: 1.13 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -46,6 +46,9 @@ public class LoaderPane extends javax.swing.JPanel {
     JButton verifyButton;
     JButton abortButton;
 
+    JRadioButton address24bit = new JRadioButton(res.getString("Button24bit"));
+    JRadioButton address16bit = new JRadioButton(res.getString("Button16bit"));
+    
     JProgressBar    bar;
     JLabel          status = new JLabel("");
 
@@ -74,6 +77,19 @@ public class LoaderPane extends javax.swing.JPanel {
             p.add(new JLabel(res.getString("LabelInpFile")));
             p.add(inputFileName);
 
+            add(p);
+        }
+
+        {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(res.getString("LabelBitMode")));
+            p.add(address16bit);
+            p.add(address24bit);
+            ButtonGroup g = new ButtonGroup();
+            g.add(address16bit);
+            g.add(address24bit);
+            address16bit.setSelected(true);
             add(p);
         }
 
@@ -287,7 +303,11 @@ public class LoaderPane extends javax.swing.JPanel {
 
         // clear the existing memory contents
         inputContent = new MemoryContents();
+        
+        // set format
+        inputContent.setAddress24Bit(address24bit.isSelected());
 
+        // load
         try {
             inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
