@@ -25,6 +25,9 @@ import javax.servlet.ServletResponse;
  * <dt>.png<dd>Just return the image
  * </dl>
  *<P>
+ * The associated .properties file contains the HTML fragments used to 
+ * form replies.
+ *<P>
  *  Parts taken from Core Web Programming from 
  *  Prentice Hall and Sun Microsystems Press,
  *  http://www.corewebprogramming.com/.
@@ -32,10 +35,11 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class JmriJFrameServlet implements Servlet {
+
     String clickRetryTime = "0.5";
     String noclickRetryTime = "1.0";
     
