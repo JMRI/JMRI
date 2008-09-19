@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -349,6 +349,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane for most recently recived packet
         rxPane = new JPanel();
+        rxPane.setLayout(new BoxLayout(rxPane, BoxLayout.X_AXIS));
         rxPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Most Recently Received Packet"));
         
@@ -383,6 +384,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane for constructing packet to send
         sendPane = new JPanel();
+        sendPane.setLayout(new BoxLayout(sendPane, BoxLayout.X_AXIS));
         sendPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Packet"));
         
@@ -440,6 +442,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         // Pane for constructing event to send
         evPane = new JPanel();
+        evPane.setLayout(new BoxLayout(evPane, BoxLayout.X_AXIS));
         evPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Event"));
         
@@ -462,6 +465,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         // Pane to select display type
         JPanel showPane = new JPanel();
+        showPane.setLayout(new BoxLayout(showPane, BoxLayout.X_AXIS));
         showPane.add(showStatsCheckBox);
         showPane.add(showPacketCheckBox);
         showPane.add(showEventCheckBox);
