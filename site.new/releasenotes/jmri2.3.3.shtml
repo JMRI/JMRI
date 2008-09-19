@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.7 2008-09-13 14:05:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.8 2008-09-19 02:59:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -167,6 +167,28 @@ Giorgio Terdina fixed an error that could occur when a Block went active and a n
 
 <p>
 Matt Harris fixed the ASUS EEPC install for RXTX. (Not really a release 2.3.3 item, but needed to be recorded somewhere)
+
+<p>
+Robert Coleman provided 
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/JUnit.shtml">JUnit tests</a> for the operations code.
+
+<p>
+Team Digital provided a fix for routes in the SMD16 definition file.
+
+<p>
+Many JUnit tests were added for operations by Robert Coleman.
+
+<p>
+Michael Mosher added a definition for the P2K H10-44 QSI decoder.
+
+<p>
+The LocoNet "Download Firmware" tool was updated to properly load files
+with 16-bit or 24-bit addressing.  The user needs to select the proper
+form on the loader window.
+
+<p>
+A problem accessing the JMRI web server from a separate Windows computer was fixed.
+
 
 <!--#include virtual="/Footer" -->
 
