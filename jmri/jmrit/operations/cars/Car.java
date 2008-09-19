@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Car implements java.beans.PropertyChangeListener{
 
@@ -223,6 +223,8 @@ public class Car implements java.beans.PropertyChangeListener{
 	 * @param kernel
 	 */
 	public void setKernel(Kernel kernel) {
+		if (_kernel == kernel)
+			return;
 		String old ="";
 		if (_kernel != null){
 			old = _kernel.getName();

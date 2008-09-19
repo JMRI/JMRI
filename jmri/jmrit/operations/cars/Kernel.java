@@ -28,6 +28,10 @@ public class Kernel {
 	List _cars = new ArrayList();
 	
 	public void addCar(Car car){
+		if (_cars.contains(car)){
+			log.debug("car "+car.getId()+" alreay part of kernel "+getName());
+			return;
+		}
 		if(_cars.size() <= 0){
 			_leadCar = car;
 		}
@@ -44,6 +48,10 @@ public class Kernel {
 	}
 	
 	public void deleteCar(Car car){
+		if (!_cars.contains(car)){
+			log.debug("car "+car.getId()+" not part of kernel "+getName());
+			return;
+		}
 		int oldSize = _cars.size();
 		setLength(getLength()- (Integer.parseInt(car.getLength()) + Car.COUPLER));
 		setWeight(getWeight()- Double.parseDouble(car.getWeight()));

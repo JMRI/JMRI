@@ -47,6 +47,8 @@ public class Engine extends Car {
 	}
 	
 	public void setConsist(Consist consist) {
+		if (_consist == consist)
+			return;
 		String old ="";
 		if (_consist != null){
 			old = _consist.getName();

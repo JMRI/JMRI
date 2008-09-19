@@ -26,6 +26,10 @@ public class Consist {
 	List _engines = new ArrayList();
 	
 	public void addEngine(Engine engine){
+		if (_engines.contains(engine)){
+			log.debug("engine "+engine.getId()+" alreay part of consist "+getName());
+			return;
+		}
 		if(_engines.size() <= 0){
 			_leadEngine = engine;
 		}
@@ -36,6 +40,10 @@ public class Consist {
 	}
 	
 	public void deleteEngine(Engine engine){
+		if (!_engines.contains(engine)){
+			log.debug("engine "+engine.getId()+" not part of consist "+getName());
+			return;
+		}
 		int oldSize = _engines.size();
 		setLength(getLength()- (Integer.parseInt(engine.getLength()) + Engine.COUPLER));
 		_engines.remove(engine);
