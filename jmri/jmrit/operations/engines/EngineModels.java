@@ -11,15 +11,18 @@ import javax.swing.JComboBox;
 
 
 /**
- * Represents the types of cars a railroad can have.
+ * Represents the various engine models a railroad can have.
+ * Each model has a horsepower rating that is kept here.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
 	private static final String MODELS = "E8%%F7%%F8%%GP20%%GP30%%GP35%%RS18%%RS19%%RS27%%RS3%%RSD4%%SD26%%SD45%%SW1200%%SW1500%%SW8%%TRAINMASTER%%U28B";
 	public static final String ENGINEMODELS = "EngineModels";
 	private static final String LENGTH = "Length";
+	
+	protected Hashtable _engineHorsepowerHashTable = new Hashtable();
     
 	public EngineModels() {
     }
@@ -103,6 +106,14 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 		String[] types = getNames();
 		for (int i = 0; i < types.length; i++)
 			box.addItem(types[i]);
+    }
+    
+    public void setModelHorsepower(String model, String horsepower){
+    	_engineHorsepowerHashTable.put(model, horsepower);
+    }
+    
+    public String getModelHorsepower(String model){
+    	return (String)_engineHorsepowerHashTable.get(model);
     }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

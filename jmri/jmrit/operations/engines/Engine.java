@@ -12,7 +12,6 @@ public class Engine extends Car {
 	
 	private Consist _consist = null;
 	private String _model = "";
-	private String _hp = "";
 	
 	public Engine(String road, String number) {
 		super(road, number);
@@ -36,14 +35,17 @@ public class Engine extends Car {
 	 * @param hp engine horsepower
 	 */
 	public void setHp (String hp){
-		String old = _hp;
-		_hp = hp;
+		String old = getHp();
+		EngineModels.instance().setModelHorsepower(getModel(), hp);
 		if (!old.equals(hp))
 			firePropertyChange("hp", old, hp);
 	}
 	
 	public String getHp(){
-		return _hp;
+		String hp = EngineModels.instance().getModelHorsepower(getModel());
+		if(hp == null)
+			hp = "";
+		return hp;
 	}
 	
 	public void setConsist(Consist consist) {
@@ -101,7 +103,7 @@ public class Engine extends Car {
 		if ((a = e.getAttribute("model")) != null)
 			_model = a.getValue();
 		if ((a = e.getAttribute("hp")) != null)
-			_hp = a.getValue();
+			setHp(a.getValue());
 		if ((a = e.getAttribute("length")) != null)
 			_length = a.getValue();
 		if ((a = e.getAttribute("built")) != null)
