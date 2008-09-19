@@ -13,7 +13,7 @@ import java.io.*;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -64,7 +64,16 @@ public class MiniServerAction extends AbstractAction {
                     // switch to Swing and notify
                     javax.swing.SwingUtilities.invokeLater(new Runnable(){
                         public void run() {
-                            javax.swing.JOptionPane.showMessageDialog(null,msg);
+                            // Want non-modal dialog, 
+                            // so can't use JOptionPane completely
+                            JOptionPane optionPane = new JOptionPane();
+                            optionPane.setMessage(msg);
+                            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                            optionPane.setOptions(new Object[] {"Close"});
+                            JDialog dialog = optionPane.createDialog(null, "Web Server Started");
+                            dialog.setModal(false);
+                            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                            dialog.setVisible(true);
                         }
                         String msg = "Web server started at http://"
                                 +getLocalAddress()
@@ -72,8 +81,8 @@ public class MiniServerAction extends AbstractAction {
                     });
                 }
             };
-            // this next statement won't be
-            // reached, as the MiniServer ctor is the service loop
+            // this line won't be reached, 
+            // as the MiniServer ctor is the service loop
         }
     }
 }
