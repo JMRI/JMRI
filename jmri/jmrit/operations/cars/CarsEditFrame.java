@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -643,11 +643,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			f.initComponents(KERNEL);
 	}
 
-
-//	Need to notify CarsTableFrame that this frame has been disposed 
 	public void dispose(){
-		// keep listerners, frame is reused
-		//removePropertyChangeListeners();
+		removePropertyChangeListeners();
 		super.dispose();
 	}
 

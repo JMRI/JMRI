@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class Car implements java.beans.PropertyChangeListener{
 
@@ -308,6 +308,11 @@ public class Car implements java.beans.PropertyChangeListener{
 			return ROAD;
 		}
 		// now determine if there's enough space for the car
+		try{
+			Integer.parseInt(getLength());
+		} catch (Exception e){
+			return LENGTH;
+		}
 		if (secondary != null && _secondaryLocation != secondary &&
 				(secondary.getUsedLength() - secondary.getReserved() + Integer.parseInt(getLength()) + COUPLER) > secondary.getLength()){
 			log.debug("Can't set (" + getId() + ") at secondary location ("+ location.getName() + ", " + secondary.getName() + ") no room!");
@@ -438,7 +443,13 @@ public class Car implements java.beans.PropertyChangeListener{
 			return ROAD;
 		}
 		// now determine if there's enough space for the car
-		int length = Integer.parseInt(getLength())+ COUPLER;
+		int length = 0;
+		try {
+			length = Integer.parseInt(getLength())+ COUPLER;
+		} catch (Exception e){
+			return LENGTH;
+		}
+		
 		if (getKernel() != null)
 			length = getKernel().getLength();
 		if (secondary != null &&

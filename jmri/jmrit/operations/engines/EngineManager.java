@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -110,6 +110,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Unload a engine.
      */
     public void deregister(Engine engine) {
+    	engine.setConsist(null);
         engine.setLocation(null, null);
         engine.setDestination(null, null);
         Integer oldSize = new Integer(_engineHashTable.size());

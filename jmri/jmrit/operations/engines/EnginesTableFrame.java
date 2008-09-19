@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -217,11 +217,11 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
 			return;
 		}
 		if (ae.getSource() == addButton){
-			if (f == null){
-				f = new EnginesEditFrame();
-				f.initComponents();
-				f.setTitle("Add Engine");
-			}
+			if (f != null)
+				f.dispose();
+			f = new EnginesEditFrame();
+			f.initComponents();
+			f.setTitle("Add Engine");
 			f.setVisible(true);
 		}
 	}

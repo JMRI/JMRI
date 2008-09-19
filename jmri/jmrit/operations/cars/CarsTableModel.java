@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -259,10 +259,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         switch (col) {
         case SETCOLUMN:
         	log.debug("Set car location");
-           	if (csf == null){
-        		csf = new CarsSetFrame();
-        		csf.initComponents();
-        	}
+           	if (csf != null)
+           		csf.dispose();
+       		csf = new CarsSetFrame();
+    		csf.initComponents();
 	    	csf.loadCar(car);
 	    	csf.setTitle("Set car location");
 	    	csf.setVisible(true);
@@ -270,10 +270,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	break;
         case EDITCOLUMN:
         	log.debug("Edit car");
-        	if (cef == null){
-        		cef = new CarsEditFrame();
-        		cef.initComponents();
-        	}
+        	if (cef != null)
+        		cef.dispose();
+    		cef = new CarsEditFrame();
+    		cef.initComponents();
 	    	cef.loadCar(car);
 	    	cef.setTitle("Edit Car");
 	    	cef.setVisible(true);

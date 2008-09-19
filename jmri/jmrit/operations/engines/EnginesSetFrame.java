@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -193,7 +193,6 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 	
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("EnginesSetFrame sees location: "+ ae.getSource());
 		if (ae.getSource()== locationBox){
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")){
@@ -335,7 +334,8 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 	}
 
 	public void dispose(){
-		// LocationManager.instance().removePropertyChangeListener(this);
+		LocationManager.instance().removePropertyChangeListener(this);
+		trainManager.removePropertyChangeListener(this);
 		super.dispose();
 	}
 	

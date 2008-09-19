@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -215,11 +215,11 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
 			return;
 		}
 		if (ae.getSource() == addButton){
-			if (f == null){
-				f = new CarsEditFrame();
-				f.initComponents();
-				f.setTitle("Add Car");
-			}
+			if (f != null)
+				f.dispose();
+			f = new CarsEditFrame();
+			f.initComponents();
+			f.setTitle("Add Car");
 			f.setVisible(true);
 		}
 	}

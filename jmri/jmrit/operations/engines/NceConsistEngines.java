@@ -49,7 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -185,15 +185,15 @@ jmri.jmrix.nce.NceListener {
 							engine.setConsist(engConsist);
 							break;
 						}else{
-							log.error("Missing lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum);
-							JOptionPane.showMessageDialog(null, "Missing lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum, "NCE Consist",
+							log.warn("Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum);
+							JOptionPane.showMessageDialog(null, "Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum, "NCE Consist",
 									JOptionPane.ERROR_MESSAGE);
 							syncOK = false;
 						}
 					}
 				}
 				if (!engMatch){
-					log.info("Engine " +engNum+ " not found in operations for NCE consist "+consistNum);
+					log.warn("Engine " +engNum+ " not found in operations for NCE consist "+consistNum);
 					if (consists.contains(Integer.toString(consistNum))){
 						JOptionPane.showMessageDialog(null, "Missing engine number "+engNum+" for NCE consist "+consistNum, "NCE Consist",
 								JOptionPane.ERROR_MESSAGE);

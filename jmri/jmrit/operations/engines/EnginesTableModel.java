@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -246,10 +246,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         switch (col) {
         case SETCOLUMN:
         	log.debug("Set engine location");
-           	if (esf == null){
-        		esf = new EnginesSetFrame();
-        		esf.initComponents();
+           	if (esf != null){
+           		esf.dispose();
         	}
+       		esf = new EnginesSetFrame();
+    		esf.initComponents();
 	    	esf.loadEngine(engine);
 	    	esf.setTitle("Set engine location");
 	    	esf.setVisible(true);
@@ -257,10 +258,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	break;
         case EDITCOLUMN:
         	log.debug("Edit engine");
-        	if (eef == null){
-        		eef = new EnginesEditFrame();
-        		eef.initComponents();
+        	if (eef != null){
+        		eef.dispose();
         	}
+    		eef = new EnginesEditFrame();
+    		eef.initComponents();
 	    	eef.loadEngine(engine);
 	    	eef.setTitle("Edit Engine");
 	    	eef.setVisible(true);

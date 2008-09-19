@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -561,10 +561,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			f.initComponents(CONSIST);
 	}
 
-//	Need to notify EnginesTableFrame that this frame has been disposed 
 	public void dispose(){
-		// keep listerners, frame is reused
-		//removePropertyChangeListeners();
+		removePropertyChangeListeners();
 		super.dispose();
 	}
 
