@@ -24,7 +24,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.6 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.7 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.DecoderPro.DecoderPro
@@ -85,7 +85,7 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:lib"
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
 #OPTIONS="${OPTIONS} -Xms10m"
-#OPTIONS="${OPTIONS} -Xmx60m"
+OPTIONS="${OPTIONS} -Xmx200m"
 # MacOS X specific options
 OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
 OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
