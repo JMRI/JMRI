@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.9 2008-09-20 21:26:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.10 2008-09-20 23:13:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,6 +69,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+Starting with this test release, by default JMRI is allowed to use
+up to 200MB of memory (up from a limit of 60MB or 64MB previously).
+If this is more memory than you have available, and you notice JMRI
+slowing down a lot, please let us know.
 
 <h3>Warnings from older versions:</h3>
 
