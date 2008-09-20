@@ -20,7 +20,7 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -33,8 +33,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _trainLength = 0;			// used during build
 	protected int _maxCarMoves = Setup.getCarMoves();
 	protected int _carMoves = 0;			// used during build
+	protected int _trainWeight = 0;			// used during build
 	protected int _sequenceId = 0;			// used to determine location order
-	protected int _grade = 0;				// maximum grade between locations
+	protected double _grade = 0;				// maximum grade between locations
 	protected int _trainIconX = 0;			// the x & y coordinates for the train icon
 	protected int _trainIconY = 0;
 	
@@ -128,6 +129,17 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _trainLength;
 	}
 	
+	public void setTrainWeight(int weight){
+		int old = _trainWeight;
+		_trainWeight = weight;
+		if (old != weight)
+			firePropertyChange("trainWeight", Integer.toString(old), Integer.toString(weight));
+	}
+	
+	public int getTrainWeight(){
+		return _trainWeight;
+	}
+	
 	public void setMaxCarMoves(int moves){
 		int old = _maxCarMoves;
 		_maxCarMoves = moves;
@@ -150,14 +162,14 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _carMoves;
 	}
 	
-	public void setGrade(int grade){
-		int old = _grade;
+	public void setGrade(double grade){
+		double old = _grade;
 		_grade = grade;
 		if (old != grade)
-			firePropertyChange("grade", Integer.toString(old), Integer.toString(grade));
+			firePropertyChange("grade", Double.toString(old), Double.toString(grade));
 	}
 	
-	public int getGrade(){
+	public double getGrade(){
 		return _grade;
 	}
 	
@@ -216,7 +228,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         }
         if ((a = e.getAttribute("trainDirection")) != null )  _trainDir = a.getValue();
         if ((a = e.getAttribute("maxTrainLength")) != null )  _maxTrainLength = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("grade")) != null )  _grade = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("grade")) != null )  _grade = Double.parseDouble(a.getValue());
         if ((a = e.getAttribute("maxCarMoves")) != null )  _maxCarMoves = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconX")) != null )  _trainIconX = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconY")) != null )  _trainIconY = Integer.parseInt(a.getValue());
@@ -236,7 +248,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
     	e.setAttribute("trainDirection", getTrainDirection());
     	e.setAttribute("maxTrainLength", Integer.toString(getMaxTrainLength()));
-    	e.setAttribute("grade", Integer.toString(getGrade()));
+    	e.setAttribute("grade", Double.toString(getGrade()));
        	e.setAttribute("maxCarMoves", Integer.toString(getMaxCarMoves()));
       	e.setAttribute("trainIconX", Integer.toString(getTrainIconX()));
       	e.setAttribute("trainIconY", Integer.toString(getTrainIconY()));

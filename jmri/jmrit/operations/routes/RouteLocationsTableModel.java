@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -168,7 +168,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         }
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
         case MAXLENGTHCOLUMN: return Integer.toString(rl.getMaxTrainLength());
-        case GRADE: return Integer.toString(rl.getGrade());
+        case GRADE: return Double.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
         case TRAINICONY: return Integer.toString(rl.getTrainIconY());
         case UPCOLUMN: return "Up";
@@ -277,9 +277,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     
     private void setGrade (Object value, int row){
     	RouteLocation location = _route.getLocationById((String)list.get(row));
-    	int grade;
+    	double grade;
     	try{
-     		grade = Integer.parseInt(value.toString());
+     		grade = Double.parseDouble(value.toString());
     	} catch(NumberFormatException e) {
     		log.error("grade must be a number");
     		return;

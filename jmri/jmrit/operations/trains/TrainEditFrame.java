@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -535,7 +535,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			return;
 		if(numEnginesBox.getSelectedItem().equals(Train.AUTO)){
 			JOptionPane.showMessageDialog(this,
-					"Auto Engines not available", "Future feature!",
+					"Auto Engines will estimate the number of engines needed", "Feature still under development!",
 					JOptionPane.INFORMATION_MESSAGE);
 			//return;
 		}

@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class TrainBuilder{
 	
@@ -171,6 +171,7 @@ public class TrainBuilder{
 				rl.setSecondaryLocation(null);		// used for staging only
 				addLine(fileOut, "Location (" +rl.getName()+ ") requests " +rl.getMaxCarMoves()+ " moves");
 			}
+			rl.setTrainWeight(0);					// clear the total train weight 
 		}
 		int carMoves = requested;
 		if(routeList.size()> 1)
@@ -724,26 +725,35 @@ public class TrainBuilder{
 	// and the maximum cars that the train can have at the maximum train length.
 	// Currently ignores the cars weight and engine horsepower
 	private int getAutoEngines(PrintWriter fileOut){
-		int numberEngines = 1;
+		double numberEngines = 1;
 		int moves = 0;
-		int carDivisor = 12;	// number of cars per engine 0 grade
+		
 		for (int i=0; i<routeList.size()-1; i++){
 			RouteLocation rl = train.getRoute().getLocationById((String)routeList.get(i));
 			moves += rl.getMaxCarMoves();
+			double carDivisor = 16;	// number of 40' cars per engine 1% grade
+			// change engine requirements based on grade
+			if (rl.getGrade()>1){
+				double grade = rl.getGrade();
+				carDivisor = carDivisor/grade;
+			}
 			if (rl.getMaxTrainLength()/(carDivisor*40) > numberEngines){
-				numberEngines = rl.getMaxTrainLength()/(carDivisor*40);
+				numberEngines = rl.getMaxTrainLength()/(carDivisor*(40+Car.COUPLER));
+				// round up to next whole integer
+				numberEngines = Math.ceil(numberEngines);
 				if (numberEngines > moves/carDivisor)
-					numberEngines = moves/carDivisor;
+					numberEngines = Math.ceil(moves/carDivisor);
 				if (numberEngines < 1)
 					numberEngines = 1;
 			}
 		}
-		addLine(fileOut, "Auto engines calculates that "+numberEngines+ " engines are required for this train");
-		if (numberEngines > Setup.getEngineSize()){
+		int nE = (int)numberEngines;
+		addLine(fileOut, "Auto engines calculates that "+nE+ " engines are required for this train");
+		if (nE > Setup.getEngineSize()){
 			addLine(fileOut, "The maximum number of engines that can be assigned is "+Setup.getEngineSize());
-			numberEngines = Setup.getEngineSize();
+			nE = Setup.getEngineSize();
 		} 
-		return numberEngines;
+		return nE;
 	}
 	
 	/**
@@ -816,6 +826,7 @@ public class TrainBuilder{
 						weightTons = car.getKernel().getWeightTons();
 					}
 					rlt.setTrainLength(rlt.getTrainLength()+length);
+					rlt.setTrainWeight(rlt.getTrainWeight()+weightTons);
 				}
 				if (weightTons > maxWeight){
 					maxWeight = weightTons;		// used for AUTO engines
@@ -1004,7 +1015,8 @@ public class TrainBuilder{
 			}
 			if (i != routeList.size() - 1) {
 				addLine(fileOut, rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirection()
-						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()+" "+rb.getString("feet"));
+						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
+						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null)
 					addLine(fileOut, rb.getString("DropEngineTo")+ " "+ engine.getSecondaryDestinationName()); 

@@ -9,12 +9,13 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents the various engine models a railroad can have.
  * Each model has a horsepower rating that is kept here.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -38,7 +39,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 			// load engines
 			EngineManagerXml.instance();
 		}
-		if (log.isDebugEnabled()) log.debug("EngineModels returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineModels returns instance "+_instance);
 		return _instance;
 	}
 
