@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class JmrixTest extends TestCase {
 
@@ -28,6 +28,8 @@ public class JmrixTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrix.JmrixTest");
+
+		suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
 
 		suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
 
