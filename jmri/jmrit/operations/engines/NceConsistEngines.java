@@ -49,7 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -93,6 +93,7 @@ jmri.jmrix.nce.NceListener {
 		}
 		// reset
 		index = 0;
+		waiting = 0;
 		syncOK = true;
 		
 		// create a status frame
