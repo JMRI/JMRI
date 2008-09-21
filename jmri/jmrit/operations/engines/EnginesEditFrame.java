@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -37,6 +37,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	EngineManager manager = EngineManager.instance();
 	EngineManagerXml managerXml = EngineManagerXml.instance();
+	EngineModels engineModels = EngineModels.instance();
 	CarManagerXml carManagerXml = CarManagerXml.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
@@ -92,7 +93,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	// combo boxes
 	javax.swing.JComboBox roadComboBox = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox modelComboBox = EngineModels.instance().getComboBox();
+	javax.swing.JComboBox modelComboBox = engineModels.getComboBox();
 	javax.swing.JComboBox lengthComboBox = EngineLengths.instance().getComboBox();
 	javax.swing.JComboBox ownerComboBox = CarOwners.instance().getComboBox();
 	javax.swing.JComboBox locationBox = locationManager.getComboBox();
@@ -253,7 +254,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		addButtonAction(fillWeightButton);
 
 		// setup combobox
-		addComboBoxAction(lengthComboBox);
+		addComboBoxAction(modelComboBox);
 		addComboBoxAction(locationBox);
 		
 		// setup checkbox
@@ -267,7 +268,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
-		EngineModels.instance().addPropertyChangeListener(this);
+		engineModels.addPropertyChangeListener(this);
 		EngineLengths.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
 		locationManager.addPropertyChangeListener(this);
@@ -297,11 +298,11 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 		roadNumberTextField.setText(engine.getNumber());
 
-		if (!EngineModels.instance().containsName(engine.getModel())){
+		if (!engineModels.containsName(engine.getModel())){
 			if (JOptionPane.showConfirmDialog(this,
 					"This engine's model \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine model?",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-				EngineModels.instance().addName(engine.getModel());
+				engineModels.addName(engine.getModel());
 			}
 		}
 		modelComboBox.setSelectedItem(engine.getModel());
@@ -352,6 +353,15 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	// combo boxes
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource()== modelComboBox){
+			if (modelComboBox.getSelectedItem() != null){
+				String model = (String)modelComboBox.getSelectedItem();
+				// load the default hp and length for the model selected
+				hpTextField.setText(engineModels.getModelHorsepower(model));
+				if(engineModels.getModelLength(model)!= null && !engineModels.getModelLength(model).equals(""))
+					lengthComboBox.setSelectedItem(engineModels.getModelLength(model));
+			}
+		}
 		if (ae.getSource()== locationBox){
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")){
@@ -568,7 +578,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	private void removePropertyChangeListeners(){
 		CarRoads.instance().removePropertyChangeListener(this);
-		EngineModels.instance().removePropertyChangeListener(this);
+		engineModels.removePropertyChangeListener(this);
 		EngineLengths.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
 		locationManager.removePropertyChangeListener(this);
@@ -583,7 +593,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			roadComboBox.setSelectedItem(_engine.getRoad());
 		}
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS)){
-			EngineModels.instance().updateComboBox(modelComboBox);
+			engineModels.updateComboBox(modelComboBox);
 			if (_engine != null)
 				modelComboBox.setSelectedItem(_engine.getType());
 		}

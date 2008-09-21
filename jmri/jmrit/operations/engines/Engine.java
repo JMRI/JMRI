@@ -12,6 +12,8 @@ public class Engine extends Car {
 	
 	private Consist _consist = null;
 	private String _model = "";
+	public static final String LENGTH = "length";
+	EngineModels engineModels = EngineModels.instance();
 	
 	public Engine(String road, String number) {
 		super(road, number);
@@ -36,16 +38,30 @@ public class Engine extends Car {
 	 */
 	public void setHp (String hp){
 		String old = getHp();
-		EngineModels.instance().setModelHorsepower(getModel(), hp);
+		engineModels.setModelHorsepower(getModel(), hp);
 		if (!old.equals(hp))
 			firePropertyChange("hp", old, hp);
 	}
 	
 	public String getHp(){
-		String hp = EngineModels.instance().getModelHorsepower(getModel());
+		String hp = engineModels.getModelHorsepower(getModel());
 		if(hp == null)
 			hp = "";
 		return hp;
+	}
+	
+	public void setLength(String length){
+		String old = getLength();
+		engineModels.setModelLength(getModel(), length);
+		if (!old.equals(length))
+			firePropertyChange(LENGTH, old, length);
+	}
+	
+	public String getLength(){
+		String length = engineModels.getModelLength(getModel());
+		if(length == null)
+			length = "";
+		return length;
 	}
 	
 	public void setConsist(Consist consist) {
@@ -105,7 +121,7 @@ public class Engine extends Car {
 		if ((a = e.getAttribute("hp")) != null)
 			setHp(a.getValue());
 		if ((a = e.getAttribute("length")) != null)
-			_length = a.getValue();
+			setLength(a.getValue());
 		if ((a = e.getAttribute("built")) != null)
 			_built = a.getValue();
 		Location location = null;

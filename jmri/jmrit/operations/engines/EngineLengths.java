@@ -13,11 +13,11 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	
-	private static final String LENGTHS = "32%%34%%36%%38%%40%%42%%44%%46%%48%%50%%52%%54%%56%%58%%60%%65%%70%%75%%80%%85%%90";
+	private static final String LENGTHS = "32%%34%%36%%38%%40%%42%%44%%45%%46%%48%%50%%51%%52%%53%%54%%55%%56%%57%%58%%59%%60%%61%%65%%66%%70%%75%%80%%85%%90";
 	public static final String ENGINELENGTHS = "EngineLengths";
 	private static final String LENGTH = "Length";
 	
