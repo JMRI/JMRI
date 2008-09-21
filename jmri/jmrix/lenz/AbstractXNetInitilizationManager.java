@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
@@ -30,7 +30,9 @@ abstract public class AbstractXNetInitilizationManager {
            if (log.isDebugEnabled()) log.debug("start wait");
               try {
 	         this.wait();
-               } catch (java.lang.InterruptedException ei) {}
+               } catch (java.lang.InterruptedException ei) {
+                Thread.currentThread().interrupt(); // retain if needed later
+               }
                if (log.isDebugEnabled()) log.debug("end wait");
         }
 

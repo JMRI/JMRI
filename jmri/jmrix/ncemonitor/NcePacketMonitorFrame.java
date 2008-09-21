@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -315,6 +315,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 		} catch (IOException e) {
 			log.error("Exception on output: " + e);
 		} catch (InterruptedException e) {
+		    Thread.currentThread().interrupt(); // retain if needed later
 			log.error("Interrupted output: " + e);
 		}
     }

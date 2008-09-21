@@ -49,7 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -227,6 +227,7 @@ jmri.jmrix.nce.NceListener {
 				try {
 					wait(1000);
 				} catch (InterruptedException e) {
+				    Thread.currentThread().interrupt(); // retain if needed later
 				}
 			}
 			if (waitcount-- < 0) {

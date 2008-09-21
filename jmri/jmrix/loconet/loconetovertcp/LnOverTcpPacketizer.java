@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.8 $
+ * @version 		$Revision: 1.9 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -223,7 +223,9 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                           ((Object)this).wait();
                       }
                   }
-                  catch (java.lang.InterruptedException ei) {}
+                  catch (java.lang.InterruptedException ei) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                  }
                   if (debug) log.debug("end wait");
               }
           }

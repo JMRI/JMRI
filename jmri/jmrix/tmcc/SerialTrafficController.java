@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -211,7 +211,10 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         synchronized(xmtRunnable) {
                            xmtRunnable.wait(10);
                         }
-                     } catch (InterruptedException e) { log.error("char send wait interupted"); }                
+                     } catch (InterruptedException e) { 
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        log.error("char send wait interupted"); 
+                     }                
             }
 			break;
 		  } else if(m.getRetries()>=0) {

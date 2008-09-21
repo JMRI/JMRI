@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 import java.util.LinkedList;
@@ -63,7 +63,9 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         {
           messageList.wait( timeout );
         }
-        catch( InterruptedException ex ){}
+        catch( InterruptedException ex ){
+            Thread.currentThread().interrupt(); // retain if needed later
+        }
       }
 
       if( messageList.size() > 0 )

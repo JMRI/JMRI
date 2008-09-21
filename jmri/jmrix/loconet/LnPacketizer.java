@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.19 $
+ * @version 		$Revision: 1.20 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -454,7 +454,9 @@ public class LnPacketizer extends LnTrafficController {
                             ((Object)this).wait();
                         }
                     }
-                    catch (java.lang.InterruptedException ei) {}
+                    catch (java.lang.InterruptedException ei) {
+                        Thread.currentThread().interrupt(); // retain if needed later
+                    }
                     if (fulldebug) log.debug("end wait");
                 }
             }

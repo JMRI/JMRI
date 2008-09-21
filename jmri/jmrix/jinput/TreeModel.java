@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -90,7 +90,10 @@ public class TreeModel extends DefaultTreeModel {
                 if(controllers.length==0) {
                     try {
                         Thread.sleep(1000);
-                    } catch (InterruptedException e) { return; }  // interrupt kills the thread
+                    } catch (InterruptedException e) { 
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        return;  // interrupt kills the thread
+                    }
                     continue;
                 }
                 

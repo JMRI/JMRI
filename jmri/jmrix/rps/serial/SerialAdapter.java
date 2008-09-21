@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -142,6 +142,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
         } catch (java.io.IOException e) {
             log.error("Exception on output: "+e);
         } catch (java.lang.InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
             log.error("Interrupted output: "+e);
         }
     }

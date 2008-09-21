@@ -24,7 +24,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -226,6 +226,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
         try {
           Thread.sleep(3);
         } catch (InterruptedException i) {
+            Thread.currentThread().interrupt(); // retain if needed later
           log.error("Sprog slot thread interrupted\n"+i);
         }
         switch(state) {

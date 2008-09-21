@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -949,7 +949,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             synchronized (this) {
                 try {
                     wait(delay);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                }
             }
             // to avoid problems, we defer this to Swing thread
             NotifyExec r = new NotifyExec(p, value, status);

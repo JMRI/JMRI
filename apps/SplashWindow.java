@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * A splash screen for showing during JMRI startup
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller Copyright 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SplashWindow extends JmriJFrame {
     Image splashIm;
@@ -33,7 +33,9 @@ public class SplashWindow extends JmriJFrame {
        mt.addImage(splashIm,0);
        try {
           mt.waitForID(0);
-       } catch(InterruptedException ie){}
+       } catch(InterruptedException ie){
+         Thread.currentThread().interrupt(); // retain if needed later
+       }
 
         JLabel l = new JLabel(new ImageIcon(splashIm, "JMRI splash screen"));
         l.setOpaque(true);

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -184,7 +184,9 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     					awaitingReply = true;
     					try {
     						wait(pollTimeout);
-    					} catch (InterruptedException e) { };
+    					} catch (InterruptedException e) {
+    					    Thread.currentThread().interrupt(); // retain if needed later
+    					};
     				}
      	    		int delay = shortCycleInterval;
     	    		if (aiuCycleCount>=2 &&
@@ -203,6 +205,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     	    				awaitingDelay = true;
     	    				wait(delay);
     	    			} catch (InterruptedException e) {
+    	    			    Thread.currentThread().interrupt(); // retain if needed later
     	    			} finally { awaitingDelay = false; }
     	    		}
     			}

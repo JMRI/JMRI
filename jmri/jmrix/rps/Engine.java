@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  */
 
 
@@ -412,6 +412,7 @@ public class Engine implements ReadingListener {
                     } catch (InterruptedException e) { 
                         // cancel whatever is happening
                         log.debug("Polling stops");
+                        Thread.currentThread().interrupt(); // retain if needed later
                         return; // end operation
                     }
                 }

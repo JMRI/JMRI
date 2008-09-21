@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -229,6 +229,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         } catch (java.io.IOException e) {
             log.error("Exception on output: "+e);
         } catch (java.lang.InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
             log.error("Interrupted output: "+e);
         }
     }

@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -119,7 +119,9 @@ public class NamedIcon extends ImageIcon {
         mt.addImage(pImage, 0);
         try {
             mt.waitForAll();
-        } catch (InterruptedException ie) {}
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt(); // retain if needed later
+        }
 
         int w = pImage.getWidth(null);
         int h = pImage.getHeight(null);

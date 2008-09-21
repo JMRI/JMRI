@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -112,8 +112,9 @@ public class SprogIIUpdateFrame
           try {
             Thread.sleep(500);
           }
-          catch (InterruptedException e) {}
-          ;
+          catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
+          }
           // Look for bootloader version
           requestBoot();
         }

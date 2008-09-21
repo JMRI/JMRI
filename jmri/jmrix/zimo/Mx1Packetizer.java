@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -232,7 +232,9 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 wait();
                               }
                             }
-                            catch (java.lang.InterruptedException ei) {}
+                            catch (java.lang.InterruptedException ei) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                            }
                             if (debug) log.debug("end wait");
                           }
                         }

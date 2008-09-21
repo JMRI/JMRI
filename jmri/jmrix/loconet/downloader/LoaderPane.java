@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.13 $
+ * @version	    $Revision: 1.14 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -596,7 +596,9 @@ public class LoaderPane extends javax.swing.JPanel {
                     // do the actual wait
                     wait(tdelay);
                 }
-            } catch (InterruptedException e) {}  // just proceed
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
         }
 
         /**

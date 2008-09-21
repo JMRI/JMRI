@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.12 $
+ * @version                     $Revision: 2.13 $
  */
 
 package jmri.jmrix.lenz;
@@ -264,7 +264,9 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 			try {
 				   wait(1000);
 			    	}
-			    } catch (java.lang.InterruptedException e) {}
+			    } catch (java.lang.InterruptedException e) {
+			        Thread.currentThread().interrupt(); // retain if needed later
+			    }
 			}*/
 		}
 		// All we have to do here is create an apropriate XNetMessage, 

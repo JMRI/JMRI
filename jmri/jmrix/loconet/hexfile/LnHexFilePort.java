@@ -27,7 +27,7 @@ import java.io.PipedOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -94,6 +94,7 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
             try {
                 Thread.sleep(3000);
             } catch (java.lang.InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
                 log.debug("woken from sleep");
             }
         }

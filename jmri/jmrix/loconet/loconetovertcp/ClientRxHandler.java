@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
@@ -183,6 +183,7 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
         log.error( "ClientTxHandler: IO Exception" );
       }
       catch (InterruptedException ex) {
+        Thread.currentThread().interrupt(); // retain if needed later
         log.debug( "ClientTxHandler: Interrupted Exception" );
       }
         // Interrupt the Parent to let it know we are exiting for some reason

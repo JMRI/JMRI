@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -281,7 +281,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 		try {
 			CurrentStatus.wait(waitValue);
 		} catch(java.lang.InterruptedException ie1) {
-			// Don't do anything with this yet
+			Thread.currentThread().interrupt(); // retain if needed later
 		}
 
              /* First, send the ops mode programing command to enter
@@ -297,7 +297,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 		try {
 			CurrentStatus.wait(waitValue);
 		} catch(java.lang.InterruptedException ie1) {
-			// Don't do anything with this yet
+			Thread.currentThread().interrupt(); // retain if needed later
 		}
 
 	     CurrentStatus.setText(rb.getString("LV102StatusWriteVolt"));
@@ -318,7 +318,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
           }  // End of synchronized(CurrentStatus) block for voltage setting
         } else { 
@@ -343,7 +343,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-			// Don't do anything with this yet
+			Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
              /* First, send the ops mode programing command to enter
@@ -359,7 +359,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie2) {
-			// Don't do anything with this yet
+			Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
  	     CurrentStatus.setText(rb.getString("LV102StatusWriteELine"));
@@ -381,7 +381,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
 	  } // End of synchronized(CurrentStatus) block for E-line setting
         } else { 
@@ -407,7 +407,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
              /* First, send the ops mode programing command to enter
@@ -423,7 +423,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie3) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
 	     CurrentStatus.setText(rb.getString("LV102StatusWriteRailCom"));
@@ -444,8 +444,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
-             }
+		    Thread.currentThread().interrupt(); // retain if needed later
+         }
 	   } // End of synchronized(CurrentStatus) block for RailCom Setting
         } else { 
     	        if(log.isDebugEnabled()) log.debug("No RailCom value Selected");
@@ -469,7 +469,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
              /* First, send the ops mode programing command to enter
@@ -485,7 +485,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie3) {
-		// Don't do anything with this yet
+		    Thread.currentThread().interrupt(); // retain if needed later
 	     }
 
 	     CurrentStatus.setText(rb.getString("LV102StatusWriteRailComMode"));
@@ -506,8 +506,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	     try {
 		CurrentStatus.wait(waitValue);
 	     } catch(java.lang.InterruptedException ie1) {
-		// Don't do anything with this yet
-             }
+		    Thread.currentThread().interrupt(); // retain if needed later
+         }
 	  } // End of synchronized(CurrentStatus) block for RailCom Mode
         } else { 
     	        if(log.isDebugEnabled()) log.debug("No RailCom Mode Selected");

@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.59 $
+ * @version         $Revision: 1.60 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -264,7 +264,10 @@ abstract public class AbstractMRTrafficController {
                             synchronized(xmtRunnable) {
                                 xmtRunnable.wait(modeMsg.getTimeout());
                             }
-                        } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                        } catch (InterruptedException e) { 
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            log.error("transmitLoop interrupted"); 
+                        }
                         if (mCurrentState != OKSENDMSGSTATE)
                             handleTimeout(modeMsg);
                         mCurrentState = WAITMSGREPLYSTATE;
@@ -279,7 +282,10 @@ abstract public class AbstractMRTrafficController {
                         synchronized(xmtRunnable) {  
                             xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
                         }
-                    } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                    } catch (InterruptedException e) { 
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        log.error("transmitLoop interrupted"); 
+                    }
                     checkReplyInDispatch();
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m);
@@ -296,7 +302,10 @@ abstract public class AbstractMRTrafficController {
                     synchronized(xmtRunnable) {
                         xmtRunnable.wait(mWaitBeforePoll);
                     }
-                } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                } catch (InterruptedException e) { 
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    log.error("transmitLoop interrupted");
+                }
                 if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE)
                     log.error("left timeout in unexpected state: "+mCurrentState);
                 if (mCurrentState == IDLESTATE) {
@@ -314,7 +323,10 @@ abstract public class AbstractMRTrafficController {
                                 synchronized(xmtRunnable) {
                                     xmtRunnable.wait(msg.getTimeout());
                                 }
-                            } catch (InterruptedException e) { log.error("interrupted while leaving programming mode"); }
+                            } catch (InterruptedException e) { 
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                log.error("interrupted while leaving programming mode");
+                            }
                             // exit program mode timeout?
                             if (mCurrentState == WAITREPLYINNORMMODESTATE){
                                 // entering normal mode via timeout
@@ -336,7 +348,10 @@ abstract public class AbstractMRTrafficController {
                                 synchronized(xmtRunnable) {
                                     xmtRunnable.wait(msg.getTimeout());
                                 }
-                            } catch (InterruptedException e) { log.error("interrupted while waiting poll reply"); }
+                            } catch (InterruptedException e) { 
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                log.error("interrupted while waiting poll reply");
+                            }
                             checkReplyInDispatch();
                             // and go around again
                             if (mCurrentState == WAITMSGREPLYSTATE) {
@@ -369,6 +384,7 @@ abstract public class AbstractMRTrafficController {
                     xmtRunnable.wait(DISPATCH_WAIT_INTERVAL);
                 }
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
                 log.error("transmitLoop interrupted");
             }
             loopCount++;
@@ -484,7 +500,10 @@ abstract public class AbstractMRTrafficController {
                             synchronized(xmtRunnable) {
                                 xmtRunnable.wait(m.getTimeout());
                             }
-                        } catch (InterruptedException e) { log.error("retry wait interupted"); }
+                        } catch (InterruptedException e) { 
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            log.error("retry wait interupted");
+                        }
                     } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
                 }
             } else {  // ostream is null
@@ -750,6 +769,7 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.wait(warmUpDelay);
                         }
                     } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
                     }
                 }
                 // update state, and notify to continue
@@ -805,7 +825,10 @@ abstract public class AbstractMRTrafficController {
                         synchronized(xmtRunnable) {
                             if (modeMsg!=null) xmtRunnable.wait(modeMsg.getTimeout());
                         }
-                } catch (InterruptedException e) { log.error("transmit interrupted"); }
+                } catch (InterruptedException e) { 
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    log.error("transmit interrupted"); 
+                }
             }
         }
     }

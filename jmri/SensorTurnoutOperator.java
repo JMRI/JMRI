@@ -52,7 +52,9 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 						synchronized(this) {
 							wait(remaining);
 						}
-					} catch (InterruptedException e) { };
+					} catch (InterruptedException e) { 
+					    Thread.currentThread().interrupt(); // retain if needed later
+					};
 				}
 				if (myTurnout.isConsistentState()) {
 					break;

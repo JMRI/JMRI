@@ -28,7 +28,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate consist address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -151,6 +151,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 					try {
 						wait(20000);
 					} catch (InterruptedException e) {
+					    Thread.currentThread().interrupt(); // retain if needed later
 					}
 				}
 			}

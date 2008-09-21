@@ -12,7 +12,7 @@ import jmri.*;
  * Frame for configuring a NCE booster
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class BoosterProgFrame extends jmri.util.JmriJFrame {
     JTextField start = new JTextField(6);
@@ -124,7 +124,9 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
                     synchronized (this) {
                         try {
                             wait(1500);  // needed for booster to reset
-                        } catch (InterruptedException i) {}
+                        } catch (InterruptedException i) {
+                            Thread.currentThread().interrupt(); // retain if needed later
+                        }
                     }
                     try {
                         p.writeCV(254, val % 256, new ProgListener() {

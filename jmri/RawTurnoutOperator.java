@@ -42,9 +42,11 @@ public class RawTurnoutOperator extends TurnoutOperator {
 			while (++tries < maxTries) {
 				try {
 					Thread.sleep(interval);
-				} catch (InterruptedException e) { };
+				} catch (InterruptedException e) {
+				    Thread.currentThread().interrupt(); // retain if needed later
+				};
 				operatorCheck();
-                                sendCommand();
+                sendCommand();
 			}
 			myTurnout.setKnownStateToCommanded();
 		} catch (TurnoutOperatorException e) { };

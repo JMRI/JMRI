@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -216,7 +216,9 @@ public class AbstractAutomaton implements Runnable {
             }
             try {
                 Thread.sleep(stillToGo);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
         }
     }
 
@@ -240,7 +242,7 @@ public class AbstractAutomaton implements Runnable {
                 } else
                     super.wait(milliseconds);
             } catch (InterruptedException e) {
-                // do nothing for now exception mention
+                Thread.currentThread().interrupt(); // retain if needed later
                 log.warn("interrupted in wait");
             }
         }
@@ -728,6 +730,7 @@ public class AbstractAutomaton implements Runnable {
                     try {
                         self.wait();
                     }  catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
                         log.warn("Interrupted during pause, not expected");
                     }
                 }
@@ -818,6 +821,7 @@ public class AbstractAutomaton implements Runnable {
         try {
             super.wait();
         }  catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
             log.warn("Interrupted during debugging wait, not expected");
         }
     }

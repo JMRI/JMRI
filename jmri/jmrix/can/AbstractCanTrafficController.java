@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
@@ -96,7 +96,10 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
                             synchronized(xmtRunnable) {
                                 xmtRunnable.wait(hm.getTimeout());
                             }
-                        } catch (InterruptedException e) { log.error("retry wait interupted"); }
+                        } catch (InterruptedException e) { 
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            log.error("retry wait interupted");
+                        }
                     } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
                 }
             } else {
@@ -220,6 +223,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
                                 xmtRunnable.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt(); // retain if needed later
                         }
                         
                     }
