@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -60,6 +60,9 @@ public class RosterMenu extends JMenu {
         AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));
         createAction.setEnabled(false);
 
+        AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(rb.getString("MenuItemCreate"));
+        editAction.setEnabled(false);
+
         AbstractAction importAction = new ImportRosterItemAction(rb.getString("MenuItemImport"), pWho);
         importAction.setEnabled(false);
 
@@ -80,6 +83,7 @@ public class RosterMenu extends JMenu {
         printAction.setEnabled(false);
 
         add(createAction);
+        add(editAction);
         add(copyAction);
         add(importAction);
         add(exportAction);
@@ -91,6 +95,7 @@ public class RosterMenu extends JMenu {
         switch (pMenuType) {
             case MAINMENU:
                 createAction.setEnabled(true);
+                editAction.setEnabled(true);
                 deleteAction.setEnabled(true);
                 importAction.setEnabled(true);
                 exportAction.setEnabled(true);

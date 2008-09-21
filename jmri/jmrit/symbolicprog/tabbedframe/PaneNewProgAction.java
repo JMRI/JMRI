@@ -33,7 +33,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PaneNewProgAction extends AbstractAction {
 
@@ -48,15 +48,6 @@ public class PaneNewProgAction extends AbstractAction {
 
     public PaneNewProgAction(String s) {
         super(s);
-
-        // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isServiceModePossible()) {
-            setEnabled(false);
-            // This needs to return, so we don't start the xmlThread
-	    return;
-        }
-
     }
 
     public void actionPerformed(ActionEvent e) {
