@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Roster.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: Roster.shtml,v 1.2 2008-09-21 02:27:30 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Rosters</title>
 
 <!-- Style -->
@@ -94,14 +94,39 @@ will still be used.
 
 </dl></p>
 
+<a id="menu">
 <h3>Roster Menu</h3>
 
-<p>Both the main DecoderPro window and the "start programmer" window
-has a "Roster" menu available.  That menu allows you to
+<a href="images/RosterMenu.jpg"><img src="images/RosterMenu.jpg" width="108" height="92" align="right"/></a>
+Both the main DecoderPro window and the "start programmer" window
+have a "Roster" menu available.  That menu allows you to
 manage the entries in your roster with commands:
 
 <dl>
 
+<a id="create">
+<dt>Create ...
+<dd>
+"Create" is used to create a new roster entry, even if you
+don't currently have a connection to a layout. 
+When you select this, you're given a window in which to select
+a decoder type. Pick the right decoder type, the format you want,
+and click "Open". You'll see a DecoderPro-style window for changing the contents
+of the new entry.
+Don't forget to click "Save" when you're done!
+
+<a id="edit">
+<dt>Edit ...
+<dd>
+"Edit" is used to update the contents of a roster entry, even when you
+don't have a layout connection (normally, if you do have a layout connection,
+you'll use the DecoderPro programming functions).  When you select this,
+you'll get a window in which to select an existing roster entry, a 
+format, and an "Open" button. Once you click "Open", you'll get a 
+DecoderPro-style window for viewing and changing the contents of the entry.
+Don't forget to click "Save" when you're done!
+
+<a id="copy">
 <dt>Copy ...
 <dd>
 "Copy" is used to create another roster entry that's identical
@@ -110,7 +135,7 @@ you'd like to use for new locomotives, you can create a roster entry
 with all the right values filled in, and then copy it every time you
 want to program a new locomotive.
 
-
+<a id="export">
 <dt>Export ...
 <dd>
 Although it is possible to find the XML files defining roster entries
@@ -121,17 +146,17 @@ to another copy of DecoderPro and import it into that roster.
 Export does not change your current roster in any way, it
 just makes a copy for you of a specific entry.
 
-<dd>
+<p>
 When you select "Export ...", you be asked to select the
 roster entry you want to export, then you'll be prompted to select
 a new filename.  You can call it anything you want, but
 it's best to put a ".xml" extension on the name.
 
+<a id="import">
 <dt>Import ...
 <dd>
-<p>The combination of "Export" then "Import" allows you to bring a locomotives
+The combination of "Export" then "Import" allows you to bring a locomotives
 roster entry when you move to another layout, with it's own DecoderPro installation.
-</p>
 
 <p>When you select "Import ...", you'll be asked to locate an XML file
 to import. It should have been created by an "Export" command.  You'll
@@ -139,11 +164,29 @@ also be asked for the ID of the new roster entry to be created.
 This can be the same as it was before it was exported, or you can
 give it a new ID.</p>
 
+<a id="delete">
 <dt>Delete ...
 <dd>
 This completely removes a roster entry.  You're asked if you're sure
 and a backup is made, in case of mistakes.
-</dl></p>
+
+<a id="summary">
+<dt>Print Summary ...
+<dd>
+This prints a summary of the entire roster, listing the primary 
+information for each entry.
+<p>
+For a more detailed listing of a specific decoder, see the 
+"File" menu on the programmer screens.
+
+<a id="previewsummary">
+<dt>Print Preview Summary ...
+<dd>
+This shows the contents of the printed summary on your screen,
+so you can preview it before printing.
+
+
+</dl>
     
 <!--#include virtual="/Footer" -->
 </body>
