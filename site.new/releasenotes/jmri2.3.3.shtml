@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.10 2008-09-20 23:13:47 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.11 2008-09-21 03:18:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -182,6 +182,13 @@ Team Digital provided a fix for routes in the SMD16 definition file.
 Many JUnit tests were added for operations by Robert Coleman.
 
 <p>
+There's a new 
+"<a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Roster.shtml#edit">Edit ...</a>"
+entry in the Roster menu that
+lets you update the contents of a roster entry (including changing
+CV values) even if you don't have a connection to your layout.
+
+<p>
 Michael Mosher added a definition for the P2K H10-44 QSI decoder.
 
 <p>
@@ -192,6 +199,10 @@ form on the loader window.
 <p>
 A problem accessing the JMRI web server from a separate Windows computer was fixed.
 
+<p>
+The handling of InterruptedException internal to the code has been standardized as a
+first step toward a cleaner shutdown procedure.  
+In turn, this is needed to simplify running JMRI within various standard web servers.
 
 <!--#include virtual="/Footer" -->
 
