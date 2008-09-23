@@ -29,7 +29,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  */
 public abstract class XmlFile {
 
@@ -309,6 +309,30 @@ public abstract class XmlFile {
 	}
 
     /**
+     * Revert to original file from backup. Use this for testing backup files.
+     * @param name Last part of file pathname i.e. subdir/name, without the
+     *               pathname for either the xml or preferences directory.
+     */
+    public void revertBackupFile(String name) {
+		File file = findFile(name);
+		if (file == null) {
+			log.info("No " + name + " file to revert");
+		} else {
+			String backupName = backupFileName(file.getAbsolutePath());
+			File backupFile = findFile(backupName);
+			if (backupFile != null) {
+        			log.info("No " + backupName + " backup file to revert");
+				if (file.delete())
+					log.debug("deleted original file " + name);
+			}
+			if (backupFile.renameTo(new File(name)))
+				log.debug("created original file " + name);
+			else
+				log.error("could not create original file " + name);
+		}
+	}
+
+    /**
 	 * Return the name of a new, unique backup file. This is here so it can be
 	 * overridden during tests. File to be backed-up must be within the
 	 * preferences directory tree.
@@ -368,7 +392,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.35 2008-08-10 14:42:21 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.36 2008-09-23 16:07:26 rcoleman Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

@@ -21,7 +21,7 @@ public class LocationManagerXml extends XmlFile {
 	}
 	
 	/** record the single instance **/
-	private static LocationManagerXml _instance = null;
+	static protected LocationManagerXml _instance = null;
 
 	public static synchronized LocationManagerXml instance() {
 		if (_instance == null) {

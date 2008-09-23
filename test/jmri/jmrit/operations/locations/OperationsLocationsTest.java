@@ -26,7 +26,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsLocations class
  * @author	Bob Coleman
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -255,51 +255,176 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Used Length one car", 0, l.getUsedLength()); // Drawbar length is 4
 	}
 
-	// test location Xml create support
-	public void testXMLCreate() {
-// slash-star here to remove this attempt
-//	BOB C: This is how you should do it -- I think.  If you remove the slash-star comments then this code will run
-//			but it will run too late.  The instance has already been created and will be based upon
-//			your live OperationLocationRoster.xml
+	// test car duplicates support
+	public void testCarDuplicatesSupport() {
+		Location l = new Location("Test id", "Test Name");
+		Assert.assertEquals("Location id", "Test id", l.getId());
+		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		// this uses explicit filenames intentionally, to ensure that
-		// the resulting files go into the test tree area.
+		Assert.assertEquals("Used Length", 0, l.getUsedLength());
+		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
 
-		LocationManagerXml lx = new LocationManagerXml();
+		jmri.jmrit.operations.cars.Car c1 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER1");
+		c1.setLength("40");
+		l.addCar(c1);
 
-		// store files in "temp"
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
+		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
-		// change file name to OperationsTestLocationRoster
-		lx.setOperationsFileName("OperationsTestLocationRoster");
+		jmri.jmrit.operations.cars.Car c2 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER2");
+		c2.setLength("33");
+		l.addCar(c2);
 
-		// remove existing Operations file if its there
-		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTestLocationRoster.xml");
-		f.delete();
-// slash-star here to remove this attempt      
+		Assert.assertEquals("Number of Cars", 2, l.getNumberCars());
+		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
-            LocationManager manager = LocationManager.instance();
-            List locationList = manager.getLocationsByIdList();
+		l.addCar(c1);
 
-//	BOB C: You need to uncomment the following test.  If you have more than 0 locations defined in your
-//			live OperationLocationRoster.xml then this test will fail since that is the file that
-//			will get read versus the test one we just tried to create. 
-//
-//          Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
-	        
-	      for (int i=0; i<locationList.size(); i++){
-	      	String locationId = (String)locationList.get(i);
-	        	Location loc = manager.getLocationById(locationId);
-		}
-// slash-star here to remove this attempt
-//	BOB C: You need to remove these slash-stars too.
-		// change file name to OperationsTestLocationRoster
-		lx.setOperationsFileName("OperationsLocationRoster");
-// slash-star here to remove this attempt
+		Assert.assertEquals("Number of Cars", 3, l.getNumberCars());
+		Assert.assertEquals("Used Length one car", 40+4+33+4+40+4, l.getUsedLength()); // Drawbar length is 4
+
 	}
 
-	// TODO: Add tests for adding + deleting the same cars
+	// test location Xml create support
+	public void testXMLCreate() {
+
+                LocationManager manager = LocationManager.instance();
+                List locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+                manager.newLocation("Test Location 2");
+                manager.newLocation("Test Location 1");
+                manager.newLocation("Test Location 3");
+
+                Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById("1").getName());
+                Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById("2").getName());
+                Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById("3").getName());
+
+                Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
+                Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
+                Assert.assertEquals("New Location by Name 3", "Test Location 3", manager.getLocationByName("Test Location 3").getName());
+
+                manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
+		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 1").addTypeName("Coal");
+		manager.getLocationByName("Test Location 1").addTypeName("Engine");
+		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 2").setSwitchList(true);
+		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 2").addTypeName("Coal");
+		manager.getLocationByName("Test Location 2").addTypeName("Engine");
+		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 3").addTypeName("Coal");
+		manager.getLocationByName("Test Location 3").addTypeName("Engine");
+		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+
+                locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
+                    }
+                }
+
+                locationList = manager.getLocationsByNameList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+                    }
+                }
+
+                LocationManagerXml.instance().writeOperationsLocationFile();
+
+                manager.newLocation("Test Location 4");
+                manager.newLocation("Test Location 5");
+                manager.newLocation("Test Location 6");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
+                
+                LocationManagerXml.instance().writeOperationsLocationFile();
+        }
+
+	// test location Xml read support preparation
+	public void testXMLReadPrep() {
+                LocationManager manager = LocationManager.instance();
+                List locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
+
+                //  Revert the main xml file back to the backup file.
+                LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+
+                //  Need to dispose of the LocationManager's list and hash table
+                manager.dispose();	
+	}
+
+	// test location Xml read support
+	public void testXMLRead() throws Exception  {
+                LocationManager manager = LocationManager.instance();
+                List locationList = manager.getLocationsByNameList();
+
+                // The dispose has removed all locations from the Manager.
+                Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+
+                // Need to force a re-read of the xml file.
+                LocationManagerXml.instance().readFile(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+
+                locationList = manager.getLocationsByNameList();
+                Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+                    }
+                }
+
+	}
+
+        // TODO: Add tests for adding + deleting the same cars
 
 	// TODO: Add tests for secondary locations
 
@@ -322,29 +447,20 @@ public class OperationsLocationsTest extends TestCase {
     */
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        new LocationManagerXml(){ {_instance = this; setOperationsFileName("temp"+File.separator+"OperationsTestLocationRoster.xml");}};
+	// store files in "temp"
+	XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations");
+	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"temp");
+	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
+	// remove existing Operations file if its there
 /*
-//	BOB C: This doesn't seem right -- but it almost works.  If you remove the slash-star comments then this code will run
-//			and it will run in time.  The test will pass, BUT, you get a warning that something else is still
-//			trying to use the test OperationsTestLocationRoster.xml rather than OperationsLocationRoster.xml
-
-		// this uses explicit filenames intentionally, to ensure that
-		// the resulting files go into the test tree area.
-
-		LocationManagerXml lx = new LocationManagerXml();
-
-		// store files in "temp"
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-
-		// change file name to OperationsTestLocationRoster
-		lx.setOperationsFileName("OperationsTestLocationRoster");
-
-		// remove existing Operations file if its there
-		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTestLocationRoster.xml");
-		f.delete();
-*/     
-
+        File fr = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+	fr.delete();
+	File fb = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml.bak");
+	fb.delete();
+*/
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
             protected void init() {
@@ -394,12 +510,6 @@ public class OperationsLocationsTest extends TestCase {
 
     // The minimal setup for log4J
     protected void tearDown() { 
-/*
-//	BOB C: You need to remove these slash-stars too.
-		// change file name to OperationsTestLocationRoster
-		LocationManagerXml lx = new LocationManagerXml();
-		lx.setOperationsFileName("OperationsLocationRoster");
-*/
         apps.tests.Log4JFixture.tearDown();
     }
 }
