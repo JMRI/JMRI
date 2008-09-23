@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -105,6 +105,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (log.isDebugEnabled()) log.debug("property change: "+e);
         if (e.getPropertyName().equals("KnownState")) {
             displayState();
+			if (layoutPanel!=null) layoutPanel.redrawPanel();
         }
     }
 

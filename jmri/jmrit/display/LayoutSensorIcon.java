@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -123,6 +123,7 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             displayState(now);
+			super.layoutPanel.redrawPanel();
         }
     }
 
@@ -246,7 +247,6 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
-//		if (layoutPanel!=null) layoutPanel.handleMouseClicked(e, getX(), getY());
 		super.layoutPanel.handleMouseClicked(e, getX(), getY());	
 	}
 	
@@ -255,10 +255,12 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
         if (getMomentary()) return; // click is only for non-momentary
         if (!buttonLive()) return;
         try {
-            if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
+            if (sensor.getKnownState()==jmri.Sensor.INACTIVE) {
                 sensor.setKnownState(jmri.Sensor.ACTIVE);
-            else
+			}
+            else {
                 sensor.setKnownState(jmri.Sensor.INACTIVE);
+			}
         } catch (jmri.JmriException reason) {
             log.warn("Exception flipping sensor: "+reason);
         }

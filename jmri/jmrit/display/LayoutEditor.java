@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -721,6 +721,7 @@ public class LayoutEditor extends JmriJFrame {
 						helpBar.setVisible(showHelpBar);
 					}
                     setEditMode(editMode);
+					awaitingIconChange = false;
                 }
             });
         editModeItem.setSelected(editMode);
@@ -1960,7 +1961,10 @@ public class LayoutEditor extends JmriJFrame {
 	/**
 	 * Allow external trigger of re-draw
 	 */
-	public void redrawPanel() { repaint(); }
+	public void redrawPanel() { 
+		repaint(); 
+		awaitingIconChange = false;
+	}
 	
 	/**
 	 * Allow external reset of dirty bit
@@ -2667,13 +2671,27 @@ public class LayoutEditor extends JmriJFrame {
 				LayoutTurnout t = (LayoutTurnout)selectedObject;
 				t.toggleTurnout();
 			}
+			// check if clicking a sensor or a multiSensor
+			else if (!awaitingIconChange) {
+				MultiSensorIcon m = checkMultiSensors(dLoc);
+				if (m!=null) {
+					m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
+									(int)(dLoc.getY()-m.getY()));
+					awaitingIconChange = true;
+				}
+				LayoutSensorIcon s = checkSensorIcons(dLoc);
+				if (s!=null) {
+					s.performMouseClicked(event);
+					awaitingIconChange = true;
+				}
+			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
 				beginObject = null;
 				foundObject = null;
 				repaint();
-			}
+			}			
         }
 		// check if controlling turnouts out of edit mode
 		else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
@@ -2688,6 +2706,20 @@ public class LayoutEditor extends JmriJFrame {
 			LocoIcon lo = checkMarkers(dLoc);
 			if (lo!=null) lo.showPopUp(event);
 		}
+		// check if clicking on sensor or multisensor out of edit mode
+		if ( (!editMode) && (!isDragging) && (!awaitingIconChange) ) {
+			MultiSensorIcon m = checkMultiSensors(dLoc);
+			if (m!=null) {
+				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
+									(int)(dLoc.getY()-m.getY()));
+				awaitingIconChange = true;
+			}
+			LayoutSensorIcon s = checkSensorIcons(dLoc);
+			if (s!=null) {
+				s.performMouseClicked(event);
+				awaitingIconChange = true;
+			}
+		}		
 		if (selectedObject!=null) {
 			// An object was selected, deselect it
 			prevSelectedObject = selectedObject;
@@ -2764,22 +2796,23 @@ public class LayoutEditor extends JmriJFrame {
 		}
 	}
 	
+	private boolean awaitingIconChange = false;
 	protected void handleMouseClicked(MouseEvent event, int dX, int dY)
 	{
 		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
-									(!event.isShiftDown()) && (!event.isControlDown()) ) {
+					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, dX, dY);
 			// check if on a multi sensor icon
 			MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
-				repaint();
+				awaitingIconChange = true;
 			}
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
-				repaint();
+				awaitingIconChange = true;
 			}
 		}
 		else if (event.isPopupTrigger()) {
