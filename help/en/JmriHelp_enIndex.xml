@@ -152,6 +152,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Tracking Display" target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
    </indexitem>
    <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
+   <indexitem text="Sections">
+      <indexitem text="Section Add/Edit" target="package.jmri.jmrit.beantable.SectionAddEdit"/>
+      <indexitem text="Section Table" target="package.jmri.jmrit.beantable.SectionTable"/>
+   </indexitem>
    <indexitem text="Send DCC Packet" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
    <indexitem text="Sensor" target="html.tools.Sensors">
       <indexitem text="Add Sensor" target="package.jmri.jmrit.beantable.SensorAddEdit"/>
@@ -188,6 +192,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
    <indexitem text="Tracker" target="html.tools.tracker.index"/>
+   <indexitem text="Transits">
+      <indexitem text="Transit Add/Edit" target="package.jmri.jmrit.beantable.TransitAddEdit"/>
+      <indexitem text="Transit Table" target="package.jmri.jmrit.beantable.TransitTable"/>
+   </indexitem>
    <indexitem text="Turnout" target="html.tools.Turnouts">
       <indexitem text="Add Turnout" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
       <indexitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
