@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.11 2008-09-21 03:18:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.12 2008-09-27 04:49:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -203,6 +203,9 @@ A problem accessing the JMRI web server from a separate Windows computer was fix
 The handling of InterruptedException internal to the code has been standardized as a
 first step toward a cleaner shutdown procedure.  
 In turn, this is needed to simplify running JMRI within various standard web servers.
+
+<p>
+Peter Ulvestad added a definition for the Digitrax DH163IP decoder.
 
 <!--#include virtual="/Footer" -->
 
