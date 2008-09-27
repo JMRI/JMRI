@@ -4,6 +4,8 @@ package jmri.jmrit;
 
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
+import jmri.util.JmriJFrame;
+
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,8 +20,8 @@ import javax.swing.JTextField;
 /**
  * Display memory usage on request
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2008
+ * @version			$Revision: 1.7 $
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -27,7 +29,7 @@ public class MemoryFrameAction extends AbstractAction {
         super(s);
     }
     public MemoryFrameAction() {
-        this("Memory monitor");
+        this("Memory Usage Monitor");
     }
 
 	JTextField used1 = new JTextField(15);
@@ -43,7 +45,7 @@ public class MemoryFrameAction extends AbstractAction {
 	JTextField total3 = new JTextField(15);
 
 	JButton updateButton = new JButton("Update");
-	JButton gcButton = new JButton("Collect memory");
+	JButton gcButton = new JButton("Collect Memory");
 	JButton testButton = new JButton("Test");
 
     java.text.NumberFormat nf;
@@ -55,7 +57,7 @@ public class MemoryFrameAction extends AbstractAction {
         nf.setMaximumFractionDigits(3);
         nf.setGroupingUsed(false);
 
-		JFrame f = new JFrame("Memory usage");
+		JmriJFrame f = new JmriJFrame("Memory Usage Monitor");
 
 		Container p = f.getContentPane();
 		p.setLayout(new GridLayout(5,3));
@@ -99,6 +101,8 @@ public class MemoryFrameAction extends AbstractAction {
 			}
 		});
 
+        f.addHelpMenu("package.jmri.jmrit.MemoryFrameAction", true);
+        
 		f.pack();
 		f.setVisible(true);
 	}
