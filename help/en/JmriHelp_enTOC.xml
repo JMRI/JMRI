@@ -97,6 +97,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Add/Edit Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
          <tocitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
       </tocitem>
+      <tocitem text="Memory Monitor" target="package.jmri.jmrit.MemoryFrameAction"/>
       <tocitem text="Memories" target="html.tools.Memories">
          <tocitem text="Add/Edit Memories" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>

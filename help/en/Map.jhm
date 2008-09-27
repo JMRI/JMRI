@@ -135,6 +135,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.apps.PanelPro.FAQ_multifile" url="html/apps/PanelPro/FAQ.shtml#multifile" />
 	<mapID target="html.web.MiniServer" url="html/web/MiniServer.shtml" />
 	<mapID target="html.apps.LocoTools.index" url="html/apps/LocoTools/index.shtml" />
+	<mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml" />
 	<mapID target="html.hardware.loconet.LocoNetSim" url="html/hardware/loconet/LocoNetSim.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c_Top" url="DecoderProManual/Comp_PrintData_c.shtml#Top" />
 	<mapID target="html.hardware.loconet.DigitraxPower.index" url="html/hardware/loconet/DigitraxPower/index.shtml" />

@@ -441,7 +441,7 @@
 </li>
    
 <li>
-<a href="html/tools/Memories.shtml">Memory</a>
+<a href="html/tools/Memories.shtml">Memories</a>
 <ul>
       
 <li>
@@ -455,6 +455,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrit/MemoryFrameAction.shtml">Memory Monitor</a>
+<ul></ul>
 </li>
    
 <li>

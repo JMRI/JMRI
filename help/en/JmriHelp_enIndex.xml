@@ -99,10 +99,11 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Edit Logix" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
       <indexitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>
    </indexitem>
-   <indexitem text="Memory" target="html.tools.Memories">
+   <indexitem text="Memories" target="html.tools.Memories">
       <indexitem text="Add Memory" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
       <indexitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
    </indexitem>
+   <indexitem text="Memory Monitor" target="package.jmri.jmrit.MemoryFrameAction"/>
    <indexitem text="Multi-Decoder Control" target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
    <indexitem text="Names" target="html.doc.Technical.Names"/>
    <indexitem text="Operations" target="package.jmri.jmrit.operations.Operations">
