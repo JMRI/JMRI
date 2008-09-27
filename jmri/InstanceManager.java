@@ -27,7 +27,7 @@ import jmri.jmrit.display.LayoutBlockManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 public class InstanceManager {
 
@@ -59,6 +59,22 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().blockManager = new BlockManager();
         return instance().blockManager;
+    }
+
+    static public SectionManager sectionManagerInstance()  {
+        if (instance().sectionManager != null) return instance().sectionManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().sectionManager = new SectionManager();
+        return instance().sectionManager;
+    }
+
+    static public TransitManager transitManagerInstance()  {
+        if (instance().transitManager != null) return instance().transitManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().transitManager = new TransitManager();
+        return instance().transitManager;
     }
 
     static public RouteManager routeManagerInstance()  {
@@ -231,6 +247,10 @@ public class InstanceManager {
     }
 
     private BlockManager blockManager = null;
+	
+	private SectionManager sectionManager = null;
+	
+	private TransitManager transitManager = null;
 
     private RouteManager routeManager = null;
     static public void setRouteManager(RouteManager p) {

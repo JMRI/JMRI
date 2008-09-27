@@ -14,7 +14,7 @@ import java.util.*;
  * out of this class and into the contructors themselves.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -52,6 +52,8 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.RouteTableAction(rb.getString("MenuItemRouteTable")));
         tableMenu.add(new jmri.jmrit.beantable.LogixTableAction(rb.getString("MenuItemLogixTable")));
         tableMenu.add(new jmri.jmrit.beantable.BlockTableAction(rb.getString("MenuItemBlockTable")));
+        tableMenu.add(new jmri.jmrit.beantable.SectionTableAction(rb.getString("MenuItemSectionTable")));
+        tableMenu.add(new jmri.jmrit.beantable.TransitTableAction(rb.getString("MenuItemTransitTable")));
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(rb.getString("MenuThrottles"));
