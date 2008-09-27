@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.12 2008-09-27 04:49:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.13 2008-09-27 21:04:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -206,6 +206,12 @@ In turn, this is needed to simplify running JMRI within various standard web ser
 
 <p>
 Peter Ulvestad added a definition for the Digitrax DH163IP decoder.
+
+<p>
+David Duchamp added tables for 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a>
+and
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>.
 
 <!--#include virtual="/Footer" -->
 
