@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TransitTable.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Transit Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Transit Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<H1>The Transit Table
+</H1>
+<H2>What is a Transit?
+</H2
+<P>A <b>Transit</b> is a group of one or more connected <b>Sections</b> that describes
+a route around the layout of a train traveling in a given direction. A Section may be 
+in multiple Transits, and may be in a given Transit multiple times. Sections are 
+kept in order--the first Section is connected to the second, the second 
+is connected to the third, etc. That means a Section in a Transit must be connected 
+to the Section before it (if there is one) and to the Section after it (if there is 
+one). Normally Transits would only be defined for mainline track.</p> 
+<p>In user-specified areas of a Transit, <i>alternate</i> Sections may be designated. 
+For example, to move between the "2nd" and "4th" Sections in a Transit, there may  
+be multiple "3rd" Sections, any of which might be used to travel between the 2nd and 
+4th Sections. Alternate Sections provide for passing tracks and staging yards. 
+Transits also provide for reverse loops. Currently Transits do not provide for an 
+operator reversing the direction of a train.</P>
+<p>Transits provide for a special action to be performed when a train is in a 
+Section.  Currently two special actions are supported: <b>Pause</b> for a user-designated 
+number of fast clock minutes, and <b>Await</b> a manual restart. The Pause action 
+may be used for automatic station stops. The Await action is designed to support 
+an engineer doing work in a specified Section, and requesting a restart when the 
+work is complete. More actions may be added in the future as needed.</p>
+<H2>How are Transits Activated and Used?
+</H2
+<p>Transits are <i>activated</i> in the Dispatcher panel. When a Transit is 
+<i>activated</i>, a Train is linked to the Transit, and the starting Block (train 
+location at start) and ending Block (train location when the travel is complete) 
+are specified. A train may start from a Block within a Section 
+in the Transit, or it may start from a Block outside of the Transit, but connected 
+to a Block within the Transit. If it is free, a starting Section is also <i>allocated</i> 
+to the train. <i>Allocation</i> means that the Section is assigned the train, and the 
+train is authorized by the dispatcher to proceed to the end of that Section.</p>
+<p>When a Transit/Train is activated, it may be activated for running by an engineer 
+using a throttle, or automatically by a <i>virtual engineer</i>. Dispatching for 
+the Transit consists of <i>allocating</i> Sections, one by one, to the Transit/Train. 
+The actual dispatching may be done by a dispatcher sitting at the computer running JMRI, 
+or automatically by an automatic dispatcher. If a requested Section is currently in 
+use, a request for assignment is placed in the dispatcher's queue. When a Section 
+is freed, the queue is scanned for the highest priority train requesting it.</p>
+<p><b>Note: The Dispatcher functionality is still under development!</b> It will be
+in a future version of JMRI.</p>
+<H2>Using the Transit Table to Set Up Transits
+</H2
+<p>Transits are set up in the Transit Table.  When set up, Transits are independent 
+of the trains that use them.  
+<P></P>
+<P>All the Transits that JMRI knows about can be referenced
+using the <b>Transit Table</b> tool under <b>Tables</b> in the Tools menu of most 
+JMRI programs. There are seven columns in the Transit Table:</P>
+<UL>
+<LI><b>System Name</b> - The system name is assigned to the Transit when it's created, 
+and can't be changed.</LI>
+<LI><b>User Name</b> - If you're interested in having your Transits carry "human 
+readable" names, you can click in the "User Name" column and change that information
+to whatever you want.</LI>
+<LI><b>State</b> - The state of a Transit tells whether a section is <b>IDLE</b> 
+(available for activation and assignment to a train), <b>ASSIGNED</b> (linked to 
+a train, but not yet running, or <b>RUNNING</b> (active in the running of a 
+train. The state of a newly added Transit is always <b>IDLE</b>.</LI>
+<LI><b>Comment</b> - This column is for your use to record any comment you may want
+to use to keep track of your Transits. It is for information only.</LI>
+<LI>Click the <b>Delete</b> button in a specific row to delete the Transit in that 
+row. Use this button with caution! Do not delete a running Transit.</LI>
+<LI><b>Mode</b> - Displays the current mode of the Transit. The mode of a transit 
+may be: <b>UNKNOWN</b> - all IDLE transits have no assigned mode, <b>AUTOMATIC</b> - 
+activated to be automatically run by the computer, <b>MANUAL</b> - activated to be 
+run manually by a throttle following computer-controlled layout signals (if present)
+and computer-controlled dispatching (Section allocation), or <b>DISPATCHED</b> - 
+run manually by a throttle with signals and section allocation controlled by a 
+dispatcher at the JMRI computer.</LI> 
+<LI>Click the <b>Edit</b> button in a row to view or change entered information
+for a Transit. System name cannot be changed. User name may be changed, 
+Sections may be redefined, etc. Only one Transit may be edited at a time. A 
+Transit may not be edited if another is being created, or if the Transit is 
+not in the IDLE state.</LI>
+</UL>
+<P>To define a new Transit, click on the 
+"<A HREF="TransitAddEdit.shtml">Add.." button</a>. A window will be brought up 
+that will allow you to define the Sections in the new Transit.  Obviously, Sections 
+must be defined before any Transit can be created.</p>
+<H2>Saving Transits to Disk
+</H2
+<P> Use the Store item in the File menu to save Transit information to disk. This 
+information is saved with the configuration in an XML file, along
+with control panel setup and similar items.  To store your panels in the same 
+file (recommended), select <b>File>Store>Store Configuration and Panels To 
+File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
+</P>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

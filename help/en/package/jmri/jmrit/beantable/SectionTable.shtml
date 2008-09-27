@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SectionTable.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Section Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Section Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<H1>The Section Table
+</H1>
+<H2> What is a Section?
+</H2>
+<P>A <b>Section</b> is a group of one or more connected <b>Blocks</b> that may be 
+allocated to one or more trains traveling in a given direction. A Block may be 
+in multiple Sections. All Blocks contained in a given Section must be unique. 
+Blocks are kept in order--the first block is connected to the second, the second 
+is connected to the third, etc. That means a Block in a Section must be connected 
+to the Block before it (if there is one) and to the Block after it (if there is 
+one), but may not be connected to any other Block in the Section. A Section may 
+not contain any reverse loops.</P>
+<p>Sections and their associated <b>Transits</b> are designed to be used for 
+dispatching, either manually by a dispatcher sitting at a panel, or automatically 
+when running trains automatically.</>
+<P>A Section has a <b>direction</b> defined by the sequence in which Blocks are 
+added to the Section. A train may run through a Section in either the <b>forward</b> 
+direction (from first block to last block) or <b>reverse</b> direction (from last 
+block to first block). A Section of sufficient length may be allocated to more 
+than one train provided the trains are traveling in the same direction. There 
+must be at least one block between trains traveling in the same direction in a 
+Section.</p>
+<P>A Section has two or more <b>Entry Points</b>. An Entry Point defines a 
+connection to a Block outside of the Section. Entry Points are derived from Paths of 
+Blocks in the Section--Paths that represent connections to Blocks not contained in 
+the Section. Entry Points are grouped according to whether entering 
+the Section at that Entry Point will result in a train traveling in the "forward" 
+direction, or whether entering at that Entry Point will result in a train 
+traveling in the "reverse" direction.</P>
+<H2> Requirements for using Sections
+</H2>
+<P>Sections may be used with a Panel Editor panel, with a Layout Editor panel, with 
+a CTC machine, or directly without any panel provided. Sections build on JMRI's 
+Blocks and Paths structure. So Before attempting to create any Sections, you should 
+have Blocks and Paths fully initialized for your layout. (An easy way to 
+automatically initialize your Blocks and Paths is to sketch out a Layout Editor panel 
+of your layout, with blocks assigned.)</p>
+<p>Layout blocking should be carefully planned, to provide "<i>reasonable</i>" 
+Sections--Sections that make sense for a dispatcher to allocate to a train. For 
+right-handed or left-handed turnouts switching mainline track, for 
+example, this usually means including the turnout in the same block as the track 
+entering at the turnout throat, and providing separate blocks for continuing 
+and diverging tracks. Some prefer to have a turnout in a separate block, and that 
+works fine also. From a dispatching perspective, tracks of mainline turnouts that 
+branch to industries do not need to be separately blocked, but blocking here is 
+acceptable. A layout blocking scheme that works well for signals, should work fine 
+for Sections also.</p>
+<p>Signals are not required for using Sections, but Sections will work fine with 
+signals installed. If signals are installed, Sections provide an easy way to set 
+up simple APB signaling (see below).</p>  
+<H2> Support for Optional Sensors
+</H2>
+<P>Optionally each Section may have two <i>direction sensors</i>, one for the forward 
+direction and one for the reverse direction. These are normally internal Sensors, 
+bearing system names that begin with IS. They automatically follow the state of their 
+Section, i.e. when the state of the Section is FORWARD, the Forward Sensor is 
+<b>INACTIVE</b> and the Reverse Sensor is <b>ACTIVE</b>. These sensors may be used 
+to force signals for travel in their respective directions to <b>RED</b> when they 
+are ACTIVE. When a Section is FREE, both of its direction Sensors are ACTIVE.</P>
+<P>Also optionally each Section may have two <i>stopping sensors</i> that indicate
+when a train in the Section has reached the end of the Section by traveling in 
+the forward direction or in the reverse direction. For manual dispatching, these 
+sensors may be displayed on a panel to indicate to the dispatcher when a train 
+has reached the end of its allocation. For automatic running, these sensors may 
+be used to stop a train before it reaches the end of its allocated Section, and 
+before it overruns a red signal, if signals are present.</>
+<H2> Using the Sensor Table to Display and Create Sensors
+</H2>
+<P>All the Sections that JMRI knows about can be referenced
+using the <b>Section Table</b> tool under <b>Tables</b> in the Tools menu of most 
+JMRI programs. There are eight columns in the table:</P>
+<UL>
+<LI><b>System Name</b> - The system name is assigned to the Section when it's created, 
+and can't be changed.</LI>
+<LI><b>User Name</b> - If you're interested in having your Sections carry "human readable"
+names, you can click in the "User Name" column and change that information
+to whatever you want.</LI>
+<LI><b>State</b> - The state of a Section tells whether a section is "allocated" 
+or "in use" by one or more trains.  The state of a newly added section is always
+<b>FREE</b>. When a Section is allocated for travel in the direction from the 
+"Begin Block" toward the "End Block", the state is <b>FORWARD</b>.  When allocated 
+for travel in the opposite direction, the state is <b>REVERSE</b>.</LI>
+<LI><b>Comment</b> - This column is for your use to record any comment you may want
+to use to keep track of your Sections. It is for information only.</LI>
+<LI>Click the <b>Delete</b> button in a specific row to delete the Section in that row. 
+Remember to remove any Transits associated using this Section. Any Transit that 
+uses a deleted Section will be broken! Use this button with caution!</LI>
+<LI><b>Begin Block</b> - This column displays the first block in the Section. 
+Since a section is a group of one or more connected blocks, there is always an
+entry.</LI> 
+<LI><b>End Block</b> - This column shows the final block in the Section. 
+Since a section may contain only one block, this entry may be the same as the Begin
+Block entry.</LI>
+<LI>Click the <b>Edit</b> button in a row to view or change entered information
+for a Section. System name cannot be changed. User name may be changed, 
+blocks may be redefined, entry points may be reconfigured, etc. Only one Section 
+may be edited at a time. A Section may not be edited if another is being created. 
+</LI>
+</UL>
+<P>To Create a new Section, click the 
+"<A HREF="SectionAddEdit.shtml">Add.." button</a>. A window will be brought up 
+that will allow you to define the blocks included in the new Section, and if 
+necessary, designate which entry points to the section result in travel in the 
+forward and reverse directions.</p>
+<p>Currently the user must manually select <b>FORWARD</b> or <b>REVERSE</b> for each 
+Entry Point after all Blocks are added to a Section. The program will set some directions
+automatically, but others are left as <b>UNKNOWN</b>. An Entry Point should be set 
+to FORWARD if a train entering the Section at that Entry Point would be traveling 
+in the FORWARD direction. Otherwise it should be set to REVERSE. It doesn't make any 
+difference which direction through a Section is designated FORWARD, as long as all 
+Entry Points are consistent. A possible future addition is to set directions of 
+Entry Points automatically from the connectivity found in a Layout Editor panel, if 
+one is available.</p>
+<H2> Saving Sections to Disk
+</H2>
+<P> Use the Store item in the File menu to save Section information to disk. This 
+information is saved with the configuration in an XML file, along
+with control panel setup and similar stuff.  To store your panels in the same 
+file (recommended), select <b>File>Store>Store Configuration and Panels To 
+File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
+</P>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TransitAddEdit.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Add/Edit Transits
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Transit Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<H2>Adding/Editing Transits</H2>
+    
+<a name="addTransit"><H3>Adding a new Transit</H3></a>
+To add a new Transit, follow this procedure:
+<ol>
+<li><p>Click <b><a href="TransitTable.shtml">Transits</a></b> in the 
+<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
+the Transit Table, and click the <b>Add...</b> button at the bottom of the 
+table to bring up the Add/Edit Transit window.</p>
+<img src="TransitAddFrame.jpg" height="384" width="578"/>
+<li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Transits 
+are internal objects, the first letter should be "I" (for internal). The second 
+letter should be "Z" to indicate a Transit. This is usually followed by a 
+number, but the program will accept any numeric or alphabetic characters. The 
+system name must be different from the System Name of other Transits. JMRI will 
+force all alphabetic characters in the System Name to upper case.</p>
+</li>
+<li><p>Enter a <b>User Name</b>. Any string of characters that is different 
+from the User Name of other Transits will be accepted, but it's 
+wise to use a string that describes the intended use of the Transit.</p>
+</li>
+<li><p>Next add <b>Sections</b> to the Transit.  Every Transit must have at least 
+one Section, but most will have many more. Sections must be connected,and must 
+be entered in order. Select the Section you would like to begin the Transit 
+in the upper popup menu. At any point during Section addition, this popup menu lists 
+only those Sections that are eligible for addition. Click <b>Add Next Section</b> 
+to add the first Section of the Transit.</p>
+</li>
+<li><p>Add more Sections and alternates in the same manner. Select the Section 
+to be added in the popup menu, and click <b>Add Next Section</b>. If at any time 
+you decide you want to start over, click <b>Delete All Sections</b> to clear the 
+table of Sections, and return to step 4 above.</p>
+<p>Immediately after entering a Section, if you would like to add an <b>Alternate 
+Section</b> to the one just entered, select an alternate Section from the lower 
+popup menu. If there are no possibly valid alternate Sections, the lower popup 
+menu will be empty. Often the lower popup menu will contain possible alternate 
+Sections that are not really alternates to the primary Section. For a listed 
+alternate Section to be a <i>valid</i> alternate Section, it must connect to 
+the next primary Section. <b>It is your responsibility to determine whether a 
+Section listed in the lower popup menu is a valid alternate Section.</b> 
+For more information on alternate Sections and their use, refer to the 
+<a href="TransitTable.shtml">Transit Table help file</a>.
+</li>
+<li><p>Next set any <b>Special Action</b> needed when a train has completely 
+entered a Section.  The entries in the Special Action column are popup menus 
+with <none> as the default entry. Currently only two Special Actions are 
+provided. Selecting <b>Pause For</b> and entering a fast clock pause time
+(in minutes) will provide for an automatic station stop or similar action. 
+Entering <b>Await Restart</b> will cause the train to delay in that Section, 
+for example, if a set out or pick up needs to be made. More information is 
+provided in the <a href="TransitTable.shtml">Transit Table help file</a>.</p>
+</li>
+</li><li><p>Click the <b>Create</b> button at the bottom of the window.  
+If everything is fine, the window will close and a new Transit will appear in 
+the Transit Table. If there is trouble with anything, a message will be 
+displayed indicating the error and what you should do to fix it. 
+Correct the error and click <b>Create</b> again.</p></li>
+</ol>
+
+<h3>Editing an existing Transit</h3>
+To edit an existing Transit, follow  this procedure:
+<ol>
+<li><p>Click a Transit's <b>Edit</b> button in the <a href="TransitTable.shtml">
+Transit Table</a> to bring up the Add/Edit Transit window. The window will 
+be the same as that shown above, except the System Name will be fixed, and 
+the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
+</li>
+<li><p>Make whatever changes or additions you need to the information in
+the window. Note that the System Name of the edited Transit may not be 
+changed, but the User Name may be changed. Items that may be edited are described 
+<A HREF="#addTransit">above</a> in steps 3 through 6 in the procedure for adding 
+a new Transit.</p></li>
+<li><p>After making changes to the Transit information, click <b>Update</b> 
+to change the selected Transit.  If everything is fine, the window will close.
+If there is any trouble, a message will be displayed indicating the error and 
+what you should do to fix it. Correct the error and click <b>Update</b> again.</p>
+</li>
+<li>Click <b>Cancel</b> to exit without changing the selected Transit. 
+If the Add/Edit Transit window is dismissed (closed) while editing, <b>Cancel</b> 
+is automatically selected, and no changes are made to the selected Transit.
+</li>
+</ol>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
