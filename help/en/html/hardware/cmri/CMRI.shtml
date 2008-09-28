@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.5 2008-03-17 09:25:20 jacobsen Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.6 2008-09-28 22:34:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -63,6 +63,7 @@
 	<li><a href="#options">C/MRI Turnout Control Options</a>
 	<li><a href="#signals">Wiring Signals</a>
 	<li><a href="#diagnostics">C/MRI Diagnostics</a>
+	<li><a href="#sim">Running JMRI when disconnected from your C/MRI system</a>
 	</ul>
 	</dd>
 
@@ -615,6 +616,35 @@ are run. The diagnostics are easy to use.  Simply follow the instructions presen
 in the Run C/MRI Diagnostic dialog.  Any errors found are reported in the status 
 box of the dialog.
 </dd>
+
+<dt class=left><a name=sim><H3>Running JMRI when disconnected from your C/MRI system</H3></a></dt>
+<dd>
+JMRI continually polls the C/MRI hardware for status changes.
+If one or more C/MRI nodes are not responding, eventually their inputs (Sensors)
+are set to the UNKNOWN state to indicate that JMRI has lost contact with 
+those devices on the layout.
+<p>
+Although this is the right thing to do when you're really connected to the
+hardware and trying to operate the layout, it can get in the way if you're 
+running JMRI without your layout connection.  
+You might want to do this, for example, to work on your panels while 
+away from the layout, or while the layout needs to be powered off for some reason.
+<p>
+To accomodate using JMRI without an active layout connection, 
+in the JMRI 2.3.2 release a "C/MRI Simulator" connection was made available
+in the preferences.
+<p>
+<i>Please note that this is only meant for users who already have a working
+C/MRI connection already configured. Please do not try to 
+use the C/MRI simulator before configuring a valid connection to C/MRI hardware, 
+as it will not work.</i>
+<p>
+Once you have your C/MRI connection configured, when your hardware is
+not available you can just go to the JMRI preferences, select "C/MRI Simulator", 
+save preferences, quit and restart. Don't change any other settings!
+<p>
+When the C/MRI hardware is again available, go the JMRI preferences, 
+select "C/MRI Serial", save preferences, quit and restart.
 </dl>
 
 	<H3> More info </H3>
