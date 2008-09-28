@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: SimpleProgFrame.shtml,v 1.1 2008-02-24 06:02:12 jacobsen Exp $ -->
+<!-- $Id: SimpleProgFrame.shtml,v 1.2 2008-09-28 03:09:30 jacobsen Exp $ -->
 <title>JMRI: Single CV Programmer</title>
 
 <!-- Style -->
@@ -27,6 +27,8 @@
 <h2> 
 Single CV Programmer
 </h2>
+
+<a href="SImpleProgFrame.jpg"><img src="SImpleProgFrame.jpg" align="right" width="132" height="180"></a><br>
 
 The Single CV Programmer lets you easily read and write
 CV values in DCC decoders.
