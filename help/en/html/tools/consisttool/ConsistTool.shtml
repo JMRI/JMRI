@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConsistTool.shtml,v 1.4 2008-05-14 23:43:53 jacobsen Exp $ -->
+<!-- $Id: ConsistTool.shtml,v 1.5 2008-09-30 14:04:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -157,6 +157,9 @@
            JMRI provides support for consists using the consist tool, 
            which is accessible through the tools menu of any JMRI 
            application.
+           (There is also a 
+           <a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">NCE-specific consisting tool</a>
+           that works somewhat differently from the tool described here)
         </p>
         <p>
            The Consisting tool provides a visual tool for manipulating the 
