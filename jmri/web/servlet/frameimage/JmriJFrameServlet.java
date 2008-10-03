@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -148,7 +148,7 @@ public class JmriJFrameServlet implements Servlet {
     }
     
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click ) {
-        String[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime};  // 3rd is retry time
+        Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime};  // 3rd is retry time
         out.println(java.text.MessageFormat.format(rb.getString("StandardHeader"), args));
         out.println(java.text.MessageFormat.format(rb.getString("StandardDocType"), args));
         out.println(java.text.MessageFormat.format(rb.getString("StandardFront"), args));
