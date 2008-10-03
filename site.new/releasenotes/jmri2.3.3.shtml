@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.13 2008-09-27 21:04:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.14 2008-10-03 18:04:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -198,6 +198,11 @@ form on the loader window.
 
 <p>
 A problem accessing the JMRI web server from a separate Windows computer was fixed.
+
+<p>
+The startup scripts for Windows have been updated to use a new LaunchJMRI program 
+provided by Matthew Harris.
+It functions similarly to the advanced scripts we've been using for a while on Linux and MacOS X.
 
 <p>
 The handling of InterruptedException internal to the code has been standardized as a
