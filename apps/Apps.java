@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.69 $
+ * @version     $Revision: 1.70 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -370,7 +370,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     protected String line1() {
         return MessageFormat.format(rb.getString("DefaultVersionCredit"),
-                                (Object[])new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
     protected String line2() {
         return "http://jmri.sf.net/ ";
@@ -394,7 +394,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 		} else {
 			cs4.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					(Object[])new String[] { prefs.getConnection1(), prefs.getPort1() });
+					new Object[] { prefs.getConnection1(), prefs.getPort1() });
 			cf = cf.toUpperCase();
 			cs4.setText(cf);
 		}
@@ -423,7 +423,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 		} else {
 			cs5.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					(Object[]) new String[] { prefs.getConnection2(), prefs.getPort2() });
+					new Object[] { prefs.getConnection2(), prefs.getPort2() });
 			cf = cf.toUpperCase();
 			cs5.setText(cf);
 		}
@@ -453,7 +453,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 		} else {
 			cs5a.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					(Object[]) new String[] { prefs.getConnection3(), prefs.getPort3() });
+					new Object[] { prefs.getConnection3(), prefs.getPort3() });
 			cf = cf.toUpperCase();
 			cs5a.setText(cf);
 		}
@@ -483,7 +483,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 		} else {
 			cs5b.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					(Object[]) new String[] { prefs.getConnection4(), prefs.getPort4() });
+					new Object[] { prefs.getConnection4(), prefs.getPort4() });
 			cf = cf.toUpperCase();
 			cs5b.setText(cf);
 		}
@@ -495,7 +495,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     protected String line7() {
         return MessageFormat.format(rb.getString("JavaVersionCredit"),
-                                (Object[]) new String[]{System.getProperty("java.version","<unknown>"),
+                                new Object[]{System.getProperty("java.version","<unknown>"),
                                             Locale.getDefault().toString()});
     }
 
@@ -577,19 +577,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     static public String getConnection1() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                (Object[]) new String[]{prefs.getConnection1(), prefs.getPort1()});
+                                new Object[]{prefs.getConnection1(), prefs.getPort1()});
     }
     static public String getConnection2() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                (Object[]) new String[]{prefs.getConnection2(), prefs.getPort2()});
+                                new Object[]{prefs.getConnection2(), prefs.getPort2()});
     }
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            (Object[]) new String[]{prefs.getConnection3(), prefs.getPort3()});
+                            new Object[]{prefs.getConnection3(), prefs.getPort3()});
     }
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            (Object[]) new String[]{prefs.getConnection4(), prefs.getPort4()});
+                            new Object[]{prefs.getConnection4(), prefs.getPort4()});
     }
     
     static SplashWindow sp = null;

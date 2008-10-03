@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -258,7 +258,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateReadingCV"),
-                                    new String[]{""+_num}));
+                                    new Object[]{""+_num}));
 
         if (mProgrammer != null) {
             setBusy(true);
@@ -270,7 +270,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringRead"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
 
                 log.warn("Exception during CV read: "+e);
                 setBusy(false);
@@ -289,7 +289,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateReadingIndexedCV"),
-                                    new String[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
+                                    new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
             setBusy(true);
@@ -304,7 +304,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringIndexedRead"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during IndexedCV read: " + e);
                 setBusy(false);
             }
@@ -322,7 +322,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateConfirmIndexedCV"),
-                                    new String[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
+                                    new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
             setBusy(true);
@@ -337,7 +337,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringIndexedRead"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during IndexedCV read: " + e);
                 setBusy(false);
             }
@@ -356,7 +356,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateConfirmingCV"),
-                                    new String[]{""+_num}));
+                                    new Object[]{""+_num}));
 
         if (mProgrammer != null) {
             setBusy(true);
@@ -368,7 +368,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringConfirm"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during CV read: "+e);
                 setBusy(false);
             }
@@ -387,7 +387,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateWritingCV"),
-                                    new String[]{""+_num}));
+                                    new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
             _reading = false;
@@ -400,7 +400,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringWrite"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
@@ -417,7 +417,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateWritingPICV"),
-                                    new String[]{""+_num}));
+                                    new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
             _reading = false;
@@ -430,7 +430,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringWrite"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
@@ -447,7 +447,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateWritingSICV"),
-                                    new String[]{""+_num}));
+                                    new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
             _reading = false;
@@ -465,7 +465,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                     if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringWrite"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                     log.warn("Exception during CV write: " + e);
                     setBusy(false);
                 }
@@ -485,7 +485,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateWritingIndexedCV"),
-                                    new String[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
+                                    new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
             setBusy(true);
@@ -499,7 +499,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
                                     rbt.getString("StateExceptionDuringIndexedWrite"),
-                                    new String[]{e.toString()}));
+                                    new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
@@ -548,7 +548,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             if (_status != null) _status.setText(
                         java.text.MessageFormat.format(
                             rbt.getString("StateProgrammerError"),
-                            new String[]{mProgrammer.decodeErrorCode(retval)}));
+                            new Object[]{mProgrammer.decodeErrorCode(retval)}));
 
             // delay to ensure that the message appears!
             javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {

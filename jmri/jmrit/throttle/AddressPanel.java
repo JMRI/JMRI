@@ -23,7 +23,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -305,7 +305,7 @@ public class AddressPanel extends JInternalFrame {
         java.util.ResourceBundle rbt 
                     = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
         String title = java.text.MessageFormat.format(rbt.getString("FrameOpsProgrammerTitle"),
-                                                new String[]{re.getId()});
+                                                new Object[]{re.getId()});
         // find the ops-mode programmer
         int address = Integer.parseInt(re.getDccAddress());
         boolean longAddr = true;

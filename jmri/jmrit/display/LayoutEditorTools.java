@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutEditorTools 
@@ -287,7 +287,7 @@ public class LayoutEditorTools
 				(throatContinuingHead!=getHeadFromName(layoutTurnout.getSignalA1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{throatContinuingField.getText().trim()}), 
+						new Object[]{throatContinuingField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -315,7 +315,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(throatContinuingHead) ) {
 					JOptionPane.showMessageDialog(setSignalsFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{throatContinuingField.getText().trim()}), 
+							new Object[]{throatContinuingField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -334,7 +334,7 @@ public class LayoutEditorTools
 				(throatDivergingHead!=getHeadFromName(layoutTurnout.getSignalA2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{throatDivergingField.getText().trim()}), 
+						new Object[]{throatDivergingField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -362,7 +362,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(throatDivergingHead) ) {
 					JOptionPane.showMessageDialog(setSignalsFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{throatDivergingField.getText().trim()}), 
+							new Object[]{throatDivergingField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -385,7 +385,7 @@ public class LayoutEditorTools
 				(continuingHead!=getHeadFromName(layoutTurnout.getSignalB1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{continuingField.getText().trim()}), 
+						new Object[]{continuingField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -413,7 +413,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(continuingHead) ) {
 					JOptionPane.showMessageDialog(setSignalsFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{continuingField.getText().trim()}), 
+							new Object[]{continuingField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -432,7 +432,7 @@ public class LayoutEditorTools
 				(divergingHead!=getHeadFromName(layoutTurnout.getSignalC1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{divergingField.getText().trim()}), 
+						new Object[]{divergingField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -460,7 +460,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(divergingHead) ) {
 					JOptionPane.showMessageDialog(setSignalsFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{divergingField.getText().trim()}), 
+							new Object[]{divergingField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -515,7 +515,7 @@ public class LayoutEditorTools
 			if (turnout==null) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError2"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
@@ -582,7 +582,7 @@ public class LayoutEditorTools
 		}
 		JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("SignalsError3"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 		return false;
 	}
@@ -751,7 +751,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -760,7 +760,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -795,7 +795,7 @@ public class LayoutEditorTools
 		if (occupancy2==null) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -804,7 +804,7 @@ public class LayoutEditorTools
 		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -846,7 +846,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -855,7 +855,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -889,7 +889,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -898,7 +898,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -931,7 +931,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -940,7 +940,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -996,7 +996,7 @@ public class LayoutEditorTools
 		// layout turnout not found
 		JOptionPane.showMessageDialog(theFrame,
 				java.text.MessageFormat.format(rb.getString("SignalsError3"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 		return null;
 	}
@@ -1022,7 +1022,7 @@ public class LayoutEditorTools
 		if (head==null) {
 			JOptionPane.showMessageDialog(frame,
 					java.text.MessageFormat.format(rb.getString("SignalsError4"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
 		}
@@ -1693,7 +1693,7 @@ public class LayoutEditorTools
 					(eastBoundHead!=getHeadFromName(boundary.getEastBoundSignal()))) { 
 				JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{eastBoundField.getText().trim()}), 
+						new Object[]{eastBoundField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -1720,7 +1720,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(eastBoundHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{eastBoundField.getText().trim()}), 
+						new Object[]{eastBoundField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -1739,7 +1739,7 @@ public class LayoutEditorTools
 					(westBoundHead!=getHeadFromName(boundary.getWestBoundSignal()))) { 
 				JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{westBoundField.getText().trim()}), 
+						new Object[]{westBoundField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -1766,7 +1766,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(westBoundHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{westBoundField.getText().trim()}), 
+						new Object[]{westBoundField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -1891,14 +1891,14 @@ public class LayoutEditorTools
 		if (block==null) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError10"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
 		}
 		if ( !block.isOnPanel(layoutEditor) ) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError11"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
 		}
@@ -1940,7 +1940,7 @@ public class LayoutEditorTools
 		if (eastBlockOccupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{eastBlock.getUserName()}), 
+					new Object[]{eastBlock.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -1949,7 +1949,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{eastBlock.getUserName()}), 
+					new Object[]{eastBlock.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -1970,7 +1970,7 @@ public class LayoutEditorTools
 		if (westBlockOccupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{westBlock.getUserName()}), 
+					new Object[]{westBlock.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);			
 			return;
 		}
@@ -1979,7 +1979,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{westBlock.getUserName()}), 
+					new Object[]{westBlock.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -2309,7 +2309,7 @@ public class LayoutEditorTools
 				(a1Head!=getHeadFromName(layoutTurnout.getSignalA1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{a1Field.getText().trim()}), 
+						new Object[]{a1Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2337,7 +2337,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(a1Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{a1Field.getText().trim()}), 
+							new Object[]{a1Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2356,7 +2356,7 @@ public class LayoutEditorTools
 				(a2Head!=getHeadFromName(layoutTurnout.getSignalA2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{a2Field.getText().trim()}), 
+						new Object[]{a2Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2384,7 +2384,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(a2Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{a2Field.getText().trim()}), 
+							new Object[]{a2Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2407,7 +2407,7 @@ public class LayoutEditorTools
 				(b1Head!=getHeadFromName(layoutTurnout.getSignalB1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{b1Field.getText().trim()}), 
+						new Object[]{b1Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2435,7 +2435,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(b1Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{b1Field.getText().trim()}), 
+							new Object[]{b1Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2454,7 +2454,7 @@ public class LayoutEditorTools
 				(b2Head!=getHeadFromName(layoutTurnout.getSignalB2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{b2Field.getText().trim()}), 
+						new Object[]{b2Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2482,7 +2482,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(b2Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{b2Field.getText().trim()}), 
+							new Object[]{b2Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2505,7 +2505,7 @@ public class LayoutEditorTools
 				(c1Head!=getHeadFromName(layoutTurnout.getSignalC1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{c1Field.getText().trim()}), 
+						new Object[]{c1Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2533,7 +2533,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(c1Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{c1Field.getText().trim()}), 
+							new Object[]{c1Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2552,7 +2552,7 @@ public class LayoutEditorTools
 				(c2Head!=getHeadFromName(layoutTurnout.getSignalC2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{c2Field.getText().trim()}), 
+						new Object[]{c2Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2580,7 +2580,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(c2Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{c2Field.getText().trim()}), 
+							new Object[]{c2Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2603,7 +2603,7 @@ public class LayoutEditorTools
 				(d1Head!=getHeadFromName(layoutTurnout.getSignalD1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{d1Field.getText().trim()}), 
+						new Object[]{d1Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2631,7 +2631,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(d1Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{d1Field.getText().trim()}), 
+							new Object[]{d1Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2650,7 +2650,7 @@ public class LayoutEditorTools
 				(d2Head!=getHeadFromName(layoutTurnout.getSignalD2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{d2Field.getText().trim()}), 
+						new Object[]{d2Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -2678,7 +2678,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(d2Head) ) {
 					JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{d2Field.getText().trim()}), 
+							new Object[]{d2Field.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -2986,7 +2986,7 @@ public class LayoutEditorTools
 			if (occupancy==null) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);						
 				return;
 			}
@@ -2995,7 +2995,7 @@ public class LayoutEditorTools
 			if ( (nextHead==null) && (!reachedEndBumper()) ) {
 				JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
@@ -3030,7 +3030,7 @@ public class LayoutEditorTools
 		if (occupancy2==null) {
 			JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -3039,7 +3039,7 @@ public class LayoutEditorTools
 		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -3095,7 +3095,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -3104,7 +3104,7 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block.getUserName()}), 
+					new Object[]{block.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -3370,7 +3370,7 @@ public class LayoutEditorTools
 					(aHead!=getHeadFromName(levelXing.getSignalAName())) ) { 
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{aField.getText().trim()}), 
+						new Object[]{aField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -3399,7 +3399,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(aHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{aField.getText().trim()}), 
+						new Object[]{aField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -3424,7 +3424,7 @@ public class LayoutEditorTools
 					(bHead!=getHeadFromName(levelXing.getSignalBName()))) { 
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{bField.getText().trim()}), 
+						new Object[]{bField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -3453,7 +3453,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(bHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{bField.getText().trim()}), 
+						new Object[]{bField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -3478,7 +3478,7 @@ public class LayoutEditorTools
 					(cHead!=getHeadFromName(levelXing.getSignalCName())) ) { 
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{cField.getText().trim()}), 
+						new Object[]{cField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -3507,7 +3507,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(cHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{cField.getText().trim()}), 
+						new Object[]{cField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -3532,7 +3532,7 @@ public class LayoutEditorTools
 					(dHead!=getHeadFromName(levelXing.getSignalDName())) ) { 
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{dField.getText().trim()}), 
+						new Object[]{dField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -3561,7 +3561,7 @@ public class LayoutEditorTools
 			if (isHeadOnPanel(dHead)) {
 				JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError13"),
-						new String[]{dField.getText().trim()}), 
+						new Object[]{dField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
@@ -3676,7 +3676,7 @@ public class LayoutEditorTools
 				if (foundCount>1) {
 					JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 							java.text.MessageFormat.format(rb.getString("SignalsError16"),
-								new String[]{" "+foundCount+" "}), 
+								new Object[]{" "+foundCount+" "}), 
 									rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
@@ -3857,7 +3857,7 @@ public class LayoutEditorTools
 		if (occupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -3883,14 +3883,14 @@ public class LayoutEditorTools
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if ( (crossOccupancy==null) && (track1Occupancy==null) && (track2Occupancy==null) ) {
 			JOptionPane.showMessageDialog(setSignalsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsWarn1"),
-						new String[]{headName}), 
+						new Object[]{headName}), 
 							null,JOptionPane.WARNING_MESSAGE);
 		}
 		if (!initializeBlockBossLogic(head.getSystemName())) return;
@@ -4277,7 +4277,7 @@ public class LayoutEditorTools
 			if (turnout2==null) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError2"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
@@ -4328,7 +4328,7 @@ public class LayoutEditorTools
 			if (turnout1==null) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError2"),
-						new String[]{str}), rb.getString("Error"),
+						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 				return false ;
 			}
@@ -4384,7 +4384,7 @@ public class LayoutEditorTools
 				if (turnout2==null) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError2"),
-								new String[]{str}), rb.getString("Error"),
+								new Object[]{str}), rb.getString("Error"),
 									JOptionPane.ERROR_MESSAGE);
 					return false ;
 				}
@@ -4461,7 +4461,7 @@ public class LayoutEditorTools
 				(a1TToTHead!=getHeadFromName(layoutTurnout1.getSignalB1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{a1Field.getText().trim()}), 
+						new Object[]{a1Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4489,7 +4489,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(a1TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{a1TToTField.getText().trim()}), 
+							new Object[]{a1TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4508,7 +4508,7 @@ public class LayoutEditorTools
 				(a2TToTHead!=getHeadFromName(layoutTurnout1.getSignalB2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{a2Field.getText().trim()}), 
+						new Object[]{a2Field.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4536,7 +4536,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(a2TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{a2TToTField.getText().trim()}), 
+							new Object[]{a2TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4559,7 +4559,7 @@ public class LayoutEditorTools
 				(b1TToTHead!=getHeadFromName(layoutTurnout1.getSignalC1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{b1TToTField.getText().trim()}), 
+						new Object[]{b1TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4587,7 +4587,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(b1TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{b1TToTField.getText().trim()}), 
+							new Object[]{b1TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4606,7 +4606,7 @@ public class LayoutEditorTools
 				(b2TToTHead!=getHeadFromName(layoutTurnout1.getSignalC2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{b2TToTField.getText().trim()}), 
+						new Object[]{b2TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4634,7 +4634,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(b2TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{b2TToTField.getText().trim()}), 
+							new Object[]{b2TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4658,7 +4658,7 @@ public class LayoutEditorTools
 				(c1TToTHead!=getHeadFromName(layoutTurnout2.getSignalB1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{c1TToTField.getText().trim()}), 
+						new Object[]{c1TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4686,7 +4686,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(c1TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{c1TToTField.getText().trim()}), 
+							new Object[]{c1TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4705,7 +4705,7 @@ public class LayoutEditorTools
 				(c2TToTHead!=getHeadFromName(layoutTurnout2.getSignalB2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{c2TToTField.getText().trim()}), 
+						new Object[]{c2TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4733,7 +4733,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(c2TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{c2TToTField.getText().trim()}), 
+							new Object[]{c2TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4756,7 +4756,7 @@ public class LayoutEditorTools
 				(d1TToTHead!=getHeadFromName(layoutTurnout2.getSignalC1Name()))) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{d1TToTField.getText().trim()}), 
+						new Object[]{d1TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4784,7 +4784,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(d1TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{d1TToTField.getText().trim()}), 
+							new Object[]{d1TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -4803,7 +4803,7 @@ public class LayoutEditorTools
 				(d2TToTHead!=getHeadFromName(layoutTurnout2.getSignalC2Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new String[]{d2TToTField.getText().trim()}), 
+						new Object[]{d2TToTField.getText().trim()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -4831,7 +4831,7 @@ public class LayoutEditorTools
 									isHeadAssignedAnywhere(d2TToTHead) ) {
 					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new String[]{d2TToTField.getText().trim()}), 
+							new Object[]{d2TToTField.getText().trim()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
@@ -5264,7 +5264,7 @@ public class LayoutEditorTools
 		if (connectorOccupancy==null) {
 			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-						new String[]{connectorBlock.getUserName()}), 
+						new Object[]{connectorBlock.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -5287,7 +5287,7 @@ public class LayoutEditorTools
 			if (occupancy==null) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);						
 				return;
 			}
@@ -5295,7 +5295,7 @@ public class LayoutEditorTools
 			if ( (nextHead==null) && (!reachedEndBumper()) ) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-						new String[]{block.getUserName()}), 
+						new Object[]{block.getUserName()}), 
 							null,JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
@@ -5337,7 +5337,7 @@ public class LayoutEditorTools
 		if (occupancy2==null) {
 			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
@@ -5346,7 +5346,7 @@ public class LayoutEditorTools
 		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new String[]{block2.getUserName()}), 
+					new Object[]{block2.getUserName()}), 
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}

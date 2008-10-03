@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.89 $
+ * @version $Revision: 1.90 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1076,7 +1076,7 @@ public class PanelEditor extends JmriJFrame {
 			int selectedValue = JOptionPane.showOptionDialog(null, "\""
 					+ name + "\" " + rb.getString("PanelHidden")
 					+ "\n" + java.text.MessageFormat.format(rb.getString("PanelHiddenHelp"),
-							new String[] { name }), null,
+							new Object[] { name }), null,
 					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
 					null, new Object[] { rb.getString("ButtonOkay"),
 							rb.getString("ButtonDontShow") }, rb.getString("ButtonDontShow"));

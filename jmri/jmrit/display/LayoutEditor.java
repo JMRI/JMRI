@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1186,7 +1186,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( (wid<=0.99) || (wid>10.0) ) {
 			JOptionPane.showMessageDialog(enterTrackWidthFrame,
 					java.text.MessageFormat.format(rb.getString("Error2"),
-					new String[]{" "+wid+" "}),rb.getString("Error"),
+					new Object[]{" "+wid+" "}),rb.getString("Error"),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -1208,7 +1208,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( (wid<=0.99) || (wid>10.0) ) {
 			JOptionPane.showMessageDialog(enterTrackWidthFrame,
 					java.text.MessageFormat.format(rb.getString("Error2"),
-					new String[]{" "+wid+" "}),rb.getString("Error"),
+					new Object[]{" "+wid+" "}),rb.getString("Error"),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -1327,7 +1327,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( ( xx<=0) || (xx>(int)dim.width) ) {
 			JOptionPane.showMessageDialog(enterReporterFrame,
 					java.text.MessageFormat.format(rb.getString("Error2a"),
-					new String[]{" "+xx+" "}),rb.getString("Error"),
+					new Object[]{" "+xx+" "}),rb.getString("Error"),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -1347,7 +1347,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( ( yy<=0) || (yy>(int)dim.height) ) {
 			JOptionPane.showMessageDialog(enterReporterFrame,
 					java.text.MessageFormat.format(rb.getString("Error2a"),
-					new String[]{" "+yy+" "}),rb.getString("Error"),
+					new Object[]{" "+yy+" "}),rb.getString("Error"),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -1360,7 +1360,7 @@ public class LayoutEditor extends JmriJFrame {
             if (reporter == null) {
 				JOptionPane.showMessageDialog(enterReporterFrame,
 					java.text.MessageFormat.format(rb.getString("Error18"),
-					new String[]{rName}),rb.getString("Error"),
+					new Object[]{rName}),rb.getString("Error"),
 					JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -3258,7 +3258,7 @@ public class LayoutEditor extends JmriJFrame {
 					((to.getUserName()!=null) && (to.getUserName().equals(turnoutName))) ) {
 					JOptionPane.showMessageDialog(openPane,
 							java.text.MessageFormat.format(rb.getString("Error4"),
-							new String[]{turnoutName}),
+							new Object[]{turnoutName}),
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
@@ -3270,7 +3270,7 @@ public class LayoutEditor extends JmriJFrame {
 			// There is no turnout corresponding to this name
 			JOptionPane.showMessageDialog(openPane,
 					java.text.MessageFormat.format(rb.getString("Error8"),
-					new String[]{turnoutName}),
+					new Object[]{turnoutName}),
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -3843,7 +3843,7 @@ public class LayoutEditor extends JmriJFrame {
 			// There is no signal head corresponding to this name
 			JOptionPane.showMessageDialog(thisPanel,
 					java.text.MessageFormat.format(rb.getString("Error9"),
-					new String[]{tName}),
+					new Object[]{tName}),
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}

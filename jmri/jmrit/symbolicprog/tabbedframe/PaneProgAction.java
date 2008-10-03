@@ -36,7 +36,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -96,9 +96,9 @@ public class PaneProgAction 			extends AbstractAction {
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     String title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
-                                                        new String[]{"new decoder"});
+                                                        new Object[]{"new decoder"});
                     if (re!=null) title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
-                                                        new String[]{re.getId()});
+                                                        new Object[]{re.getId()});
                     JFrame p = new PaneServiceProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  modePane.getProgrammer());

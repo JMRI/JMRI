@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -102,7 +102,7 @@ public class LoaderEngine {
     
     public void SendOneWav(int index) throws DelayException {
         notify(java.text.MessageFormat.format(
-            res.getString("EngineSendWavBlock"), new String[]{""+index}));
+            res.getString("EngineSendWavBlock"), new Object[]{""+index}));
         // get control info, data
         SpjFile.Header header = spjFile.getHeader(index);
         int handle = header.getHandle();

@@ -36,7 +36,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class PacketPro extends Apps {
 
@@ -46,7 +46,7 @@ public class PacketPro extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("PacketProVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     // Main entry point

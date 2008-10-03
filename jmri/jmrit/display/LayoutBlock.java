@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -209,7 +209,7 @@ public class LayoutBlock extends AbstractNamedBean
 			// There is no sensor corresponding to this name
 			JOptionPane.showMessageDialog(openFrame,
 					java.text.MessageFormat.format(rb.getString("Error7"),
-					new String[]{sensorName}),
+					new Object[]{sensorName}),
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -227,7 +227,7 @@ public class LayoutBlock extends AbstractNamedBean
 			occupancySensor = savedSensor;
 			JOptionPane.showMessageDialog(openFrame,
 					java.text.MessageFormat.format(rb.getString("Error6"),
-					new String[]{sensorName,b.getID()}),
+					new Object[]{sensorName,b.getID()}),
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -253,7 +253,7 @@ public class LayoutBlock extends AbstractNamedBean
 			// There is no memory corresponding to this name
 			JOptionPane.showMessageDialog(openFrame,
 					java.text.MessageFormat.format(rb.getString("Error16"),
-					new String[]{memName}),
+					new Object[]{memName}),
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -411,7 +411,7 @@ public class LayoutBlock extends AbstractNamedBean
 						// send user an error message
 						int response = JOptionPane.showOptionDialog(null,
 								java.text.MessageFormat.format(rb.getString("Warn1"),
-								new String[]{blockName,tPanel.getLayoutName(),
+								new Object[]{blockName,tPanel.getLayoutName(),
 								panel.getLayoutName()}),rb.getString("WarningTitle"),
 								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
 								null,new Object[] {rb.getString("ButtonOK"),

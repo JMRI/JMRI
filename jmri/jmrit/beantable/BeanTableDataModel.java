@@ -26,7 +26,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.23 $
+ * @version		$Revision: 1.24 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -195,7 +195,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 				String msg;
 				msg = java.text.MessageFormat.format(AbstractTableAction.rb
 						.getString("WarningUserName"),
-						new String[] { ("" + value) });
+						new Object[] { ("" + value) });
 				JOptionPane.showMessageDialog(null, msg,
 						AbstractTableAction.rb.getString("WarningTitle"),
 						JOptionPane.ERROR_MESSAGE);
@@ -224,11 +224,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 msg = java.text.MessageFormat.format(
                         AbstractTableAction.rb.getString("DeletePrompt")+"\n"
                         +AbstractTableAction.rb.getString("ReminderInUse"),
-                        new String[]{t.getSystemName(),""+count});
+                        new Object[]{t.getSystemName(),""+count});
             } else {
                 msg = java.text.MessageFormat.format(
                         AbstractTableAction.rb.getString("DeletePrompt"),
-                        new String[]{t.getSystemName()});
+                        new Object[]{t.getSystemName()});
             }
         
             // verify deletion

@@ -34,7 +34,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class PacketScript extends Apps {
 
@@ -53,7 +53,7 @@ public class PacketScript extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("PacketScriptVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     // Main entry point

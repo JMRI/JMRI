@@ -6,7 +6,7 @@ package jmri.jmrix;
  * Lightweight class to check if a system is active.
  *
  * @author		Bob Jacobsen  Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 abstract public class ActiveSystemFlag {
 
@@ -21,8 +21,8 @@ abstract public class ActiveSystemFlag {
                 java.lang.reflect.InvocationTargetException {
         String classname = name+".ActiveFlag";
         Class c = Class.forName(classname);
-        java.lang.reflect.Method m = c.getMethod("isActive", null);
-        Object b = m.invoke(null, null); // static object, no args
+        java.lang.reflect.Method m = c.getMethod("isActive", (Class[])null);
+        Object b = m.invoke(null, (Object[])null); // static object, no args
         return ((Boolean)b).booleanValue();
     }
 }

@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class InstallTest extends Apps {
 
@@ -62,7 +62,7 @@ public class InstallTest extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("InstallTestVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {

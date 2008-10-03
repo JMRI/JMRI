@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -492,7 +492,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Logix, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
 					java.text.MessageFormat.format(rbx.getString("Error32"),
-							new String[] { curLogix.getSystemName() }), rbx
+							new Object[] { curLogix.getSystemName() }), rbx
 							.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
@@ -791,10 +791,10 @@ public class LogixTableAction extends AbstractTableAction {
 							msg7 = java.text.MessageFormat
 									.format(
 											rbx.getString("Warn7"),
-											new String[] { signalAppearanceIndexToString(signalAppearanceToAppearanceIndex(varAppearance[k])) });
+											new Object[] { signalAppearanceIndexToString(signalAppearanceToAppearanceIndex(varAppearance[k])) });
 						}
 						String msg6 = java.text.MessageFormat.format(rbx
-								.getString("Warn6"), new String[] {
+								.getString("Warn6"), new Object[] {
 								varListenerProperty[k], varName[k], msg7 });
 						javax.swing.JOptionPane.showMessageDialog(
 								editLogixFrame, msg6, rbx
@@ -889,7 +889,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already have the maximum number of conditionals
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
 					java.text.MessageFormat.format(rbx.getString("Error36"),
-							new String[] { curConditional.getSystemName() }),
+							new Object[] { curConditional.getSystemName() }),
 					rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
@@ -944,7 +944,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error34"),
-							new String[] { curConditional.getSystemName() }),
+							new Object[] { curConditional.getSystemName() }),
 					rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
@@ -1016,7 +1016,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error35"),
-							new String[] { curConditional.getSystemName() }),
+							new Object[] { curConditional.getSystemName() }),
 					rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return true;
@@ -1731,7 +1731,7 @@ public class LogixTableAction extends AbstractTableAction {
 		if (numStateVariables <= 0) {
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
 					java.text.MessageFormat.format(rbx.getString("Warn5"),
-							new String[] { c.getSystemName() }), rbx
+							new Object[] { c.getSystemName() }), rbx
 							.getString("WarnTitle"),
 					javax.swing.JOptionPane.WARNING_MESSAGE);
 		} else {
@@ -2835,7 +2835,7 @@ public class LogixTableAction extends AbstractTableAction {
 							editConditionalFrame,
 							java.text.MessageFormat.format(rbx
 									.getString("Error38"),
-									new String[] { dataField.getText() }), rbx
+									new Object[] { dataField.getText() }), rbx
 									.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 					return (false);
@@ -2844,7 +2844,7 @@ public class LogixTableAction extends AbstractTableAction {
 				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 						java.text.MessageFormat.format(
 								rbx.getString("Error39"),
-								new String[] { dataField.getText() }), rbx
+								new Object[] { dataField.getText() }), rbx
 								.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return (false);
@@ -2883,7 +2883,7 @@ public class LogixTableAction extends AbstractTableAction {
 							editConditionalFrame,
 							java.text.MessageFormat.format(rbx
 									.getString("Error40"),
-									new String[] { dataField.getText() }), 
+									new Object[] { dataField.getText() }), 
 									rbx.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 					return (false);
@@ -2892,7 +2892,7 @@ public class LogixTableAction extends AbstractTableAction {
 				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 						java.text.MessageFormat.format(
 								rbx.getString("Error41"),
-								new String[] { dataField.getText() }), 
+								new Object[] { dataField.getText() }), 
 								rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return (false);
@@ -3078,7 +3078,7 @@ public class LogixTableAction extends AbstractTableAction {
 							editConditionalFrame,
 							java.text.MessageFormat.format(rbx
 									.getString("Error25"),
-									new String[] { dataField.getText() }), rbx
+									new Object[] { dataField.getText() }), rbx
 									.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 					return (false);
@@ -3087,7 +3087,7 @@ public class LogixTableAction extends AbstractTableAction {
 				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 						java.text.MessageFormat.format(
 								rbx.getString("Error23"),
-								new String[] { dataField.getText() }), rbx
+								new Object[] { dataField.getText() }), rbx
 								.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return (false);
@@ -3126,7 +3126,7 @@ public class LogixTableAction extends AbstractTableAction {
 							editConditionalFrame,
 							java.text.MessageFormat.format(rbx
 									.getString("Error28"),
-									new String[] { dataField.getText() }), 
+									new Object[] { dataField.getText() }), 
 										rbx.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 					return (false);
@@ -3135,7 +3135,7 @@ public class LogixTableAction extends AbstractTableAction {
 				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 						java.text.MessageFormat.format(
 								rbx.getString("Error27"),
-								new String[] { dataField.getText() }), rbx
+								new Object[] { dataField.getText() }), rbx
 								.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return (false);
@@ -3554,7 +3554,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// if unsuccessful, print error message
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error26"),
-							new String[] { s }), rbx.getString("ErrorTitle"),
+							new Object[] { s }), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return (-1);
 		}
@@ -3601,7 +3601,7 @@ public class LogixTableAction extends AbstractTableAction {
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 				java.text.MessageFormat.format(rbx.getString(msg)
 						+ (table ? rbx.getString("Error21") : ""),
-						new String[] { name }), rbx.getString("ErrorTitle"),
+						new Object[] { name }), rbx.getString("ErrorTitle"),
 				javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 

@@ -38,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.66 $
+ * @version   $Revision: 1.67 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -1126,7 +1126,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // show OK status
         progStatus.setText(java.text.MessageFormat.format(
                                 rbt.getString("StateSaveOK"),
-                                new String[]{filename}));
+                                new Object[]{filename}));
         return true;
     }
 

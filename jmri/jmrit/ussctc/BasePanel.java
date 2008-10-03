@@ -16,7 +16,7 @@ import java.util.List;
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class BasePanel extends JPanel implements Constants {
 
@@ -30,7 +30,7 @@ public class BasePanel extends JPanel implements Constants {
         javax.swing.JOptionPane.showMessageDialog(this,
             java.text.MessageFormat.format(
                 rb.getString(message),
-                new String[]{value}),
+                new Object[]{value}),
             rb.getString("ErrorTitle"),
             javax.swing.JOptionPane.ERROR_MESSAGE);
     }

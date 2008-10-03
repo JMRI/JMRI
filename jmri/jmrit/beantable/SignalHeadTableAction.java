@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -516,7 +516,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		String sName = sysName.toUpperCase();
 		if ( (sName.length()<3) || (!sName.substring(1,2).equals("H")) ) {
 			String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-					.getString("InvalidSignalSystemName"), new String[] { sName });
+					.getString("InvalidSignalSystemName"), new Object[] { sName });
 			JOptionPane.showMessageDialog(addFrame, msg,
 					AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 			return false;			
@@ -528,7 +528,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		// inform the user if signal head already exists, and return false so creation can be bypassed
 		log.warn("Attempt to create signal with duplicate system name "+sName);
 		String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-					.getString("DuplicateSignalSystemName"), new String[] { sName });
+					.getString("DuplicateSignalSystemName"), new Object[] { sName });
 		JOptionPane.showMessageDialog(addFrame, msg,
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 		return false;
@@ -537,7 +537,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	void addTurnoutMessage(String s1, String s2) {
 		log.warn("Could not provide turnout "+s2);
 		String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-					.getString("AddNoTurnout"), new String[] { s1, s2 });
+					.getString("AddNoTurnout"), new Object[] { s1, s2 });
 		JOptionPane.showMessageDialog(addFrame, msg,
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
@@ -563,7 +563,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             if (!name.getText().substring(0,2).toUpperCase().equals("GH")) {
                 log.warn("skipping creation of signal, "+name.getText()+" does not start with GH");
 				String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-					.getString("GrapevineSkippingCreation"), new String[] { name.getText() });
+					.getString("GrapevineSkippingCreation"), new Object[] { name.getText() });
 				JOptionPane.showMessageDialog(addFrame, msg,
 					AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);				
                 return;
@@ -575,7 +575,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					if (nb!=null) {
 						//user name already in use
 						String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-								.getString("WarningUserName"), new String[] { (to1.getText()) });
+								.getString("WarningUserName"), new Object[] { (to1.getText()) });
 						JOptionPane.showMessageDialog(addFrame, msg,
 								AbstractTableAction.rb.getString("WarningTitle"),JOptionPane.ERROR_MESSAGE);
 						return;
@@ -699,7 +699,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 			else {
 				log.error("Attempt to edit two signal heads at the same time-"+editSysName+"-and-"+eSName+"-");
 				String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-								.getString("WarningEdit"), new String[] { editSysName, eSName });
+								.getString("WarningEdit"), new Object[] { editSysName, eSName });
 				JOptionPane.showMessageDialog(editFrame, msg,
 							AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 				editFrame.setVisible(true);
@@ -1030,7 +1030,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					if (nB != null) {
 						log.error("User name is not unique " + nam);
 						String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-								.getString("WarningUserName"), new String[] { ("" + nam) });
+								.getString("WarningUserName"), new Object[] { ("" + nam) });
 						JOptionPane.showMessageDialog(editFrame, msg,
 									AbstractTableAction.rb.getString("WarningTitle"),
 										JOptionPane.ERROR_MESSAGE);
@@ -1051,7 +1051,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					if (nB != null) {
 						log.error("User name is not unique " + nam);
 						String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-								.getString("WarningUserName"), new String[] { ("" + nam) });
+								.getString("WarningUserName"), new Object[] { ("" + nam) });
 						JOptionPane.showMessageDialog(editFrame, msg,
 									AbstractTableAction.rb.getString("WarningTitle"),
 										JOptionPane.ERROR_MESSAGE);
@@ -1068,7 +1068,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	void noTurnoutMessage(String s1, String s2) {
 		log.warn("Could not provide turnout "+s2);
 		String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-					.getString("WarningNoTurnout"), new String[] { s1, s2 });
+					.getString("WarningNoTurnout"), new Object[] { s1, s2 });
 		JOptionPane.showMessageDialog(editFrame, msg,
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}

@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.65 $
+ * @version     $Revision: 1.66 $
  */
 public class JMRIdemo extends Apps {
 
@@ -41,7 +41,7 @@ public class JMRIdemo extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("JmriDemoVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     /**

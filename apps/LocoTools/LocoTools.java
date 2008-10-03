@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class LocoTools extends Apps {
 
@@ -51,7 +51,7 @@ public class LocoTools extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("LocoToolsVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {

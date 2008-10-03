@@ -21,7 +21,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -66,7 +66,7 @@ public class FileServlet extends AbstractServlet {
     /**
      * Items to be substituted into FileServletPaths
      */
-    String[] args;
+    Object[] args;
 
 
     /**

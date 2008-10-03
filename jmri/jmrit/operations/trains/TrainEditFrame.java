@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -671,7 +671,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateNumberCars(){
 		if (_train != null){
-			String msg = java.text.MessageFormat.format(rb.getString("CarMoves"),new String[]{Integer.toString(_train.getNumberCarsWorked())});
+			String msg = java.text.MessageFormat.format(rb.getString("CarMoves"),new Object[]{Integer.toString(_train.getNumberCarsWorked())});
 			textCars.setText(msg);
 		}
 	}

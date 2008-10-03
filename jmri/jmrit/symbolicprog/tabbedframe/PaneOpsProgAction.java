@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -85,7 +85,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                 String title = java.text.MessageFormat.format(rbt.getString("FrameOpsProgrammerTitle"),
-                                                        new String[]{re.getId()});
+                                                        new Object[]{re.getId()});
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = true;

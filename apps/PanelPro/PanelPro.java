@@ -31,7 +31,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class PanelPro extends Apps {
 
@@ -49,7 +49,7 @@ public class PanelPro extends Apps {
 
     protected String line1() {
         return MessageFormat.format(rb.getString("PanelProVersionCredit"),
-                                new String[]{jmri.Version.name()});
+                                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {
