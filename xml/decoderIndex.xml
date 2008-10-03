@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.1-2008-09-03 on Sat Sep 06 21:41:49 PDT 2008 $Id: decoderIndex.xml,v 1.126 2008-09-07 04:43:10 jacobsen Exp $-->
-  <decoderIndex version="145">
+  <!--Written by JMRI version 2.3.2 on Fri Oct 03 10:50:43 PDT 2008 $Id: decoderIndex.xml,v 1.127 2008-10-03 17:51:50 jacobsen Exp $-->
+  <decoderIndex version="147">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -414,6 +414,13 @@
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="2.877" width="0.667" height="0.173" units="inches" />
+        </model>
+        <model model="DH165IP" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="DH165K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Pad" connection="solder" />
@@ -2315,6 +2322,12 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="P2k GP30" numFns="14" numOuts="14" productID="140" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k H10-44" numFns="14" numOuts="14" productID="166" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
