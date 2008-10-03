@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.4 2008-08-10 05:01:34 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-10-03 02:45:15 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -104,8 +104,15 @@ appears, select "Start Web Miniserver".
 Don't forget to save your changes!
 
 <p>
-There are also more advanced settings that can be configured;
-see the links on the sidebar for more information.
+The "index.html" page that you used in the 
+previous section
+is automatically created by the program in the JMRI
+preferences directory.  You can edit it to 
+display whatever you want; JMRI won't modify it once 
+you've changed it. 
+You can include links to web pages outside JMRI, and 
+links to various JMRI-served pages, see below.
+
 
 <a id="URLs">
 <h2>Access URLs</h2>
