@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.2 on Fri Oct 03 10:50:43 PDT 2008 $Id: decoderIndex.xml,v 1.127 2008-10-03 17:51:50 jacobsen Exp $-->
+  <!--Written by JMRI version 2.3.2 on Fri Oct 03 10:50:43 PDT 2008 $Id: decoderIndex.xml,v 1.128 2008-10-05 22:10:41 jacobsen Exp $-->
   <decoderIndex version="147">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -65,7 +65,6 @@
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
-      <manufacturer mfg="Praecipuus" mfgID="33" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
       <manufacturer mfg="QSIndustries" mfgID="113" />
@@ -80,6 +79,7 @@
       <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
       <manufacturer mfg="Signaling Solution" mfgID="119" />
+      <manufacturer mfg="Silicon Railway" mfgID="33" />
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
