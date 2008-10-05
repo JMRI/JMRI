@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -34,7 +34,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
 
     boolean init = false;
 
-    void checkInitDone() {
+    private void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         portBox.addActionListener(new ActionListener() {
