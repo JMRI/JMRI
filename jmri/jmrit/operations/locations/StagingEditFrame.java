@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location stagings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -85,6 +85,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	javax.swing.JComboBox comboBox = CarRoads.instance().getComboBox();
 
 	public static final String DISPOSE = "dispose" ;
+	public static final int MAX_NAME_LENGTH = 25;
 
 	public StagingEditFrame() {
 		super();
@@ -364,10 +365,10 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(){
-		if (stagingNameTextField.getText().length() > 25){
-			log.error("Staging name must be less than 26 charaters");
+		if (stagingNameTextField.getText().length() > MAX_NAME_LENGTH){
+			log.error("Staging name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters");
 			JOptionPane.showMessageDialog(this,
-					"Staging name must be less than 26 charaters", "Can not add location!",
+					"Staging name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters", "Can not add location!",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

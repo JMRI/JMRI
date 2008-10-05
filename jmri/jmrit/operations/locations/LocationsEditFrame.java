@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -101,6 +101,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	// combo boxes
 
 	public static final String NAME = rb.getString("Name");
+	public static final int MAX_NAME_LENGTH = 25;
 	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
@@ -467,10 +468,10 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(){
-		if (locationNameTextField.getText().length() > 25){
-			log.error("Location name must be less than 26 charaters");
+		if (locationNameTextField.getText().length() > MAX_NAME_LENGTH){
+			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
 			JOptionPane.showMessageDialog(this,
-					"Location name must be less than 26 charaters", "Can not add location!",
+					"Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters", "Can not add location!",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

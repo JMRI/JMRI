@@ -7,10 +7,12 @@ import jmri.jmrit.operations.engines.EngineManagerXml;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
@@ -24,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	
@@ -82,7 +84,14 @@ public class LocationsTableFrame extends JmriJFrame {
 		addRadioButtonAction (sortByName);
 		addRadioButtonAction (sortById);
     	
-        // add help menu to window
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		Frame newFrame = new Frame();
+		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), newFrame, false, this));
+		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), newFrame, true, this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
     	
     	pack();
