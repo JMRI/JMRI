@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.14 2008-10-03 18:04:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.15 2008-10-06 02:30:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -217,6 +217,14 @@ David Duchamp added tables for
 <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a>
 and
 <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>.
+
+<p>
+Manufacturer number 33 has been renamed from "Praecipuus" to "Silicon Railway".
+
+<p>
+Ken Cameron updated his 
+<a href="http://jmri.sf.net/jython/RobotThrottle.py">RobotThrottle.py</a>
+sample script.
 
 <!--#include virtual="/Footer" -->
 
