@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -56,7 +56,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     public String name() { return "XnTcp"; }
 
 
-    void checkInitDone() {
+    protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         portBox.addActionListener(new ActionListener() {
