@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.4.shtml,v 1.1 2008-10-06 16:49:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.4.shtml,v 1.2 2008-10-07 15:19:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -46,7 +46,8 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<li>
+<li>updates to the Windows startup scripts to improve operation on Vista
+and reduce chance of problems with older libraries
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -70,22 +71,25 @@ see our
 
 <h3>Warnings from older versions:</h3>
 
-Starting with the 2.3.3 test release, by default JMRI is allowed to use
+Starting with this test release, by default JMRI is allowed to use
 up to 200MB of memory (up from a limit of 60MB or 64MB previously).
 If this is more memory than you have available, and you notice JMRI
 slowing down a lot, please let us know.
 <p>
-Staring with the 2.3.3 test release, JMRI now builds the classpath (the
+Staring with this test release, JMRI now builds the classpath (the
 list of .jar libraries used by the program) dynamically.  
 We'll use this in the future for plug-ins and other features, and
 other platforms have been doing this for a while.
-If you haven't made any changes in the 
-<a href="">JMRI program directory<a>, 
-you don't have to do anything.
 If you have added any .jar files to your JMRI program directory, they
-may cause problems when the program is starting.  
+may cause problems when the program is starting.  Also, if originally
+installed a very old version of JMRI, there might still be files around
+that can cause this problems.
 If so, you can fix it by moving aside those extra
 .jar files from the JMRI program directory.
+For more information on this, please see this
+<a href="http://groups.yahoo.com/group/jmriusers/message/35065">discussion</a>
+on the 
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list</a>.
 
 <p>JMRI is moving toward requiring Java 1.5 or later.  Certain new features may not work if you are using an earlier
 version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
@@ -120,6 +124,12 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 
 <h3>Changes since test version 2.3.3:</h3>
 
+The Windows installer now removes specific older Java library (.jar) files if present.
+
+<p>
+Fixed some links in help pages.
+
+<p>
 
 <!--#include virtual="/Footer" -->
 
