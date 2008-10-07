@@ -22,19 +22,19 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.6 $      
+ * @version             $Revision: 1.7 $      
  */
 public interface  ConsistManager {
 	
 	/**
 	 *    Find a Consist with this consist address, and return it.
-     *    if the Consist doesn't exit, create it.
+         *    if the Consist doesn't exit, create it.
 	 **/
 	public Consist getConsist(DccLocoAddress address);
 	
 	/**
 	 *    Remove an old Consist
-     */
+	 */
 	public void delConsist(DccLocoAddress address);
 
 	/**
@@ -50,7 +50,7 @@ public interface  ConsistManager {
 	/**
 	 *    Get an ArrayList object containning the string representation 
 	 *    of the consist addresses we know about.
-     */
+	 */
 	public ArrayList getConsistList();
 
 	/**
