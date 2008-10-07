@@ -15,7 +15,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR   "Matt Harris"     ; Author name
 !define APP      "LaunchJMRI"      ; Application name
-!define VER      "0.1.0.0"         ; Launcher version
+!define VER      "0.1.1.0"         ; Launcher version
 !define PNAME    "${APP}"          ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON     "decpro5.ico"     ; Launcher icon
@@ -30,7 +30,7 @@
 ; -------------------------------------------------------------------------
 ; - Variable declarations
 ; -------------------------------------------------------------------------
-Var JAVAPATH    ; holds the path to the location where JAVA files can be found
+Var JAVAPATH   ; holds the path to the location where JAVA files can be found
 Var CLASSPATH  ; holds the class path for JMRI .jars
 Var OPTIONS    ; holds the JRE options
 Var CALCMAXMEM ; holds the calculated maximum memory
@@ -48,8 +48,10 @@ SetCompressor /SOLID /FINAL lzma
 ; -------------------------------------------------------------------------
 CRCCheck On ; do CRC check on launcher before start ("Off" for later EXE compression)
 WindowIcon Off ; show no icon of the launcher
-SilentInstall Silent ; start as launcher, not as installer
-AutoCloseWindow True ; do not automatically close when finished
+ShowInstDetails Show ; show the installation details
+;SilentInstall Silent ; start as launcher, not as installer
+;AutoCloseWindow True ; do not automatically close when finished
+RequestExecutionLevel user ; set execution level for Windows Vista to user
 
 ; -------------------------------------------------------------------------
 ; - Set basic information
@@ -81,6 +83,8 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "OriginalFilename" "${PNAME}.exe"
 ; -------------------------------------------------------------------------
 Section "Main"
 
+  DetailPrint "CommandLine: $PARAMETERS"
+
 ; -- Find the JAVA install
 
 ; -- Read from machine registry
@@ -96,6 +100,7 @@ Section "Main"
 
   JreFound:
   StrCpy "$JAVAPATH" "$R0"
+  DetailPrint "JavaPath: $JAVAPATH"
 
 ; -- Get the memory status
   Call GetSystemMemoryStatus
@@ -111,6 +116,7 @@ Section "Main"
     StrCpy $CALCMAXMEM ${MAXMEM}
     Goto cmp_done
   cmp_done:
+  DetailPrint "MaxMemory: $CALCMAXMEMm"
 
 ; -- Build options string
   ; -- JVM and RMI options
@@ -141,17 +147,6 @@ Section "Main"
   StrCmp $9 "" +2 0
   StrCpy $CLASSPATH "$CLASSPATH;$9"
 
-; -- Get commandline parameters
-  Call GetParameters
-  Pop $0
-  StrCmp $0 "" 0 cmdlineok
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe class [config]'"
-    Goto Exit
-
-  cmdlineok:
-  StrCpy $PARAMETERS $0
-  DetailPrint "CommandLine: $PARAMETERS"
-
   StrCpy $0 '"$JAVAPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS'
 ;  MessageBox MB_OK|MB_ICONINFORMATION "$0" ; for debugging
 
@@ -163,6 +158,36 @@ Section "Main"
 
   Exit:
 SectionEnd
+
+Function .onInit
+; -- Get commandline parameters
+  StrCpy $0 $CMDLINE
+  SetSilent silent
+  cmdloop:
+  Push $0
+  Call GetParameters
+  Pop $0
+  StrCmp $0 "" 0 cmdlineok
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] class [config]'"
+    Abort
+
+  cmdlineok:
+  StrCpy $1 $0 1
+  StrCmp $1 "/" cmdlineoptsget cmdlineoptsdone
+  cmdlineoptsget:
+  StrCpy $1 $0 6
+  StrCmp $1 "/debug" optsdebug
+; -- finished processing options
+  Goto cmdlineoptsdone
+
+  optsdebug:
+  SetSilent normal
+  Goto cmdloop
+  
+  cmdlineoptsdone:
+  StrCpy $PARAMETERS $0
+FunctionEnd
+
 
 ; -------------------------------------------------------------------------
 ; - JMRI Launcher Functions
@@ -241,21 +266,23 @@ FunctionEnd
 Function GetParameters
 ; -------------------------------------------------------------------------
 ; - Gets command line parameters
-; - input:  none
+; - input:  top of stack
 ; - output: top of stack
 ; - modifies no other variables
 ; -------------------------------------------------------------------------
 
-  Push $R0
+  Exch $R0
   Push $R1
   Push $R2
   Push $R3
+  Push $R4
   
+  StrCpy $R4 $R0
   StrCpy $R2 1
-  StrLen $R3 $CMDLINE
+  StrLen $R3 $R4
   
   ; -- Check for quote or space
-  StrCpy $R0 $CMDLINE $R2
+  StrCpy $R0 $R4 $R2
   StrCmp $R0 '"' 0 +3
     StrCpy $R1 '"'
     Goto loop
@@ -263,17 +290,18 @@ Function GetParameters
 
   loop:
     IntOp $R2 $R2 + 1
-    StrCpy $R0 $CMDLINE 1 $R2
+    StrCpy $R0 $R4 1 $R2
     StrCmp $R0 $R1 get
     StrCmp $R2 $R3 get
     Goto loop
 
   get:
     IntOp $R2 $R2 + 1
-    StrCpy $R0 $CMDLINE 1 $R2
+    StrCpy $R0 $R4 1 $R2
     StrCmp $R0 " " get
-    StrCpy $R0 $CMDLINE "" $R2
+    StrCpy $R0 $R4 "" $R2
 
+  Pop $R4
   Pop $R3
   Pop $R2
   Pop $R1
