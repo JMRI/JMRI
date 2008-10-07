@@ -51,7 +51,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.60 $
+ * @version    $Revision: 1.61 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -181,13 +181,18 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public void notifyThrottleFound(DccThrottle t)
     {
+        if(log.isDebugEnabled()) log.debug("control panel received new throttle");
         this.throttle = t;
         this.setEnabled(true);
         this.setIsForward(throttle.getIsForward());
         this.setSpeedValues((int) throttle.getSpeedIncrement(),
                             (int) throttle.getSpeedSetting());
         this.throttle.addPropertyChangeListener(this);
-    }
+        if(log.isDebugEnabled()) {
+           jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
+           log.debug("new address is " +Address.toString());
+        }
+   }
     
     /**
      *  Enable/Disable all buttons and slider.
@@ -756,7 +761,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.60 $
+     * @version    $Revision: 1.61 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
