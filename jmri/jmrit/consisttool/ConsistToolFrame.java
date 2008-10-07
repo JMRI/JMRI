@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.22 $
+ * @version              $Revision: 1.23 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -349,6 +349,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
           ArrayList addressList = tempConsist.getConsistList();
           DccLocoAddress locoaddress=(DccLocoAddress)addressList.get(0);
           if(address!=locoaddress){
+                if(log.isDebugEnabled()) log.debug("Consist Address " + 
+                                                    address.toString() +
+                                                   ", Lead Locomoitve  " +
+                                                   locoaddress.toString());
                 // the consist address and the lead locomotive address differ,
                 // register so the function buttons trigger the lead locomotive 
 	        tf.notifyAddressChosen(locoaddress.getNumber(), 
