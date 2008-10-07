@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.17 2008-10-06 15:25:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.18 2008-10-07 14:33:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -79,13 +79,16 @@ Staring with this test release, JMRI now builds the classpath (the
 list of .jar libraries used by the program) dynamically.  
 We'll use this in the future for plug-ins and other features, and
 other platforms have been doing this for a while.
-If you haven't made any changes in the 
-<a href="">JMRI program directory<a>, 
-you don't have to do anything.
 If you have added any .jar files to your JMRI program directory, they
-may cause problems when the program is starting.  
+may cause problems when the program is starting.  Also, if originally
+installed a very old version of JMRI, there might still be files around
+that can cause this problems.
 If so, you can fix it by moving aside those extra
 .jar files from the JMRI program directory.
+For more information on this, please see this
+<a href="http://groups.yahoo.com/group/jmriusers/message/35065">discussion</a>
+on the 
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list</a>.
 
 <h3>Warnings from older versions:</h3>
 
