@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Script to start a JMRI 2.1.7 application
+# Script to start a JMRI 2.3.4 application
 #
 # If you want to be able to move this anywhere and run it,
 # set the JMRI_HOME environment variable to the absolute pathname
