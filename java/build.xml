@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.30 $ -->
+<!-- Revision $Revision: 1.31 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -371,10 +371,11 @@
   </target>
 
   <target name="uploadjavadoc" depends="javadoc" description="create and upload JavaDocs">
-    <exec executable="scp">
-      <arg value="-r"/>
+    <exec executable="rsync">
+      <arg value="-avz"/>
+      <arg value="--delete"/>
       <arg value="${doctarget}"/>
-      <arg value="jacobsen@jmri.sf.net:htdocs/JavaDoc/"/>
+      <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
     </exec>
   </target>
 
