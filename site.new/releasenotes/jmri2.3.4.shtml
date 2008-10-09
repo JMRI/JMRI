@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.4.shtml,v 1.2 2008-10-07 15:19:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.4.shtml,v 1.3 2008-10-09 04:07:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -43,14 +43,9 @@ back to an earlier version.
 
 <p>This is the fourth in a series of test versions.
 
-It contains 
-many new features, including:
-<ul>
-<li>updates to the Windows startup scripts to improve operation on Vista
-and reduce chance of problems with older libraries
-</ul>
-along with lots of other changes.  See the complete list below.
-
+<p>JMRI 2.3.4 was released to fix a Windows-related problem in JMRI2.3.3,
+which it replaces.  The JMRI 2.3.3 features are listed in its
+<a href="jmri2.3.3.shtml">release note</a>.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
@@ -125,11 +120,13 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 <h3>Changes since test version 2.3.3:</h3>
 
 The Windows installer now removes specific older Java library (.jar) files if present.
+Also, Matt Harris updated it to handle Vista security and the administrator account.
 
 <p>
 Fixed some links in help pages.
 
 <p>
+Dick Bronson updated the decoder definition for the RR-CirKits TC-64.
 
 <!--#include virtual="/Footer" -->
 
