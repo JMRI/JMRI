@@ -64,7 +64,7 @@ import java.util.List;
  *</ul>
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -192,6 +192,8 @@ public class Block extends jmri.AbstractNamedBean {
         setState(UNOCCUPIED);
     }
 
+	private int maxInfoMessages = 5;
+	private int infoMessageCount = 0;
     /**
      * Handles Block sensor going ACTIVE: this block is now occupied, 
      * figure out from who and copy their value.
@@ -208,7 +210,12 @@ public class Block extends jmri.AbstractNamedBean {
             }
         }
         // sort on number of neighbors
-        if (count == 0) log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block "+getSystemName()+". Value not set.");
+        if (count == 0) {
+			if (infoMessageCount<maxInfoMessages) {
+				log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block "+getSystemName()+". Value not set.");
+				infoMessageCount ++;
+			}
+		}
         else if (count == 1) { // simple case
         
             if ((next!= null) && (next.getBlock()!=null)) {

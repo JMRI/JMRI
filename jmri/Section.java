@@ -40,6 +40,9 @@ import java.util.ArrayList;
  *		FORWARD - allocated for travel in the forward direction
  *		REVERSE - allocated for travel in the reverse direction
  * <P>
+ * A Section has an occupancy.  A Section is OCCUPIED if any of its Blocks is 
+ *  OCCUPIED. A Section is UNOCCUPIED if all  of its Blocks are UNOCCUPIED
+ * <P>
  * A Section of sufficient length may be allocated to more than one train provided 
  *	the trains are travelling in the same direction. There must be at least one block
  *  between trains travelling in the same direction in a section.
@@ -82,7 +85,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -101,10 +104,18 @@ public class Section extends AbstractNamedBean
 	 *	 for travel in the forward direction, or REVERSE - allocated for travel in
 	 *   the REVERSE direction.
 	 */ 
+	public static final int UNKNOWN = 0x01;
 	public static final int FREE = 0x02;
 	public static final int FORWARD = 0x04;
 	public static final int REVERSE = 0X08;
 
+	/**
+	 * Constants representing the occupancy of the Section.
+	 * A Section is OCCUPIED if any of its Blocks are OCCUPIED. If all of its Blocks 
+	 *   are UNOCCUPIED, a Section is UNOCCUPIED.
+	 */
+	public static final int OCCUPIED = Block.OCCUPIED;
+	public static final int UNOCCUPIED = Block.UNOCCUPIED;
     /**
      *  Persistant instance variables (saved between runs)
      */
@@ -119,25 +130,29 @@ public class Section extends AbstractNamedBean
     /**
      *  Operational instance variables (not saved between runs)
      */
-	private int mState = Section.FREE;
+	private int mState = FREE;
+	private int mOccupancy = UNOCCUPIED;
 	private Block mFirstBlock = null;
 	private Block mLastBlock = null;
 	private Sensor mForwardBlockingSensor = null;
 	private Sensor mReverseBlockingSensor = null;
 	private Sensor mForwardStoppingSensor = null;
 	private Sensor mReverseStoppingSensor = null;
+	private ArrayList mBlockListeners = new ArrayList();
 	
 	/**
 	 * Query the state of the Section
 	 */
-	public  int getState() { return mState; }
+	public int getState() { return mState; }
 	
 	/** 
 	 * Set the state of the Section
 	 */
 	public void setState(int state) {
 		if ( (state==Section.FREE) || (state==FORWARD) || (state==Section.REVERSE) ) {
+			int old = mState;
 			mState = state;
+			firePropertyChange("state", new Integer(old), new Integer(mState));
 			// update the forward/reverse blocking sensors as needed
 			if (state==FORWARD) {
 				try {
@@ -174,6 +189,16 @@ public class Section extends AbstractNamedBean
 			log.error("Attempt to set state of Section "+getSystemName()+" to illegal value - "+state);
 	}
 	
+	/**
+	 * Query the occupancy of a section
+	 */
+	public int getOccupancy() { return mOccupancy; }
+	private void setOccupancy(int occupancy) {
+        int old = mOccupancy;
+        mOccupancy = occupancy;
+        firePropertyChange("occupancy", new Integer(old), new Integer(mOccupancy));
+    }
+		
 	/**
 	 * Access methods for forward and reverse blocking sensors
 	 *	The set methods return a Sensor object if successful, or else they
@@ -359,6 +384,18 @@ public class Section extends AbstractNamedBean
 		// add Block to the Block list
 		mBlockEntries.add((Object)b);
 		mLastBlock = b;
+		// check occupancy
+		if (b.getState() == OCCUPIED) {
+			if (mOccupancy!=OCCUPIED) {
+				setOccupancy(OCCUPIED);
+			}
+		}
+		java.beans.PropertyChangeListener listener = null;
+		b.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) 
+					{ handleBlockChange(e); }
+            });
+		mBlockListeners.add((Object)listener);
 		return true;
 	}
 	private boolean initializationNeeded = false;
@@ -380,9 +417,39 @@ public class Section extends AbstractNamedBean
 				}
 				mBlockEntries.add((Object)b);
 				mLastBlock = b;
+				java.beans.PropertyChangeListener listener = null;
+				b.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+						public void propertyChange(java.beans.PropertyChangeEvent e) 
+							{ handleBlockChange(e); }
+					});
+				mBlockListeners.add((Object)listener);
 			}
 		}
 		initializationNeeded = false;
+	}
+	/**
+	 * Handle change in occupancy of a Block in the Section
+	 */
+	void handleBlockChange(java.beans.PropertyChangeEvent e) {
+		int o = UNOCCUPIED;
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			if (((Block)mBlockEntries.get(i)).getState() == OCCUPIED) {
+				o = OCCUPIED;
+			}
+		}
+		if (mOccupancy!=o)setOccupancy(o);
+	}
+	
+	/**
+	 * Get a Copy of this Section's Block List
+	 */
+	public ArrayList getBlockList() {
+		if (initializationNeeded) initializeBlocks();
+		ArrayList a = new ArrayList();
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			a.add(mBlockEntries.get(i));
+		}
+		return a;
 	}
 			
 	/**
@@ -396,10 +463,15 @@ public class Section extends AbstractNamedBean
 		return null;
 	}
 	/**
-	 * Remove all Blocks and Entry Points
+	 * Remove all Blocks, Block Listeners,  and Entry Points
 	 */
 	public void removeAllBlocksFromSection () {
 		for (int i = mBlockEntries.size();i>0;i--) {
+			Block b = (Block)mBlockEntries.get(i-1);
+			if (b!=null) {
+				b.removePropertyChangeListener((java.beans.PropertyChangeListener)mBlockListeners.get(i-1));
+			}
+			mBlockListeners.remove(i-1);
 			mBlockEntries.remove(i-1);
 		}
 		for (int i = mForwardEntryPoints.size();i>0;i--) {
@@ -431,6 +503,24 @@ public class Section extends AbstractNamedBean
 		if ( (blockIndex>mBlockEntries.size()) || (blockIndex<=0) ) return null;
 		return (Block)mBlockEntries.get(blockIndex-1);
 	}
+	public boolean containsBlock(Block b) {
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			if (b == (Block)mBlockEntries.get(i)) return true;
+		}
+		return false;
+	}
+	public boolean connectsToBlock(Block b) {
+		EntryPoint ep = null;
+		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+			ep = (EntryPoint)mForwardEntryPoints.get(i);
+			if (ep.getFromBlock()==b) return true;
+		}
+		for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+			ep = (EntryPoint)mReverseEntryPoints.get(i);
+			if (ep.getFromBlock()==b) return true;
+		}
+		return false;
+	}	
 	
 	/** 
 	 * Access methods for beginning and ending block names

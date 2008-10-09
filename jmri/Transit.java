@@ -7,6 +7,7 @@ import jmri.TransitSection;
 import jmri.Block;
 import jmri.Timebase;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class providing the basic implementation of a Transit.
@@ -63,7 +64,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -105,6 +106,7 @@ public class Transit extends AbstractNamedBean
 	private int mState = Transit.IDLE;
 	private int mMode = Transit.UNKNOWN;
 	private ArrayList mTransitSectionList = new ArrayList();
+	private int mMaxSequence = 0;
 
     /**
      * Query the state of the Transit
@@ -145,6 +147,7 @@ public class Transit extends AbstractNamedBean
 	 */
 	public void addTransitSection( TransitSection s ) {
 		mTransitSectionList.add((Object)s);
+		mMaxSequence = s.getSequenceNumber();
 	}
 	
 	/** 
@@ -156,13 +159,217 @@ public class Transit extends AbstractNamedBean
 			list.add(mTransitSectionList.get(i));
 		return list;
 	}
+	
+	/**
+	 * Get the maximum sequence number used in this Transit
+	 */
+	public int getMaxSequence() {return mMaxSequence;}
 
 	/**
 	 * Remove all TransitSections
 	 */
 	public void removeAllSections() {
 		mTransitSectionList.clear();
-	}		
+	}
+	
+	/**
+	 * Test if a Section is in the Transit
+	 */
+	public boolean containsSection(Section s) {
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if (ts.getSection()==s) return true;
+		}	 
+		return false;
+	}
+	
+	/**
+	 * Get a List of Sections with a given sequence number
+	 */
+	public ArrayList getSectionListBySeq(int seq) {
+		ArrayList list = new ArrayList();
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if (seq == ts.getSequenceNumber()) {
+				list.add(ts.getSection());
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Test if a Block is in the Transit
+	 */
+	public boolean containsBlock(Block b) {
+		ArrayList bList = getInternalBlocksList();
+		for (int i = 0; i<bList.size(); i++) {
+			if (b == (Block)bList.get(i)) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Count the number of times a Block is in this Transit
+	 */
+	public int getBlockCount(Block b) {
+		ArrayList bList = getInternalBlocksList();
+		int count = 0;
+		for (int i = 0; i<bList.size(); i++) {
+			if (b == (Block)bList.get(i)) count++;
+		}
+		return count;
+	}
+	/**
+	 * Returns a Section from one of its Blocks and its sequence number
+	 */
+	public Section getSectionFromBlockAndSeq(jmri.Block b, int seq) {
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if (ts.getSequenceNumber()==seq) {
+				Section s = ts.getSection();
+				if (s.containsBlock(b)) return s;
+			}
+		}
+		return null;
+	}
+	/**
+	 * Returns a Section from one of its EntryPoint Blocks and its sequence number
+	 */
+	public Section getSectionFromConnectedBlockAndSeq(jmri.Block b, int seq) {
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if (ts.getSequenceNumber()==seq) {
+				Section s = ts.getSection();
+				if (s.connectsToBlock(b)) return s;
+			}
+		}
+		return null;
+	}
+	/**
+	 * Gets the direction of a Section in the transit from its sequence number
+	 *    Returns 0 if direction was not found.
+	 */
+	public int getDirectionFromSectionAndSeq(Section s, int seq) {
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if ( (ts.getSection() == s) && (ts.getSequenceNumber() == seq) ) {
+				return ts.getDirection();
+			}
+		}
+		return 0;
+	}
+	
+	/** 
+	 * Get a list of all blocks internal to this Transit
+	 * Since Sections may be present more than once, blocks may be listed more than once.
+	 * The sequence numbers of the Section the Block was found in are accumulated in a 
+	 *   parallel list, which can be accessed by immediately calling getBlockSeqList().
+	 */
+	public ArrayList getInternalBlocksList() {
+		ArrayList list = new ArrayList();
+		blockSecSeqList.clear();
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			ArrayList bList = ts.getSection().getBlockList();
+			for (int j = 0; j<bList.size(); j++) {
+				list.add(bList.get(j));
+				blockSecSeqList.add((Object) new Integer(ts.getSequenceNumber()));
+			}
+		}
+		return list;
+	}
+	// The following is mainly for internal use, but is available if requested immediately after
+	//      getInternalBlocksList or getEntryBlocksList.
+	private ArrayList blockSecSeqList = new ArrayList();
+	public ArrayList getBlockSeqList() { 
+		ArrayList list = new ArrayList();
+		for (int i = 0; i<blockSecSeqList.size(); i++) {
+			list.add(blockSecSeqList.get(i));
+		}
+		return list;
+	}
+	
+	/** 
+	 * Get a list of all entry blocks to this Transit.
+	 * These are Blocks that a train might enter from and be going in the 
+	 *   Transit's direction.
+	 * The sequence numbers of the Section the Block will enter are accumulated in a 
+	 *   parallel list, which can be accessed by immediately calling getBlockSeqList().
+	 */
+	public ArrayList getEntryBlocksList() {
+		ArrayList list = new ArrayList();
+		ArrayList internalBlocks = getInternalBlocksList();
+		blockSecSeqList.clear();
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);		
+			List ePointList = null;
+			if (ts.getDirection()==Section.FORWARD)
+				ePointList = ts.getSection().getForwardEntryPointList();
+			else
+				ePointList = ts.getSection().getReverseEntryPointList();
+			for (int j=0; j<ePointList.size(); j++) {
+				Block b = ((EntryPoint)ePointList.get(j)).getFromBlock();
+				boolean isInternal = false;
+				for (int k = 0; k<internalBlocks.size(); k++) {
+					if (b==(Block)internalBlocks.get(k)) isInternal = true;
+				}
+				if (!isInternal) {
+					// not an internal Block, keep it
+					list.add((Object)b);
+					blockSecSeqList.add((Object) new Integer(ts.getSequenceNumber()));
+				}				
+			}
+		}
+		return list;
+	}
+	
+	/** 
+	 * Get a list of all destination blocks that can be reached from a 
+	 *   specified starting block, "startBlock". "startInTransit" should be set "true" if 
+	 *   "startBlock" is in the Transit, and "false" otherwise.
+	 * The sequence numbers of the Section the Block was found in are accumulated in a 
+	 *   parallel list, which can be accessed by immediately calling getDestBlocksSeqList().
+	 * Note: A train may not terminate in the same Section in which it starts!
+	 * Note: A train must terminate in a block within the transit!
+	 */
+	public ArrayList getDestinationBlocksList(Block startBlock, boolean startInTransit) {
+		ArrayList list = new ArrayList();
+		destBlocksSeqList.clear();
+		if (startBlock==null) return list;
+		// get the sequence number of the Section of the starting Block
+		int startSeq = -1;
+		ArrayList startBlocks = null;
+		if (startInTransit) {
+			startBlocks = getInternalBlocksList();
+		}
+		else {
+			startBlocks = getEntryBlocksList();
+		}
+		// programming note: the above calls initialize blockSecSeqList.
+		for (int k = 0; ((k<startBlocks.size()) && (startSeq==-1)); k++) {
+			if (startBlock==(Block)startBlocks.get(k)) {
+				startSeq = ((Integer)blockSecSeqList.get(k)).intValue();
+			}
+		}
+		ArrayList internalBlocks = getInternalBlocksList();
+		for (int i = internalBlocks.size(); i>0; i--) {
+			if ( (((Integer)blockSecSeqList.get(i-1)).intValue() ) > startSeq) {
+				// could stop in this block, keep it
+				list.add(internalBlocks.get(i-1));
+				destBlocksSeqList.add(blockSecSeqList.get(i-1));
+			}
+		}
+		return list;
+	}
+	private ArrayList destBlocksSeqList = new ArrayList();
+	public ArrayList getDestBlocksSeqList() { 
+		ArrayList list = new ArrayList();
+		for (int i = 0; i<destBlocksSeqList.size(); i++) {
+			list.add(destBlocksSeqList.get(i));
+		}
+		return list;
+	}
+					
 	    
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Transit.class.getName());
 	
