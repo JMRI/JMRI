@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.3.shtml,v 1.18 2008-10-07 14:33:08 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.3.shtml,v 1.19 2008-10-09 14:29:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -34,6 +34,13 @@
 	<p>Subject: Test version 2.3.3 of JMRI/DecoderPro is available for download.
 
 <!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+
+<br><b>JMRI 2.3.3 has been replaced by 
+<a href="jmri2.3.4.shtml">JMRI 2.3.4</a>
+due to a Windows-related startup problem encounted by some 
+users.  Please see the 
+<a href="jmri2.3.4.shtml">JMRI 2.3.4 release note</a>
+for download links to that version.</b>
 
 <h3>Notes:</h3>
 
