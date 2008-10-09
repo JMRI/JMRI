@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * TransitTable GUI.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -67,7 +67,8 @@ public class TransitTableAction extends AbstractTableAction {
         m = new BeanTableDataModel() {
 
 		static public final int MODECOL = NUMCOLUMN;
-		static public final int EDITCOL = MODECOL+1;	
+		static public final int EDITCOL = MODECOL+1;
+		static public final int DUPLICATECOL = EDITCOL+1;	
 
        	public String getValue(String name) {
         		if (name == null) {
@@ -89,7 +90,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
     		public int getColumnCount(){ 
-    		    return EDITCOL+1;
+    		    return DUPLICATECOL+1;
      		}
 
     		public Object getValueAt(int row, int col) {
@@ -118,7 +119,8 @@ public class TransitTableAction extends AbstractTableAction {
 						else if (state==Transit.RUNNING) return (rbx.getString("TransitRunning"));
 					}
 				}
-				else if (col==EDITCOL) return rb.getString("ButtonEdit"); 
+				else if (col==EDITCOL) return rb.getString("ButtonEdit");
+				else if (col==DUPLICATECOL) return rbx.getString("ButtonDuplicate"); 
 				else return super.getValueAt(row, col);
 				return null;
 			}    		
@@ -132,12 +134,18 @@ public class TransitTableAction extends AbstractTableAction {
 					String sName = (String) getValueAt(row, SYSNAMECOL);
 					editPressed(sName);
 				} 
+ 				else if (col == DUPLICATECOL) {
+					// set up to duplicate
+					String sName = (String) getValueAt(row, SYSNAMECOL);
+					duplicatePressed(sName);
+				} 
 				else super.setValueAt(value, row, col);
     		}
 
 	   		public String getColumnName(int col) {
 				if (col==MODECOL) return (rbx.getString("TransitMode"));
 				if (col==EDITCOL) return "";   // no namne on Edit column
+				if (col==DUPLICATECOL) return "";   // no namne on Duplicate column
         		return super.getColumnName(col);
         	}
 
@@ -145,13 +153,15 @@ public class TransitTableAction extends AbstractTableAction {
 				if (col==VALUECOL) return String.class;  // not a button
     			if (col==MODECOL) return String.class;  // not a button
  				if (col==EDITCOL) return JButton.class;
-   			else return super.getColumnClass(col);
+ 				if (col==DUPLICATECOL) return JButton.class;
+				else return super.getColumnClass(col);
 		    }
 
  			public boolean isCellEditable(int row, int col) {
 				if (col == MODECOL) return false;
 				if (col == VALUECOL) return false;
 				if (col == EDITCOL) return true;
+				if (col == DUPLICATECOL) return true;
 				else return super.isCellEditable(row, col);
 			}
 			
@@ -163,6 +173,7 @@ public class TransitTableAction extends AbstractTableAction {
 				// new columns
 				if (col == MODECOL)return new JTextField(9).getPreferredSize().width;
      			if (col == EDITCOL) return new JTextField(6).getPreferredSize().width;
+     			if (col == DUPLICATECOL) return new JTextField(10).getPreferredSize().width;
    			else return super.getPreferredWidth(col);
 		    }
 
@@ -192,6 +203,7 @@ public class TransitTableAction extends AbstractTableAction {
 	
 	// instance variables
 	private boolean editMode = false;
+	private boolean duplicateMode = false;
 	private TransitManager transitManager = null;
 	private SectionManager sectionManager = InstanceManager.sectionManagerInstance();
 	private Transit curTransit = null;
@@ -233,6 +245,7 @@ public class TransitTableAction extends AbstractTableAction {
 	 */
 	void addPressed(ActionEvent e) {
 		editMode = false;
+		duplicateMode = false;
 		if ((sectionManager.getSystemNameList().size()) > 0) {
 			addEditPressed();
 		}
@@ -250,6 +263,17 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 		sysNameFixed.setText(sName);
 		editMode = true;
+		duplicateMode = false;
+		addEditPressed();
+	}
+	void duplicatePressed(String sName) {
+		curTransit = transitManager.getBySystemName(sName);
+		if (curTransit==null) {
+			// no transit - should never happen, but protects against a $%^#@ exception
+			return;
+		}
+		duplicateMode = true;
+		editMode = false;
 		addEditPressed();
 	}
 	void addEditPressed() {
@@ -386,7 +410,15 @@ public class TransitTableAction extends AbstractTableAction {
 			update.setVisible(false);
 			sysName.setVisible(true);
 			sysNameFixed.setVisible(false);
-			deleteAllSections(null);
+			if (duplicateMode) {
+				// setup with information from previous Transit
+				initializeEditInformation();
+				sysName.setText(curTransit.getSystemName());
+				curTransit = null;
+			}
+			else {			
+				deleteAllSections(null);
+			}
 		}
 		initializeSectionCombos();
         addFrame.pack();
