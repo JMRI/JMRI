@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitTable.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<!-- $Id: TransitTable.shtml,v 1.2 2008-10-09 01:43:51 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,13 +25,15 @@
 </H1>
 <H2>What is a Transit?
 </H2
-<P>A <b>Transit</b> is a group of one or more connected <b>Sections</b> that describes
+<P>A <b>Transit</b> is a group of two or more connected <b>Sections</b> that describes
 a route around the layout of a train traveling in a given direction. A Section may be 
 in multiple Transits, and may be in a given Transit multiple times. Sections are 
 kept in order--the first Section is connected to the second, the second 
 is connected to the third, etc. That means a Section in a Transit must be connected 
 to the Section before it (if there is one) and to the Section after it (if there is 
-one). Normally Transits would only be defined for mainline track.</p> 
+one). The order of the Sections determines the direction of travel in the Transit. 
+Trains travel from Sections with lower sequence numbers toward Sections with higher
+sequence numbers. Normally Transits would only be defined for mainline track.</p> 
 <p>In user-specified areas of a Transit, <i>alternate</i> Sections may be designated. 
 For example, to move between the "2nd" and "4th" Sections in a Transit, there may  
 be multiple "3rd" Sections, any of which might be used to travel between the 2nd and 
@@ -46,18 +48,27 @@ an engineer doing work in a specified Section, and requesting a restart when the
 work is complete. More actions may be added in the future as needed.</p>
 <H2>How are Transits Activated and Used?
 </H2
-<p>Transits are <i>activated</i> in the Dispatcher panel. When a Transit is 
-<i>activated</i>, a Train is linked to the Transit, and the starting Block (train 
-location at start) and ending Block (train location when the travel is complete) 
-are specified. A train may start from a Block within a Section 
-in the Transit, or it may start from a Block outside of the Transit, but connected 
-to a Block within the Transit. If it is free, a starting Section is also <i>allocated</i> 
-to the train. <i>Allocation</i> means that the Section is assigned the train, and the 
+<p>Transits are <i>activated</i> in the Dispatcher window, where a Transit is 
+linked to a Train and becomes an Active Train. When an Active Train is created, a 
+Transit is selected, a Train is selected, and a starting Block (train location 
+at start) and ending Block (train location when travel is complete) are 
+specified. This process results in an <b>Active Train</b>, which can then be 
+dispatched. A Transit may be in only one Active Train at a time. When an Active 
+Train is done, its Transit is <i>deactivated</i>, and may be reused for a subsequent 
+Active Train.</p>
+<p>A train usually starts from a Block outside of the Transit, but connected 
+to a Block within the Transit. Optionally a train may start from a Block within a Section 
+in the Transit. A train moves through a Transit in only one direction--defined by 
+the order in which Sections are included in the Transit. Trains move from lower 
+sequence number Sections toward higher sequence number Sections. When an Active 
+Train is initiated, an <i>allocation</i> request is placed for a starting Section.
+If the Section is free, the Section will be <i>allocated</i> to the train. 
+<i>Allocation</i> means that the Section is assigned the Active Train, and the 
 train is authorized by the dispatcher to proceed to the end of that Section.</p>
-<p>When a Transit/Train is activated, it may be activated for running by an engineer 
-using a throttle, or automatically by a <i>virtual engineer</i>. Dispatching for 
-the Transit consists of <i>allocating</i> Sections, one by one, to the Transit/Train. 
-The actual dispatching may be done by a dispatcher sitting at the computer running JMRI, 
+<p>When an Active Train is created, it may be activated for running by an engineer 
+using a throttle, or automatically by a <i>virtual engineer</i>. Dispatching 
+consists of <i>allocating</i> Sections, one by one, to the Active Train. The 
+actual dispatching may be done by a dispatcher sitting at the computer running JMRI, 
 or automatically by an automatic dispatcher. If a requested Section is currently in 
 use, a request for assignment is placed in the dispatcher's queue. When a Section 
 is freed, the queue is scanned for the highest priority train requesting it.</p>
@@ -97,11 +108,18 @@ for a Transit. System name cannot be changed. User name may be changed,
 Sections may be redefined, etc. Only one Transit may be edited at a time. A 
 Transit may not be edited if another is being created, or if the Transit is 
 not in the IDLE state.</LI>
-</UL>
-<P>To define a new Transit, click on the 
-"<A HREF="TransitAddEdit.shtml">Add.." button</a>. A window will be brought up 
-that will allow you to define the Sections in the new Transit.  Obviously, Sections 
-must be defined before any Transit can be created.</p>
+<LI>Click the <b>Duplicate</b> button in a row to add another Transit identical 
+to this one. Clicking this button is similar to clicking the <b>Add...</b> 
+button (see below) except the information from this Transit is copied into the 
+Add/Edit Transit window. This option offers an easy way to enter multiple copies 
+of a Transit when multiple trains must follow the same route at the same time.
+</LI></UL>
+<P>To define a new Transit, click the 
+"<A HREF="TransitAddEdit.shtml">Add.." button</a>. An Add/Edit Transit window will 
+be brought up that will allow you to define the Sections in the new Transit.  
+(Obviously, Sections must be defined before any Transit can be created.) Since a 
+Transit may be used in only one Active Train at a time, the Duplicate option 
+(see above) may save time when creating multiple copies of the same Transit.</p>
 <H2>Saving Transits to Disk
 </H2
 <P> Use the Store item in the File menu to save Transit information to disk. This 
