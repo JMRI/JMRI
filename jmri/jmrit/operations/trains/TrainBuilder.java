@@ -52,8 +52,8 @@ import org.jdom.Element;
 /**
  * Utilities to build trains and move them. 
  * 
- * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @author Daniel Boudreau  Copyright (C) 2008
+ * @version             $Revision: 1.5 $
  */
 public class TrainBuilder{
 	
@@ -139,7 +139,7 @@ public class TrainBuilder{
 			buildFailed(fileOut, "Route terminate location missing for train ("+train.getName()+")");
 			return;
 		}
-		// DAB this needs to be controled by each train
+		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberCars() && Control.fullTrainOnly){
 			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberCars()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
 			return;
@@ -204,7 +204,6 @@ public class TrainBuilder{
 		}
 
 		// get list of cars for this route
-		
 		carList = carManager.getCarsAvailableTrainList(train);
 		// DAB this needs to be controled by each train
 		if (requested > carList.size() && Control.fullTrainOnly){
@@ -1029,21 +1028,24 @@ public class TrainBuilder{
 	
 	private void  pickupCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + car.getType() + " "
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
-				+ car.getSecondaryLocationName());
+				+ car.getSecondaryLocationName() + carComment);
 	}
 	
 	private void dropCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + car.getType() + " "
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ rb.getString("to") + " " + car.getSecondaryDestinationName());
+				+ rb.getString("to") + " " + car.getSecondaryDestinationName()
+				+ carComment);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category

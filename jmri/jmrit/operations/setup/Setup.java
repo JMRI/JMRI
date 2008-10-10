@@ -103,6 +103,7 @@ public class Setup {
 	
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
+	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	public static String getRailroadName(){
 		return railroadName;
@@ -150,6 +151,14 @@ public class Setup {
 	
 	public static void setPanelName(String name){
 		panelName = name;
+	}
+	
+	public static void  setAppendCarCommentEnabled(boolean enable){
+		appendCarComment = enable;
+	}
+	
+	public static boolean isAppendCarCommentEnabled(){
+		return appendCarComment;
 	}
 	
 	public static void  setTrainIconCordEnabled(boolean enable){
@@ -359,6 +368,7 @@ public class Setup {
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
     	values.setAttribute("scale", Integer.toString(getScale()));
+    	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
     	values.setAttribute("name", getPanelName());
@@ -415,6 +425,11 @@ public class Setup {
         	String scale = a.getValue();
            	if (log.isDebugEnabled()) log.debug("scale: "+scale);
            	Setup.setScale(Integer.parseInt(scale));
+        }
+        if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("addCarComment: "+enable);
+           	Setup.setTrainIconCordEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("panel").getAttribute("name"))!= null){
         	String panel = a.getValue();

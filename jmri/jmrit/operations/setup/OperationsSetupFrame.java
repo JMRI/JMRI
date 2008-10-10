@@ -22,7 +22,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -71,6 +71,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     
     javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
+	javax.swing.JCheckBox appendCommentCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox iconCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox appendCheckBox = new javax.swing.JCheckBox();
 	
@@ -140,7 +141,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		textPrinter.setText(rb.getString("PrinterFont"));
 		textPrinter.setVisible(true);
-		
+		appendCommentCheckBox.setText(rb.getString("CarComment"));
+		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
+				
 		textIconNorth.setText(rb.getString("IconNorth"));
 		textIconSouth.setText(rb.getString("IconSouth"));
 		textIconEast.setText(rb.getString("IconEast"));
@@ -220,6 +223,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (panel, textPrinter, 0, 8);
 		addItemLeft (panel, mono, 1, 8);
 		addItemLeft (panel, sanSerif, 2, 8);
+		addItemLeft (panel, appendCommentCheckBox, 1, 9);
 		setPrinterFontRadioButton();
 
 		// Icon panel
@@ -310,6 +314,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setFontName(Setup.MONOSPACED);
 			else
 				Setup.setFontName(Setup.SANSERIF);
+			// append car comment
+			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
 			// add panel name to setup
 			Setup.setPanelName(panelTextField.getText());
 			// train Icon X&Y
