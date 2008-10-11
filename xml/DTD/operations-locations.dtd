@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a location roster -->
-<!-- $Id: operations-locations.dtd,v 1.1 2008-08-26 02:39:48 dan_boudreau Exp $ -->
+<!-- $Id: operations-locations.dtd,v 1.2 2008-10-11 02:42:33 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -34,6 +34,10 @@
 <!ATTLIST secondary carTypes		CDATA #IMPLIED> 
 <!ATTLIST secondary carRoadOperation		CDATA #IMPLIED> 
 <!ATTLIST secondary carRoads		CDATA #IMPLIED> 
+<!ATTLIST secondary dropOption		CDATA #IMPLIED> 
+<!ATTLIST secondary dropIds			CDATA #IMPLIED> 
+<!ATTLIST secondary pickupOption	CDATA #IMPLIED>
+<!ATTLIST secondary pickupIds		CDATA #IMPLIED>  
 <!ATTLIST secondary length			CDATA #IMPLIED> 
 <!ATTLIST secondary moves			CDATA #IMPLIED> 
 <!ATTLIST secondary comment			CDATA #IMPLIED>
