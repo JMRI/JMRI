@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class TrainBuilder{
 	
@@ -977,9 +977,11 @@ public class TrainBuilder{
 		
 		List engineList = engineManager.getEnginesByTrainList(train);
 		Engine engine = null;
+		String comment = "";
 		for (int i =0; i < engineList.size(); i++){
 			engine = engineManager.getEngineById((String) engineList.get(i));
-			addLine(fileOut, rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain"));
+			comment = (Setup.isAppendCarCommentEnabled() ? " "+engine.getComment() : "");
+			addLine(fileOut, rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain") + comment);
 		}
 		
 		if (engine != null)

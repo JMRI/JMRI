@@ -429,7 +429,7 @@ public class Setup {
         if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
         	String enable = a.getValue();
            	if (log.isDebugEnabled()) log.debug("addCarComment: "+enable);
-           	Setup.setTrainIconCordEnabled(enable.equals("true"));
+           	Setup.setAppendCarCommentEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("panel").getAttribute("name"))!= null){
         	String panel = a.getValue();
