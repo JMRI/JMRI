@@ -7,6 +7,8 @@ import java.util.List;
 import jmri.jmrit.operations.cars.CarManager;
 import jmri.jmrit.operations.cars.CarRoads;
 import jmri.jmrit.operations.cars.Car;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.routes.Route;
 
 import org.jdom.Element;
 
@@ -15,7 +17,7 @@ import org.jdom.Element;
  * Can be a siding, yard, staging, etc.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SecondaryLocation implements java.beans.PropertyChangeListener {
 
@@ -24,6 +26,8 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
 	protected String _locType = "";					// yard, siding or staging
 	protected String _sortId = "";
 	protected String _roadOption = ALLROADS;
+	protected String _dropOption = ANY;
+	protected String _pickupOption = ANY;
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
 	protected int _numberCars = 0;
 	protected int _pickupCars = 0;
@@ -49,7 +53,10 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
 	public static final String ALLROADS = "All";
 	public static final String INCLUDEROADS = "Include";
 	public static final String EXCLUDEROADS = "Exclude";
-
+	
+	public static final String ANY = "Any";			//drop and pickup options
+	public static final String TRAINS = "trains";
+	public static final String ROUTES = "routes";
 	
 	public SecondaryLocation(String id, String name, String type) {
 		log.debug("New secondary location " + name + " " + id);
@@ -242,7 +249,7 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
     	_roadOption = option;
     }
     
-	public void setTrainDirections(int direction){
+ 	public void setTrainDirections(int direction){
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
@@ -299,6 +306,134 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
       		return _roadList.contains(road);
     }  
     
+    public String getDropOption (){
+    	return _dropOption;
+    }
+    
+    public void setDropOption (String option){
+    	String old = _dropOption;
+    	_dropOption = option;
+    	if (!old.equals(option))
+    		_dropList.clear();
+    }
+    
+    public String getPickupOption (){
+    	return _pickupOption;
+    }
+    
+    public void setPickupOption (String option){
+       	String old = _pickupOption;
+       	_pickupOption = option;
+    	if (!old.equals(option))
+    		_pickupList.clear();
+     }
+    
+    List _dropList = new ArrayList();
+    
+    public String[] getDropIds(){
+      	String[] names = new String[_dropList.size()];
+     	for (int i=0; i<_dropList.size(); i++)
+     		names[i] = (String)_dropList.get(i);
+     	if (_dropList.size() == 0)
+     		return names;
+     	jmri.util.StringUtil.sort(names);
+   		return names;
+    }
+    
+    private void setDropIds(String[] names){
+    	if (names.length == 0) return;
+    	jmri.util.StringUtil.sort(names);
+ 		for (int i=0; i<names.length; i++)
+ 			_dropList.add(names[i]);
+    }
+    
+    public void addDropId(String name){
+     	if (_dropList.contains(name))
+    		return;
+    	_dropList.add(name);
+    	log.debug("secondary location " +getName()+ " add drop "+name);
+    }
+    
+    public void deleteDropId(String name){
+    	_dropList.remove(name);
+    	log.debug("secondary location " +getName()+ " delete drop "+name);
+     }
+    
+    public boolean acceptsDropTrain(Train train){
+    	if (_dropOption.equals(ANY))
+    		return true;
+    	if (_dropOption.equals(TRAINS))
+    		return containsDropId(train.getId());
+    	else if (train.getRoute() == null)
+    		return false;
+   		return acceptsDropRoute(train.getRoute());
+    }
+    
+    public boolean acceptsDropRoute(Route route){
+      	if (_dropOption.equals(ANY))
+    		return true;
+      	if (_dropOption.equals(TRAINS))
+      		return false;
+      	return containsDropId(route.getId());
+    }
+    
+    public boolean containsDropId(String name){
+      		return _dropList.contains(name);
+    }  
+    
+    List _pickupList = new ArrayList();
+    
+    public String[] getPickupIds(){
+      	String[] names = new String[_pickupList.size()];
+     	for (int i=0; i<_pickupList.size(); i++)
+     		names[i] = (String)_pickupList.get(i);
+     	if (_pickupList.size() == 0)
+     		return names;
+     	jmri.util.StringUtil.sort(names);
+   		return names;
+    }
+    
+    private void setPickupIds(String[] names){
+    	if (names.length == 0) return;
+    	jmri.util.StringUtil.sort(names);
+ 		for (int i=0; i<names.length; i++)
+ 			_pickupList.add(names[i]);
+    }
+    
+    public void addPickupId(String name){
+     	if (_pickupList.contains(name))
+    		return;
+    	_pickupList.add(name);
+    	log.debug("secondary location " +getName()+ " add pickup "+name);
+    }
+    
+    public void deletePickupId(String name){
+    	_pickupList.remove(name);
+    	log.debug("secondary location " +getName()+ " delete pickup "+name);
+     }
+    
+    public boolean acceptsPickupTrain(Train train){
+    	if (_pickupOption.equals(ANY))
+    		return true;
+    	if (_pickupOption.equals(TRAINS))
+    		return containsPickupId(train.getId());
+    	else if (train.getRoute() == null)
+    		return false;
+   		return acceptsPickupRoute(train.getRoute());
+    }
+    
+    public boolean acceptsPickupRoute(Route route){
+      	if (_pickupOption.equals(ANY))
+    		return true;
+      	if (_pickupOption.equals(TRAINS))
+      		return false;
+      	return containsPickupId(route.getId());
+    }
+    
+    public boolean containsPickupId(String name){
+      		return _pickupList.contains(name);
+    }  
+    
     public int getMoves(){
     	return _moves;
     }
@@ -336,6 +471,20 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
         	setTypeNames(types);
         }
         if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
+        if ((a = e.getAttribute("dropIds")) != null ) {
+        	String names = a.getValue();
+           	String[] ids = names.split("%%");
+        	if (log.isDebugEnabled()) log.debug("Secondary location (" +getName()+ ") has drop ids : "+ names);
+        	setDropIds(ids);
+        }
+        if ((a = e.getAttribute("dropOption")) != null )  _dropOption = a.getValue();
+        if ((a = e.getAttribute("pickupIds")) != null ) {
+        	String names = a.getValue();
+           	String[] ids = names.split("%%");
+        	if (log.isDebugEnabled()) log.debug("Secondary location (" +getName()+ ") has pickup ids : "+ names);
+        	setPickupIds(ids);
+        }
+        if ((a = e.getAttribute("pickupOption")) != null )  _pickupOption = a.getValue();
         if ((a = e.getAttribute("carRoads")) != null ) {
         	String names = a.getValue();
            	String[] roads = names.split("%%");
@@ -365,14 +514,30 @@ public class SecondaryLocation implements java.beans.PropertyChangeListener {
     		typeNames = typeNames + types[i]+"%%";
     	}
     	e.setAttribute("carTypes", typeNames);
-    	// build list of car roads for this secondary location
+     	e.setAttribute("carRoadOperation", getRoadOption());
+       	// build list of car roads for this secondary location
     	String[] roads = getRoadNames();
     	String roadNames ="";
     	for (int i=0; i<roads.length; i++){
     		roadNames = roadNames + roads[i]+"%%";
     	}
-    	e.setAttribute("carRoadOperation", getRoadOption());
     	e.setAttribute("carRoads", roadNames);
+    	e.setAttribute("dropOption", getDropOption());
+      	// build list of drop ids for this secondary location
+    	String[] dropIds = getDropIds();
+    	String ids ="";
+    	for (int i=0; i<dropIds.length; i++){
+    		ids = ids + dropIds[i]+"%%";
+    	}
+    	e.setAttribute("dropIds", ids);
+    	e.setAttribute("pickupOption", getPickupOption());
+     	// build list of pickup ids for this secondary location
+    	String[] pickupIds = getPickupIds();
+    	ids ="";
+    	for (int i=0; i<pickupIds.length; i++){
+    		ids = ids + pickupIds[i]+"%%";
+    	}
+    	e.setAttribute("pickupIds", ids);
     	e.setAttribute("comment", getComment());
 
     	return e;

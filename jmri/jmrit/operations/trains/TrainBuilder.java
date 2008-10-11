@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class TrainBuilder{
 	
@@ -272,13 +272,36 @@ public class TrainBuilder{
     				continue;
     			}
     		}
-    		// don't service a car at interchange and has been dropped of by this train
-			if (c.getSecondaryLocation().getLocType().equals(SecondaryLocation.INTERCHANGE) && c.getSavedRouteId().equals(train.getRoute().getId())){
-				addLine(fileOut, "Exclude car ("+c.getId()+") at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
-				carList.remove(carList.get(carIndex));
-				carIndex--;
-				continue;
-			}
+    		// is car at interchange?
+    		if (c.getSecondaryLocation().getLocType().equals(SecondaryLocation.INTERCHANGE)){
+    			// don't service a car at interchange and has been dropped of by this train
+    			if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
+    				addLine(fileOut, "Exclude car ("+c.getId()+") previously droped by this train at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    				carList.remove(carList.get(carIndex));
+    				carIndex--;
+    				continue;
+    			}
+    			if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.TRAINS)){
+    				if (c.getSecondaryLocation().acceptsPickupTrain(train)){
+    					log.debug("Car ("+c.getId()+") can be picked up by this train");
+    				} else {
+    					addLine(fileOut, "Exclude car ("+c.getId()+") by train, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    					carList.remove(carList.get(carIndex));
+    					carIndex--;
+    					continue;
+    				}
+    			}
+    			else if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.ROUTES)){
+    				if (c.getSecondaryLocation().acceptsPickupRoute(train.getRoute())){
+    					log.debug("Car ("+c.getId()+") can be picked up by this route");
+    				} else {
+    					addLine(fileOut, "Exclude car ("+c.getId()+") by route, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    					carList.remove(carList.get(carIndex));
+    					carIndex--;
+    					continue;
+    				}
+    			}
+    		}
 		}
 
 		addLine(fileOut, "Found " +carList.size()+ " cars for train (" +train.getName()+ ")");
@@ -451,7 +474,7 @@ public class TrainBuilder{
 						
 								// more than one location in this route?
 								if (routeList.size()>1)
-									start++;		//yes!, no car drops at departure"
+									start++;		//yes!, no car drops at departure
 								for (int k = start; k<routeList.size(); k++){
 									rld = train.getRoute().getLocationById((String)routeList.get(k));
 									addLine(fileOut, "Searching location ("+rld.getName()+") for possible destination");
@@ -500,6 +523,25 @@ public class TrainBuilder{
 														if (routeList.size() == 1 && testSecondary.getLocType().equals(testSecondary.INTERCHANGE) && c.getSecondaryLocation().getLocType().equals(testSecondary.INTERCHANGE)){
 															log.debug("Local interchange to interchange move not allowed (" +testSecondary.getName()+ ")");
 															continue;
+														}
+														// drop to interchange?
+														if (testSecondary.getLocType().equals(testSecondary.INTERCHANGE)){
+															if (testSecondary.getDropOption().equals(testSecondary.TRAINS)){
+																if (testSecondary.acceptsDropTrain(train)){
+																	log.debug("Car ("+c.getId()+" can be droped by train to interchange (" +testSecondary.getName()+")");
+																} else {
+																	addLine(fileOut, "Can't drop car ("+c.getId()+") by train to interchange (" +testSecondary.getName()+")");
+																	continue;
+																}
+															}
+															if (testSecondary.getDropOption().equals(testSecondary.ROUTES)){
+																if (testSecondary.acceptsDropRoute(train.getRoute())){
+																	log.debug("Car ("+c.getId()+" can be droped by route to interchange (" +testSecondary.getName()+")");
+																} else {
+																	addLine(fileOut, "Can't drop car ("+c.getId()+") by route to interchange (" +testSecondary.getName()+")");
+																	continue;
+																}
+															}
 														}
 														// not staging, then use
 														if (!testSecondary.getLocType().equals(testSecondary.STAGING)){
