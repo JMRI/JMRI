@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AlignTableFrame.shtml,v 1.4 2008-07-06 03:59:37 jacobsen Exp $ -->
+<!-- $Id: AlignTableFrame.shtml,v 1.5 2008-10-11 16:05:55 jacobsen Exp $ -->
 <title>JMRI: RPS Receiver Control</title>
 
 <!-- Style -->
@@ -43,17 +43,19 @@ each one's
 X, Y and Z coordinates in the table.
 
 <p>
-By default, the RPS system measures position in inches.
-If you'd prefer to use some other unit, such as meters or feet,
+By default, the RPS system measures position in inches and
+time in microseconds.
+If you'd prefer to use some other distance unit, such as meters or feet,
 you change the number used for the speed of sound.
 Typical values are:
 <dl>
 <dt>Inches<dd>0.01345
-<dt>Feet<dd>0.001
-<dt>Meters<dd>0.0003
-<dt>cm<dd>0.03
+<dt>Feet<dd>0.00112
+<dt>Meters<dd>0.000345
+<dt>cm<dd>0.0345
 </dl>
 If you change this value, be sure to click the "Set" box.
+
 
 <p>
 The "offset" value should usually be left unchanged.
