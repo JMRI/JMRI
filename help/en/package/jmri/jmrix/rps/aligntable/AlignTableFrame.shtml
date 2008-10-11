@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AlignTableFrame.shtml,v 1.5 2008-10-11 16:05:55 jacobsen Exp $ -->
+<!-- $Id: AlignTableFrame.shtml,v 1.6 2008-10-11 16:18:05 jacobsen Exp $ -->
 <title>JMRI: RPS Receiver Control</title>
 
 <!-- Style -->
@@ -26,7 +26,7 @@ JMRI: RPS Receiver Control
 </h1>
 
 <a href="../../../../../html/hardware/rps/images/ReceiverControl.gif">
-<img src="../../../../../html/hardware/rps/images/ReceiverControl.gif" height="120" width="300" alt="RPS Receiver Control window" align="right"></a><br>
+<img src="../../../../../html/hardware/rps/images/ReceiverControl.gif" height="120" width="292" alt="RPS Receiver Control window" align="right"></a><br>
 
 The RPS Receiver Control window lets you update and examine
 the 
@@ -41,6 +41,25 @@ text bus and clicking "Set".
 Once you have the right number of receivers defined, enter
 each one's
 X, Y and Z coordinates in the table.
+
+<p>
+There's also a checkbox for each receiver that controls whether it will be
+used in position calculations (if checked) or ignored (not checked).
+
+<p>
+The values "Min Time" and "Max Time" columns are used to decide if the receivers
+time measurement should be used in a particular calculation. These can usually be 
+left at their default values of -1 and 99999 respectively, in which case
+the program will always attempt to use the receivers measurement.
+If you're having trouble, for example with echoes that make very long measurements
+(high time values) inaccurate, you can set a high limit, above which the measurement
+won't be used.  You can similarly set a low limit if very small time measurements 
+(short distances or certain forms of interference) turn out to be inaccurate.
+
+<p>
+To help determine those limits, the most recent time measurement 
+for each receiver is shown in the 
+"Last Time" column of the table.
 
 <p>
 By default, the RPS system measures position in inches and
