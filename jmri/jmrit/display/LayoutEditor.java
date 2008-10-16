@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1963,6 +1963,15 @@ public class LayoutEditor extends JmriJFrame {
 	 */
 	public void redrawPanel() { 
 		repaint(); 
+	}
+	
+	/**
+	 * Allow external set/reset of awaitingIconChange
+	 */
+	public void setAwaitingIconChange() { 
+		awaitingIconChange = true;
+	}
+	public void resetAwaitingIconChange() { 
 		awaitingIconChange = false;
 	}
 	
@@ -2587,6 +2596,7 @@ public class LayoutEditor extends JmriJFrame {
     protected void handleMouseReleased(MouseEvent event,int dX,int dY)
     {
 		// initialize mouse position
+		whenReleased = event.getWhen();
 		calcLocation(event, dX, dY);
         if (editMode) {
             xLabel.setText(Integer.toString(xLoc));
@@ -2677,12 +2687,10 @@ public class LayoutEditor extends JmriJFrame {
 				if (m!=null) {
 					m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
-					awaitingIconChange = true;
 				}
 				LayoutSensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					s.performMouseClicked(event);
-					awaitingIconChange = true;
 				}
 			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
@@ -2712,12 +2720,10 @@ public class LayoutEditor extends JmriJFrame {
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
-				awaitingIconChange = true;
 			}
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
-				awaitingIconChange = true;
 			}
 		}		
 		if (selectedObject!=null) {
@@ -2796,9 +2802,13 @@ public class LayoutEditor extends JmriJFrame {
 		}
 	}
 	
+	private long whenReleased = 0;
 	private boolean awaitingIconChange = false;
 	protected void handleMouseClicked(MouseEvent event, int dX, int dY)
 	{
+		if (whenReleased == event.getWhen()) {
+			return;
+		}
 		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, dX, dY);
@@ -2807,12 +2817,10 @@ public class LayoutEditor extends JmriJFrame {
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
-				awaitingIconChange = true;
 			}
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
-				awaitingIconChange = true;
 			}
 		}
 		else if (event.isPopupTrigger()) {

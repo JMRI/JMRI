@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -123,6 +123,7 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             displayState(now);
+			super.layoutPanel.resetAwaitingIconChange();
 			super.layoutPanel.redrawPanel();
         }
     }
@@ -254,6 +255,7 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
         if (e.isAltDown() || e.isMetaDown()) return;
         if (getMomentary()) return; // click is only for non-momentary
         if (!buttonLive()) return;
+		super.layoutPanel.setAwaitingIconChange();
         try {
             if (sensor.getKnownState()==jmri.Sensor.INACTIVE) {
                 sensor.setKnownState(jmri.Sensor.ACTIVE);
