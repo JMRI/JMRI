@@ -11,8 +11,8 @@ import javax.swing.border.Border;
 import java.io.*;
 import java.util.ResourceBundle;
 
-import jmri.jmrit.operations.cars.CarManagerXml;
-import jmri.jmrit.operations.cars.CarOwners;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.OperationsFrame;
 
 import jmri.jmrit.display.LocoIcon;
@@ -22,7 +22,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

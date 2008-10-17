@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.CarRoads;
-import jmri.jmrit.operations.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 
 import org.jdom.Element;
@@ -20,13 +20,13 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected Location _location = null;
-	protected SecondaryLocation _secondaryLocation = null;  // used for staging cars
+	protected Track _trackLocation = null;  // used for staging cars
 	protected String _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
 	protected String _comment = "";
 	protected int _maxTrainLength = Setup.getTrainLength();
@@ -195,12 +195,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _trainIconY;
 	}
 	
-	public void setSecondaryLocation(SecondaryLocation secondaryLocation){
-		_secondaryLocation = secondaryLocation;
+	public void setTrack(Track track){
+		_trackLocation = track;
 	}
 	
-	public SecondaryLocation getSecondaryLocation(){
-		return _secondaryLocation;
+	public Track getTrack(){
+		return _trackLocation;
 	}
 
     public void dispose(){
@@ -220,7 +220,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
-        else log.warn("no id attribute in secondary location element when reading operations");
+        else log.warn("no id attribute in track location element when reading operations");
         if ((a = e.getAttribute("name")) != null ){
         	_location = LocationManager.instance().getLocationByName(a.getValue());
         	if (_location != null)

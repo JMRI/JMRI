@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -35,9 +35,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private static final int NAMECOLUMN   = 1;
     private static final int LENGTHCOLUMN = 2;
     private static final int USEDLENGTHCOLUMN = 3;
-    private static final int NUMBEROFCARS = 4;
-    private static final int CARSPICKUP = 5;
-    private static final int CARSDROP = 6;
+    private static final int ROLLINGSTOCK = 4;
+    private static final int PICKUPS = 5;
+    private static final int DROPS = 6;
     private static final int EDITCOLUMN = 7;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
@@ -90,9 +90,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(NUMBEROFCARS).setPreferredWidth(60);
-		table.getColumnModel().getColumn(CARSPICKUP).setPreferredWidth(60);
-		table.getColumnModel().getColumn(CARSDROP).setPreferredWidth(60);
+		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(60);
+		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(60);
+		table.getColumnModel().getColumn(DROPS).setPreferredWidth(60);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -108,9 +108,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case NAMECOLUMN: return rb.getString("Name");
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
-        case NUMBEROFCARS: return rb.getString("Cars");
-        case CARSPICKUP: return rb.getString("Pickup");
-        case CARSDROP: return rb.getString("Drop");
+        case ROLLINGSTOCK: return rb.getString("RollingStock");
+        case PICKUPS: return rb.getString("Pickup");
+        case DROPS: return rb.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -122,9 +122,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case NAMECOLUMN: return String.class;
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
-        case NUMBEROFCARS: return String.class;
-        case CARSPICKUP: return String.class;
-        case CARSDROP: return String.class;
+        case ROLLINGSTOCK: return String.class;
+        case PICKUPS: return String.class;
+        case DROPS: return String.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -155,9 +155,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case NAMECOLUMN: return l.getName();
         case LENGTHCOLUMN: return Integer.toString(l.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(l.getUsedLength());
-        case NUMBEROFCARS: return Integer.toString(l.getNumberCars());
-        case CARSPICKUP: return Integer.toString(l.getPickupCars());
-        case CARSDROP: return Integer.toString(l.getDropCars());
+        case ROLLINGSTOCK: return Integer.toString(l.getNumberCars());
+        case PICKUPS: return Integer.toString(l.getPickupRS());
+        case DROPS: return Integer.toString(l.getDropCars());
         case EDITCOLUMN: return "Edit";
         default: return "unknown "+col;
         }

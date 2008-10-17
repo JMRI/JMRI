@@ -2,11 +2,11 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.cars.CarTypes;
-import jmri.jmrit.operations.cars.CarRoads;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -34,7 +34,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	SecondaryLocation _siding = null;
+	Track _siding = null;
 	List checkBoxes = new ArrayList();
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
@@ -91,7 +91,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		super();
 	}
 
-	public void initComponents(Location location, SecondaryLocation siding) {
+	public void initComponents(Location location, Track siding) {
 		_location = location;
 		_location.addPropertyChangeListener(this);
 		_siding = siding;
@@ -259,7 +259,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		}
 		if (ae.getSource() == deleteSidingButton){
 			log.debug("siding delete button actived");
-//			SecondaryLocation y = _location.getSecondaryLocationByName(sidingNameTextField.getText());
+//			Track y = _location.getTrackByName(sidingNameTextField.getText());
 			if (_siding != null){
 				int cars = _siding.getNumberCars();
 				if (cars > 0){
@@ -270,7 +270,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 					}
 				}
 				selectCheckboxes(false);
-				_location.deleteSecondaryLocation(_siding);
+				_location.deleteTrack(_siding);
 				_siding = null;
 				enableButtons(false);
 				// save location file
@@ -301,13 +301,13 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		if (!checkName())
 			return;
 		// check to see if siding already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(sidingNameTextField.getText(), SecondaryLocation.SIDING);
+		Track check = _location.getTrackByName(sidingNameTextField.getText(), Track.SIDING);
 		if (check != null){
 			reportSidingExists("add");
 			return;
 		}
 		// add siding to this location
-		_siding =_location.addSecondaryLocation(sidingNameTextField.getText(), SecondaryLocation.SIDING);
+		_siding =_location.addTrack(sidingNameTextField.getText(), Track.SIDING);
 		// check siding length
 		checkLength(_siding);
 		// copy checkboxes
@@ -323,12 +323,12 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveSiding (SecondaryLocation y){
+	private void saveSiding (Track y){
 		// check that siding name is valid
 		if (!checkName())
 			return;
 		// check to see if siding already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(sidingNameTextField.getText(), SecondaryLocation.SIDING);
+		Track check = _location.getTrackByName(sidingNameTextField.getText(), Track.SIDING);
 		if (check != null && check != y){
 			reportSidingExists("save");
 			return;
@@ -375,7 +375,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		return true;
 	}
 	
-	private boolean checkLength (SecondaryLocation y){	
+	private boolean checkLength (Track y){	
 		// convert siding length if in inches
 		String length = sidingLengthTextField.getText();
 		if (length.endsWith("\"")){

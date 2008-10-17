@@ -2,9 +2,9 @@
 
 package jmri.jmrit.operations.trains;
  
-import jmri.jmrit.operations.cars.CarManagerXml;
-import jmri.jmrit.operations.engines.EngineManagerXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 
@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -205,7 +205,7 @@ public class TrainsTableFrame extends JmriJFrame {
 			engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
 			carMangerXml.writeOperationsCarFile();				//Need to save train assignments
 			trainManagerXml.writeOperationsTrainFile();			//Need to save train status
-			locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for secondary loc 
+			locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track loc 
 			routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
 		}
 	}

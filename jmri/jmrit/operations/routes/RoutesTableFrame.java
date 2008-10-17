@@ -2,7 +2,7 @@
 
 package jmri.jmrit.operations.routes;
  
-import jmri.jmrit.operations.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class RoutesTableFrame extends JmriJFrame {
 	

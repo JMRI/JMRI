@@ -4,9 +4,9 @@ package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.cars.CarLengths;
-import jmri.jmrit.operations.cars.CarTypes;
-import jmri.jmrit.operations.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

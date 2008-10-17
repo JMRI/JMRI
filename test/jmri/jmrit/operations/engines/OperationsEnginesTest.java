@@ -8,6 +8,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
@@ -17,7 +21,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsEngines class
  * @author	Bob Coleman
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsEnginesTest extends TestCase {
 

@@ -2,8 +2,8 @@
 
 package jmri.jmrit.operations.locations;
  
-import jmri.jmrit.operations.cars.CarManagerXml;
-import jmri.jmrit.operations.engines.EngineManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	

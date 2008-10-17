@@ -15,26 +15,26 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
 import jmri.jmrit.XmlFile;
 import java.util.List;
 import java.io.File;
-import jmri.jmrit.operations.cars.Car;
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.engines.Consist;
-import jmri.jmrit.operations.engines.Engine;
-import jmri.jmrit.operations.engines.EngineManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.routes.RouteManager;
 
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -342,7 +342,7 @@ public class OperationsTrainsTest extends TestCase {
                 l1.addTypeName("Caboose");
                 lmanager.register(l1);
                 
-                SecondaryLocation l1s1 = new SecondaryLocation("1s1", "North End 1", SecondaryLocation.STAGING);
+                Track l1s1 = new Track("1s1", "North End 1", Track.STAGING);
                 l1s1.setLength(300);
 		Assert.assertEquals("Location 1s1 Id", "1s1", l1s1.getId());
 		Assert.assertEquals("Location 1s1 Name", "North End 1", l1s1.getName());
@@ -356,7 +356,7 @@ public class OperationsTrainsTest extends TestCase {
                 l1s1.setDropOption("Any");
                 l1s1.setPickupOption("Any");
 
-                SecondaryLocation l1s2 = new SecondaryLocation("1s2", "North End 2", SecondaryLocation.STAGING);
+                Track l1s2 = new Track("1s2", "North End 2", Track.STAGING);
                 l1s2.setLength(400);
 		Assert.assertEquals("Location 1s2 Id", "1s2", l1s2.getId());
 		Assert.assertEquals("Location 1s2 Name", "North End 2", l1s2.getName());
@@ -370,9 +370,9 @@ public class OperationsTrainsTest extends TestCase {
                 l1s2.setDropOption("Any");
                 l1s2.setPickupOption("Any");
 
-                l1.addSecondaryLocation("North End 1", SecondaryLocation.STAGING);
-                l1.addSecondaryLocation("North End 2", SecondaryLocation.STAGING);
-                List templist1 = l1.getSecondaryLocationsByNameList("");
+                l1.addTrack("North End 1", Track.STAGING);
+                l1.addTrack("North End 2", Track.STAGING);
+                List templist1 = l1.getTracksByNameList("");
         	for (int i = 0; i < templist1.size(); i++){
                     if (i == 0) {
         		Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i));
@@ -412,7 +412,7 @@ public class OperationsTrainsTest extends TestCase {
                 l3.addTypeName("Caboose");
                 lmanager.register(l3);
 
-                SecondaryLocation l3s1 = new SecondaryLocation("3s1", "South End 1", SecondaryLocation.STAGING);
+                Track l3s1 = new Track("3s1", "South End 1", Track.STAGING);
                 l3s1.setLength(300);
 		Assert.assertEquals("Location 3s1 Id", "3s1", l3s1.getId());
 		Assert.assertEquals("Location 3s1 Name", "South End 1", l3s1.getName());
@@ -426,7 +426,7 @@ public class OperationsTrainsTest extends TestCase {
                 l3s1.setDropOption("Any");
                 l3s1.setPickupOption("Any");
                 
-                SecondaryLocation l3s2 = new SecondaryLocation("3s2", "South End 2", SecondaryLocation.STAGING);
+                Track l3s2 = new Track("3s2", "South End 2", Track.STAGING);
                 l3s2.setLength(400);
 		Assert.assertEquals("Location 3s2 Id", "3s2", l3s2.getId());
 		Assert.assertEquals("Location 3s2 Name", "South End 2", l3s2.getName());
@@ -440,9 +440,9 @@ public class OperationsTrainsTest extends TestCase {
                 l3s2.setDropOption("Any");
                 l3s2.setPickupOption("Any");
                 
-                l3.addSecondaryLocation("South End 1", SecondaryLocation.STAGING);
-                l3.addSecondaryLocation("South End 2", SecondaryLocation.STAGING);
-                List templist3 = l3.getSecondaryLocationsByNameList("");
+                l3.addTrack("South End 1", Track.STAGING);
+                l3.addTrack("South End 2", Track.STAGING);
+                List templist3 = l3.getTracksByNameList("");
         	for (int i = 0; i < templist3.size(); i++){
                     if (i == 0) {
         		Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i));

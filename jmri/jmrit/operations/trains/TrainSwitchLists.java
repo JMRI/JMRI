@@ -11,10 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
 
 public class TrainSwitchLists {
@@ -98,7 +98,7 @@ public class TrainSwitchLists {
 				+ car.getLength() + "' " + car.getColor()
 				+ (car.isHazardous() ? " (Hazardous)" : "")
 				+ (car.hasFred() ? " (FRED)" : "") + " from "
-				+ car.getSecondaryLocationName());
+				+ car.getTrackName());
 	}
 	
 	private void dropCar(PrintWriter file, Car car){
@@ -106,7 +106,7 @@ public class TrainSwitchLists {
 				+ car.getNumber() + " " + car.getType() + " "
 				+ car.getLength() + "' " + car.getColor()
 				+ (car.isHazardous() ? " (Hazardous)" : "")
-				+ " to " + car.getSecondaryDestinationName());
+				+ " to " + car.getDestinationTrackName());
 	}
 	
 	private void addStatusLine (PrintWriter file, String string){

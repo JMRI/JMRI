@@ -5,10 +5,10 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.cars.CarTypes;
-import jmri.jmrit.operations.cars.CarRoads;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location interchanges
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class InterchangeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,7 +41,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	SecondaryLocation _interchange = null;
+	Track _interchange = null;
 	List checkBoxes = new ArrayList();
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
@@ -118,7 +118,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 		super();
 	}
 
-	public void initComponents(Location location, SecondaryLocation interchange) {
+	public void initComponents(Location location, Track interchange) {
 		_location = location;
 		_location.addPropertyChangeListener(this);
 		_interchange = interchange;
@@ -319,7 +319,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 		}
 		if (ae.getSource() == deleteInterchangeButton){
 			log.debug("interchange delete button actived");
-//			SecondaryLocation y = _location.getSecondaryLocationByName(interchangeNameTextField.getText());
+//			Track y = _location.getTrackByName(interchangeNameTextField.getText());
 			if (_interchange != null){
 				int cars = _interchange.getNumberCars();
 				if (cars > 0){
@@ -330,7 +330,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 					}
 				}
 				selectCheckboxes(false);
-				_location.deleteSecondaryLocation(_interchange);
+				_location.deleteTrack(_interchange);
 				_interchange = null;
 				enableButtons(false);
 				// save location file
@@ -458,13 +458,13 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 		if (!checkName())
 			return;
 		// check to see if interchange already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(interchangeNameTextField.getText(), SecondaryLocation.INTERCHANGE);
+		Track check = _location.getTrackByName(interchangeNameTextField.getText(), Track.INTERCHANGE);
 		if (check != null){
 			reportInterchangeExists("add");
 			return;
 		}
 		// add interchange to this location
-		_interchange =_location.addSecondaryLocation(interchangeNameTextField.getText(), SecondaryLocation.INTERCHANGE);
+		_interchange =_location.addTrack(interchangeNameTextField.getText(), Track.INTERCHANGE);
 		// check interchange length
 		checkLength(_interchange);
 		// copy checkboxes
@@ -480,12 +480,12 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveInterchange (SecondaryLocation y){
+	private void saveInterchange (Track y){
 		// check that interchange name is valid
 		if (!checkName())
 			return;
 		// check to see if interchange already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(interchangeNameTextField.getText(), SecondaryLocation.INTERCHANGE);
+		Track check = _location.getTrackByName(interchangeNameTextField.getText(), Track.INTERCHANGE);
 		if (check != null && check != y){
 			reportInterchangeExists("save");
 			return;
@@ -532,7 +532,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 		return true;
 	}
 	
-	private boolean checkLength (SecondaryLocation y){	
+	private boolean checkLength (Track y){	
 		// convert interchange length if in inches
 		String length = interchangeLengthTextField.getText();
 		if (length.endsWith("\"")){

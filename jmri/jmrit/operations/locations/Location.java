@@ -7,9 +7,10 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.CarRoads;
-import jmri.jmrit.operations.cars.Car;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 
 import org.jdom.Element;
@@ -18,7 +19,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -26,9 +27,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected String _name = "";
 	protected String _sortId = "";
 	protected int _IdNumber = 0;
-	protected int _numberCars = 0;
-	protected int _pickupCars = 0;
-	protected int _dropCars = 0;
+	protected int _numberRS = 0;
+	protected int _pickupRS = 0;
+	protected int _dropRS = 0;
 	protected int _locationOps = NORMAL;	//type of operations at this location
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
 	protected int _length = 0;				//length of all tracks at this location
@@ -50,7 +51,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String SIDINGLISTLENGTH = "sidingListLength";
 	public static final String INTERCHANGELISTLENGTH = "sidingListLength";
 	public static final String STAGINGLISTLENGTH = "sidingListLength";
-	public static final String CARTYPES = "carTypes";
+	public static final String CARTYPES = "types";
 	public static final String TRAINDIRECTION = "trainDirection";
 	public static final String LENGTH = "length";
 	public static final String NAME = "name";
@@ -85,6 +86,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _name;
 	}
 
+	/**
+	 * Set total length of all tracks for this location
+	 * @param length
+	 */
 	public void setLength(int length) {
 		int old = _length;
 		_length = length;
@@ -92,6 +97,10 @@ public class Location implements java.beans.PropertyChangeListener {
 			firePropertyChange("length", Integer.toString(old), Integer.toString(length));
 	}
 
+	/**
+	 * 
+	 * @return total length of all tracks for this location
+	 */
 	public int getLength() {
 		return _length;
 	}
@@ -103,6 +112,10 @@ public class Location implements java.beans.PropertyChangeListener {
 			firePropertyChange("usedLength", Integer.toString(old), Integer.toString(length));
 	}
 	
+	/**
+	 * 
+	 * @return The length of the track that is occupied by cars and engines
+	 */
 	public int getUsedLength() {
 		return _usedLength;
 	}
@@ -130,16 +143,25 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setNumberCars(int cars) {
-		int old = _numberCars;
-		_numberCars = cars;
+		int old = _numberRS;
+		_numberRS = cars;
 		if (old != cars)
-			firePropertyChange("numberCars", Integer.toString(old), Integer.toString(cars));
+			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(cars));
 	}
 	
+	/**
+	 * Gets the number of cars at this location
+	 * @return number of cars at this location
+	 */
 	public int getNumberCars() {
-		return _numberCars;
+		return _numberRS;
 	}
 	
+	/**
+	 * When true, a switchlist is desired for this location.
+	 * Used for preview and printing a manifest for a single location
+	 * @param switchList
+	 */
 	public void setSwitchList(boolean switchList) {
 		boolean old = _switchList;
 		_switchList = switchList;
@@ -153,54 +175,131 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	
 	/**
-	 * Adds a car to a specific location.  
+	 * Adds rolling stock to a specific location.  
+	 * @param car
+	 */	
+	public void addRS (RollingStock rs){
+   		int numberOfRS = getNumberCars();
+		numberOfRS++;
+		setNumberCars(numberOfRS);
+		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ rs.COUPLER);
+	}
+	
+	public void deleteRS (RollingStock rs){
+   		int numberOfRS = getNumberCars();
+		numberOfRS--;
+		setNumberCars(numberOfRS);
+		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ rs.COUPLER));
+	}
+
+	/**
+	 * Increments the number of cars that will be picked up by a train
+	 * at this location.
+	 */
+	public void addPickupRS() {
+		int old = _pickupRS;
+		_pickupRS++;
+		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+	}
+	
+	public void deletePickupRS() {
+		int old = _pickupRS;
+		_pickupRS--;
+		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+	}
+	
+	/**
+	 * 
+	 * @return the number of cars that are scheduled for pickup at this
+	 *         location.
+	 */
+	public int getPickupRSs() {
+		return _pickupRS;
+	}
+
+	/**
+	 * Increments the number of cars that will be droped off by trains at this
+	 * location.
+	 */
+	public void addDropRS() {
+		int old = _dropRS;
+		_dropRS++;
+		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+	}
+	
+	public void deleteDropRS() {
+		int old = _dropRS;
+		_dropRS--;
+		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+	}
+	
+	public int getDropRSs() {
+		return _dropRS;
+	}
+	
+	/**
+	 * Adds rolling stock to a specific location.  
 	 * @param car
 	 */	
 	public void addCar (Car car){
-   		int numberOfCars = getNumberCars();
-		numberOfCars++;
-		setNumberCars(numberOfCars);
+   		int numberOfRS = getNumberCars();
+		numberOfRS++;
+		setNumberCars(numberOfRS);
 		setUsedLength(getUsedLength() + Integer.parseInt(car.getLength())+ car.COUPLER);
 	}
 	
 	public void deleteCar (Car car){
-   		int numberOfCars = getNumberCars();
-		numberOfCars--;
-		setNumberCars(numberOfCars);
+   		int numberOfRS = getNumberCars();
+		numberOfRS--;
+		setNumberCars(numberOfRS);
 		setUsedLength(getUsedLength() - (Integer.parseInt(car.getLength())+ car.COUPLER));
 	}
 
+	/**
+	 * Increments the number of cars that will be picked up by a train
+	 * at this location.
+	 */
 	public void addPickupCar() {
-		int old = _pickupCars;
-		_pickupCars++;
-		firePropertyChange("pickupCars", Integer.toString(old), Integer.toString(_pickupCars));
+		int old = _pickupRS;
+		_pickupRS++;
+		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
 	public void deletePickupCar() {
-		int old = _pickupCars;
-		_pickupCars--;
-		firePropertyChange("pickupCars", Integer.toString(old), Integer.toString(_pickupCars));
+		int old = _pickupRS;
+		_pickupRS--;
+		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
-	public int getPickupCars() {
-		return _pickupCars;
+	/**
+	 * 
+	 * @return the number of cars that are scheduled for pickup at this
+	 *         location.
+	 */
+	public int getPickupRS() {
+		return _pickupRS;
 	}
 
+	/**
+	 * Increments the number of cars that will be droped off by trains at this
+	 * location.
+	 */
 	public void addDropCar() {
-		int old = _dropCars;
-		_dropCars++;
-		firePropertyChange("dropCars", Integer.toString(old), Integer.toString(_dropCars));
+		int old = _dropRS;
+		_dropRS++;
+		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	public void deleteDropCar() {
-		int old = _dropCars;
-		_dropCars--;
-		firePropertyChange("dropCars", Integer.toString(old), Integer.toString(_dropCars));
+		int old = _dropRS;
+		_dropRS--;
+		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	public int getDropCars() {
-		return _dropCars;
+		return _dropRS;
 	}
+
 
 	public void setComment(String comment) {
 		_comment = comment;
@@ -226,6 +325,10 @@ public class Location implements java.beans.PropertyChangeListener {
  			list.add(types[i]);
     }
     
+    /**
+     * Adds the specific type of car to the will service list
+     * @param type of car that location will service
+     */
     public void addTypeName(String type){
     	// insert at start of list, sort later
     	if (list.contains(type))
@@ -245,23 +348,30 @@ public class Location implements java.beans.PropertyChangeListener {
     	return list.contains(type);
     }
   
-	public SecondaryLocation addSecondaryLocation (String name, String type){
-		SecondaryLocation sl = getSecondaryLocationByName(name, type);
+	/** 
+	 * Adds a track to this location.  Valid tracks are
+	 * sidings, yards, staging and interchange tracks.
+	 *  @param name of track
+	 * @param type of track
+	 * @return Track
+	 */
+    public Track addTrack (String name, String type){
+		Track sl = getTrackByName(name, type);
 		if (sl == null){
 			_IdNumber++;
 			String id = _id + "s"+ Integer.toString(_IdNumber);
 			log.debug("adding new "+ type +" to "+getName()+ " id: " + id);
-	   		sl = new SecondaryLocation(id, name, type);
+	   		sl = new Track(id, name, type);
 	   		Integer old = new Integer(_subLocationHashTable.size());
     		_subLocationHashTable.put(sl.getId(), sl);
     		setLength(sl.getLength() + getLength());
-    		if(type.equals(SecondaryLocation.YARD))
+    		if(type.equals(Track.YARD))
     			firePropertyChange(YARDLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(SecondaryLocation.SIDING))
+    		if(type.equals(Track.SIDING))
     			firePropertyChange(SIDINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(SecondaryLocation.INTERCHANGE))
+    		if(type.equals(Track.INTERCHANGE))
     			firePropertyChange(INTERCHANGELISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(SecondaryLocation.STAGING))
+    		if(type.equals(Track.STAGING))
     			firePropertyChange(STAGINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
             // listen for change in track length
             sl.addPropertyChangeListener(this);
@@ -272,73 +382,73 @@ public class Location implements java.beans.PropertyChangeListener {
    /**
      * Remember a NamedBean Object created outside the manager.
  	 */
-    public void register(SecondaryLocation sl) {
+    public void register(Track track) {
     	Integer old = new Integer(_subLocationHashTable.size());
-        _subLocationHashTable.put(sl.getId(), sl);
+        _subLocationHashTable.put(track.getId(), track);
         // add to the locations's available track length
-        setLength(getLength() + sl.getLength());
+        setLength(getLength() + track.getLength());
         // find last id created
-        String[] getId = sl.getId().split("s");
+        String[] getId = track.getId().split("s");
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber)
         	_IdNumber = id;
-        String type = sl.getLocType();
-        if (type.equals(SecondaryLocation.YARD))
+        String type = track.getLocType();
+        if (type.equals(Track.YARD))
         	firePropertyChange(YARDLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    	if(type.equals(SecondaryLocation.SIDING))
+    	if(type.equals(Track.SIDING))
 			firePropertyChange(SIDINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-		if(type.equals(SecondaryLocation.INTERCHANGE))
+		if(type.equals(Track.INTERCHANGE))
 			firePropertyChange(INTERCHANGELISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    	if(type.equals(SecondaryLocation.STAGING))
+    	if(type.equals(Track.STAGING))
 			firePropertyChange(STAGINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
         // listen for name and state changes to forward
-        sl.addPropertyChangeListener(this);
+        track.addPropertyChangeListener(this);
     }
 
 	
-    public void deleteSecondaryLocation (SecondaryLocation sl){
-    	if (sl != null){
-    		sl.removePropertyChangeListener(this);
+    public void deleteTrack (Track track){
+    	if (track != null){
+    		track.removePropertyChangeListener(this);
     		// subtract from the locations's available track length
-            setLength(getLength() - sl.getLength());
-    		String type = sl.getLocType();
-    		String id = sl.getId();
-    		sl.dispose();
+            setLength(getLength() - track.getLength());
+    		String type = track.getLocType();
+    		String id = track.getId();
+    		track.dispose();
     		Integer old = new Integer(_subLocationHashTable.size());
     		_subLocationHashTable.remove(id);
-            if (type.equals(SecondaryLocation.YARD))
+            if (type.equals(Track.YARD))
             	firePropertyChange(YARDLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-        	if(type.equals(SecondaryLocation.SIDING))
+        	if(type.equals(Track.SIDING))
     			firePropertyChange(SIDINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(SecondaryLocation.INTERCHANGE))
+    		if(type.equals(Track.INTERCHANGE))
     			firePropertyChange(INTERCHANGELISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-        	if(type.equals(SecondaryLocation.STAGING))
+        	if(type.equals(Track.STAGING))
     			firePropertyChange(STAGINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
     	}
     }
     
 	/**
-	 * Get secondary location by name and type
+	 * Get track location by name and type
 	 * @param name
-	 * @return secondary location
+	 * @return track location
 	 */
     
-    public SecondaryLocation getSecondaryLocationByName(String name, String type) {
-    	SecondaryLocation sl;
+    public Track getTrackByName(String name, String type) {
+    	Track track;
     	Enumeration en =_subLocationHashTable.elements();
     	for (int i = 0; i < _subLocationHashTable.size(); i++){
-    		sl = (SecondaryLocation)en.nextElement();
-    		if (sl.getName().equals(name) && sl.getLocType().equals(type))
-    			return sl;
+    		track = (Track)en.nextElement();
+    		if (track.getName().equals(name) && track.getLocType().equals(type))
+    			return track;
       	}
         return null;
     }
     
-    public SecondaryLocation getSecondaryLocationById (String id){
-    	return (SecondaryLocation)_subLocationHashTable.get(id);
+    public Track getTrackById (String id){
+    	return (Track)_subLocationHashTable.get(id);
     }
     
-    private List getSecondaryLocationsByIdList() {
+    private List getTracksByIdList() {
         String[] arr = new String[_subLocationHashTable.size()];
         List out = new ArrayList();
         Enumeration en = _subLocationHashTable.keys();
@@ -353,34 +463,34 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort ids by secondary location name.  Returns a list of a given location type
-     * if type is not null, otherwise all secondary locations are returned.  
-     * @return list of secondary location ids ordered by name
+     * Sort ids by track location name.  Returns a list of a given location type
+     * if type is not null, otherwise all track locations are returned.  
+     * @return list of track location ids ordered by name
      */
-    public List getSecondaryLocationsByNameList(String type) {
+    public List getTracksByNameList(String type) {
 		// first get id list
-		List sortList = getSecondaryLocationsByIdList();
+		List sortList = getTracksByIdList();
 		// now re-sort
 		List out = new ArrayList();
 		String locName = "";
 		boolean locAdded = false;
-		SecondaryLocation sl;
-		SecondaryLocation slout;
+		Track track;
+		Track trackOut;
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			sl = getSecondaryLocationById((String) sortList.get(i));
-			locName = sl.getName();
+			track = getTrackById((String) sortList.get(i));
+			locName = track.getName();
 			for (int j = 0; j < out.size(); j++) {
-				slout = getSecondaryLocationById((String) out.get(j));
-				String outLocName = slout.getName();
-				if (locName.compareToIgnoreCase(outLocName) < 0 && (type !=null && sl.getLocType().equals(type) || type == null)) {
+				trackOut = getTrackById((String) out.get(j));
+				String outLocName = trackOut.getName();
+				if (locName.compareToIgnoreCase(outLocName) < 0 && (type !=null && track.getLocType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type !=null && sl.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type !=null && track.getLocType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -388,33 +498,33 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
     
     /**
-     * Sort ids by secondary location moves.  Returns a list of a given locaation type
-     * if type is not null, otherwise all secondary locations are returned.  
-     * @return list of secondary location ids ordered by moves
+     * Sort ids by track location moves.  Returns a list of a given locaation type
+     * if type is not null, otherwise all track locations are returned.  
+     * @return list of track location ids ordered by moves
      */
-    public List getSecondaryLocationsByMovesList(String type) {
+    public List getTracksByMovesList(String type) {
 		// first get id list
-		List sortList = getSecondaryLocationsByIdList();
+		List sortList = getTracksByIdList();
 		// now re-sort
 		List out = new ArrayList();
 		boolean locAdded = false;
-		SecondaryLocation sl;
-		SecondaryLocation slout;
+		Track track;
+		Track trackOut;
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			sl = getSecondaryLocationById((String) sortList.get(i));
-			int moves = sl.getMoves();
+			track = getTrackById((String) sortList.get(i));
+			int moves = track.getMoves();
 			for (int j = 0; j < out.size(); j++) {
-				slout = getSecondaryLocationById((String) out.get(j));
-				int outLocMoves = slout.getMoves();
-				if (moves < outLocMoves && (type !=null && sl.getLocType().equals(type) || type == null)) {
+				trackOut = getTrackById((String) out.get(j));
+				int outLocMoves = trackOut.getMoves();
+				if (moves < outLocMoves && (type !=null && track.getLocType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type !=null && sl.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type !=null && track.getLocType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -422,18 +532,18 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
       
     /**
-     * returns a JComboBox with all of the secondary locations for
+     * returns a JComboBox with all of the track locations for
      * this location.
      * @param box
      */
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-    	List sls = getSecondaryLocationsByNameList(null);
-		for (int i = 0; i < sls.size(); i++){
-			String Id = (String)sls.get(i);
-			SecondaryLocation sl = getSecondaryLocationById(Id);
-			box.addItem(sl);
+    	List tracks = getTracksByNameList(null);
+		for (int i = 0; i < tracks.size(); i++){
+			String Id = (String)tracks.get(i);
+			Track track = getTrackById(Id);
+			box.addItem(track);
 		}
     }
   	    
@@ -463,11 +573,19 @@ public class Location implements java.beans.PropertyChangeListener {
 //        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
         	setTypeNames(Types);
         }
+        // early version of operations called tracks "secondary"
         if (e.getChildren("secondary") != null) {
             List l = e.getChildren("secondary");
-            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
+            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" track locations");
             for (int i=0; i<l.size(); i++) {
-                register(new SecondaryLocation((Element)l.get(i)));
+                register(new Track((Element)l.get(i)));
+            }
+        }
+        if (e.getChildren("track") != null) {
+            List l = e.getChildren("track");
+            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" track locations");
+            for (int i=0; i<l.size(); i++) {
+                register(new Track((Element)l.get(i)));
             }
         }
     }
@@ -494,11 +612,11 @@ public class Location implements java.beans.PropertyChangeListener {
         
         e.setAttribute("comment", getComment());
         
-        List sls = getSecondaryLocationsByIdList();
-        for (int i=0; i<sls.size(); i++) {
-        	String id = (String)sls.get(i);
-        	SecondaryLocation sl = getSecondaryLocationById(id);
-	            e.addContent(sl.store());
+        List tracks = getTracksByIdList();
+        for (int i=0; i<tracks.size(); i++) {
+        	String id = (String)tracks.get(i);
+        	Track track = getTrackById(id);
+	            e.addContent(track.store());
         }
   
         return e;
@@ -507,9 +625,9 @@ public class Location implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("location (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " from secondary (" +e.getSource()+") old: " + e.getOldValue() + " new: "
+    				+ e.getPropertyName() + " from track (" +e.getSource()+") old: " + e.getOldValue() + " new: "
     				+ e.getNewValue());
-    	// update length of tracks if secondary location track length changes
+    	// update length of tracks at this location if track length changes
     	if(e.getPropertyName().equals("length")){
     		setLength(getLength() - Integer.parseInt((String)e.getOldValue()) + Integer.parseInt((String)e.getNewValue()));
     	}

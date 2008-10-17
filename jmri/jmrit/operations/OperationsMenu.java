@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OperationsMenu extends JMenu {
     public OperationsMenu(String name) {
@@ -30,8 +30,8 @@ public class OperationsMenu extends JMenu {
         
         add(new jmri.jmrit.operations.setup.OperationsSetupAction(rb.getString("MenuSetup")));
         add(new jmri.jmrit.operations.locations.LocationsTableAction(rb.getString("MenuLocations")));
-        add(new jmri.jmrit.operations.cars.CarsTableAction(rb.getString("MenuCars")));
-        add(new jmri.jmrit.operations.engines.EnginesTableAction(rb.getString("MenuEngines")));
+        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(rb.getString("MenuCars")));
+        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(rb.getString("MenuEngines")));
         add(new jmri.jmrit.operations.routes.RoutesTableAction(rb.getString("MenuRoutes")));
         add(new jmri.jmrit.operations.trains.TrainsTableAction(rb.getString("MenuTrains")));
         //add(new JSeparator());

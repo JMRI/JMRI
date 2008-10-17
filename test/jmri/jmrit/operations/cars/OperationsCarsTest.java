@@ -8,6 +8,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarColors;
+import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
@@ -17,7 +24,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsCars class
  * @author	Bob Coleman
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -270,21 +277,21 @@ public class OperationsCarsTest extends TestCase {
 
 	// TODO: Add tests for location
 
-	// TODO: Add tests for secondary location
+	// TODO: Add tests for track location
 
 	// TODO: Add tests for destination
 
-	// TODO: Add tests for secondary destination
+	// TODO: Add tests for track destination
 
 	// TODO: Add tests for train
 
 	// TODO: Add tests for route location
 
-	// TODO: Add tests for route secondary location
+	// TODO: Add tests for route track location
 
 	// TODO: Add tests for route destination
 
-	// TODO: Add tests for route secondary destination
+	// TODO: Add tests for route track destination
 
 	// TODO: Add test for import
 

@@ -2,11 +2,11 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.cars.CarTypes;
-import jmri.jmrit.operations.cars.CarRoads;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location yards
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -34,7 +34,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	SecondaryLocation _yard = null;
+	Track _yard = null;
 	List checkBoxes = new ArrayList();
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
@@ -91,7 +91,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		super();
 	}
 
-	public void initComponents(Location location, SecondaryLocation yard) {
+	public void initComponents(Location location, Track yard) {
 		_location = location;
 		_location.addPropertyChangeListener(this);
 		_yard = yard;
@@ -259,7 +259,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		}
 		if (ae.getSource() == deleteYardButton){
 			log.debug("yard delete button actived");
-//			SecondaryLocation y = _location.getSecondaryLocationByName(yardNameTextField.getText());
+//			Track y = _location.getTrackByName(yardNameTextField.getText());
 			if (_yard != null){
 				int cars = _yard.getNumberCars();
 				if (cars > 0){
@@ -270,7 +270,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 					}
 				}
 				selectCheckboxes(false);
-				_location.deleteSecondaryLocation(_yard);
+				_location.deleteTrack(_yard);
 				_yard = null;
 				enableButtons(false);
 				// save location file
@@ -301,13 +301,13 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		if (!checkName())
 			return;
 		// check to see if yard already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(yardNameTextField.getText(), SecondaryLocation.YARD);
+		Track check = _location.getTrackByName(yardNameTextField.getText(), Track.YARD);
 		if (check != null){
 			reportYardExists("add");
 			return;
 		}
 		// add yard to this location
-		_yard =_location.addSecondaryLocation(yardNameTextField.getText(), SecondaryLocation.YARD);
+		_yard =_location.addTrack(yardNameTextField.getText(), Track.YARD);
 		// check yard length
 		checkLength(_yard);
 		// copy checkboxes
@@ -323,12 +323,12 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveYard (SecondaryLocation y){
+	private void saveYard (Track y){
 		// check that yard name is valid
 		if (!checkName())
 			return;
 		// check to see if yard already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(yardNameTextField.getText(), SecondaryLocation.YARD);
+		Track check = _location.getTrackByName(yardNameTextField.getText(), Track.YARD);
 		if (check != null && check != y){
 			reportYardExists("save");
 			return;
@@ -375,7 +375,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		return true;
 	}
 	
-	private boolean checkLength (SecondaryLocation y){	
+	private boolean checkLength (Track y){	
 		// convert yard length if in inches
 		String length = yardLengthTextField.getText();
 		if (length.endsWith("\"")){

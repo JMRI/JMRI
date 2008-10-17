@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.CarRoads;
-import jmri.jmrit.operations.cars.Car;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 
 import org.jdom.Element;
@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 

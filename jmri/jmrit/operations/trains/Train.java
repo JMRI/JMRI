@@ -20,6 +20,12 @@ import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -27,15 +33,9 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.Car;
-import jmri.jmrit.operations.cars.Kernel;
 
-import jmri.jmrit.operations.engines.EngineManager;
-import jmri.jmrit.operations.engines.Engine;
-import jmri.jmrit.operations.engines.Consist;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -722,7 +722,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				log.debug("engine ("+engine.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
 				if(engine.getRouteLocation() == engine.getRouteDestination()){
 					log.debug("engine ("+engine.getId()+") has arrived at destination");
-					engine.setLocation(engine.getDestination(), engine.getSecondaryDestination());
+					engine.setLocation(engine.getDestination(), engine.getDestinationTrack());
 					engine.setDestination(null, null); 	// this also clears the route locations
 					engine.setTrain(null);
 				}else{
@@ -748,13 +748,13 @@ public class Train implements java.beans.PropertyChangeListener {
 				log.debug("car ("+car.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
 				if(car.getRouteLocation() == car.getRouteDestination()){
 					log.debug("car ("+car.getId()+") has arrived at destination");
-					car.setLocation(car.getDestination(), car.getSecondaryDestination());
+					car.setLocation(car.getDestination(), car.getDestinationTrack());
 					car.setDestination(null, null); 	// this also clears the route locations
 					car.setTrain(null);
 					dropCars++;
 				}else{
 					Location nextLocation = locationManager.getLocationByName(next.getName());
-					if (car.getSecondaryLocation() != null)
+					if (car.getTrack() != null)
 						pickupCars++;
 					car.setLocation(nextLocation, null);
 					car.setRouteLocation(next);
@@ -855,7 +855,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("carRoads")) != null ) {
         	String names = a.getValue();
            	String[] roads = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("Secondary location (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
+        	if (log.isDebugEnabled()) log.debug("Track location (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
         if ((a = e.getAttribute("numberEngines")) != null)

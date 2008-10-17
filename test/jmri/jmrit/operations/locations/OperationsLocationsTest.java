@@ -26,7 +26,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsLocations class
  * @author	Bob Coleman
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -173,19 +173,19 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Pick Ups Start Condition", 0 , l.getPickupCars());
+		Assert.assertEquals("Pick Ups Start Condition", 0 , l.getPickupRS());
 
 		l.addPickupCar();
-		Assert.assertEquals("Pick Up 1", 1, l.getPickupCars());
+		Assert.assertEquals("Pick Up 1", 1, l.getPickupRS());
 
 		l.addPickupCar();
-		Assert.assertEquals("Pick Up second", 2, l.getPickupCars());
+		Assert.assertEquals("Pick Up second", 2, l.getPickupRS());
 
 		l.deletePickupCar();
-		Assert.assertEquals("Delete Pick Up", 1, l.getPickupCars());
+		Assert.assertEquals("Delete Pick Up", 1, l.getPickupRS());
 
 		l.deletePickupCar();
-		Assert.assertEquals("Delete Pick Up second", 0, l.getPickupCars());
+		Assert.assertEquals("Delete Pick Up second", 0, l.getPickupRS());
 	}
 
 	// test drop support
@@ -194,7 +194,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Drop Start Condition", 0 , l.getPickupCars());
+		Assert.assertEquals("Drop Start Condition", 0 , l.getPickupRS());
 
 		l.addDropCar();
 		Assert.assertEquals("Drop 1", 1, l.getDropCars());
@@ -218,21 +218,21 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Used Length", 0, l.getUsedLength());
 		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
 
-		jmri.jmrit.operations.cars.Car c1 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER1");
+		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addCar(c1);
 
 		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
 		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.cars.Car c2 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER2");
+		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addCar(c2);
 
 		Assert.assertEquals("Number of Cars", 2, l.getNumberCars());
 		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.cars.Car c3 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER3");
+		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
 		l.addCar(c3);
 
@@ -264,14 +264,14 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Used Length", 0, l.getUsedLength());
 		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
 
-		jmri.jmrit.operations.cars.Car c1 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER1");
+		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addCar(c1);
 
 		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
 		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.cars.Car c2 = new jmri.jmrit.operations.cars.Car("TESTROAD", "TESTNUMBER2");
+		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addCar(c2);
 
@@ -426,7 +426,7 @@ public class OperationsLocationsTest extends TestCase {
 
         // TODO: Add tests for adding + deleting the same cars
 
-	// TODO: Add tests for secondary locations
+	// TODO: Add tests for track locations
 
 	// TODO: Add test to create xml file
 

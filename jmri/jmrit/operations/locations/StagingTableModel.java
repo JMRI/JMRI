@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of staging locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class StagingTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -34,9 +34,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int NAMECOLUMN   = 1;
     private static final int LENGTHCOLUMN = 2;
     private static final int USEDLENGTHCOLUMN = 3;
-    private static final int NUMBEROFCARS = 4;
-    private static final int CARSPICKUP = 5;
-    private static final int CARSDROP = 6;
+    private static final int ROLLINGSTOCK = 4;
+    private static final int PICKUPS = 5;
+    private static final int DROPS = 6;
     private static final int EDITCOLUMN = 7;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
@@ -67,11 +67,11 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
 //		if (_sort == SORTBYID)
 //			stagingList = _location.getStagingsByIdList();
 //		else
-			stagingList = _location.getSecondaryLocationsByNameList(SecondaryLocation.STAGING);
+			stagingList = _location.getTracksByNameList(Track.STAGING);
 		// and add them back in
 		for (int i = 0; i < stagingList.size(); i++){
 			log.debug("staging ids: " + (String) stagingList.get(i));
-			_location.getSecondaryLocationById((String) stagingList.get(i))
+			_location.getTrackById((String) stagingList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
@@ -93,9 +93,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(4);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(4);
-		table.getColumnModel().getColumn(NUMBEROFCARS).setPreferredWidth(4);
-		table.getColumnModel().getColumn(CARSPICKUP).setPreferredWidth(4);
-		table.getColumnModel().getColumn(CARSDROP).setPreferredWidth(4);
+		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(4);
+		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(4);
+		table.getColumnModel().getColumn(DROPS).setPreferredWidth(4);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(30);
         updateList();
 	}
@@ -110,9 +110,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return rb.getString("StagingName");
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
-        case NUMBEROFCARS: return rb.getString("Cars");
-        case CARSPICKUP: return rb.getString("Pickup");
-        case CARSDROP: return rb.getString("Drop");
+        case ROLLINGSTOCK: return rb.getString("RollingStock");
+        case PICKUPS: return rb.getString("Pickup");
+        case DROPS: return rb.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -124,9 +124,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return String.class;
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
-        case NUMBEROFCARS: return String.class;
-        case CARSPICKUP: return String.class;
-        case CARSDROP: return String.class;
+        case ROLLINGSTOCK: return String.class;
+        case PICKUPS: return String.class;
+        case DROPS: return String.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -143,15 +143,15 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
 
     public Object getValueAt(int row, int col) {
     	String stagingId = (String)stagingList.get(row);
-    	SecondaryLocation sl = _location.getSecondaryLocationById(stagingId);
+    	Track sl = _location.getTrackById(stagingId);
         switch (col) {
         case IDCOLUMN: return sl.getId();
         case NAMECOLUMN: return sl.getName();
         case LENGTHCOLUMN: return Integer.toString(sl.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(sl.getUsedLength());
-        case NUMBEROFCARS: return Integer.toString(sl.getNumberCars());
-        case CARSPICKUP: return Integer.toString(sl.getPickupCars());
-        case CARSDROP: return Integer.toString(sl.getDropCars());
+        case ROLLINGSTOCK: return Integer.toString(sl.getNumberCars());
+        case PICKUPS: return Integer.toString(sl.getPickupRS());
+        case DROPS: return Integer.toString(sl.getDropCars());
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -176,7 +176,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     	sef = new StagingEditFrame();
 
 		String stagingId = (String)stagingList.get(row);
-    	SecondaryLocation staging = _location.getSecondaryLocationById(stagingId);
+    	Track staging = _location.getTrackById(stagingId);
     	sef.initComponents(_location, staging);
     	sef.setTitle(rb.getString("EditStaging"));
     }
@@ -191,9 +191,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     	}
 
     	if (e.getSource() != _location){
-    		String type = ((SecondaryLocation) e.getSource()).getLocType();
-    		if (type.equals(SecondaryLocation.STAGING)){
-    			String stagingId = ((SecondaryLocation) e.getSource()).getId();
+    		String type = ((Track) e.getSource()).getLocType();
+    		if (type.equals(Track.STAGING)){
+    			String stagingId = ((Track) e.getSource()).getId();
     			int row = stagingList.indexOf(stagingId);
     			if (Control.showProperty && log.isDebugEnabled()) 
     				log.debug("Update staging table row: "+ row + " id: " + stagingId);
@@ -206,7 +206,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     private void removePropertyChangeStagings() {
     	for (int i = 0; i < stagingList.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		SecondaryLocation y = _location.getSecondaryLocationById((String) stagingList.get(i));
+    		Track y = _location.getTrackById((String) stagingList.get(i));
     		if (y != null)
     			y.removePropertyChangeListener(this);
     	}

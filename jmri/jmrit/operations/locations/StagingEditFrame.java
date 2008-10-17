@@ -2,11 +2,11 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.cars.CarTypes;
-import jmri.jmrit.operations.cars.CarRoads;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location stagings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -34,7 +34,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	SecondaryLocation _staging = null;
+	Track _staging = null;
 	List checkBoxes = new ArrayList();
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
@@ -91,7 +91,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		super();
 	}
 
-	public void initComponents(Location location, SecondaryLocation staging) {
+	public void initComponents(Location location, Track staging) {
 		_location = location;
 		_location.addPropertyChangeListener(this);
 		_staging = staging;
@@ -259,7 +259,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		}
 		if (ae.getSource() == deleteStagingButton){
 			log.debug("staging delete button actived");
-//			SecondaryLocation y = _location.getSecondaryLocationByName(stagingNameTextField.getText());
+//			Track y = _location.getTrackByName(stagingNameTextField.getText());
 			if (_staging != null){
 				int cars = _staging.getNumberCars();
 				if (cars > 0){
@@ -270,7 +270,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 					}
 				}
 				selectCheckboxes(false);
-				_location.deleteSecondaryLocation(_staging);
+				_location.deleteTrack(_staging);
 				_staging = null;
 				enableButtons(false);
 				// save location file
@@ -301,13 +301,13 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		if (!checkName())
 			return;
 		// check to see if staging already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(stagingNameTextField.getText(), SecondaryLocation.STAGING);
+		Track check = _location.getTrackByName(stagingNameTextField.getText(), Track.STAGING);
 		if (check != null){
 			reportStagingExists("add");
 			return;
 		}
 		// add staging to this location
-		_staging =_location.addSecondaryLocation(stagingNameTextField.getText(), SecondaryLocation.STAGING);
+		_staging =_location.addTrack(stagingNameTextField.getText(), Track.STAGING);
 		// check staging length
 		checkLength(_staging);
 		// copy checkboxes
@@ -323,12 +323,12 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveStaging (SecondaryLocation y){
+	private void saveStaging (Track y){
 		// check that staging name is valid
 		if (!checkName())
 			return;
 		// check to see if staging already exsists
-		SecondaryLocation check = _location.getSecondaryLocationByName(stagingNameTextField.getText(), SecondaryLocation.STAGING);
+		Track check = _location.getTrackByName(stagingNameTextField.getText(), Track.STAGING);
 		if (check != null && check != y){
 			reportStagingExists("save");
 			return;
@@ -375,7 +375,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		return true;
 	}
 	
-	private boolean checkLength (SecondaryLocation y){	
+	private boolean checkLength (Track y){	
 		// convert staging length if in inches
 		String length = stagingLengthTextField.getText();
 		if (length.endsWith("\"")){

@@ -15,7 +15,7 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Tests for the OperationsRoutes class
  * @author	Bob Coleman
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -265,7 +265,7 @@ public class OperationsRoutesTest extends TestCase {
 		}
 	}
 
-	// TODO: Add tests for Route location secondary location
+	// TODO: Add tests for Route location track location
 
 	// TODO: Add test to create xml file
 

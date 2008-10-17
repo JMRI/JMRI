@@ -21,21 +21,21 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.SecondaryLocation;
+import jmri.jmrit.operations.locations.Track;
 
-import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.cars.Car;
-import jmri.jmrit.operations.cars.Kernel;
 
-import jmri.jmrit.operations.engines.EngineManager;
-import jmri.jmrit.operations.engines.Engine;
-import jmri.jmrit.operations.engines.Consist;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class TrainBuilder{
 	
@@ -119,24 +119,24 @@ public class TrainBuilder{
 		addLine(fileOut, "Build report for train ("+train.getName()+") built on "+now);
 		
 		if (train.getRoute() == null){
-			buildFailed(fileOut, "Can't build train ("+train.getName()+"), needs a route");
+			buildFailed(fileOut, "ERROR Can't build train ("+train.getName()+"), needs a route");
 			return;
 		}
 		routeList = train.getRoute().getLocationsBySequenceList();
 		if (routeList.size() < 1){
-			buildFailed(fileOut, "Route needs at least one location to build train ("+train.getName()+")");
+			buildFailed(fileOut, "ERROR Route needs at least one location to build train ("+train.getName()+")");
 			return;
 		}
 		// train departs
 		departLocation = locationManager.getLocationByName(train.getTrainDepartsName());
 		if (departLocation == null){
-			buildFailed(fileOut, "Route departure location missing for train ("+train.getName()+")");
+			buildFailed(fileOut, "ERROR Route departure location missing for train ("+train.getName()+")");
 			return;
 		}
 		// train terminates
 		terminateLocation = locationManager.getLocationByName(train.getTrainTerminatesName());
 		if (terminateLocation == null){
-			buildFailed(fileOut, "Route terminate location missing for train ("+train.getName()+")");
+			buildFailed(fileOut, "ERROR Route terminate location missing for train ("+train.getName()+")");
 			return;
 		}
 		// TODO: DAB control minimal build by each train
@@ -151,11 +151,11 @@ public class TrainBuilder{
 			// check to see if there's a location for each stop in the route
 			Location l = locationManager.getLocationByName(rl.getName());
 			if (l == null){
-				buildFailed(fileOut, "Location missing in route ("+train.getRoute().getName()+")");
+				buildFailed(fileOut, "ERROR location missing in route ("+train.getRoute().getName()+")");
 				return;
 			}
 			// train doesn't drop or pickup cars from staging locations found in middle of a route
-			List slStage = l.getSecondaryLocationsByMovesList(SecondaryLocation.STAGING);
+			List slStage = l.getTracksByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i!=0 && i!=routeList.size()-1){
 				addLine(fileOut, "Location ("+rl.getName()+") has only staging tracks");
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
@@ -168,7 +168,7 @@ public class TrainBuilder{
 			}else{
 				requested = requested + rl.getMaxCarMoves();
 				rl.setCarMoves(0);					// clear the number of moves
-				rl.setSecondaryLocation(null);		// used for staging only
+				rl.setTrack(null);		// used for staging only
 				addLine(fileOut, "Location (" +rl.getName()+ ") requests " +rl.getMaxCarMoves()+ " moves");
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
@@ -179,12 +179,12 @@ public class TrainBuilder{
 		addLine(fileOut, "Route (" +train.getRoute().getName()+ ") requests " + requested + " cars and " + carMoves +" moves");
 
 		// determine if train is departing staging
-		SecondaryLocation departStage = null;
-		List slStage = departLocation.getSecondaryLocationsByMovesList(SecondaryLocation.STAGING);
-		if (slStage.size()>0){
-			addLine(fileOut, "Train will depart staging, there are "+slStage.size()+" tracks");
-			for (int i=0; i<slStage.size(); i++ ){
-				departStage = departLocation.getSecondaryLocationById((String)slStage.get(i));
+		Track departStage = null;
+		List stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
+		if (stagingTracks.size()>0){
+			addLine(fileOut, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
+			for (int i=0; i<stagingTracks.size(); i++ ){
+				departStage = departLocation.getTrackById((String)stagingTracks.get(i));
 				addLine(fileOut, "Staging track ("+departStage.getName()+") has "+departStage.getNumberCars()+" cars");
 				if (departStage.getNumberCars()>0 && getEngines(fileOut, departStage)){
 					break;
@@ -193,7 +193,7 @@ public class TrainBuilder{
 				}
 			}
 		}
-		if (slStage.size()>0 && departStage == null){
+		if (stagingTracks.size()>0 && departStage == null){
 			buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
 			return;
 		}
@@ -250,52 +250,52 @@ public class TrainBuilder{
     	addLine(fileOut, "Train ("+train.getName()+") services car types: "+typeNames);
     	for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getCarById((String) carList.get(carIndex));
-    		// remove cars that don't have a valid secondary location
-    		if (c.getSecondaryLocation() == null){
-    			addLine(fileOut, "ERROR Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+") no secondary location");
+    		// remove cars that don't have a valid track location
+    		if (c.getTrack() == null){
+    			addLine(fileOut, "ERROR Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") no track location");
 				carList.remove(carList.get(carIndex));
 				carIndex--;
 				continue;
     		}
     		// all cars in staging must be accepted, so don't exclude if in staging
-    		if (departStage == null || !c.getSecondaryLocation().getName().equals(departStage.getName())){
+    		if (departStage == null || !c.getTrack().getName().equals(departStage.getName())){
     			if (!train.acceptsRoadName(c.getRoad())){
-    				addLine(fileOut, "Exclude car ("+c.getId()+") road ("+c.getRoad()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    				addLine(fileOut, "Exclude car ("+c.getId()+") road ("+c.getRoad()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
     			}
     			if (!train.acceptsTypeName(c.getType())){
-    				addLine(fileOut, "Exclude car ("+c.getId()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    				addLine(fileOut, "Exclude car ("+c.getId()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
     			}
     		}
     		// is car at interchange?
-    		if (c.getSecondaryLocation().getLocType().equals(SecondaryLocation.INTERCHANGE)){
+    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE)){
     			// don't service a car at interchange and has been dropped of by this train
-    			if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
-    				addLine(fileOut, "Exclude car ("+c.getId()+") previously droped by this train at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    			if (c.getTrack().getPickupOption().equals(Track.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
+    				addLine(fileOut, "Exclude car ("+c.getId()+") previously droped by this train at interchange ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
     			}
-    			if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.TRAINS)){
-    				if (c.getSecondaryLocation().acceptsPickupTrain(train)){
+    			if (c.getTrack().getPickupOption().equals(Track.TRAINS)){
+    				if (c.getTrack().acceptsPickupTrain(train)){
     					log.debug("Car ("+c.getId()+") can be picked up by this train");
     				} else {
-    					addLine(fileOut, "Exclude car ("+c.getId()+") by train, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    					addLine(fileOut, "Exclude car ("+c.getId()+") by train, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getTrackName()+")");
     					carList.remove(carList.get(carIndex));
     					carIndex--;
     					continue;
     				}
     			}
-    			else if (c.getSecondaryLocation().getPickupOption().equals(SecondaryLocation.ROUTES)){
-    				if (c.getSecondaryLocation().acceptsPickupRoute(train.getRoute())){
+    			else if (c.getTrack().getPickupOption().equals(Track.ROUTES)){
+    				if (c.getTrack().acceptsPickupRoute(train.getRoute())){
     					log.debug("Car ("+c.getId()+") can be picked up by this route");
     				} else {
-    					addLine(fileOut, "Exclude car ("+c.getId()+") by route, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+    					addLine(fileOut, "Exclude car ("+c.getId()+") by route, can't pickup this car at interchange ("+c.getLocationName()+", "+c.getTrackName()+")");
     					carList.remove(carList.get(carIndex));
     					carIndex--;
     					continue;
@@ -313,13 +313,13 @@ public class TrainBuilder{
 			int numberCarsFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
-//				addLine(fileOut, "Check car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getSecondaryLocationName()+")");
+//				addLine(fileOut, "Check car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 				if (c.getLocationName().equals(departLocation.getName())){
-					if (c.getSecondaryLocationName().equals(departStage.getName())){
-						addLine(fileOut, "Staging car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+")");
+					if (c.getTrackName().equals(departStage.getName())){
+						addLine(fileOut, "Staging car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
 						numberCarsFromStaging++;
 					} else {
-						addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+") from car list");
+						addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") from car list");
 						carList.remove(carList.get(carIndex));
 						carIndex--;
 					}
@@ -334,7 +334,7 @@ public class TrainBuilder{
 		// now go through the car list and remove any that don't belong
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car c = carManager.getCarById((String) carList.get(carIndex));
-			addLine(fileOut, "Car (" +c.getId()+ ") at location (" +c.getLocationName()+ ", " +c.getSecondaryLocationName()+ ") with " + c.getMoves()+ " moves");
+			addLine(fileOut, "Car (" +c.getId()+ ") at location (" +c.getLocationName()+ ", " +c.getTrackName()+ ") with " + c.getMoves()+ " moves");
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
 				addLine(fileOut, "Car (" +c.getId()+ ") is part of kernel ("+c.getKernelName()+")");
@@ -374,7 +374,7 @@ public class TrainBuilder{
 			
 			// remove cabooses and cars with FRED if not needed for train
 			if (c.isCaboose() && foundCaboose || c.hasFred() && foundFred){
-				addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getSecondaryLocationName()+") from car list");
+				addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") from car list");
 				carList.remove(carList.get(carIndex));		// remove this car from the list
 				carIndex--;
 				continue;
@@ -384,13 +384,13 @@ public class TrainBuilder{
 				if(c.getLocationName().equals(train.getTrainDepartsName())){
 					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStage != null){
 						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStage != null){
-							// find a secondary location
-							if (train.getTrainTerminatesRouteLocation().getSecondaryLocation() == null){
-								List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
+							// find a track to place car
+							if (train.getTrainTerminatesRouteLocation().getTrack() == null){
+								List sls = terminateLocation.getTracksByMovesList(null);
 								for (int s = 0; s < sls.size(); s++){
-									SecondaryLocation sld = terminateLocation.getSecondaryLocationById((String)sls.get(s));
-									if (c.testDestination(terminateLocation, sld).equals(c.OKAY)){
-										addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, sld);
+									Track destTrack = terminateLocation.getTrackById((String)sls.get(s));
+									if (c.testDestination(terminateLocation, destTrack).equals(c.OKAY)){
+										addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
 										if (c.isCaboose())
 											foundCaboose = true;
 										if (c.hasFred())
@@ -400,8 +400,8 @@ public class TrainBuilder{
 								}
 								addLine(fileOut,"Could not find a destination for ("+c.getId()+")");
 							// terminate into staging	
-							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getSecondaryLocation()).equals(c.OKAY)){
-								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getSecondaryLocation());
+							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getTrack()).equals(c.OKAY)){
+								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getTrack());
 								if (c.isCaboose())
 									foundCaboose = true;
 								if (c.hasFred())
@@ -411,7 +411,7 @@ public class TrainBuilder{
 					}
 				} // caboose or FRED not at departure locaton so remove from list
 				if(!foundCaboose || !foundFred) {
-					addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getSecondaryLocationName()+") from car list");
+					addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getTrackName()+") from car list");
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
 				}
@@ -459,17 +459,17 @@ public class TrainBuilder{
 										addLine(fileOut, "Car (" + c.getId()+ ") already assigned to this train");
 									} 
 									if (rld.getCarMoves() < rld.getMaxCarMoves() && 
-											addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getSecondaryDestination())&& success){
+											addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getDestinationTrack())&& success){
 										break;
 									}
 								}
 							// car does not have a destination, search for one	
 							} else {
-								addLine(fileOut, "Find destinations for car ("+c.getId()+") at location (" +c.getLocationName()+", " +c.getSecondaryLocationName()+ ")");
+								addLine(fileOut, "Find destinations for car ("+c.getId()+") at location (" +c.getLocationName()+", " +c.getTrackName()+ ")");
 								int start = locationIndex;				// start looking after car's current location
 								RouteLocation rld = null;				// the route location destination being checked for the car
 								RouteLocation rldSave = null;			// holds the best route location destination for the car
-								SecondaryLocation secondarySave = null;	// holds the best secondary destination for the car
+								Track trackSave = null;					// holds the best track at destination for the car
 								Location destinationSave = null;		// holds the best destination for the car
 						
 								// more than one location in this route?
@@ -481,98 +481,98 @@ public class TrainBuilder{
 									// don't move car to same location unless the route only has one location (local moves)
 									if (!rl.getName().equals(rld.getName()) || routeList.size() == 1){
 										Location destinationTemp = null;
-										SecondaryLocation secondaryTemp = null;
+										Track trackTemp = null;
 										// any moves left at this location?
 										if (rld.getMaxCarMoves()-rld.getCarMoves()>0){
-											// get a "test" destination and a list of the secondary locations available
+											// get a "test" destination and a list of the track locations available
 											noMoreMoves = false;
 											Location testDestination = locationManager.getLocationByName(rld.getName());
 											if (testDestination == null){
 												buildFailed(fileOut, "Route ("+train.getRoute().getName()+") missing location ("+rld.getName()+")");
 												return;
 											}
-											// is there a secondary location assigned for staging cars?
-											if (rld.getSecondaryLocation() == null){
-												List sls = testDestination.getSecondaryLocationsByMovesList(null);
+											// is there a track assigned for staging cars?
+											if (rld.getTrack() == null){
+												List sls = testDestination.getTracksByMovesList(null);
 												for (int s = 0; s < sls.size(); s++){
-													SecondaryLocation testSecondary = testDestination.getSecondaryLocationById((String)sls.get(s));
-//													log.debug("secondary location (" +testSecondary.getName()+ ") has "+ testSecondary.getMoves() + " moves");
-													// need to find a secondary location that is isn't the same as the car's
-													String status = c.testDestination(testDestination, testSecondary);
-													if (testSecondary != c.getSecondaryLocation() 
+													Track testTrack = testDestination.getTrackById((String)sls.get(s));
+//													log.debug("track location (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
+													// need to find a track that is isn't the same as the car's current
+													String status = c.testDestination(testDestination, testTrack);
+													if (testTrack != c.getTrack() 
 															&& status.equals(c.OKAY) 
-															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testSecondary)){
+															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
 														// staging track with zero cars?
-														if (testSecondary.getLocType().equals(testSecondary.STAGING) && testSecondary.getNumberCars() == 0){
-															rld.setSecondaryLocation(testSecondary);	// Use this location for all cars
-															secondaryTemp = testSecondary;
+														if (testTrack.getLocType().equals(testTrack.STAGING) && testTrack.getNumberCars() == 0){
+															rld.setTrack(testTrack);	// Use this location for all cars
+															trackTemp = testTrack;
 															destinationTemp = testDestination;
 															break;
 														}
 														// No local moves from siding to siding
-														if (routeList.size() == 1 && testSecondary.getLocType().equals(testSecondary.SIDING) && c.getSecondaryLocation().getLocType().equals(testSecondary.SIDING)){
-															log.debug("Local siding to siding move not allowed (" +testSecondary.getName()+ ")");
+														if (routeList.size() == 1 && testTrack.getLocType().equals(testTrack.SIDING) && c.getTrack().getLocType().equals(testTrack.SIDING)){
+															log.debug("Local siding to siding move not allowed (" +testTrack.getName()+ ")");
 															continue;
 														}
 														// No local moves from yard to yard
-														if (routeList.size() == 1 && testSecondary.getLocType().equals(testSecondary.YARD) && c.getSecondaryLocation().getLocType().equals(testSecondary.YARD)){
-															log.debug("Local yard to yard move not allowed (" +testSecondary.getName()+ ")");
+														if (routeList.size() == 1 && testTrack.getLocType().equals(testTrack.YARD) && c.getTrack().getLocType().equals(testTrack.YARD)){
+															log.debug("Local yard to yard move not allowed (" +testTrack.getName()+ ")");
 															continue;
 														}
 														// No local moves from interchange to interchange
-														if (routeList.size() == 1 && testSecondary.getLocType().equals(testSecondary.INTERCHANGE) && c.getSecondaryLocation().getLocType().equals(testSecondary.INTERCHANGE)){
-															log.debug("Local interchange to interchange move not allowed (" +testSecondary.getName()+ ")");
+														if (routeList.size() == 1 && testTrack.getLocType().equals(testTrack.INTERCHANGE) && c.getTrack().getLocType().equals(testTrack.INTERCHANGE)){
+															log.debug("Local interchange to interchange move not allowed (" +testTrack.getName()+ ")");
 															continue;
 														}
 														// drop to interchange?
-														if (testSecondary.getLocType().equals(testSecondary.INTERCHANGE)){
-															if (testSecondary.getDropOption().equals(testSecondary.TRAINS)){
-																if (testSecondary.acceptsDropTrain(train)){
-																	log.debug("Car ("+c.getId()+" can be droped by train to interchange (" +testSecondary.getName()+")");
+														if (testTrack.getLocType().equals(testTrack.INTERCHANGE)){
+															if (testTrack.getDropOption().equals(testTrack.TRAINS)){
+																if (testTrack.acceptsDropTrain(train)){
+																	log.debug("Car ("+c.getId()+" can be droped by train to interchange (" +testTrack.getName()+")");
 																} else {
-																	addLine(fileOut, "Can't drop car ("+c.getId()+") by train to interchange (" +testSecondary.getName()+")");
+																	addLine(fileOut, "Can't drop car ("+c.getId()+") by train to interchange (" +testTrack.getName()+")");
 																	continue;
 																}
 															}
-															if (testSecondary.getDropOption().equals(testSecondary.ROUTES)){
-																if (testSecondary.acceptsDropRoute(train.getRoute())){
-																	log.debug("Car ("+c.getId()+" can be droped by route to interchange (" +testSecondary.getName()+")");
+															if (testTrack.getDropOption().equals(testTrack.ROUTES)){
+																if (testTrack.acceptsDropRoute(train.getRoute())){
+																	log.debug("Car ("+c.getId()+" can be droped by route to interchange (" +testTrack.getName()+")");
 																} else {
-																	addLine(fileOut, "Can't drop car ("+c.getId()+") by route to interchange (" +testSecondary.getName()+")");
+																	addLine(fileOut, "Can't drop car ("+c.getId()+") by route to interchange (" +testTrack.getName()+")");
 																	continue;
 																}
 															}
 														}
 														// not staging, then use
-														if (!testSecondary.getLocType().equals(testSecondary.STAGING)){
-															secondaryTemp = testSecondary;
+														if (!testTrack.getLocType().equals(testTrack.STAGING)){
+															trackTemp = testTrack;
 															destinationTemp = testDestination;
 															break;
 														}
 													}
-													// car's secondary location is equal to test secondary location or car can't be dropped
+													// car's current track is equal to test track or car can't be dropped
 												}
 											// all cars in this train go to one staging track
 											} else {
 												// will staging accept this car?
-												String status = c.testDestination(testDestination, rld.getSecondaryLocation());
+												String status = c.testDestination(testDestination, rld.getTrack());
 												if (status.equals(c.OKAY)){
-													secondaryTemp = rld.getSecondaryLocation();
+													trackTemp = rld.getTrack();
 													destinationTemp = testDestination;
 												}
 											}
 											if(destinationTemp != null){
-												addLine(fileOut, "car ("+c.getId()+") has available destination (" +destinationTemp.getName()+ ", " +secondaryTemp.getName()+ ") with " +rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
+												addLine(fileOut, "car ("+c.getId()+") has available destination (" +destinationTemp.getName()+ ", " +trackTemp.getName()+ ") with " +rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
 												// if there's more than one available destination use the one with the least moves
 												if (rldSave != null && (rldSave.getCarMoves()-rldSave.getMaxCarMoves())<(rld.getCarMoves()-rld.getMaxCarMoves())){
 													rld = rldSave;					// the saved is better than the last found
 													destinationTemp = destinationSave;
-													secondaryTemp = secondarySave;
+													trackTemp = trackSave;
 												}
-												// every time through, save the best location
+												// every time through, save the best route location, destination, and track
 												rldSave = rld;
 												destinationSave = destinationTemp;
-												secondarySave = secondaryTemp;
+												trackSave = trackTemp;
 											} else {
 												addLine(fileOut, "Could not find a valid destination for car ("+c.getId()+") at location (" + rld.getName()+")");
 											}
@@ -584,11 +584,11 @@ public class TrainBuilder{
 									}
 								}
 								if (destinationSave != null){
-									if (addCarToTrain(fileOut, c, rl, rldSave, destinationSave, secondarySave) && success){
+									if (addCarToTrain(fileOut, c, rl, rldSave, destinationSave, trackSave) && success){
 										break;
 									}
 								// car leaving staging without a destinaton
-								} else if (c.getSecondaryLocation().getLocType().equals(SecondaryLocation.STAGING)){
+								} else if (c.getTrack().getLocType().equals(Track.STAGING)){
 									buildFailed(fileOut, "could not find a destination for car ("+c.getId()+") at location (" + rld.getName()+")");
 									return;
 								// are there still moves available?
@@ -629,23 +629,27 @@ public class TrainBuilder{
 
 	}
 	
-	// get the engines for this train. If secondary != null, then engines must
-	// come from that secondary location (staging).  Returns true if engines found, else false.
-	// This method will also setup the secondary location if the train is
+	// get the engines for this train. If track != null, then engines must
+	// come from that track location (staging).  Returns true if engines found, else false.
+	// This routine will also pick the destination track if the train is
 	// terminating into staging, therefore this routine should only be called once when return is true.
-	private boolean getEngines(PrintWriter fileOut, SecondaryLocation secondary){
+	private boolean getEngines(PrintWriter fileOut, Track track){
 		// show engine requirements for this train
-		addLine(fileOut, "Train requires "+train.getNumberEngines()+" engine(s) type ("+train.getEngineModel()+") road (" +train.getEngineRoad()+")");
+		addLine(fileOut, "Train requires "+train.getNumberEngines()+" engine(s) model ("+train.getEngineModel()+") road (" +train.getEngineRoad()+")");
 				
 		numberEngines = 0;
-		int reqEngines = 0; 	
+		int reqNumEngines = 0; 	
 		int engineLength = 0;
 		
 		if (train.getNumberEngines().equals(train.AUTO)){
-			reqEngines = getAutoEngines(fileOut);
+			reqNumEngines = getAutoEngines(fileOut);
 		} else {
-			reqEngines = Integer.parseInt(train.getNumberEngines());
+			reqNumEngines = Integer.parseInt(train.getNumberEngines());
 		}
+		// if leaving staging, use any number of engines if required number is 0
+		boolean leavingStaging = false;
+		if (track != null && reqNumEngines == 0)
+			leavingStaging = true;
 
 		// get list of engines for this route
 		
@@ -653,7 +657,7 @@ public class TrainBuilder{
 		// remove engines not at departure, wrong road name, or part of consist (not lead)
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
-			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") type ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getSecondaryLocationName()+")");
+			addLine(fileOut, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
 			// remove engines that have been assigned destinations
 			if (engine.getDestination() != null && !engine.getDestination().equals(terminateLocation)){
 				addLine(fileOut, "Exclude engine ("+engine.getId()+") it has an assigned destination ("+engine.getDestination().getName()+")");
@@ -661,16 +665,25 @@ public class TrainBuilder{
 				indexEng--;
 				continue;
 			}
-			// determine if engine is departing from staging track (secondary != null) 
-			if(engine.getLocationName().equals(train.getTrainDepartsName()) && (secondary == null || engine.getSecondaryLocationName().equals(secondary.getName()))){
+			// determine if engine is departing from staging track (track != null if staging) 
+			if(engine.getLocationName().equals(train.getTrainDepartsName()) && (track == null || engine.getTrackName().equals(track.getName()))){
 				if ((train.getEngineRoad().equals("") || engine.getRoad().equals(train.getEngineRoad())) && (train.getEngineModel().equals("") || engine.getModel().equals(train.getEngineModel()))){
-					// is this engine part of a consist?  Keep only lead engines in consist.
+					// is this engine part of a consist?  Keep only lead engines in consist if required number is correct.
 					if (engine.getConsist() != null){
 						addLine(fileOut, "Engine ("+engine.getId()+") is part of consist ("+engine.getConsist().getName()+")");
 						if (!engine.getConsist().isLeadEngine(engine)){
 							// only use lead engines
 							engineList.remove(indexEng);
 							indexEng--;
+						}else{
+							List cEngines = engine.getConsist().getEngines();
+							if (cEngines.size() == reqNumEngines || leavingStaging){
+								log.debug("Consist ("+engine.getConsist().getName()+") has the required number of engines");
+							}else{
+								log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
+								engineList.remove(indexEng);
+								indexEng--;
+							}
 						}
 					}
 					continue;
@@ -680,48 +693,44 @@ public class TrainBuilder{
 			engineList.remove(indexEng);
 			indexEng--;
 		}
-		// if leaving staging, use any number of engines if required number is 0
-		boolean leavingStaging = false;
-		if (secondary != null && reqEngines == 0)
-			leavingStaging = true;
 
 		// now load the number of engines into the train
-		SecondaryLocation terminateSecondary = null;
+		Track terminateTrack = null;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
 			train.iconEngine = engine;		//load Icon
-			// find secondary location for engines at destination
-			List sls = terminateLocation.getSecondaryLocationsByMovesList(null);
-			for (int s = 0; s < sls.size(); s++){
-				terminateSecondary = terminateLocation.getSecondaryLocationById((String)sls.get(s));
-				if (terminateSecondary.getLocType().equals(terminateSecondary.STAGING) && terminateSecondary.getNumberCars()>0){
-					terminateSecondary = null;
+			// find a track for engine(s) at destination
+			List destTracks = terminateLocation.getTracksByMovesList(null);
+			for (int s = 0; s < destTracks.size(); s++){
+				terminateTrack = terminateLocation.getTrackById((String)destTracks.get(s));
+				if (terminateTrack.getLocType().equals(terminateTrack.STAGING) && terminateTrack.getNumberCars()>0){
+					terminateTrack = null;
 					continue;
 				}
-				String status = engine.testDestination(terminateLocation, terminateSecondary);
+				String status = engine.testDestination(terminateLocation, terminateTrack);
 				if(status == engine.OKAY){
 					break;
 				} else {
-					terminateSecondary = null;
+					terminateTrack = null;
 				}
 			}
-			if (terminateSecondary == null && indexEng == engineList.size()-1 && (reqEngines>0 || leavingStaging)){
-				addLine(fileOut, "Could not find valid destination for engines at (" +terminateLocation.getName()+ ") for train (" +train.getName()+ ")");
-				return false;
+			if (terminateTrack == null && (reqNumEngines>0 || leavingStaging)){
+				addLine(fileOut, "Could not find valid destination for engine ("+engine.getId()+") at (" +terminateLocation.getName()+ ") for train (" +train.getName()+ ")");
+				//return false;
 			}
-			if (terminateSecondary != null){
+			if (terminateTrack != null){
 				if (engine.getConsist() != null){
 					List cEngines = engine.getConsist().getEngines();
-					if (cEngines.size() == reqEngines || leavingStaging){
+					if (cEngines.size() == reqNumEngines || leavingStaging){
 						engineLength = engine.getConsist().getLength();
 						for (int j=0; j<cEngines.size(); j++){
 							numberEngines++;
 							Engine cEngine = (Engine)cEngines.get(j);
-							addLine(fileOut, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
+							addLine(fileOut, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateTrack.getName()+")");
 							cEngine.setTrain(train);
 							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
 							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
-							cEngine.setDestination(terminateLocation, terminateSecondary);
+							cEngine.setDestination(terminateLocation, terminateTrack);
 						}
 						break;  // done with loading engines
 						// consist has the wrong number of engines, remove 	
@@ -731,19 +740,19 @@ public class TrainBuilder{
 						indexEng--;
 					}
 					// engine isn't part of a consist
-				} else if (reqEngines ==1 || leavingStaging){
+				} else if (reqNumEngines ==1 || leavingStaging){
 					numberEngines++;
-					addLine(fileOut, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateSecondary.getName()+")");
+					addLine(fileOut, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateTrack.getName()+")");
 					engine.setTrain(train);
 					engine.setRouteLocation(train.getTrainDepartsRouteLocation());
 					engine.setRouteDestination(train.getTrainTerminatesRouteLocation());
-					engine.setDestination(terminateLocation, terminateSecondary);
+					engine.setDestination(terminateLocation, terminateTrack);
 					engineLength = Integer.parseInt(engine.getLength());
 					break;  // done with loading engine
 				}
 			}
 		}
-		if (numberEngines < reqEngines){
+		if (numberEngines < reqNumEngines){
 			addLine(fileOut, "Could not find the proper engines at departure location");
 			return false;
 		}
@@ -754,8 +763,8 @@ public class TrainBuilder{
 			rl.setTrainLength(engineLength);		// load the engine(s) length
 		}
 		// terminating into staging?
-		if (terminateSecondary != null && terminateSecondary.getLocType().equals(terminateSecondary.STAGING)){
-			train.getTrainTerminatesRouteLocation().setSecondaryLocation(terminateSecondary);
+		if (terminateTrack != null && terminateTrack.getLocType().equals(terminateTrack.STAGING)){
+			train.getTrainTerminatesRouteLocation().setTrack(terminateTrack);
 		}
 		return true;
 	}
@@ -804,11 +813,11 @@ public class TrainBuilder{
 	 * @param rl the planned origin for this car
 	 * @param rld the planned destination for this car
 	 * @param destination
-	 * @param secondary the final destination for car
+	 * @param track the final destination for car
 	 * @return true if car was successfully added to train.  Also makes boolean
 	 * success true if location doesn't need any more pickups. 
 	 */
-	private boolean addCarToTrain(PrintWriter file, Car car, RouteLocation rl, RouteLocation rld, Location destination, SecondaryLocation secondary){
+	private boolean addCarToTrain(PrintWriter file, Car car, RouteLocation rl, RouteLocation rld, Location destination, Track track){
 		if (checkTrainLength(file, car, rl, rld)){
 			int oldNum = moves;
 			// car could be part of a kernel
@@ -818,19 +827,19 @@ public class TrainBuilder{
 				// log.debug("kernel length "+car.getKernel().getLength());
 				for(int i=0; i<kCars.size(); i++){
 					Car kCar = (Car)kCars.get(i);
-					addLine(file, "Car ("+kCar.getId()+") assigned destination ("+destination.getName()+", "+secondary.getName()+")");
+					addLine(file, "Car ("+kCar.getId()+") assigned destination ("+destination.getName()+", "+track.getName()+")");
 					kCar.setTrain(train);
 					kCar.setRouteLocation(rl);
 					kCar.setRouteDestination(rld);
-					kCar.setDestination(destination, secondary);
+					kCar.setDestination(destination, track);
 				}
 				// not part of kernel, add one car	
 			} else {
-				addLine(file, "Car ("+car.getId()+") assigned destination ("+destination.getName()+", "+secondary.getName()+")");
+				addLine(file, "Car ("+car.getId()+") assigned destination ("+destination.getName()+", "+track.getName()+")");
 				car.setTrain(train);
 				car.setRouteLocation(rl);
 				car.setRouteDestination(rld);
-				car.setDestination(destination, secondary);
+				car.setDestination(destination, track);
 			}
 			numberCars++;		// bump number of cars moved by this train
 			moves++;			// bump number of car pickup moves for the location
@@ -885,20 +894,20 @@ public class TrainBuilder{
 		String trainDirection = rl.getTrainDirection();	// train direction North, South, East and West
 		int trainDir = 0;
 		if (trainDirection.equals(rl.NORTH))
-			trainDir = SecondaryLocation.NORTH;
+			trainDir = Track.NORTH;
 		if (trainDirection.equals(rl.SOUTH))
-			trainDir = SecondaryLocation.SOUTH;
+			trainDir = Track.SOUTH;
 		if (trainDirection.equals(rl.EAST))
-			trainDir = SecondaryLocation.EAST;
+			trainDir = Track.EAST;
 		if (trainDirection.equals(rl.WEST))
-			trainDir = SecondaryLocation.WEST;
+			trainDir = Track.WEST;
 		
-		if ((trainDir & car.getLocation().getTrainDirections() & car.getSecondaryLocation().getTrainDirections()) >0)
+		if ((trainDir & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
 			return true;
 		else {
 			addLine(file, "Can't add car ("+car.getId()+") to "
 					+trainDirection+"bound train, location ("+car.getLocation().getName()
-					+", "+car.getSecondaryLocation().getName()+") does not service this direction");
+					+", "+car.getTrack().getName()+") does not service this direction");
 			return false;
 		}
 	}
@@ -935,25 +944,25 @@ public class TrainBuilder{
 		return true;
 	}
 	
-	private boolean checkDropTrainDirection (PrintWriter file, Car car, RouteLocation rld, Location destination, SecondaryLocation secondary){
+	private boolean checkDropTrainDirection (PrintWriter file, Car car, RouteLocation rld, Location destination, Track track){
 		// is the destination the last location on the route? 
 		if (rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
 		String trainDirection = rld.getTrainDirection();	// train direction North, South, East and West
 		int trainDir = 0;
 		if (trainDirection.equals(rld.NORTH))
-			trainDir = SecondaryLocation.NORTH;
+			trainDir = Track.NORTH;
 		if (trainDirection.equals(rld.SOUTH))
-			trainDir = SecondaryLocation.SOUTH;
+			trainDir = Track.SOUTH;
 		if (trainDirection.equals(rld.EAST))
-			trainDir = SecondaryLocation.EAST;
+			trainDir = Track.EAST;
 		if (trainDirection.equals(rld.WEST))
-			trainDir = SecondaryLocation.WEST;
-		int serviceTrainDir = (destination.getTrainDirections() & secondary.getTrainDirections()); // this location only services trains with these directions
+			trainDir = Track.WEST;
+		int serviceTrainDir = (destination.getTrainDirections() & track.getTrainDirections()); // this location only services trains with these directions
 		if ((serviceTrainDir & trainDir) >0){
 			return true;
 		} else {
-			addLine(file, "Can't add car ("+car.getId()+") to "+trainDirection+"bound train, destination ("+secondary+") does not service this direction");
+			addLine(file, "Can't add car ("+car.getId()+") to "+trainDirection+"bound train, destination ("+track+") does not service this direction");
 			return false;
 		}
 	}
@@ -1027,7 +1036,7 @@ public class TrainBuilder{
 		}
 		
 		if (engine != null)
-			addLine(fileOut, "Pickup engine(s) at "+engine.getLocationName()+", "+engine.getSecondaryLocationName());
+			addLine(fileOut, "Pickup engine(s) at "+engine.getLocationName()+", "+engine.getTrackName());
 		
 		List carList = carManager.getCarsByTrainList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
@@ -1062,7 +1071,7 @@ public class TrainBuilder{
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null)
-					addLine(fileOut, rb.getString("DropEngineTo")+ " "+ engine.getSecondaryDestinationName()); 
+					addLine(fileOut, rb.getString("DropEngineTo")+ " "+ engine.getDestinationTrackName()); 
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + rl.getName());
 			}
 		}
@@ -1078,7 +1087,7 @@ public class TrainBuilder{
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
-				+ car.getSecondaryLocationName() + carComment);
+				+ car.getTrackName() + carComment);
 	}
 	
 	private void dropCar(PrintWriter file, Car car){
@@ -1088,7 +1097,7 @@ public class TrainBuilder{
 				+ carNumber[0] + " " + car.getType() + " "
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ rb.getString("to") + " " + car.getSecondaryDestinationName()
+				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);
 	}
 

@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of yard locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class YardTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -35,9 +35,9 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int LENGTHCOLUMN = 2;
     private static final int USEDLENGTHCOLUMN = 3;
     private static final int RESERVEDCOLUMN = 4;  
-    private static final int NUMBEROFCARS = 5;
-    private static final int CARSPICKUP = 6;
-    private static final int CARSDROP = 7;
+    private static final int ROLLINGSTOCK = 5;
+    private static final int PICKUPS = 6;
+    private static final int DROPS = 7;
     private static final int EDITCOLUMN = 8;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
@@ -68,11 +68,11 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
 //		if (_sort == SORTBYID)
 //			yardList = _location.getYardsByIdList();
 //		else
-			yardList = _location.getSecondaryLocationsByNameList(SecondaryLocation.YARD);
+			yardList = _location.getTracksByNameList(Track.YARD);
 		// and add them back in
 		for (int i = 0; i < yardList.size(); i++){
 			log.debug("yard ids: " + (String) yardList.get(i));
-			_location.getSecondaryLocationById((String) yardList.get(i))
+			_location.getTrackById((String) yardList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
@@ -95,9 +95,9 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(4);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(4);
 		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(4);
-		table.getColumnModel().getColumn(NUMBEROFCARS).setPreferredWidth(4);
-		table.getColumnModel().getColumn(CARSPICKUP).setPreferredWidth(4);
-		table.getColumnModel().getColumn(CARSDROP).setPreferredWidth(4);
+		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(4);
+		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(4);
+		table.getColumnModel().getColumn(DROPS).setPreferredWidth(4);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(30);
         updateList();
 	}
@@ -113,9 +113,9 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
         case RESERVEDCOLUMN: return rb.getString("Reserved");
-        case NUMBEROFCARS: return rb.getString("Cars");
-        case CARSPICKUP: return rb.getString("Pickup");
-        case CARSDROP: return rb.getString("Drop");
+        case ROLLINGSTOCK: return rb.getString("RollingStock");
+        case PICKUPS: return rb.getString("Pickup");
+        case DROPS: return rb.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -128,9 +128,9 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
         case RESERVEDCOLUMN: return String.class;
-        case NUMBEROFCARS: return String.class;
-        case CARSPICKUP: return String.class;
-        case CARSDROP: return String.class;
+        case ROLLINGSTOCK: return String.class;
+        case PICKUPS: return String.class;
+        case DROPS: return String.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -147,16 +147,16 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
 
     public Object getValueAt(int row, int col) {
     	String yardId = (String)yardList.get(row);
-    	SecondaryLocation sl = _location.getSecondaryLocationById(yardId);
+    	Track sl = _location.getTrackById(yardId);
         switch (col) {
         case IDCOLUMN: return sl.getId();
         case NAMECOLUMN: return sl.getName();
         case LENGTHCOLUMN: return Integer.toString(sl.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(sl.getUsedLength());
         case RESERVEDCOLUMN: return Integer.toString(sl.getReserved());
-        case NUMBEROFCARS: return Integer.toString(sl.getNumberCars());
-        case CARSPICKUP: return Integer.toString(sl.getPickupCars());
-        case CARSDROP: return Integer.toString(sl.getDropCars());
+        case ROLLINGSTOCK: return Integer.toString(sl.getNumberCars());
+        case PICKUPS: return Integer.toString(sl.getPickupRS());
+        case DROPS: return Integer.toString(sl.getDropCars());
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -180,7 +180,7 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
     	yef = new YardEditFrame();
     	String yardId = (String)yardList.get(row);
-    	SecondaryLocation yard = _location.getSecondaryLocationById(yardId);
+    	Track yard = _location.getTrackById(yardId);
     	yef.initComponents(_location, yard);
     	yef.setTitle(rb.getString("EditYard"));
     }
@@ -195,9 +195,9 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
 
     	if (e.getSource() != _location){
-    		String type = ((SecondaryLocation) e.getSource()).getLocType();
-    		if (type.equals(SecondaryLocation.YARD)){
-    			String yardId = ((SecondaryLocation) e.getSource()).getId();
+    		String type = ((Track) e.getSource()).getLocType();
+    		if (type.equals(Track.YARD)){
+    			String yardId = ((Track) e.getSource()).getId();
     			int row = yardList.indexOf(yardId);
     			if (Control.showProperty && log.isDebugEnabled()) 
     				log.debug("Update yard table row: "+ row + " id: " + yardId);
@@ -210,7 +210,7 @@ public class YardTableModel extends javax.swing.table.AbstractTableModel impleme
     private void removePropertyChangeYards() {
     	for (int i = 0; i < yardList.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		SecondaryLocation y = _location.getSecondaryLocationById((String) yardList.get(i));
+    		Track y = _location.getTrackById((String) yardList.get(i));
     		if (y != null)
     			y.removePropertyChangeListener(this);
     	}
