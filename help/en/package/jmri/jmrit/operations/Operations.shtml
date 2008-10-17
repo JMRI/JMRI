@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.5 2008-09-06 17:20:23 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.6 2008-10-17 02:40:02 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -108,7 +108,7 @@ button to hide the settings panel.
 <H2>Locations</H2>
 
 Locations are places on your railroad that trains visit to pickup or
-drop off cars. Select "Tools->Operations->Locations" to add or edit the
+drop off cars and engines. Select "Tools->Operations->Locations" to add or edit the
 locations on your railroad. To add a location, press the "Add" button
 located on the bottom of the "Locations" panel. A new panel should
 appear. In the "Add Location" panel, enter the name of the location in
@@ -122,7 +122,8 @@ siding, interchange or staging tracks. Yards are where cars are placed
 for temporary storage. A siding can be an industry or any place where a
 car is loaded or unloaded. For a train to service a location, there must
 be at least one track for that location. See below how to add tracks to
-your location.
+your location.  The tables show the total number of cars and engines at
+each location labeled as rolling stock. 
 
 <H3>Location Service Direction</H3>
 
@@ -209,6 +210,10 @@ and drops off cars from a terminal. By defining the track as an
 interchange, once the branch line train setouts cars, they will remain
 there until the main line train stops to service the terminal's
 interchange track.
+<P>
+If you want more control on how your interchange track will operate, you can also
+specify a train or route to pickup or drop off cars at an interchange
+track.
 
 <A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
