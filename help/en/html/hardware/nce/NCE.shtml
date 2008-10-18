@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.16 2008-07-03 15:21:51 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.17 2008-10-18 17:09:40 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -26,14 +26,20 @@
 
 <H1>JMRI Hardware Guide: NCE</H1>
 
-<P>JMRI supports three NCE layout connections, Power Pro (PowerHouse) via serial
-cable, Power Pro (PowerHouse) via network connection, and NCE USB adapter via serial
-cable. They are shown in the preferences menu as NCE, NCE via network,
+<P>JMRI supports three NCE layout connections:
+Power Pro (PowerHouse) via serial cable, 
+Power Pro (PowerHouse) via network connection, 
+and NCE USB adapter via a USB cable. 
+They are shown in the preferences menu as NCE, NCE via network,
 and NCE USB respectively.</P>
 
 <a name="phpro">
-<H2>Power Pro</H2>
-This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
+<H2>Power Pro (PowerHouse) via serial cable</H2>
+<IMG SRC="../images/NcePowerPro.gif" WIDTH="168" HEIGHT="66" ALIGN="right" ALT="NCE Power Pro" >
+
+This section discusses JMRI's support for connecting to 
+the NCE Power Pro and PowerHouse via the serial cable connector
+on their front panel.
 
 <H3>Setup</H3>
 
@@ -55,11 +61,15 @@ This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
 	times to determine if AIU broadcasts are disabled. Press 0 to disable.
 	Now press the ENTER button once more to select the baud rate. Press 1
 	to set the baud rate to 9,600, and press PROG/ESC to exit.</LI>
+    <LI>Select the version of EPROM present in your
+    command station, either "2004 or earlier" or "2006 or later".
+    See <a href="#eeprom">below</a> for more information on this.
+    
 	<LI>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
-	type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on
-	Linux, Windows, MacOS "Classic" and MacOS X respectively.</LI>
+	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
+	Linux, Windows, and MacOS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -74,6 +84,7 @@ broadcast", and set the baud rate to 9,600. These are the normal
 defaults for NCE. Both of these parameters can be found in your NCE
 user's manual under "Setup Command Station".</P>
 
+<a id="eeprom">
 <H3>EPROM Versions</H3>
 
 <P>The NCE Power Pro command station uses an "EPROM" to contain
@@ -137,10 +148,71 @@ normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
+
+<a name="vianetwork">
+<H2>Power Pro (PowerHouse) via Network</H2>
+
+Instead of connecting a serial cable from your computer to a Power Pro,
+you can also connect JMRI to your Power Pro via a network connection
+and a serial-network adapter.
+This will let you, for example, connect a computer in one room 
+to a layout in another without having to run a long serial cable.
+
+<H3>Setup</H3>
+
+<OL>
+	<LI>Connect your serial-network adapter to 
+	your NCE Power Pro or PowerHouse system
+	using a 9-pin serial cable.</LI>
+	<LI>Configure the serial-network adapter to
+	use the same baud
+	rate set as the NCE command station. 
+	9600 baud is the normal default for NCE. 
+	To confirm this and the AIU broadcast setting,
+	use a ProCab to select "SET CMD STATION" by
+	pressing the PROG/ESC button 5 times. Then press the ENTER button 14
+	times to determine if AIU broadcasts are disabled. Press 0 to disable.
+	Now press the ENTER button once more to select the baud rate. Press 1
+	to set the baud rate to 9,600, and press PROG/ESC to exit.</LI>
+	<LI>Then go to the preferences panel of a JMRI-based program. This
+	opens automatically the first time a program is run, or you can select
+	it from the "Edit" menu.</LI>
+	<LI>Select "NCE via network" from the top selection box.</LI>
+
+    <LI>In the "Server hostname" box, enter the Internet name
+    or Internet address numbers for your serial-network adapter.
+    In the "Port number" box, enter the port on the serial-network
+    adapter to be used.
+    
+    <LI>Select the version of EPROM present in your
+    command station, either "2004 or earlier" or "2006 or later".
+    See <a href="#eeprom">above</a> for more information on this.</LI>
+    
+	<LI>The series of radio buttons labeled "GUI style" allows you to
+	select how the program will look. "Metal" is the native Java look
+	available on all types. Other choices will vary with your computer
+	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
+	Linux, Windows, and MacOS X respectively.</LI>
+	<LI>In the bottom selection box, you can pick the default
+	programmer format. You can override this each time you open the
+	programmer, so this is here just for convenience.</LI>
+	<LI>Click "Save". You'll be asked if it's OK for the program to
+	quit, click "Yes".</LI>
+	<LI>Restart the program. You should be up and running.</LI>
+	<LI>If not see the 
+	<A HREF="#troubleShoot">trouble shooting</A> section below.</LI>
+</OL>
+
+<P>For reliable operation, we recommend that you disable "AIU
+broadcast", and set the baud rate to 9,600. These are the normal
+defaults for NCE. Both of these parameters can be found in your NCE
+user's manual under "Setup Command Station".</P>
+
+
 <a name="powercab">
 <H2>NCE USB Adapter</H2>
 
-<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALT="NCE USB" >
+<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB" >
 
 <P>The NCE USB Adapter can be connected to three NCE systems,
 Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
@@ -152,6 +224,21 @@ system from the preference menu for reliable operation.</P>
 	<LI>To connect your computer using a NCE USB adaptor, you will
 	need in addition to the USB adaptor, a USB cable and a RJ12 to RJ12
 	cable.</LI>
+	<LI>On some computers, you'll need to install a driver for the
+    <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">USB interface chip</a>
+	in the NCE USB adapter.
+	    <UL>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a>
+        <LI>
+        If one of the above links doesn't work, you can
+        perhaps find the needed driver on the
+        <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">support web site</a>
+        for
+        <a href="http://www.silabs.com">SiLabs</a> chips.
+	    </UL>
+	Download the proper file, unpack it, and execute the installer.
 	<LI>Now go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</LI>
@@ -168,8 +255,8 @@ system from the preference menu for reliable operation.</P>
 	<LI>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
-	type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on
-	Linux, Windows, MacOS "Classic" and MacOS X respectively.</LI>
+	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
+	Linux, Windows, and MacOS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
