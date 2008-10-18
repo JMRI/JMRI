@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -261,7 +261,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 			log.debug("siding delete button actived");
 //			Track y = _location.getTrackByName(sidingNameTextField.getText());
 			if (_siding != null){
-				int cars = _siding.getNumberCars();
+				int cars = _siding.getNumberRS();
 				if (cars > 0){
 					if (JOptionPane.showConfirmDialog(this,
 							"There are " + cars + " cars at this location, delete?", "Delete location?",
@@ -664,7 +664,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.CARTYPES)){
+		if (e.getPropertyName().equals(Location.TYPES)){
 			updateCheckboxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){

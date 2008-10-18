@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class TrainBuilder{
 	
@@ -140,8 +140,8 @@ public class TrainBuilder{
 			return;
 		}
 		// TODO: DAB control minimal build by each train
-		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberCars() && Control.fullTrainOnly){
-			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberCars()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
+		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS() && Control.fullTrainOnly){
+			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberRS()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
 			return;
 		}
 		// get the number of requested car moves
@@ -185,8 +185,8 @@ public class TrainBuilder{
 			addLine(fileOut, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
 			for (int i=0; i<stagingTracks.size(); i++ ){
 				departStage = departLocation.getTrackById((String)stagingTracks.get(i));
-				addLine(fileOut, "Staging track ("+departStage.getName()+") has "+departStage.getNumberCars()+" cars");
-				if (departStage.getNumberCars()>0 && getEngines(fileOut, departStage)){
+				addLine(fileOut, "Staging track ("+departStage.getName()+") has "+departStage.getNumberRS()+" engines and cars");
+				if (departStage.getNumberRS()>0 && getEngines(fileOut, departStage)){
 					break;
 				} else {
 					departStage = null;
@@ -309,15 +309,15 @@ public class TrainBuilder{
 		// adjust carlist to only have cars from one staging track
 		if (departStage != null){
 			// Make sure that all cars in staging are moved
-			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStage.getNumberCars());  // neg number moves more cars
-			int numberCarsFromStaging = 0; 
+			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStage.getNumberRS());  // neg number moves more cars
+			int numRollingStockFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
 //				addLine(fileOut, "Check car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 				if (c.getLocationName().equals(departLocation.getName())){
 					if (c.getTrackName().equals(departStage.getName())){
 						addLine(fileOut, "Staging car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
-						numberCarsFromStaging++;
+						numRollingStockFromStaging++;
 					} else {
 						addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") from car list");
 						carList.remove(carList.get(carIndex));
@@ -326,8 +326,8 @@ public class TrainBuilder{
 				}
 			}
 			// error if all of the cars in staging aren't available
-			if (numberCarsFromStaging+numberEngines != departStage.getNumberCars()){
-				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStage.getNumberCars()-numberCarsFromStaging)+" cars or engines can't be serviced");
+			if (numRollingStockFromStaging +numberEngines != departStage.getNumberRS()){
+				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStage.getNumberRS()-numRollingStockFromStaging)+" cars or engines can't be serviced");
 				return;
 			}
 		}
@@ -503,7 +503,7 @@ public class TrainBuilder{
 															&& status.equals(c.OKAY) 
 															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
 														// staging track with zero cars?
-														if (testTrack.getLocType().equals(testTrack.STAGING) && testTrack.getNumberCars() == 0){
+														if (testTrack.getLocType().equals(testTrack.STAGING) && testTrack.getNumberRS() == 0){
 															rld.setTrack(testTrack);	// Use this location for all cars
 															trackTemp = testTrack;
 															destinationTemp = testDestination;
@@ -703,7 +703,7 @@ public class TrainBuilder{
 			List destTracks = terminateLocation.getTracksByMovesList(null);
 			for (int s = 0; s < destTracks.size(); s++){
 				terminateTrack = terminateLocation.getTrackById((String)destTracks.get(s));
-				if (terminateTrack.getLocType().equals(terminateTrack.STAGING) && terminateTrack.getNumberCars()>0){
+				if (terminateTrack.getLocType().equals(terminateTrack.STAGING) && terminateTrack.getNumberRS()>0){
 					terminateTrack = null;
 					continue;
 				}

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location stagings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -261,10 +261,10 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 			log.debug("staging delete button actived");
 //			Track y = _location.getTrackByName(stagingNameTextField.getText());
 			if (_staging != null){
-				int cars = _staging.getNumberCars();
-				if (cars > 0){
+				int rs = _staging.getNumberRS();
+				if (rs > 0){
 					if (JOptionPane.showConfirmDialog(this,
-							"There are " + cars + " cars at this location, delete?", "Delete location?",
+							"There are " + rs + " cars or engines at this location, delete?", "Delete location?",
 							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
 						return;
 					}
@@ -664,7 +664,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.CARTYPES)){
+		if (e.getPropertyName().equals(Location.TYPES)){
 			updateCheckboxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){

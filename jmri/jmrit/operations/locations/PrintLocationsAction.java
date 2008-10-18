@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -77,9 +77,9 @@ public class PrintLocationsAction  extends AbstractAction {
         		}
          		s = name + " \t  " + Integer.toString(location.getLength()) + "\t"
          						+ Integer.toString(location.getUsedLength()) + "\t"
-								+ Integer.toString(location.getNumberCars()) + "\t"
+								+ Integer.toString(location.getNumberRS()) + "\t"
 								+ Integer.toString(location.getPickupRS()) + "\t"
-								+ Integer.toString(location.getDropCars())+ newLine;
+								+ Integer.toString(location.getDropRS())+ newLine;
         		writer.write(s, 0, s.length());
         		
         		List yards = location.getTracksByNameList(Track.YARD);
@@ -95,9 +95,9 @@ public class PrintLocationsAction  extends AbstractAction {
                 		s = "\t" + name + " "
 								+ Integer.toString(yard.getLength()) + "\t"
 								+ Integer.toString(yard.getUsedLength()) + "\t"
-								+ Integer.toString(yard.getNumberCars()) + "\t"
+								+ Integer.toString(yard.getNumberRS()) + "\t"
 								+ Integer.toString(yard.getPickupRS()) + "\t"
-								+ Integer.toString(yard.getDropCars())
+								+ Integer.toString(yard.getDropRS())
 								+ newLine;
                 		writer.write(s, 0, s.length());
          			}
@@ -116,9 +116,9 @@ public class PrintLocationsAction  extends AbstractAction {
 						s = "\t" + name + " "
 								+ Integer.toString(siding.getLength()) + "\t"
 								+ Integer.toString(siding.getUsedLength()) + "\t"
-								+ Integer.toString(siding.getNumberCars()) + "\t"
+								+ Integer.toString(siding.getNumberRS()) + "\t"
 								+ Integer.toString(siding.getPickupRS()) + "\t"
-								+ Integer.toString(siding.getDropCars())
+								+ Integer.toString(siding.getDropRS())
 								+ newLine;
                 		writer.write(s, 0, s.length());
          			}
@@ -137,9 +137,9 @@ public class PrintLocationsAction  extends AbstractAction {
                 		s = "\t" + name + " "
 								+ Integer.toString(interchange.getLength())	+ "\t"
 								+ Integer.toString(interchange.getUsedLength()) + "\t"
-								+ Integer.toString(interchange.getNumberCars())	+ "\t"
+								+ Integer.toString(interchange.getNumberRS())	+ "\t"
 								+ Integer.toString(interchange.getPickupRS())	+ "\t"
-								+ Integer.toString(interchange.getDropCars())
+								+ Integer.toString(interchange.getDropRS())
 								+ newLine;
                 		writer.write(s, 0, s.length());
          			}
@@ -158,9 +158,9 @@ public class PrintLocationsAction  extends AbstractAction {
                 		s = "\t" + name + " "
 								+ Integer.toString(staging.getLength()) + "\t"
 								+ Integer.toString(staging.getUsedLength()) + "\t"
-								+ Integer.toString(staging.getNumberCars())	+ "\t"
+								+ Integer.toString(staging.getNumberRS())	+ "\t"
 								+ Integer.toString(staging.getPickupRS())	+ "\t"
-								+ Integer.toString(staging.getDropCars())
+								+ Integer.toString(staging.getDropRS())
 								+ newLine;
                 		writer.write(s, 0, s.length());
          			}

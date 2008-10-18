@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -389,7 +389,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 			Location l = manager.getLocationByName(locationNameTextField.getText());
 			if (l == null)
 				return;
-			int cars = l.getNumberCars();
+			int cars = l.getNumberRS();
 			if (cars > 0){
 				if (JOptionPane.showConfirmDialog(this,
 						"There are " + cars + " cars at this location, delete?", "Delete location?",

@@ -26,7 +26,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsLocations class
  * @author	Bob Coleman
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -117,8 +117,8 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		l.setNumberCars(8);
-		Assert.assertEquals("Location Number of Cars", 8, l.getNumberCars());
+		l.setNumberRS(8);
+		Assert.assertEquals("Location Number of Cars", 8, l.getNumberRS());
 	}
 
 	// test switchlist attributes
@@ -175,16 +175,16 @@ public class OperationsLocationsTest extends TestCase {
 
 		Assert.assertEquals("Pick Ups Start Condition", 0 , l.getPickupRS());
 
-		l.addPickupCar();
+		l.addPickupRS();
 		Assert.assertEquals("Pick Up 1", 1, l.getPickupRS());
 
-		l.addPickupCar();
+		l.addPickupRS();
 		Assert.assertEquals("Pick Up second", 2, l.getPickupRS());
 
-		l.deletePickupCar();
+		l.deletePickupRS();
 		Assert.assertEquals("Delete Pick Up", 1, l.getPickupRS());
 
-		l.deletePickupCar();
+		l.deletePickupRS();
 		Assert.assertEquals("Delete Pick Up second", 0, l.getPickupRS());
 	}
 
@@ -196,17 +196,17 @@ public class OperationsLocationsTest extends TestCase {
 
 		Assert.assertEquals("Drop Start Condition", 0 , l.getPickupRS());
 
-		l.addDropCar();
-		Assert.assertEquals("Drop 1", 1, l.getDropCars());
+		l.addDropRS();
+		Assert.assertEquals("Drop 1", 1, l.getDropRS());
 
-		l.addDropCar();
-		Assert.assertEquals("Drop second", 2, l.getDropCars());
+		l.addDropRS();
+		Assert.assertEquals("Drop second", 2, l.getDropRS());
 
-		l.deleteDropCar();
-		Assert.assertEquals("Delete Drop", 1, l.getDropCars());
+		l.deleteDropRS();
+		Assert.assertEquals("Delete Drop", 1, l.getDropRS());
 
-		l.deleteDropCar();
-		Assert.assertEquals("Delete Drop second", 0, l.getDropCars());
+		l.deleteDropRS();
+		Assert.assertEquals("Delete Drop second", 0, l.getDropRS());
 	}
 
 	// test car support
@@ -216,42 +216,42 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
 		Assert.assertEquals("Used Length", 0, l.getUsedLength());
-		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
 
 		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
-		l.addCar(c1);
+		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
-		l.addCar(c2);
+		l.addRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
-		l.addCar(c3);
+		l.addRS(c3);
 
-		Assert.assertEquals("Number of Cars", 3, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 3, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 40+4+33+4+50+4, l.getUsedLength()); // Drawbar length is 4
 
-		l.deleteCar(c2);
+		l.deleteRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 40+4+50+4, l.getUsedLength()); // Drawbar length is 4
 
-		l.deleteCar(c1);
+		l.deleteRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 50+4, l.getUsedLength()); // Drawbar length is 4
 
-		l.deleteCar(c3);
+		l.deleteRS(c3);
 
-		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 0, l.getUsedLength()); // Drawbar length is 4
 	}
 
@@ -262,25 +262,25 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
 		Assert.assertEquals("Used Length", 0, l.getUsedLength());
-		Assert.assertEquals("Number of Cars", 0, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
 
 		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
-		l.addCar(c1);
+		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
-		l.addCar(c2);
+		l.addRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
-		l.addCar(c1);
+		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 3, l.getNumberCars());
+		Assert.assertEquals("Number of Cars", 3, l.getNumberRS());
 		Assert.assertEquals("Used Length one car", 40+4+33+4+40+4, l.getUsedLength()); // Drawbar length is 4
 
 	}

@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location interchanges
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class InterchangeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -321,10 +321,10 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 			log.debug("interchange delete button actived");
 //			Track y = _location.getTrackByName(interchangeNameTextField.getText());
 			if (_interchange != null){
-				int cars = _interchange.getNumberCars();
-				if (cars > 0){
+				int rs = _interchange.getNumberRS();
+				if (rs > 0){
 					if (JOptionPane.showConfirmDialog(this,
-							"There are " + cars + " cars at this location, delete?", "Delete location?",
+							"There are " + rs + " cars or engines at this location, delete?", "Delete location?",
 							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
 						return;
 					}
@@ -965,7 +965,7 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.CARTYPES)){
+		if (e.getPropertyName().equals(Location.TYPES)){
 			updateCheckboxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){

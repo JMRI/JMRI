@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of staging locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class StagingTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -149,9 +149,9 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return sl.getName();
         case LENGTHCOLUMN: return Integer.toString(sl.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(sl.getUsedLength());
-        case ROLLINGSTOCK: return Integer.toString(sl.getNumberCars());
+        case ROLLINGSTOCK: return Integer.toString(sl.getNumberRS());
         case PICKUPS: return Integer.toString(sl.getPickupRS());
-        case DROPS: return Integer.toString(sl.getDropCars());
+        case DROPS: return Integer.toString(sl.getDropRS());
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }

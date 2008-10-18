@@ -6,9 +6,6 @@ import java.util.List;
 
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.routes.Route;
 
 import org.jdom.Element;
@@ -18,7 +15,7 @@ import org.jdom.Element;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -124,14 +121,18 @@ public class Track implements java.beans.PropertyChangeListener {
 		return _usedLength;
 	}
 	
-	public void setNumberCars(int cars) {
+	/**
+	 * Sets the number of cars and or engines on this track
+	 * @param number
+	 */
+	public void setNumberRS(int number) {
 		int old = _numberRS;
-		_numberRS = cars;
-		if (old != cars)
-			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(cars));
+		_numberRS = number;
+		if (old != number)
+			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
 	}
 	
-	public int getNumberCars() {
+	public int getNumberRS() {
 		return _numberRS;
 	}
 	
@@ -140,21 +141,21 @@ public class Track implements java.beans.PropertyChangeListener {
 	 * @param rs
 	 */	
 	public void addRS (RollingStock rs){
-   		int numberOfRS = getNumberCars();
+   		int numberOfRS = getNumberRS();
 		numberOfRS++;
-		setNumberCars(numberOfRS);
+		setNumberRS(numberOfRS);
 		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ rs.COUPLER);
 	}
 	
 	public void deleteRS (RollingStock rs){
-   		int numberOfRS = getNumberCars();
+   		int numberOfRS = getNumberRS();
 		numberOfRS--;
-		setNumberCars(numberOfRS);
+		setNumberRS(numberOfRS);
 		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ rs.COUPLER));
 	}
 
 	/**
-	 * Increments the number of cars that will be picked up by a train
+	 * Increments the number of cars and or engines that will be picked up by a train
 	 * at this location.
 	 */
 	public void addPickupRS() {
@@ -171,7 +172,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * 
-	 * @return the number of cars and engines that are scheduled for pickup at this
+	 * @return the number of cars and or engines that are scheduled for pickup at this
 	 *         location.
 	 */
 	public int getPickupRS() {
@@ -197,10 +198,6 @@ public class Track implements java.beans.PropertyChangeListener {
 		int reserved = getReserved() - (Integer.parseInt(rs.getLength()) + rs.COUPLER);
 		setReserved(reserved);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
-	}
-	
-	public int getDropCars() {
-		return _dropRS;
 	}
 
 	public void setComment(String comment) {
@@ -233,14 +230,12 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("track " +getName()+ " add car type "+type);
-//    	firePropertyChange (CARTYPES, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	_typeList.remove(type);
     	log.debug("track " +getName()+ " delete car type "+type);
-//    	firePropertyChange (CARTYPES, null, LENGTH);
-     }
+    }
     
     public boolean acceptsTypeName(String type){
     	return _typeList.contains(type);

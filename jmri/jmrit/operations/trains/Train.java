@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -85,7 +85,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	// property change names
 	public static final String DISPOSE = "dispose";
 	public static final String STOPS = "stops";
-	public static final String CARTYPES = "carTypes";
+	public static final String TYPES = "Types";
 	public static final String LENGTH = "length";
 	public static final String ENGINELOCATION = "EngineLocation";
 	public static final String NUMBERCARS = "numberCarsMoves";
@@ -338,13 +338,13 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("train add car type "+type);
-    	firePropertyChange (CARTYPES, null, LENGTH);
+    	firePropertyChange (TYPES, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	_typeList.remove(type);
     	log.debug("train delete car type "+type);
-     	firePropertyChange (CARTYPES, null, LENGTH);
+     	firePropertyChange (TYPES, null, LENGTH);
      }
     
     public boolean acceptsTypeName(String type){

@@ -8,9 +8,6 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 
 import org.jdom.Element;
@@ -19,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -51,7 +48,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String SIDINGLISTLENGTH = "sidingListLength";
 	public static final String INTERCHANGELISTLENGTH = "sidingListLength";
 	public static final String STAGINGLISTLENGTH = "sidingListLength";
-	public static final String CARTYPES = "types";
+	public static final String TYPES = "types";
 	public static final String TRAINDIRECTION = "trainDirection";
 	public static final String LENGTH = "length";
 	public static final String NAME = "name";
@@ -142,18 +139,22 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _trainDir;
 	}
 	
-	public void setNumberCars(int cars) {
+	/**
+	 * Sets the number of cars and or engines on for this location
+	 * @param number
+	 */
+	public void setNumberRS(int number) {
 		int old = _numberRS;
-		_numberRS = cars;
-		if (old != cars)
-			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(cars));
+		_numberRS = number;
+		if (old != number)
+			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
 	}
 	
 	/**
-	 * Gets the number of cars at this location
+	 * Gets the number of cars and engines at this location
 	 * @return number of cars at this location
 	 */
-	public int getNumberCars() {
+	public int getNumberRS() {
 		return _numberRS;
 	}
 	
@@ -179,16 +180,16 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param rs
 	 */	
 	public void addRS (RollingStock rs){
-   		int numberOfRS = getNumberCars();
+   		int numberOfRS = getNumberRS();
 		numberOfRS++;
-		setNumberCars(numberOfRS);
+		setNumberRS(numberOfRS);
 		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ rs.COUPLER);
 	}
 	
 	public void deleteRS (RollingStock rs){
-   		int numberOfRS = getNumberCars();
+   		int numberOfRS = getNumberRS();
 		numberOfRS--;
-		setNumberCars(numberOfRS);
+		setNumberRS(numberOfRS);
 		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ rs.COUPLER));
 	}
 
@@ -238,42 +239,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Adds rolling stock to a specific location.  
-	 * @param car
-	 */	
-	public void addCar (Car car){
-   		int numberOfRS = getNumberCars();
-		numberOfRS++;
-		setNumberCars(numberOfRS);
-		setUsedLength(getUsedLength() + Integer.parseInt(car.getLength())+ car.COUPLER);
-	}
-	
-	public void deleteCar (Car car){
-   		int numberOfRS = getNumberCars();
-		numberOfRS--;
-		setNumberCars(numberOfRS);
-		setUsedLength(getUsedLength() - (Integer.parseInt(car.getLength())+ car.COUPLER));
-	}
-
-	/**
-	 * Increments the number of cars that will be picked up by a train
-	 * at this location.
-	 */
-	public void addPickupCar() {
-		int old = _pickupRS;
-		_pickupRS++;
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
-	}
-	
-	public void deletePickupCar() {
-		int old = _pickupRS;
-		_pickupRS--;
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
-	}
-	
-	/**
 	 * 
-	 * @return the number of cars that are scheduled for pickup at this
+	 * @return the number of cars and engines that are scheduled for pickup at this
 	 *         location.
 	 */
 	public int getPickupRS() {
@@ -281,22 +248,11 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Increments the number of cars that will be droped off by trains at this
-	 * location.
+	 * 
+	 * @return the number of cars and engines that are scheduled for drop at this
+	 *         location.
 	 */
-	public void addDropCar() {
-		int old = _dropRS;
-		_dropRS++;
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
-	}
-	
-	public void deleteDropCar() {
-		int old = _dropRS;
-		_dropRS--;
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
-	}
-	
-	public int getDropCars() {
+	public int getDropRS() {
 		return _dropRS;
 	}
 
@@ -326,22 +282,22 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Adds the specific type of car to the will service list
-     * @param type of car that location will service
+     * Adds the specific type of rolling stock to the will service list
+     * @param type of rolling stock that location will service
      */
     public void addTypeName(String type){
     	// insert at start of list, sort later
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	log.debug("location ("+getName()+") add car type "+type);
-    	firePropertyChange (CARTYPES, null, LENGTH);
+    	log.debug("location ("+getName()+") add rolling stock type "+type);
+    	firePropertyChange (TYPES, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	list.remove(type);
-    	log.debug("location ("+getName()+") delete car type "+type);
-     	firePropertyChange (CARTYPES, null, LENGTH);
+    	log.debug("location ("+getName()+") delete rolling stock type "+type);
+     	firePropertyChange (TYPES, null, LENGTH);
      }
     
     public boolean acceptsTypeName(String type){
@@ -570,7 +526,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
            	String[] Types = names.split("%%");
-//        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
+//        	if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
         	setTypeNames(Types);
         }
         // early version of operations called tracks "secondary"
@@ -602,7 +558,7 @@ public class Location implements java.beans.PropertyChangeListener {
         e.setAttribute("ops", Integer.toString(getLocationOps()));
         e.setAttribute("dir", Integer.toString(getTrainDirections()));
         e.setAttribute("switchList", getSwitchList()?"true":"false");
-        // build list of car types for this location
+        // build list of rolling stock types for this location
         String[] types = getTypeNames();
         String typeNames ="";
         for (int i=0; i<types.length; i++){
