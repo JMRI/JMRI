@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -176,7 +176,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * Adds rolling stock to a specific location.  
-	 * @param car
+	 * @param rs
 	 */	
 	public void addRS (RollingStock rs){
    		int numberOfRS = getNumberCars();

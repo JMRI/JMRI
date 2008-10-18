@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -137,7 +137,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * Adds rolling stock to a specific track.  
-	 * @param car
+	 * @param rs
 	 */	
 	public void addRS (RollingStock rs){
    		int numberOfRS = getNumberCars();
