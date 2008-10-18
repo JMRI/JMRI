@@ -15,8 +15,8 @@ import org.jdom.Element;
 /**
  * Represents a location on the layout
  * 
- * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.5 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -194,7 +194,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Increments the number of cars that will be picked up by a train
+	 * Increments the number of cars and or engines that will be picked up by a train
 	 * at this location.
 	 */
 	public void addPickupRS() {
@@ -203,6 +203,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
+	/**
+	 * Decrements the number of cars and or engines that will be picked up by a train
+	 * at this location.
+	 */
 	public void deletePickupRS() {
 		int old = _pickupRS;
 		_pickupRS--;
@@ -211,7 +215,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * 
-	 * @return the number of cars that are scheduled for pickup at this
+	 * @return the number of cars and or engines that are scheduled for pickup at this
 	 *         location.
 	 */
 	public int getPickupRSs() {
@@ -219,7 +223,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Increments the number of cars that will be droped off by trains at this
+	 * Increments the number of cars and or engines that will be droped off by trains at this
 	 * location.
 	 */
 	public void addDropRS() {
@@ -228,6 +232,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
+	/**
+	 * Decrements the number of cars and or engines that will be droped off by trains at this
+	 * location.
+	 */
 	public void deleteDropRS() {
 		int old = _dropRS;
 		_dropRS--;
@@ -509,7 +517,7 @@ public class Location implements java.beans.PropertyChangeListener {
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml
+     * detailed DTD in operations-location.dtd
      *
      * @param e  Consist XML element
      */

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location yards
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -323,36 +323,36 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveYard (Track y){
+	private void saveYard (Track track){
 		// check that yard name is valid
 		if (!checkName())
 			return;
 		// check to see if yard already exsists
 		Track check = _location.getTrackByName(yardNameTextField.getText(), Track.YARD);
-		if (check != null && check != y){
+		if (check != null && check != track){
 			reportYardExists("save");
 			return;
 		}
 		// check yard length
-		if (!checkLength(y))
+		if (!checkLength(track))
 			return;
 		// save train directions serviced by this location
 		int direction = 0;
 		if (northCheckBox.isSelected()){
-			direction += y.NORTH;
+			direction += track.NORTH;
 		}
 		if (southCheckBox.isSelected()){
-			direction += y.SOUTH;
+			direction += track.SOUTH;
 		}
 		if (eastCheckBox.isSelected()){
-			direction += y.EAST;
+			direction += track.EAST;
 		}
 		if (westCheckBox.isSelected()){
-			direction += y.WEST;
+			direction += track.WEST;
 		}
-		y.setTrainDirections(direction);
-		y.setName(yardNameTextField.getText());
-		y.setComment(commentTextField.getText());
+		track.setTrainDirections(direction);
+		track.setName(yardNameTextField.getText());
+		track.setComment(commentTextField.getText());
 		// enable 
 		enableButtons(true);
 		// save location file
@@ -375,7 +375,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 		return true;
 	}
 	
-	private boolean checkLength (Track y){	
+	private boolean checkLength (Track track){	
 		// convert yard length if in inches
 		String length = yardLengthTextField.getText();
 		if (length.endsWith("\"")){
@@ -411,7 +411,7 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 			return false;
 		}
 		// if everything is okay, save length
-		y.setLength(yardLength);
+		track.setLength(yardLength);
 		return true;
 	}
 	

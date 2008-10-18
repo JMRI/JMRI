@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -323,36 +323,36 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveSiding (Track y){
+	private void saveSiding (Track track){
 		// check that siding name is valid
 		if (!checkName())
 			return;
 		// check to see if siding already exsists
 		Track check = _location.getTrackByName(sidingNameTextField.getText(), Track.SIDING);
-		if (check != null && check != y){
+		if (check != null && check != track){
 			reportSidingExists("save");
 			return;
 		}
 		// check siding length
-		if (!checkLength(y))
+		if (!checkLength(track))
 			return;
 		// save train directions serviced by this location
 		int direction = 0;
 		if (northCheckBox.isSelected()){
-			direction += y.NORTH;
+			direction += track.NORTH;
 		}
 		if (southCheckBox.isSelected()){
-			direction += y.SOUTH;
+			direction += track.SOUTH;
 		}
 		if (eastCheckBox.isSelected()){
-			direction += y.EAST;
+			direction += track.EAST;
 		}
 		if (westCheckBox.isSelected()){
-			direction += y.WEST;
+			direction += track.WEST;
 		}
-		y.setTrainDirections(direction);
-		y.setName(sidingNameTextField.getText());
-		y.setComment(commentTextField.getText());
+		track.setTrainDirections(direction);
+		track.setName(sidingNameTextField.getText());
+		track.setComment(commentTextField.getText());
 		// enable 
 		enableButtons(true);
 		// save location file
@@ -375,7 +375,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 		return true;
 	}
 	
-	private boolean checkLength (Track y){	
+	private boolean checkLength (Track track){	
 		// convert siding length if in inches
 		String length = sidingLengthTextField.getText();
 		if (length.endsWith("\"")){
@@ -411,7 +411,7 @@ public class SidingEditFrame extends jmri.util.JmriJFrame implements java.beans.
 			return false;
 		}
 		// if everything is okay, save length
-		y.setLength(sidingLength);
+		track.setLength(sidingLength);
 		return true;
 	}
 	

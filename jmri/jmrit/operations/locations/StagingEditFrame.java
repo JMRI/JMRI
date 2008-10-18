@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location stagings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -323,36 +323,36 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		managerXml.writeOperationsLocationFile();
 	}
 
-	private void saveStaging (Track y){
+	private void saveStaging (Track track){
 		// check that staging name is valid
 		if (!checkName())
 			return;
 		// check to see if staging already exsists
 		Track check = _location.getTrackByName(stagingNameTextField.getText(), Track.STAGING);
-		if (check != null && check != y){
+		if (check != null && check != track){
 			reportStagingExists("save");
 			return;
 		}
 		// check staging length
-		if (!checkLength(y))
+		if (!checkLength(track))
 			return;
 		// save train directions serviced by this location
 		int direction = 0;
 		if (northCheckBox.isSelected()){
-			direction += y.NORTH;
+			direction += track.NORTH;
 		}
 		if (southCheckBox.isSelected()){
-			direction += y.SOUTH;
+			direction += track.SOUTH;
 		}
 		if (eastCheckBox.isSelected()){
-			direction += y.EAST;
+			direction += track.EAST;
 		}
 		if (westCheckBox.isSelected()){
-			direction += y.WEST;
+			direction += track.WEST;
 		}
-		y.setTrainDirections(direction);
-		y.setName(stagingNameTextField.getText());
-		y.setComment(commentTextField.getText());
+		track.setTrainDirections(direction);
+		track.setName(stagingNameTextField.getText());
+		track.setComment(commentTextField.getText());
 		// enable 
 		enableButtons(true);
 		// save location file
@@ -375,7 +375,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 		return true;
 	}
 	
-	private boolean checkLength (Track y){	
+	private boolean checkLength (Track track){	
 		// convert staging length if in inches
 		String length = stagingLengthTextField.getText();
 		if (length.endsWith("\"")){
@@ -411,7 +411,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 			return false;
 		}
 		// if everything is okay, save length
-		y.setLength(stagingLength);
+		track.setLength(stagingLength);
 		return true;
 	}
 	

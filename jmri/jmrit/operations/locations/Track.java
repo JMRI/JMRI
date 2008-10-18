@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -496,7 +496,7 @@ public class Track implements java.beans.PropertyChangeListener {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml.
+     * detailed DTD in operations-location.dtd.
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
