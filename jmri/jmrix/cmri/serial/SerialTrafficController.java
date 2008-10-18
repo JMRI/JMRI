@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -105,17 +105,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // ensure validity of call
         if (getNumNodes()<=0) return null;
         
-        // move to a new node
-        curSerialNodeIndex ++;
-        if (curSerialNodeIndex>=getNumNodes()) {
-            curSerialNodeIndex = 0;
-        }
         // ensure that each node is initialized        
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
             log.debug("send init message: "+m);
             m.setTimeout(500);  // wait for init to finish (milliseconds)
+            updatePollPointer(); // service next node next
             return m;
         }
         // send Output packet if needed
@@ -123,7 +119,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             log.debug("request write command to send");
             getNode(curSerialNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curSerialNodeIndex).createOutPacket();
-            m.setTimeout(10);  // no need to wait for output to answer
+            m.setTimeout(2);  // no need to wait for output to answer
+                    // don't update poll pointer, so will poll this one next time
             return m;
         }
         // poll for Sensor input
@@ -132,11 +129,23 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             SerialMessage m = SerialMessage.getPoll(
                                 getNode(curSerialNodeIndex).getNodeAddress());
             if (curSerialNodeIndex>=getNumNodes()) curSerialNodeIndex = 0;
+            updatePollPointer(); // service next node next
             return m;
         }
         else {
             // no Sensors (inputs) are active for this node
+            updatePollPointer(); // service next node next
             return null;
+        }
+    }
+    
+    /**
+     * Update the curSerialNodeIndex so next node polled next time
+     */
+    private void updatePollPointer() {
+        curSerialNodeIndex ++;
+        if (curSerialNodeIndex>=getNumNodes()) {
+            curSerialNodeIndex = 0;
         }
     }
 
