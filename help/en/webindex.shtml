@@ -576,6 +576,18 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="package/apps/AppConfigPanel.shtml">Preferences</a>
+<ul>
+      
+<li>
+<a href="package/apps/AppConfigPanel.shtml#advanced">Advanced</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
 <li>Programmers<ul>
       
 <li>
@@ -669,6 +681,11 @@
       
 <li>
 <a href="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/display/RpsIcon.shtml">Panel Icons</a>
 <ul></ul>
 </li>
    

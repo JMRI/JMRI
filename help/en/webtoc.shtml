@@ -238,6 +238,33 @@
 </li>
    
 <li>
+<a href="html/apps/PanelPro/PanelPro.shtml">PanelPro</a>
+<ul>
+      
+<li>
+<a href="html/apps/PanelPro/PanelPro.shtml">Intro</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/display/PanelTarget.shtml">Panel Controls</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
 <a href="html/hardware/index.shtml">Hardware Support</a>
 <ul>
       

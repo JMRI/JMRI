@@ -153,6 +153,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="RPS Sensors" target="html.hardware.rps.sensors"/>
       <indexitem text="Sound Speed Control" target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame"/>
       <indexitem text="Tracking Display" target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
+      <indexitem text="Panel Icons" target="package.jmri.jmrit.display.RpsIcon"/>
    </indexitem>
    <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
    <indexitem text="Sections">
