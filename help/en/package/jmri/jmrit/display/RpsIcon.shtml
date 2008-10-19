@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RpsIcon.shtml,v 1.9 2008-07-15 20:20:26 jacobsen Exp $ -->
+<!-- $Id: RpsIcon.shtml,v 1.10 2008-10-19 18:25:46 jacobsen Exp $ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
@@ -86,6 +86,7 @@ when the transmitter is in that location.
 <p>
 Don't forget to save your panel!
 
+<a id="popup">
 <h2>Popup Menu</h2>
 
 The popup menu for an RPS icon contains:
@@ -143,6 +144,7 @@ icon.
 
 </dl>
 
+<a id="filter">
 <h2>Filtering and Multiple Locomotives</h2>
 
 We're still trying to figure out how best to configure multiple icons
@@ -171,6 +173,7 @@ and then set the filters; see below).
 But it has the advantage that you can control exactly which locomotives to 
 display and which not to.
 
+<a id="custom">
 <h2>Customization</h2>
 <h3>Starting Position</h3>
 When you first open the panel, the icons are put back to the same
@@ -181,6 +184,7 @@ They'll stay in that position until a valid reading moves them, so
 you can use this to "park" locomotives that are not on the track 
 off the active part of the panel.
 
+<a id="custicon">
 <h3>Displaying a Custom Icon</h3>
 Although there is not yet a graphical interface for this yet (it's coming!),
 you can modify the icon for a transmitter that's being tracked by 
