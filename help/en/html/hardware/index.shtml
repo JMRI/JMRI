@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.23 2008-09-07 04:05:45 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.24 2008-10-19 18:21:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -182,7 +182,7 @@
 	    <dd>
 		Configure connection to a Powerhouse Pro via 
 		<A HREF="nce/NCE.shtml#phpro">serial link</a> or
-		<A HREF="TerminalServer.shtml">Terminal Server</a>.
+		<A HREF="nce/NCE.shtml#vianetwork">Terminal Server</a>.
 		<br>
 		Configure connection to a PowerCab via 
 		<A HREF="nce/NCE.shtml#powercab">NCE USB adapter</a>.
