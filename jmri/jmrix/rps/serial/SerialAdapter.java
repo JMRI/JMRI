@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -343,9 +343,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             // skip handling this line
             return;
         }
-
-        r.setRawData(s);
-        
         
         // forward
         try {
@@ -411,7 +408,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
                 vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
             }
             
-            Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
+            Reading r = new Reading(Engine.instance().getPolledAddress(), vals, s);
             return r;
         } else if (version == 2) {
             // parse string
@@ -444,7 +441,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
                 e.printStackTrace();
                 System.out.flush();System.err.flush();
             }
-            Reading r = new Reading(Engine.instance().getPolledAddress(), vals);
+            Reading r = new Reading(Engine.instance().getPolledAddress(), vals, s);
             return r;
         } else {
             log.error("can't handle version "+version);
