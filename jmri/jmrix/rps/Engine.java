@@ -29,7 +29,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  */
 
 
@@ -179,7 +179,7 @@ public class Engine implements ReadingListener {
     // Store the lastMeasurement 
     void saveLastMeasurement(int addr, Measurement m) {
         for (int i=0; i<getNumTransmitters(); i++) {
-            if (getTransmitter(i).getAddress() == addr) {
+            if (getTransmitter(i).getAddress() == addr && getTransmitter(i).isPolled()) {
                 getTransmitter(i).setLastMeasurement(m);
                 // might be more than one, so don't end here
             }
