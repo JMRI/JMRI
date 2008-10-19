@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -540,7 +540,7 @@ public class Location implements java.beans.PropertyChangeListener {
         // early version of operations called tracks "secondary"
         if (e.getChildren("secondary") != null) {
             List l = e.getChildren("secondary");
-            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" track locations");
+            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
             for (int i=0; i<l.size(); i++) {
                 register(new Track((Element)l.get(i)));
             }
