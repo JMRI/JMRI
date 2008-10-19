@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.SidingEditFrame;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -283,10 +284,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void addNewRouteLocation(){
 		// add location to this route
+		RouteLocation rl;
 		if (addLocAtTop.isSelected())
-			_route.addLocation((Location)locationBox.getSelectedItem(),0);
+			rl = _route.addLocation((Location)locationBox.getSelectedItem(),0);
 		else
-			_route.addLocation((Location)locationBox.getSelectedItem());
+			rl =_route.addLocation((Location)locationBox.getSelectedItem());
+		rl.setTrainDirection(routeModel.getLastTrainDirection());
+		rl.setMaxTrainLength(routeModel.getLastMaxTrainLength());
 	}
 	
 	private void saveNewRoute(){

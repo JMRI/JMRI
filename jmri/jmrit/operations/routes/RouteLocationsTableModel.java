@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -163,7 +163,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case NAMECOLUMN: return rl.getName();
         case TRAINCOLUMN:{
         	JComboBox c = Setup.getComboBox();
-        	c.setSelectedItem(rl.getTrainDirection());
+        	c.setSelectedItem(rl.getTrainDirection());	//TODO: Doesn't work properly if user deleted direction
         	return c;
         }
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
@@ -231,10 +231,16 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	_route.deleteLocation(rl);
     }
     
+   private String _trainDirection = "";
+   
+   public String getLastTrainDirection(){
+	   return _trainDirection;
+   }
+    
     private void setTrainDirection (Object value, int row){
     	RouteLocation location = _route.getLocationById((String)list.get(row));
-    	String direction = (String)((JComboBox)value).getSelectedItem();
-    	location.setTrainDirection(direction);
+    	_trainDirection = (String)((JComboBox)value).getSelectedItem();
+    	location.setTrainDirection(_trainDirection);
     }
     
     private void setMaxTrainMoves (Object value, int row){
@@ -256,6 +262,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
      	}
     }
     
+    private int _maxTrainLength = Setup.getTrainLength();
+    
+    public int getLastMaxTrainLength(){
+    	return _maxTrainLength;
+    }
+    
     private void setMaxTrainLength (Object value, int row){
     	RouteLocation location = _route.getLocationById((String)list.get(row));
     	int length;
@@ -267,6 +279,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	}
      	if (length <= Setup.getTrainLength()){
      		location.setMaxTrainLength(length);
+     		_maxTrainLength = length;
      	}else{
      		log.error("Location length can not exceed max train length");
 			JOptionPane.showMessageDialog(null,

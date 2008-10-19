@@ -11,6 +11,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.OperationsFrame;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -325,6 +326,53 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 								"Engine will not move!",
 								JOptionPane.ERROR_MESSAGE);
 						return;
+					}
+				}
+			}
+			// is this engine part of a consist?
+			if (_engine.getConsist() != null){
+				if (JOptionPane.showConfirmDialog(this,
+						"This engine is part of a consist, do you want the other engines to also have the same settings?",
+						"Engine is part of a consist",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					List engines = _engine.getConsist().getEngines();
+					for(int i=0; i<engines.size(); i++){
+						Engine engine = (Engine)engines.get(i);
+						if (engine == _engine)
+							continue;
+						if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+							engine.setLocation(null, null);
+						} else {
+							String status = engine.setLocation((Location) locationBox.getSelectedItem(),
+								(Track)trackLocationBox.getSelectedItem());
+							if (!status.equals(Engine.OKAY)){
+								log.debug ("Can't set the location for all of the engines in the consist because of "+ status);
+								JOptionPane.showMessageDialog(this,
+										"Can't set the location for all of the engines in the consist because of "+ status,
+										"Can not update engine location",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+						if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+							engine.setDestination(null, null);
+						} else {
+							String status = engine.setDestination((Location) destinationBox.getSelectedItem(),
+									(Track)trackDestinationBox.getSelectedItem());
+							if (!status.equals(Engine.OKAY)){
+								log.debug ("Can't set the destination for all of the engines in the consist because of "+ status);
+								JOptionPane.showMessageDialog(this,
+										"Can't set the destination for all of the engines in the consist because of "+ status,
+										"Can not update engine destination",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+						if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
+							engine.setTrain(null);
+						} else {
+							engine.setTrain((Train)trainBox.getSelectedItem());
+						}
 					}
 				}
 			}
