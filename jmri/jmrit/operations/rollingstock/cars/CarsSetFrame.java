@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -325,6 +325,53 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 								"Car will not move!",
 								JOptionPane.ERROR_MESSAGE);
 						return;
+					}
+				}
+			}
+			// is this car part of a kernel?
+			if (_car.getKernel() != null){
+				if (JOptionPane.showConfirmDialog(this,
+						"This car is part of a kernel, do you want the other cars to also have the same settings?",
+						"Car is part of a kernel",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					List kCars = _car.getKernel().getCars();
+					for(int i=0; i<kCars.size(); i++){
+						Car kCar = (Car)kCars.get(i);
+						if (kCar == _car)
+							continue;
+						if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+							kCar.setLocation(null, null);
+						} else {
+							String status = kCar.setLocation((Location) locationBox.getSelectedItem(),
+								(Track)trackLocationBox.getSelectedItem());
+							if (!status.equals(Car.OKAY)){
+								log.debug ("Can't set the location for all of the cars in the kernel because of "+ status);
+								JOptionPane.showMessageDialog(this,
+										"Can't set the location for all of the cars in the kernel because of "+ status,
+										"Can not update car location",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+						if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+							kCar.setDestination(null, null);
+						} else {
+							String status = kCar.setDestination((Location) destinationBox.getSelectedItem(),
+									(Track)trackDestinationBox.getSelectedItem());
+							if (!status.equals(Car.OKAY)){
+								log.debug ("Can't set the destination for all of the cars in the kernel because of "+ status);
+								JOptionPane.showMessageDialog(this,
+										"Can't set the destination for all of the cars in the kernel because of "+ status,
+										"Can not update car destination",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+						if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
+							kCar.setTrain(null);
+						} else {
+							kCar.setTrain((Train)trainBox.getSelectedItem());
+						}
 					}
 				}
 			}
