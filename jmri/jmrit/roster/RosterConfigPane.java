@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class RosterConfigPane extends JPanel {
 
@@ -43,31 +43,30 @@ public class RosterConfigPane extends JPanel {
             public String getDescription() { return "roster.xml only"; }
         };
         
-        fc.setDialogTitle("Find desired roster.xml file");
+        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        fc.setDialogTitle(rb.getString("DialogTitleMove"));
         fc.setFileFilter(filt);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel("Roster info location:"));
+        p.add(new JLabel(rb.getString("LabelMoveLocation")));
 
         p.add(filename = new JLabel(Roster.getFileLocation()));
         // don't show default location, so it's not deemed a user selection
         // and saved
         if (jmri.jmrit.XmlFile.prefsDir().equals(Roster.getFileLocation()))
             filename.setText("");
-        JButton b = new JButton("Set ...");
+        JButton b = new JButton(rb.getString("ButtonSetDots"));
 
         parent = this;
         b.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+                java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
                 // prompt with instructions
                 if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(parent.getTopLevelAncestor(), 
-                "To use this option, you must already have alternate roster information (a\n"+
-                "\"roster.xml\" file and a \"roster\" directory) available somewhere on your\n"+
-                "computer other than the standard location. To use that non-standard roster\n"+
-                "information, find and select its roster.xml file using the next panel.", 
-                "Are you sure you want to continue?",
+                rb.getString("DialogMsgMoveWarning"), 
+                rb.getString("DialogMsgMoveQuestion"),
                 JOptionPane.OK_CANCEL_OPTION
                 )) return;
                 
@@ -82,7 +81,7 @@ public class RosterConfigPane extends JPanel {
             }
         });
         p.add(b);
-        b = new JButton("Reset");
+        b = new JButton(rb.getString("ButtonReset"));
         b.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 filename.setText("");
@@ -95,7 +94,7 @@ public class RosterConfigPane extends JPanel {
 
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
-        p2.add(new JLabel("Default owner name: "));
+        p2.add(new JLabel(rb.getString("LabelDefaultOwner")));
         owner.setText(RosterEntry.getDefaultOwner());
         p2.add(owner);
         add(p2);
