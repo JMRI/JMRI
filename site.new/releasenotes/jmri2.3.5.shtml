@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.4 2008-10-18 17:09:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.5 2008-10-19 18:21:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -144,6 +144,14 @@ optionally print the car comment field in manifests and switch lists.
 
 <p>
 Peter Ulvestad added CV3 and 4 to the SoundTraxx DSX Diesel definition.
+
+<p>
+David Duchamp fixed a throughput problem with the C/MRI serial connection.
+
+<p>
+The instruction dialog box for moving the roster location
+(in <a href="http://jmri.sf.net/help/en/package/apps/AppConfigPanel.shtml#roster">preferences</a>)
+has been updated to reduce the possibility of confusion.
 
 <!--#include virtual="/Footer" -->
 
