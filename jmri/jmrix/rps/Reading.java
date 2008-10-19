@@ -7,17 +7,28 @@ package jmri.jmrix.rps;
  * <P>
  * The values are in time units (nominally usec), and need to be converted
  * to space units during later calculations.
+ * <p>
+ * The values are indexed by Receiver number, as known to the RPS system.
+ * For example, getValue(2) will return the time from 
+ * RPS receiver 2.
  *
+ *<p>
  * Objects of this class are immutable once created.
  *
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @version	$Revision: 1.5 $
  */
 public class Reading {
 
     public Reading(int id, double[] values) {
         this.id = id;
         this.values = values;
+    }
+        
+    public Reading(int id, double[] values, String raw) {
+        this.id = id;
+        this.values = values;
+        this.rawData = raw;
     }
         
     public Reading(int id, double[] values, int time) {
@@ -69,13 +80,6 @@ public class Reading {
     double[] values;
     int time; // in msec since epoch
         
-    /**
-     * Preserve a reference to raw data for possible later logging
-     */
-    public void setRawData(Object o) {
-        rawData = o;
-    }
-    
     public String toString() {
         String r = "Reading id="+getID()+" values=";
         for (int i = 0; i<getNSample(); i++) 
