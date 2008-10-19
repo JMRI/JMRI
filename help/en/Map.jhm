@@ -215,8 +215,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.TransitAddEdit_addTransit" url="package/jmri/jmrit/beantable/TransitAddEdit.shtml#addTransit" />
 	<mapID target="html.tools.scripting.FAQ" url="html/tools/scripting/FAQ.shtml" />
 	<mapID target="html.tools.signaling.index_table" url="html/tools/signaling/index.shtml#table" />
-	<mapID target="html.tools.throttle.ThrottleChapter3_ViewPanels" url="html/tools/throttle/ThrottleChapter3.shtml#ViewPanels" />
 	<mapID target="package.jmri.jmrit.beantable.LogixAddEdit" url="package/jmri/jmrit/beantable/LogixAddEdit.shtml" />
+	<mapID target="html.tools.throttle.ThrottleChapter3_ViewPanels" url="html/tools/throttle/ThrottleChapter3.shtml#ViewPanels" />
 	<mapID target="html.tools.throttle.ThrottleChapter4_SaveMultiple" url="html/tools/throttle/ThrottleChapter4.shtml#SaveMultiple" />
 	<mapID target="DecoderProManual.index_Top" url="DecoderProManual/index.shtml#Top" />
 	<mapID target="html.tools.automation.index" url="html/tools/automation/index.shtml" />
@@ -242,6 +242,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.downloader.LoaderFrame" url="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml" />
 	<mapID target="html.apps.DecoderPro.MultiDecoder_digitraxproposal" url="html/apps/DecoderPro/MultiDecoder.shtml#digitraxproposal" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_terms" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#terms" />
+	<mapID target="html.hardware.nce.NCE_vianetwork" url="html/hardware/nce/NCE.shtml#vianetwork" />
 	<mapID target="html.apps.LocoTools.index_locoio" url="html/apps/LocoTools/index.shtml#locoio" />
 	<mapID target="DecoderProManual.Basic_Programming_Select Decoder" url="DecoderProManual/Basic_Programming.shtml#Select Decoder" />
 	<mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml" />

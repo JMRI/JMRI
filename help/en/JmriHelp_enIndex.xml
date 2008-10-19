@@ -128,6 +128,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="PM4" target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
    <indexitem text="PR2" target="html.hardware.loconet.PR2"/>
    <indexitem text="PR3" target="html.hardware.loconet.PR3"/>
+   <indexitem text="Preferences" target="package.apps.AppConfigPanel">
+      <indexitem text="Advanced" target="package.apps.AppConfigPanel_advanced"/>
+   </indexitem>
    <indexitem text="Programmers">
       <indexitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming_Basic Programmer"/>
       <indexitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
