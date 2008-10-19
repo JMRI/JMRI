@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.13 2008-07-06 15:34:46 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.14 2008-10-19 18:10:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -166,6 +166,7 @@ Click "Add File", which will open a file section window in which you can select 
 desired file.  If you later want to stop executing a particular script at startup, 
 click the "Remove" button next to the filename.
 
+<a id="roster">
 <dt>Set the location of the roster
 <dd>
 Normally, the roster is stored in a standard location
