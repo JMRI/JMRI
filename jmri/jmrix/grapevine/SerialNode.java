@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -378,7 +378,7 @@ public class SerialNode extends AbstractNode {
     public void registerSensor(Sensor s, int i) {
         if (log.isDebugEnabled()) log.debug("Register sensor "+s.getSystemName()+" index "+i);
         // validate the sensor ordinal
-        if ( (i<0) || (i> (inputBits[nodeType] - 1)) || (i>MAXSENSORS) ) {
+        if ( (i<0) || (i> (inputBits[nodeType])) || (i>MAXSENSORS) ) {
             log.error("Unexpected sensor ordinal in registerSensor: "+Integer.toString(i));
             return;
         }
