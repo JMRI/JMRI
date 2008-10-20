@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -30,6 +30,9 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         setToolTipText("<no item>");  // activates ToolTip, sets default
     }
     
+    public void dispose() {
+        Distributor.instance().removeMeasurementListener(this);
+    }
     /**
      * Provide tool tip text that depends on 
      * what's under the cursor.
