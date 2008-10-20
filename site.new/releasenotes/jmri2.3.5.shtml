@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.5 2008-10-19 18:21:06 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.6 2008-10-20 20:06:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,9 +149,24 @@ Peter Ulvestad added CV3 and 4 to the SoundTraxx DSX Diesel definition.
 David Duchamp fixed a throughput problem with the C/MRI serial connection.
 
 <p>
+Fixed a problem with the RPS panel icons that was introduced in JMRI 2.3.3.
+
+<p>
 The instruction dialog box for moving the roster location
 (in <a href="http://jmri.sf.net/help/en/package/apps/AppConfigPanel.shtml#roster">preferences</a>)
 has been updated to reduce the possibility of confusion.
+
+<p>
+The internals of the
+<a href="http://jmri.sourceforge.net/help/en/html/hardware/rps/index.shtml">RPS</a>
+support received a major overhaul.
+It should now be possible to use non-consecutive receiver addresses,
+error handling was updated, and RPS now works with an
+<a href="http://jmri.sourceforge.net/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>.
+
+<p>
+Fixed a problem that prevented the 24th (last) sensor on a Grapevine board
+from properly detecting motion of a train.
 
 <!--#include virtual="/Footer" -->
 

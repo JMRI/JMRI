@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.53 2008-09-07 04:00:37 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.54 2008-10-20 20:06:12 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -158,6 +158,10 @@
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
 	<LI>Paul Fraker, who wrote the documentation for the Throttles
+	<li>Joe Fugate and the other people of 
+	<a href="http://model-railroad-hobbyist.com">Model Railroad Hobbyist</a> emagazine for
+	putting the 
+	<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clincs from the NMRA 2008 Anaheim convention</a> on the web.
 <a name="G"></A>
 	<LI>Simon Ginsburg has helped with advanced consisting, provided some Digitrax 
 	definition files, and translated much of DecoderPro into German
