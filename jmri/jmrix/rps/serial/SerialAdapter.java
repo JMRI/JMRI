@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -402,10 +402,11 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
             c.readRecord();
     
+            // values are stored in 1-N of the output array; 0 not used
             int count = c.getColumnCount()-SKIPCOLS;
-            double[] vals = new double[count];
-            for (int i=0; i<count; i++) {
-                vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
+            double[] vals = new double[count+1];
+            for (int i=1; i<count+1; i++) {
+                vals[i] = Double.valueOf(c.get(i+SKIPCOLS-1)).doubleValue();
             }
             
             Reading r = new Reading(Engine.instance().getPolledAddress(), vals, s);
@@ -417,17 +418,17 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             c.readRecord();
     
             int count = (c.getColumnCount()-2)/2;  // skip 'ADR, DAT,'
-            double[] vals = new double[Engine.instance().getReceiverCount()];
+            double[] vals = new double[Engine.instance().getMaxReceiverNumber()+1]; // Receiver 2 goes in element 2
             for (int i=0; i<vals.length; i++) vals[i] = 0.0;
             try {
-                for (int i=0; i<count; i++) {
-                    int index = Integer.parseInt(c.get(2+i*2))-1;  
+                for (int i=0; i<count; i++) {  // i is zero-based count of input pairs
+                    int index = Integer.parseInt(c.get(2+i*2));  // index is receiver number
                     // numbers are from one for valid receivers
                     // the null message starts with index zero
                     if (index<0) continue; 
                     if (index>=vals.length) { // data for undefined Receiver
                         log.warn("Data from unexpected receiver "+index+", creating receiver");
-                        Engine.instance().setReceiverCount(index+1);
+                        Engine.instance().setMaxReceiverNumber(index+1);
                         // make vals longer
                         double[] temp = new double[index+1];
                         for (int j = 0; j<vals.length; j++) temp[j] = vals[j];

@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -155,7 +155,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             ((MeasurementRep)measurementRepList.get(i)).draw(g2);
         }
         if (showReceivers) { // draw receivers
-            for (int i = 1; i<Engine.instance().getReceiverCount()+1; i++) {  // indexed from 1
+            for (int i = 1; i<Engine.instance().getMaxReceiverNumber()+1; i++) {  // indexed from 1
                 Receiver r = Engine.instance().getReceiver(i);
                 Point3d p = Engine.instance().getReceiverPosition(i);
                 if (p!=null && r != null) {

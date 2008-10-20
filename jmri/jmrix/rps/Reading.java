@@ -16,7 +16,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Reading {
 
@@ -57,7 +57,11 @@ public class Reading {
         return id;
     }
     
-    public int getNSample() { return values.length; }
+    /**
+     * NValues is
+     * really the highest receiver number possible.
+     */
+    public int getNValues() { return values.length-1; }
     
     /**
      * Convenience method to get a specific one of the values
@@ -82,8 +86,8 @@ public class Reading {
         
     public String toString() {
         String r = "Reading id="+getID()+" values=";
-        for (int i = 0; i<getNSample(); i++) 
-            r+=""+(int)getValue(i)+((i!=(getNSample()-1))?",":" ");
+        for (int i = 1; i<=getNValues(); i++) 
+            r+=""+(int)getValue(i)+((i!=(getNValues()))?",":" ");
         return r;
     }
     

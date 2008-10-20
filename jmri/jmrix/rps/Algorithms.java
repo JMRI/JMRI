@@ -10,7 +10,7 @@ import javax.vecmath.Point3d;
  * Provide central access to the RPS algorithms
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class Algorithms implements Constants {
 
@@ -18,7 +18,8 @@ public class Algorithms implements Constants {
     static final String[] names = new String[] {
                         "Ash 2.0",
                         "Ash 2.1",
-                        "Ash 2.2"
+                        "Ash 2.2",
+                        "Analytic A"
                         };
     
     public static JComboBox algorithmBox() {
@@ -39,6 +40,9 @@ public class Algorithms implements Constants {
                 
         else if (name.equals(names[2]))
                 return new Ash2_2Algorithm(points, vs, offset);
+                
+        else if (name.equals(names[3]))
+                return new Analytic_AAlgorithm(points, vs, offset);
                 
         else  // default is most recent
                 return new  Ash2_1Algorithm(points, vs);

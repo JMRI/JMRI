@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class PositionFileTest extends TestCase {
 
@@ -38,9 +38,12 @@ public class PositionFileTest extends TestCase {
     public void testReadingElement() {
         PositionFile f = new PositionFile();
         
-        Reading in = new Reading(21, new double[]{11,12,13,14});
+        Reading in = new Reading(21, new double[]{0.,11,12,13,14});
+
         Element e = f.readingElement(in);
+
         Reading out = f.readingFromElement(e);
+
         checkReading(in, out);        
     }
     
@@ -52,9 +55,9 @@ public class PositionFileTest extends TestCase {
     
     void checkReading(Reading first, Reading second) {
 	    Assert.assertEquals("id ok", first.getID(),second.getID());
-	    Assert.assertEquals("num ok", first.getNSample(),second.getNSample());
+	    Assert.assertEquals("num ok", first.getNValues(),second.getNValues());
 	    
-        for (int i = 0; i<first.getNSample(); i++) {
+        for (int i = 1; i<=first.getNValues(); i++) {
             Assert.assertTrue(""+i+" ok", Math.abs(first.getValue(i)-second.getValue(i))<0.001);
         }
     }

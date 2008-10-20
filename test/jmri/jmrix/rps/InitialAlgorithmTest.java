@@ -16,14 +16,14 @@ import javax.vecmath.Point3d;
  * is (0,0,12)
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class InitialAlgorithmTest extends TestCase {
         
 	double vs = 0.0344; // SI default for testing
 
 	public void testCalc4() {
-	    Reading r = new Reading(21, new double[]{7./vs, 13./vs, 13./vs, 13./vs});
+	    Reading r = new Reading(21, new double[]{0., 7./vs, 13./vs, 13./vs, 13./vs});
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
@@ -40,7 +40,7 @@ public class InitialAlgorithmTest extends TestCase {
 	}
         
 	public void testCalc3_not4() {
-	    Reading r = new Reading(21, new double[]{7./vs, 13./vs, 13./vs});
+	    Reading r = new Reading(21, new double[]{0., 7./vs, 13./vs, 13./vs});
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
@@ -56,7 +56,7 @@ public class InitialAlgorithmTest extends TestCase {
 	}
         
 	public void testCalc3_not1() {
-	    Reading r = new Reading(21, new double[]{13./vs, 13./vs, 13./vs});
+	    Reading r = new Reading(21, new double[]{0., 13./vs, 13./vs, 13./vs});
 	    
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
 	    Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
@@ -72,7 +72,7 @@ public class InitialAlgorithmTest extends TestCase {
 	}
         
 	public void testCalc3_not2() {
-	    Reading r = new Reading(21, new double[]{7./vs, 13./vs, 13./vs});
+	    Reading r = new Reading(21, new double[]{0., 7./vs, 13./vs, 13./vs});
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
@@ -88,7 +88,7 @@ public class InitialAlgorithmTest extends TestCase {
 	}
         
 	public void testCalc3_not3() {
-	    Reading r = new Reading(21, new double[]{7./vs, 13./vs, 13./vs});
+	    Reading r = new Reading(21, new double[]{0., 7./vs, 13./vs, 13./vs});
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
@@ -106,19 +106,20 @@ public class InitialAlgorithmTest extends TestCase {
 	// from here down is testing infrastructure
 
 	public InitialAlgorithmTest(String s) {
-            super(s);
+        super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-            String[] testCaseName = {InitialAlgorithmTest.class.getName()};
-            junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {InitialAlgorithmTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-            TestSuite suite = new TestSuite(InitialAlgorithmTest.class);
-            return suite;
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite(InitialAlgorithmTest.class);
+        return suite;
 	}
 
 }

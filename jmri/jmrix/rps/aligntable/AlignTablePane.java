@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -79,14 +79,14 @@ public class AlignTablePane extends javax.swing.JPanel {
         p.setLayout(new FlowLayout());
 
         p.add(new JLabel(rb.getString("LabelNumCol")));
-        num.setText(""+Engine.instance().getReceiverCount());
+        num.setText(""+Engine.instance().getMaxReceiverNumber());
         p.add(num);
         
         JButton b = new JButton(rb.getString("ButtonSet"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 // set number of columns
-                Engine.instance().setReceiverCount(
+                Engine.instance().setMaxReceiverNumber(
                     Integer.parseInt(num.getText()));
                 // mark modification
                 flag.setModifiedFlag(true);
@@ -201,7 +201,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         public int getColumnCount () {return LAST+1;}
 
         public int getRowCount () {
-            return Engine.instance().getReceiverCount();
+            return Engine.instance().getMaxReceiverNumber();
         }
 
         public String getColumnName(int c) {

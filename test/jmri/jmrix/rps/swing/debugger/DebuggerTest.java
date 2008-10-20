@@ -14,14 +14,14 @@ import javax.vecmath.Point3d;
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class DebuggerTest extends TestCase {
 
     public void testCtor() throws Exception {
 
         // create a context
-        Engine.instance().setReceiverCount(4);
+        Engine.instance().setMaxReceiverNumber(4);
         Engine.instance().setReceiver(1,new Receiver(new Point3d(1,2,3)));
         Engine.instance().setReceiver(2,new Receiver(new Point3d(1,2,3)));
         Engine.instance().setReceiver(3,new Receiver(new Point3d(1,2,3)));

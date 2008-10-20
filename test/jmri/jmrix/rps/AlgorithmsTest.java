@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * not all the package tests.
  *
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class AlgorithmsTest extends TestCase {
 
@@ -36,11 +36,16 @@ public class AlgorithmsTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.rps.AlgorithmsTest");
 
         suite.addTest(InitialAlgorithmTest.suite());
-        suite.addTest(Ash1_0AlgorithmTest.suite());
-        suite.addTest(Ash1_1AlgorithmTest.suite());
+        
+        // suite.addTest(Ash1_0AlgorithmTest.suite());
+        // suite.addTest(Ash1_1AlgorithmTest.suite());
+        
         suite.addTest(Ash2_0AlgorithmTest.suite());
         suite.addTest(Ash2_1AlgorithmTest.suite());
         suite.addTest(Ash2_2AlgorithmTest.suite());
+        
+        
+        // suite.addTest(Analytic_AAlgorithmTest.suite());
 
         return suite;
     }

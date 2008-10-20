@@ -5,21 +5,22 @@ package jmri.jmrix.rps;
 import javax.vecmath.Point3d;
 
 /**
- * Some helpful implementations and values for Calculators
+ * Some helpful implementations and values for Calculators.
  *
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @version	$Revision: 1.4 $
  */
 public abstract class AbstractCalculator implements Calculator {
 
-    // Sensor position objects
+    // Sensor position objects, fully packed array indexed from zero
     Point3d sensors[];
 
-    // values for usual calculators
-    double [] Tr;
-    double [] Xr;
-    double [] Yr;
-    double [] Zr;
+    // Values for usual calculators
+    // These are fully packed (start at index 0, no skipped entries)
+    double [] Tr;  // received time
+    double [] Xr;  // receiver X
+    double [] Yr;  // receiver Y
+    double [] Zr;  // receiver Z
     int nr;
     
     public void prep(Reading r) {
@@ -31,9 +32,11 @@ public abstract class AbstractCalculator implements Calculator {
             if (sensors.length>=2 && sensors[1]!=null) log.debug("Sensor[1]: "+sensors[1].x+","+sensors[1].y+","+sensors[1].z);
         }
 
-        nr = r.getNSample();
-        if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
-        nr = Math.min(nr, sensors.length); // accept the shortest
+        nr = r.getNValues(); 
+        
+        // zero doesn't count in receivers
+        if (nr != sensors.length-1) log.error("Mismatch: "+nr+" readings, "+(sensors.length-1)+" receivers");
+        nr = Math.min(nr, sensors.length-1); // accept the shortest
         
         Tr = new double[nr];
         Xr = new double[nr];
@@ -42,7 +45,7 @@ public abstract class AbstractCalculator implements Calculator {
         
         // generate vector
         int j = 0;
-        for (int i = 0; i<nr; i++) {
+        for (int i = 0; i<=nr; i++) {
             if (sensors[i]!=null) {
                 Tr[j] = r.getValue(i);
                 Xr[j] = sensors[i].x;

@@ -16,12 +16,11 @@ import javax.vecmath.Point3d;
  * intellectual property status of this algorithm.  
  * Use it at your own risk.
  *
- *
-
-<P>
+ * <p>
+ * 
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 

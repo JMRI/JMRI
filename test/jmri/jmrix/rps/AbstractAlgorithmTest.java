@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractAlgorithmTest extends TestCase {
         
@@ -29,6 +29,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 	double vs = 0.0344;  // SI default for testing
 
     Point3d[] receivers1 = new Point3d[]{
+        null,
 	    new Point3d(0.0f,  0.0f, 10.0f),
 	    new Point3d(-3.0f, 4.0f, 5.0f),
 	    new Point3d(-3.0f,-4.0f, 5.0f),
@@ -44,6 +45,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
 
     Point3d[] receivers2 = new Point3d[]{
+        null,
 	    new Point3d(0.0f,  0.0f, 15.0f),
 	    new Point3d(-30.0f, 40.0f, 10.0f),
 	    new Point3d(-30.0f,-40.0f, 10.0f),
@@ -59,6 +61,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
 
     Point3d[] receivers3 = new Point3d[]{
+        null,
 	    new Point3d(0.0f,  0.0f, 15.0f),
 	    new Point3d(-30.0f, 40.0f, 10.0f),
 	    new Point3d(-30.0f,-40.0f, 10.0f),
@@ -82,6 +85,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
     // bad point
     Point3d[] receivers4 = new Point3d[]{
+        null,
 	    new Point3d(0.0f,  0.0f, 15.0f),
 	    new Point3d(-30.0f, 40.0f, 10.0f),
 	    new Point3d(-30.0f,-40.0f, 10.0f),
@@ -98,6 +102,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
 
     Point3d[] receivers5 = new Point3d[]{
+        null,
 	    new Point3d(-3.0f, 4.0f, 9.0f),
 	    new Point3d(-3.0f,-4.0f, 10.0f),
 	    new Point3d(5.0f,  0.0f, 11.0f),
@@ -112,6 +117,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
 
     Point3d[] receivers6 = new Point3d[]{
+        null,
 	    new Point3d(10.0f,  0.0f, 12.0f),
 	    new Point3d(-3.0f,-4.0f, 10.0f),
 	    new Point3d(5.0f,  0.0f, 11.0f),
@@ -126,6 +132,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
 
     Point3d[] receivers7 = new Point3d[]{
+        null,
 	    new Point3d(10.0f,  0.0f, 12.0f),
 	    new Point3d(-3.0f, 4.0f, 9.0f),
 	    new Point3d(5.0f,  0.0f, 11.0f),
@@ -141,7 +148,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
 
     // infrastructure
     
-    double tolerance = 0.01;
+    double tolerance = 0.05;
     
     double distance(Point3d p, Point3d q) {
         return Math.sqrt(
@@ -157,7 +164,10 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     double[] distances(Point3d[] ps, double vs, Point3d location) {
         double[] retval = new double[ps.length];
         for (int i = 0; i<ps.length; i++) {
-            retval[i] = distance(ps[i], location)/vs;
+            if (ps[i]!=null)
+                retval[i] = distance(ps[i], location)/vs;
+            else
+                retval[i] = 0.;
         }
         return retval;
     }

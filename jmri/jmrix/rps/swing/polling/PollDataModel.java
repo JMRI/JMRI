@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
@@ -150,7 +150,7 @@ public class PollDataModel extends AbstractTableModel
             modifiedFlag.setModifiedFlag(true);
             return;
         case TYPECOL:
-            System.out.println("Got "+((JComboBox)value).getSelectedItem());
+            log.error("Got "+((JComboBox)value).getSelectedItem()+" but did not act");
         }
     }
     

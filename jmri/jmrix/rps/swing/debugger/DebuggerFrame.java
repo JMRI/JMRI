@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 
 
@@ -25,7 +25,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     public DebuggerFrame() {
         super();
         
-        NUMSENSORS = Engine.instance().getReceiverCount();
+        NUMSENSORS = Engine.instance().getMaxReceiverNumber();
 
         setTitle(title());
     }
@@ -263,19 +263,15 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     Measurement lastPoint = null;
     
     Reading getReadingFromTimeFields() {
+        
+        double[] values = new double[NUMSENSORS+1];
+        
         // parse input
-        int count = 0;
-        for (int i = 0; i<NUMSENSORS; i++) {
-            if (!timep.times[i].getText().equals("")) count++;
-        }
-        
-        double[] values = new double[count];
-        
         int index = 0;
-        for (int i = 0; i<NUMSENSORS; i++) {
-            if (!timep.times[i].getText().equals("")) {
-                values[index] = Double.valueOf(timep.times[i].getText()).doubleValue();
-                index++;
+        for (int i = 0; i<=NUMSENSORS; i++) {
+            values[i] = 0.;
+            if ((timep.times[i]!=null) && !timep.times[i].getText().equals("")) {
+                values[i] = Double.valueOf(timep.times[i].getText()).doubleValue();
             }
         }
 

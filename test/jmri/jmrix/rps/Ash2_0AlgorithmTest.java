@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * is (0,0,12)
  * 
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Ash2_0AlgorithmTest extends AbstractAlgorithmTest {
         
@@ -31,14 +31,15 @@ public class Ash2_0AlgorithmTest extends AbstractAlgorithmTest {
 
 	// Main entry point
 	static public void main(String[] args) {
-            String[] testCaseName = {Ash2_0AlgorithmTest.class.getName()};
-            junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {Ash2_0AlgorithmTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-            TestSuite suite = new TestSuite(Ash2_0AlgorithmTest.class);
-            return suite;
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite(Ash2_0AlgorithmTest.class);
+        return suite;
 	}
 
     // The minimal setup for log4J

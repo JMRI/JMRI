@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -53,7 +53,7 @@ public class Ash1_0Algorithm implements Calculator {
     
     public Measurement convert(Reading r) {
     
-        int nr = r.getNSample();
+        int nr = r.getNValues();
         if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
         nr = Math.min(nr, sensors.length); // accept the shortest
         

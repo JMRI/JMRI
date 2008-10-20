@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class InitialAlgorithm implements Calculator {
 
@@ -68,11 +68,11 @@ public class InitialAlgorithm implements Calculator {
     double vsound;
     
     public Measurement convert(Reading r) {
-        ngps = r.getNSample();
-        ri = r.getValue(0)*vsound;
-        rj = r.getValue(1)*vsound;
-        rk = r.getValue(2)*vsound;
-        if (r.getNSample()>3) rl = r.getValue(3)*vsound;
+        ngps = r.getNValues();
+        ri = r.getValue(1)*vsound;
+        rj = r.getValue(2)*vsound;
+        rk = r.getValue(3)*vsound;
+        if (r.getNValues()>3) rl = r.getValue(4)*vsound;
         
         log.debug("inputs "+ri+" "+rj+" "+rk+" "+rl);
         

@@ -19,7 +19,8 @@ import java.io.*;
 /**
  * Engine does basic computations of RPS system.
  *<p>
- * Holds all the alignment info. Receiver numbers are indexed from one.
+ * Holds all the alignment info. Receivers are indexed by their 
+ * RPS receiver number in all cases.
  *<p>
  * Gets a reading from the Distributor and passes back a Measurement
  *<p>
@@ -29,7 +30,7 @@ import java.io.*;
  *</ul>
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 
 
@@ -71,20 +72,24 @@ public class Engine implements ReadingListener {
     Receiver[] receivers;
     
     /**
-     * Set the number of receivers
+     * Set the maximum receiver number expected. If the highest value
+     * in the hardware is 5, that's what's needed here.
+     
      */
-    public void setReceiverCount(int n) {
+    public void setMaxReceiverNumber(int n) {
         log.debug("setReceiverCount to "+n);
         if ((receivers!=null) && (n == receivers.length+1)) return;
         Receiver[] oldReceivers = receivers;
         receivers = new Receiver[n+1];  // n is highest address, so need n+1
         if (oldReceivers == null) return;
+        // clear new array
+        for (int i=0; i<receivers.length; i++) receivers[i] = null;
         // copy the existing receivers
         for (int i=0; i<Math.min(n+1, oldReceivers.length); i++)
             receivers[i] = oldReceivers[i];
     }
     
-    public int getReceiverCount() {
+    public int getMaxReceiverNumber() {
         return receivers.length-1;
     }
     
@@ -121,7 +126,7 @@ public class Engine implements ReadingListener {
         return algorithm;
     }
     
-    String algorithm = "Ash 2.1";
+    String algorithm = "Ash 2.1";  // default value, configured separately
     
     public void notify(Reading r) {
         // This implementation creates a new Calculator
@@ -134,34 +139,31 @@ public class Engine implements ReadingListener {
         log.debug("po false "+r.getID());
         pollOutstanding = false;
         
-        int count = 0;
+        // make a list of receiver positions to provide 
+        // to the new Calculator.  Missing/unconfigured receivers
+        // are null.
+        Point3d list[] = new Point3d[receivers.length];
         for (int i = 0; i<receivers.length; i++) {
-            if (receivers[i]!=null) 
-                count++;
-            else
-                log.error("receivers out of synch at index="+i);
-        }
-                
-        int index = 0;
-        log.debug("count is "+count);
-        
-        Point3d list[] = new Point3d[count];
-        for (int i = 0; i<receivers.length; i++) {
-            if (receivers[i]==null) continue;  // skip receivers not present
+       
+            if (receivers[i]==null) {
+                list[i] = null;
+                continue;  // skip receivers not present
+            }
+            
             Point3d p = getReceiverPosition(i);
             if ( p != null ) {
-                receivers[i].setLastTime((int)r.getValue(i-1));  // recievers numbered from 1
-                log.debug(" values "+receivers[i].getMinTime()+" "
-                                    +r.getValue(i-1)+" "
-                                    +receivers[i].getMaxTime());
-                if (receivers[i].isActive() && (receivers[i].getMinTime()<=r.getValue(i-1)) 
-                                            && (r.getValue(i-1) <= receivers[i].getMaxTime()))
-                    list[index] = p;
+                receivers[i].setLastTime((int)r.getValue(i));  // recievers numbered from 1
+                log.debug("    "+i+"th value min "+receivers[i].getMinTime()+" < time "
+                                    +r.getValue(i)+" < max "
+                                    +receivers[i].getMaxTime()+" at "+p);
+                if (receivers[i].isActive() && (receivers[i].getMinTime()<=r.getValue(i)) 
+                                            && (r.getValue(i) <= receivers[i].getMaxTime()))
+                    list[i] = p;
                 else
-                    list[index] = null;
-                index++;
+                    list[i] = null;
             } else {
-                log.error("Unexpected null position for receiver "+i);
+                list[i] = null;
+                log.error("Unexpected null position from receiver "+i);
             }
         }
         
@@ -192,7 +194,7 @@ public class Engine implements ReadingListener {
         pf.prepare();
         pf.setConstants(getVSound(), getOffset(), getAlgorithm());
         
-        for (int i = 1; i<=getReceiverCount(); i++) {
+        for (int i = 1; i<=getMaxReceiverNumber(); i++) {
             if (getReceiver(i) == null) continue;
             pf.setReceiver(i, getReceiver(i));
         }
@@ -214,12 +216,12 @@ public class Engine implements ReadingListener {
         setAlgorithm(pf.getAlgorithm());
         
         // get receivers
-        setReceiverCount(pf.maxReceiver());  // count from 1
+        setMaxReceiverNumber(pf.maxReceiver());  // count from 1
         Point3d p;
         boolean a;
         int min;
         int max;
-        for (int i = 1; i<=getReceiverCount(); i++) {    
+        for (int i = 1; i<=getMaxReceiverNumber(); i++) {    
             p = pf.getReceiverPosition(i);
             if (p == null) continue;
 
@@ -249,9 +251,9 @@ public class Engine implements ReadingListener {
     }
     
     protected void setDefaultAlignment() {
-        setReceiverCount(2);
-        setReceiver(0, new Receiver(new Point3d(0.0,0.0,72.0)));
-        setReceiver(1, new Receiver(new Point3d(72.0,0.0,72.0)));
+        setMaxReceiverNumber(2);
+        setReceiver(1, new Receiver(new Point3d(0.0,0.0,72.0)));
+        setReceiver(2, new Receiver(new Point3d(72.0,0.0,72.0)));
     }
     
     //**************************************

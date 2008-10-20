@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -159,7 +159,7 @@ public class Ash1_1Algorithm implements Calculator {
     
     public Measurement convert(Reading r) {
     
-        int nr = r.getNSample();
+        int nr = r.getNValues();
         if (nr != sensors.length) log.error("Mismatch: "+nr+" readings, "+sensors.length+" receivers");
         nr = Math.min(nr, sensors.length); // accept the shortest
         

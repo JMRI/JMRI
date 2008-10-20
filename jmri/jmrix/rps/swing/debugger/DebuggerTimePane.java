@@ -10,10 +10,13 @@ import javax.vecmath.Point3d;
 import java.io.*;
 
 /**
- * Pane for manual operation and debugging of the RPS system
+ * Pane for manual operation and debugging of the RPS system.
+ *<p>
+ * All index numbers here are 1-based, so they are the same
+ * as the RPS hardware number.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 
@@ -23,12 +26,13 @@ public class DebuggerTimePane extends JPanel
     public DebuggerTimePane() {
         super();
         
-        NUMSENSORS = Engine.instance().getReceiverCount();
+        NUMSENSORS = Engine.instance().getMaxReceiverNumber();
         
-        times = new JTextField[NUMSENSORS];
-        residuals = new JLabel[NUMSENSORS];
-        
-        for (int i = 0; i < NUMSENSORS; i++) {
+        times = new JTextField[NUMSENSORS+1];
+        residuals = new JLabel[NUMSENSORS+1];
+        times[0] = null;
+        residuals[0] = null;
+        for (int i = 1; i <= NUMSENSORS; i++) {
             times[i] = new JTextField(10);
             times[i].setText("");
             residuals[i] = new JLabel("          ");
@@ -43,7 +47,7 @@ public class DebuggerTimePane extends JPanel
 
     java.text.NumberFormat nf;
 
-    int NUMSENSORS = 6;
+    int NUMSENSORS;
     
     JTextField[] times;
     JLabel[] residuals;
@@ -60,10 +64,10 @@ public class DebuggerTimePane extends JPanel
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.GridLayout(NUMSENSORS, 2));
         
-        for (int i = 0; i< NUMSENSORS; i++) {
+        for (int i = 1; i<= NUMSENSORS; i++) {
             p1 = new JPanel();
             p1.setLayout(new FlowLayout());
-            p1.add(new JLabel("r"+(i+1)+":"));
+            p1.add(new JLabel("r"+i+":"));
             p1.add(times[i]);   
             p3.add(p1);
             p1 = new JPanel();
@@ -75,14 +79,26 @@ public class DebuggerTimePane extends JPanel
     }
         
     void setResidual(int i, Measurement m) {
+        if (times[i].getText().equals("")) {
+            residuals[i].setText(""); // just blank out
+            return;
+        }
         try {
-            Point3d p = Engine.instance().getReceiverPosition(i+1);
+            if (Engine.instance().getReceiver(i) == null) {
+                residuals[i].setText(""); // just blank out
+                return;
+            }
+            Point3d p = Engine.instance().getReceiverPosition(i);
             Point3d x = new Point3d((float)m.getX(), (float)m.getY(), (float)m.getZ());
             
             double rt = p.distance(x)/Engine.instance().getVSound();
             int res = (int) (rt-m.getReading().getValue(i))-Engine.instance().getOffset();
             residuals[i].setText(""+res);
-        } catch (Exception e) {} // just skip filling in
+            if (log.isDebugEnabled())
+                log.debug(" residual "+res+" from "+p+" vs "+x);
+        } catch (Exception e) {
+            residuals[i].setText(""); // just blank out
+        }
     }
     
     Measurement lastPoint = null;
@@ -95,7 +111,7 @@ public class DebuggerTimePane extends JPanel
         // to reduce the work used.
 
         // Display this set of time values
-        for (int i = 0; i<Math.min(r.getNSample(), times.length); i++) {
+        for (int i = 1; i<=Math.min(r.getNValues(), times.length); i++) {
             times[i].setText(nf.format(r.getValue(i)));
         }
         
@@ -103,7 +119,7 @@ public class DebuggerTimePane extends JPanel
 
     public void notify(Measurement m) {
         try {
-            for (int i=0; i<NUMSENSORS; i++) 
+            for (int i=1; i<=NUMSENSORS; i++) 
                 setResidual(i, m);
         } catch (Exception e) {
             log.error("Error setting residual: "+e);
