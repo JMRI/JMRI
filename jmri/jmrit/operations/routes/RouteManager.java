@@ -14,13 +14,14 @@ import java.awt.Dimension;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 
 /**
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RouteManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH = "listLength"; 
@@ -37,6 +38,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("RouteManager creating instance");
 			// create and load
 			_instance = new RouteManager();
+			OperationsXml.instance();				// load setup
 			RouteManagerXml.instance();				// load routes
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("RouteManager returns instance "+_instance);

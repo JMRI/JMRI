@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 import jmri.jmrit.operations.trains.Train;
 
@@ -24,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -46,6 +47,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("CarManager creating instance");
 			// create and load
 			_instance = new CarManager();
+			OperationsXml.instance();					// load setup
 	    	// create manager to load cars and their attributes
 	    	CarManagerXml.instance();
 			log.debug("Cars have been loaded!");

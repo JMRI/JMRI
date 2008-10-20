@@ -10,6 +10,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 import jmri.jmrit.operations.trains.Train;
 
@@ -25,7 +26,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -47,6 +48,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("EngineManager creating instance");
 			// create and load
 			_instance = new EngineManager();
+			OperationsXml.instance();					// load setup
 	    	// create manager to load engines and their attributes
 	    	EngineManagerXml.instance();
 			log.debug("Engines have been loaded!");

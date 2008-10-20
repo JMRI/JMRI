@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -131,9 +131,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		manager = TrainManager.instance();
 		managerXml = TrainManagerXml.instance();
 		routeManager = RouteManager.instance();
-		OperationsXml.instance();					// force settings to load 
-
-		// the following code sets the frame's initial state
 		
 		textName.setText(rb.getString("Name"));
 		textName.setVisible(true);

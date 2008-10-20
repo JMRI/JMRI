@@ -8,9 +8,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.OperationsFrame;
 
 
@@ -28,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -39,7 +37,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	EngineManagerXml managerXml = EngineManagerXml.instance();
 	EngineModels engineModels = EngineModels.instance();
 	CarManagerXml carManagerXml = CarManagerXml.instance();
-	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
 
 	Engine _engine;
@@ -113,12 +110,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	public void initComponents() {
-
-		// load managers
-		OperationsXml.instance();					// force settings to load 
-
-		// the following code sets the frame's initial state
-
 		textRoad.setText(rb.getString("Road"));
 		textRoad.setVisible(true);
 		textRoadNumber.setText(rb.getString("RoadNumber"));
@@ -430,23 +421,21 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 						newEngine.setTrain(e.getTrain());
 						manager.deregister(e);
 						managerXml.writeOperationsEngineFile();
-						trainManagerXml.writeOperationsTrainFile();
 						return;
 					}
 				}
 			}
-			addEngine ();
-			// save engine file
-			managerXml.writeOperationsEngineFile();
-			trainManagerXml.writeOperationsTrainFile();
+			addEngine();
+			
+			managerXml.writeOperationsEngineFile();		//save engine file
+			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("engine delete button actived");
-			Engine c = manager.newEngine(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
-			manager.deregister(c);
+			Engine e = manager.newEngine(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
+			manager.deregister(e);
 			// save engine file
 			managerXml.writeOperationsEngineFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 		if (ae.getSource() == addButton){
 			String roadNum = roadNumberTextField.getText();
@@ -456,8 +445,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			Engine c = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
-			if (c != null){
+			Engine e = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
+			if (e != null){
 				log.info("Can not add, engine already exists");
 				JOptionPane.showMessageDialog(this,
 						"Engine with road name and number already exists", "Can not add engine!",
@@ -467,7 +456,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			addEngine();
 			// save engine file
 			managerXml.writeOperationsEngineFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 		if (ae.getSource() == clearRoadNumberButton){
 			roadNumberTextField.setText("");

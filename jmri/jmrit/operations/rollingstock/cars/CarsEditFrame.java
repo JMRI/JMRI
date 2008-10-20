@@ -2,11 +2,9 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.TrainManagerXml; 
 import jmri.jmrit.operations.locations.LocationManager; 
 import jmri.jmrit.operations.locations.Location; 
 import jmri.jmrit.operations.locations.Track; 
-import jmri.jmrit.operations.setup.OperationsXml; 
 import jmri.jmrit.operations.setup.Setup; 
 import jmri.jmrit.operations.setup.Control; 
 import jmri.jmrit.operations.OperationsFrame; 
@@ -25,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -34,7 +32,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 	CarManager manager = CarManager.instance();
 	CarManagerXml managerXml = CarManagerXml.instance();
-	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
 
 	Car _car;
@@ -110,12 +107,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	}
 
 	public void initComponents() {
-
-		// load managers
-		OperationsXml.instance();					// force settings to load 
-
 		// the following code sets the frame's initial state
-
 		textRoad.setText(rb.getString("Road"));
 		textRoad.setVisible(true);
 		textRoadNumber.setText(rb.getString("RoadNumber"));
@@ -476,13 +468,13 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 							|| !_car.getNumber().equals(roadNumberTextField.getText())) {
 						// transfer car attributes since road name and number have changed
-						Car c = manager.newCar(_car.getRoad(), _car.getNumber());
+						Car oldcar = manager.newCar(_car.getRoad(), _car.getNumber());
 						Car newCar = addCar();
-						newCar.setDestination(c.getDestination(), c.getDestinationTrack());
-						newCar.setTrain(c.getTrain());
-						manager.deregister(c);
+						// set the car's destination and train
+						newCar.setDestination(oldcar.getDestination(), oldcar.getDestinationTrack());
+						newCar.setTrain(oldcar.getTrain());
+						manager.deregister(oldcar);
 						managerXml.writeOperationsCarFile();
-						trainManagerXml.writeOperationsTrainFile();
 						return;
 					}
 				}
@@ -490,7 +482,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			addCar ();
 			// save car file
 			managerXml.writeOperationsCarFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("car delete button actived");
@@ -498,7 +489,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			manager.deregister(c);
 			// save car file
 			managerXml.writeOperationsCarFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 		if (ae.getSource() == addButton){
 			String roadNum = roadNumberTextField.getText();
@@ -519,7 +509,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			addCar();
 			// save car file
 			managerXml.writeOperationsCarFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 		if (ae.getSource() == clearRoadNumberButton){
 			roadNumberTextField.setText("");

@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -115,8 +115,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		// load managers
 		manager = LocationManager.instance();
 		managerXml = LocationManagerXml.instance();
-		OperationsXml.instance();					// force settings to load 
-
+		
 		// the following code sets the frame's initial state
 		
 		textName.setText(rb.getString("Name"));
