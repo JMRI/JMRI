@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.10 2008-07-28 21:38:15 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.11 2008-10-21 03:49:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -97,7 +97,8 @@ Next, configure the JMRI program.
   <li>As a temporary measure during development of the system,
   there's a "Protocol" option to select.  The valid
   choices are "Version 1" and "Version 2"; your hardware determines which
-  to use. This will eventually be automated.
+  to use. Most current RPS systems use "Version 2".
+  This selection will eventually be automated.
   
   <li>Click "Save".  You'll be asked if it's OK for the program to
   quit, click "Yes".
@@ -112,13 +113,19 @@ Next, configure the JMRI program.
   This will open a new window.  
   
   <li>In the middle of that window, enter the number of
-  highest-numbered receiver you've got. 
+  highest-numbered receiver you've got.
+  For example, if you have three receivers numbered 2, 3 and 6, 
+  enter 6 in the field.
   Press the "Set" button next to that field.
   
   <li>In the table at the top, enter the X, Y and Z position of
   each of your receivers.  If you don't have a 
   receiver with a particular number, leave that row blank.
   For now, just enter approximate values.
+  
+  <li>Check the boxes next to each receiver you have hooked up,
+  and make sure that there's no box checked next for receiver numbers
+  that are not yet connected.
   
   <li>Click the "Set Defaults" button to save these positions as default values.
   They'll appear again when you next start the program.
