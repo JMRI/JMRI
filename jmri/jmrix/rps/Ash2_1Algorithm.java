@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * 
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
@@ -122,10 +122,10 @@ public class Ash2_1Algorithm extends AbstractCalculator {
 	 *							*/
 
     int	    offset	= 0;			//  Offset (usec), add to delay
-final static int TMAX = 35000;			//  Max. allowable delay (usec)
-final static int TMIN = 150;			//  Min. allowable delay (usec)
-final static int SMAX = 30;			//  Max. OK std. dev. (usec)
-final static int NMAX = 50;			//  Max. no. of receivers used
+    static int TMAX = 35000;			//  Max. allowable delay (usec)
+    static int TMIN = 150;			//  Min. allowable delay (usec)
+    static int SMAX = 30;			//  Max. OK std. dev. (usec)
+    static int NMAX = 50;			//  Max. no. of receivers used
 
 						//  Compute RPS Position  using
 RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   many
