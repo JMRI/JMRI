@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for control of the sound speed for the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -140,8 +140,8 @@ public class SoundSetPane extends JPanel
                 log.warn("resetting receiver number");
                 rcvr.setText("");
             }
-            log.debug("Rcvr "+i+" saw "+r.getValue(i-1));
-            double val = r.getValue(i-1);
+            log.debug("Rcvr "+i+" saw "+r.getValue(i));
+            double val = r.getValue(i);
             
             // can't use speed too small
             if (val<100) {
