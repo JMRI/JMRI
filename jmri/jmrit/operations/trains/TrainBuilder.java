@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class TrainBuilder{
 	
@@ -99,9 +99,9 @@ public class TrainBuilder{
 		this.train = train;
 		train.setStatus(BUILDING);
 		train.setBuilt(false);
+		train.setLeadEngine(null);
 		numberCars = 0;
 		maxWeight = 0;
-		train.iconEngine = null;
 		
 		// create build status file
 		File file = TrainManagerXml.instance().createTrainBuildReportFile(train.getName());
@@ -168,7 +168,7 @@ public class TrainBuilder{
 			}else{
 				requested = requested + rl.getMaxCarMoves();
 				rl.setCarMoves(0);					// clear the number of moves
-				rl.setTrack(null);		// used for staging only
+				rl.setStagingTrack(null);		// used for staging only
 				addLine(fileOut, "Location (" +rl.getName()+ ") requests " +rl.getMaxCarMoves()+ " moves");
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
@@ -179,51 +179,51 @@ public class TrainBuilder{
 		addLine(fileOut, "Route (" +train.getRoute().getName()+ ") requests " + requested + " cars and " + carMoves +" moves");
 
 		// determine if train is departing staging
-		Track departStage = null;
+		Track departStageTrack = null;
 		List stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
 			addLine(fileOut, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
 			for (int i=0; i<stagingTracks.size(); i++ ){
-				departStage = departLocation.getTrackById((String)stagingTracks.get(i));
-				addLine(fileOut, "Staging track ("+departStage.getName()+") has "+departStage.getNumberRS()+" engines and cars");
-				if (departStage.getNumberRS()>0 && getEngines(fileOut, departStage)){
+				departStageTrack = departLocation.getTrackById((String)stagingTracks.get(i));
+				addLine(fileOut, "Staging track ("+departStageTrack.getName()+") has "+departStageTrack.getNumberRS()+" engines and cars");
+				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut, departStageTrack)){
 					break;
 				} else {
-					departStage = null;
+					departStageTrack = null;
 				}
 			}
 		}
-		if (stagingTracks.size()>0 && departStage == null){
+		if (stagingTracks.size()>0 && departStageTrack == null){
 			buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
 			return;
 		}
 		// load engines for this train
-		if (departStage == null && !getEngines(fileOut, null)){
+		if (departStageTrack == null && !getEngines(fileOut, null)){
 			buildFailed(fileOut, "Could not get the required engines for this train");
 			return;
 		}
 
 		// get list of cars for this route
 		carList = carManager.getCarsAvailableTrainList(train);
-		// DAB this needs to be controled by each train
+		// TODO: DAB this needs to be controled by each train
 		if (requested > carList.size() && Control.fullTrainOnly){
 			buildFailed(fileOut, "The number of requested cars (" +requested+ ") for train (" +train.getName()+ ") is greater than the number available (" +carList.size()+ ")");
 			return;
 		}
 		// get any requirements for this train
-		boolean caboose = false;		// start off without any requirements
-		boolean fred = false;
+		boolean requiresCaboose = false;		// start off without any requirements
+		boolean requiresFred = false;
 		boolean foundFred = true;
 		boolean foundCaboose = true;
 		String textRequires = "none";
 		if (train.getRequirements()>0){
 			if ((train.getRequirements()& train.FRED) > 0){
-				fred = true;
+				requiresFred = true;
 				foundFred = false;
 				textRequires = "FRED";
 			} 
 			if ((train.getRequirements()& train.CABOOSE) > 0){
-				caboose = true;
+				requiresCaboose = true;
 				foundCaboose = false;
 				textRequires = "caboose";
 			}
@@ -258,7 +258,7 @@ public class TrainBuilder{
 				continue;
     		}
     		// all cars in staging must be accepted, so don't exclude if in staging
-    		if (departStage == null || !c.getTrack().getName().equals(departStage.getName())){
+    		if (departStageTrack == null || !c.getTrack().getName().equals(departStageTrack.getName())){
     			if (!train.acceptsRoadName(c.getRoad())){
     				addLine(fileOut, "Exclude car ("+c.getId()+") road ("+c.getRoad()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
@@ -307,15 +307,15 @@ public class TrainBuilder{
 		addLine(fileOut, "Found " +carList.size()+ " cars for train (" +train.getName()+ ")");
 
 		// adjust carlist to only have cars from one staging track
-		if (departStage != null){
+		if (departStageTrack != null){
 			// Make sure that all cars in staging are moved
-			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStage.getNumberRS());  // neg number moves more cars
+			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberRS());  // neg number moves more cars
 			int numRollingStockFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
 //				addLine(fileOut, "Check car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 				if (c.getLocationName().equals(departLocation.getName())){
-					if (c.getTrackName().equals(departStage.getName())){
+					if (c.getTrackName().equals(departStageTrack.getName())){
 						addLine(fileOut, "Staging car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
 						numRollingStockFromStaging++;
 					} else {
@@ -326,8 +326,8 @@ public class TrainBuilder{
 				}
 			}
 			// error if all of the cars in staging aren't available
-			if (numRollingStockFromStaging +numberEngines != departStage.getNumberRS()){
-				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStage.getNumberRS()-numRollingStockFromStaging)+" cars or engines can't be serviced");
+			if (numRollingStockFromStaging +numberEngines != departStageTrack.getNumberRS()){
+				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStageTrack.getNumberRS()-numRollingStockFromStaging)+" cars or engines can't be serviced");
 				return;
 			}
 		}
@@ -354,7 +354,7 @@ public class TrainBuilder{
 				if (rld == null){
 					addLine(fileOut, "Exclude car (" + c.getId()+ ") destination (" +c.getDestination().getName()+ ") not part of this train's route (" +train.getRoute().getName() +")");
 					// is this car departing staging?
-					if (c.getLocationName().equals(departLocation.getName()) && departStage != null){
+					if (c.getLocationName().equals(departLocation.getName()) && departStageTrack != null){
 						buildFailed(fileOut, "Car (" + c.getId()+ ") departing staging with destination that isn't part of this train's route");
 						return;
 					}
@@ -362,14 +362,40 @@ public class TrainBuilder{
 					carIndex--;
 				}
 			}
+		}
+		// now go through the car list and find a caboose or fred if required
+		// try and find a caboose that matches the engine's road
+		if(requiresCaboose && train.getCabooseRoad().equals("") && train.getLeadEngine() != null){
+			for (carIndex=0; carIndex<carList.size(); carIndex++){
+				Car car = carManager.getCarById((String) carList.get(carIndex));
+				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())){
+					if (car.getDestination() == null || car.getDestination() == terminateLocation){
+						addLine(fileOut,"Found caboose (" +car.getId()+ ") that matches engine road");
+						// remove all other cabooses from list
+						for (int i=0; i<carList.size(); i++){
+							Car testCar = carManager.getCarById((String) carList.get(i));
+							if (testCar.isCaboose() && testCar != car){
+								addLine(fileOut, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+") from car list");
+								carList.remove(carList.get(i));		// remove this car from the list
+								i--;
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+		for (carIndex=0; carIndex<carList.size(); carIndex++){
+			Car c = carManager.getCarById((String) carList.get(carIndex));
+			// find a caboose or card with FRED for this train if needed
 			// check for caboose or car with FRED
 			if (c.isCaboose()){
 				addLine(fileOut, "Car (" +c.getId()+ ") is a caboose");
-				if (departStage != null) foundCaboose = false;		// must move caboose from staging   
+				if (departStageTrack != null) foundCaboose = false;		// must move caboose from staging   
 			}
 			if (c.hasFred()){
 				addLine(fileOut, "Car (" +c.getId()+ ") has a FRED");
-				if (departStage != null) foundFred = false;			// must move car with FRED from staging
+				if (departStageTrack != null) foundFred = false;		// must move car with FRED from staging
 			}
 			
 			// remove cabooses and cars with FRED if not needed for train
@@ -379,13 +405,12 @@ public class TrainBuilder{
 				carIndex--;
 				continue;
 			}
-			// find a caboose or card with FRED for this train if needed
 			if (c.isCaboose() && !foundCaboose || c.hasFred() && !foundFred){	
 				if(c.getLocationName().equals(train.getTrainDepartsName())){
-					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStage != null){
-						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStage != null){
+					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStageTrack != null){
+						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStageTrack != null){
 							// find a track to place car
-							if (train.getTrainTerminatesRouteLocation().getTrack() == null){
+							if (train.getTrainTerminatesRouteLocation().getStagingTrack() == null){
 								List sls = terminateLocation.getTracksByMovesList(null);
 								for (int s = 0; s < sls.size(); s++){
 									Track destTrack = terminateLocation.getTrackById((String)sls.get(s));
@@ -398,10 +423,11 @@ public class TrainBuilder{
 										break;
 									}
 								}
-								addLine(fileOut,"Could not find a destination for ("+c.getId()+")");
+								if (!foundCaboose || !foundFred)
+									addLine(fileOut,"Could not find a destination for ("+c.getId()+")");
 							// terminate into staging	
-							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getTrack()).equals(c.OKAY)){
-								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getTrack());
+							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack()).equals(c.OKAY)){
+								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
 								if (c.isCaboose())
 									foundCaboose = true;
 								if (c.hasFred())
@@ -417,7 +443,7 @@ public class TrainBuilder{
 				}
 			}
 		}
-		if (fred && !foundFred || caboose && !foundCaboose){
+		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
 			buildFailed(fileOut, "Train ("+train.getName()+") requires "+textRequires+", none found at departure ("+train.getTrainDepartsName()+")");
 			return;
 		}
@@ -492,7 +518,7 @@ public class TrainBuilder{
 												return;
 											}
 											// is there a track assigned for staging cars?
-											if (rld.getTrack() == null){
+											if (rld.getStagingTrack() == null){
 												List sls = testDestination.getTracksByMovesList(null);
 												for (int s = 0; s < sls.size(); s++){
 													Track testTrack = testDestination.getTrackById((String)sls.get(s));
@@ -504,7 +530,7 @@ public class TrainBuilder{
 															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
 														// staging track with zero cars?
 														if (testTrack.getLocType().equals(testTrack.STAGING) && testTrack.getNumberRS() == 0){
-															rld.setTrack(testTrack);	// Use this location for all cars
+															rld.setStagingTrack(testTrack);	// Use this location for all cars
 															trackTemp = testTrack;
 															destinationTemp = testDestination;
 															break;
@@ -555,9 +581,9 @@ public class TrainBuilder{
 											// all cars in this train go to one staging track
 											} else {
 												// will staging accept this car?
-												String status = c.testDestination(testDestination, rld.getTrack());
+												String status = c.testDestination(testDestination, rld.getStagingTrack());
 												if (status.equals(c.OKAY)){
-													trackTemp = rld.getTrack();
+													trackTemp = rld.getStagingTrack();
 													destinationTemp = testDestination;
 												}
 											}
@@ -698,7 +724,7 @@ public class TrainBuilder{
 		Track terminateTrack = null;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
-			train.iconEngine = engine;		//load Icon
+			train.setLeadEngine(engine);	//load lead engine
 			// find a track for engine(s) at destination
 			List destTracks = terminateLocation.getTracksByMovesList(null);
 			for (int s = 0; s < destTracks.size(); s++){
@@ -716,7 +742,6 @@ public class TrainBuilder{
 			}
 			if (terminateTrack == null && (reqNumEngines>0 || leavingStaging)){
 				addLine(fileOut, "Could not find valid destination for engine ("+engine.getId()+") at (" +terminateLocation.getName()+ ") for train (" +train.getName()+ ")");
-				//return false;
 			}
 			if (terminateTrack != null){
 				if (engine.getConsist() != null){
@@ -764,7 +789,7 @@ public class TrainBuilder{
 		}
 		// terminating into staging?
 		if (terminateTrack != null && terminateTrack.getLocType().equals(terminateTrack.STAGING)){
-			train.getTrainTerminatesRouteLocation().setTrack(terminateTrack);
+			train.getTrainTerminatesRouteLocation().setStagingTrack(terminateTrack);
 		}
 		return true;
 	}

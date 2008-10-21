@@ -20,13 +20,13 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected Location _location = null;
-	protected Track _trackLocation = null;  // used for staging cars
+	protected Track _stagingTrack = null;  // used for staging cars
 	protected String _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
 	protected String _comment = "";
 	protected int _maxTrainLength = Setup.getTrainLength();
@@ -195,12 +195,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _trainIconY;
 	}
 	
-	public void setTrack(Track track){
-		_trackLocation = track;
+	public void setStagingTrack(Track track){
+		_stagingTrack = track;
 	}
 	
-	public Track getTrack(){
-		return _trackLocation;
+	public Track getStagingTrack(){
+		return _stagingTrack;
 	}
 
     public void dispose(){

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -790,7 +790,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Route.LISTCHANGE) || e.getPropertyName().equals(Location.NAME)){
 			updateLocationCheckboxes();
 		}
-		if (e.getPropertyName().equals(Train.NUMBERCARS)){
+		if (e.getPropertyName().equals(Train.NUMBERCARS) || e.getPropertyName().equals(Train.STATUS)){
 			updateNumberCars();
 		}
 	}

@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -89,6 +89,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String LENGTH = "length";
 	public static final String ENGINELOCATION = "EngineLocation";
 	public static final String NUMBERCARS = "numberCarsMoves";
+	public static final String STATUS = "status";
 	
 	// Train status
 	private static final String TERMINATED = rb.getString("Terminated");
@@ -269,7 +270,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _status;
 		_status = status;
 		if (!old.equals(status)){
-			firePropertyChange("status", old, status);
+			firePropertyChange(STATUS, old, status);
 		}
 	}
 	
@@ -662,7 +663,15 @@ public class Train implements java.beans.PropertyChangeListener {
 		return name;
 	}
 	
-	Engine iconEngine; // lead engine for icon
+	private Engine iconEngine; // lead engine for icon
+	
+	public Engine getLeadEngine(){
+		return iconEngine;
+	}
+	
+	public void setLeadEngine(Engine engine){
+		iconEngine = engine;
+	}
 
 	private void createTrainIcon() {
 		if (_locoIcon != null && _locoIcon.isActive()) {
