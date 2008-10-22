@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.54 2008-10-20 20:06:12 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.55 2008-10-22 13:14:31 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -281,6 +281,7 @@
 	<A HREF="http://www.dcc-portal.net/">http://www.dcc-portal.net/</a> website.
 	<li>Peter Rushworth helped to add a reporter icon to the layout editor.
 <a name="S"></A>
+    <LI>John Sacrey wrote instructions for getting Java to work on 64-bit Windows
 	<LI>Joe Salemi, who contributed the Atlas 345 decoder definition and
 	updated the TCS Tx definition.
     <LI>Jeff Schmaltz, who contributed decoder definitions for 
