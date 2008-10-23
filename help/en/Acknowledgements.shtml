@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.55 2008-10-22 13:14:31 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.56 2008-10-23 14:28:41 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -272,8 +272,9 @@
     added a check for completed status to Routes,
     and added the "invert" option to LocoNet Turnouts.
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
-	MS100-equivalent level shifter, contributed the LnSendTool.py script,
-	and decoder definitions for Team Digital products
+	MS100-equivalent level shifter, contributed the LnSendTool.py script
+	and decoder definitions for Team Digital products,
+	and helped fix a problem with overrunning LocoNet command stations.
     <LI>Mark Rogerson, who provided the RXTX (Java communications library) for MacOS X machines with Intel processors
 	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
 	<LI>Klaus Ruebsam, who is hosting German and English JMRI discussion
@@ -339,7 +340,8 @@
     <LI>Howard Watkins, who helped test the CBUS support
 	<LI>Jim Wells, who created our logos
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
-    <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels
+    <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels,
+        and helped fix a problem with over-running LocoNet command stations.
     <li>Denny Whitaker, who wrote a great 
             <a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">description of how to program Hare and Wabbit controllers</a> using JMRI.
 	<LI>Rich White II, who provided the images for our small Nixie tube clock
