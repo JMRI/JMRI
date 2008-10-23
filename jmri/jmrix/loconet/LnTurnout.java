@@ -36,7 +36,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -87,7 +87,24 @@ import jmri.AbstractTurnout;
          //deal with inversion
          s = adjustStateForInversion(s);
          
-         // send SWREQ for close
+         // send SWREQ for close/thrown on
+         sendOpcSwReqMessage(s, true);
+         // schedule SWREQ for closed/thrown off
+         meterTimer.schedule(new java.util.TimerTask(){
+            public void run() {
+                sendSetOffMessage();
+            }
+         }, METERINTERVAL);
+     }
+
+    /**
+     * Send a single OPC_SW_REQ message
+     * for this turnout, with the CLOSED/THROWN
+     * ON/OFF state.
+     *<p>
+     * Inversion is to already have been handled.
+     */
+    void sendOpcSwReqMessage(int state, boolean on) {
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
 
@@ -97,30 +114,32 @@ import jmri.AbstractTurnout;
 
          // set closed (note that this can't handle both!  Not sure how to
          // say that in LocoNet.
-         if ((s & CLOSED) != 0) {
+         if ((state & CLOSED) != 0) {
              hiadr |= 0x20;
              // thrown exception if also THROWN
-             if ((s & THROWN) != 0)
+             if ((state & THROWN) != 0)
                  log.error("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
          }
 
-         // load On/Off with on
-         hiadr |= 0x10;
-
+         // load On/Off
+        if (on) 
+            hiadr |= 0x10;
+        else   
+            hiadr &= 0xEF;
 
          // store and send
          l.setElement(1,loadr);
          l.setElement(2,hiadr);
          LnTrafficController.instance().sendLocoNetMessage(l);
-         
-         // now send same as off message,
-         // required in practice by some hardware
-         l = new LocoNetMessage(l);
-         l.setElement(2,hiadr&0xEF);
-         LnTrafficController.instance().sendLocoNetMessage(l);
-         
-     }
-
+    }
+    
+    /**
+     * Set the turnout off, e.g. after a timeout
+     */
+    void sendSetOffMessage() {
+        sendOpcSwReqMessage(adjustStateForInversion(getCommandedState()), false);
+    }
+    
      // implementing classes will typically have a function/listener to get
      // updates from the layout, which will then call
      //		public void firePropertyChange(String propertyName,
@@ -265,6 +284,9 @@ import jmri.AbstractTurnout;
          }
          
      }
+     
+     static public int METERINTERVAL = 150;
+     static java.util.Timer meterTimer = new java.util.Timer(true);
      
      static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnout.class.getName());
 
