@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -60,7 +60,7 @@ public class RosterMenu extends JMenu {
         AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));
         createAction.setEnabled(false);
 
-        AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(rb.getString("MenuItemCreate"));
+        AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(rb.getString("MenuItemEdit"));
         editAction.setEnabled(false);
 
         AbstractAction importAction = new ImportRosterItemAction(rb.getString("MenuItemImport"), pWho);
