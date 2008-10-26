@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.7 2008-10-23 14:25:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.8 2008-10-26 20:23:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -179,6 +179,15 @@ This is for better compatibility with Windows98.
 
 <p>
 Ken Weygandt and Bill Robinson helped fix a problem with over-running LocoNet command stations when sending lots of turnout messages.
+
+<p>
+Dick Bronson contributted new icons for 
+<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/BandORsignals/">B&O signal heads</a>, and some improvements to the 
+<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/PRRsignals/">PRR signal heads</a>.
+
+<p>
+Paul Bender updated the XPressNet support so that JMRI can program CVs 513-1024 in direct mode if the command station is using XPressNet 3.6.
+(The XPressNet 3.5 protocol doesn't provide a way to do this)
 
 <!--#include virtual="/Footer" -->
 
