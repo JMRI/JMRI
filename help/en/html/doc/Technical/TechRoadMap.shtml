@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.5 2008-10-03 02:45:51 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.6 2008-10-26 04:16:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -151,7 +151,7 @@ after that, both for running (JRE - Java Runtime Environment) and for building
 individual copies (JDK - Java Development Kit).
 <P>
 
-<h3>Remainging Issues</h3>
+<h3>Remaining Issues</h3>
 
 We currently use Log4J for logging. At some future point, there
 may be good reasons to migrate to ava Logging API. It was introduced
