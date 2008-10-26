@@ -54,7 +54,7 @@ public class RouteManagerXml extends XmlFile {
 	        // add XSLT processing instruction
 	        java.util.Map m = new java.util.HashMap();
 	        m.put("type", "text/xsl");
-	        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/operations-routes.xsl");
+	        m.put("href", xsltLocation+"operations-routes.xsl");
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 	        

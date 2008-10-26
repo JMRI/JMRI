@@ -18,7 +18,7 @@ import jmri.jmrit.roster.Roster;
  * Location Manager.  Load and stores the locations for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -59,7 +59,7 @@ public class LocationManagerXml extends XmlFile {
 	        // add XSLT processing instruction
 	        java.util.Map m = new java.util.HashMap();
 	        m.put("type", "text/xsl");
-	        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/operations-locations.xsl");
+	        m.put("href", xsltLocation+"operations-locations.xsl");
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 	        
