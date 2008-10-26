@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -211,7 +211,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
-        m.setElement(1, XNetConstants.PROG_READ_MODE_CV);
+        if(cv<0x0100)      /* Use the version 3.5 command for CVs <= 256 */
+          m.setElement(1, XNetConstants.PROG_READ_MODE_CV);
+        else if(cv==0x0400) /* For CV1024, we need to send the version 3.6
+                               command for CVs 1 to 256, sending a 0 for the
+                               CV */
+          m.setElement(1,0x18);
+        else               /* and the version 3.6 command for CVs > 256 */
+          m.setElement(1,0x18|((cv&0x0300)>>8));
         m.setElement(2, (0xff &cv));
         return m;
     }
@@ -232,7 +239,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
-        m.setElement(1, XNetConstants.PROG_WRITE_MODE_CV);
+        if(cv<0x0100)          /* Use the version 3.5 command for CVs <= 256 */
+          m.setElement(1, XNetConstants.PROG_WRITE_MODE_CV);
+        else if(cv==0x0400) /* For CV1024, we need to send the version 3.6
+                               command for CVs 1 to 256, sending a 0 for the
+                               CV */
+          m.setElement(1,0x1c);
+        else                   /* and the version 3.6 command for CVs > 256 */
+          m.setElement(1,0x1c|((cv&0x0300)>>8));
         m.setElement(2, (0xff & cv));
         m.setElement(3, val);
         return m;

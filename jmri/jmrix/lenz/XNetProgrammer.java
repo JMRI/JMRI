@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.19 $
+ * @version $Revision: 2.20 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -319,6 +319,22 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 		   m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
                 	    // valid operation response, but does it belong to us?
 			    if(m.getElement(2)!=_cv) return;
+			    // see why waiting
+			    if (_progRead) {
+				// read was in progress - get return value
+				_val = m.getElement(3);
+			    }
+			    progState = NOTPROGRAMMING;
+			    stopTimer();
+			    // if this was a read, we cached the value earlier.  If its a
+			    // write, we're to return the original write value
+			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+                	    return;
+            		} else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
+                		   (m.getElement(1)&0x14)==(0x14)) {
+                	    // valid operation response, but does it belong to us?
+                            int sent_cv=(m.getElement(1)&0x03<<2)+m.getElement(2);
+			    if(sent_cv!=_cv && (sent_cv==0 && _cv!=0x0400)) return;
 			    // see why waiting
 			    if (_progRead) {
 				// read was in progress - get return value
