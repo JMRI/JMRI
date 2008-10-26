@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-10-26 18:22:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -43,28 +43,36 @@ that contains updates since the last downloadable version was published,
 this section of the web site will help you get started.
 
 <h2>JMRI project information (For people interested in how the software is being written)</h2>
-Links to the SourceForge pages:<P>
-<A HREF="http://sourceforge.net/projects/jmri/">Project page</A><P>
-<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">Statistics</A>,
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</A>,
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</A>,
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</A>,
-<P>
-<A HREF="http://jmri.cvs.sourceforge.net/">Browse CVS</A><P>
 
-<P>
-<A HREF="http://sourceforge.net/docman/display_doc.php?docid=2352&group_id=1">SourceForge Site Status</a>
-
-<p>
-JMRI-Developers mailing list:
+Much of the discussion about JMRI development takes place on the JMRI-Developers mailing list:
 <a href="https://lists.sourceforge.net/lists/listinfo/jmri-developers">Subscribe</a>,
 <a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">Archive</a>
+
+<p>
+The <a href="http://jmri.wiki.sourceforge.net/">Developer Wiki</a>
+is where we are trying to document the structure of the code and how it's evolving.
+(This is an experimental effort, not yet really working, but we keep trying...)
+
+<p>
+SourceForge.net provides project hosting:<ul>
+<li><A HREF="http://sourceforge.net/projects/jmri/">JMRI project page</A> and 
+<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</A>.
+<li>Trackers for 
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</A>,
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</A>, and
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</A>.
+<li>SourceForge-hosted <A HREF="http://jmri.cvs.sourceforge.net/">CVS Repository</A>
+which you can <A HREF="http://jmri.cvs.sourceforge.net/">browse through</a>.
+</ul>
 
 <h2>Code</h2>
 All of the JMRI code is available from CVS.  See the 
 <a href="getcode.shtml">"Getting the code via CVS"</a> and
 <a href="CVSFAQ.shtml">"CVS FAQ"</a>
 pages for more information on how to do that. 
+<p>
+If you just want to look at the contents of a few files, you can 
+<A HREF="http://jmri.cvs.sourceforge.net/">browse CVS</a> over the web.
 
 <h2>Building Your Own Copy</h2>
 
