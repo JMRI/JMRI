@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.8 2008-10-26 20:23:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.9 2008-10-27 01:29:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -182,13 +182,18 @@ Ken Weygandt and Bill Robinson helped fix a problem with over-running LocoNet co
 
 <p>
 Dick Bronson contributted new icons for 
-<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/BandORsignals/">B&O signal heads</a>, and some improvements to the 
-<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/PRRsignals/">PRR signal heads</a>.
+<a href="http://jmri.sourceforge.net/resources/icons/mediumschematics/BandOsignals/">medium B&O signal heads</a>, 
+<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/BandOsignals/">small B&O signal heads</a>, 
+<a href="http://jmri.sourceforge.net/resources/icons/mediumschematics/PRRsignals/">medium PRR signal heads</a>.
+and some improvements to the 
+<a href="http://jmri.sourceforge.net/resources/icons/smallschematics/PRRsignals/">small PRR signal heads</a>.
 
 <p>
 Paul Bender updated the XPressNet support so that JMRI can program CVs 513-1024 in direct mode if the command station is using XPressNet 3.6.
 (The XPressNet 3.5 protocol doesn't provide a way to do this)
 
+<p>
+A problem with the labels in the Roster menu was fixed. The first two entries are now "Create..." and "Edit...", not "Create..." and "Create...".
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
