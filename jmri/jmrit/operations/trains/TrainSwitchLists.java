@@ -41,7 +41,7 @@ public class TrainSwitchLists {
 		addStatusLine(fileOut, "Switchlist for " + location.getName());
 		addStatusLine(fileOut, "Valid " + new Date());
 		
-		// get a list of trains that service this location
+		// get a list of trains
 		List trains = manager.getTrainsByNameList();
 		CarManager carManager = CarManager.instance();
 		for (int i=0; i<trains.size(); i++){
@@ -50,9 +50,7 @@ public class TrainSwitchLists {
 			int stops = 1;
 			Train train = manager.getTrainById((String)trains.get(i));
 			List carsInTrain = carManager.getCarsByTrainList(train);
-			newLine(fileOut);
-			addStatusLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
-			// does the train stop more than once at this location?
+			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			List routeLocations = route.getLocationsBySequenceList();
 			for (int r=0; r<routeLocations.size(); r++){
@@ -61,11 +59,15 @@ public class TrainSwitchLists {
 					if (stops > 1){
 						newLine(fileOut);
 						addStatusLine(fileOut, "Visit number "+stops);
+					} else {
+						newLine(fileOut);
+						addStatusLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
 					}
 					// get a list of cars and determine if this location is serviced
 					for (int j=0; j<carsInTrain.size(); j++){
 						Car car = carManager.getCarById((String)carsInTrain.get(j));
-						if (car.getRouteLocation() == rl){
+						// if car is in train (no track) ignore
+						if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 							pickupCar(fileOut, car);
 							pickupCars++;
 						}
@@ -80,11 +82,11 @@ public class TrainSwitchLists {
 					stops++;
 				}
 			}
-			if (pickupCars == 0){
+			if (stops > 1 && pickupCars == 0){
 				addStatusLine(fileOut, "No car pickups for this train at this location");
 			}
 	
-			if (dropCars == 0){
+			if (stops > 1 && dropCars == 0){
 				addStatusLine(fileOut, "No car drops for this train at this location");
 			}
 		}
