@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.9 2008-10-27 01:29:43 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.10 2008-10-28 14:50:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -194,6 +194,16 @@ Paul Bender updated the XPressNet support so that JMRI can program CVs 513-1024 
 
 <p>
 A problem with the labels in the Roster menu was fixed. The first two entries are now "Create..." and "Edit...", not "Create..." and "Create...".
+
+<p>
+The "New Panel" item in the "Panels" menu has been restructured to improve clarity.
+
+<p>
+Many 
+<a href="http://jmri.sourceforge.net/JavaDoc/doc/">JavaDoc</a> and 
+<a href="http://jmri.sourceforge.net/help/en/webtoc.shtml">help panel</a> updates
+
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
