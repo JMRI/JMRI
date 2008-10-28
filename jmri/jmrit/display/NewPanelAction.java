@@ -16,9 +16,12 @@ import java.util.ResourceBundle;
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
  * <P>
+ * Uses the individual LayoutEditorAction or PanelEditorAction to 
+ * start the editors, to ensure consistent operation.
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @author	Bob Jacobsen   Copyright (C) 2008 
+ * @version	$Revision: 1.4 $
  */
 public class NewPanelAction extends AbstractAction {
 
@@ -44,37 +47,10 @@ public class NewPanelAction extends AbstractAction {
 					rbx.getString("PanelEditor")},
 					rbx.getString("PanelEditor"));
 		if (response == 1) {
-			String name = "My Layout";
-			for (int i = 2; i < 100; i++){
-				if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
-					name = "My Layout " +i;
-				}
-			}
-			LayoutEditor panel = new LayoutEditor(name);
-			panel.pack();
-			panel.show();
-			panel.setEditMode(true);
-			panel.setCurrentPositionAndSize();
+            new LayoutEditorAction().actionPerformed(null);
 		}
 		else if (response == 2) {
-			PanelEditor panel = new PanelEditor();
-			String name = "Panel";
-			for (int i = 2; i < 100; i++){
-				if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
-					name = "Panel " +i;
-				}
-			}
-			JmriJFrame targetFrame = panel.makeFrame(name);
-			jmri.jmrit.display.PanelMenu.instance().addPanelEditorPanel(panel);
-			targetFrame.setLocation(20,20);
-        
-			panel.setTitle();
-
-			targetFrame.pack();
-			targetFrame.setVisible(true);
-
-			panel.pack();
-			panel.setVisible(true);
+		    new PanelEditorAction().actionPerformed(null);
 		}
 	}
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NewPanelAction.class.getName());
