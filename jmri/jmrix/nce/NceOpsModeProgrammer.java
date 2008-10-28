@@ -12,14 +12,14 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
     int mAddress;
     boolean mLongAddr;
     public NceOpsModeProgrammer(int pAddress, boolean pLongAddr) {
-
+        log.debug("NCE ops mode programmer "+pAddress+" "+pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
     }
