@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialAddress {
 
@@ -238,8 +238,8 @@ public class SerialAddress {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
-            // here if an illegal format 
-            log.error("illegal system name format: "+systemName);
+            // here if an illegal format, e.g. another system letter
+            // which happens all the time due to how proxy managers work
             return false;
         }
         if (matcher.group(2).charAt(0) != type ) {

@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -167,11 +167,8 @@ public class SerialAddressTest extends TestCase {
             checkValidSystemNameFormatName("GL1302",'L', true);
             checkValidSystemNameFormatName("GL1B302",'L', true);
             checkValidSystemNameFormatName("GL",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GL");
             
-
             checkValidSystemNameFormatName("GLB2",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GLB2");
 
             checkValidSystemNameFormatName("GL2305",'L', true);
             checkValidSystemNameFormatName("GL2B105",'L', true);
@@ -181,10 +178,8 @@ public class SerialAddressTest extends TestCase {
             checkValidSystemNameFormatName("GS2B5",'S', true);
 
             checkValidSystemNameFormatName("GY2005",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GY2005");
 
             checkValidSystemNameFormatName("GY2B5",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GY2B5");
 
             checkValidSystemNameFormatName("GL22101",'L', true);
             checkValidSystemNameFormatName("GL22B301",'L', true);
@@ -212,13 +207,10 @@ public class SerialAddressTest extends TestCase {
             JUnitAppender.assertErrorMessage("invalid node number 128 in GL128B7");
 
             checkValidSystemNameFormatName("GL2oo5",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GL2oo5");
 
             checkValidSystemNameFormatName("GL2aB5",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GL2aB5");
 
             checkValidSystemNameFormatName("GL2B5x",'L', false);
-            JUnitAppender.assertErrorMessage("illegal system name format: GL2B5x");
 	}
 
 	public void testGetBitFromSystemName() {
