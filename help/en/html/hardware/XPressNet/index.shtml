@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2008-03-22 03:59:40 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2008-10-28 14:40:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -150,11 +150,15 @@ this page
 	speeds of 19,200, 38,400, 57,600, and 115,200 baud.  The factory 
 	default is 19,200 baud.
 	
-	<li>The Lenz LIUSB is Lenz's first USB based computer interface.
+	<li>The Lenz LI-USB is Lenz's first USB based computer interface.
 	Internally, the device contains a USB to RS232 serial adapter, and 
-	an XPressNet interface circuit similar to that of the LI101F.  The 
-	device is configured via a software tool provided by Lenz which 
-	runs on Windows only. 
+	an XPressNet interface circuit similar to that of the LI101F.  
+	Note:  If you are using the XPressNet version 3.6 update in your command station, 
+	you should also update your LI-USB to version 3.6.  There are instructions
+	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a>.
+	The device is configured via a software tool provided by Lenz which 
+	runs on Windows only.  Lenz has not released the information which 
+	would let us build a similar tool for Linux and Mac OS X.
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
@@ -165,7 +169,7 @@ this page
 	full fledged interface. Note that an XPA cannot be used to program 
     decoders!
     
-    <li>The ZTC Controls ZTC640 is ZTC's USB interface.  We have had limit 
+    <li>The ZTC Controls ZTC640 is ZTC's USB interface.  We have had limited 
     experience with this device, though the current JMRI drivers are 
     belived to be stable.  Operationally, the device appears to be similar 
     to the Lenz LIUSB.
