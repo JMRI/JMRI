@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -30,7 +30,13 @@ public class PanelMenu extends JMenu {
 
         this.setText(rb.getString("MenuPanels"));
 
-		add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
+        // new panel is a submenu
+		//add(new jmri.jmrit.display.NewPanelAction());
+        JMenu newPanel = new JMenu(rb.getString("MenuItemNew"));
+        newPanel.add(new PanelEditorAction(rb.getString("PanelEditor")));
+        newPanel.add(new LayoutEditorAction(rb.getString("LayoutEditor")));
+        add(newPanel);
+        
         add(new jmri.configurexml.LoadXmlUserAction(rb.getString("MenuItemLoad")));
         add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         add(new JSeparator());
