@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -305,6 +305,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
+        pane2.add(filterButton);
         paneA.add(pane2);
         
         JPanel pane3 = new JPanel();
@@ -470,7 +471,6 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showPane.add(showPacketCheckBox);
         showPane.add(showEventCheckBox);
         showPane.add(decimalCheckBox);
-        showPane.add(filterButton);
 //        getContentPane().add(showPane);
         southPane.add(showPane);
         
