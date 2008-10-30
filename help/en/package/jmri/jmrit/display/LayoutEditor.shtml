@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.10 2008-09-01 23:32:14 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.11 2008-10-30 15:01:03 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -635,7 +635,18 @@ control-click or right-click inside the square showing the connection point.</p>
 <p>
 To delete an item from a panel, select <b>Remove</b> in that item's popup menu. 
 Some items will show a verify dialog. Most verify dialogs have an option to shut
-off verify dialogs in case you're deleting many of the same items.</p>
+off verify dialogs in case you're deleting many of the same items. When an 
+icon object is "removed" from the panel, its icon is deleted, but the item itself 
+(signal head, sensor, memory variable, etc.) is not deleted. If you need to 
+delete the item itself, do so using the corresponding table (Signals Table, Sensor 
+Table, etc.) <b>Important Note: Prior to deleting any item in a table, make sure 
+that all references to that item are removed from other places. Also immediately 
+after deleting an item, save your panel and restart before doing anything else!</b> 
+If there is no good reason for deleting an item, or if there is uncertainty if all 
+references to an item have been removed, don't delete the item from its table. 
+Extra unused items in a table don't hurt anything, but deleting a referenced item 
+can cause trouble. Removing an icon from a panel is safe, but deleting the item 
+that the icon represented requires more caution.</p>
 <p>
 Some popup menus allow information relating to the item to be edited directly 
 from the popup menu, for example, font size, style, and color options for text 
