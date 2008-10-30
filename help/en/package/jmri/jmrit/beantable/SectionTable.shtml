@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SectionTable.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<!-- $Id: SectionTable.shtml,v 1.2 2008-10-30 14:57:59 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,16 +33,20 @@ is connected to the third, etc. That means a Block in a Section must be connecte
 to the Block before it (if there is one) and to the Block after it (if there is 
 one), but may not be connected to any other Block in the Section. A Section may 
 not contain any reverse loops.</P>
-<p>Sections and their associated <b>Transits</b> are designed to be used for 
-dispatching, either manually by a dispatcher sitting at a panel, or automatically 
-when running trains automatically.</>
+<p>Sections and their associated <b><a href="TransitTable.shtml">Transits</a></b> 
+are designed to be used for dispatching, either manual dispatching (by a dispatcher 
+sitting at a panel), or automatic dispatching by the computer. Dispatching may be 
+used for trains run by engineers with a throttle, and/or for trains run 
+automatically by the computer.</p>
 <P>A Section has a <b>direction</b> defined by the sequence in which Blocks are 
 added to the Section. A train may run through a Section in either the <b>forward</b> 
 direction (from first block to last block) or <b>reverse</b> direction (from last 
-block to first block). A Section of sufficient length may be allocated to more 
-than one train provided the trains are traveling in the same direction. There 
-must be at least one block between trains traveling in the same direction in a 
-Section.</p>
+block to first block).</p>
+<p> Sections are designed so that a Section of sufficient length may be allocated 
+to more than one train provided the trains are traveling in the same direction. 
+There must be at least one block between trains traveling in the same direction 
+in a Section. Note that allocating a Section to two trains at the same time is not 
+currently supported by Dispatcher.</p>
 <P>A Section has two or more <b>Entry Points</b>. An Entry Point defines a 
 connection to a Block outside of the Section. Entry Points are derived from Paths of 
 Blocks in the Section--Paths that represent connections to Blocks not contained in 

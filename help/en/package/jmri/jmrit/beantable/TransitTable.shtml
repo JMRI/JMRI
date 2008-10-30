@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitTable.shtml,v 1.2 2008-10-09 01:43:51 djduchamp Exp $ -->
+<!-- $Id: TransitTable.shtml,v 1.3 2008-10-30 14:57:59 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,8 +25,9 @@
 </H1>
 <H2>What is a Transit?
 </H2
-<P>A <b>Transit</b> is a group of two or more connected <b>Sections</b> that describes
-a route around the layout of a train traveling in a given direction. A Section may be 
+<P>A <b>Transit</b> is a group of two or more connected 
+<b><a href="SectionTable.shtml">Sections</a></b> that describes a route around 
+the layout of a train traveling in a given direction. A Section may be 
 in multiple Transits, and may be in a given Transit multiple times. Sections are 
 kept in order--the first Section is connected to the second, the second 
 is connected to the third, etc. That means a Section in a Transit must be connected 
@@ -48,8 +49,16 @@ an engineer doing work in a specified Section, and requesting a restart when the
 work is complete. More actions may be added in the future as needed.</p>
 <H2>How are Transits Activated and Used?
 </H2
-<p>Transits are <i>activated</i> in the Dispatcher window, where a Transit is 
-linked to a Train and becomes an Active Train. When an Active Train is created, a 
+<p>Transits are static objects. They specify routes for trains to follow around the 
+layout. Transits do not run trains, or keep track of running trains. A Transit 
+becomes part of the train running process when it is <i>activated</i> by being 
+assigned to an Active Train. Transits are saved as part of a panel/configuration 
+file, only need to be set up once, and can be reused. Active Trains, on the other 
+hand are dynamic and transient.  Active Trains are not saved to disk, and must be 
+set up each time they are used.</p>
+<p>Transits are <i>activated</i> in the 
+<a href="../dispatcher/DispatcherFrame.shtml">Dispatcher</a> window, where a Transit is 
+linked to a train to create an Active Train. When an Active Train is created, a 
 Transit is selected, a Train is selected, and a starting Block (train location 
 at start) and ending Block (train location when travel is complete) are 
 specified. This process results in an <b>Active Train</b>, which can then be 
@@ -69,11 +78,11 @@ train is authorized by the dispatcher to proceed to the end of that Section.</p>
 using a throttle, or automatically by a <i>virtual engineer</i>. Dispatching 
 consists of <i>allocating</i> Sections, one by one, to the Active Train. The 
 actual dispatching may be done by a dispatcher sitting at the computer running JMRI, 
-or automatically by an automatic dispatcher. If a requested Section is currently in 
+or automatically by the computer. If a requested Section is currently in 
 use, a request for assignment is placed in the dispatcher's queue. When a Section 
 is freed, the queue is scanned for the highest priority train requesting it.</p>
-<p><b>Note: The Dispatcher functionality is still under development!</b> It will be
-in a future version of JMRI.</p>
+<p><b>Note: Automated dispatching and automatic running of Active Trains are not 
+currently supported!</b> They will be in a future version of JMRI.</p>
 <H2>Using the Transit Table to Set Up Transits
 </H2
 <p>Transits are set up in the Transit Table.  When set up, Transits are independent 
@@ -89,20 +98,13 @@ and can't be changed.</LI>
 readable" names, you can click in the "User Name" column and change that information
 to whatever you want.</LI>
 <LI><b>State</b> - The state of a Transit tells whether a section is <b>IDLE</b> 
-(available for activation and assignment to a train), <b>ASSIGNED</b> (linked to 
-a train, but not yet running, or <b>RUNNING</b> (active in the running of a 
-train. The state of a newly added Transit is always <b>IDLE</b>.</LI>
+(available for activation and assignment to a train), or <b>ASSIGNED</b> (linked 
+to a train to form an Active Train). The state of a newly added Transit is always 
+<b>IDLE</b>.</LI>
 <LI><b>Comment</b> - This column is for your use to record any comment you may want
 to use to keep track of your Transits. It is for information only.</LI>
 <LI>Click the <b>Delete</b> button in a specific row to delete the Transit in that 
 row. Use this button with caution! Do not delete a running Transit.</LI>
-<LI><b>Mode</b> - Displays the current mode of the Transit. The mode of a transit 
-may be: <b>UNKNOWN</b> - all IDLE transits have no assigned mode, <b>AUTOMATIC</b> - 
-activated to be automatically run by the computer, <b>MANUAL</b> - activated to be 
-run manually by a throttle following computer-controlled layout signals (if present)
-and computer-controlled dispatching (Section allocation), or <b>DISPATCHED</b> - 
-run manually by a throttle with signals and section allocation controlled by a 
-dispatcher at the JMRI computer.</LI> 
 <LI>Click the <b>Edit</b> button in a row to view or change entered information
 for a Transit. System name cannot be changed. User name may be changed, 
 Sections may be redefined, etc. Only one Transit may be edited at a time. A 
@@ -114,8 +116,8 @@ button (see below) except the information from this Transit is copied into the
 Add/Edit Transit window. This option offers an easy way to enter multiple copies 
 of a Transit when multiple trains must follow the same route at the same time.
 </LI></UL>
-<P>To define a new Transit, click the 
-"<A HREF="TransitAddEdit.shtml">Add.." button</a>. An Add/Edit Transit window will 
+<P>To define a new Transit, click the <b><A HREF="TransitAddEdit.shtml">Add...</a>
+</b> button. An Add/Edit Transit window will 
 be brought up that will allow you to define the Sections in the new Transit.  
 (Obviously, Sections must be defined before any Transit can be created.) Since a 
 Transit may be used in only one Active Train at a time, the Duplicate option 
