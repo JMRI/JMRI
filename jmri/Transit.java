@@ -17,25 +17,7 @@ import java.util.List;
  * <P>
  * A Transit may have the following states.
  *		IDLE - indicating that it is available for "assignment"
- *      ASSIGNED - linked to a train with its mode of running set
- *      RUNNING - a train is being run through the transit path 
- *				according to the assigned  mode
- * <P>
- * A Transit may be assigned one of the following modes, which specify 
- *	how the assigned train will be run through the transit:
- *		UNKNOWN - indicates that a mode has not yet been assigned to this
- *				transit. All transits are set to UNKNOWN mode when loaded.
- *		AUTOMATIC - indicates the assigned train will be run under automatic 
- *				control of the computer.
- *		MANUAL - indicates the assigned train will be run by an operator  
- *				using a throttle. The computer will allocate sections to 
- *				the train as needed, and arbitrate any conflicts between 
- *				trains. The operator is expected to follow signals set 
- *				by the computer. (Automated Computer Dispatching)
- *		DISPATCHED - indicates the assigned train will be run by an operator  
- *				using a throttle. A dispatcher will allocate sections to 
- *				trains as needed, control signals, using a CTC panel,  and 
- *				arbitrate any conflicts between trains. (Human Dispatcher).
+ *      ASSIGNED - linked to a train to form an ActiveTrain
  * <P>
  * When assigned to a Transit, options may be set for the assigned Section.
  *  The Section and its options are kept in a TransitSection object.
@@ -64,7 +46,7 @@ import java.util.List;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -79,32 +61,17 @@ public class Transit extends AbstractNamedBean
 
 	/**
 	 * Constants representing the state of the Transit.
-	 * A Transit can be either IDLE - available), ASSIGNED - assigned to 
-	 *   a train (throttle), or RUNNING - running a train.
+	 * A Transit can be either:
+	 *     IDLE - available for assignment to an ActiveTrain, or
+	 *     ASSIGNED - assigned to an ActiveTrain
 	 */ 
 	public static final int IDLE = 0x02;
 	public static final int ASSIGNED = 0x04;
-	public static final int RUNNING = 0X08;	
 	
-	/** 
-	 * Constants representing the mode of running
-	 * The mode of a transit can be UNKNOWN - all IDLE transits have no 
-	 *  assigned mode, AUTOMATIC - set up to be automatically run by the 
-	 *  computer, MANUAL - set up to be run manually by a throttle following
-	 *  computer-controlled layout signals and computer-controlled section 
-	 *  allocation, or DISPATCHED - run manually by a throttle with signals 
-	 *  and section allocation controlled by a dispatcher.
-	 */
-	public static final int UNKNOWN = 0x01;
-	public static final int AUTOMATIC = 0x02;
-	public static final int MANUAL = 0x04;
-	public static final int DISPATCHED = 0x08;
-
     /**
      *  Instance variables (not saved between runs)
      */
 	private int mState = Transit.IDLE;
-	private int mMode = Transit.UNKNOWN;
 	private ArrayList mTransitSectionList = new ArrayList();
 	private int mMaxSequence = 0;
 
@@ -117,27 +84,14 @@ public class Transit extends AbstractNamedBean
      * Set the state of the Transit
 	 */
     public void setState(int state) {
-		if ( (state==Transit.IDLE) || (state==Transit.ASSIGNED) || (state==Transit.RUNNING) )
+		if ( (state==Transit.IDLE) || (state==Transit.ASSIGNED) ) {
+			int old = mState;
 			mState = state;
+			firePropertyChange("state", new Integer(old), new Integer(mState));
+		}
 		else
 			log.error("Attempt to set Transit state to illegal value - "+state);
     }	
-	
-	/**
-	 * Query the mode of the Transit
-	 */
-	public  int getMode() { return mMode; }
-	
-	/** 
-	 * Set the mode of the Transit
-	 */
-	public void setMode(int mode) {
-		if ( (mode==Transit.UNKNOWN) || (mode==Transit.AUTOMATIC) || (mode==Transit.MANUAL) ||
-				(mode==Transit.DISPATCHED) )
-			mMode = mode;
-		else
-			log.error("Attempt to set Transit mode to illegal value - "+mode);
-    }
 	
 	/**
 	 *  Add a TransitSection to the Transit
@@ -192,6 +146,20 @@ public class Transit extends AbstractNamedBean
 			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
 			if (seq == ts.getSequenceNumber()) {
 				list.add(ts.getSection());
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * Get a List of sequence numbers for a given Section
+	 */
+	public ArrayList getSeqListBySection(Section s) {
+		ArrayList list = new ArrayList();
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = (TransitSection)mTransitSectionList.get(i);
+			if (s == ts.getSection()) {
+				list.add((Object) new Integer(ts.getSequenceNumber()));
 			}
 		}
 		return list;

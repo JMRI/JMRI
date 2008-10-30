@@ -30,8 +30,21 @@ import java.util.ArrayList;
  * Swing action to create and register a
  * TransitTable GUI.
  *
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it 
+ * under the terms of version 2 of the GNU General Public License as 
+ * published by the Free Software Foundation. See the "COPYING" file for 
+ * a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -66,8 +79,7 @@ public class TransitTableAction extends AbstractTableAction {
     void createModel() {
         m = new BeanTableDataModel() {
 
-		static public final int MODECOL = NUMCOLUMN;
-		static public final int EDITCOL = MODECOL+1;
+		static public final int EDITCOL = NUMCOLUMN;
 		static public final int DUPLICATECOL = EDITCOL+1;	
 
        	public String getValue(String name) {
@@ -94,20 +106,7 @@ public class TransitTableAction extends AbstractTableAction {
      		}
 
     		public Object getValueAt(int row, int col) {
-				if (col==MODECOL) {
-            		Transit z = (Transit)getBySystemName((String)sysNameList.get(row));
-                    if (z == null) {
-						return " ";
-					}
-					else {
-						int mode = z.getMode();
-						if (mode==Transit.UNKNOWN) return (rbx.getString("Unknown"));
-						else if (mode==Transit.AUTOMATIC) return (rbx.getString("TransitAutomatic"));
-						else if (mode==Transit.MANUAL) return (rbx.getString("TransitManual"));
-						else if (mode==Transit.DISPATCHED) return (rbx.getString("TransitDispatched"));
-					}
-				}
-				else if (col==VALUECOL) {
+				if (col==VALUECOL) {
             		Transit z = (Transit)getBySystemName((String)sysNameList.get(row));
                     if (z == null) {
 						return "";
@@ -116,7 +115,6 @@ public class TransitTableAction extends AbstractTableAction {
 						int state = z.getState();
 						if (state==Transit.IDLE) return (rbx.getString("TransitIdle"));
 						else if (state==Transit.ASSIGNED) return (rbx.getString("TransitAssigned"));
-						else if (state==Transit.RUNNING) return (rbx.getString("TransitRunning"));
 					}
 				}
 				else if (col==EDITCOL) return rb.getString("ButtonEdit");
@@ -126,10 +124,7 @@ public class TransitTableAction extends AbstractTableAction {
 			}    		
 
     		public void setValueAt(Object value, int row, int col) {
-        		if (col==MODECOL) {
-					return;
-				}
- 				else if (col == EDITCOL) {
+ 				if (col == EDITCOL) {
 					// set up to edit
 					String sName = (String) getValueAt(row, SYSNAMECOL);
 					editPressed(sName);
@@ -143,7 +138,6 @@ public class TransitTableAction extends AbstractTableAction {
     		}
 
 	   		public String getColumnName(int col) {
-				if (col==MODECOL) return (rbx.getString("TransitMode"));
 				if (col==EDITCOL) return "";   // no namne on Edit column
 				if (col==DUPLICATECOL) return "";   // no namne on Duplicate column
         		return super.getColumnName(col);
@@ -151,14 +145,12 @@ public class TransitTableAction extends AbstractTableAction {
 
     		public Class getColumnClass(int col) {
 				if (col==VALUECOL) return String.class;  // not a button
-    			if (col==MODECOL) return String.class;  // not a button
  				if (col==EDITCOL) return JButton.class;
  				if (col==DUPLICATECOL) return JButton.class;
 				else return super.getColumnClass(col);
 		    }
 
  			public boolean isCellEditable(int row, int col) {
-				if (col == MODECOL) return false;
 				if (col == VALUECOL) return false;
 				if (col == EDITCOL) return true;
 				if (col == DUPLICATECOL) return true;
@@ -171,7 +163,6 @@ public class TransitTableAction extends AbstractTableAction {
 				if (col == USERNAMECOL)return new JTextField(17).getPreferredSize().width;
 				if (col == VALUECOL)return new JTextField(6).getPreferredSize().width;
 				// new columns
-				if (col == MODECOL)return new JTextField(9).getPreferredSize().width;
      			if (col == EDITCOL) return new JTextField(6).getPreferredSize().width;
      			if (col == DUPLICATECOL) return new JTextField(10).getPreferredSize().width;
    			else return super.getPreferredWidth(col);
