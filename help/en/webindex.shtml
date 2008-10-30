@@ -192,6 +192,11 @@
 </li>
    
 <li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+<ul></ul>
+</li>
+   
+<li>
 <a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
 <ul></ul>
 </li>
@@ -655,6 +660,11 @@
 <ul>
       
 <li>
+<a href="package/jmri/jmrit/display/RpsIcon.shtml">Panel Icons</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control</a>
 <ul></ul>
 </li>
@@ -683,11 +693,6 @@
 <a href="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
 <ul></ul>
 </li>
-      
-<li>
-<a href="package/jmri/jmrit/display/RpsIcon.shtml">Panel Icons</a>
-<ul></ul>
-</li>
    
 </ul>
 </li>
@@ -697,7 +702,9 @@
 <ul></ul>
 </li>
    
-<li>Sections<ul>
+<li>
+<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Sections</a>
+<ul>
       
 <li>
 <a href="package/jmri/jmrit/beantable/SectionAddEdit.shtml">Section Add/Edit</a>
@@ -876,7 +883,9 @@
 <ul></ul>
 </li>
    
-<li>Transits<ul>
+<li>
+<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>
+<ul>
       
 <li>
 <a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Transit Add/Edit</a>

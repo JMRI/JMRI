@@ -45,6 +45,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       </indexitem>
       <indexitem text="Throttle Messages" target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
    </indexitem>
+   <indexitem text="Dispatcher" target="package.jmri.jmrit.dispatcher.Dispatcher"/>
    <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
    <indexitem text="Error Codes" target="html.Errors"/>
    <indexitem text="Hardware" target="html.hardware.index">
@@ -147,16 +148,16 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Route Table" target="package.jmri.jmrit.beantable.RouteTable"/>
    </indexitem>
    <indexitem text="RPS Position System" target="html.hardware.rps.index">
+      <indexitem text="Panel Icons" target="package.jmri.jmrit.display.RpsIcon"/>
       <indexitem text="Polling Control" target="package.jmri.jmrix.rps.swing.polling.PollTableFrame"/>
       <indexitem text="Receiver Control" target="package.jmri.jmrix.rps.aligntable.AlignTableFrame"/>
       <indexitem text="RPS Debug Display" target="package.jmri.jmrix.rps.swing.debugger.DebuggerFrame"/>
       <indexitem text="RPS Sensors" target="html.hardware.rps.sensors"/>
       <indexitem text="Sound Speed Control" target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame"/>
       <indexitem text="Tracking Display" target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
-      <indexitem text="Panel Icons" target="package.jmri.jmrit.display.RpsIcon"/>
    </indexitem>
    <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
-   <indexitem text="Sections">
+   <indexitem text="Sections" target="package.jmri.jmrit.beantable.SectionTable">
       <indexitem text="Section Add/Edit" target="package.jmri.jmrit.beantable.SectionAddEdit"/>
       <indexitem text="Section Table" target="package.jmri.jmrit.beantable.SectionTable"/>
    </indexitem>
@@ -196,7 +197,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
    <indexitem text="Tracker" target="html.tools.tracker.index"/>
-   <indexitem text="Transits">
+   <indexitem text="Transits" target="package.jmri.jmrit.beantable.TransitTable">
       <indexitem text="Transit Add/Edit" target="package.jmri.jmrit.beantable.TransitAddEdit"/>
       <indexitem text="Transit Table" target="package.jmri.jmrit.beantable.TransitTable"/>
    </indexitem>
