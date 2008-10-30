@@ -1,5 +1,5 @@
 <!-- Defines XML for Dispatcher options information -->
-<!-- $Id: dispatcher-options.dtd,v 1.1 2008-10-09 01:11:37 djduchamp Exp $ -->
+<!-- $Id: dispatcher-options.dtd,v 1.2 2008-10-30 15:11:54 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2008.                         -->
 <!--                                                                        -->
@@ -20,8 +20,10 @@
     <!ATTLIST options useconnectivity         CDATA #REQUIRED>
     <!ATTLIST options trainsfromroster        CDATA #REQUIRED>
     <!ATTLIST options trainsfromtrains        CDATA #REQUIRED>
+    <!ATTLIST options trainsfromuser          CDATA #REQUIRED>
     <!ATTLIST options autoallocate            CDATA #REQUIRED>
     <!ATTLIST options autoturnouts            CDATA #REQUIRED>
     <!ATTLIST options hasoccupancydetection   CDATA #REQUIRED>
     <!ATTLIST options shortactivetrainnames   CDATA #REQUIRED>
+    <!ATTLIST options shortnameinblock        CDATA #REQUIRED>
 
