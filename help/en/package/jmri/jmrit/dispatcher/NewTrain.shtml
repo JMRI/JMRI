@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NewTrain.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: New Train Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Dispatcher New Train">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<H1>Activate New Train Window
+</H1>
+<H2>Introduction
+</H2
+<p>The <b>Activate New Train</b> window supports the creation of a new <b>Active 
+Train</b>. To create an Active Train, the dispatcher uses this window to assign
+a <b><a href="../beantable/TransitTable.shtml">Transit</a></b>, assign a train, 
+and specify a starting Block (train location at start) and an end Block (train 
+location when transit of the layout is complete). Options for the new <b>Active 
+Train</b> are also set using this window. It is likely that more Active Train 
+options will be added in the future.</p>
+<p>Transits are always selected from Transits defined in the Transit Table. 
+Trains may come from any one of three sources:</p>
+	<ul>
+	<li><b>Trains from Roster</b> - Dispatcher will list all trains in the JMRI 
+	Roster that are not currently in Active Trains.</li>
+	<li><b>Trains from Trains</b> - Dispatcher will list all trains available 
+	from Operations that are not in Active Trains.</li>
+	<li><b>Trains from User Entry</b> - Dispatcher will replace the train 
+	selection box in the Activate New Train window with two entry fields 
+	allowing the user to enter a train name and a dcc Address.
+	</li></ul>
+<p>Dispatcher's train source is set by selecting one of the above in the 
+<b><a href="Options.shtml">Options</a></b> window accessed from Dispatcher's 
+<b>Options</b> menu.</p>
+<p>Active Trains must start from a Block in the selected Transit, or from a 
+Block connected to a Block in the selected Transit. Active Trains must stop 
+in a Block within the selected Transit. Transits have a direction, so for 
+a starting Block outside the Transit to be a valid starting Block, entry to 
+the Transit from the starting Block must result in travel in the Transit's 
+defined direction. This window only allows selection of valid starting and 
+stopping Blocks. If an expected Block is not in the starting Block selection 
+box, it may be because of this requirement.</p>
+
+<H2>Using the Activate New Train Window
+</H2
+<p>To create a new <b>Active Train</b>, use the following procedure:
+<ol>
+<li><p>Click the <b>New Train...</b> button in the 
+<b><a href="Dispatcher.shtml">Dispatcher</a></b> window to bring up 
+the window shown below.</p>
+<img src="NewTrainWindow.jpg" height="258" width="375"/>
+</li>
+<li><p>Select a Transit from the Transit selection box. The selected 
+Transit specifies the route the Active Train will follow while  
+running on the layout. Transits are displayed and new Transits are created 
+using the <b><a href="../beantable/TransitTable.shtml">Transit Table</a></b> 
+accessed from the <b>Tables</b> submenu of the JMRI <b>Tools</b> menu. This 
+Transit selection box will allow selection of any Transit in the Transit Table 
+that is not in use by an Active Train.</p>
+</li>
+<li><p>If the window shown above is displayed, select a train from the Train 
+selection box. This window is displayed if the <b>Trains from Roster</b> or 
+the <b>Trains from Trains</b> options are selected as Dispatcher's train 
+source.</p>
+<p>- OR -</p>
+</li>
+<li><p>If the window shown below is displayed,</p> 
+<img src="NewTrainAltWindow.jpg" height="277" width="368"/>
+<p>enter a train name in the <b>Train Name:</b> field, and enter a numeric 
+address in the <b>DCC Address:</b> field. Any short name that identifies 
+the train may be used provided the name is not being used by another Active 
+Train. Dcc addresses must be a number in the range 1 - 9999. Note: If the 
+train will not be run automatically, the dcc address need not be accurate. This 
+window is displayed if <b>Trains from User Entry</b> is selected as Dispatcher's 
+train source.</p>
+</li>
+<li><p>If the starting location of the Active Train is a Block within the 
+selected Transit, check the <b>Train in selected Transit</b> box. If the 
+starting location of the Active Train is outside the selected Transit, (in 
+a Block connected to a Block within the selected Transit) uncheck this box. 
+Checking and unchecking this box results in different selections in the 
+<b>Starting Location of Train:</b> select box.</p>
+</li>
+<li><p>Select a <b>Starting Location of Train:</b> from the select box. This 
+select box lists all Blocks consistent with the check box above and the 
+selected Transit. To identify each Block uniquely, the Block identifier 
+consists of the Block system name, followed by the Block user name (in 
+parentheses) followed by the sequence number of a Section in the 
+Transit definition. If the train is located in the Transit, this 
+sequence number identifies the Section where the train is located. If the 
+train is located in a connected Block, the sequence number identifies the 
+Section that will be entered when the train enters the Transit. If the train 
+spans two blocks, select the Block where the engine is located.</p>
+</li>
+<li><p>Select a <b>Destination Location of Train:</b> from the select box. This 
+select box lists all Blocks consistent with the selected Transit that can be 
+reached from the selected starting location by travel in the direction of 
+the Transit. The Block identifier in the select box consists of the Block system 
+name, followed by the Block user name (in parentheses). If a Section is in the 
+Transit more than once, the sequence number of the destination Section is 
+appended to the Block identifier to identify the destination 
+Block uniquely.</p>
+</li>
+<li><p>Enter a <b>Priority</b> for the Active Train relative to other Active 
+Trains. Larger numbers are higher priority. The priority is used in by 
+automated dispatching functions to arbitrate between Active Trains if multiple 
+Active Trains are requesting the same resources.</p>
+</li>
+<li><p>Check <b>Run Train Automatically</b> to request that the Active Train 
+be run automatically by the computer.</p>
+</li>
+<li><p>Click <b>Add New Train</b> after all the above have been set to create 
+and activate the new Active Train. The new Active Train will immediately 
+appear in the Dispatcher window, and this window will be dismissed.</p>
+<p>- OR -</p>
+</li>
+</li>
+<li><p>Click <b>Cancel</b> to exit this window without creating a new Active 
+Train.</p>
+</li>
+</ol>
+<p><b>Note: Automated dispatching and automatic running of trains are not 
+implemented in the initial version of Dispatcher.</b> These functions are 
+expected to be introduced in later versions of JMRI.</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
