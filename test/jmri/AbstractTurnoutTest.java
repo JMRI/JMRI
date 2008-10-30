@@ -24,8 +24,8 @@ public abstract class AbstractTurnoutTest extends TestCase {
 	//
 	abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
 	abstract public int numListeners();	// return number of listeners registered with the TrafficController
-	abstract public void checkThrownMsgSent();
-	abstract public void checkClosedMsgSent();
+	abstract public void checkThrownMsgSent() throws InterruptedException;
+	abstract public void checkClosedMsgSent() throws InterruptedException;
 	
 	public AbstractTurnoutTest(String s) {
 		super(s);
@@ -77,14 +77,14 @@ public abstract class AbstractTurnoutTest extends TestCase {
 		Assert.assertEquals("controller listeners remaining", 0, numListeners());
 	}
 
-	public void testCommandClosed() throws JmriException {
+	public void testCommandClosed() throws JmriException, InterruptedException {
 		t.setCommandedState(Turnout.CLOSED);
 		// check
 		Assert.assertEquals("commanded state", jmri.Turnout.CLOSED, t.getCommandedState());
 		checkClosedMsgSent();
 	}
 	
-	public void testCommandThrown() throws JmriException {
+	public void testCommandThrown() throws JmriException, InterruptedException {
 		t.setCommandedState(Turnout.THROWN);
 		// check
 		Assert.assertEquals("commanded state", jmri.Turnout.THROWN, t.getCommandedState());

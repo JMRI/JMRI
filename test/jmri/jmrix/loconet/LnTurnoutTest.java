@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -15,6 +15,7 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 		// prepare an interface
 		lnis = new LocoNetInterfaceScaffold();
 
+        // create object under test
 		t = new LnTurnout(21);
 	}
 
@@ -27,28 +28,32 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
     /** Check that last two messages correspond to 
      * closed/on, then closed/off
      */
-	public void checkClosedMsgSent() {
-	    // this is timing specific, check for only one 
-	    // message with other still to come
-		Assert.assertTrue("at least two messages", lnis.outbound.size()>=1);
-		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(), 
+	public void checkClosedMsgSent() throws InterruptedException {
+	    // Make sure that timed message has fired by waiting
+	    synchronized (this) { this.wait(LnTurnout.METERINTERVAL+25); }
+	    
+	    // check results
+		Assert.assertTrue("at least two messages", lnis.outbound.size()>=2);
+		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-2).toString(), 
 		            "B0 14 30 00");  // CLOSED/ON loconet message
-		//Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(), 
-		//            "B0 14 20 00");  // CLOSED/OFF loconet message
+		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(), 
+		            "B0 14 20 00");  // CLOSED/OFF loconet message
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 	}
 
     /** Check that last two messages correspond to 
      * thrown/on, then thrown/off
      */
-	public void checkThrownMsgSent() {
-	    // this is timing specific, check for only one 
-	    // message with other still to come
-		Assert.assertTrue("at least two messages", lnis.outbound.size()>=1);
-		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(),
+	public void checkThrownMsgSent() throws InterruptedException {
+	    // Make sure that timed message has fired by waiting
+	    synchronized (this) { this.wait(LnTurnout.METERINTERVAL+25); }
+	    
+        // check for messages
+		Assert.assertTrue("at least two messages", lnis.outbound.size()>=2);
+		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-2).toString(),
 		            "B0 14 10 00");  // THROWN/ON loconet message
-		//Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(),
-		//            "B0 14 00 00");  // THROWN/OFF loconet message
+		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(),
+		            "B0 14 00 00");  // THROWN/OFF loconet message
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 	}
 
