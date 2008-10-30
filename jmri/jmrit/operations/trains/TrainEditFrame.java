@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -57,6 +57,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// labels
 	javax.swing.JLabel textName = new javax.swing.JLabel();
 	javax.swing.JLabel textDescription = new javax.swing.JLabel();
+	javax.swing.JLabel textDepartTime = new javax.swing.JLabel();
 	javax.swing.JLabel textRoute = new javax.swing.JLabel();
 	javax.swing.JLabel textType = new javax.swing.JLabel();
 	javax.swing.JLabel textModel = new javax.swing.JLabel();
@@ -108,6 +109,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JLabel space5 = new javax.swing.JLabel();
 	
 	// combo boxes
+	javax.swing.JComboBox hourBox = new javax.swing.JComboBox();
+	javax.swing.JComboBox minuteBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
 	javax.swing.JComboBox roadBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox road2Box = CarRoads.instance().getComboBox();
@@ -136,6 +139,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		textName.setVisible(true);
 		textDescription.setText(rb.getString("Description"));
 		textDescription.setVisible(true);
+		textDepartTime.setText(rb.getString("DepartTime"));
+		textDepartTime.setVisible(true);
 		textRoute.setText(rb.getString("Route"));
 		textRoute.setVisible(true);
 		textRoad.setText(rb.getString("RoadsTrain"));
@@ -200,19 +205,43 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				
 		// Layout the panel by rows
 		// row 1
-//    	addItem(p1, space0, 0, 0);
 		addItem(p1, textName, 0, 1);
 		addItemWidth(p1, trainNameTextField, 3, 1, 1);
 
 		// row 2
-		addItem(p1, space3, 0, 2);
+//		addItem(p1, space0, 0, 2);
 		addItem(p1, textDescription, 0, 3);
 		addItemWidth(p1, trainDescriptionTextField, 3, 1, 3);
 //		addItem(p1, space5, 0, 6);
-//		Border border = BorderFactory.createEtchedBorder();
-//		p1.setBorder(border);
-
+		Border border = BorderFactory.createEtchedBorder();
+		p1.setBorder(border);
+		
 		// row 3
+	   	JPanel pdt = new JPanel();
+	   	pdt.setLayout(new GridBagLayout());
+		// build hour and minute menus
+		for (int i=0; i<24; i++){
+			if (i<9)
+				hourBox.addItem("0"+Integer.toString(i));
+			else
+				hourBox.addItem(Integer.toString(i));
+		}
+		hourBox.setMinimumSize(new Dimension(100,25));
+		hourBox.setSelectedItem(_train.getDepartureTimeHour());
+		
+		for (int i=0; i<60; i+=5){
+			if (i<9)
+				minuteBox.addItem("0"+Integer.toString(i));
+			else
+				minuteBox.addItem(Integer.toString(i));
+		}
+		minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
+		addItem(pdt, textDepartTime, 0, 5);
+		addItem(pdt, hourBox, 1, 5);
+		addItemLeft(pdt, minuteBox, 2, 5);
+		pdt.setBorder(border);
+
+		// row 4
 		// BUG! routeBox needs its own panel when resizing frame!
 	   	JPanel p2 = new JPanel();
     	p2.setLayout(new GridBagLayout());
@@ -220,11 +249,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(p2, textRoute, 0, 5);
 		addItem(p2, routeBox, 1, 5);
 		addItem(p2, editButton, 2, 5);
-		Border border = BorderFactory.createEtchedBorder();
 		p2.setBorder(border);
-		
-		// row 4
-
 
 		// row 5
 	   	typePanelCheckBoxes.setLayout(new GridBagLayout());
@@ -251,6 +276,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     		numEnginesBox.addItem(Integer.toString(i));
     	}
     	numEnginesBox.addItem(Train.AUTO);
+    	numEnginesBox.setMinimumSize(new Dimension(100,25));
     	addItem (trainReq, textEngine, 1, 1);
     	addItem (trainReq, numEnginesBox, 2, 1);
     	addItem (trainReq, textModel, 3, 1);
@@ -302,6 +328,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(p4, saveTrainButton, 3, y);
 		
 		getContentPane().add(p1);
+		getContentPane().add(pdt);
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
 		getContentPane().add(typePanelCheckBoxes);
@@ -536,6 +563,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.INFORMATION_MESSAGE);
 			//return;
 		}
+		_train.setDepartureTime((String)hourBox.getSelectedItem(), (String)minuteBox.getSelectedItem());
 		_train.setNumberEngines((String)numEnginesBox.getSelectedItem());
 		_train.setEngineRoad((String)roadEngineBox.getSelectedItem());
 		_train.setEngineModel((String)modelEngineBox.getSelectedItem());

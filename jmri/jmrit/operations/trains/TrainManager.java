@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH = "listLength";
@@ -157,6 +157,41 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				train = getTrainById((String) out.get(j));
 				String outTrainName = train.getName();
 				if (trainName.compareToIgnoreCase(outTrainName) < 0) {
+					out.add(j, sortList.get(i));
+					trainAdded = true;
+					break;
+				}
+			}
+			if (!trainAdded) {
+				out.add(sortList.get(i));
+			}
+		}
+		return out;
+
+	}
+    
+    /**
+     * Sort by train departure time
+     * @return list of train ids ordered by departure time
+     */
+    public List getTrainsByTimeList() {
+		// first get train by name list
+		List sortList = getTrainsByNameList();
+		// now re-sort
+		List out = new ArrayList();
+		int trainTime;
+		int outTrainTime;
+		boolean trainAdded = false;
+		Train train;
+
+		for (int i = 0; i < sortList.size(); i++) {
+			trainAdded = false;
+			train = getTrainById((String) sortList.get(i));
+			trainTime = train.getDepartTimeMinutes();
+			for (int j = 0; j < out.size(); j++) {
+				train = getTrainById((String) out.get(j));
+				outTrainTime = train.getDepartTimeMinutes();
+				if (trainTime < outTrainTime) {
 					out.add(j, sortList.get(i));
 					trainAdded = true;
 					break;

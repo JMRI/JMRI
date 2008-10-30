@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -29,7 +30,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -54,7 +55,9 @@ public class TrainsTableFrame extends JmriJFrame {
 	
 	// radio buttons
     javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton("Name");
+    javax.swing.JRadioButton sortByTime = new javax.swing.JRadioButton("Time");
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton("Id");
+     
 
 	// major buttons
 	javax.swing.JButton addButton = new javax.swing.JButton();
@@ -88,7 +91,13 @@ public class TrainsTableFrame extends JmriJFrame {
     	controlPanel.add(textSort);
     	controlPanel.add(sortByName);
     	sortByName.setSelected(true);
+    	controlPanel.add(sortByTime);
     	controlPanel.add(sortById);
+    	ButtonGroup sortGroup = new ButtonGroup();
+    	sortGroup.add(sortByName);
+    	sortGroup.add(sortByTime);
+    	sortGroup.add(sortById);
+    	
     	textSep1.setText("          ");
     	controlPanel.add(textSep1);
     	
@@ -127,6 +136,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		addButtonAction(saveButton);
 		
 		addRadioButtonAction(sortByName);
+		addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortById);
 		
 		addCheckBoxAction(buildReportBox);
@@ -151,14 +161,13 @@ public class TrainsTableFrame extends JmriJFrame {
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByName){
-			sortByName.setSelected(true);
-			sortById.setSelected(false);
 			trainsModel.setSort(trainsModel.SORTBYNAME);
 		}
 		if (ae.getSource() == sortById){
-			sortByName.setSelected(false);
-			sortById.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
+		}
+		if (ae.getSource() == sortByTime){
+			trainsModel.setSort(trainsModel.SORTBYTIME);
 		}
 	}
     
@@ -180,16 +189,14 @@ public class TrainsTableFrame extends JmriJFrame {
 			f.setVisible(true);
 		}
 		if (ae.getSource() == buildButton){
-			List trains = trainManager.getTrainsByNameList();
-			if (sortById.isSelected())
-				trains = trainManager.getTrainsByIdList();
+			List trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById((String)trains.get(i));
 				train.buildIfSelected();
 			}
 		}
 		if (ae.getSource() == printButton){
-			List trains = trainManager.getTrainsByNameList();
+			List trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById((String)trains.get(i));
 				train.printIfSelected();
@@ -208,6 +215,17 @@ public class TrainsTableFrame extends JmriJFrame {
 			locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track loc 
 			routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
 		}
+	}
+	
+	private List getTrainList(){
+		List trains;
+		if (sortById.isSelected())
+			trains = trainManager.getTrainsByIdList();
+		else if (sortByTime.isSelected())
+			trains = trainManager.getTrainsByTimeList();
+		else
+			trains = trainManager.getTrainsByNameList();
+		return trains;
 	}
 	
 	private void addCheckBoxAction(JCheckBox b) {

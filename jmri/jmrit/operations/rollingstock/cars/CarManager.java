@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -453,7 +453,10 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	 * @return List of cars with no assigned train on a route
 	 */
     public List getCarsAvailableTrainList(Train train) {
+    	List out = new ArrayList();
     	Route route = train.getRoute();
+    	if (route == null)
+    		return out;
     	// get a list of locations served by this route
     	List routeList = route.getLocationsBySequenceList();
     	// don't include cars at route destination
@@ -473,7 +476,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	// get cars by number list
     	List carsSortByNum = getCarsByNumberList();
     	// now build list of available cars for this route
-    	List out = new ArrayList();
+    	
     	boolean carAdded = false;
     	Car c;
  

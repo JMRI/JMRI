@@ -12,6 +12,7 @@ import javax.swing.table.TableColumnModel;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import java.util.Calendar;
 
 import jmri.*;
 import jmri.util.table.ButtonEditor;
@@ -26,7 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -57,14 +58,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     public final int SORTBYNAME = 1;
-    public final int SORTBYID = 2;
+    public final int SORTBYTIME = 2;
+    public final int SORTBYID = 3;
     
     private int _sort = SORTBYNAME;
     
     public void setSort (int sort){
     	_sort = sort;
         updateList();
-        fireTableDataChanged();
+        fireTableStructureChanged();
+        initTable(table);
     }
      
     synchronized void updateList() {
@@ -73,8 +76,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	
 		if (_sort == SORTBYID)
 			sysList = manager.getTrainsByIdList();
-		else
+		else if (_sort == SORTBYNAME)
 			sysList = manager.getTrainsByNameList();
+		else if (_sort == SORTBYTIME)
+			sysList = manager.getTrainsByTimeList();
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++){
 //			log.debug("route ids: " + (String) sysList.get(i));
@@ -84,8 +89,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	List sysList = null;
+	JTable table = null;
     
 	void initTable(JTable table) {
+		this.table = table;
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -99,8 +106,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(30);
-		table.getColumnModel().getColumn(BUILDBOXCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(BUILDBOXCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(BUILDCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(DESCRIPTIONCOLUMN).setPreferredWidth(125);
@@ -121,7 +128,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
+        case IDCOLUMN: {
+        	if (_sort == SORTBYID)
+        		return rb.getString("Id");
+        	else
+        		return rb.getString("Time");
+        }
         case BUILDBOXCOLUMN: return rb.getString("Build");
         case BUILDCOLUMN: return "";
         case NAMECOLUMN: return rb.getString("Name");
@@ -170,7 +182,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public Object getValueAt(int row, int col) {
     	Train train = manager.getTrainById((String)sysList.get(row));
         switch (col) {
-        case IDCOLUMN: return train.getId();
+        case IDCOLUMN: {
+        	if (_sort == SORTBYID){
+           		return train.getId();
+        	}
+        	else
+           		return train.getDepartureTime();
+        }
         case NAMECOLUMN: return train.getIconName();
         case DESCRIPTIONCOLUMN: return train.getDescription();
         case BUILDBOXCOLUMN: {

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -35,8 +36,6 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 
-
-
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 
@@ -46,19 +45,19 @@ import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LocoIcon;
 
-
 import org.jdom.Element;
+
 
 /**
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
 	// WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED
-	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME
+	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME, SEE EXAMPLES BELOW
 	//CarManager carManager = CarManager.instance();
 	//EngineManager engineManager = EngineManager.instance();
 	
@@ -79,7 +78,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _engineRoad = "";		// required road name for engines assigned to this train 
 	protected String _engineModel = "";		// required model of engines assigned to this train
 	protected String _cabooseRoad = "";		// required road name for cabooses assigned to this train
-
+	protected Calendar _departureTime = Calendar.getInstance();	// departure time for this train
+	
 	protected String _comment = "";
 	
 	// property change names
@@ -131,6 +131,55 @@ public class Train implements java.beans.PropertyChangeListener {
 	public String getName() {
 		return _name;
 	}
+	
+	/**
+	 * Get's trains departure time
+	 * @return train's departure time in the String format hh:mm
+	 */
+	public String getDepartureTime(){
+		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
+		int minute = _departureTime.get(Calendar.MINUTE);
+		String h = Integer.toString(hour);
+		if (hour < 10)
+			h = "0"+h;
+		if (minute < 10)
+			return h+":0"+minute;
+		else
+			return h+":"+minute;
+	}
+	
+	/**
+	 * Get train's departure time in minutes from midnight for sorting
+	 * @return int hh*60+mm
+	 */
+	public int getDepartTimeMinutes(){
+		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
+		int minute = _departureTime.get(Calendar.MINUTE);
+		return (hour*60)+minute;
+	}
+	
+	public void setDepartureTime(String hour, String minute){
+		_departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+		_departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
+		firePropertyChange("departureTime", null, hour+":"+minute);
+	}
+	
+	public String getDepartureTimeHour(){
+		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
+		if (hour<10)
+			return "0"+Integer.toString(hour);
+		else
+			return Integer.toString(hour);
+	}
+	
+	public String getDepartureTimeMinute(){
+		int minute = _departureTime.get(Calendar.MINUTE);
+		if (minute<10)
+			return "0"+Integer.toString(minute);
+		else
+			return Integer.toString(minute);
+	}
+	
 	
 	/**
 	 * Set train requirements
@@ -841,6 +890,17 @@ public class Train implements java.beans.PropertyChangeListener {
         else log.warn("no id attribute in train element when reading operations");
         if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
         if ((a = e.getAttribute("description")) != null )  _description = a.getValue();
+        // create the train calendar
+        _departureTime = Calendar.getInstance();
+		_departureTime.set(2008,10,29,12,00);
+        if ((a = e.getAttribute("departHour")) != null ){
+        	String hour = a.getValue();
+        	if ((a = e.getAttribute("departMinute")) != null ){
+        		String minute = a.getValue();
+        		setDepartureTime(hour, minute);
+        	}
+        }
+        
         if ((a = e.getAttribute("route")) != null ) {
        		setRoute(RouteManager.instance().getRouteByName(a.getValue()));
         }
@@ -896,6 +956,8 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("description", getDescription());
+        e.setAttribute("departHour", getDepartureTimeHour());
+        e.setAttribute("departMinute", getDepartureTimeMinute());
         Route route = getRoute();
         if (route != null)
         	e.setAttribute("route", getRoute().toString());

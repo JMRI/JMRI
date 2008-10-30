@@ -49,9 +49,13 @@ public class TrainSwitchLists {
 			int dropCars = 0;
 			int stops = 1;
 			Train train = manager.getTrainById((String)trains.get(i));
+			if (!train.getBuilt())
+				continue;	// train wasn't built so skip
 			List carsInTrain = carManager.getCarsByTrainList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
+			if (route == null)
+				continue;	// no route for this train
 			List routeLocations = route.getLocationsBySequenceList();
 			for (int r=0; r<routeLocations.size(); r++){
 				RouteLocation rl = route.getLocationById((String)routeLocations.get(r));
