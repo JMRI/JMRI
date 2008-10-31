@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.7 2008-10-21 20:41:33 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.8 2008-10-31 03:18:50 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -105,18 +105,18 @@ disable. The "Enable Train Icon SetX&Y" when selected allows you to
 teach the operations program where to place the train icon on your panel
 when moving your train from location to location. Deselect this feature
 after your done teaching the program to prevent accidentally changing
-the train icons position on your panel. If you also want the lead engine
-name as part of you train icon text, select the "Append Engine Number"
-box. You can select the background color of your train icon depending on
-the train's direction. Select the color desired for each direction using
-the pull down menus.
+the train icon's position on your panel. If you also want the lead
+engine name as part of your train icon text, select the "Append Engine
+Number" box. You can select the background color of your train icon
+depending on the train's direction. Select the color desired for each
+direction using the pull down menus.
 
 <H3>Save</H3>
 
 When you're finished with the settings panel, press the save button to
-store the setting in a file that can be found as
-JMRI->operations->Operations.xml. The program will also create a backup
-file each time you press the save button.
+store the setting in a file called "Operations.xml". You can find this
+file in your JMRI directory in a folder called "operations". The program
+will also create a backup file each time you press the save button.
 
 <A NAME="Locations"></A>
 <H2>Locations</H2>
@@ -134,12 +134,16 @@ the bottom of the panel. The various fields that were disabled should
 now appear.
 
 <P>Each location can have several yard, siding, interchange or
-staging tracks. Yards are where cars and engines are placed for temporary storage. A
-siding can be an industry or any place where a car is loaded or
-unloaded. For a train to service a location, there must be at least one
-track for that location. See below how to add tracks to your location.
-The tables show the total number of cars and engines at each location
-titled as "Rolling Stock".</P>
+staging tracks. Yards are where cars and engines are placed for
+temporary storage. A siding can be an industry or any place where a car
+is loaded or unloaded. For a train to service a location, there must be
+at least one track for that location. See below how to add tracks to
+your location.</P>
+<P>The tables show the length of the tracks, the amount of track
+that is occupied (Used) by cars and engines, the total number of cars
+and engines (Rolling Stock) at each location, the number of cars and
+engines that will be picked up (Pickups) by trains, and the number of
+cars and engines that will be delivered (Drops) by trains.</P>
 
 <H3>Location Service Direction</H3>
 
@@ -200,7 +204,9 @@ containing the last settings for all of your locations.
 <H3>Sidings</H3>
 
 To add a siding, press the "Add Siding" button. Sidings are very similar
-to <A HREF="#Yards">Yards</A>, so see above for more information.
+to
+<A HREF="#Yards">Yards</A>
+, so see above for more information.
 
 <H3>Local Switcher</H3>
 
@@ -232,7 +238,7 @@ interchange track.
 
 <P>If you want more control on how your interchange track will
 operate, you can optionally specify a train or route to pickup or drop
-off cars at an interchange track.</P> 
+off cars at an interchange track.</P>
 
 <A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
@@ -283,17 +289,14 @@ couplers when calculating the length of a kernel.
 
 <H3>Importing Cars from a File</H3>
 
-If you already have a list of cars in a database, you can import
-the cars into the program. The import function requires an ACSII text
-file, with one line for each car. The import order is car number, car
-road name, car type, car length, car weight, car color. The following
-shows two examples of the correct format:
+If you already have a list of cars in a database, you can import the
+cars into the program. The import function requires an ACSII text file,
+with one line for each car. The import order is car number, car road
+name, car type, car length, car weight, car color. The following shows
+two examples of the correct format:
 
-<BR>
-336 GCR Flat 40 3.8 Tuscan
-<BR>
-655578 UP Boxcar 40 3.8 Yellow
-
+<P>336 GCR Flat 40 3.8 Tuscan <BR>
+655578 UP Boxcar 40 3.8 Yellow</P>
 <P>Each line can start with a space and multiple spaces between
 fields is okay. Optionally you can include additional information in the
 following order, owner name, date built, and location. The location can
@@ -311,9 +314,13 @@ corner of the Tools->Operations->Cars menu. Then select
 "Tools->Roster->Import from file". Note that the program will only add
 cars that don't exist in the program's car roster. It the car already
 exists, the import will be skipped by the program. You must also create
-the locations and their tracks before importing the cars into the operations program.</P>
+the locations and their tracks before importing the cars into the
+operations program.</P>
 
-<A NAME="CarsEdit"></A>
+<P>After importing your cars, you must save them if you want to keep
+them as part of your roster. Select any car by pressing the edit button
+and then press the "Save" button that can be found at the bottom right
+of the "Edit Car" panel. <A NAME="CarsEdit"></A></P>
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
@@ -402,7 +409,7 @@ cars. Press the "Edit" button for any of your cars in the Cars panel,
 and then press the "Edit" button across from Road in the "Car Edit"
 panel. Enter the new road "UPS" in the top box, select "UP" in the menu
 box, and press "Replace". All cars with "UP" as their road will now have
-"UPS" as their road name. 
+"UPS" as their road name.
 
 <A NAME="CarsSet"></A>
 <H3>Car Set Location Button</H3>
@@ -410,7 +417,7 @@ box, and press "Replace". All cars with "UP" as their road will now have
 After creating a car, you can set the car's location, and optionally the
 car's destination and train. Normally the car's destination and assigned
 train are generated by the program, but you can use these fields to
-force a car to a specific location using a specified train. 
+force a car to a specific location using a specified train.
 
 <A NAME="Engines"></A>
 <H2>Engines</H2>
@@ -437,15 +444,13 @@ correctly calculate your train lengths.
 
 <H3>Import Engines from a File</H3>
 
-The import from file function requires an ACSII text file, with
-one line for each engine. The import order is engine number, engine road
-name, engine model, engine length, engine weight, engine color. The
-following shows two examples of the correct format:
-<BR>
-<BR>
-236 UP RS4 40 <BR>
-5578 SP SW1200 42
+The import from file function requires an ACSII text file, with one line
+for each engine. The import order is engine number, engine road name,
+engine model, and engine length. The following shows two examples of the
+correct format:
 
+<P>236 UP RS4 40 <BR>
+5578 SP SW1200 42</P>
 <P>Each line can start with a space and multiple spaces between
 fields is okay. Optionally you can include additional information in the
 following order, owner name, date built, and location. The location can
@@ -454,7 +459,8 @@ yard name separated by a hyphen. The following shows two examples of the
 correct format:</P>
 
 <BR>
-236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal <BR>
+236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal
+<BR>
 5578 SP SW1200 42 DB 1934 York - York Engine Yard
 
 <P>To import a file, use the "Tools" menu in the upper left hand
@@ -463,7 +469,12 @@ corner of the Tools->Operations->Engines menu. Select
 don't exist in the program's engine roster. It the engine already
 exists, it will be skipped by the program.</P>
 
-<A NAME="EnginesEdit"></A>
+<P>After importing your engines, you must save them if you want to
+keep them as part of your roster. Select any engine by pressing the edit
+button and then press the "Save" button that can be found at the bottom
+right of the "Edit Engine" panel. 
+
+<A NAME="EnginesEdit"></A></P>
 <H3>Adding Engines to your Roster</H3>
 
 To manually add an engine to your roster, press the "Add" button located
@@ -476,14 +487,14 @@ engine is off the layout, set the location to none (blank space). If
 wish this engine to be part of a consist, press "Edit" across from
 "Consist" and enter a consist name. Then select the consist name from
 the menu box. Finally you can optionally enter the build date, owner and
-comment for this engine. 
+comment for this engine.
 
 <H3>Save</H3>
 
-Press "Save" to store the engine's settings. The program will create a file
-(OperationsEngineRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your engines
-is also created each time the "Save" button is pressed. 
+Press "Save" to store the engine's settings. The program will create a
+file (OperationsEngineRoster.xml) in your JMRI directory in a folder
+called "operations". A backup file with the last settings for all of
+your engines is also created each time the "Save" button is pressed.
 
 <A NAME="EnginesSet"></A>
 <H3>Engine Set Location Button</H3>
@@ -502,7 +513,7 @@ will read all of the consists out of the NCE system and then will search
 for matching engines in your operations roster. The program will assign
 the consist name nce_xxx where xxx is the consist number. To synchronize
 your consists, select "Synchronize with NCE Consists" under the "Tools"
-menu. 
+menu.
 
 <A NAME="Routes"></A>
 <H2>Routes</H2>
@@ -540,14 +551,14 @@ specified location. Leave the X and Y coordinates at zero if you want to
 manually move the icon or you're not using the icon feature. After
 setting the number of moves, maximum length, or coordinates, click on
 the table to make sure it is recognized by the program, then hit "Save
-Route." </P>
+Route."</P>
 
 <H3>Save</H3>
 
 Press "Save" to save your route. The program will create a file
 (OperationsRouteRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your routes
-is also created each time the "Save" button is pressed. 
+"operations". A backup file with the last settings for all of your
+routes is also created each time the "Save" button is pressed.
 
 <A NAME="Trains"></A>
 <H2>Trains</H2>
@@ -562,6 +573,14 @@ this train will travel. There's an Edit button to the right of the route
 that allows you to directly edit the selected route. Once a route is
 selected a list of locations that the train will visit should appear.
 You can deselect any location that you don't want the train to work.
+
+<H3>Train Departure Time</H3>
+
+Enter the time that this train will depart the first location in its
+route. You can use the departure time to sort your trains in the order
+that you want them built when using the
+<A HREF="#BuildingTrains">"Build Selected Trains"</A>
+button.
 
 <H3>Train Rolling Stock</H3>
 
@@ -578,7 +597,8 @@ If you want to accept only some road names, select "Accept only" radio
 button. Then use the menu of road names and "Add Road" button to make a
 list of road names that the train will service. To remove a road name
 from your list, select the road name from the menu and use the "Delete
-Road" button. <BR>
+Road" button.
+<BR>
 To build a list of road names that the train will not service, select
 the "Exclude" radio button. Use the menu of road names and the "Add
 Road" button to build a list of roads that this train will not service.
@@ -606,9 +626,10 @@ railroad.
 
 Press "Save" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your trains
-is also created each time the "Save" button is pressed. 
+"operations". A backup file with the last settings for all of your
+trains is also created each time the "Save" button is pressed.
 
+<A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
 
 To build one train, press the "Build" button in the row for the desired
@@ -620,7 +641,7 @@ program will generate the build report and manifest and present them in
 preview frames. If you want to build several trains without having to
 press individual buttons for each train, select the trains that you want
 builds and press the "Build Selected Trains" button. The program will
-then generate manifests for the selected trains. 
+then generate manifests for the selected trains.
 
 <A NAME="SwitchList"></A>
 <H3>Switch Lists</H3>
