@@ -193,7 +193,24 @@
    
 <li>
 <a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+<ul>
+      
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains</a>
 <ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary">Glossary</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/dispatcher/Options.shtml">Options</a>
+<ul></ul>
+</li>
+   
+</ul>
 </li>
    
 <li>
