@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AllocateExtra.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<!-- $Id: AllocateExtra.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -48,7 +48,7 @@ procedure:
 <li><p>Click the <b>Allocate Extra...</b> button in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window. This brings up 
 the window shown below.</p>
-<img src="AllocateExtraWindow.jpg" height="146" width="267"/>
+<img src="AllocateExtraWindow.jpg" height="146" width="267">
 </li>
 <li><p>Select an Active Train in the <b>Active Train:</b> select box. When an 
 Active Train is selected, the <b>Section to Allocate:</b> select box will change 

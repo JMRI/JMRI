@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AllocatedSections.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<!-- $Id: AllocatedSections.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,7 +38,7 @@ be used to bring it to the front if it becomes buried.</p>
 <b>Show Allocations...</b> button in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window. Clicking this 
 button brings up the small window shown below.</p>
-<img src="AllocatedSectionsWindow.jpg" height="171" width="543"/>
+<img src="AllocatedSectionsWindow.jpg" height="171" width="543">
 <p> The table has four columns as follows:
 <li><p><b>Active Train</b> - Shows the Active Train to which the Section is assigned. 
 Active Train names are displayed in either short form (shown above) or long form 

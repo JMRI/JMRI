@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Dispatcher.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<!-- $Id: Dispatcher.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,7 +23,9 @@
 
 <H1>Dispatcher
 </H1>
-<dt class="left"><a name="contents"><h3>Contents</h3></a></dt>
+
+<a name="contents"><h3>Contents</h3></a>
+
 <p>This document describes <b>Dispatcher</b>, and how to use Dispatcher to 
 help with dispatching and running trains on layouts with PanelPro panels. The 
 document is divided into sections; click below to jump to the named section. 
@@ -38,8 +40,8 @@ Underlined items are links to sections of this document or to other help files.<
 	<li><a href="#arequests">The Allocation Requests Table</a></li>
 </ul>
 
-<dt class="left"><a name="intro"><H2>Introduction to Dispatcher
-</H2></a></dt>
+<a name="intro"><H2>Introduction to Dispatcher</H2></a>
+
 <p><b>Dispatcher</b> provides functions and organizes information relating to 
 dispatching trains on a model railroad layout. It's main function is allocation 
 of sections of track to various trains running around the layout. Dispatcher is 
@@ -105,8 +107,8 @@ Some were created specifically for use with Dispatcher. Please briefly review
 the <b>Glossary of Terms</b> which follows, and come back to it as needed when 
 reading the remainder of this documentation.</p>
 
-<dt class="left"><a name="glossary"><H2>Glossary of Terms
-</H2></a></dt>
+<a name="glossary"><H2>Glossary of Terms</H2></a>
+
 <p><b>Block</b> - A portion of track whose occupancy may be individually monitored. 
 Blocks are defined by subdividing the track in a layout. Blocks normally correspond 
 to physical blocks on a layout, each wired for occupancy detection. However, if 
@@ -157,9 +159,9 @@ Sections in a Transit, there may be multiple "3rd" Sections, any of which might
 be used to travel between the 2nd and 4th Sections. Alternate Sections provide for 
 passing tracks and staging yards.</p>
 
-<dt class="left"><a name="transits"><H2>Using Transits and Sections in Dispatching 
-Active Trains
-</H2></a></dt>
+<a name="transits"><H2>Using Transits and Sections in Dispatching 
+Active Trains</H2></a>
+
 <p>When a <b>Transit</b> is paired with a <b>Train</b> to form an <b>Active Train</b>, 
 the starting Block (Active Train location at start) and ending Block (Active Train 
 location when the travel is complete) are specified. The Active Train is referred to by 
@@ -194,8 +196,8 @@ may be used for automatic station stops. The Await action is designed to support
 an engineer doing work in a specified Section, and requesting a restart when the 
 work is complete. More actions may be added in the future as needed.</p>
 
-<dt class="left"><a name="window"><H2>The Dispatcher Window
-</H2></a></dt>
+<a name="window"><H2>The Dispatcher Window</H2></a>
+
 <p>The <b>Dispatcher</b> window is opened when <b>Dispatcher...</b> is selected 
 in the JMRI <b>Tools</b> menu. It displays a table of <b>Active Trains</b> and 
 their status, and a table of pending <b>Allocation Requests</b>. It provides 
@@ -208,7 +210,7 @@ window buttons are discussed below. The
 table are discussed in the following sections.</p>
 <p>A typical Active Trains window early in a train running session is shown below.
 </p>
-<img src="DispatcherWindow.jpg" height="386" width="843"/>
+<img src="DispatcherWindow.jpg" height="386" width="843">
 <p>In the example window above, two Active Trains have been created. The top 
 Active Train, ATSF4581, has been allocated a Section and is RUNNING. The second 
 Active Train, SP234 is WAITING for its first allocation. An Allocation Request 
@@ -258,9 +260,8 @@ accessed via the Dispatcher window's Options menu. Descriptions of currently
 available options, the Options menu, the Options window are contained in 
 the <b><a href="Options.shtml">Options</a></b> help file.</p>
 
-<dt class="left"><a name="atrains"><H2>The Active Trains Table
-</H2></a></dt>
-<p>
+<a name="atrains"><H2>The Active Trains Table</H2></a>
+
 <p>Each row of <b>Active Trains</b> table corresponds to one Active Train. The 
 columns are explained below.
 <ul>
@@ -341,8 +342,8 @@ Section is appropriate, so the dispatcher is not queried.
 </li>
 </ul>
 
-<dt class="left"><a name="arequests"><H2>The Allocation Requests Table
-</H2></a></dt>
+<a name="arequests"><H2>The Allocation Requests Table</H2></a>
+
 <p>This table, headed <b>Requested Allocations waiting for Dispatch</b>, 
 displays pending <b>Allocation Requests</b>. Each row corresponds to one 
 <b>Allocation Request</b>. Columns are explained below.

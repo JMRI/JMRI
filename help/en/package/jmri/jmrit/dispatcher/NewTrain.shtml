@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewTrain.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<!-- $Id: NewTrain.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -62,7 +62,7 @@ box, it may be because of this requirement.</p>
 <li><p>Click the <b>New Train...</b> button in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window to bring up 
 the window shown below.</p>
-<img src="NewTrainWindow.jpg" height="258" width="375"/>
+<img src="NewTrainWindow.jpg" height="258" width="375">
 </li>
 <li><p>Select a Transit from the Transit selection box. The selected 
 Transit specifies the route the Active Train will follow while  
@@ -79,7 +79,7 @@ source.</p>
 <p>- OR -</p>
 </li>
 <li><p>If the window shown below is displayed,</p> 
-<img src="NewTrainAltWindow.jpg" height="277" width="368"/>
+<img src="NewTrainAltWindow.jpg" height="277" width="368">
 <p>enter a train name in the <b>Train Name:</b> field, and enter a numeric 
 address in the <b>DCC Address:</b> field. Any short name that identifies 
 the train may be used provided the name is not being used by another Active 

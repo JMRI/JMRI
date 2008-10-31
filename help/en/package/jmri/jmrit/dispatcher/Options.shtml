@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Options.shtml,v 1.1 2008-10-30 15:25:33 djduchamp Exp $ -->
+<!-- $Id: Options.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -36,7 +36,7 @@ in the following section.
 </H2
 <p>Selecting <b>Options Window...</b> in the <b>Options</b> menu of the Dispatcher 
 window brings up the window shown below.</p>
-<img src="OptionsWindow.jpg" height="312" width="519"/>
+<img src="OptionsWindow.jpg" height="312" width="519">
 
 <p>This window shows options currently selected for Dispatcher. To change 
 Dispatcher options, change to the desired option configuration, and 
