@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -15,6 +15,10 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 		// prepare an interface
 		lnis = new LocoNetInterfaceScaffold();
 
+        // outwait any pending delayed sends
+	    try { synchronized (this) { this.wait(LnTurnout.METERINTERVAL+25); }}
+	    catch (InterruptedException e) {}
+	    
         // create object under test
 		t = new LnTurnout(21);
 	}
@@ -26,7 +30,10 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 	LocoNetInterfaceScaffold lnis;
 
     /** Check that last two messages correspond to 
-     * closed/on, then closed/off
+     * closed/on, then closed/off.
+     * Why last two?  For unknown reason(s), this test
+     * gets _three_ messages, with the first one being a 
+     * set 21 closed and off. Is it left over from some previous test?
      */
 	public void checkClosedMsgSent() throws InterruptedException {
 	    // Make sure that timed message has fired by waiting
@@ -49,7 +56,7 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 	    synchronized (this) { this.wait(LnTurnout.METERINTERVAL+25); }
 	    
         // check for messages
-		Assert.assertTrue("at least two messages", lnis.outbound.size()>=2);
+		Assert.assertTrue("just two messages", lnis.outbound.size()==2);
 		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-2).toString(),
 		            "B0 14 10 00");  // THROWN/ON loconet message
 		Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size()-1).toString(),
