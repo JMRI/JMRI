@@ -14,7 +14,7 @@ import java.util.*;
  * out of this class and into the contructors themselves.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -92,7 +92,6 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.blockboss.BlockBossAction(rb.getString("MenuItemSimpleSignal")));
         add(new jmri.jmrit.sensorgroup.SensorGroupAction(rb.getString("MenuItemSensorGroup")));
         add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
-        add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(rb.getString("MenuItemLightControl")));
         add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(rb.getString("MenuItemLightControl")));
         add(new jmri.jmrit.dispatcher.DispatcherAction(rb.getString("MenuItemDispatcher")));
         
