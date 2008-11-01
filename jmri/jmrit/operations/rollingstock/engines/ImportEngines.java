@@ -61,6 +61,7 @@ public class ImportEngines extends Thread {
 
 		// Now read the input file 
 		boolean importOkay = false;
+		boolean comma = false;
 		int lineNum = 0;
 		int enginesAdded = 0;
 		String line = " ";
@@ -86,12 +87,25 @@ public class ImportEngines extends Thread {
 				break;
 			}
 
-			line.trim();
+			line = line.trim();
 			if (log.isDebugEnabled()) {
 				log.debug("Import: " + line);
 			}
-
-			String[] inputLine = line.split("\\s+");
+			if (line.equalsIgnoreCase("comma")){
+				log.info("Using comma as delimiter for import engines");
+				comma = true;
+			}
+			// use comma as delimiter if found otherwise use spaces
+			String[] inputLine;
+			if (comma)
+				inputLine = line.split(",");
+			else
+				inputLine = line.split("\\s+");
+			
+			if (inputLine.length < 1){
+				log.debug("Skipping blank line");
+				continue;
+			}
 			int base = 0;
 			if (!inputLine[0].equals("")){
 				base--;		// skip over any spaces at start of line
@@ -109,26 +123,30 @@ public class ImportEngines extends Thread {
 
 				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") type ("+engineModel+ ") length ("+engineLength+")");
 				if (engineNumber.length() > 10){
-					JOptionPane.showMessageDialog(null, rb.getString("engineRoadNum"),
+					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road number ("+engineNumber+") too long!",
+							rb.getString("engineRoadNum"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineRoad.length() > 12){
-					JOptionPane.showMessageDialog(null, rb.getString("engineAttribute"),
+					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road name ("+engineRoad+") too long!",
+							rb.getString("engineAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineModel.length() > 12){
-					JOptionPane.showMessageDialog(null, rb.getString("engineAttribute"),
+					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") type ("+engineModel+") too long!",
+							rb.getString("engineAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineLength.length() > 4){
-					JOptionPane.showMessageDialog(null, rb.getString("engineAttribute5"),
+					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") length ("+engineLength+") too long!",
+							rb.getString("engineAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -140,8 +158,9 @@ public class ImportEngines extends Thread {
 					if(inputLine.length > base+5){
 						engineOwner = inputLine[base+5];
 						if (engineOwner.length() > 12){
-							JOptionPane.showMessageDialog(null, rb.getString("engineAttribute"),
+							JOptionPane.showMessageDialog(null, 
 									"Engine ("+engineRoad+" "+engineNumber+") owner ("+engineOwner+") too long!",
+									rb.getString("engineAttribute"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -149,19 +168,19 @@ public class ImportEngines extends Thread {
 					if(inputLine.length > base+6){
 						engineBuilt = inputLine[base+6];
 						if (engineBuilt.length() > 4){
-							JOptionPane.showMessageDialog(null, rb.getString("engineAttribute5"),
+							JOptionPane.showMessageDialog(null, 
 									"Engine ("+engineRoad+" "+engineNumber+") built ("+engineBuilt+") too long!",
+									rb.getString("engineAttribute5"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
 					}
 					if(inputLine.length > base+7){
 						engineLocation = inputLine[base+7];
-
 					}
 					// Location name can be one to three words 
 					if(inputLine.length > base+8){
-						if (!inputLine[8].equals("-")){
+						if (!inputLine[base+8].equals("-")){
 							engineLocation = engineLocation + " " +inputLine[base+8];
 							if(inputLine.length > base+9){
 								if (!inputLine[base+9].equals("-"))
@@ -178,18 +197,20 @@ public class ImportEngines extends Thread {
 							} else if (foundDash)
 								engineTrack = engineTrack + " " +inputLine[i];
 						}
-						log.debug("Engine ("+engineRoad+" "+engineNumber+") has track location ("+engineTrack+")");
+						log.debug("Engine ("+engineRoad+" "+engineNumber+") has track ("+engineTrack+")");
 					}
 
 					if (engineLocation.length() > 25){
-						JOptionPane.showMessageDialog(null, rb.getString("engineAttribute"),
+						JOptionPane.showMessageDialog(null, 
 								"Engine ("+engineRoad+" "+engineNumber+") location ("+engineLocation+") too long!",
+								rb.getString("engineAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
 					if (engineTrack.length() > 25){
-						JOptionPane.showMessageDialog(null, rb.getString("engineAttribute"),
-								"Engine ("+engineRoad+" "+engineNumber+") track location ("+engineTrack+") too long!",
+						JOptionPane.showMessageDialog(null, 
+								"Engine ("+engineRoad+" "+engineNumber+") track ("+engineTrack+") too long!",
+								rb.getString("engineAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
@@ -239,7 +260,7 @@ public class ImportEngines extends Thread {
 					}
 				}
 			}else{
-				log.debug("Import missing one of four required engine attributes");
+				log.info("Import line number " + lineNum + " missing one of four required engine attributes");
 			}
 		}
 		try {

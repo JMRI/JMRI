@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -354,8 +354,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null){
 			trainNameTextField.setText(_train.getName());
 			trainDescriptionTextField.setText(_train.getDescription());
-			hourBox.setSelectedItem(train.getDepartureTimeHour());
-			minuteBox.setSelectedItem(train.getDepartureTimeMinute());
+			hourBox.setSelectedItem(_train.getDepartureTimeHour());
+			minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
 			routeBox.setSelectedItem(_train.getRoute());
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			roadEngineBox.setSelectedItem(_train.getEngineRoad());

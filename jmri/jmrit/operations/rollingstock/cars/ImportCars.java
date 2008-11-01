@@ -61,6 +61,7 @@ public class ImportCars extends Thread {
 
 		// Now read the input file 
 		boolean importOkay = false;
+		boolean comma = false;
 		int lineNum = 0;
 		int carsAdded = 0;
 		String line = " ";
@@ -88,12 +89,25 @@ public class ImportCars extends Thread {
 				break;
 			}
 
-			line.trim();
+			line = line.trim();
 			if (log.isDebugEnabled()) {
 				log.debug("Import: " + line);
 			}
-
-			String[] inputLine = line.split("\\s+");
+			if (line.equalsIgnoreCase("comma")){
+				log.info("Using comma as delimiter for import cars");
+				comma = true;
+			}
+			// use comma as delimiter if found otherwise use spaces
+			String[] inputLine;
+			if (comma)
+				inputLine = line.split(",");
+			else
+				inputLine = line.split("\\s+");
+			
+			if (inputLine.length < 1){
+				log.debug("Skipping blank line");
+				continue;
+			}
 			int base = 1;
 			if (!inputLine[0].equals("")){
 				base--;		// skip over any spaces at start of line
@@ -114,38 +128,44 @@ public class ImportCars extends Thread {
 
 				log.debug("Checking car number ("+carNumber+") road ("+carRoad+ ") type ("+carType+ ") length ("+carLength+") weight ("+carWeight+") color ("+carColor+")" );
 				if (carNumber.length() > 10){
-					JOptionPane.showMessageDialog(null, rb.getString("carRoadNum"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") road number ("+carNumber+") too long!",
+							rb.getString("carRoadNum"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carRoad.length() > 12){
-					JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") road name ("+carRoad+") too long!",
+							rb.getString("carAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carType.length() > 12){
-					JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") type ("+carType+") too long!",
+							rb.getString("carAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carLength.length() > 4){
-					JOptionPane.showMessageDialog(null, rb.getString("carAttribute5"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") length ("+carLength+") too long!",
+							rb.getString("carAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carWeight.length() > 4){
-					JOptionPane.showMessageDialog(null, rb.getString("carAttribute5"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") weight ("+carWeight+") too long!",
+							rb.getString("carAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carColor.length() > 12){
-					JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
+					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") color ("+carColor+") too long!",
+							rb.getString("carAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -157,8 +177,9 @@ public class ImportCars extends Thread {
 					if(inputLine.length > base+6){
 						carOwner = inputLine[base+6];
 						if (carOwner.length() > 12){
-							JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
+							JOptionPane.showMessageDialog(null, 
 									"Car ("+carRoad+" "+carNumber+") owner ("+carOwner+") too long!",
+									rb.getString("carAttribute"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -166,8 +187,9 @@ public class ImportCars extends Thread {
 					if(inputLine.length > base+7){
 						carBuilt = inputLine[base+7];
 						if (carBuilt.length() > 4){
-							JOptionPane.showMessageDialog(null, rb.getString("carAttribute5"),
+							JOptionPane.showMessageDialog(null, 
 									"Car ("+carRoad+" "+carNumber+") built ("+carBuilt+") too long!",
+									rb.getString("carAttribute5"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -195,18 +217,20 @@ public class ImportCars extends Thread {
 							} else if (foundDash)
 								carTrack = carTrack + " " +inputLine[i];
 						}
-						log.debug("Car ("+carRoad+" "+carNumber+") has track location ("+carTrack+")");
+						log.debug("Car ("+carRoad+" "+carNumber+") has track ("+carTrack+")");
 					}
 
 					if (carLocation.length() > 25){
-						JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
+						JOptionPane.showMessageDialog(null, 
 								"Car ("+carRoad+" "+carNumber+") location ("+carLocation+") too long!",
+								rb.getString("carAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
 					if (carTrack.length() > 25){
-						JOptionPane.showMessageDialog(null, rb.getString("carAttribute"),
-								"Car ("+carRoad+" "+carNumber+") track location ("+carTrack+") too long!",
+						JOptionPane.showMessageDialog(null, 
+								"Car ("+carRoad+" "+carNumber+") track ("+carTrack+") too long!",
+								rb.getString("carAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
@@ -260,7 +284,7 @@ public class ImportCars extends Thread {
 					}
 				}
 			}else{
-				log.debug("Import missing one of six required car attributes");
+				log.info("Import line number " + lineNum + " missing one of six required car attributes");
 			}
 		}
 		try {
