@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.2 on Fri Oct 03 10:50:43 PDT 2008 $Id: decoderIndex.xml,v 1.128 2008-10-05 22:10:41 jacobsen Exp $-->
-  <decoderIndex version="147">
+  <!--Written by JMRI version 2.3.5 on Sat Nov 01 13:06:11 PDT 2008 $Id: decoderIndex.xml,v 1.129 2008-11-01 20:11:16 jacobsen Exp $-->
+  <decoderIndex version="149">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2696,7 +2696,7 @@
         </model>
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
-        <model model="TC-64" comment="64 line I/O" lowVersionID="02" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="TC-64" comment="64 line I/O" lowVersionID="05" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" type="locomotive" file="SPROG_DCC_Servo6.xml">
         comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..."&gt;
