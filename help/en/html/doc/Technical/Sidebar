@@ -61,8 +61,9 @@
 		<dt>How To</dt>
 		<dd>
 			<ul>
-			<LI><a href="NewType.shtml">Add a New Type</a>
 			<LI><a href="plugins.shtml">Extend with Plugins</a>
+			<LI><a href="NewType.shtml">Add a New Type</a>
+			<LI><a href="NewSystem.shtml">Add a New System</a>
 			</ul>
 		</dd>
 
