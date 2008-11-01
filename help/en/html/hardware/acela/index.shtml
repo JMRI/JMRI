@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.4 2008-07-29 23:02:08 rcoleman Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-11-01 17:32:59 jacobsen Exp $ -->
 <title>JMRI: Connecting the CTI Acela System</title>
 
 <!-- Style -->
@@ -17,10 +17,12 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<h2> 
+<h1> 
 JMRI: Connecting the Acela System
-</h2>
+</h1>
 
 
 Naming of CTI Acela inputs and outputs are described on a 
@@ -35,7 +37,7 @@ tool. Either way, don't forget to save them with the
 <a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
 (under Edit in the main menu).
 
-<H3>CTI Modules</h3>
+<H2>CTI Modules</h2>
 
 
 As described in the Acela documentation on the 
@@ -53,7 +55,7 @@ there are several CTI modules available:
 <LI>A CTI Sentry (no output circuits, 16 input circuits).
 </UL>
  
-<H3>Limitations</h3>
+<H2>Limitations</h2>
 
 <UL>
 <LI>A CTI network is usually connected to a computer via a CTI to serial (or CTI to USB) interface.  In this configuration all of the CTI network management must be performed by the computer.  CTI also offers an Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.  JMRI only supports the CTI Acela interface (it does not support the direct serial -- nor USB interface).
@@ -62,7 +64,7 @@ there are several CTI modules available:
 <LI>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI now allows you to <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">configure</a> this.
 </UL>
 
-<h3>Background Information</h3>
+<h2>Background Information</h2>
 
 The CTI Acela network is a true token passing ring network.
 <p>
@@ -86,7 +88,7 @@ green LED to indicate that it is happy (whether the ring is happy or
 not).
 
 
-<h3>More Information</h3>
+<h2>More Information</h2>
 
 More information on the Acela hardware can be found on the
 <a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>.

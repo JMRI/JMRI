@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.6 2008-07-31 18:59:59 djduchamp Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.7 2008-11-01 17:32:59 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -17,14 +17,15 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<h2> 
+<h1> 
 JMRI: Simple Signal Logic Documentation
-</h2>
+</h1>
 
-<dl>
-<dt class="left"><a name="contents"><h3>Contents</h3></a></dt>
-<dd class="top">
+<a name="contents"><h2>Contents</h2></a>
+
 <p>The documentation below describes Signaling with JMRI, and discusses how to set 
 up the basic signal situations. The documentation is divided into sections; click below for 
 easy access to a listed section. If you prefer to try before reading much,
@@ -37,57 +38,71 @@ and follow those instructions. Return here to read about what you did.
 </li><li><a href="#SSL">SSL</a>
 </li><li><a href="#start">Getting Started</a>
 </li></ul>
-</dd>
 
-<dt class="left"><a name="terms"><h3>Vocabulary</h3></a></dt>
-<dd class="top">
-<p><b>Some basic signal terms:</b><br>
-<ul>
-<li><b>Signal Arm</b> or <b>Signal Head</b> Each individual signal unit.</li>
-<li><b>Aspect</b> The speed or route indication given by one or more signal heads or arms.<br>
-</li>
-<li><b>Marker</b> A signal head or arm that does not change color or position.</li>
-<li>
-<b>Light</b> The individual lamp in a signal. A light may indicate multiple aspects
+
+<a name="terms"><h2>Vocabulary</h2></a>
+
+<p>Some basic signal terms:
+<dl>
+<dt><b>Signal Arm</b> or <b>Signal Head</b><dd>Each individual signal unit.
+
+<dt><b>Aspect</b><dd>The speed or route indication given by one or more signal heads or arms.
+
+<dt><b>Marker</b> <dd>A signal head or arm that does not change color or position.
+
+<dt><b>Light</b> <dd>The individual lamp in a signal. A light may indicate multiple aspects
 if it changes color like  in a searchlight signal, or it may take multiple lights
-to indicate a single aspect, for example in position light signals.</li>
-<li>
-<b>Mast</b> The pole that mounts one or more signal arms that (usually) control each
-individual track.</li>
-<li><b>Distant Signal</b> The signal you are controlling shows the same or 
-more restrictive aspect as the next signal in the direction and route of travel.</li></ul>
+to indicate a single aspect, for example in position light signals.
+
+<dt><b>Mast</b> <dd>The pole that mounts one or more signal arms that (usually) control each
+individual track.
+<dt><b>Distant Signal</b> <dd>A distant signal shows the same or 
+more restrictive aspect as the next signal in the direction and route of travel.
+</dl>
 	
-<p><b>Some JMRI specific SSL and Signal terms:</b><br>
-<ul><li><b>Signal Table</b> The list of signals in JMRI. Signals must first be added into 
-the Signal Table before they may be included in a SSL entry or Logix.</li>
-<li><b>Triple Output</b> 
-A signal head that has each aspect of the signal directly driven 
+<p>Some JMRI specific SSL and Signal terms:
+
+<dl>
+<dt><b>Signal Table</b> <dd>The list of signals in JMRI. Signals must first be added into 
+the Signal Table before they may be included in a SSL entry or Logix.
+
+<dt><b>Triple Output</b> 
+<dd>A signal head that has each aspect of the signal directly driven 
 from an individual output (called a turnout) line. 
-Each aspect change requires that three commands be sent.</li>
-<li>
-<b>Double Output</b> 
-A signal head that uses just two output lines to indicate 4 signal aspects.
+Each aspect change requires that three commands be sent.
+
+<dt><b>Double Output</b> 
+<dd>A signal head that uses just two output lines to indicate 4 signal aspects.
 Usually these aspects will be Clear, Approach, Stop, and Dark. 
 The output coding is such that 
 one turnout thrown (on) controls the stop and the other thrown (on) controls the clear. 
 Both outputs thrown (on) controls the
 approach, and both closed (off) are dark. 
-Each aspect change requires that two commands be sent.</li>
-<li>
-<b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
-stop and clear, and the second turnout command changes between approach and dark.</li>
-<li> <b>Virtual</b> Virtual signals are JMRI internal signals with no actual hardware attached. Before the advent of Logix,
-Virtual Signals were required to solve more complex operations than can be done with with a single SSL alone.</li>
-<li><b>Protected Sensor</b> The next block sensor/s following the signal you are controlling in the 
-direction and route of travel. The "protection" is to prevent a train from entering an occupied block without warning.</li>
-<li><b>Protected Signal</b> The next signal after the one you are controlling in the 
-direction and route of travel. The "protection" is to prevent a train from approaching a stop signal without sufficient warning to allow it to be stopped short of reaching the "protected" signal.</li>
-</li>
-<li><b>System Name</b> The internal JMRI representation for the actual hardware being used
+Each aspect change requires that two commands be sent.
+
+<dt><b>SE8c</b> <dd>A signal head controlled by a single turnout command per aspect change. 
+One turnout command changes between 
+stop and clear, and the second turnout command changes between approach and dark.
+
+<dt><b>Virtual</b> <dd>Virtual signals are JMRI internal signals with no actual hardware attached. 
+Before the advent of Logix,
+Virtual Signals were required to solve more complex operations than can be done with with a single SSL alone.
+
+<dt><b>Protected Sensor</b> <dd>The next block sensor/s following the signal you are controlling in the 
+direction and route of travel. 
+The "protection" is to prevent a train from entering an occupied block without warning.
+
+<dt><b>Protected Signal</b> <dd>The next signal after the one you are controlling in the 
+direction and route of travel. 
+The "protection" is to prevent a train from approaching a stop signal 
+without sufficient warning to allow it to be stopped short of reaching the "protected" signal.
+
+<dt><b>System Name</b> <dd>The internal JMRI representation for the actual hardware being used
 to control the signal. This will vary depending on your hardware, and must match your system.
-</ul>
-	<dt class="left"><a name="table"><h3>Signal Table</h3></a></dt>
-	<dd class="top">
+
+</dl>
+
+<a name="table"><h2>Signal Table</h2></a>
 
 <A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="750" HEIGHT="332" HSPACE="0" VSPACE="0"></A>
 <p>All the signals that JMRI knows about can be referenced
@@ -128,8 +143,10 @@ on creating and displaying panels, including how to show signals
 on your panels, please see the 
 <A HREF="../../../../html/apps/PanelPro/Panels.html">Panels pages</a>
 and the pages on the 
-<A HREF="../../../../html/apps/PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	<dt class="left"><a name="intro"><h3>Introduction to SSL</h3></a></dt>
-	<dd class="top">
+<A HREF="../../../../html/apps/PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
+
+<a name="intro"><h2>Introduction to SSL</h2></a>
+
 <p>
 SSL is a JMRI tool to enable the rapid setup of basic ABS style signaling. 
 	For more complex operations beyond the capability of SSL refer to the section on Logix.
@@ -139,9 +156,8 @@ SSL is a JMRI tool to enable the rapid setup of basic ABS style signaling.
 	user having to be familiar with all of the logic necessary to account for the different aspects.
 	
 
-    <dt class="left"><a name="SSL"><h3>SSL</h3></a></dt>                                                                                          
-	<dd class="top">
-	<A NAME="logic"><h3>Simple Signal Logic</h3></a>
+<a name="SSL">
+<A NAME="logic"><h2>Simple Signal Logic</h2></a>
 <A href="./images/SigAdd.gif"><IMG SRC="./images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
 Much of basic ABS signaling can be boiled down to "a signal goes red when a train
@@ -191,41 +207,39 @@ reminder.</p>
 cover the speed-signaling seen on some prototypes. For those situations use a 
 combination of Logix and Routes. Logix cover the conditions, and Routes control the actions
 to be taken.</p>
-	</dd>
+
 	
-	<dt class="left"><a name="start"><h3>Getting Started</h3></a>
-	</dt>
-	<dd class="top">
-	    <p>Follow the following steps to create a signal and become familiar
-	    with how the SSL user interface works.
-	    </p><ol>
-		<li> Select <b>Turnout Table</b> in the <b>Tools</b> menu.
-		</li><li> Check to be sure that the output lines (turnouts) that will control your signal are in the table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
-		</li><li> In the Add New Turnout window that appears, enter a system name, (E.g. LT1)
-		and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
-		with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
-		</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
-		</li><li> Next select <b>Signal Table</b> in the <b>Tools</b> menu.
-		</li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
-		</li><li> In the Add New Signal window that appears choose the correct signal type to 
-		match your hardware. The required item boxes will appear.
-		</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
-		with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
-		</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
-		SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
-		</li><li> Click <b>OK</b> to enter this head into the Signal Table.  
-		</li><li> Enter all the signal heads that you will be using for this test.
-		<li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
-		</li>
-		<li> Fill in the various entries to match your signals requirements as 
-		previously shown in the <a href="#SSL">SSL</a> section.
-		</li><li> Click <b>Apply</b> to make this entry active.</li>
-		<li> Be sure to save your work.
-		</ol>
-    	<p>You have just created an SSL entry to control a signal head. It's as 
-		simple as that. It took 
-    	you more time to read this tutorial than to create the SSL entry.</p>	    
-	</dd>
+<a name="start"><h2>Getting Started</h2></a>
+
+<p>Follow the following steps to create a signal and become familiar
+with how the SSL user interface works.
+</p><ol>
+<li> Select <b>Turnout Table</b> in the <b>Tools</b> menu.
+</li><li> Check to be sure that the output lines (turnouts) that will control your signal are in the table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
+</li><li> In the Add New Turnout window that appears, enter a system name, (E.g. LT1)
+and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
+with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
+</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
+</li><li> Next select <b>Signal Table</b> in the <b>Tools</b> menu.
+</li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
+</li><li> In the Add New Signal window that appears choose the correct signal type to 
+match your hardware. The required item boxes will appear.
+</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
+with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
+</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
+SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
+</li><li> Click <b>OK</b> to enter this head into the Signal Table.  
+</li><li> Enter all the signal heads that you will be using for this test.
+<li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
+</li>
+<li> Fill in the various entries to match your signals requirements as 
+previously shown in the <a href="#SSL">SSL</a> section.
+</li><li> Click <b>Apply</b> to make this entry active.</li>
+<li> Be sure to save your work.
+</ol>
+<p>You have just created an SSL entry to control a signal head. It's as 
+simple as that. It took 
+you more time to read this tutorial than to create the SSL entry.</p>	    
     
 <!--#include virtual="/Footer" -->
 </body>

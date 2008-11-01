@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SlotMonFrame.shtml,v 1.3 2008-03-27 04:47:43 jacobsen Exp $ -->
+<!-- $Id: SlotMonFrame.shtml,v 1.4 2008-11-01 17:33:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>LocoNet Slot Monitor
-</H2>
+<H1>LocoNet Slot Monitor
+</H1>
     
 <a href="../../../../../html/apps/LocoTools/images/SlotMon.gif">
     <img src="../../../../../html/apps/LocoTools/images/SlotMon.gif"

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditTrackSegment.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
+<!-- $Id: EditTrackSegment.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,11 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Edit Track Segment
-</H2>
-<h3>Track Segments and Connecting Points</h3>
-<P>
+<H1>Edit Track Segment</H1>
+
+<h2>Track Segments and Connecting Points</h2>
+
 A <b>Track Segment</b> is a piece of straight track stretching between two
 connection points. Connection points are drawn as small red or green squares.
 Connection points are found on turnouts, anchor points, end bumpers, and 
@@ -37,8 +39,8 @@ drawn red.  When a connection point has its capacity of connections, its color
 is changed to green. When all connection points are green, a track diagram is
 complete, with all connections defined.</P>
 
-<h3>Line Styles</h3>
-<P>
+<h2>Line Styles</h2>
+
 Track segments are normally drawn as solid lines. but you can designate that a
 track segment be drawn <i>dashed</i> to show tunnels or tracks crossing 
 at different grades. You can request a dashed line for a track segment by 
@@ -51,8 +53,8 @@ track segments are useful for track diagrams drawn as multiple rows where the
 end of one row connects to the beginning of the same or another row. To make a 
 track segment hidden, check <b>Hide Track</b> in the Edit Track Segment dialog.</P>
 
-<h3>Mainline Track and Side Track</h3>
-<p>
+<h2>Mainline Track and Side Track</h2>
+
 Optionally, track segments are used to designate <i>mainline track</i> or <i>side 
 track</i>. The legs of turnouts and level crossings are set to <i>mainline 
 track</i> or <i>side track</i> according to the designations of track segments 
@@ -67,8 +69,8 @@ track to side track, or vice versa, in the Edit Track dialog. Mainline track and
 side track may be drawn with different width lines. Track widths for each are set 
 using the <b>Set Track Width...</b> item in the Options menu.</p>
 
-<h3>Track Blocks</h3>
-<p>
+<h2>Track Blocks</h2>
+
 Optionally, you can designate which <b>Block</b> a track segment is in--either by 
 entering a block name in the <b>Block: Name</b> field of the tool bar prior to 
 creating each track segment, or by entering a block name in the Edit Track Segment 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DecoderPro.shtml,v 1.4 2008-09-21 02:27:13 jacobsen Exp $ -->
+<!-- $Id: DecoderPro.shtml,v 1.5 2008-11-01 17:32:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,8 +20,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>JMRI: DecoderPro Main Window</H2>
+<H1>JMRI: DecoderPro Main Window</H1>
 
 The DecoderPro main window gives you access to all the 
 capabilities of JMRI.

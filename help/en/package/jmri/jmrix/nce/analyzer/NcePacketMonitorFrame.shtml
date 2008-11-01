@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NcePacketMonitorFrame.shtml,v 1.4 2007-12-23 19:22:52 dan_boudreau Exp $ -->
+<!-- $Id: NcePacketMonitorFrame.shtml,v 1.5 2008-11-01 17:33:01 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE DCC Packet Analyzer</TITLE>
@@ -20,8 +20,10 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>NCE DCC Packet Analyzer</H2>
+<H1>NCE DCC Packet Analyzer</H1>
 Select the "Serial port:" and push the "Open" button before using any of
 the radio buttons. The baud rate is fixed at 38.4Kbps. Press the "Init"
 button to initialize the analyzer.

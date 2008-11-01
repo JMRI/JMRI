@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.11 2008-10-30 15:01:03 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.12 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,10 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>The Layout Editor
-</H2>
-<dt class="left"><a name="contents"><h3>Contents</h3></a></dt><p>
+<H1>The Layout Editor</H1>
+
+<a name="contents"><h2>Contents</h2></a>
+
 This document describes Layout Editor and how to use Layout Editor to make 
 PanelPro panels. The document is divided into sections; click below to 
 jump to the named section. The minimum reading to get started is 
@@ -53,9 +56,9 @@ sections in detail.</p>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
 
-<dt class="left"><a name="intro"><H3>Introduction to Layout Editor Panels
-</H3></a></dt>
-<P>
+<a name="intro"><H2>Introduction to Layout Editor Panels</H2>
+
+
 <b>Layout Editor</b> supports the construction and display of PanelPro panels.
 <b>Layout Editor</b> is similar to the traditional PanelPro <b>Panel Editor</b>, 
 except it supports a drawn track diagram instead of an icon-based track
@@ -104,9 +107,8 @@ your panel changing during subsequent saves! The position and size of your panel
 only change when you select <b>Save Location and Size</b>. So save your panel often to 
 preserve your work.</p>
 
-<a name="start"><H3>Getting Started with Layout Editor
-</H3></a>
-<P>
+<a name="start"><H2>Getting Started with Layout Editor</H2>
+
 To get familiar with the Layout Editor user interface, try the following:</P>
 <P>
 1. Select <b>New panel...</b> in the Panels menu, and click <b>Layout Editor</b>
@@ -197,9 +199,8 @@ vertically or horizontally on your panel.</b> To make maximum use of these tools
 your panel with turnouts oriented vertically or horizontally (the orientation does 
 not have to be exact, just mostly vertical or mostly horizontal).</p>
 
-<a name="toolbar"><h3>Using the  Layout Editor Tool Bar
-</h3></a>
-<p>
+<a name="toolbar"><h2>Using the  Layout Editor Tool Bar</h2>
+
 The tool bar is used to add items to a panel, and to provide information for the items
 added. The item to be added is selected using one of the following checkboxes in the tool 
 bar:</p>
@@ -322,9 +323,8 @@ Signal Icons, Layout Editor defaults to the left-facing short icons found at
 background you may need to switch to white icons that are available in the same
 area, since the default icons have black borders.</p>
 
-<a name="filemenu"><h3>Using a Panel's File Menu
-</h3></a>
-<p>
+<a name="filemenu"><h2>Using a Panel's File Menu</h2></a>
+
 The File menu provides for storing and deleting panels. 
 </p>
 <p><ul>
@@ -346,8 +346,8 @@ The File menu provides for storing and deleting panels.
 </ul></p>
 
 
-<a name="option"><h3>Using Layout Editor's Options Menu</h3></a>
-<p>
+<a name="option"><h2>Using Layout Editor's Options Menu</h2>
+
 The Options menu is used to set options, add items to the panel, and perform
 operations that do not happen very often during panel creation. Each Option menu 
 selection is described below.
@@ -428,9 +428,8 @@ selection is described below.
 	the selection rectangle.</li>
 </ul></p>
 
-<a name="toolsmenu"><h3>Using Layout Editor's Tools Menu
-</h3></a>
-<p>
+<a name="toolsmenu"><h2>Using Layout Editor's Tools Menu</h2>
+
 The Tools menu provides tools to aid in creation and editing of Layout Editor
 panels. Using these automated procedures should reduce the time and effort needed
 to create your panel. Note: <b>Set Signals</b> tools only work correctly if 
@@ -560,9 +559,8 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
 </ul></p>
 
-<a name="zoommenu"><h3>Using Layout Editor's Zoom Menu
-</h3></a>
-<p>
+<a name="zoommenu"><h2>Using Layout Editor's Zoom Menu</h2>
+
 The Zoom menu allows you to temporarily magnify a panel. The menu provides a 
 choice of several magnification factors, and a <b>No Zoom</b> item to return to 
 normal size. When a magnification 
@@ -579,9 +577,8 @@ unmagnified panel. A panel may be saved while magnified.</p>
 When a panel is loaded, it always come up with <b>No Zoom</b> selected. Since 
 zooming is temporary, the zoom factor is not preserved when a panel is saved.</p>
 
-<a name="markermenu"><h3>Using Layout Editor's Marker Menu
-</h3></a>
-<p>
+<a name="markermenu"><h2>Using Layout Editor's Marker Menu</h2>
+
 The Marker menu provides <b>Markers</b> that may be used to keep track of the 
 location of trains on Layout Editor panels. Markers are small colored icons that 
 display a train ID, usually the locomotive number. When running trains, a marker 
@@ -620,9 +617,8 @@ saved to disk when the panel is saved to disk.
 	marker may be removed by selecting <b>Remove</b> in its popup menu.
 </ul></p>
 
-<a name="editing"><h3>Editing and Removing Items
-</h3></a>
-<p>
+<a name="editing"><h2>Editing and Removing Items</h2>
+
 Every item on a panel has a popup menu. <b>Except for Markers, popup menus are only 
 active in edit mode.</b> To access the popup menu of an icon-based item (sensor icon, 
 signal icon, text label, memory label, multi-sensor, fast clock, icon label, marker, 
@@ -682,9 +678,8 @@ Signals...</b> tools may be accessed via the Tools menu. These tools are briefly
 described above under <a href="#toolsmenu">Using Layout Editor's Tools Menu</a>, 
 and are discussed in detail on the help page of the tool's dialog window.</p>
 
-<a name="turnouts"><H3>Turnouts
-</H3></a>
-<P>
+<a name="turnouts"><H2>Turnouts</H2>
+
 Layout Editor supports six different types of turnouts (track switches): right-
 handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), double 
 crossover (<b>Double Xover</b>), right-handed single crossover (<b>RH Xover</b>). 
@@ -782,9 +777,8 @@ or <b>Block 4</b> entries are blank, the default block is used. Block connection
 points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
 point in a clockwise direction.</p>
 
-<a name="track"><h3>Track Segments and Connection Points
-</h3></a>
-<P>
+<a name="track"><h2>Track Segments and Connection Points</h2>
+
 A <b>Track Segment</b> is a piece of straight track stretching between two
 connection points. Connection points are drawn as small red or green squares.
 Connection points are found on turnouts, anchor points, end bumpers, and 
@@ -830,9 +824,8 @@ dialog at a later time. The Edit Track Segment dialog also allows a Create/Edit
 Block dialog to be requested, so information for the track segment's block may be 
 entered or changed. (Blocks are discussed more fully below.)</p>
 
-<a name="xing"><h3>Level Crossings
-</h3></a>
-<p>
+<a name="xing"><h2>Level Crossings</h2>
+
 A level crossing is a special piece of track that represents two tracks crossing
 at grade. A level crossing is commonly referred to as a diamond. A level crossing 
 has four connection points, and two tracks, designated 1 and 2. When a level 
@@ -856,9 +849,8 @@ be different from the block(s) of connected track segments; in this case, each
 level crossing connecting point where the block changes serves as a block 
 boundary. (Blocks are discussed more fully below.)</p>
 
-<a name="turn"><h3>Turntables
-</h3></a>
-<p>
+<a name="turn"><h2>Turntables</h2>
+
 A Layout Editor turntable is a schematic representation of a turntable on the 
 layout. A turntable is drawn as a circle with a variable number of track 
 connections, called <i>ray tracks</i>. Each <i>ray track</i> is drawn 
@@ -886,9 +878,8 @@ changed, and provides for the addition and deletion of ray tracks. For more
 information on how to add and delete ray tracks, see the help page of the 
 Edit Turntable dialog.</p>
 
-<a name="background"><h3>Backgrounds
-</h3></a>
-<p>
+<a name="background"><h2>Backgrounds</h2>
+
 Background images are not required for Layout Editor panels. Support for 
 adding a background is provided for panels that require other than the 
 default Layout Editor background. Background images may be used simply to change 
@@ -930,10 +921,8 @@ CTC panel, then finish by adding the right edge image. The advantages of
 building CTC backgrounds with slices are that 1) you can make virtually any 
 length CTC panel, and 2) the plates will be precisely located automatically.</P>
 
+<a name="block"><h2>Blocks</h2>
 
-<a name="block"><h3>Blocks
-</h3></a>
-<p>
 Blocks are sections of track whose occupancy may be individually monitored. 
 Dividing track into blocks is optional. Blocks set up in a track diagram 
 normally correspond to physical blocks on a layout. Block occupancy is indicated 
@@ -996,9 +985,8 @@ and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
 
-<a name="tracking"><h3>Blocks, Memory Labels, and Train Tracking
-</h3></a>
-<p>
+<a name="tracking"><h2>Blocks, Memory Labels, and Train Tracking</h2>
+
 <b>Train Tracking</b> is an animation technique that allows us to display 
 dynamically which train is in an occupied 
 Block.  So, for one train, or for several trains transiting a layout at the same
@@ -1051,9 +1039,8 @@ drawing wheels to ensure a block doesn't loose detection before the train
 enters the next block.
 </p>
 
-<a name="tips"><h3>Tips
-</h3></a>
-<p>
+<a name="tips"><h2>Tips</h2>
+
 Because of the way a Layout Editor panel is refreshed, the drawn track schematic 
 will be on top of all icons and labels. It is possible to have a label or icon 
 appear to be "on top of" a section of track, as is commonly done in Panel Editor. 
@@ -1083,9 +1070,8 @@ they just need to show up in the <b>Show Panel</b> submenu. So, for example, if
 you set up a Layout Editor panel for train tracking as described above, you can 
 track trains in a companion Panel Editor panel just by adding Memory Labels.</p>
 
-<a name="finish"><h3>Putting Finishing Touches on your Panel
-</h3></a>
-<p>
+<a name="finish"><h2>Putting Finishing Touches on your Panel</h2>
+
 Below is an enhanced version of the simple oval panel constructed in  
 <b>Getting Started with Layout Editor</b>. The general steps needed to get from 
 that starting panel to this panel are sketched below. The steps need not be done 

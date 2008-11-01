@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.6 2008-07-18 22:31:37 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.7 2008-11-01 17:33:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>SPJ Sound File Editor
-</H2>
+<H1>SPJ Sound File Editor
+</H1>
     
 Digitrax sound decoders are loaded with "sound projects", stored in
 "Sound Project" (.spj) files.  Those contain a number of "sound fragments"
@@ -132,7 +134,7 @@ with its own
 The "CV data" element isn't used by JMRI. DecoderPro uses another method for
 storing CV information.
 
-<h3>Related Tools</h3>
+<h2>Related Tools</h2>
 
 The JMRI 
 <a href="LoaderFrame.shtml">Sound File Downloader</a>

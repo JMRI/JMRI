@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Dispatcher.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
+<!-- $Id: Dispatcher.shtml,v 1.3 2008-11-01 17:32:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,11 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H1>Dispatcher
-</H1>
+<H1>Dispatcher</H1>
 
-<a name="contents"><h3>Contents</h3></a>
+<a name="contents"><h2>Contents</h2>
 
 <p>This document describes <b>Dispatcher</b>, and how to use Dispatcher to 
 help with dispatching and running trains on layouts with PanelPro panels. The 
@@ -40,7 +41,7 @@ Underlined items are links to sections of this document or to other help files.<
 	<li><a href="#arequests">The Allocation Requests Table</a></li>
 </ul>
 
-<a name="intro"><H2>Introduction to Dispatcher</H2></a>
+<a name="intro"><H2>Introduction to Dispatcher</H2>
 
 <p><b>Dispatcher</b> provides functions and organizes information relating to 
 dispatching trains on a model railroad layout. It's main function is allocation 
@@ -107,7 +108,7 @@ Some were created specifically for use with Dispatcher. Please briefly review
 the <b>Glossary of Terms</b> which follows, and come back to it as needed when 
 reading the remainder of this documentation.</p>
 
-<a name="glossary"><H2>Glossary of Terms</H2></a>
+<a name="glossary"><H2>Glossary of Terms</H2>
 
 <p><b>Block</b> - A portion of track whose occupancy may be individually monitored. 
 Blocks are defined by subdividing the track in a layout. Blocks normally correspond 
@@ -160,7 +161,7 @@ be used to travel between the 2nd and 4th Sections. Alternate Sections provide f
 passing tracks and staging yards.</p>
 
 <a name="transits"><H2>Using Transits and Sections in Dispatching 
-Active Trains</H2></a>
+Active Trains</H2>
 
 <p>When a <b>Transit</b> is paired with a <b>Train</b> to form an <b>Active Train</b>, 
 the starting Block (Active Train location at start) and ending Block (Active Train 
@@ -196,7 +197,7 @@ may be used for automatic station stops. The Await action is designed to support
 an engineer doing work in a specified Section, and requesting a restart when the 
 work is complete. More actions may be added in the future as needed.</p>
 
-<a name="window"><H2>The Dispatcher Window</H2></a>
+<a name="window"><H2>The Dispatcher Window</H2>
 
 <p>The <b>Dispatcher</b> window is opened when <b>Dispatcher...</b> is selected 
 in the JMRI <b>Tools</b> menu. It displays a table of <b>Active Trains</b> and 
@@ -260,7 +261,7 @@ accessed via the Dispatcher window's Options menu. Descriptions of currently
 available options, the Options menu, the Options window are contained in 
 the <b><a href="Options.shtml">Options</a></b> help file.</p>
 
-<a name="atrains"><H2>The Active Trains Table</H2></a>
+<a name="atrains"><H2>The Active Trains Table</H2>
 
 <p>Each row of <b>Active Trains</b> table corresponds to one Active Train. The 
 columns are explained below.
@@ -342,7 +343,7 @@ Section is appropriate, so the dispatcher is not queried.
 </li>
 </ul>
 
-<a name="arequests"><H2>The Allocation Requests Table</H2></a>
+<a name="arequests"><H2>The Allocation Requests Table</H2>
 
 <p>This table, headed <b>Requested Allocations waiting for Dispatch</b>, 
 displays pending <b>Allocation Requests</b>. Each row corresponds to one 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NodeConfigFrame.shtml,v 1.1 2008-01-15 05:39:10 jacobsen Exp $ -->
+<!-- $Id: NodeConfigFrame.shtml,v 1.2 2008-11-01 17:33:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Configure Powerline Devices
-</H2>
+<H1>Configure Powerline Devices
+</H1>
     
 This is the help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame help page
 

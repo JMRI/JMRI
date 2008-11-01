@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutTurnout.shtml,v 1.3 2007-12-13 02:21:28 djduchamp Exp $ -->
+<!-- $Id: EditLayoutTurnout.shtml,v 1.4 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,11 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Edit Turnout</H2>
+<H1>Edit Turnout</H1>
 
-<H3> Turnouts</H3>
-<P>
+<H2> Turnouts</H2>
+
 Layout Editor supports six different types of turnouts (track switches): right-
 handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), double 
 crossover (<b>Double Xover</b>), right-handed single crossover (<b>RH Xover</b>), 
@@ -34,10 +36,10 @@ and three-way, can be drawn using two LH or RH turnouts. Double slip turnouts,
 for example, are easily represented by two LH and/or RH turnouts drawn with their 
 throats connected by a short track segment. Once a turnout has been created, its 
 type cannot be changed. Changing the type of a turnout requires removing and 
-recreating the turnout.</P>
-<P>
-<H3> Linking Turnout Drawings to Actual Turnouts
-</H3></P>
+recreating the turnout.
+
+<H2>Linking Turnout Drawings to Actual Turnouts</H2>
+
 Turnout drawings in a track diagram are drawn using solid lines for both 
 continuing and diverging legs until the turnout drawings are linked to
 turnouts in the Turnout Table. Once linked to actual turnouts, turnout 
@@ -56,10 +58,9 @@ Table name (either system name or user name) in the <b>Turnout: Name</b> field
 you can create your turnout drawings first, then select <b>Edit...</b> in each 
 turnout's popup menu to open an <b>Edit Turnout</b> dialog that allows entry of 
 the turnout name.</P>
-<P>
-<H3> Setting a Turnout's Block
-</H3></P>
-<P>
+
+<H2> Setting a Turnout's Block</H2>
+
 Optionally, you can designate which <b>Block</b> a turnout is in either by 
 entering a block name in the <b>Block: Name</b> field of the tool bar prior to 
 creating each turnout drawing, or by entering a block name in the Edit Turnout 
@@ -67,10 +68,9 @@ dialog at a later time. The Edit Turnout dialog also allows a Create/Edit Block
 dialog to be requested, where information for the turnout's block may be entered 
 or changed. Blocks are discussed more fully on the help page of the Create/Edit 
 Block dialog.</P>
-<P>
-<H3> Continuing Route Turnout State
-</H3></P>
-<p>
+
+<H2>Continuing Route Turnout State</H2>
+
 When a side track branches from a mainline track at an RH or LH turnout, the 
 mainline normally continues through the turnout by following the straight-through 
 track leg (the closed path). Sometimes, however, the mainline follows the 
@@ -85,10 +85,9 @@ state of the turnout in the Turnout Table when the turnout is set to clear the
 mainline. The Turnout Table state should match the Continuing Route Turnout 
 State chosen in the Edit Turnout dialog. Defining mainline track is 
 optional; if you are not defining mainline track this item can be ignored.</p>
-<P>
-<H3> Crossover Turnouts
-</H3></P>
-<p>
+
+<H2>Crossover Turnouts</H2>
+
 Crossover turnouts differ from other turnouts in several important ways. 
 Like other turnouts, crossovers have two states--crossed and straight. To
 change a crossover's state, however, requires two or four track switches to 

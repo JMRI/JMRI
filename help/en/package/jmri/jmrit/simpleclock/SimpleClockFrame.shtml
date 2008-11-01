@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleClockFrame.shtml,v 1.5 2007-12-22 20:49:51 djduchamp Exp $ -->
+<!-- $Id: SimpleClockFrame.shtml,v 1.6 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,10 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Setup Fast Clock
-</H2>
-<H3> Introduction to JMRI Fast Clocks</H3>
+<H1>Setup Fast Clock</H1>
+<H2> Introduction to JMRI Fast Clocks</H2>
 
 JMRI provides a fast clock that can get its time from an internal fast clock 
 or a selected hardware fast clock if one exists on your DCC system. This dialog 
@@ -69,7 +70,7 @@ exist. Unless you know you have the hardware fast clock listed, you should not
 select the hardware clock as your Time Source, and you should not check either 
 the <b>Synchronize...</b> or <b>Correct...</b> options even if they show on 
 this dialog.</p>
-<H3> Setting Fast Clock Rate and Fast Clock Time</H3>
+<H2> Setting Fast Clock Rate and Fast Clock Time</H2>
 <p> 
 The <b>Fast Clock Rate</b> is a factor that multiplies the wall clock time rate. 
 For example, a fast clock rate of 4.000 means that the fast clock will run 4 times 
@@ -85,7 +86,7 @@ clock. After entry click the <b>Set</b> button, so JMRI will check the entered
 time. If anything is not right, an error message is displayed, and the time is 
 not changed. If the entry checks out, the time is immediately changed on all 
 clocks.</p>
-<H3> Setting Start Up Options</H3>
+<H2> Setting Start Up Options</H2>
 <p> 
 The options set in this section take effect when you load your panel file (or 
 configuration file if you don't have any panels). If <b>Start with Fast Clock 
@@ -113,7 +114,7 @@ is to save using <b>Store panels...</b>. <b>Store panels...</b>may be found in t
 to automatically load your panel file when your application starts, add it to 
 <b>Load panel file at startup:</b> in the <b>Advanced Preferences</b> section of your 
 <b>Preferences...</b> window.</p>
-<H3> Starting and Stopping the Fast Clock</H3>
+<H2> Starting and Stopping the Fast Clock</H2>
 <p>
 Your fast clock may be started and stopped using the <b>Start Clock/Stop Clock</b> 
 buttons at the bottom of this dialog. Or you can use the <b>Run/Pause</b> button 
@@ -128,7 +129,7 @@ method you use to start and stop your fast clock, button labels and the
 restarted after having been stopped, the fast clock time continues where it left 
 off.</p>
 </p>
-<H3> Supported Hardware Clocks</H3>
+<H2> Supported Hardware Clocks</H>
 <ul>
 	<li><p>
 	<b>Loconet Fast Clock</b> - A Digitrax Loconet can contain it's own fast 

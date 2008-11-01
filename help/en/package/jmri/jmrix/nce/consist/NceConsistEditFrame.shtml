@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceConsistEditFrame.shtml,v 1.7 2008-09-30 14:08:09 jacobsen Exp $ -->
+<!-- $Id: NceConsistEditFrame.shtml,v 1.8 2008-11-01 17:33:01 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Edit NCE Consist</TITLE>
@@ -19,8 +19,11 @@
 </HEAD>
 
 <BODY>
-<!--#include virtual="/Header" -->
-<H2>Edit NCE Consist</H2>
+<!--#include virtual="/Header" -->  
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Edit NCE Consist</H1>
 This tool allows you to review, edit, and save NCE style consists. It
 also allows you to backup and restore all the NCE command station
 consists to and from a file. The file format is identical to NCE, so you
@@ -36,7 +39,7 @@ whose
 <a href="../../../../../html/tools/consisttool/ConsistTool.shtml">help page</a>
 also has a small tutorial on the various forms of consisting.
 
-<H3>Backup</H3>
+<H2>Backup</H2>
 
 To backup all of your consists to a file, press the "Backup" button
 located on the bottom row of the JMRI consist editor. A default file
@@ -45,7 +48,7 @@ whatever you wish. Press the "Save" button and the JMRI consist editor
 will read the NCE command station memory and store the contents into the
 file you selected.
 
-<H3>Restore</H3>
+<H2>Restore</H2>
 
 To restore all of your consists from a file, press the "Restore" button
 located on the bottom row of the JMRI consist editor. Select a file by
@@ -57,14 +60,14 @@ verify that the file is indeed a NCE consist backup file! Note that the
 "Restore" only updates the NCE command station memory. It doesn't
 program the locos on your layout.
 
-<H3>Get</H3>
+<H2>Get</H2>
 
 To review a consist, enter the number of the consist in the text box
 under the heading "Consist" and press the "Get" button. This will
 retrieve the consist from the command station's memory.
 
 
-<H3>Add Loco</H3>
+<H2>Add Loco</H2>
 
 To add a loco to a consist, enter the loco's address and then press the
 "??" button until the desired direction "Forward" or "Reverse" appears.
@@ -73,14 +76,14 @@ If you want the use the short address format press the "Long" button and
 update the NCE command station, press the "Add" button and the loco will
 be added to the consist.
 
-<H3>Add Loco from Roster</H3>
+<H2>Add Loco from Roster</H2>
 
 To add a loco from your locomotive roster, select the desired loco and
 the program will automatically fill in the loco address and address
 format. Select the loco direction and press "Add" to complete the
 operation.
 
-<H3>Replace</H3>
+<H2>Replace</H2>
 
 To replace the lead or rear loco, press the "Replace" button. This will
 delete the selected loco from the consist. Enter the address of the new
@@ -88,23 +91,23 @@ loco along with its direction and press "Add" to program this loco with
 the consist address. If you want a mid loco to now be a lead or rear
 loco, just enter the mid loco's address and then press "Add".
 
-<H3>Delete</H3>
+<H2>Delete</H2>
 
 To delete an loco from the consist, press the "Delete" button across
 from the loco address you wish to remove.
 
-<H3>Clear</H3>
+<H2>Clear</H2>
 
 To remove all locos from a consist, press the "Clear" button located on
 the bottom row.
 
 
-<H3>Previous and Next</H3>
+<H2>Previous and Next</H2>
 The "Previous" and "Next" buttons allow you to search for consists. If
 you're looking for an empty consist, click the "Empty Consist" box
 located in the upper right hand corner.
 
-<H3>Verify Loco Checkbox</H3>
+<H2>Verify Loco Checkbox</H2>
 
 When checked, the program will verify that the loco that you are adding
 isn't assigned as a lead or rear loco in another consist. It takes
@@ -115,7 +118,7 @@ the add loco address is already in use.
 in another consist, the program will delete the loco from the other
 consist and add it to the new one without any warnings.</P>
 
-<H3>Consist Roster Checkbox</H3>
+<H2>Consist Roster Checkbox</H2>
 
 When checked, the program will create and manage a roster of consists. A
 consist must have a lead and rear loco before the program will create an
@@ -141,7 +144,7 @@ identify your consists by assigning the lowest number of your end locos
 as the lead loco. This way you can quickly select a consist by using the
 lowest number of your two end locos.</P>
 
-<H3>Save and Load button</H3>
+<H2>Save and Load button</H2>
 
 The label for this button can be "Save" or "Load". If the program
 detects that a consist has been created or changed the "Save" button
@@ -160,13 +163,13 @@ command station, the program will pop up a message stating that the
 consist has already been loaded. You can press "Load" to reprogram your
 locos if you wish, otherwise press the "Cancel" button.</P>
 
-<H3>Delete button</H3>
+<H2>Delete button</H2>
 
 To remove a consist from your roster, press the "Delete" button located
 on the bottom row. The "Delete button only becomes active after you've
 selected a consist from the "Consist" menu.
 
-<H3>Status:</H3>
+<H2>Status:</H2>
 
 There are many states that the NCE consist editor can be in and the
 "Status:" field provides an indication of what is happening and whether

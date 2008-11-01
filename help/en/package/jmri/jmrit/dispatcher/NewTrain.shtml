@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewTrain.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
+<!-- $Id: NewTrain.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,12 +20,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H1>Activate New Train Window
-</H1>
-<H2>Introduction
-</H2
-<p>The <b>Activate New Train</b> window supports the creation of a new <b>Active 
+<H1>Activate New Train Window</H1>
+
+<H2>Introduction</H2>
+
+The <b>Activate New Train</b> window supports the creation of a new <b>Active 
 Train</b>. To create an Active Train, the dispatcher uses this window to assign
 a <b><a href="../beantable/TransitTable.shtml">Transit</a></b>, assign a train, 
 and specify a starting Block (train location at start) and an end Block (train 
@@ -55,9 +57,9 @@ defined direction. This window only allows selection of valid starting and
 stopping Blocks. If an expected Block is not in the starting Block selection 
 box, it may be because of this requirement.</p>
 
-<H2>Using the Activate New Train Window
-</H2
-<p>To create a new <b>Active Train</b>, use the following procedure:
+<H2>Using the Activate New Train Window</H2>
+
+To create a new <b>Active Train</b>, use the following procedure:
 <ol>
 <li><p>Click the <b>New Train...</b> button in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window to bring up 

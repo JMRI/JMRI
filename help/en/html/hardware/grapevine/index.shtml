@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.3 2008-03-16 04:53:00 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-11-01 17:32:59 jacobsen Exp $ -->
 <title>JMRI: Connecting the Grapevine System</title>
 
 <!-- Style -->
@@ -17,30 +17,32 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<h2> 
+<h1> 
 JMRI: Connecting the Grapevine System
-</h2>
+</h1>
 
 
 Naming and input/output connectors are described on a 
 <a href="Names.shtml">separate page</a>.
 
-<H3>Tools</h3>
+<H2>Tools</h2>
 
 You can check whether your Grapevine is working and configure
 the connected nodes using the
 <a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a> tool.
 It also lets you change the number of a node.
 
-<H3>Limitations</h3>
+<H2>Limitations</h2>
 
 <UL>
 <LI>Fast clocks not yet supported. If you have one and want to test
 it with JMRI, let us know.
 </UL>
 
-<h3>More Information</h3>
+<h2>More Information</h2>
 
 More information on the Grapevine hardware can be found on the
 <a href="http://www.protrak.cc">ProTrak web site</a>.

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TranslateSelection.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
+<!-- $Id: TranslateSelection.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Translate Selection
-</H2>
+<H1>Translate Selection
+</H1>
 <p>    
 The Translate Selection dialog provides for translating a user-selected part of
 a panel created using Layout Editor. Before selecting <b>Translate Selection...</b> 

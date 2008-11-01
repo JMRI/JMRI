@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AllocatedSections.shtml,v 1.2 2008-10-31 22:30:33 jacobsen Exp $ -->
+<!-- $Id: AllocatedSections.shtml,v 1.3 2008-11-01 17:32:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,11 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
 <H1>Allocated Sections Window
 </H1>
 <H2>Introduction
-</H2
+</H2>
 <p>The <b>Allocated Sections</b> window displays a table of all Sections 
 currently allocated to Active Trains. This window serves two purposes.  It 
 shows which Allocated Sections are allocated to which Active Trains, and it 

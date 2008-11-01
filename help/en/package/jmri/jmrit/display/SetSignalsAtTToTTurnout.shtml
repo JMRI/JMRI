@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTToTTurnout.shtml,v 1.1 2007-12-02 16:31:53 djduchamp Exp $ -->
+<!-- $Id: SetSignalsAtTToTTurnout.shtml,v 1.2 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,10 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Set Signals at Throat-to-Throat Turnouts
-</H2>
-<h3>Introduction</h3>
+<H1>Set Signals at Throat-to-Throat Turnouts</H1>
+<h2>Introduction</h2>
 <p>
 This tool provides an automated procedure for assigning signals to two turnouts
 in close proximity oriented throat-to-throat, with the throats connected by a 

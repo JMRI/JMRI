@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NodeConfigFrame.shtml,v 1.2 2008-07-29 23:06:13 rcoleman Exp $ -->
+<!-- $Id: NodeConfigFrame.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Welcome to the Acela Help pages
-</H2>
+<H1>Welcome to the Acela Help pages
+</H1>
 This is the help/jmri/jmrix/acela/nodeconfig/NodeConfigFrame help page
 <p>
 Thank you for reading this, hopefully the few minutes you spend reading this will save you hours down the road.
@@ -96,7 +98,7 @@ It will look something like (note the second "connection port" line):
 <p>
   &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.2 2008-07-29 23:06:13 rcoleman Exp $-->
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $-->
 <p>
 &lt/layout-config>
 <h3>Let JMRI discover your CTI Acela network configuration  
@@ -279,7 +281,7 @@ It will look something like (note the lines after the second "connection port" l
 <p>
   &lt/connection>
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.2 2008-07-29 23:06:13 rcoleman Exp $-->
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $-->
 <p>
 &lt/layout-config>
 <p>

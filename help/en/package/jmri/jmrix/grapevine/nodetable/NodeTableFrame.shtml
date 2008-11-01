@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NodeTableFrame.shtml,v 1.4 2008-05-13 14:41:03 jacobsen Exp $ -->
+<!-- $Id: NodeTableFrame.shtml,v 1.5 2008-11-01 17:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Configure Grapevine Nodes
-</H2>
+<H1>Configure Grapevine Nodes
+</H1>
     
 This is the help/jmri/jmrix/grapevine/nodetable/NodeTableFrame help page
 
