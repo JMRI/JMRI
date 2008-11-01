@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.12 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.13 2008-11-01 19:30:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -111,8 +111,8 @@ preserve your work.</p>
 
 To get familiar with the Layout Editor user interface, try the following:</P>
 <P>
-1. Select <b>New panel...</b> in the Panels menu, and click <b>Layout Editor</b>
-in the dialog that is displayed.  You should see a blank panel window with
+1. Select <b>New panel...</b>, then <b>Layout Editor</b> in the Panels menu.
+You should see a blank panel window with
 a tool bar at the top, and a help bar at the bottom. </P>
 <P>
 2. Move the cursor around inside the blank panel. Note that as you move, coordinates

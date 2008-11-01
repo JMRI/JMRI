@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Panels.shtml,v 1.4 2008-06-04 20:59:22 jacobsen Exp $ -->
+<!-- $Id: Panels.shtml,v 1.5 2008-11-01 19:30:08 jacobsen Exp $ -->
 <title>JMRI: Creating Control Panels</title>
 
 <!-- Style -->
@@ -55,8 +55,9 @@ Panels are made with a "Panel Editor", which allows you to place images
 to represent turnouts, sensors (on some systems) and trackwork.
 
 <P>
-You start the editor by selecting "New panel..." from the "Panel" menu
-in the JmriDemo program.  You'll get a blank control panel, plus the
+You start the editor by selecting "New Panel...", then "Panel Editor" from the "Panels" menu
+on the main window.  
+You'll get a blank control panel, plus the
 editor window:
 <A HREF="../../../images/paneleditor.gif">
 <IMG SRC="../../../images/paneleditor.gif" 
