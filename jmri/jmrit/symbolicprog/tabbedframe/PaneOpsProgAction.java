@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -88,8 +88,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
                                                         new Object[]{re.getId()});
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
-                boolean longAddr = true;
-                if (address<100) longAddr = false;
+                boolean longAddr = re.isLongAddress();
                 Programmer programmer = InstanceManager.programmerManagerInstance()
                                             .getOpsModeProgrammer(longAddr, address);
                 // and created the frame
