@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitAddEdit.shtml,v 1.1 2008-09-27 15:54:41 djduchamp Exp $ -->
+<!-- $Id: TransitAddEdit.shtml,v 1.2 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,6 +20,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
 <H2>Adding/Editing Transits</H2>
     

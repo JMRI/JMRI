@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LightAddEdit.shtml,v 1.5 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: LightAddEdit.shtml,v 1.6 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,10 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Adding/Editing Lights</H2>
+<H1>Adding/Editing Lights</H1>
     
-<a name="addLight"><H3>Adding a new Light</H3></a>
+<a name="addLight"><H2>Adding a new Light</H2></a>
 To add a new Light, follow this procedure:
 <ol>
 	<li><p>Click <b><a href="LightTable.shtml">Light Table</a></b> in the <b>Tools</b> menu to bring up
@@ -64,7 +66,7 @@ warning message will be displayed in the notes area; you should then
 correct the error and click <b>Create</b> again.</p></li>
 </ol>
 
-<h3>Editing an existing Light</h3>
+<h2>Editing an existing Light</h2>
 To edit an existing Light, follow  this procedure:
 <ol>
 	<li>Edit of an existing Light may be started in either of two ways:
@@ -94,7 +96,7 @@ To edit an existing Light, follow  this procedure:
 	changes are made to the selected Light.</li>
 </ol>
 
-<a name="lightcontrol"><H3>Automated Control Options for Lights</H3></a>
+<a name="lightcontrol"><H2>Automated Control Options for Lights</H2></a>
 
 The operation of a Light can be controlled in the following ways:
 	<ul>

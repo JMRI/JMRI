@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.shtml,v 1.6 2008-03-18 02:04:04 jacobsen Exp $ -->
+<!-- $Id: RouteTable.shtml,v 1.7 2008-11-01 16:40:03 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -20,8 +20,10 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>The Route Table</H2>
+<H1>The Route Table</H1>
 
 <P>A route consists of one or more turnouts or sensors that you
 would like to control. Before creating a route, you should first add
@@ -32,7 +34,7 @@ table. These tables can be found under the main menu "Tools -> Tables".
 button in the lower left hand corner of the route table to create a new
 route.
 
-<H3>Route Table Columns</H3>
+<H2>Route Table Columns</H2>
 
 <DL>
 	<DT>System Name</DT>
@@ -91,8 +93,7 @@ There is also a button at the bottom of the Route Table
 	<A HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
 </DL>
 
-<BR>
-<H3><A NAME="Turnout lock feature">Turnout lock feature</A></H3>
+<H2><A NAME="Turnout lock feature">Turnout lock feature</A></H2>
 
 <P>The turnout lock feature allows you to selectively disable
 accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. JMRI

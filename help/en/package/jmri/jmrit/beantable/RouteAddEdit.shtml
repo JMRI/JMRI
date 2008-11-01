@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteAddEdit.shtml,v 1.6 2008-02-22 16:51:00 dan_boudreau Exp $ -->
+<!-- $Id: RouteAddEdit.shtml,v 1.7 2008-11-01 16:40:03 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Routes</TITLE>
@@ -20,8 +20,10 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2><A NAME="Adding/Editing Routes"></A>Adding/Editing Routes</H2>
+<H1><A NAME="Adding/Editing Routes"></A>Adding/Editing Routes</H1>
 
 <P>The first thing you must do when creating a route is name it. In
 the box labeled "Route System Name" enter a unique name for your route.
@@ -71,7 +73,7 @@ Panel" command which can be found under the "Panels" main menu. If you
 decide that you need to change your route, use the "Edit" and "Update
 Route" buttons to modify your route.</P>
 
-<H3><A NAME="Turnout lock feature">Turnout lock feature</A></H3>
+<H2><A NAME="Turnout lock feature">Turnout lock feature</A></H2>
 
 <P>The turnout lock feature allows you to selectively disable
 accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. JMRI

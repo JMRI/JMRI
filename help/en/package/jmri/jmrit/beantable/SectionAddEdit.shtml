@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SectionAddEdit.shtml,v 1.1 2008-09-27 15:54:40 djduchamp Exp $ -->
+<!-- $Id: SectionAddEdit.shtml,v 1.2 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,10 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Adding/Editing Sections</H2>
+<H1>Adding/Editing Sections</H1>
     
-<a name="addSection"><H3>Adding a new Section</H3></a>
+<a name="addSection"><H2>Adding a new Section</H2></a>
 To add a new Section, follow this procedure:
 <ol>
 <li><p>Click <b><a href="SectionTable.shtml">Sections</a></b> in the 
@@ -106,7 +108,7 @@ displayed indicating the error and what you should do to fix it.
 Correct the error and click <b>Create</b> again.</p></li>
 </ol>
 
-<h3>Editing an existing Section</h3>
+<h2>Editing an existing Section</h2>
 To edit an existing Section, follow  this procedure:
 <ol>
 <li><p>Click a Section's <b>Edit</b> button in the <a href="SectionTable.shtml">

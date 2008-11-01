@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LightTable.shtml,v 1.4 2008-02-18 04:55:02 jacobsen Exp $ -->
+<!-- $Id: LightTable.shtml,v 1.5 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,8 +20,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>The Light Table</H2>
+<H1>The Light Table</H1>
     
 <p>Lights are digital output bits that function as on/off switches. Lights
 were created to provide easy control for fascia panel lights and scenery
@@ -58,7 +60,7 @@ must be checked.  You can uncheck this box to temporarily disable a
 Light from being triggered, i.e. prevent it switching when its control
 mechanism fires.</p>
 
-<h3>Switching a Light On or Off</h3>
+<h2>Switching a Light On or Off</h2>
 
 <p>Lights may be turned on or off by clicking the button in the State
 column of the Light Table. A Light may be set up to follow the state of 
@@ -77,7 +79,7 @@ control mechanism.  A 'disabled' state will not prevent a Light
 from being turned on or off using the button in the Light Table or from 
 being controlled by a logix.</p>
    
-<h3>Creating New Lights</h3>
+<h2>Creating New Lights</h2>
 
 To define a new light, click the
 <a href="LightAddEdit.shtml">Add...</a> button the light table.
@@ -85,7 +87,7 @@ This will take you to a
 <a href="LightAddEdit.shtml">new window</a>
 for adding or editing Lights.
 
-<h3>Saving Lights to Disk</h3>
+<h2>Saving Lights to Disk</h2>
 
 <p>Lights are saved in your layout configuration file, along with turnouts, 
 sensors, signal heads, etc.  To store this information on disk, use <b>Store 

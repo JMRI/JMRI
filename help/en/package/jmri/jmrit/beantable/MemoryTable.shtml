@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MemoryTable.shtml,v 1.3 2008-05-18 06:18:58 jacobsen Exp $ -->
+<!-- $Id: MemoryTable.shtml,v 1.4 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>The Memory Table
-</H2>
+<H1>The Memory Table</H1>
     
 You can use the Memory Table to look at the contents of JMRI memory variables.
 <p>

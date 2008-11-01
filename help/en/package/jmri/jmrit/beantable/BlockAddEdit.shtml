@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: BlockAddEdit.shtml,v 1.1 2008-02-17 18:48:08 jacobsen Exp $ -->
+<!-- $Id: BlockAddEdit.shtml,v 1.2 2008-11-01 16:40:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -20,9 +20,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Add/Edit Block Table Entries
-</H2>
+<H1>Add/Edit Block Table Entries</H1>
     
 This is the package/jmri/jmrit/beantable/BlockAddEdit help page
 

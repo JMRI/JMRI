@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.6 2008-04-17 23:27:27 djduchamp Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.7 2008-11-01 16:40:03 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -20,8 +20,10 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<H2>Adding/Editing Logix Conditionals</H2>
+<H1>Adding/Editing Logix Conditionals</H>
 <P>The Edit Conditional window is where logical expressions are set
 up and where actions are specified. The Edit Conditional window is
 displayed when a Conditional is created, or when the <B>Edit</B> button
@@ -147,7 +149,7 @@ information, consult the Logix documentation on the JMRI web page
 http://jmri.sourceforge.net/ .</P>
 
 <DT CLASS="left"><A NAME="variable">
-<H3>Available State Variables</H3>
+<H2>Available State Variables</H2>
 </A></DT>
 
 <P>State variables that are currently available for use in
@@ -216,7 +218,7 @@ the Logix is triggered when any monitored state changes as noted below
 <P></P>
 
 <DT CLASS="left"><A NAME="action">
-<H3>Available Actions</H3>
+<H2>Available Actions</H2>
 </A></DT>
 
 <P>Actions that are currently available for use in Conditionals are
