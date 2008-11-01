@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.12 2008-11-01 17:56:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.13 2008-11-01 21:54:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -8,7 +8,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.3.4 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.3.5 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -41,7 +41,7 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the fourth in a series of test versions.
+<p>This is the fifth in a series of test versions.
 
 It contains 
 many new features, including:
