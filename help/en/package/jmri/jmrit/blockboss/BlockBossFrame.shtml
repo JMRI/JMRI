@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.7 2008-11-01 17:32:59 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.8 2008-11-01 17:49:58 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -141,9 +141,7 @@ whatever setup information is needed for your choice.
 with control panel setup, Logix, Routes, and similar stuff.  For more information
 on creating and displaying panels, including how to show signals
 on your panels, please see the 
-<A HREF="../../../../html/apps/PanelPro/Panels.html">Panels pages</a>
-and the pages on the 
-<A HREF="../../../../html/apps/PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
+<A HREF="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
 
 <a name="intro"><h2>Introduction to SSL</h2></a>
 
