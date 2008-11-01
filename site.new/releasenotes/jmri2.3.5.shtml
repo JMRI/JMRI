@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.5.shtml,v 1.10 2008-10-28 14:50:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.5.shtml,v 1.11 2008-11-01 17:32:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -46,8 +46,11 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<li>updates to the Windows startup scripts to improve operation on Vista
-and reduce chance of problems with older libraries
+<li>Improvements to the 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">operations</a> feature
+<li>New 
+"<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">dispatcher</a>" capability.
+
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -68,16 +71,20 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+Windows desktop shortcuts have been restructured to make them more reliable.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be effected by this change.
 
 <h3>Warnings from older versions:</h3>
 
-Starting with this test release, by default JMRI is allowed to use
+Starting with the 2.3.4 test release, by default JMRI is allowed to use
 up to 200MB of memory (up from a limit of 60MB or 64MB previously).
 If this is more memory than you have available, and you notice JMRI
-slowing down a lot, please let us know.
+slowing down a lot, please let us know so we can provide a work-around.
 <p>
-Staring with this test release, JMRI now builds the classpath (the
-list of .jar libraries used by the program) dynamically.  
+Staring with the 2.3.3 test release, JMRI builds the classpath (the
+list of .jar libraries used by the program) dynamically on Windows.  
 We'll use this in the future for plug-ins and other features, and
 other platforms have been doing this for a while.
 If you have added any .jar files to your JMRI program directory, they
@@ -85,7 +92,8 @@ may cause problems when the program is starting.  Also, if originally
 installed a very old version of JMRI, there might still be files around
 that can cause this problems.
 If so, you can fix it by moving aside those extra
-.jar files from the JMRI program directory.
+.jar files from the JMRI program directory, or by asking Windows to un-install JMRI,
+before reruning the installer.
 For more information on this, please see this
 <a href="http://groups.yahoo.com/group/jmriusers/message/35065">discussion</a>
 on the 
@@ -135,10 +143,13 @@ Dick Bronson updated the decoder definition for the RR-CirKits
 Tower Controller 64.
 
 <p>
-Giorgio Terdina and Dave Duchamp fixed a thread race bug that caused problems with internal sensor clicking in Layout Editor.
+Giorgio Terdina and Dave Duchamp fixed a thread race bug that caused problems with 
+internal sensor clicking in Layout Editor.
 
 <p>
-Dan Boudreau fixed a minor bug with the engine consist replace, changed
+Dan Boudreau fixed minor bugs in the 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">operations support</a> 
+involving the engine consist replace, changed
 "Cars" to "Rolling Stock" in the location menus, and added the ability to
 optionally print the car comment field in manifests and switch lists.   
 
@@ -178,7 +189,8 @@ now go directly to running the program, rather than going through a .bat file.
 This is for better compatibility with Windows98.
 
 <p>
-Ken Weygandt and Bill Robinson helped fix a problem with over-running LocoNet command stations when sending lots of turnout messages.
+Ken Weygandt and Bill Robinson helped fix a problem with over-running LocoNet command stations when 
+sending lots of turnout messages.
 
 <p>
 Dick Bronson contributted new icons for 
@@ -203,6 +215,17 @@ Many
 <a href="http://jmri.sourceforge.net/JavaDoc/doc/">JavaDoc</a> and 
 <a href="http://jmri.sourceforge.net/help/en/webtoc.shtml">help panel</a> updates
 
+<p>
+The "<a href="http://jmri.sourceforge.net/jython/ControlPanel.py">ControlPanel.py</a>"
+sample script now provides buttons for both Panel Editor and Layout Editor windows.
+
+<p>
+David Duchamp added a first version of 
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">dispatcher support</a>.
+
+<p>
+Lots of updates to navigation and formatting of the 
+<a href="http://jmri.sourceforge.net/help/en/webtoc.shtml">help screens</a>.
 
 <!--#include virtual="/Footer" -->
 
