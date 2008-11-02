@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -25,7 +26,7 @@ import jmri.jmrit.display.LocoIcon;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -61,7 +62,16 @@ public class TrainIcon extends LocoIcon {
 				popup.add(new AbstractAction("Throttle") {
 					public void actionPerformed(ActionEvent e) {
 						tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-						tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+						if (consist > 0){
+							if (JOptionPane.showConfirmDialog(null,
+									"Send function commands to lead loco?", "Consist Throttle",
+									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+								tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress()); 	// first notify for func button
+							}
+							tf.notifyAddressChosen(consist, false);	// second notify for consist address
+						} else {
+							tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+						}
 						tf.setVisible(true);
 					}
 				});
@@ -95,6 +105,16 @@ public class TrainIcon extends LocoIcon {
     
     public Train getTrain (){
     	return train;
+    }
+    
+    int consist = 0;
+    
+    public void setConsistNumber (int consist){
+    	this.consist =   consist;
+    }
+        
+    public int getConsist (){
+    	return consist;
     }
     
  

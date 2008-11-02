@@ -23,11 +23,13 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -67,7 +69,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	_sort = sort;
         updateList();
         fireTableStructureChanged();
-        initTable(table);
+        initTable(table, frame);
     }
      
     synchronized void updateList() {
@@ -90,9 +92,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 	List sysList = null;
 	JTable table = null;
+	JmriJFrame frame = null;
     
-	void initTable(JTable table) {
+	void initTable(JTable table, JmriJFrame frame) {
 		this.table = table;
+		this.frame = frame;
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -202,12 +206,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
         	if (!train.getBuilt())
-        		return "Build";
+        		return rb.getString("Build");
         	else
-        		return "Print";
+        		return rb.getString("Print");
         }
-        case MOVECOLUMN: return "Move";
-        case EDITCOLUMN: return "Edit";
+        case MOVECOLUMN: return rb.getString("Move");
+        case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
     }
@@ -241,9 +245,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     private void buildTrain (int row){
      	Train train = manager.getTrainById((String)sysList.get(row));
-     	if (!train.getBuilt())
+     	if (!train.getBuilt()){
+     		frame.setModifiedFlag(true);
      		train.build();
-     	else {
+     	} else {
      		train.printBuildReport();
      		train.printManifest();
      	}
@@ -252,6 +257,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void moveTrain (int row){
     	Train train = manager.getTrainById((String)sysList.get(row));
        	if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
+       	frame.setModifiedFlag(true);
      	train.move();
     }
 

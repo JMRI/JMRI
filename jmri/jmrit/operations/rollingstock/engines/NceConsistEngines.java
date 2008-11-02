@@ -49,7 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -141,6 +141,7 @@ jmri.jmrix.nce.NceListener {
 						if (engine.getNumber().equals(Integer.toString(engNum))){
 							log.debug("found lead engine match "+engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE+consistNum);
+							engConsist.setConsistNumber(consistNum);	// load the consist number
 							engine.setConsist(engConsist);
 							engMatch = true;
 							consists.add(Integer.toString(consistNum));

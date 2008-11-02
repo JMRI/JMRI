@@ -8,6 +8,7 @@ public class Consist {
 	protected String _name ="";
 	protected int _length = 0;
 	protected Engine _leadEngine = null;
+	protected int _consistNumber = 0;
 	
 	public Consist(String name){
 		_name = name;
@@ -78,6 +79,14 @@ public class Consist {
 	
 	public void setLeadEngine(Engine engine){
 		_leadEngine = engine;
+	}
+	
+	public int getConsistNumber(){
+		return _consistNumber;
+	}
+	
+	public void setConsistNumber(int number){
+		_consistNumber = number;
 	}
 	
 	public void dispose(){

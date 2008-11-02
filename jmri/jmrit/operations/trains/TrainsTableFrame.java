@@ -30,7 +30,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
@@ -64,6 +64,7 @@ public class TrainsTableFrame extends JmriJFrame {
 	javax.swing.JButton buildButton = new javax.swing.JButton();
 	javax.swing.JButton printButton = new javax.swing.JButton();
 	javax.swing.JButton printSwitchButton = new javax.swing.JButton();
+	javax.swing.JButton terminateButton = new javax.swing.JButton();
 	javax.swing.JButton saveButton = new javax.swing.JButton();
 	
 	// check boxes
@@ -80,7 +81,7 @@ public class TrainsTableFrame extends JmriJFrame {
     	trainsPane = new JScrollPane(trainsTable);
     	trainsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     	trainsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       	trainsModel.initTable(trainsTable);
+       	trainsModel.initTable(trainsTable, this);
      	getContentPane().add(trainsPane);
      	
      	// Set up the control panel
@@ -111,19 +112,28 @@ public class TrainsTableFrame extends JmriJFrame {
     	controlPanel.add(textSep2);
 
     	addButton.setText(rb.getString("Add"));
+    	addButton.setToolTipText(rb.getString("AddTrain"));
 		addButton.setVisible(true);
-		buildButton.setText(rb.getString("BuildSelected"));
+		buildButton.setText(rb.getString("Build"));
+		buildButton.setToolTipText(rb.getString("BuildSelected"));
 		buildButton.setVisible(true);
-		printButton.setText(rb.getString("PrintSelected"));
+		printButton.setText(rb.getString("Print"));
+		printButton.setToolTipText(rb.getString("PrintSelected"));
 		printButton.setVisible(true);
-		printSwitchButton.setText(rb.getString("PrintSwitchLists"));
+		printSwitchButton.setText(rb.getString("SwitchLists"));
+		printSwitchButton.setToolTipText(rb.getString("PrintSwitchLists"));
 		printSwitchButton.setVisible(true);
+		terminateButton.setText(rb.getString("Terminate"));
+		terminateButton.setToolTipText(rb.getString("TerminateSelected"));
+		terminateButton.setVisible(true);
 		saveButton.setText(rb.getString("SaveBuilds"));
+		saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
 		saveButton.setVisible(true);
 		controlPanel.add (addButton);
 		controlPanel.add (buildButton);
 		controlPanel.add (printButton);
 		controlPanel.add (printSwitchButton);
+		controlPanel.add (terminateButton);
 		controlPanel.add (saveButton);
 		
 	   	getContentPane().add(controlPanel);
@@ -133,6 +143,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		addButtonAction(buildButton);
 		addButtonAction(printButton);
 		addButtonAction(printSwitchButton);
+		addButtonAction(terminateButton);
 		addButtonAction(saveButton);
 		
 		addRadioButtonAction(sortByName);
@@ -179,7 +190,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		});
 	}
 	
-	// add button
+	// add, build, print, switch lists, terminate, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("train button actived");
 		if (ae.getSource() == addButton){
@@ -192,7 +203,9 @@ public class TrainsTableFrame extends JmriJFrame {
 			List trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById((String)trains.get(i));
-				train.buildIfSelected();
+				boolean build = train.buildIfSelected();
+				if (build)
+					setModifiedFlag(true);
 			}
 		}
 		if (ae.getSource() == printButton){
@@ -208,12 +221,16 @@ public class TrainsTableFrame extends JmriJFrame {
 			f.setTitle("Switchlists by location");
 			f.setVisible(true);
 		}
+		if (ae.getSource() == terminateButton){
+			List trains = getTrainList();
+			for (int i=0; i<trains.size(); i++){
+				Train train = trainManager.getTrainById((String)trains.get(i));
+				train.terminateIfSelected();
+			}
+		}
+		
 		if (ae.getSource() == saveButton){
-			engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
-			carMangerXml.writeOperationsCarFile();				//Need to save train assignments
-			trainManagerXml.writeOperationsTrainFile();			//Need to save train status
-			locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track loc 
-			routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
+			storeValues();
 		}
 	}
 	
@@ -237,12 +254,22 @@ public class TrainsTableFrame extends JmriJFrame {
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		setModifiedFlag(true);
 		if (ae.getSource() == buildReportBox){
 			trainManager.setBuildReport(buildReportBox.isSelected());
 		}
 		if (ae.getSource() == printPreviewBox){
 			trainManager.setPrintPreview(printPreviewBox.isSelected());
 		}
+	}
+	
+	protected void storeValues(){
+		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
+		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
+		trainManagerXml.writeOperationsTrainFile();			//Need to save train status
+		locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track loc 
+		routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
+		setModifiedFlag(false);
 	}
 
     public void dispose() {

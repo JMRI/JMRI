@@ -38,6 +38,8 @@ import jmri.jmrit.operations.locations.Track;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.display.PanelMenu;
@@ -52,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -549,11 +551,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _build;
 	}
 	
-	public void buildIfSelected(){
-		if(_build && !_built)
+	public boolean buildIfSelected(){
+		if(_build && !_built){
 			build();
-		else
+			return true;
+		} else
 			log.debug("Train ("+getName()+") not selected or already built, skipping build");
+		return false;
 	}
 
 	public void build(){
@@ -660,6 +664,14 @@ public class Train implements java.beans.PropertyChangeListener {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	public void terminateIfSelected(){
+		if(_build && _built)
+			while(_built)
+				move();
+		else
+			log.debug("Train ("+getName()+") not selected or built, skipping terminate train");
+	}
 
 	/**
 	 * Move train to next location in route.  Will move
@@ -743,6 +755,16 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (pe != null || le != null) {
 			_locoIcon.setText(getIconName());
 			_locoIcon.setTrain(this);
+			// add throttle if JMRI loco roster entry exsist
+			// TODO: add consist throttle if engine is in a consist
+			RosterEntry entry = Roster.instance().entryFromTitle(iconEngine.getNumber());
+			if (entry == null){
+				List entries = Roster.instance().matchingList(null, null, iconEngine.getNumber(), null, null, null, null);
+				if (entries.size() > 0){
+					entry = (RosterEntry)entries.get(0);
+				}
+			}
+			_locoIcon.setRosterEntry(entry);
 			setTrainIconColor();
 			if (getIconName().length() > 9) {
 				_locoIcon.setFontSize(8.f);
