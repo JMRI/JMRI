@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -392,7 +392,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and train for display
 		pack();
-		//setLocation(10, 20);
+		if (getHeight() < 600)
+			setSize(getWidth(), getHeight()+ 50);
 		setVisible(true);
 	}
 	
