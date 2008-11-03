@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -231,20 +231,20 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	_route.deleteLocation(rl);
     }
     
-   private String _trainDirection = "";
+   private String _trainDirection = (String)Setup.getComboBox().getItemAt(0);
    
    public String getLastTrainDirection(){
 	   return _trainDirection;
    }
     
     private void setTrainDirection (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	_trainDirection = (String)((JComboBox)value).getSelectedItem();
-    	location.setTrainDirection(_trainDirection);
+    	rl.setTrainDirection(_trainDirection);
     }
     
     private void setMaxTrainMoves (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	int moves;
     	try{
      		moves = Integer.parseInt(value.toString());
@@ -253,7 +253,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		return;
     	}
      	if (moves <= 100){
-     		location.setMaxCarMoves(moves);
+     		rl.setMaxCarMoves(moves);
      	}else{
      		log.error("Location moves can not exceed 100");
 			JOptionPane.showMessageDialog(null,
@@ -269,7 +269,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setMaxTrainLength (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	int length;
     	try{
      		length = Integer.parseInt(value.toString());
@@ -278,7 +278,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		return;
     	}
      	if (length <= Setup.getTrainLength()){
-     		location.setMaxTrainLength(length);
+     		rl.setMaxTrainLength(length);
      		_maxTrainLength = length;
      	}else{
      		log.error("Location length can not exceed max train length");
@@ -289,7 +289,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setGrade (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	double grade;
     	try{
      		grade = Double.parseDouble(value.toString());
@@ -298,7 +298,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		return;
     	}
      	if (grade <= 6){
-     		location.setGrade(grade);
+     		rl.setGrade(grade);
      	}else{
      		log.error("Maximum grade is 6 percent");
 			JOptionPane.showMessageDialog(null,
@@ -308,7 +308,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setTrainIconX (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	int x;
     	try{
      		x = Integer.parseInt(value.toString());
@@ -316,11 +316,11 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		log.error("Train icon x coordinate must be a number");
     		return;
     	}
-    	location.setTrainIconX(x);
+    	rl.setTrainIconX(x);
     }
     
     private void setTrainIconY (Object value, int row){
-    	RouteLocation location = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
     	int y;
     	try{
      		y = Integer.parseInt(value.toString());
@@ -328,7 +328,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		log.error("Train icon y coordinate must be a number");
     		return;
     	}
-    	location.setTrainIconY(y);
+    	rl.setTrainIconY(y);
     }
 
 
@@ -353,9 +353,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private void removePropertyChangeRouteLocations() {
     	for (int i = 0; i < list.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		RouteLocation y = _route.getLocationById((String) list.get(i));
-    		if (y != null)
-    			y.removePropertyChangeListener(this);
+    		RouteLocation rl = _route.getLocationById((String) list.get(i));
+    		if (rl != null)
+    			rl.removePropertyChangeListener(this);
     	}
     }
 
