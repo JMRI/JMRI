@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -72,6 +72,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _status = "";
 	protected boolean _built = false;		// when true, a train manifest has been built
 	protected boolean _build = true;		// when true, build this train
+	protected boolean _printed = false;		// when true, manifest has been printed
 	protected Route _route = null;
 	protected TrainIcon _locoIcon = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
@@ -563,6 +564,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void build(){
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
+		setPrinted(false);
 	}
 
 	public static void printReport (File file, String name, boolean isPreview, String fontName){
@@ -615,16 +617,11 @@ public class Train implements java.beans.PropertyChangeListener {
         writer.close();
 	}
 	
-	public static void printReport(File file, String name, boolean isPreview){
-		printReport(file, name, isPreview, "");
- 	}
-	
-
 	public void printBuildReport(){
 		if(_built && TrainManager.instance().getBuildReport()){
 			File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(buildFile, "Train Build Report", isPreview);
+			printReport(buildFile, "Train Build Report", isPreview, "");
 		}
 	}
 	
@@ -633,7 +630,9 @@ public class Train implements java.beans.PropertyChangeListener {
 			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
 			printReport(file, "Train Manifest", isPreview, Setup.getFontName());
-		}else{
+			if (!isPreview)
+				setPrinted(true);
+		} else {
 			String string = "Need to build train (" +getName()+ ") before printing manifest";
 			log.debug(string);
 			JOptionPane.showMessageDialog(null, string,
@@ -648,6 +647,14 @@ public class Train implements java.beans.PropertyChangeListener {
 		else
 			log.debug("Train ("+getName()+") not selected, skipping printing manifest");
 	}
+	
+	private void setPrinted (boolean printed){
+		_printed = printed;
+	}
+	
+	public boolean getPrinted(){
+		return _printed;
+	}
 
 	/**
 	 * Sets the panel position for the train icon   
@@ -658,19 +665,31 @@ public class Train implements java.beans.PropertyChangeListener {
 			trainIconRl.setTrainIconX(_locoIcon.getX());
 			trainIconRl.setTrainIconY(_locoIcon.getY());
 			RouteManagerXml.setDirty(true);
-		} else{
+		} else {
 			JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
 					"Set X&Y is disabled",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
+	/**
+	 * Terminate train if build checkbox is selected by user.
+	 * Warns user if the train manifest hasn't been printed.
+	 */
 	public void terminateIfSelected(){
-		if(_build && _built)
+		if(_build && _built){
+			if (!_printed){
+				if (JOptionPane.showConfirmDialog(null,
+						"Warning, train manifest hasn't been printed!",
+						"Terminate Train ("+getName()+")?", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					return;
+				}
+			}
 			while(_built)
 				move();
-		else
+		} else {
 			log.debug("Train ("+getName()+") not selected or built, skipping terminate train");
+		}
 	}
 
 	/**
@@ -756,7 +775,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			_locoIcon.setText(getIconName());
 			_locoIcon.setTrain(this);
 			// add throttle if JMRI loco roster entry exsist
-			// TODO: add consist throttle if engine is in a consist
 			RosterEntry entry = Roster.instance().entryFromTitle(iconEngine.getNumber());
 			if (entry == null){
 				List entries = Roster.instance().matchingList(null, null, iconEngine.getNumber(), null, null, null, null);
@@ -889,6 +907,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setStatus(TRAINRESET);
 		setCurrent(null);
 		setBuilt(false);
+		setPrinted(false);
 		firePropertyChange(NUMBERCARS, Integer.toString(oldNum), Integer.toString(0));
 	}
     
@@ -963,6 +982,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_built = a.getValue().equals("true");
 		if ((a = e.getAttribute("build")) != null)
 			_build = a.getValue().equals("true");
+		if ((a = e.getAttribute("printed")) != null)
+			_printed = a.getValue().equals("true");
 		if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
  
@@ -1016,13 +1037,12 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("cabooseRoad", getCabooseRoad());
         e.setAttribute("built", getBuilt()?"true":"false");
         e.setAttribute("build", getBuild()?"true":"false");
+        e.setAttribute("printed", getPrinted()?"true":"false");
         e.setAttribute("status", getStatus());
         e.setAttribute("comment", getComment());
         return e;
     }
-    
 
-    
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("train (" + getName() + ") sees property change: "
