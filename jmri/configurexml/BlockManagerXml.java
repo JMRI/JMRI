@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @since 2.1.2
  *
  */
@@ -177,6 +177,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                 InstanceManager.blockManagerInstance().createNewBlock(sysName, userName);
                 block = InstanceManager.blockManagerInstance().getBlock(sysName);
             }
+            if (userName!=null) block.setUserName(userName);
             
             // load common parts
             loadCommon(block, element);
