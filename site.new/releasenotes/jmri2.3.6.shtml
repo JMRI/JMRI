@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.1 2008-11-02 06:27:45 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.2 2008-11-04 00:52:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -129,6 +129,9 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 
 <h3>Changes since test version 2.3.5:</h3>
 
+Dan Boudreau added termination of trains to operations for batch mode.
+
+<p>
 
 <!--#include virtual="/Footer" -->
 
