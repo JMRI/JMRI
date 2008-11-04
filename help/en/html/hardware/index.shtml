@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.24 2008-10-19 18:21:52 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.25 2008-11-04 00:00:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -236,9 +236,10 @@
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 		</dd>
 
-	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/">SPROG</a></dt>
-	    <dt>Andrew Crosland</dt>
-	    <dd><p class="dl">Configure: <A HREF="sprog/SPROG.shtml">SPROG</a></p></dd>
+	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img src="http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt="SPROG" height="41" width="150"></a></dt>
+	    <dt>SPROG</dt>
+	    <dd><p class="dl">Configure: <A HREF="sprog/SPROG.shtml">SPROG</a>
+	        as either a stand-alone DCC programmer or DCC command station</p></dd>
 
 	    <dt class="im"><a href="http://srcpd.sourceforge.net/"><img src="http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78"></a></dt>
 	    <dt>SRCP</dt>
