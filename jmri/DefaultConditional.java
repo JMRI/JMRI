@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -515,7 +515,8 @@ public class DefaultConditional extends AbstractNamedBean
 					(actionOption[i]==ACTION_OPTION_ON_CHANGE) ) {
 				// need to take this action
 				SignalHead h = null;
-				Logix x = null;		
+				Logix x = null;	
+				Light lgt = null;	
 				switch (actionType[i]) {
 					case Conditional.ACTION_NONE:
 						break;
@@ -726,13 +727,43 @@ public class DefaultConditional extends AbstractNamedBean
 						}						
 						break;
 					case Conditional.ACTION_SET_LIGHT:
-						Light lgt = InstanceManager.lightManagerInstance().
+						lgt = InstanceManager.lightManagerInstance().
 										getLight(actionName[i]);
 						if (lgt == null) {
 							log.error("invalid light name in action - "+actionName[i]);
 						}
 						else {
 							lgt.setState(actionData[i]);
+						}
+						break;
+					case Conditional.ACTION_SET_LIGHT_INTENSITY:
+						lgt = InstanceManager.lightManagerInstance().
+										getLight(actionName[i]);
+						if (lgt == null) {
+							log.error("invalid light name in action - "+actionName[i]);
+						}
+						else {
+							try {
+								lgt.setTargetIntensity(((double)actionData[i])/100.0);
+							}
+							catch (IllegalArgumentException e) {
+								log.error("Exception in set light intensity action - "+e);
+							}
+						}
+						break;
+					case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+						lgt = InstanceManager.lightManagerInstance().
+										getLight(actionName[i]);
+						if (lgt == null) {
+							log.error("invalid light name in action - "+actionName[i]);
+						}
+						else {
+							try {
+								lgt.setTransitionTime((double)actionData[i]);
+							}
+							catch (IllegalArgumentException e) {
+								log.error("Exception in set light transition time action - "+e);
+							}
 						}
 						break;
 					case Conditional.ACTION_SET_MEMORY:

@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1503,6 +1503,10 @@ public class LogixTableAction extends AbstractTableAction {
 				action1LightSetBox.setSelectedIndex(1);
 			}
 			break;
+		case Conditional.ACTION_SET_LIGHT_INTENSITY:
+		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+			action1DataField.setText(Integer.toString(actionData[0]));
+			break;		
 		case Conditional.ACTION_LOCK_TURNOUT:
 			if (actionData[0] == Turnout.UNLOCKED) {
 				action1LockSetBox.setSelectedIndex(0);
@@ -1572,6 +1576,10 @@ public class LogixTableAction extends AbstractTableAction {
 				action2LightSetBox.setSelectedIndex(1);
 			}
 			break;
+		case Conditional.ACTION_SET_LIGHT_INTENSITY:
+		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+			action2DataField.setText(Integer.toString(actionData[1]));
+			break;		
 		case Conditional.ACTION_LOCK_TURNOUT:
 			if (actionData[1] == Turnout.UNLOCKED) {
 				action2LockSetBox.setSelectedIndex(0);
@@ -1973,6 +1981,22 @@ public class LogixTableAction extends AbstractTableAction {
 				action1LightSetBox.setVisible(true);
 				action1NameField.setToolTipText(rbx.getString("NameHintLight"));
 				break;
+			case Conditional.ACTION_SET_LIGHT_INTENSITY:
+				action1NameField.setVisible(true);
+				action1DataField.setVisible(true);
+				action1NameField
+						.setToolTipText(rbx.getString("NameHintLight"));
+				action1DataField
+						.setToolTipText(rbx.getString("DataHintLightIntensity"));
+				break;
+			case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+				action1NameField.setVisible(true);
+				action1DataField.setVisible(true);
+				action1NameField
+						.setToolTipText(rbx.getString("NameHintLight"));
+				action1DataField
+						.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
+				break;
 			case Conditional.ACTION_SET_MEMORY:
 				action1NameField.setVisible(true);
 				action1DataField.setVisible(true);
@@ -2124,6 +2148,22 @@ public class LogixTableAction extends AbstractTableAction {
 				action2NameField.setVisible(true);
 				action2LightSetBox.setVisible(true);
 				action2NameField.setToolTipText(rbx.getString("NameHintLight"));
+				break;
+			case Conditional.ACTION_SET_LIGHT_INTENSITY:
+				action2NameField.setVisible(true);
+				action2DataField.setVisible(true);
+				action2NameField
+						.setToolTipText(rbx.getString("NameHintLight"));
+				action2DataField
+						.setToolTipText(rbx.getString("DataHintLightIntensity"));
+				break;
+			case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+				action2NameField.setVisible(true);
+				action2DataField.setVisible(true);
+				action2NameField
+						.setToolTipText(rbx.getString("NameHintLight"));
+				action2DataField
+						.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
 				break;
 			case Conditional.ACTION_SET_MEMORY:
 				action2NameField.setVisible(true);
@@ -3191,6 +3231,112 @@ public class LogixTableAction extends AbstractTableAction {
 				actionData[index] = Light.OFF;
 			actionString[index] = " ";
 			break;
+		case Conditional.ACTION_SET_LIGHT_INTENSITY:
+			Light lgtx = null;
+			// check if light user name was entered
+			if ((uName != null) && (uName != "")) {
+				lgtx = InstanceManager.lightManagerInstance().getByUserName(
+						uName);
+				if (lgtx != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check light system name
+					lgtx = InstanceManager.lightManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (lgtx == null) {
+				systemNameField.setText(uName);
+				messageInvalidLightName(uName, false);
+				return (false);
+			}
+			if (!lgtx.isIntensityVariable()) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error45"),
+								new Object[] { systemNameField.getText() }), rbx
+								.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);				
+			}
+			try {
+				actionData[index] = Integer.valueOf(dataField.getText())
+						.intValue();
+				if ( (actionData[index] < 0) || (actionData[index] > 100) ) {
+					javax.swing.JOptionPane.showMessageDialog(
+							editConditionalFrame,
+							java.text.MessageFormat.format(rbx
+									.getString("Error42"),
+									new Object[] { dataField.getText() }), 
+										rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+					return (false);
+				}
+			} catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error43"),
+								new Object[] { dataField.getText() }), rbx
+								.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);
+			}			
+			actionString[index] = " ";
+			break;
+		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+			Light lgtz = null;
+			// check if light user name was entered
+			if ((uName != null) && (uName != "")) {
+				lgtz = InstanceManager.lightManagerInstance().getByUserName(
+						uName);
+				if (lgtz != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check light system name
+					lgtz = InstanceManager.lightManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (lgtz == null) {
+				systemNameField.setText(uName);
+				messageInvalidLightName(uName, false);
+				return (false);
+			}
+			if (!lgtz.isIntensityVariable()) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error45"),
+								new Object[] { systemNameField.getText() }), rbx
+								.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);				
+			}
+			try {
+				actionData[index] = Integer.valueOf(dataField.getText())
+						.intValue();
+				if (actionData[index] < 0) {
+					javax.swing.JOptionPane.showMessageDialog(
+							editConditionalFrame,
+							java.text.MessageFormat.format(rbx
+									.getString("Error44"),
+									new Object[] { dataField.getText() }), 
+										rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+					return (false);
+				}
+			} catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error44"),
+								new Object[] { dataField.getText() }), rbx
+								.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);
+			}			
+			actionString[index] = " ";
+			break;
 		case Conditional.ACTION_SET_MEMORY:
 			Memory m = null;
 			// check if memory user name was entered
@@ -3435,6 +3581,10 @@ public class LogixTableAction extends AbstractTableAction {
 			return (rbx.getString("ActionStopFastClock"));			
 		case Conditional.ACTION_COPY_MEMORY:
 			return (rbx.getString("ActionCopyMemory"));
+		case Conditional.ACTION_SET_LIGHT_INTENSITY:
+			return (rbx.getString("ActionSetLightIntensity"));
+		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+			return (rbx.getString("ActionSetLightTransitionTime"));
 		}
 		return ("");
 	}

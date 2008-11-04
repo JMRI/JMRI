@@ -83,7 +83,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
 	// action types
-	public static final int NUM_ACTION_TYPES = 26;
+	public static final int NUM_ACTION_TYPES = 28;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -130,6 +130,10 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_STOP_FAST_CLOCK = 25;
 	// stops the fast clock
 	public static final int ACTION_COPY_MEMORY = 26;
+	// copies value from memory variable (in name) to memory variable (in string)
+	public static final int ACTION_SET_LIGHT_INTENSITY = 27;
+	// copies value from memory variable (in name) to memory variable (in string)
+	public static final int ACTION_SET_LIGHT_TRANSITION_TIME = 28;
 	// copies value from memory variable (in name) to memory variable (in string)
 	
 	/**

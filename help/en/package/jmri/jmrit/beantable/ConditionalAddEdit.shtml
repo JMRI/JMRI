@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.7 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.8 2008-11-04 18:33:04 djduchamp Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -23,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Logix Conditionals</H>
+<H1>Adding/Editing Logix Conditionals</H1>
 <P>The Edit Conditional window is where logical expressions are set
 up and where actions are specified. The Edit Conditional window is
 displayed when a Conditional is created, or when the <B>Edit</B> button
@@ -325,6 +325,19 @@ listed below along with information on each:</P>
 	another memory variable. Specify the memory to be copied from by entering its 
 	name in the leftmost field. Specify the memory to receive the copied value by 
 	entering its name in the rightmost field.</LI>
+	<LI><B>Set Light Intensity</B>: Sets the intensity of a specified variable 
+	intensity light to the entered intensity value. Specify the light to set by 
+	entering its name. Specify the intensity by entering the percent intensity 
+	as an integer in the range 0 to 100. If the specified light is not a 
+	variable light, or if the intensity value entered is not an integer in the 
+	required range, an error message is displayed.</LI>
+	<LI><B>Set Light Transition Time</B>: Sets the transition time  of a 
+	specified variable intensity light to the entered time. Specify the light to 
+	set by entering its name. Specify the transition time by entering the 
+	number of fast clock minutes needed to move from 0% intensity to 100% 
+	intensity. If the specified light is not a variable light, or if a positive 
+	integer is not entered for the number of fast clock minutes, an error 
+	message results.</LI>
 
 </UL>
 <P></P>
