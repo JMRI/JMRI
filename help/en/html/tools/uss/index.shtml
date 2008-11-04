@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-11-04 00:50:27 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-11-04 00:55:12 jacobsen Exp $ -->
 <title>JMRI: USS CTC Tools</title>
 
 <!-- Style -->
@@ -40,7 +40,7 @@ Slaves an output Turnout device to follow the state of an input Sensor device.
 This could, for example, make a layout turnout follow a fascia switch connected to a Sensor.
 
 <dt>
-<a href="../../../package/jmri/jmrit/ussctc/OSIndicatorFrame.shtml">OS Indicator</a>
+<a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator</a>
 <dd>
 Drives the occupancy indicator lamps on the panel. This takes input from a sensor
 to show the track section is occupied, and also optionally can light the indicator
