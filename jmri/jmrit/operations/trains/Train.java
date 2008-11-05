@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -925,7 +925,6 @@ public class Train implements java.beans.PropertyChangeListener {
      * @param e  Consist XML element
      */
     public Train(org.jdom.Element e) {
-//        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in train element when reading operations");
@@ -965,7 +964,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("carRoads")) != null ) {
         	String names = a.getValue();
            	String[] roads = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("Track location (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
+        	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
         if ((a = e.getAttribute("numberEngines")) != null)
