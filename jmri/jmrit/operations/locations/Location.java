@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -117,6 +117,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _usedLength;
 	}
 	
+	/**
+	 * Set the operations mode for this location 
+	 * @param ops NORMAL STAGING
+	 */
 	public void setLocationOps(int ops){
 		int old = _locationOps;
 		_locationOps = ops;
@@ -214,15 +218,6 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
-	 * @return the number of cars and or engines that are scheduled for pickup at this
-	 *         location.
-	 */
-	public int getPickupRSs() {
-		return _pickupRS;
-	}
-
-	/**
 	 * Increments the number of cars and or engines that will be droped off by trains at this
 	 * location.
 	 */
@@ -240,10 +235,6 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _dropRS;
 		_dropRS--;
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
-	}
-	
-	public int getDropRSs() {
-		return _dropRS;
 	}
 	
 	/**
@@ -320,28 +311,28 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return Track
 	 */
     public Track addTrack (String name, String type){
-		Track sl = getTrackByName(name, type);
-		if (sl == null){
+		Track track = getTrackByName(name, type);
+		if (track == null){
 			_IdNumber++;
 			String id = _id + "s"+ Integer.toString(_IdNumber);
 			log.debug("adding new "+ type +" to "+getName()+ " id: " + id);
-	   		sl = new Track(id, name, type);
-	   		Integer old = new Integer(_subLocationHashTable.size());
-    		_subLocationHashTable.put(sl.getId(), sl);
-    		setLength(sl.getLength() + getLength());
-    		if(type.equals(Track.YARD))
-    			firePropertyChange(YARDLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(Track.SIDING))
-    			firePropertyChange(SIDINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(Track.INTERCHANGE))
-    			firePropertyChange(INTERCHANGELISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-    		if(type.equals(Track.STAGING))
-    			firePropertyChange(STAGINGLISTLENGTH, old, new Integer(_subLocationHashTable.size()));
-            // listen for change in track length
-            sl.addPropertyChangeListener(this);
-		}
-		return sl;
+	   		track = new Track(id, name, type);
+	   		register(track);
+ 		}
+		resetMoves();	// give all of the tracks equal weighting
+		return track;
 	}
+    
+    /**
+     * Reset the move count for all tracks at this location
+     */
+    public void resetMoves(){
+    	List tracks = getTracksByIdList();
+    	for (int i=0; i<tracks.size(); i++) {
+    		Track track = getTrackById((String)tracks.get(i));
+    		track.setMoves(0);
+    	}
+    }
 	
    /**
      * Remember a NamedBean Object created outside the manager.
@@ -462,7 +453,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
     
     /**
-     * Sort ids by track location moves.  Returns a list of a given locaation type
+     * Sort ids by track location moves.  Returns a list of a given location type
      * if type is not null, otherwise all track locations are returned.  
      * @return list of track location ids ordered by moves
      */
