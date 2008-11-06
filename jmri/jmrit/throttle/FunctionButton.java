@@ -41,7 +41,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private boolean isDisplayed = true;
 	private int actionKey;
 	static final int BUT_HGHT = 30;
-	static final int BUT_WDTH = 54;
+	static final int BUT_WDTH = 56;
 
     private JPopupMenu popup;
 
