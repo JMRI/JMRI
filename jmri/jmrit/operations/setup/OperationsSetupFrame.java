@@ -22,7 +22,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -216,20 +216,24 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (panel, textOwner, 0, 6);
 		addItemLeft (panel, ownerTextField, 1, 6);
 		
+		Border border = BorderFactory.createEtchedBorder();
+		
 		// Printer panel
+		JPanel pPrinter = new JPanel();
+		pPrinter.setLayout(new GridBagLayout());
 		ButtonGroup printerGroup = new ButtonGroup();
 		printerGroup.add(mono);
 		printerGroup.add(sanSerif);
-		addItem (panel, textPrinter, 0, 8);
-		addItemLeft (panel, mono, 1, 8);
-		addItemLeft (panel, sanSerif, 2, 8);
-		addItemLeft (panel, appendCommentCheckBox, 1, 9);
+		addItem (pPrinter, textPrinter, 0, 8);
+		addItemLeft (pPrinter, mono, 1, 8);
+		addItemLeft (pPrinter, sanSerif, 2, 8);
+		addItemLeft (pPrinter, appendCommentCheckBox, 1, 9);
+		pPrinter.setBorder(border);
 		setPrinterFontRadioButton();
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
 		pIcon.setLayout(new GridBagLayout());
-		Border border = BorderFactory.createEtchedBorder();
 		pIcon.setBorder(border);
 		addItem (pIcon, textPanel, 0, 1);
 		addItemLeft (pIcon, panelTextField, 1, 1);
@@ -268,6 +272,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem(pControl, saveButton, 2, 9);
 		
 		getContentPane().add(panel);
+		getContentPane().add(pPrinter);
 		getContentPane().add(pIcon);
 		getContentPane().add(pControl);
 
