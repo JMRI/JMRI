@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -782,7 +782,10 @@ public class Train implements java.beans.PropertyChangeListener {
 					entry = (RosterEntry)entries.get(0);
 				}
 			}
-			_locoIcon.setRosterEntry(entry);
+			if (entry != null){
+				_locoIcon.setRosterEntry(entry);
+				_locoIcon.setConsistNumber(iconEngine.getConsist().getConsistNumber());
+			}
 			setTrainIconColor();
 			if (getIconName().length() > 9) {
 				_locoIcon.setFontSize(8.f);
