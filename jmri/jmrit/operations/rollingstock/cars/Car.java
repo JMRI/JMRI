@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -125,69 +125,20 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 * @param e  Car XML element
 	 */
 	public Car(org.jdom.Element e) {
+		super.rollingStock(e);
 		org.jdom.Attribute a;
-		if ((a = e.getAttribute("id")) != null)
-			_id = a.getValue();
-		else
-			log.warn("no id attribute in car element when reading operations");
-		if ((a = e.getAttribute("roadNumber")) != null)
-			_number = a.getValue();
-		if ((a = e.getAttribute("roadName")) != null)
-			_road = a.getValue();
-		if ((a = e.getAttribute("type")) != null)
-			_type = a.getValue();
-		if ((a = e.getAttribute("length")) != null)
-			_length = a.getValue();
-		if ((a = e.getAttribute("color")) != null)
-			_color = a.getValue();
 		if ((a = e.getAttribute("hazardous")) != null)
 			_hazardous = a.getValue().equals("true");
 		if ((a = e.getAttribute("caboose")) != null)
 			_caboose = a.getValue().equals("true");
 		if ((a = e.getAttribute("fred")) != null)
 			_fred = a.getValue().equals("true");
-		if ((a = e.getAttribute("weight")) != null)
-			_weight = a.getValue();
-		if ((a = e.getAttribute("weightTons")) != null)
-			_weightTons = a.getValue();
-		if ((a = e.getAttribute("built")) != null)
-			_built = a.getValue();
-		Location location = null;
-		Track track = null;
-		if ((a = e.getAttribute("locationId")) != null)
-			location = locationManager.getLocationById(a.getValue());
-		if ((a = e.getAttribute("secLocationId")) != null && location != null)
-			track = location.getTrackById(a.getValue());
-		setLocation(location, track);
-		Location destination = null;
-		Track trackDestination = null;
-		if ((a = e.getAttribute("destinationId")) != null)
-			destination = locationManager.getLocationById(a.getValue());
-		if ((a = e.getAttribute("secDestinationId")) != null  && destination != null)
-			trackDestination = destination.getTrackById(a.getValue());
-		setDestination(destination, trackDestination);
-		if ((a = e.getAttribute("moves")) != null)
-			_moves = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute("train")) != null){
-			_train = TrainManager.instance().getTrainByName(a.getValue());
-			if (_train != null && _train.getRoute() != null && (a = e.getAttribute("routeLocationId")) != null){
-				_routeLocation = _train.getRoute().getLocationById(a.getValue());
-				if((a = e.getAttribute("routeDestinationId")) != null)
-					_routeDestination = _train.getRoute().getLocationById(a.getValue());
-			}
-		}
-		if ((a = e.getAttribute("lastRouteId")) != null)
-			_routeId = a.getValue();
 		if ((a = e.getAttribute("kernel")) != null){
 			setKernel(CarManager.instance().getKernelByName(a.getValue()));
 			if ((a = e.getAttribute("leadKernel")) != null){
 				_kernel.setLeadCar(this);
 			}
 		}
-		if ((a = e.getAttribute("owner")) != null)
-			_owner = a.getValue();
-		if ((a = e.getAttribute("comment")) != null)
-			_comment = a.getValue();
 	}
 	
 	boolean verboseStore = false;
@@ -200,54 +151,18 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 */
 	public org.jdom.Element store() {
 		org.jdom.Element e = new org.jdom.Element("car");
-		e.setAttribute("id", getId());
-		e.setAttribute("roadName", getRoad());
-		e.setAttribute("roadNumber", getNumber());
-		e.setAttribute("type", getType());
-		e.setAttribute("length", getLength());
-		e.setAttribute("color", getColor());
-		e.setAttribute("weight", getWeight());
-		if (!_weightTons.equals(""))
-			e.setAttribute("weightTons", getWeightTons());
-		e.setAttribute("built", getBuilt());
+		super.store(e);
 		if (isHazardous())
 			e.setAttribute("hazardous", isHazardous()?"true":"false");
 		if (isCaboose())
 			e.setAttribute("caboose", isCaboose()?"true":"false");
 		if (hasFred())
 			e.setAttribute("fred", hasFred()?"true":"false");
-		if (getLocationId() != "")
-			e.setAttribute("locationId", getLocationId());
-		if (getRouteLocationId() != "")
-			e.setAttribute("routeLocationId", getRouteLocationId());
-		if (getTrackId() != "")
-			e.setAttribute("secLocationId", getTrackId());
-		if (getDestinationId() != "")
-			e.setAttribute("destinationId", getDestinationId());
-		if (getRouteDestinationId() != "")
-			e.setAttribute("routeDestinationId", getRouteDestinationId());
-		if (getDestinationTrackId() != "")
-			e.setAttribute("secDestinationId", getDestinationTrackId());
-		if (getSavedRouteId() != "")
-			e.setAttribute("lastRouteId", getSavedRouteId());
-		if (verboseStore){
-			e.setAttribute("location", getLocationName());
-			e.setAttribute("secLocation", getTrackName());
-			e.setAttribute("destination", getDestinationName());
-			e.setAttribute("secDestination", getDestinationTrackName());
-		}
-		e.setAttribute("moves", Integer.toString(getMoves()));
-		if (getTrain() != null)
-			e.setAttribute("train",	getTrain().getName());
 		if (getKernel() != null){
 			e.setAttribute("kernel", getKernelName());
 			if (getKernel().isLeadCar(this))
 				e.setAttribute("leadKernel", "true");
 		}
-		e.setAttribute("owner", getOwner());
-		if (!getComment().equals("") )
-			e.setAttribute("comment", getComment());
-
 		return e;
 	}
 	

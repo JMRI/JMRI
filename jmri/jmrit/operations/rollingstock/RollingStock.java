@@ -18,7 +18,7 @@ import org.jdom.Element;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -164,7 +164,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			try{
 				weight = Double.parseDouble(getWeight());
 			}catch (Exception e){
-				log.debug("Weight not set for rolling stock ("+getId()+")");
+				// log.debug("Weight not set for rolling stock ("+getId()+")");
 			}
 			return Integer.toString((int)(weight*Setup.getScaleTonRatio()));
 		}
@@ -516,8 +516,116 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getComment() {
 		return _comment;
 	}
+	
+	/**
+	 * Construct this Entry from XML. 
+	 * 
+	 * @param e  RollingStock XML element
+	 */
+	public void rollingStock(org.jdom.Element e) {
+		org.jdom.Attribute a;
+		if ((a = e.getAttribute("id")) != null)
+			_id = a.getValue();
+		else
+			log.warn("no id attribute in rolling stock element when reading operations");
+		if ((a = e.getAttribute("roadNumber")) != null)
+			_number = a.getValue();
+		if ((a = e.getAttribute("roadName")) != null)
+			_road = a.getValue();
+		if ((a = e.getAttribute("type")) != null)
+			_type = a.getValue();
+		if ((a = e.getAttribute("length")) != null)
+			_length = a.getValue();
+		if ((a = e.getAttribute("color")) != null)
+			_color = a.getValue();
+		if ((a = e.getAttribute("weight")) != null)
+			_weight = a.getValue();
+		if ((a = e.getAttribute("weightTons")) != null)
+			_weightTons = a.getValue();
+		if ((a = e.getAttribute("built")) != null)
+			_built = a.getValue();
+		Location location = null;
+		Track track = null;
+		if ((a = e.getAttribute("locationId")) != null)
+			location = locationManager.getLocationById(a.getValue());
+		if ((a = e.getAttribute("secLocationId")) != null && location != null)
+			track = location.getTrackById(a.getValue());
+		setLocation(location, track);
+		Location destination = null;
+		Track trackDestination = null;
+		if ((a = e.getAttribute("destinationId")) != null)
+			destination = locationManager.getLocationById(a.getValue());
+		if ((a = e.getAttribute("secDestinationId")) != null  && destination != null)
+			trackDestination = destination.getTrackById(a.getValue());
+		setDestination(destination, trackDestination);
+		if ((a = e.getAttribute("moves")) != null)
+			_moves = Integer.parseInt(a.getValue());
+		if ((a = e.getAttribute("train")) != null){
+			_train = TrainManager.instance().getTrainByName(a.getValue());
+			if (_train != null && _train.getRoute() != null && (a = e.getAttribute("routeLocationId")) != null){
+				_routeLocation = _train.getRoute().getLocationById(a.getValue());
+				if((a = e.getAttribute("routeDestinationId")) != null)
+					_routeDestination = _train.getRoute().getLocationById(a.getValue());
+			}
+		}
+		if ((a = e.getAttribute("lastRouteId")) != null)
+			_routeId = a.getValue();
+		if ((a = e.getAttribute("owner")) != null)
+			_owner = a.getValue();
+		if ((a = e.getAttribute("comment")) != null)
+			_comment = a.getValue();
+	}
+	
 
-
+	boolean verboseStore = false;
+	/**
+	 * Add XML elements to represent this Entry. 
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public org.jdom.Element store(org.jdom.Element e) {
+		e.setAttribute("id", getId());
+		e.setAttribute("roadName", getRoad());
+		e.setAttribute("roadNumber", getNumber());
+		e.setAttribute("type", getType());
+		e.setAttribute("length", getLength());
+		if(!getColor().equals(""))
+			e.setAttribute("color", getColor());
+		if(!getWeight().equals(""))
+			e.setAttribute("weight", getWeight());
+		if (!getWeightTons().equals("0"))
+			e.setAttribute("weightTons", getWeightTons());
+		if (!getBuilt().equals(""))
+			e.setAttribute("built", getBuilt());
+		if (!getLocationId().equals(""))
+			e.setAttribute("locationId", getLocationId());
+		if (!getRouteLocationId().equals(""))
+			e.setAttribute("routeLocationId", getRouteLocationId());
+		if (!getTrackId().equals(""))
+			e.setAttribute("secLocationId", getTrackId());
+		if (!getDestinationId().equals(""))
+			e.setAttribute("destinationId", getDestinationId());
+		if (!getRouteDestinationId().equals(""))
+			e.setAttribute("routeDestinationId", getRouteDestinationId());
+		if (!getDestinationTrackId().equals(""))
+			e.setAttribute("secDestinationId", getDestinationTrackId());
+		if (!getSavedRouteId().equals(""))
+			e.setAttribute("lastRouteId", getSavedRouteId());
+		if (verboseStore){
+			e.setAttribute("location", getLocationName());
+			e.setAttribute("secLocation", getTrackName());
+			e.setAttribute("destination", getDestinationName());
+			e.setAttribute("secDestination", getDestinationTrackName());
+		}
+		e.setAttribute("moves", Integer.toString(getMoves()));
+		if (getTrain() != null)
+			e.setAttribute("train",	getTrain().getName());
+		if (!getOwner().equals(""))
+			e.setAttribute("owner", getOwner());
+		if (!getComment().equals("") )
+			e.setAttribute("comment", getComment());
+		return e;
+	}
 	
 	// rolling stock listens for changes in a location name or if a location is deleted
     public void propertyChange(PropertyChangeEvent e) {
