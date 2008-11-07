@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class TrainBuilder{
 	
@@ -90,9 +90,11 @@ public class TrainBuilder{
 	 * 2. Select only engines and cars the that train can service
 	 * 3. Optional, train must depart with the required number of moves (cars)
 	 * 4. Add caboose or car with FRED to train if required
-	 * 5. All cars must leave stagging tracks
-	 * 6. If a train is assigned to stagging, all cars must go there  
-	 * 7. Service locations based on car types and roads
+	 * 5. All cars and engines must leave stagging tracks
+	 * 6. If a train is assigned to stagging, all cars and engines must go there  
+	 * 7. Service locations based on train direction, location car types and roads
+	 * 8. Ignore train/track direction when servicing the last location in a route
+	 * 9. Ignore track direction when train is a local (serves one location)
 	 *
 	 */
 	public void build(Train train){
@@ -310,14 +312,14 @@ public class TrainBuilder{
 		if (departStageTrack != null){
 			// Make sure that all cars in staging are moved
 			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberRS());  // neg number moves more cars
-			int numRollingStockFromStaging = 0; 
+			int numCarsFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
 //				addLine(fileOut, "Check car ("+c.getId()+") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 				if (c.getLocationName().equals(departLocation.getName())){
 					if (c.getTrackName().equals(departStageTrack.getName())){
 						addLine(fileOut, "Staging car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
-						numRollingStockFromStaging++;
+						numCarsFromStaging++;
 					} else {
 						addLine(fileOut, "Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") from car list");
 						carList.remove(carList.get(carIndex));
@@ -326,8 +328,8 @@ public class TrainBuilder{
 				}
 			}
 			// error if all of the cars in staging aren't available
-			if (numRollingStockFromStaging +numberEngines != departStageTrack.getNumberRS()){
-				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStageTrack.getNumberRS()-numRollingStockFromStaging)+" cars or engines can't be serviced");
+			if (numCarsFromStaging + numberEngines != departStageTrack.getNumberRS()){
+				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStageTrack.getNumberRS()- (numCarsFromStaging + numberEngines))+" cars or engines can't be serviced");
 				return;
 			}
 		}
@@ -522,7 +524,7 @@ public class TrainBuilder{
 												List sls = testDestination.getTracksByMovesList(null);
 												for (int s = 0; s < sls.size(); s++){
 													Track testTrack = testDestination.getTrackById((String)sls.get(s));
-//													log.debug("track location (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
+													// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 													// need to find a track that is isn't the same as the car's current
 													String status = c.testDestination(testDestination, testTrack);
 													if (testTrack != c.getTrack() 
@@ -576,7 +578,7 @@ public class TrainBuilder{
 															break;
 														}
 													}
-													// car's current track is equal to test track or car can't be dropped
+													// car's current track is the test track or car can't be dropped
 												}
 											// all cars in this train go to one staging track
 											} else {
@@ -973,15 +975,16 @@ public class TrainBuilder{
 		// is the destination the last location on the route? 
 		if (rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
-		String trainDirection = rld.getTrainDirection();	// train direction North, South, East and West
+		String trainDirection = rld.getTrainDirection();	// train direction North, South, East or West
+		// convert train direction to binary bit map, only one bit set 
 		int trainDir = 0;
 		if (trainDirection.equals(rld.NORTH))
 			trainDir = Track.NORTH;
-		if (trainDirection.equals(rld.SOUTH))
+		else if (trainDirection.equals(rld.SOUTH))
 			trainDir = Track.SOUTH;
-		if (trainDirection.equals(rld.EAST))
+		else if (trainDirection.equals(rld.EAST))
 			trainDir = Track.EAST;
-		if (trainDirection.equals(rld.WEST))
+		else if (trainDirection.equals(rld.WEST))
 			trainDir = Track.WEST;
 		int serviceTrainDir = (destination.getTrainDirections() & track.getTrainDirections()); // this location only services trains with these directions
 		if ((serviceTrainDir & trainDir) >0){
