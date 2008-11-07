@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.11 2008-11-02 17:25:26 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.12 2008-11-07 17:06:20 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -107,7 +107,7 @@ teach the operations program where to place the train icon on your panel
 when moving your train from location to location. Deselect this feature
 after your done teaching the program to prevent accidentally changing
 the train icon's position on your panel. If you also want the lead
-engine name as part of your train icon text, select the "Append Engine
+engine number as part of your train icon text, select the "Append Engine
 Number" box. You can select the background color of your train icon
 depending on the train's direction. Select the color desired for each
 direction using the pull down menus.
@@ -487,12 +487,16 @@ at the bottom of the "Engines" panel. Then select the road for the
 engine. If the desired road doesn't exist, press the "Edit" button
 across from the road select menu box. This will allow you to add a new
 road or delete any that you don't need. Now enter the engine's number,
-model, and length. Now set the engine's location on the layout. If the
-engine is off the layout, set the location to none (blank space). If
-wish this engine to be part of a consist, press "Edit" across from
-"Consist" and enter a consist name. Then select the consist name from
-the menu box. Finally you can optionally enter the build date, owner and
-comment for this engine.
+model, length and horsepower. The engine's horsepower, the train's
+weight, and track grade is used by the program to calculate how many
+engines are required when using the "Auto" feature when building trains.
+
+<p> Now set the engine's location on the
+layout. If the engine is off the layout, set the location to none (blank
+space). If wish this engine to be part of a consist, press "Edit" across
+from "Consist" and enter a consist name. Then select the consist name
+from the menu box. Finally you can optionally enter the build date,
+owner and comment for this engine.
 
 <H3>Save</H3>
 
@@ -608,7 +612,9 @@ Road" button to build a list of roads that this train will not service.
 You can control the number of engines that will be assigned to this
 train, and optionally, the engine's model and road name. If you want two
 or more engines assigned to a train, the engines must be part of a
-consist.
+consist. If you select "Auto", the program will calculate the number of
+engines required for this train based on the weight of the train, the
+track grade, and the horsepower of the engines.
 
 <P>You can also require a caboose or car with FRED (Flashing Rear
 End Device) as the last car in the train, and you can optionally specify
