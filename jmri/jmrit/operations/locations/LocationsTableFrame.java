@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	
@@ -95,7 +95,7 @@ public class LocationsTableFrame extends JmriJFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
     	
     	pack();
-    	if ( (getWidth()<650)) setSize(650, getHeight());
+    	if ((getWidth()<660)) setSize(660, getHeight());
     	
      	// now load the cars and engines
     	CarManagerXml.instance();
