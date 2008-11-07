@@ -64,7 +64,9 @@ public class ImportRosterEngines extends Thread {
 				if (engine == null){
 					engine = manager.newEngine(re.getRoadName(), re.getRoadNumber());
 					engine.setModel(re.getModel());
-					engine.setLength(defaultEngineLength);
+					// does this model already have a length?
+					if (engine.getLength().equals(""))
+						engine.setLength(defaultEngineLength);
 					engine.setOwner(re.getOwner());
 					enginesAdded++;
 				} else{
