@@ -1,13 +1,15 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+
 import javax.swing.AbstractAction;
 
 /**
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -32,7 +34,12 @@ public class ThrottleCreationAction extends AbstractAction {
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-		ThrottleFrame tf =
+    	// load throttle preference 
+    	LoadXmlThrottleAction lxta = new LoadXmlThrottleAction();
+    	if (lxta.loadThrottles(new File(SaveThrottlePreferencesAction.getDefaultThrottleFilename())))
+    		return;
+		// need to create a new one
+    	ThrottleFrame tf =
 			ThrottleFrameManager.instance().createThrottleFrame();
 		tf.setVisible(true);
     }

@@ -10,7 +10,7 @@ import java.util.Iterator;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.12 $
+ * @version    $Revision: 1.13 $
  */
 public class ThrottleFrameManager
 {
@@ -136,6 +136,10 @@ public class ThrottleFrameManager
 			throttleFramePropertyEditor = new ThrottleFramePropertyEditor();
 		}
 		return throttleFramePropertyEditor;
+	}
+	
+	public int getNumberThrottles(){
+		return throttleFrames.size();
 	}
 
 	private void requestFocusForNextFrame()
