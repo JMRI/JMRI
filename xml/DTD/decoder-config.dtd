@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.49 $ -->
+<!-- $Revision: 1.50 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -42,7 +42,7 @@
 <!-- The family element identifies the decoder. It must be kept consistent -->
 <!-- with the family & decoder elements in the decoderIndex-config.dtd; -->
 <!-- DecoderPro does this automatically  via the "recreate decoder index" tool -->
-<!ELEMENT family (productIDalgorithm*, model*) >
+<!ELEMENT family (productIDalgorithm*, model*, functionlabels?) >
 <!ATTLIST family name           CDATA #REQUIRED>  <!-- family name used for identification to user -->
 <!ATTLIST family mfg            CDATA #REQUIRED>  <!-- manufacturer name used for identification to user -->
                                 <!-- for reliable identification, the mfg name should match one of -->
@@ -417,3 +417,10 @@
 <!ATTLIST display format ( default | vslider | hslider | radiobuttons | checkbox |
                                          onradiobutton | offradiobutton) "default" >
 <!ATTLIST display comment CDATA #IMPLIED >
+
+<!ELEMENT functionlabels (functionlabel*) >
+
+<!ELEMENT functionlabel (#PCDATA) >
+<!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
+<!ATTLIST functionlabel	lockable (true | false) "false">   
+

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.18 2008-02-22 01:54:47 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.19 2008-11-09 04:49:20 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -21,7 +21,7 @@
 <!-- decoder must be kept the same as the ones in the roster DTD -->
 <!-- This copy is used if we have to import an existing file into a roster -->
 
-<!ELEMENT locomotive (decoder, locoaddress*, values*) >
+<!ELEMENT locomotive (decoder, locoaddress*, values?, functionlabels?) >
 <!ATTLIST locomotive id		      CDATA #REQUIRED>          
 <!ATTLIST locomotive fileName	CDATA #IMPLIED>  
 <!ATTLIST locomotive groupName  CDATA #IMPLIED>        
@@ -72,3 +72,12 @@
 <!ATTLIST varValue name    CDATA #IMPLIED>        <!-- old form of item name, for compatibility -->
 <!ATTLIST varValue value   CDATA #REQUIRED>       <!-- Value of specified variable -->
 <!ATTLIST varValue comment CDATA #IMPLIED>
+
+<!ELEMENT functionlabels (functionlabel*) >
+<!ATTLIST functionlabels foo		      CDATA #REQUIRED>   
+
+<!ELEMENT functionlabel (#PCDATA) >
+<!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
+<!ATTLIST functionlabel	lockable (true | false) "false">   
+
+       
