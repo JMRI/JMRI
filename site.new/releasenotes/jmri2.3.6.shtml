@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.4 2008-11-07 17:50:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.5 2008-11-09 18:11:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -135,7 +135,19 @@ Dan Boudreau added termination of trains to operations for batch mode.
 Fixed a bug that would result in user names for Blocks being lost when Layout Editor wasn't being used.
 
 <p>
+Dan Boudreau made some tweaks to the Throttle window layout.
+
+<p>
 David Duchamp added Logix actions to set variable light intensity and light transition time.
+
+<p>
+Dan Boudreau changed the Throttle's default text for buttons F0, F1 and F3 to Light, Bell, and Horn.  Horn button is set to momentary. 
+
+<p>
+You can now configure the labels on the throttle function keys as part of your locomotive roster.
+A new "Function Key Labels" pane in DecoderPro lets you assign a label to each function, which will then be
+displayed on the function button when using a JMRI throttle to control that locomotive.
+For example, F2 in a sound-equipped locomotive might be labelled "Bell".
 
 <!--#include virtual="/Footer" -->
 
