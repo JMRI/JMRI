@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -105,8 +105,34 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("model ", "33", r.getDecoderModel());
         Assert.assertEquals("family ", "91", r.getDecoderFamily());
     }
-
-    public void testStore() {
+    
+    public void testStoreFunctionLabel() {
+        RosterEntry r = new RosterEntry("file here");
+        
+        r.setFunctionLabel(3, "tree");
+        Assert.assertEquals("tree", r.getFunctionLabel(3));
+        Assert.assertEquals(null, r.getFunctionLabel(4));
+        
+    }
+    
+    public void testStoreFunctionLockable() {
+        RosterEntry r = new RosterEntry("file here");
+        
+        r.setFunctionLabel(3, "tree");
+        r.setFunctionLockable(3, true);
+        
+        r.setFunctionLabel(4, "fort");
+        r.setFunctionLockable(4, false);
+        
+        Assert.assertEquals("tree", r.getFunctionLabel(3));
+        Assert.assertEquals(true, r.getFunctionLockable(3));
+        Assert.assertEquals("fort", r.getFunctionLabel(4));
+        Assert.assertEquals(false, r.getFunctionLockable(4));
+        Assert.assertEquals(null, r.getFunctionLabel(5));
+        
+    }
+    
+    public void testXmlLoadStore() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
             .setAttribute("id","our id 4")
@@ -132,6 +158,53 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("model ","33", o.getChild("decoder").getAttribute("model").getValue());
     }
 
+    public void testXmlFunctionLabelsLoadStore() {
+        // create Element
+        org.jdom.Element e = new org.jdom.Element("locomotive")
+            .setAttribute("id","our id 4")
+            .setAttribute("fileName","file here")
+            .setAttribute("roadNumber","431")
+            .setAttribute("roadName","SP")
+            .setAttribute("mfg","Athearn")
+            .setAttribute("dccAddress","1234")
+            .addContent(new org.jdom.Element("decoder")
+                        .setAttribute("family","91")
+                        .setAttribute("model","33")
+                  )
+            .addContent(new org.jdom.Element("functionlabels")
+                  .addContent(new org.jdom.Element("functionlabel")
+                         .setAttribute("num","2")
+                         .setAttribute("lockable","true")
+                         .addContent("label 2")
+                       )
+                  .addContent(new org.jdom.Element("functionlabel")
+                         .setAttribute("num","3")
+                         .setAttribute("lockable","false")
+                         .addContent("label 3")
+                       )
+                  )
+            ; // end create element
+
+        RosterEntry r = new RosterEntry(e){
+                            void warnShortLong(String s){}
+        };
+        
+        // check loaded
+        Assert.assertEquals(null, r.getFunctionLabel(1));
+        Assert.assertEquals("label 2", r.getFunctionLabel(2));
+        Assert.assertEquals("lockable 2", true, r.getFunctionLockable(2));
+        Assert.assertEquals("label 3", r.getFunctionLabel(3));
+        Assert.assertEquals("lockable 2", false, r.getFunctionLockable(3));
+        Assert.assertEquals(null, r.getFunctionLabel(4));
+        
+        org.jdom.Element o = r.store();
+
+        // check stored element
+        Assert.assertEquals("num 2","2", o.getChild("functionlabels").getChild("functionlabel").getAttribute("num").getValue());
+        Assert.assertEquals("lockable 2","true", o.getChild("functionlabels").getChild("functionlabel").getAttribute("lockable").getValue());
+        Assert.assertEquals("label 2","label 2", o.getChild("functionlabels").getChild("functionlabel").getText());
+    }
+    
     public void testEnsureFilenameExistsNew() {
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
