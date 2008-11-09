@@ -31,7 +31,7 @@ public class RouteManagerXml extends XmlFile {
 	           try {
 	                _instance.readFile(defaultOperationsFilename());
 	            } catch (Exception e) {
-	                log.error("Exception during operations location file reading: "+e);
+	                log.error("Exception during operations route file reading: "+e);
 	            }
 				log.debug("Routes have been loaded!");
 		}

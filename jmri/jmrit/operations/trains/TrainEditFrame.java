@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -52,6 +52,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel typePanelCheckBoxes = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	JPanel locationPanelCheckBoxes = new JPanel();
+	JScrollPane typesPane;
 	JScrollPane locationsPane;
 
 	// labels
@@ -125,6 +126,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
     	locationsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+       	typesPane = new JScrollPane(typePanelCheckBoxes);
+    	typesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 
 	public void initComponents(Train train) {
@@ -251,16 +254,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		p2.setBorder(border);
 
 		// row 5
-	   	typePanelCheckBoxes.setLayout(new GridBagLayout());
-		updateTypeCheckboxes();
-
-
-		// row 7
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
 		updateLocationCheckboxes();
 		
-		// row 8
+		// row 7
+	   	typePanelCheckBoxes.setLayout(new GridBagLayout());
+		updateTypeCheckboxes();
 		
+		// row 8
 		panelRoadNames.setLayout(new GridBagLayout());
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
@@ -330,7 +331,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(pdt);
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
-		getContentPane().add(typePanelCheckBoxes);
+		getContentPane().add(typesPane);
 		getContentPane().add(panelRoadNames);
 		getContentPane().add(trainReq);
 		getContentPane().add(p3);
@@ -392,8 +393,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and train for display
 		pack();
-		if (getHeight() < 600)
+		if (getHeight() < 700)
 			setSize(getWidth(), getHeight()+ 50);
+		if (getWidth() < 550)
+			setSize(550, getHeight());
 		setVisible(true);
 	}
 	

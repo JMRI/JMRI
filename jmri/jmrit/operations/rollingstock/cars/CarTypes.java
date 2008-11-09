@@ -9,15 +9,18 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
-	private static final String TYPES = "Baggage%%Boxcar%%Caboose%%Coal%%Coilcar%%Engine%%FlatBulkHead%%FlatBHPaper%%FlatBHWood%%FlatTimber%%FlatTrailer%%FlatWood%%Flatcar%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopCoal%%HopCoalEmty%%HopGrain%%HopSand%%Hopper%%MOW%%MOWBox%%Passenger%%ReefMech%%Reefer%%ReeferIce%%Stock%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg";
+	private static final String TYPES = "Baggage%%Boxcar%%Caboose%%Coal%%Coilcar%%Engine%%FlatBulkHead%%FlatBHPaper%%FlatBHWood%%FlatTimber%%FlatTrailer%%FlatWood%%Flatcar%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopCoal%%HopCoal-Ety%%HopGrain%%HopSand%%Hopper%%MOW%%MOWBox%%Passenger%%ReefMech%%Reefer%%ReeferIce%%Stock%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg";
+	private static final String ARRTYPES = "BR%%CA%%CS%%DA%%DB%%DL%%Engine%%FA%%FB%%FC%%FCA%%FD%%FL%%FM%%FW%%GA%%GB%%GD%%GH%%GS%%GT%%GW%%HFA%%HK%%HM%%HT%%HTA%%LC%%LF%%LG%%LM%%LO%%LP%%LS%%LU%%MA%%MB%%MWC%%MMA%%NE%%PA%%PAS%%PC%%PL%%PO%%PS%%PT%%PV%%RA%%RB%%RP%%RS%%SA%%SC%%SM%%ST%%T%%TA%%TG%%THI%%TL%%TM%%TMU%%TP%%TPA%%TRGA%%TVI%%TW%%XC%%XF%%XL%%XM%%XP%%XT";
+	// for property change
 	public static final String CARTYPES = "CarTypes";
 	private static final String LENGTH = "Length";
     
@@ -57,6 +60,8 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     public String[] getNames(){
      	if (list.size() == 0){
      		String[] types = TYPES.split("%%");
+     		if(Setup.getCarTypes().equals(Setup.AAR))
+     			types = ARRTYPES.split("%%");
      		for (int i=0; i<types.length; i++)
      			list.add(types[i]);
     	}
@@ -71,6 +76,36 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
  			list.add(types[i]);
+    }
+    
+    /**
+     * Changes the car types from descriptive to AAR, or the other way.
+     * Only removes the default car type names from the list
+     */
+    public void changeDefaultNames(String type){
+    	if (type.equals(Setup.DESCRIPTIVE)){
+    		// remove AAR types
+    		String[] types = ARRTYPES.split("%%");
+     		for (int i=0; i<types.length; i++)
+     			list.remove(types[i]);
+     		// add descriptive types
+    		types = TYPES.split("%%");
+    		for (int i=0; i<types.length; i++){
+    			if (!list.contains(types[i]))
+    				list.add(types[i]);
+    		}
+    	} else {
+    		// remove descriptive types
+    		String[] types = TYPES.split("%%");
+     		for (int i=0; i<types.length; i++)
+     			list.remove(types[i]);
+     		// add AAR types
+    		types = ARRTYPES.split("%%");
+    		for (int i=0; i<types.length; i++){
+    			if (!list.contains(types[i]))
+    				list.add(types[i]);
+    		}
+     	}
     }
     
     public void addName(String type){

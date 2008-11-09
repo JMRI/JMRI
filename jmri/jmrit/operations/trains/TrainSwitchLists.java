@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -19,6 +20,8 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainSwitchLists {
 	
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+
 	TrainManager manager = TrainManager.instance();
 	
 	// builds a switchlist for a location
@@ -36,10 +39,10 @@ public class TrainSwitchLists {
 			return;
 		}
 		// build header
-		addStatusLine(fileOut, Setup.getRailroadName());
+		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		addStatusLine(fileOut, "Switchlist for " + location.getName());
-		addStatusLine(fileOut, "Valid " + new Date());
+		addLine(fileOut, "Switchlist for " + location.getName());
+		addLine(fileOut, "Valid " + new Date());
 		
 		// get a list of trains
 		List trains = manager.getTrainsByNameList();
@@ -62,10 +65,10 @@ public class TrainSwitchLists {
 				if (rl.getName().equals(location.getName())){
 					if (stops > 1){
 						newLine(fileOut);
-						addStatusLine(fileOut, "Visit number "+stops);
+						addLine(fileOut, "Visit number "+stops);
 					} else {
 						newLine(fileOut);
-						addStatusLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
+						addLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
 					}
 					// get a list of cars and determine if this location is serviced
 					for (int j=0; j<carsInTrain.size(); j++){
@@ -87,11 +90,11 @@ public class TrainSwitchLists {
 				}
 			}
 			if (stops > 1 && pickupCars == 0){
-				addStatusLine(fileOut, "No car pickups for this train at this location");
+				addLine(fileOut, "No car pickups for this train at this location");
 			}
 	
 			if (stops > 1 && dropCars == 0){
-				addStatusLine(fileOut, "No car drops for this train at this location");
+				addLine(fileOut, "No car drops for this train at this location");
 			}
 		}
 		fileOut.flush();
@@ -99,26 +102,35 @@ public class TrainSwitchLists {
 	}
 	
 	private void  pickupCar(PrintWriter file, Car car){
-		addStatusLine(file, "Pickup " + car.getRoad() + " "
-				+ car.getNumber() + " " + car.getType() + " "
-				+ car.getLength() + "' " + car.getColor()
-				+ (car.isHazardous() ? " (Hazardous)" : "")
-				+ (car.hasFred() ? " (FRED)" : "") + " from "
-				+ car.getTrackName());
+		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String[] carType = car.getType().split("-"); // ignore lading
+		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
+		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
+				+ carNumber[0] + " " + carType[0] + " "
+				+ car.getLength() + " " + car.getColor()
+				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
+				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
+				+ car.getTrackName() + carComment);
 	}
 	
 	private void dropCar(PrintWriter file, Car car){
-		addStatusLine(file, "Drop " + car.getRoad() + " "
-				+ car.getNumber() + " " + car.getType() + " "
-				+ car.getLength() + "' " + car.getColor()
-				+ (car.isHazardous() ? " (Hazardous)" : "")
-				+ " to " + car.getDestinationTrackName());
+		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String[] carType = car.getType().split("-"); // ignore lading
+		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
+		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
+				+ carNumber[0] + " " + carType[0] + " "
+				+ car.getLength() + " " + car.getColor()
+				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
+				+ rb.getString("to") + " " + car.getDestinationTrackName()
+				+ carComment);
 	}
 	
-	private void addStatusLine (PrintWriter file, String string){
+	// writes string to console and file
+	private void addLine (PrintWriter file, String string){
 		if(log.isDebugEnabled())
 			log.debug(string);
-		file.println(string);
+		if (file != null)
+			file.println(string);
 	}
 	
 	private void newLine (PrintWriter file){

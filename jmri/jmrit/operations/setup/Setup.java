@@ -78,6 +78,9 @@ public class Setup {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
+	public static final String DESCRIPTIVE = "Descriptive"; // Car types
+	public static final String AAR = "ARR Codes"; // Car types
+	
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
 	
@@ -91,6 +94,7 @@ public class Setup {
 	private static int trainLength = 1000;
 	private static int engineSize = 6;
 	private static int carMoves = 5;
+	private static String carTypes = DESCRIPTIVE;
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
 	private static String panelName ="Panel";
@@ -151,6 +155,14 @@ public class Setup {
 	
 	public static void setPanelName(String name){
 		panelName = name;
+	}
+	
+	public static String getCarTypes(){
+		return carTypes;
+	}
+	
+	public static void setCarTypes(String types){
+		carTypes = types;
 	}
 	
 	public static void  setAppendCarCommentEnabled(boolean enable){
@@ -368,6 +380,7 @@ public class Setup {
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
     	values.setAttribute("scale", Integer.toString(getScale()));
+    	values.setAttribute("carTypes", getCarTypes());
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
@@ -425,6 +438,11 @@ public class Setup {
         	String scale = a.getValue();
            	if (log.isDebugEnabled()) log.debug("scale: "+scale);
            	Setup.setScale(Integer.parseInt(scale));
+        }
+        if ((a = operations.getChild("settings").getAttribute("carTypes"))!= null){
+        	String types = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("CarTypes: "+types);
+           	Setup.setCarTypes(types);
         }
         if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
         	String enable = a.getValue();

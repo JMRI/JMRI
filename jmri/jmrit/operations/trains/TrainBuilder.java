@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class TrainBuilder{
 	
@@ -1109,9 +1109,10 @@ public class TrainBuilder{
 	
 	private void  pickupCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
-				+ carNumber[0] + " " + car.getType() + " "
+				+ carNumber[0] + " " + carType[0] + " "
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
@@ -1120,9 +1121,10 @@ public class TrainBuilder{
 	
 	private void dropCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
-				+ carNumber[0] + " " + car.getType() + " "
+				+ carNumber[0] + " " + carType[0] + " "
 				+ car.getLength() + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()

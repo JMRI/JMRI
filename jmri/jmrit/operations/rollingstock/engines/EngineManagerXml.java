@@ -33,7 +33,7 @@ public class EngineManagerXml extends XmlFile {
 	           try {
 	                _instance.readFile(defaultOperationsFilename());
 	            } catch (Exception e) {
-	                log.error("Exception during operations car file reading: "+e);
+	                log.error("Exception during operations engine file reading: "+e);
 	            }
 		}
 		if (log.isDebugEnabled()) log.debug("EngineManagerXml returns instance "+_instance);

@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
 
 import jmri.jmrit.display.LocoIcon;
@@ -22,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -31,6 +32,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	
 	// labels
 	javax.swing.JLabel textScale = new javax.swing.JLabel();
+	javax.swing.JLabel textCarType = new javax.swing.JLabel();
 	javax.swing.JLabel textRailroadName = new javax.swing.JLabel();
 	javax.swing.JLabel textDirection = new javax.swing.JLabel();
 	javax.swing.JLabel textMaxTrain = new javax.swing.JLabel();
@@ -63,12 +65,14 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     javax.swing.JRadioButton scaleOn3 = new javax.swing.JRadioButton("On3");
     javax.swing.JRadioButton scaleO = new javax.swing.JRadioButton("O");
     javax.swing.JRadioButton scaleG = new javax.swing.JRadioButton("G");
+    
+    javax.swing.JRadioButton typeDesc = new javax.swing.JRadioButton(rb.getString("Descriptive"));
+    javax.swing.JRadioButton typeAAR = new javax.swing.JRadioButton(rb.getString("AAR"));
 		
     javax.swing.JRadioButton mono = new javax.swing.JRadioButton(rb.getString("Monospaced"));
     javax.swing.JRadioButton sanSerif = new javax.swing.JRadioButton(rb.getString("SansSerif"));
     
     // check boxes
-    
     javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JCheckBox appendCommentCheckBox = new javax.swing.JCheckBox();
@@ -109,6 +113,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		textScale.setText(" "+ rb.getString("Scale"));
 		textScale.setVisible(true);
+		
+		textCarType.setText(" "+ rb.getString("CarTypes"));
+		textCarType.setVisible(true);
 		
 		textRailroadName.setText(" " + rb.getString("RailroadName") + " ");
 		textRailroadName.setVisible(true);
@@ -213,8 +220,19 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setScale();
 		
 		// row 6
-		addItem (panel, textOwner, 0, 6);
-		addItemLeft (panel, ownerTextField, 1, 6);
+		JPanel carTypeButtons = new JPanel();
+		ButtonGroup carTypeGroup = new ButtonGroup();
+		carTypeGroup.add(typeDesc);
+		carTypeGroup.add(typeAAR);
+		carTypeButtons.add(typeDesc);
+		carTypeButtons.add(typeAAR);
+		addItem (panel, textCarType, 0, 6);
+		addItemWidth(panel, carTypeButtons, 3, 1, 6);
+		setCarTypes();
+		
+		// row 7
+		addItem (panel, textOwner, 0, 7);
+		addItemLeft (panel, ownerTextField, 1, 7);
 		
 		Border border = BorderFactory.createEtchedBorder();
 		
@@ -314,6 +332,18 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setOwnerName(addOwner);
 			// add owner name to list
 			CarOwners.instance().addName(addOwner);
+			// set car types
+			if (typeDesc.isSelected()){
+				if (!Setup.getCarTypes().equals(Setup.DESCRIPTIVE)){
+					CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
+					Setup.setCarTypes(Setup.DESCRIPTIVE);
+				}
+			} else {
+				if (!Setup.getCarTypes().equals(Setup.AAR)){
+					CarTypes.instance().changeDefaultNames(Setup.AAR);
+					Setup.setCarTypes(Setup.AAR);
+				}
+			}
 			// set printer font
 			if (mono.isSelected())
 				Setup.setFontName(Setup.MONOSPACED);
@@ -442,6 +472,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		default:
 			log.error ("Unknown scale");
 		}
+	}
+	
+	private void setCarTypes(){
+		typeDesc.setSelected(Setup.getCarTypes().equals(Setup.DESCRIPTIVE));
+		typeAAR.setSelected(Setup.getCarTypes().equals(Setup.AAR));
 	}
 	
 	private void setDirectionCheckBox(int direction){
