@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.5 2008-11-09 18:11:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.6 2008-11-09 19:25:29 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -129,19 +129,24 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 
 <h3>Changes since test version 2.3.5:</h3>
 
-Dan Boudreau added termination of trains to operations for batch mode.
+Dan Boudreau made several additions to the operations code. He added
+termination of trains to operations for batch mode, AAR type code for
+cars, and the ability to specify a commodity for cars. Fixed a bug when
+adding or editing routes in which the train direction wasn't properly
+saved.
 
 <p>
 Fixed a bug that would result in user names for Blocks being lost when Layout Editor wasn't being used.
 
-<p>
-Dan Boudreau made some tweaks to the Throttle window layout.
 
+<p>Dan Boudreau made some tweaks to the Throttle window layout and
+added the ability to save your throttle preference. Now you can
+configure how you want your throttle buttons to appear and save it using
+the "Save Throttle Preference" in the Tools->Throttles menu. He also
+changed the Throttle's default text for buttons F0, F1 and F3 to Light,
+Bell, and Horn. The Horn button is also set to momentary.
 <p>
 David Duchamp added Logix actions to set variable light intensity and light transition time.
-
-<p>
-Dan Boudreau changed the Throttle's default text for buttons F0, F1 and F3 to Light, Bell, and Horn.  Horn button is set to momentary. 
 
 <p>
 You can now configure the labels on the throttle function keys as part of your locomotive roster.
