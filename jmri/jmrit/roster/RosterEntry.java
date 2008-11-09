@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.26 $
+ * @version   $Revision: 1.27 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -215,8 +215,71 @@ public class RosterEntry {
             if ((a = d.getAttribute("family")) != null )  _decoderFamily = a.getValue();
             if ((a = d.getAttribute("comment")) != null )  _decoderComment = a.getValue();
         }
+
+        loadFunctions(e.getChild("functionlabels"));
+
     }
 
+    public void loadFunctions(Element e3) {
+        if (e3 != null)  {
+            // load function names
+            java.util.List l = e3.getChildren("functionlabel");
+            for (int i = 0; i < l.size(); i++) {
+                Element fn = (Element)l.get(i);
+                int num = Integer.parseInt(fn.getAttribute("num").getValue());
+                String lock = fn.getAttribute("lockable").getValue();
+                String val = fn.getText();
+                this.setFunctionLabel(num, val);
+                this.setFunctionLockable(num, lock.equals("true"));
+            }
+        }
+    }
+    
+    /**
+     * Define label for a specific function
+     * @param fn function number, starting with 0
+     */
+    public void setFunctionLabel(int fn, String label) {
+        if (functionLabels == null) functionLabels = new String[MAXFNNUM+1]; // counts zero
+        functionLabels[fn] = label;
+    }
+    
+    /**
+     * If a label has been defined for a specific function,
+     * return it, otherwise return null.
+     * @param fn function number, starting with 0
+     */
+    public String getFunctionLabel(int fn) {
+        if (functionLabels == null) return null;
+        if (fn <0 || fn >MAXFNNUM)
+            throw new IllegalArgumentException("number out of range: "+fn);
+        return functionLabels[fn];
+    }
+    
+    /**
+     * Define whether a specific function is lockable
+     * @param fn function number, starting with 0
+     */
+    public void setFunctionLockable(int fn, boolean lockable) {
+        if (functionLockables == null) functionLockables = new boolean[MAXFNNUM+1]; // counts zero
+        functionLockables[fn] = lockable;
+    }
+    
+    /**
+     * Return the lockable state of a specific function. Defaults to false.
+     * @param fn function number, starting with 0
+     */
+    public boolean getFunctionLockable(int fn) {
+        if (functionLockables == null) return false;
+        if (fn <0 || fn >MAXFNNUM)
+            throw new IllegalArgumentException("number out of range: "+fn);
+        return functionLockables[fn];
+    }
+    
+    final static int MAXFNNUM = 28;
+    String[] functionLabels;
+    boolean[] functionLockables;
+    
     /**
      * Warn user that the roster entry needs to be resaved.
      */
@@ -252,6 +315,24 @@ public class RosterEntry {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _isLongAddress)));
+        }
+
+        if (functionLabels!=null) {
+            d = new org.jdom.Element("functionlabels");
+            
+            // loop to copy non-null elements
+            for (int i = 0; i<MAXFNNUM; i++) {
+                if (functionLabels[i]!=null && !functionLabels[i].equals("")) {
+                        org.jdom.Element fne = new org.jdom.Element("functionlabel");  
+                        fne.setAttribute("num", ""+i);
+                        boolean lockable = false;
+                        if (functionLockables!=null) lockable = functionLockables[i];
+                        fne.setAttribute("lockable", lockable ? "true" : "false");
+                        fne.addContent(functionLabels[i]);
+                        d.addContent(fne); 
+                }
+            }
+            e.addContent(d);
         }
         return e;
     }

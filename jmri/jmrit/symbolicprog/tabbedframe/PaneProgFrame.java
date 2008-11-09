@@ -9,9 +9,7 @@ import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.RosterEntryPane;
+import jmri.jmrit.roster.*;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.JmriJFrame;
 import java.awt.Dimension;
@@ -38,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.67 $
+ * @version   $Revision: 1.68 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -61,7 +59,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     RosterEntry         _rosterEntry    = null;
     RosterEntryPane     _rPane          = null;
-
+    FunctionLabelPane   _flPane         = null;
+    
     List                paneList        = new ArrayList();
     int                 paneListIndex;
 
@@ -358,7 +357,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         if (pDecoderFile != null)
-            loadDecoderFile(pDecoderFile);
+            loadDecoderFile(pDecoderFile, _rosterEntry);
         else
             loadDecoderFromLoco(pRosterEntry);
 
@@ -426,7 +425,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         if (l.size() > 0) {
             DecoderFile d = (DecoderFile)l.get(0);
-            loadDecoderFile(d);
+            loadDecoderFile(d, r);
         } else {
             if (decoderModel.equals(""))
                 log.debug("blank decoderModel requested, so nothing loaded");
@@ -435,7 +434,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    protected void loadDecoderFile(DecoderFile df) {
+    protected void loadDecoderFile(DecoderFile df, RosterEntry re) {
         if (df == null) {
             log.warn("loadDecoder file invoked with null object");
             return;
@@ -449,6 +448,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+        
         // load reset from decoder tree
         if (variableModel.piCv() >= 0) {
             resetModel.setPiCv(variableModel.piCv());
@@ -458,6 +458,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
+        // load function names
+        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+        
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
             if (log.isDebugEnabled()) log.debug("Found in decoder "+decoderRoot.getAttribute("showEmptyPanes").getValue());
@@ -516,7 +519,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @return true if file needs to be written
      */
     protected boolean checkDirtyFile() {
-        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry));
+        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry));
     }
     protected void handleDirtyFile() {
     }
@@ -588,6 +591,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // add the Info tab
         tabPane.addTab("Roster Entry", makeInfoPane(r));
 
+        // add the Function Label tab
+        tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
+
         // for all "pane" elements in the programmer
         List paneList = base.getChildren("pane");
         if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
@@ -648,7 +654,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected JPanel makeInfoPane(RosterEntry r) {
-        // create the identification pane (not configured by file now; maybe later?
+        // create the identification pane (not configured by programmer file now; maybe later?
         
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
@@ -660,7 +666,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rPane = new RosterEntryPane(r);
         _rPane.setMaximumSize(_rPane.getPreferredSize());
         body.add(_rPane);
-
+        
         // add the store button
         JButton store = new JButton(rbt.getString("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -708,6 +714,25 @@ abstract public class PaneProgFrame extends JmriJFrame
         return outer;
     }
 
+    protected JPanel makeFunctionLabelPane(RosterEntry r) {
+        // create the identification pane (not configured by programmer file now; maybe later?
+        
+        JPanel outer = new JPanel();
+        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
+        JPanel body = new JPanel();
+        body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(body);
+
+        // add roster info
+        _flPane = new FunctionLabelPane(r);
+        _flPane.setMaximumSize(_flPane.getPreferredSize());
+        body.add(_flPane);
+
+        outer.add(scrollPane);
+        return outer;
+    }
+
+    
     // hold refs to variables to check dccAddress
     VariableValue primaryAddr = null;
     VariableValue extendAddr = null;
@@ -1053,7 +1078,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event
         if (_programmingPane == null) {
-            log.warn("unexpected propertChange: "+e);
+            log.warn("unexpected propertyChange: "+e);
             return;
         } else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
                                                    +" new value: "+e.getNewValue());
@@ -1102,6 +1127,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // reload the RosterEntry
         updateDccAddress();
         _rPane.update(_rosterEntry);
+        _flPane.update(_rosterEntry);
 
         // id has to be set!
         if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(rbt.getString("LabelNewDecoder"))) {
@@ -1155,6 +1181,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // dispose of things we owned, in order of dependence
         _rPane.dispose();
+        _flPane.dispose();
         variableModel.dispose();
         cvModel.dispose();
         iCvModel.dispose();
@@ -1166,6 +1193,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel = null;
         _rosterEntry = null;
         _rPane = null;
+        _flPane = null;
 
         paneList.clear();
         paneList = null;
