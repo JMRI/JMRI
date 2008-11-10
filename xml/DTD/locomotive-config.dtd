@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.19 2008-11-09 04:49:20 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.20 2008-11-10 07:38:59 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -78,6 +78,6 @@
 
 <!ELEMENT functionlabel (#PCDATA) >
 <!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
-<!ATTLIST functionlabel	lockable (true | false) "false">   
+<!ATTLIST functionlabel	lockable (true | false) "true">   
 
        

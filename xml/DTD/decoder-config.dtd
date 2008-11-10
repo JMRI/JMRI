@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.50 $ -->
+<!-- $Revision: 1.51 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -422,5 +422,5 @@
 
 <!ELEMENT functionlabel (#PCDATA) >
 <!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
-<!ATTLIST functionlabel	lockable (true | false) "false">   
+<!ATTLIST functionlabel	lockable (true | false) "true">   
 
