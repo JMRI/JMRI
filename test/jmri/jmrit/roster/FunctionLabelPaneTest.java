@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  * @author	Bob Jacobsen     Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class FunctionLabelPaneTest extends TestCase {
 
@@ -93,7 +93,7 @@ public class FunctionLabelPaneTest extends TestCase {
         Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
         
         // change the roster road name entry and check
-        rOld.setFunctionLockable(14,true);
+        rOld.setFunctionLockable(14,false);
         Assert.assertTrue("detects change", p.guiChanged(rOld));
 
     }
