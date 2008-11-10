@@ -13,6 +13,9 @@ import javax.swing.WindowConstants;
 
 import org.jdom.Element;
 
+import javax.swing.JDesktopPane;
+import jmri.jmrit.roster.RosterEntry;
+
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
@@ -83,6 +86,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     {
         if (log.isDebugEnabled()) log.debug("Throttle found");
         this.throttle = t;
+        RosterEntry re = null;
+        if (addressPanel != null)
+        	re = addressPanel.getRosterEntry();
+        if (re != null){
+        	if (log.isDebugEnabled()) log.debug("RosterEntry found");
+        	initGUI();	// need to rebuild panel
+        }
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
            try
@@ -92,6 +102,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                         throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
                 Boolean state = (Boolean)getter.invoke(throttle, (Class[])null);
                 functionButton[i].setState(state.booleanValue());
+                if (re != null){
+                	String text = re.getFunctionLabel(functionNumber);
+                	if (text != null){
+                		functionButton[i].setText(text);
+                		functionButton[i].setIsLockable(re.getFunctionLockable(functionNumber));
+                	}
+                }
            }
            catch (java.lang.NoSuchMethodException ex1)
            {
@@ -219,14 +236,19 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
             functionButton[i].setEnabled(isEnabled);
         }
     }
+    
+    AddressPanel addressPanel = null;
+    public void setAddressPanel(AddressPanel addressPanel){
+    	this.addressPanel = addressPanel; 
+    }
 
-
+    JPanel mainPanel = new JPanel();
     /**
      * Place and initialize all the buttons.
      */
     private void initGUI()
     {
-        JPanel mainPanel = new JPanel();
+        mainPanel.removeAll();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
@@ -340,7 +362,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.39 $
+	 * @version $Revision: 1.40 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

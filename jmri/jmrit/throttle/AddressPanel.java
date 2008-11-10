@@ -23,7 +23,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -42,6 +42,8 @@ public class AddressPanel extends JInternalFrame {
 	private JButton setButton;
 	private JComboBox rosterBox;
 	private JComboBox conRosterBox;
+	
+	private RosterEntry rosterEntry;
 
 	/**
 	 * Constructor
@@ -118,6 +120,15 @@ public class AddressPanel extends JInternalFrame {
 		rosterBox.setEnabled(true);
 		conRosterBox.setEnabled(true);
 		throttle = null;
+		rosterEntry = null;
+	}
+	
+	/**
+	 * Get the RosterEntry if there's one for this throttle.
+	 * @return RosterEntry or null
+	 */
+	public RosterEntry getRosterEntry(){
+		return rosterEntry;
 	}
 
 	/**
@@ -232,10 +243,10 @@ public class AddressPanel extends JInternalFrame {
 	private void rosterItemSelected() {
 		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {
 			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
-			RosterEntry entry = Roster.instance().entryFromTitle(
+			rosterEntry = Roster.instance().entryFromTitle(
 					rosterEntryTitle);
 
-			addrSelector.setAddress(entry.getDccLocoAddress());
+			addrSelector.setAddress(rosterEntry.getDccLocoAddress());
 			consistAddress = null;
 			changeOfAddress();
 		}
@@ -274,7 +285,7 @@ public class AddressPanel extends JInternalFrame {
 	/**
 	 * The user has selected a new address. Notify all listeners.
 	 */
-	public void changeOfAddress() {
+	private void changeOfAddress() {
 		// send notification of new address
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {

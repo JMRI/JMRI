@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.28 $
+ * @version   $Revision: 1.29 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -272,11 +272,11 @@ public class RosterEntry {
     }
     
     /**
-     * Return the lockable state of a specific function. Defaults to false.
+     * Return the lockable state of a specific function. Defaults to true.
      * @param fn function number, starting with 0
      */
     public boolean getFunctionLockable(int fn) {
-        if (functionLockables == null) return false;
+        if (functionLockables == null) return true;
         if (fn <0 || fn >MAXFNNUM)
             throw new IllegalArgumentException("number out of range: "+fn);
         return functionLockables[fn];

@@ -45,7 +45,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.39 $
+ * @version    $Revision: 1.40 $
  */
 /**
  * @author DSM
@@ -226,6 +226,8 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         addressPanel.setVisible(true);
         addressPanel.addInternalFrameListener(frameListener);
         addressPanel.addAddressListener(this);
+        
+        functionPanel.setAddressPanel(addressPanel); // so the function panel can get access to the roster
         
         if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight())
             {controlPanel.setSize(controlPanel.getWidth(),functionPanel.getHeight() + addressPanel.getHeight());}
