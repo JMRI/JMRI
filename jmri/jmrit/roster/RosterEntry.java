@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -220,6 +220,10 @@ public class RosterEntry {
 
     }
 
+    /**
+     * Loads function names from a 
+     * JDOM element.  Does not change values that are already present!
+     */
     public void loadFunctions(Element e3) {
         if (e3 != null)  {
             // load function names
@@ -229,8 +233,10 @@ public class RosterEntry {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
                 String val = fn.getText();
-                this.setFunctionLabel(num, val);
-                this.setFunctionLockable(num, lock.equals("true"));
+                if (this.getFunctionLabel(num)==null) {
+                    this.setFunctionLabel(num, val);
+                    this.setFunctionLockable(num, lock.equals("true"));
+                }
             }
         }
     }
