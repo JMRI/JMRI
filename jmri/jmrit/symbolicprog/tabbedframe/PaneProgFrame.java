@@ -36,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.68 $
+ * @version   $Revision: 1.69 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -728,6 +728,21 @@ abstract public class PaneProgFrame extends JmriJFrame
         _flPane.setMaximumSize(_flPane.getPreferredSize());
         body.add(_flPane);
 
+        // add the store button
+        JButton store = new JButton(rbt.getString("ButtonSave"));
+        store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        store.addActionListener( new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    storeFile();
+                }
+            });
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+        
+        buttons.add(store);
+        
+        body.add(buttons);
         outer.add(scrollPane);
         return outer;
     }
