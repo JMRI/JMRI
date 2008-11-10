@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -263,11 +263,14 @@ public class RosterEntry {
     }
     
     /**
-     * Define whether a specific function is lockable
+     * Define whether a specific function is lockable.
      * @param fn function number, starting with 0
      */
     public void setFunctionLockable(int fn, boolean lockable) {
-        if (functionLockables == null) functionLockables = new boolean[MAXFNNUM+1]; // counts zero
+        if (functionLockables == null) {
+            functionLockables = new boolean[MAXFNNUM+1]; // counts zero
+            for (int i = 0; i < functionLockables.length; i++) functionLockables[i] = true;
+        }
         functionLockables[fn] = lockable;
     }
     
