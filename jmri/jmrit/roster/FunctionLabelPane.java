@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -118,10 +118,14 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public void update(RosterEntry r) {
         if (labels!=null) {
             for (int i = 0; i<labels.length; i++) 
-               if (labels[i]!=null && !labels[i].getText().equals("")) {
+                if (labels[i]!=null && !labels[i].getText().equals("")) {
                     r.setFunctionLabel(i, labels[i].getText());
                     r.setFunctionLockable(i, lockable[i].isSelected());
-               }
+                } else if (labels[i]!=null && labels[i].getText().equals("")) {
+                    if (r.getFunctionLabel(i) != null) {
+                        r.setFunctionLabel(i, null);
+                    }
+                }
         }
     }
 
