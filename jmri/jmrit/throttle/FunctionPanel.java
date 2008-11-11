@@ -16,6 +16,7 @@ import org.jdom.Element;
 import javax.swing.JDesktopPane;
 import jmri.jmrit.roster.RosterEntry;
 
+
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
@@ -86,10 +87,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     {
         if (log.isDebugEnabled()) log.debug("Throttle found");
         this.throttle = t;
-        RosterEntry re = null;
+        RosterEntry rosterEntry = null;
         if (addressPanel != null)
-        	re = addressPanel.getRosterEntry();
-        if (re != null){
+        	rosterEntry = addressPanel.getRosterEntry();
+        if (rosterEntry != null){
         	if (log.isDebugEnabled()) log.debug("RosterEntry found");
         	initGUI();	// need to rebuild panel
         }
@@ -102,11 +103,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                         throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
                 Boolean state = (Boolean)getter.invoke(throttle, (Class[])null);
                 functionButton[i].setState(state.booleanValue());
-                if (re != null){
-                	String text = re.getFunctionLabel(functionNumber);
+                if (rosterEntry != null){
+                	String text = rosterEntry.getFunctionLabel(functionNumber);
                 	if (text != null){
                 		functionButton[i].setText(text);
-                		functionButton[i].setIsLockable(re.getFunctionLockable(functionNumber));
+                		// adjust button width for text
+                		int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
+                		butWidth = butWidth + 20;	// pad out the width a bit
+                		if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
+                		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
+                		functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(functionNumber));
                 	}
                 }
            }
@@ -241,13 +247,30 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     public void setAddressPanel(AddressPanel addressPanel){
     	this.addressPanel = addressPanel; 
     }
+    
+    public void saveFunctionButtonsToRoster (RosterEntry rosterEntry){
+    	if (rosterEntry == null)
+    		return;
+    	for (int i=0; i < NUM_FUNCTION_BUTTONS; i++){
+    		int functionNumber = functionButton[i].getIdentity();
+    		String text = functionButton[i].getText();
+    		boolean lockable = functionButton[i].getIsLockable();
+    		if (functionButton[i].isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))){
+    			functionButton[i].setDirty(false);
+    			rosterEntry.setFunctionLabel(functionNumber, text);
+    		}
+    		if (rosterEntry.getFunctionLabel(functionNumber) != null && lockable != rosterEntry.getFunctionLockable(functionNumber)){
+    			rosterEntry.setFunctionLockable(functionNumber, lockable);
+    		}
+    	}
+    	//TODO save roster!
+    }
 
     JPanel mainPanel = new JPanel();
     /**
      * Place and initialize all the buttons.
      */
-    private void initGUI()
-    {
+    public void initGUI(){
         mainPanel.removeAll();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -362,7 +385,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.40 $
+	 * @version $Revision: 1.41 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

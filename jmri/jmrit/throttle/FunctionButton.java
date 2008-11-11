@@ -39,6 +39,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private boolean isOn;
     private boolean isLockable = true;
     private boolean isDisplayed = true;
+    private boolean dirty = false;
 	private int actionKey;
 	static final int BUT_HGHT = 30;
 	static final int BUT_WDTH = 56;
@@ -167,6 +168,22 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public boolean getDisplay()
     {
         return isDisplayed;
+    }
+    
+    /**
+     * True when function button has been modified by user.
+     *
+     */
+    public void setDirty(boolean dirty){
+    	this.dirty = dirty;
+    }
+    
+    /**
+     * 
+     * @return true when function button has been modified by user.
+     */
+    public boolean isDirty(){
+    	return dirty;
     }
 
     /**

@@ -163,6 +163,7 @@ public class FunctionButtonPropertyEditor extends JDialog
             butWidth = butWidth + 20;	// pad out the width a bit
             if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
             button.setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
+            button.setDirty(true);
             finishEdit();
         }
     }

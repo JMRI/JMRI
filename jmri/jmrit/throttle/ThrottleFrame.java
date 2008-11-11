@@ -36,6 +36,8 @@ import jmri.util.JmriJFrame;
 
 import org.jdom.Element;
 
+import jmri.jmrit.roster.RosterEntry;
+
 /**
  *  A JFrame to contain throttle elements such as speed control, address
  *  chooser, function panel, and maybe others. <p>
@@ -45,7 +47,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.40 $
+ * @version    $Revision: 1.41 $
  */
 /**
  * @author DSM
@@ -268,138 +270,156 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     /**
      *  Set up View, Edit and Power Menus
      */
-    private void initializeMenu()
-    {
-        JMenu viewMenu = new JMenu("View");
-        viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
-        viewAddressPanel.setSelected(true);
-        viewAddressPanel.addItemListener(
-                                         new ItemListener()
-                                         {
-                                             public void itemStateChanged(ItemEvent e)
-                                             {
-                                                 addressPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-                                             }
-                                         });
-        
-        viewControlPanel = new JCheckBoxMenuItem("Control Panel");
-        viewControlPanel.setSelected(true);
-        viewControlPanel.addItemListener(
-                                         new ItemListener()
-                                         {
-                                             public void itemStateChanged(ItemEvent e)
-                                             {
-                                                 controlPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-                                             }
-                                         });
-        viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
-        viewFunctionPanel.setSelected(true);
-        viewFunctionPanel.addItemListener(
-                                          new ItemListener()
-                                          {
-                                              public void itemStateChanged(ItemEvent e)
-                                              {
-                                                  functionPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-                                              }
-                                          });
-        
-        viewAllButtons = new JMenuItem("Show All Function Buttons");
-        viewAllButtons.addActionListener(
-                                         new AbstractAction()
-                                         {
-                                             public void actionPerformed(ActionEvent ev)
-                                             {
-                                                 functionPanel.showAllFnButtons();
-                                             }
-                                         });
-        
-        viewMenu.add(viewAddressPanel);
-        viewMenu.add(viewControlPanel);
-        viewMenu.add(viewFunctionPanel);
-        viewMenu.add(viewAllButtons);
-        
-        JMenu editMenu = new JMenu("Edit");
-        JMenuItem preferencesItem = new JMenuItem("Frame Properties");
-        editMenu.add(preferencesItem);
-        preferencesItem.addActionListener(
-                                          new ActionListener()
-                                          {
-                                              public void actionPerformed(ActionEvent e)
-                                              {
-                                                  editPreferences();
-                                              }
-                                          });
-        
-        this.setJMenuBar(new JMenuBar());
-        this.getJMenuBar().add(viewMenu);
-        this.getJMenuBar().add(editMenu);
-        
-        if (powerMgr !=null) {
-            JMenu powerMenu = new JMenu("  Power:");
-            JMenuItem powerOn = new JMenuItem("Power On");
-            powerMenu.add(powerOn);
-            powerOn.addActionListener(
-                                      new ActionListener() {
-                                          public void actionPerformed(ActionEvent e){
-                                              powerControl.onButtonPushed();
-                                          }
-                                      });
-            
-            JMenuItem powerOff = new JMenuItem("Power Off");
-            powerMenu.add(powerOff);
-            powerOff.addActionListener(
-                                       new ActionListener() {
-                                           public void actionPerformed(ActionEvent e){
-                                               powerControl.offButtonPushed();
-                                           }
-                                       });
-            
-            this.getJMenuBar().add(powerMenu);
-            powerLight = new JButton();
-            setPowerIcons();
-            // make the button itself invisible, just display the power LED
-            powerLight.setBorderPainted(false);
-            powerLight.setContentAreaFilled(false);
-            powerLight.setFocusPainted(false);
-            this.getJMenuBar().add(powerLight);
-            powerLight.addActionListener(
-                                         new ActionListener() {
-                                             public void actionPerformed(ActionEvent e){
-                                                 try {
-                                                     if (powerMgr.getPower()==PowerManager.ON) powerControl.offButtonPushed();
-                                                     else if (powerMgr.getPower()==PowerManager.OFF)powerControl.onButtonPushed();
-                                                     else if (powerMgr.getPower()==PowerManager.UNKNOWN)powerControl.offButtonPushed();
-                                                 } catch (JmriException ex) {
-                                                     powerLight.setIcon(powerXIcon);
-                                                 }
-                                             }
-                                         }
-                                         );
-        }
-        
-        // add help selection
-        addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
-        
-    }
+    private void initializeMenu() {
+		JMenu viewMenu = new JMenu("View");
+		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
+		viewAddressPanel.setSelected(true);
+		viewAddressPanel.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				addressPanel
+						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+			}
+		});
+
+		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
+		viewControlPanel.setSelected(true);
+		viewControlPanel.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				controlPanel
+						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+			}
+		});
+		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
+		viewFunctionPanel.setSelected(true);
+		viewFunctionPanel.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				functionPanel
+						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+			}
+		});
+
+		viewAllButtons = new JMenuItem("Show All Function Buttons");
+		viewAllButtons.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent ev) {
+				functionPanel.showAllFnButtons();
+			}
+		});
+
+		viewMenu.add(viewAddressPanel);
+		viewMenu.add(viewControlPanel);
+		viewMenu.add(viewFunctionPanel);
+		viewMenu.add(viewAllButtons);
+
+		JMenu editMenu = new JMenu("Edit");
+		JMenuItem preferencesItem = new JMenuItem("Frame Properties");
+		editMenu.add(preferencesItem);
+		preferencesItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				editPreferences();
+			}
+		});
+		JMenuItem resetFuncButtonsItem = new JMenuItem("Reset Function Buttons");
+		editMenu.add(resetFuncButtonsItem);
+		resetFuncButtonsItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetFuncButtons();
+			}
+		});
+		JMenuItem saveFuncButtonsItem = new JMenuItem("Save Function Buttons");
+		editMenu.add(saveFuncButtonsItem);
+		saveFuncButtonsItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveFuncButtons();
+			}
+		});
+
+		this.setJMenuBar(new JMenuBar());
+		this.getJMenuBar().add(viewMenu);
+		this.getJMenuBar().add(editMenu);
+
+		if (powerMgr != null) {
+			JMenu powerMenu = new JMenu("  Power");
+			JMenuItem powerOn = new JMenuItem("Power On");
+			powerMenu.add(powerOn);
+			powerOn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					powerControl.onButtonPushed();
+				}
+			});
+
+			JMenuItem powerOff = new JMenuItem("Power Off");
+			powerMenu.add(powerOff);
+			powerOff.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					powerControl.offButtonPushed();
+				}
+			});
+
+			this.getJMenuBar().add(powerMenu);
+			powerLight = new JButton();
+			setPowerIcons();
+			// make the button itself invisible, just display the power LED
+			powerLight.setBorderPainted(false);
+			powerLight.setContentAreaFilled(false);
+			powerLight.setFocusPainted(false);
+			this.getJMenuBar().add(powerLight);
+			powerLight.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						if (powerMgr.getPower() == PowerManager.ON)
+							powerControl.offButtonPushed();
+						else if (powerMgr.getPower() == PowerManager.OFF)
+							powerControl.onButtonPushed();
+						else if (powerMgr.getPower() == PowerManager.UNKNOWN)
+							powerControl.offButtonPushed();
+					} catch (JmriException ex) {
+						powerLight.setIcon(powerXIcon);
+					}
+				}
+			});
+		}
+
+		// add help selection
+		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
+	}
     
-    private void editPreferences()
-    {
+    private void editPreferences(){
         ThrottleFramePropertyEditor editor =
             ThrottleFrameManager.instance().getThrottleFrameEditor();
         editor.setThrottleFrame(this);
-        //editor.setLocation(this.getLocationOnScreen());
+        // editor.setLocation(this.getLocationOnScreen());
         editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }
     
+    private void resetFuncButtons(){
+    	functionPanel.initGUI();
+    }
+    
+    private void saveFuncButtons(){
+    	RosterEntry rosterEntry = addressPanel.getRosterEntry();
+    	if (rosterEntry == null){
+			JOptionPane.showMessageDialog(this, "Select loco using roster menu in Address Panel", "No Loco Roster Entry Selected",
+					JOptionPane.ERROR_MESSAGE);
+    		return;
+    	}
+		if (JOptionPane.showConfirmDialog(this,
+				"Save function buttons to your loco's roster?", "Update Roster Entry",
+				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			return;
+		}
+		// save function buttons to roster
+		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
+    }
+    
     /**
-     *  Handle my own destruction.
-     *  <ol>
-     *    <li> dispose of sub windows.
-     *    <li> notify my manager of my demise.
-     *  </ol>
-     *
-     */
+	 * Handle my own destruction.
+	 * <ol>
+	 * <li> dispose of sub windows.
+	 * <li> notify my manager of my demise.
+	 * </ol>
+	 * 
+	 */
     public void dispose()
     {
         // check for any special disposing in InternalFrames
@@ -423,18 +443,19 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     
     
     /**
-     *  A KeyAdapter that listens for the key that cycles through
-     * the JInternalFrames.
-     *
-     * @author     glen
-     */
+	 * A KeyAdapter that listens for the key that cycles through the
+	 * JInternalFrames.
+	 * 
+	 * @author glen
+	 */
     class FrameCyclingKeyListener extends KeyAdapter
     {
         /**
-         *  Description of the Method
-         *
-         * @param  e  Description of the Parameter
-         */
+		 * Description of the Method
+		 * 
+		 * @param e
+		 *            Description of the Parameter
+		 */
         public void keyPressed(KeyEvent e)
         {
             if (e.isControlDown() && e.getKeyCode() == NEXT_FRAME_KEY)
