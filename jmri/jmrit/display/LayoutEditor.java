@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3356,6 +3356,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			else {
 				// initialize the new block
+				blk.initializeLayoutBlock();
 				blk.setBlockTrackColor(defaultTrackColor);
 				blk.setBlockOccupiedColor(defaultTrackColor);
 			}

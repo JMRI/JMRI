@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -143,12 +143,20 @@ public class LayoutBlockManager extends AbstractManager {
 	 * This routine should be called when loading panels, after all Layout Editor panels have been loaded.
 	 */
 	public void initializeLayoutBlockPaths() {
-		badBeanErrors = 0;
-		// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
+		// cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
 		java.util.Iterator iter = getSystemNameList().iterator();
 		while (iter.hasNext()) {
 			String sName = (String)iter.next();
-			if (sName==null) log.error("System name null during initialization of LayoutBlocks");
+			if (sName==null) log.error("System name null during 1st initialization of LayoutBlocks");
+			LayoutBlock b = getBySystemName(sName); 
+			b.initializeLayoutBlock();
+		}	
+		// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
+		badBeanErrors = 0;
+		iter = getSystemNameList().iterator();
+		while (iter.hasNext()) {
+			String sName = (String)iter.next();
+			if (sName==null) log.error("System name null during 2nd initialization of LayoutBlocks");
 			log.debug("LayoutBlock initialization - system name = "+sName);
 			LayoutBlock b = getBySystemName(sName); 
 			b.updatePaths();

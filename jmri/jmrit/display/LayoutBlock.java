@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -86,18 +86,32 @@ public class LayoutBlock extends AbstractNamedBean
 
 	// persistent instances variables (saved between sessions)
 	public String blockName = "";
+	public String lbSystemName = "";
 	public String occupancySensorName = "";
 	public String memoryName = "";
 	public int occupiedSense = Sensor.ACTIVE;
 	public Color blockTrackColor = Color.black;
 	public Color blockOccupiedColor = Color.black;
 	
+	/* 
+	 * Creates a LayoutBlock object.
+	 *  
+	 * Note: initializeLayoutBlock() must be called to complete the process. They are split 
+	 *       so  that loading of panel files will be independent of whether LayoutBlocks or 
+	 *		 Blocks are loaded first.
+	 */
 	public LayoutBlock(String sName, String uName) {
 		super (sName,uName);
 		_instance = this;
 		blockName = uName;
+		lbSystemName = sName;
+	}
+	/*
+	 * Completes the creation of a LayoutBlock object by adding a Block to it
+	 */
+	protected void initializeLayoutBlock() {
 		// get/create a jmri.Block object corresponding to this LayoutBlock
-		block = InstanceManager.blockManagerInstance().getByUserName(uName);
+		block = InstanceManager.blockManagerInstance().getByUserName(blockName);
 		if (block==null) {
 			// not found, create a new jmri.Block
 			String s = "";
@@ -109,8 +123,8 @@ public class LayoutBlock extends AbstractNamedBean
 				block = InstanceManager.blockManagerInstance().getBySystemName(s);
 				if (block == null) found = false;
 			}
-			block = InstanceManager.blockManagerInstance().createNewBlock(s,uName);
-			if (block==null) log.error("Failure to get/create Block: "+s+","+uName);
+			block = InstanceManager.blockManagerInstance().createNewBlock(s,blockName);
+			if (block==null) log.error("Failure to get/create Block: "+s+","+blockName);
 		}
 		if (block!=null) {
 			// attach a listener for changes in the Block
@@ -120,6 +134,9 @@ public class LayoutBlock extends AbstractNamedBean
 						handleBlockChange(e);
 					}
 				});
+			if (occupancySensor!=null) {			
+				block.setSensor(occupancySensor);
+			}
 		}
 	}
 	
