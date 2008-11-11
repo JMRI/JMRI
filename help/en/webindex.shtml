@@ -325,11 +325,6 @@
 </li>
       
 <li>
-<a href="html/hardware/tchtech/index.shtml">TCH Technology</a>
-<ul></ul>
-</li>
-      
-<li>
 <a href="html/hardware/loconet/Uhlenbrock.shtml">Uhlenbrock Intelllibox</a>
 <ul></ul>
 </li>
@@ -504,17 +499,17 @@
 </li>
       
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
+<a href="">Engines</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
+<a href="">Interchange</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
+<a href="">Locations</a>
 <ul></ul>
 </li>
       
@@ -529,7 +524,7 @@
 </li>
       
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
+<a href="">Sidings</a>
 <ul></ul>
 </li>
       
@@ -544,7 +539,7 @@
 </li>
       
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
+<a href="">Trains</a>
 <ul></ul>
 </li>
       
