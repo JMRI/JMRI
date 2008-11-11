@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @since 2.1.2
  *
  */
@@ -194,6 +194,8 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             
             // load paths if present
             List paths = element.getChildren("path");
+            if (paths.size()>0 && block.getPaths().size()>0) 
+                log.warn("Adding "+paths.size()+" paths to block "+sysName+" that already has "+block.getPaths().size()+" blocks. Please report this as an error.");
             for (int i=0; i<paths.size(); i++) {
                 Element path = (Element)paths.get(i);
                 loadPath(block, path);
