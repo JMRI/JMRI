@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.6 2008-11-09 19:25:29 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.7 2008-11-11 00:09:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -153,6 +153,9 @@ You can now configure the labels on the throttle function keys as part of your l
 A new "Function Key Labels" pane in DecoderPro lets you assign a label to each function, which will then be
 displayed on the function button when using a JMRI throttle to control that locomotive.
 For example, F2 in a sound-equipped locomotive might be labelled "Bell".
+
+<p>
+Support for TCH Technology hardware has been removed.
 
 <!--#include virtual="/Footer" -->
 
