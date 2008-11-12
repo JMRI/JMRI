@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
 
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
@@ -41,9 +42,15 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private boolean isDisplayed = true;
     private boolean dirty = false;
 	private int actionKey;
-	static final int BUT_HGHT = 30;
-	static final int BUT_WDTH = 56;
+	static int BUT_HGHT = 30;
+	static int BUT_WDTH = 56;
 
+    static {
+        JButton sample = new JButton(" Light ");
+        BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, BUT_HGHT);
+        BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, BUT_WDTH);
+    }
+    
     private JPopupMenu popup;
 
     /**
