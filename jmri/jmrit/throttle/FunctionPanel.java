@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -257,12 +258,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     		boolean lockable = functionButton[i].getIsLockable();
     		if (functionButton[i].isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))){
     			functionButton[i].setDirty(false);
+    			if (text.equals(""))
+    				text = null;		// reset button text to default
     			rosterEntry.setFunctionLabel(functionNumber, text);
     		}
     		if (rosterEntry.getFunctionLabel(functionNumber) != null && lockable != rosterEntry.getFunctionLockable(functionNumber)){
     			rosterEntry.setFunctionLockable(functionNumber, lockable);
     		}
     	}
+		JOptionPane.showMessageDialog(this, "Use Roster Edit Entry to save your function keys", "Feature still under development!",
+				JOptionPane.INFORMATION_MESSAGE);
     	//TODO save roster!
     }
 
@@ -385,7 +390,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.41 $
+	 * @version $Revision: 1.42 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
