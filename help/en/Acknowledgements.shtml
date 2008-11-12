@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.57 2008-10-26 20:22:52 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.58 2008-11-12 07:18:42 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -131,11 +131,12 @@
 	<LI>David Duchamp, who has added diagnostics to the C/MRI code, 
 	did much of the customization work for the fast clock, 
 	created the C/MRI light controls,
+    added Light support,
 	updated the Route functionality,
-	created Logix,
+	created Logix and the Layout Editor,
 	added "two outputs per turnout" support for C/MRI,
-	fixed a bug with complex definition loading
-	and added the Layout editor.
+	fixed a bug with complex definition loading,
+	and produced some <a href="http://model-railroad-hobbyist.com/mrht_decoderpro">great clinics</a>. 
 	<LI>Dave Duchesneau, who provided a decoder definition for the MERG accessory decoder
 	<li>Jim Duncan, who did a lot of the initial Grapevine debugging
 	<LI>Michael Dunn, who provided a decoder ddefinition for the MRC 1645 decoder
@@ -161,7 +162,7 @@
 	<li>Joe Fugate and the other people of 
 	<a href="http://model-railroad-hobbyist.com">Model Railroad Hobbyist</a> emagazine for
 	putting the 
-	<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clincs from the NMRA 2008 Anaheim convention</a> on the web.
+	<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clinics from the NMRA 2008 Anaheim convention</a> on the web.
 <a name="G"></A>
 	<LI>Simon Ginsburg has helped with advanced consisting, provided some Digitrax 
 	definition files, and translated much of DecoderPro into German
@@ -187,6 +188,7 @@
 	improved handling of screen insets,
 	and provided a shutdown task.
 	<LI>Phil Hartung, who provided some CTC graphics
+	<LI>Tim Hatch, who added the support for TCH Technology devices
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
 	<LI>Rob Heikens, who created ESU decoder definitions and programmer pages
 	<LI>Freek Heite, who located some important XpressNet info
