@@ -13,11 +13,11 @@ import javax.swing.JComboBox;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CarOwners implements java.beans.PropertyChangeListener {
 	
-	public static final String CAROWNERS = "CarOwners";
+	public static final String CAROWNERS_CHANGED_PROPERTY = "CarOwners";
 	private static final String LENGTH = "Length";
 	
     public CarOwners() {
@@ -70,12 +70,12 @@ public class CarOwners implements java.beans.PropertyChangeListener {
     	if (list.contains(owner))
     		return;
     	list.add(0,owner);
-    	firePropertyChange (CAROWNERS, null, LENGTH);
+    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String owner){
     	list.remove(owner);
-    	firePropertyChange (CAROWNERS, null, LENGTH);
+    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public boolean containsName(String owner){

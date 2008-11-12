@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -335,7 +335,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     // this table listens for changes to a route and it's locations
     public void propertyChange(PropertyChangeEvent e) {
     	if (log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(Route.LISTCHANGE)) {
+    	if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

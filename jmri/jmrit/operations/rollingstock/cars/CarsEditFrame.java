@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -650,37 +650,37 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if(Control.showProperty && log.isDebugEnabled()) 
 			log.debug ("CarsEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS)){
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 			roadComboBox.setSelectedItem(_car.getRoad());
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)){
 			CarTypes.instance().updateComboBox(typeComboBox);
 			if (_car != null)
 				typeComboBox.setSelectedItem(_car.getType());
 		}
-		if (e.getPropertyName().equals(CarColors.CARCOLORS)){
+		if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)){
 			CarColors.instance().updateComboBox(colorComboBox);
 			if (_car != null)
 				colorComboBox.setSelectedItem(_car.getColor());
 		}
-		if (e.getPropertyName().equals(CarLengths.CARLENGTHS)){
+		if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)){
 			CarLengths.instance().updateComboBox(lengthComboBox);
 			if (_car != null)
 				lengthComboBox.setSelectedItem(_car.getLength());
 		}
-		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH)){
+		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)){
 			manager.updateKernelComboBox(kernelComboBox);
 			if (_car != null) 
 				kernelComboBox.setSelectedItem(_car.getKernelName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS)){
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_car != null)
 				ownerComboBox.setSelectedItem(_car.getOwner());
 		}
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			LocationManager.instance().updateComboBox(locationBox);
 			if (_car != null)
 				locationBox.setSelectedItem(_car.getLocation());

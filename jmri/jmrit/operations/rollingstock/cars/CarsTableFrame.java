@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -233,7 +233,7 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
     
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(CarManager.LISTLENGTH)) {
+    	if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
     		numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
     	}
     }

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location yards
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -665,10 +665,10 @@ public class YardEditFrame extends jmri.util.JmriJFrame implements java.beans.Pr
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.TYPES)){
+		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
-		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){
+		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateTrainDir();
 		}
 		

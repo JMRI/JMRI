@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -388,7 +388,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarsSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}

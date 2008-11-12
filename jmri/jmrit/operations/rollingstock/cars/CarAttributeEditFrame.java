@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -342,17 +342,17 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarsAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarTypes.CARTYPES))
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarColors.CARCOLORS))
+		if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY))
 			CarColors.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarLengths.CARLENGTHS))
+		if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY))
 			CarLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH))
+		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY))
 			manager.updateKernelComboBox(comboBox);
 	}
 	

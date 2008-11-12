@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -33,8 +33,8 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	protected Hashtable _carHashTable = new Hashtable();   		// stores Cars by id
 	protected Hashtable _kernelHashTable = new Hashtable();   	// stores Kernels by number
 
-	public static final String LISTLENGTH = "CarListLength";
-	public static final String KERNELLISTLENGTH = "KernelListLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "CarListLength";
+	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
 
     public CarManager() {
     }
@@ -93,7 +93,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		car = new Car(carRoad, carNumber);
     		Integer oldSize = new Integer(_carHashTable.size());
     		_carHashTable.put(car.getId(), car);
-    		firePropertyChange(LISTLENGTH, oldSize, new Integer(_carHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));
     	}
     	return car;
     }
@@ -104,7 +104,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     public void register(Car car) {
     	Integer oldSize = new Integer(_carHashTable.size());
         _carHashTable.put(car.getId(), car);
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_carHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));
     }
 
     /**
@@ -116,7 +116,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
         car.setLocation(null, null);
         Integer oldSize = new Integer(_carHashTable.size());
     	_carHashTable.remove(car.getId());
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_carHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));
     }
     
     public Kernel newKernel(String name){
@@ -125,7 +125,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		kernel = new Kernel(name);
     		Integer oldSize = new Integer(_kernelHashTable.size());
     		_kernelHashTable.put(name, kernel);
-    		firePropertyChange(KERNELLISTLENGTH, oldSize, new Integer(_kernelHashTable.size()));
+    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_kernelHashTable.size()));
     	}
     	return kernel;
     }
@@ -136,7 +136,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		kernel.dispose();
     		Integer oldSize = new Integer(_kernelHashTable.size());
     		_kernelHashTable.remove(name);
-    		firePropertyChange(KERNELLISTLENGTH, oldSize, new Integer(_kernelHashTable.size()));
+    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_kernelHashTable.size()));
     	}
     }
     

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -261,13 +261,13 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("route location ("+getName()+ ") id (" +getId()+ ") sees property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 				+ e.getNewValue());
-    	if (e.getPropertyName().equals(Location.DISPOSE)){
+    	if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)){
         	if (_location != null)
         		_location.removePropertyChangeListener(this);
     		_location = null;
     	}
     	// forward property name change
-    	if (e.getPropertyName().equals(Location.NAME)){
+    	if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
     		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     	}
      }

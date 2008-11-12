@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -410,7 +410,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}

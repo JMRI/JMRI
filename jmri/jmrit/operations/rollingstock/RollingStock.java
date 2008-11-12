@@ -18,7 +18,7 @@ import org.jdom.Element;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -635,7 +635,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
         	if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     	}
-    	if (e.getPropertyName().equals(Location.DISPOSE)){
+    	if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)){
     	    if (e.getSource() == _location){
         	   	if (log.isDebugEnabled()) log.debug("delete location for rolling stock: " + getId());
     	    	setLocation(null, null);
@@ -645,7 +645,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     	    	setDestination(null, null);
     	    }
      	}
-    	if (e.getPropertyName().equals(Track.DISPOSE)){
+    	if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)){
     	    if (e.getSource() == _trackLocation){
         	   	if (log.isDebugEnabled()) log.debug("delete location for rolling stock: " + getId());
     	    	setLocation(_location, null);
@@ -656,7 +656,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     	    }
     	    	
     	}
-    	if (e.getPropertyName().equals(Train.DISPOSE)){
+    	if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY)){
     		if (e.getSource() == _train){
         	   	if (log.isDebugEnabled()) log.debug("delete train for rolling stock: " + getId());
         	   	setTrain(null);

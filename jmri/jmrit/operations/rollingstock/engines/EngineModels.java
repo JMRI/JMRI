@@ -43,7 +43,7 @@ import jmri.jmrit.operations.setup.Control;
  * TRAINMASTER	2400	66 
  * U28B		2800	60
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -58,7 +58,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 			"51%%52%%51%%53%%52%%57%%52%%61%%66%%45%%" +
 			"45%%44%%66%%60";
 	
-	public static final String ENGINEMODELS = "EngineModels";
+	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	private static final String LENGTH = "Length";
 	
 	protected Hashtable _engineHorsepowerHashTable = new Hashtable();
@@ -122,12 +122,12 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	if (list.contains(model))
     		return;
     	list.add(0,model);
-    	firePropertyChange (ENGINEMODELS, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String model){
     	list.remove(model);
-    	firePropertyChange (ENGINEMODELS, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean containsName(String model){

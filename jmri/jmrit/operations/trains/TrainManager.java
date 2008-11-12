@@ -21,10 +21,10 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH = "listLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
 	protected boolean _buildReport = false;
 	protected boolean _printPreview = false;	// when true, preview train manifest
     
@@ -105,7 +105,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     		train = new Train(Integer.toString(_id), name);
     		Integer oldSize = new Integer(_trainHashTable.size());
     		_trainHashTable.put(train.getId(), train);
-    		firePropertyChange(LISTLENGTH, oldSize, new Integer(_trainHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
     	}
     	return train;
     }
@@ -120,7 +120,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         int id = Integer.parseInt(train.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_trainHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -133,7 +133,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         train.dispose();
         Integer oldSize = new Integer(_trainHashTable.size());
     	_trainHashTable.remove(train.getId());
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_trainHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
     }
 
    /**

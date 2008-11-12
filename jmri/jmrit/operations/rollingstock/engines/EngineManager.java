@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -34,8 +34,8 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	protected Hashtable _engineHashTable = new Hashtable();   		// stores Engines by id
 	protected Hashtable _consistHashTable = new Hashtable();   	// stores Kernels by number
 
-	public static final String LISTLENGTH = "EngineListLength";
-	public static final String CONSISTLISTLENGTH = "KernelListLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "EngineListLength";
+	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
 
     public EngineManager() {
     }
@@ -94,7 +94,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		engine = new Engine(engineRoad, engineNumber);
     		Integer oldSize = new Integer(_engineHashTable.size());
     		_engineHashTable.put(engine.getId(), engine);
-    		firePropertyChange(LISTLENGTH, oldSize, new Integer(_engineHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
     	}
     	return engine;
     }
@@ -105,7 +105,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     public void register(Engine engine) {
     	Integer oldSize = new Integer(_engineHashTable.size());
         _engineHashTable.put(engine.getId(), engine);
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_engineHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
     }
 
     /**
@@ -117,7 +117,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
         engine.setDestination(null, null);
         Integer oldSize = new Integer(_engineHashTable.size());
     	_engineHashTable.remove(engine.getId());
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_engineHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
     }
     
     public Consist newConsist(String name){
@@ -126,7 +126,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		consist = new Consist(name);
     		Integer oldSize = new Integer(_consistHashTable.size());
     		_consistHashTable.put(name, consist);
-    		firePropertyChange(CONSISTLISTLENGTH, oldSize, new Integer(_consistHashTable.size()));
+    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_consistHashTable.size()));
     	}
     	return consist;
     }
@@ -137,7 +137,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		consist.dispose();
     		Integer oldSize = new Integer(_consistHashTable.size());
     		_consistHashTable.remove(name);
-    		firePropertyChange(CONSISTLISTLENGTH, oldSize, new Integer(_consistHashTable.size()));
+    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_consistHashTable.size()));
     	}
     }
     

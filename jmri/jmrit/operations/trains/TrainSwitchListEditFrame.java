@@ -27,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -221,7 +221,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if(e.getPropertyName().equals(Location.SWITCHLIST) || e.getPropertyName().equals(LocationManager.LISTLENGTH))
+		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY) || e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateLocationCheckboxes();
 	}
  	

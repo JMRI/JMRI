@@ -31,7 +31,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -327,15 +327,15 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EnginesAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS))
+		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
 			EngineModels.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS))
+		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY))
 			EngineLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH))
+		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY))
 			manager.updateConsistComboBox(comboBox);
 	}
 	

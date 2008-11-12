@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -814,16 +814,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)){
 			updateTypeCheckboxes();
 		}
-		if (e.getPropertyName().equals(routeManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
-		if (e.getPropertyName().equals(Route.LISTCHANGE) || e.getPropertyName().equals(Location.NAME)){
+		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();
 		}
-		if (e.getPropertyName().equals(Train.NUMBERCARS) || e.getPropertyName().equals(Train.STATUS)){
+		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateNumberCars();
 		}
 	}

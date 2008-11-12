@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of staging locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class StagingTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -185,7 +185,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     public void propertyChange(PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) 
     		log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(Location.STAGINGLISTLENGTH)) {
+    	if (e.getPropertyName().equals(Location.STAGINGLISTLENGTH_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

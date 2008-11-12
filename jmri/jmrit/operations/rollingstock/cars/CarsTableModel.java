@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -322,7 +322,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(CarManager.LISTLENGTH) || e.getPropertyName().equals(CarManager.KERNELLISTLENGTH)) {
+    	if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY) || e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

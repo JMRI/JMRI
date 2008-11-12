@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -86,13 +86,15 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _comment = "";
 	
 	// property change names
-	public static final String DISPOSE = "dispose";
-	public static final String STOPS = "stops";
-	public static final String TYPES = "Types";
-	public static final String LENGTH = "length";
-	public static final String ENGINELOCATION = "EngineLocation";
-	public static final String NUMBERCARS = "numberCarsMoves";
-	public static final String STATUS = "status";
+	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
+	public static final String STOPS_CHANGED_PROPERTY = "stops";
+	public static final String TYPES_CHANGED_PROPERTY = "Types";
+	public static final String LENGTH_CHANGED_PROPERTY = "length";
+	public static final String ENGINELOCATION_CHANGED_PROPERTY = "EngineLocation";
+	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
+	public static final String STATUS_CHANGED_PROPERTY = "status";
+	
+	private static final String LENGTH = "Length";
 	
 	// Train status
 	private static final String TERMINATED = rb.getString("Terminated");
@@ -322,7 +324,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _status;
 		_status = status;
 		if (!old.equals(status)){
-			firePropertyChange(STATUS, old, status);
+			firePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
 		}
 	}
 	
@@ -352,13 +354,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_skipLocationsList.add(0,locationId);
 		log.debug("train does not stop at "+locationId);
-		firePropertyChange (STOPS, null, LENGTH);
+		firePropertyChange (STOPS_CHANGED_PROPERTY, null, LENGTH);
 	}
 
 	public void deleteTrainSkipsLocation(String locationId){
 		_skipLocationsList.remove(locationId);
 		log.debug("train will stop at "+locationId);
-		firePropertyChange (STOPS, null, LENGTH);
+		firePropertyChange (STOPS_CHANGED_PROPERTY, null, LENGTH);
 	}
 
 	public boolean skipsLocation(String locationId){
@@ -391,13 +393,13 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("train add car type "+type);
-    	firePropertyChange (TYPES, null, LENGTH);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	_typeList.remove(type);
     	log.debug("train delete car type "+type);
-     	firePropertyChange (TYPES, null, LENGTH);
+     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean acceptsTypeName(String type){
@@ -833,7 +835,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
-		firePropertyChange(ENGINELOCATION, old.getName(), next.getName());
+		firePropertyChange(ENGINELOCATION_CHANGED_PROPERTY, old.getName(), next.getName());
 	}
 
 	private void moveCars(RouteLocation old, RouteLocation next){
@@ -874,7 +876,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			else
 				setStatus(rb.getString("Drop")+" " +dropCars+ " "+rb.getString("Cars"));
 		}
-		firePropertyChange(NUMBERCARS, Integer.toString(oldNum), Integer.toString(getNumberCarsWorked()));
+		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(getNumberCarsWorked()));
 	}
 	
 	public void reset(){
@@ -911,13 +913,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		setCurrent(null);
 		setBuilt(false);
 		setPrinted(false);
-		firePropertyChange(NUMBERCARS, Integer.toString(oldNum), Integer.toString(0));
+		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(0));
 	}
     
     public void dispose(){
     	if (getRoute() != null)
     		getRoute().removePropertyChangeListener(this);
-    	firePropertyChange (DISPOSE, null, DISPOSE);
+    	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
   
  	

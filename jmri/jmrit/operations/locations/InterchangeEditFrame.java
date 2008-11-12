@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location interchanges
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class InterchangeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -965,10 +965,10 @@ public class InterchangeEditFrame extends OperationsFrame implements java.beans.
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.TYPES)){
+		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
-		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){
+		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateTrainDir();
 		}
 		

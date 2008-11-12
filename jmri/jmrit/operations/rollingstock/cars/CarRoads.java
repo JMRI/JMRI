@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CarRoads implements java.beans.PropertyChangeListener {
 	
@@ -29,7 +29,8 @@ public class CarRoads implements java.beans.PropertyChangeListener {
 		+ "%%SAL%%SDW%%SDWX%%SHP%%SHPX%%SLSF%%SOO%%SOU%%SP%%SSW%%SUNX"
 		+ "%%T&P%%TC%%TP&W%%UOCX%%UP%%UTL%%UTLX" 
 		+ "%%VGN%%VN%%VTR%%W&LE%%W&LG%%WA%%WAB%%WDL%%WDLX%%WFEX%%WM%%WP%%WRNX";
-	public static final String CARROADS = "CarRoads";
+	
+	public static final String CARROADS_CHANGED_PROPERTY = "CarRoads";
 	private static final String LENGTH = "Length";
 	
 
@@ -88,12 +89,12 @@ public class CarRoads implements java.beans.PropertyChangeListener {
     	if (list.contains(road))
     		return;
     	list.add(0,road);
-    	firePropertyChange (CARROADS, null, LENGTH);
+    	firePropertyChange (CARROADS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String road){
     	list.remove(road);
-    	firePropertyChange (CARROADS, null, LENGTH);
+    	firePropertyChange (CARROADS_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean containsName(String road){

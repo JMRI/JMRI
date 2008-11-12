@@ -24,10 +24,10 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH = "listLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
     
 	public LocationManager() {
     }
@@ -89,7 +89,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     		location = new Location(Integer.toString(_id), name);
     		Integer oldSize = new Integer(_locationHashTable.size());
     		_locationHashTable.put(location.getId(), location);
-    		firePropertyChange(LISTLENGTH, oldSize, new Integer(_locationHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
     	}
     	return location;
     }
@@ -104,7 +104,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         int id = Integer.parseInt(location.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_locationHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -117,7 +117,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         location.dispose();
         Integer oldSize = new Integer(_locationHashTable.size());
     	_locationHashTable.remove(location.getId());
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_locationHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
     }
 
     /**

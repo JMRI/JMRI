@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -41,7 +41,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	public static final String YARD = "Yard";
 	public static final String SIDING = "Siding";
 	
-	public static final String DISPOSE = "dispose";
+	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	
 	public static final int EAST = 1;		// train direction serviced by this location
 	public static final int WEST = 2;
@@ -443,7 +443,7 @@ public class Track implements java.beans.PropertyChangeListener {
     }
     
     public void dispose(){
-    	firePropertyChange (DISPOSE, null, DISPOSE);
+    	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
     
 	

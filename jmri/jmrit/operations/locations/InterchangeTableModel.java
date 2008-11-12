@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of interchange locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class InterchangeTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -188,7 +188,7 @@ public class InterchangeTableModel extends javax.swing.table.AbstractTableModel 
     public void propertyChange(PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) 
     		log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(Location.INTERCHANGELISTLENGTH)) {
+    	if (e.getPropertyName().equals(Location.INTERCHANGELISTLENGTH_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

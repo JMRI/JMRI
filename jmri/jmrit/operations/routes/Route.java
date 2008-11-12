@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -38,7 +38,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	public static final String LISTCHANGE = "listChange";
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";
 	public static final String DISPOSE = "dispose";
 	
 
@@ -91,7 +91,7 @@ public class Route implements java.beans.PropertyChangeListener {
     	Integer old = new Integer(_routeHashTable.size());
     	_routeHashTable.put(rl.getId(), rl);
 
-    	firePropertyChange(LISTCHANGE, old, new Integer(_routeHashTable.size()));
+    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
     	// listen for name and state changes to forward
     	// rl.addPropertyChangeListener(this);
     	return rl;
@@ -128,7 +128,7 @@ public class Route implements java.beans.PropertyChangeListener {
         // find highest sequence number
         if (rl.getSequenceId() > _sequenceNum)
         	_sequenceNum = rl.getSequenceId();
-       	firePropertyChange(LISTCHANGE, old, new Integer(_routeHashTable.size()));
+       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
         // listen for name and state changes to forward
         // rl.addPropertyChangeListener(this);
     }
@@ -142,7 +142,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		rl.dispose();
     		Integer old = new Integer(_routeHashTable.size());
     		_routeHashTable.remove(id);
-           	firePropertyChange(LISTCHANGE, old, new Integer(_routeHashTable.size()));
+           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
      	}
     }
     
@@ -245,7 +245,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		if (searchId < 1)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE, null, Integer.toString(sequenceId));
+    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
     
     public void moveLocationDown(RouteLocation rl){
@@ -273,7 +273,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		if (searchId > _sequenceNum)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE, null, Integer.toString(sequenceId));
+    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
 
  	

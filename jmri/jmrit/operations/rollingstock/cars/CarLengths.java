@@ -13,12 +13,12 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
 	private static final String LENGTHS = "32%%34%%36%%38%%40%%42%%50%%51%%52%%54%%60%%70";
-	public static final String CARLENGTHS = "CarLengths";
+	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";
 	private static final String LENGTH = "Length";
 	
     public CarLengths() {
@@ -76,12 +76,12 @@ public class CarLengths implements java.beans.PropertyChangeListener {
     	if (list.contains(length))
     		return;
     	list.add(0,length);
-    	firePropertyChange (CARLENGTHS, null, LENGTH);
+    	firePropertyChange (CARLENGTHS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String length){
     	list.remove(length);
-    	firePropertyChange (CARLENGTHS, null, LENGTH);
+    	firePropertyChange (CARLENGTHS_CHANGED_PROPERTY, null, LENGTH);
     }
      
     public boolean containsName(String length){

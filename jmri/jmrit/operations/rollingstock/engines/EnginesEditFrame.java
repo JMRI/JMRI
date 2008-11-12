@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -575,32 +575,32 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EnginesEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS)){
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)
 			roadComboBox.setSelectedItem(_engine.getRoad());
 		}
-		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS)){
+		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY)){
 			engineModels.updateComboBox(modelComboBox);
 			if (_engine != null)
 				modelComboBox.setSelectedItem(_engine.getType());
 		}
-		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS)){
+		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY)){
 			EngineLengths.instance().updateComboBox(lengthComboBox);
 			if (_engine != null)
 				lengthComboBox.setSelectedItem(_engine.getLength());
 		}
-		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH)){
+		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)){
 			manager.updateConsistComboBox(consistComboBox);
 			if (_engine != null) 
 				consistComboBox.setSelectedItem(_engine.getConsistName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS)){
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_engine != null)
 				ownerComboBox.setSelectedItem(_engine.getOwner());
 		}
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			LocationManager.instance().updateComboBox(locationBox);
 			if (_engine != null)
 				locationBox.setSelectedItem(_engine.getLocation());

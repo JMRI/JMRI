@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -235,7 +235,7 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
     
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(EngineManager.LISTLENGTH)) {
+    	if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
     		numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
     	}
     }

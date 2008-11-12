@@ -21,10 +21,10 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RouteManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH = "listLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
     
 	public RouteManager() {
     }
@@ -85,7 +85,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     		route = new Route(Integer.toString(_id), name);
     		Integer oldSize = new Integer(_routeHashTable.size());
     		_routeHashTable.put(route.getId(), route);
-    		firePropertyChange(LISTLENGTH, oldSize, new Integer(_routeHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
     	}
     	return route;
     }
@@ -100,7 +100,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
         int id = Integer.parseInt(route.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_routeHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -113,7 +113,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
         route.dispose();
         Integer oldSize = new Integer(_routeHashTable.size());
     	_routeHashTable.remove(route.getId());
-        firePropertyChange(LISTLENGTH, oldSize, new Integer(_routeHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
     }
 
     /**

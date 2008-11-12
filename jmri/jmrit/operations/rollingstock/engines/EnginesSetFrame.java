@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -389,7 +389,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EnginesSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}

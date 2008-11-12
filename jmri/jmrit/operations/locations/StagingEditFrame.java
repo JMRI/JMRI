@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location stagings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
@@ -84,7 +84,7 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	// combo box
 	javax.swing.JComboBox comboBox = CarRoads.instance().getComboBox();
 
-	public static final String DISPOSE = "dispose" ;
+	public static final String DISPOSE_CHANGED_PROPERTY = "dispose" ;
 	public static final int MAX_NAME_LENGTH = 25;
 
 	public StagingEditFrame() {
@@ -664,14 +664,14 @@ public class StagingEditFrame extends jmri.util.JmriJFrame implements java.beans
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.TYPES)){
+		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
-		if (e.getPropertyName().equals(Location.TRAINDIRECTION)){
+		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateTrainDir();
 		}
 		
-		if (e.getPropertyName().equals(DISPOSE)){
+		if (e.getPropertyName().equals(DISPOSE_CHANGED_PROPERTY)){
 			editActive = false;
 		}
 	}
