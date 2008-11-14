@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class TrainBuilder{
 	
@@ -417,6 +417,7 @@ public class TrainBuilder{
 								for (int s = 0; s < sls.size(); s++){
 									Track destTrack = terminateLocation.getTrackById((String)sls.get(s));
 									if (c.testDestination(terminateLocation, destTrack).equals(c.OKAY)){
+										//TODO check to see if the caboose or car with FRED would exceed train length
 										addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
 										if (c.isCaboose())
 											foundCaboose = true;
@@ -429,6 +430,7 @@ public class TrainBuilder{
 									addLine(fileOut,"Could not find a destination for ("+c.getId()+")");
 							// terminate into staging	
 							} else if (c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack()).equals(c.OKAY)){
+								//TODO check to see if the caboose or car with FRED would exceed train length
 								addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
 								if (c.isCaboose())
 									foundCaboose = true;
@@ -592,10 +594,17 @@ public class TrainBuilder{
 											if(destinationTemp != null){
 												addLine(fileOut, "car ("+c.getId()+") has available destination (" +destinationTemp.getName()+ ", " +trackTemp.getName()+ ") with " +rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
 												// if there's more than one available destination use the one with the least moves
-												if (rldSave != null && (rldSave.getCarMoves()-rldSave.getMaxCarMoves())<(rld.getCarMoves()-rld.getMaxCarMoves())){
-													rld = rldSave;					// the saved is better than the last found
-													destinationTemp = destinationSave;
-													trackTemp = trackSave;
+												if (rldSave != null){
+													double saveCarMoves = rldSave.getCarMoves();
+													double saveRatio = saveCarMoves/rldSave.getMaxCarMoves();
+													double nextCarMoves = rld.getCarMoves();
+													double nextRatio = nextCarMoves/rld.getMaxCarMoves();
+													log.debug("Save = "+Double.toString(saveRatio)+ " Next = "+Double.toString(nextRatio));
+													if (saveRatio < nextRatio){
+														rld = rldSave;					// the saved is better than the last found
+														destinationTemp = destinationSave;
+														trackTemp = trackSave;
+													}
 												}
 												// every time through, save the best route location, destination, and track
 												rldSave = rld;
@@ -611,16 +620,21 @@ public class TrainBuilder{
 										addLine(fileOut, "Car ("+c.getId()+") location is equal to destination ("+rld.getName()+"), skiping this destination");
 									}
 								}
+								boolean carAdded = false; // all cars departing staging must be included or build failure
 								if (destinationSave != null){
-									if (addCarToTrain(fileOut, c, rl, rldSave, destinationSave, trackSave) && success){
+									carAdded = addCarToTrain(fileOut, c, rl, rldSave, destinationSave, trackSave);
+									if (carAdded && success){
+										log.debug("done with location ("+destinationSave.getName()+")");
 										break;
 									}
-								// car leaving staging without a destinaton
-								} else if (c.getTrack().getLocType().equals(Track.STAGING)){
-									buildFailed(fileOut, "could not find a destination for car ("+c.getId()+") at location (" + rld.getName()+")");
+								} 
+								// car leaving staging without a destinaton?
+								if (c.getTrack().getLocType().equals(Track.STAGING) && (!carAdded  || destinationSave == null)){
+									buildFailed(fileOut, "Could not find a destination for car ("+c.getId()+") at location (" + rld.getName()+")");
 									return;
-								// are there still moves available?
-								} else if (noMoreMoves) {
+									// are there still moves available?
+								} 
+								if (noMoreMoves) {
 									log.debug("No available destinations for any car");
 									reqNumOfMoves = 0;
 									break;
@@ -842,7 +856,7 @@ public class TrainBuilder{
 	 * @param destination
 	 * @param track the final destination for car
 	 * @return true if car was successfully added to train.  Also makes boolean
-	 * success true if location doesn't need any more pickups. 
+	 * boolean "success" true if location doesn't need any more pickups. 
 	 */
 	private boolean addCarToTrain(PrintWriter file, Car car, RouteLocation rl, RouteLocation rld, Location destination, Track track){
 		if (checkTrainLength(file, car, rl, rld)){
