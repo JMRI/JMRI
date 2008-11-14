@@ -49,7 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -131,10 +131,10 @@ jmri.jmrix.nce.NceListener {
 
 			// look for lead engines
 			for (int consistNum=1; consistNum<128; consistNum++){
+				engineManager.deleteConsist(NCE+consistNum);
 				int engNum = getEngineNumberFromArray(consistNum, 0, 2);
 				if (engNum != 0){
 					log.debug("NCE consist "+consistNum+" has lead engine "+engNum);
-					engineManager.deleteConsist(NCE+consistNum);
 					boolean engMatch = false;
 					for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 						Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
