@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.41 $
+ * @version    $Revision: 1.42 $
  */
 /**
  * @author DSM
@@ -394,6 +394,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     
     private void resetFuncButtons(){
     	functionPanel.initGUI();
+    	functionPanel.setEnabled(false);
     }
     
     private void saveFuncButtons(){
