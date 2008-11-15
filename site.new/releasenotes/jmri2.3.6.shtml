@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.7 2008-11-11 00:09:45 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.8 2008-11-15 17:57:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -145,6 +145,7 @@ configure how you want your throttle buttons to appear and save it using
 the "Save Throttle Preference" in the Tools->Throttles menu. He also
 changed the Throttle's default text for buttons F0, F1 and F3 to Light,
 Bell, and Horn. The Horn button is also set to momentary.
+
 <p>
 David Duchamp added Logix actions to set variable light intensity and light transition time.
 
@@ -156,6 +157,9 @@ For example, F2 in a sound-equipped locomotive might be labelled "Bell".
 
 <p>
 Support for TCH Technology hardware has been removed.
+
+<p>
+David Duchamp fixed a bug where Block system names were being changed when loading a Layout Editor panel while restarting after Layout Editor edits that changed the block structure of the panel.
 
 <!--#include virtual="/Footer" -->
 
