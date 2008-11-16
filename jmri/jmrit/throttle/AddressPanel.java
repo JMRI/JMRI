@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -23,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -277,6 +278,13 @@ public class AddressPanel extends JInternalFrame {
 						rb.getString("ConsistNumberHasNotBeenAssigned"),
 						rb.getString("NeedsConsistNumber"),
 						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if (JOptionPane.showConfirmDialog(this,
+					rb.getString("SendFunctionToLead"), rb.getString("NCEconsistThrottle"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+				addrSelector.setAddress(consistAddress);
+				consistAddress = null;
 			}
 			changeOfAddress();
 		}
