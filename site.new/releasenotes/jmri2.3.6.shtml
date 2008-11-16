@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.8 2008-11-15 17:57:44 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.6.shtml,v 1.9 2008-11-16 05:50:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -160,6 +160,16 @@ Support for TCH Technology hardware has been removed.
 
 <p>
 David Duchamp fixed a bug where Block system names were being changed when loading a Layout Editor panel while restarting after Layout Editor edits that changed the block structure of the panel.
+
+<p>
+Added a Help button to the DecoderPro and PanelPro main windows, and a Quit button to the PanelPro main window.
+Also, when the setup fails and the preferences window is opened at startup, also open the help window for preferences.
+
+<p>
+Added "Import Decoder File" in the Debug menu, which 
+will take a user-selected decoder definition file, copy it in the right place, and 
+rebuild the decoder index.
+
 
 <!--#include virtual="/Footer" -->
 
