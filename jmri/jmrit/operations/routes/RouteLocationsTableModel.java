@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -109,7 +109,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         switch (col) {
         case IDCOLUMN: return rb.getString("Id");
         case NAMECOLUMN: return rb.getString("Name");
-        case TRAINCOLUMN: return rb.getString("Train");
+        case TRAINCOLUMN: return rb.getString("TrainDirection");
         case MAXMOVESCOLUMN: return rb.getString("MaxMoves");
         case MAXLENGTHCOLUMN: return rb.getString("MaxLength");
         case GRADE: return rb.getString("Grade");

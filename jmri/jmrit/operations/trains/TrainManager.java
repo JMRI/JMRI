@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 import java.awt.Dimension;
+import java.awt.Point;
 
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -21,12 +22,16 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
 	protected boolean _buildReport = false;
 	protected boolean _printPreview = false;	// when true, preview train manifest
+	protected TrainsTableFrame _trainFrame = null;
+	protected Dimension _frameDimension = new Dimension(Control.panelWidth,600);
+	protected Point _framePosition = new Point();
+	protected String _sortBy = "";
     
 	public TrainManager() {
     }
@@ -63,6 +68,26 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     
     public void setPrintPreview(boolean preview){
     	_printPreview = preview;
+    }
+    
+    public void setTrainFrame(TrainsTableFrame trainFrame){
+    	_trainFrame = trainFrame;
+    }
+    
+    public Dimension getTrainFrameSize(){
+    	return _frameDimension;
+    }
+    
+    public Point getTrainFramePosition(){
+    	return _framePosition;
+    }
+    
+    public String getTrainFrameSortBy (){
+    	return _sortBy;
+    }
+   
+    public void setTrainFrameSortBy(String sortBy){
+    	_sortBy = sortBy;
     }
 	
 	public void dispose() {
@@ -294,6 +319,24 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			_buildReport = a.getValue().equals("true");
  		if ((a = e.getAttribute("printPreview")) != null)
 			_printPreview = a.getValue().equals("true");
+        int x = 0;
+        int y = 0;
+        int height = 400;
+        int width = Control.panelWidth;
+        try {
+            x = e.getAttribute("x").getIntValue();
+            y = e.getAttribute("y").getIntValue();
+            height = e.getAttribute("height").getIntValue();
+            width = e.getAttribute("width").getIntValue();
+        } catch ( org.jdom.DataConversionException ee) {
+            log.debug("Did not find train frame attributes");
+        } catch ( NullPointerException ne) {
+        	log.debug("Did not find train frame attributes");
+        }
+        _frameDimension = new Dimension(width, height);
+        _framePosition = new Point(x,y);
+        if ((a = e.getAttribute("sortBy")) != null)
+        	_sortBy = a.getValue();
     }
 
     
@@ -306,6 +349,17 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         org.jdom.Element e = new org.jdom.Element("trainOptions");
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
         e.setAttribute("printPreview", getPrintPreview()?"true":"false");
+        Dimension size = getTrainFrameSize();
+        Point posn = getTrainFramePosition();
+        if (_trainFrame != null){
+        	size = _trainFrame.getSize();
+        	posn = _trainFrame.getLocation();
+        }
+        e.setAttribute("x", ""+posn.x);
+        e.setAttribute("y", ""+posn.y);
+        e.setAttribute("height", ""+size.height);
+        e.setAttribute("width", ""+size.width);
+        e.setAttribute("sortBy", getTrainFrameSortBy());
         return e;
     }
     

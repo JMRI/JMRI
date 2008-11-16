@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
  
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.setup.Control;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -26,7 +27,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class LocationsTableFrame extends JmriJFrame {
 	
@@ -75,7 +76,7 @@ public class LocationsTableFrame extends JmriJFrame {
 		addButton.setText(rb.getString("Add"));
 		addButton.setVisible(true);
 		controlPanel.add (addButton);
-		
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 	   	getContentPane().add(controlPanel);
 	   	
 		// setup buttons

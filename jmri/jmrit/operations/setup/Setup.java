@@ -84,6 +84,8 @@ public class Setup {
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
 	
+	public static final String FEET ="'";
+	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
 	private static int ratioTons = HO_RATIO_TONS;

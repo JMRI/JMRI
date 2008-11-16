@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -280,16 +280,16 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     //  Train's current route location
-	public void setCurrent(RouteLocation current) {
+	public void setCurrentLocation(RouteLocation location) {
 		RouteLocation old = _current;
-		_current = current;
-		if (old == null || !old.equals(current)){
-			firePropertyChange("current", old, current);
+		_current = location;
+		if (old == null || !old.equals(location)){
+			firePropertyChange("current", old, location);
 		}
 	}
 	
 	// Train's current route location name
-	public String getCurrentName() {
+	public String getCurrentLocationName() {
 		if (_current == null)
 			return "";
 		else
@@ -297,7 +297,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	// Train's current route location
-	public RouteLocation getCurrent(){
+	public RouteLocation getCurrentLocation(){
 		return _current;
 	}
 	
@@ -306,7 +306,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		List routeList = getRoute().getLocationsBySequenceList();
 		for (int i=0; i<routeList.size(); i++){
 			RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
-			if (rl == getCurrent()){
+			if (rl == getCurrentLocation()){
 				i++;
 				if (i < routeList.size()){
 					rl = getRoute().getLocationById((String)routeList.get(i));
@@ -316,7 +316,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
-		return getCurrentName();	// At end of route
+		return getCurrentLocationName();	// At end of route
 	}
 	
 	// Train status
@@ -631,7 +631,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if(_built){
 			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest", isPreview, Setup.getFontName());
+			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName());
 			if (!isPreview)
 				setPrinted(true);
 		} else {
@@ -699,17 +699,17 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * engines, cars, and train icon.
 	 */
 	public void move() {
-		if (getRoute() == null || getCurrent() == null)
+		if (getRoute() == null || getCurrentLocation() == null)
 			return;
 		List routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
 			RouteLocation rl = getRoute().getLocationById((String) routeList.get(i));
-			if (getCurrent() == rl) {
+			if (getCurrentLocation() == rl) {
 				i++;
 				RouteLocation rlNew = rl;	// use current if end of route
 				if (i < routeList.size()) {
 					rlNew = getRoute().getLocationById((String) routeList.get(i));
-					setCurrent(rlNew);		// note, _current becomes null after all cars moved at terminate
+					setCurrentLocation(rlNew);		// note, _current becomes null after all cars moved at terminate
 				} 
 				moveEngines(rl, rlNew);
 				moveCars(rl, rlNew);
@@ -728,10 +728,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		if (_locoIcon != null && _locoIcon.isActive()){
 			setTrainIconColor();
-			if (getCurrentName().equals(""))
+			if (getCurrentLocationName().equals(""))
 				_locoIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
 			else
-				_locoIcon.setToolTipText(getDescription() + " at " + getCurrentName() + " next "+getNextLocationName());
+				_locoIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
 			if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
 				_locoIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
 			}
@@ -810,7 +810,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (getRoute().getLocationsBySequenceList().size()==1)
 			_locoIcon.setLocoColor(Setup.getTrainIconColorLocal());
 		// Terminated train?
-		if (getCurrentName().equals(""))
+		if (getCurrentLocationName().equals(""))
 			_locoIcon.setLocoColor(Setup.getTrainIconColorTerminate());
 	}
 	
@@ -867,7 +867,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		if (old == next && dropCars == 0 && pickupCars == 0 && departCars == 0){
 			setStatus(TERMINATED);
-			setCurrent(null);
+			setCurrentLocation(null);
 			setBuilt(false);
 		}else{
 			log.debug(dropCars+ " Drop " +pickupCars+ " Add " +departCars+ " Cars");
@@ -881,7 +881,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public void reset(){
 		// is this train in route?
-		if (getCurrentName() != "" && getTrainDepartsRouteLocation() != getCurrent()){
+		if (getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation()){
 			log.error("Train has started its route, can not reset");
 			JOptionPane.showMessageDialog(null,
 					"Train is in route to "+getTrainTerminatesName(), "Can not reset train!",
@@ -910,7 +910,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		setStatus(TRAINRESET);
-		setCurrent(null);
+		setCurrentLocation(null);
 		setBuilt(false);
 		setPrinted(false);
 		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(0));
@@ -1024,8 +1024,8 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         e.setAttribute("carTypes", typeNames);
         e.setAttribute("skip", names);
-        if (getCurrent() != null)
-        	e.setAttribute("current", getCurrent().getId());
+        if (getCurrentLocation() != null)
+        	e.setAttribute("current", getCurrentLocation().getId());
        	// build list of car roads for this train
     	String[] roads = getRoadNames();
     	String roadNames ="";

@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class TrainBuilder{
 	
@@ -64,6 +64,8 @@ public class TrainBuilder{
 	private static final String BUILDING = rb.getString("Building");
 	private static final String BUILT = rb.getString("Built") + " ";
 	private static final String PARTIALBUILT = rb.getString("Partial") + " ";
+	private static final String FEET = Setup.FEET;
+	private static final String BOX = " [ ] ";
 	
 	// build variables shared between local routines
 	Train train;		// the train being built
@@ -650,7 +652,7 @@ public class TrainBuilder{
 			}
 		}
 
-		train.setCurrent(train.getTrainDepartsRouteLocation());
+		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested){
 			train.setStatus(PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("moves"));
 			addLine(fileOut, PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("moves"));
@@ -1064,6 +1066,7 @@ public class TrainBuilder{
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
 		addLine(fileOut, "Valid " + new Date());
+		addLine(fileOut, "Departs "+train.getDepartureTime());
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}
@@ -1074,7 +1077,7 @@ public class TrainBuilder{
 		for (int i =0; i < engineList.size(); i++){
 			engine = engineManager.getEngineById((String) engineList.get(i));
 			comment = (Setup.isAppendCarCommentEnabled() ? " "+engine.getComment() : "");
-			addLine(fileOut, rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain") + comment);
+			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain") + comment);
 		}
 		
 		if (engine != null)
@@ -1125,9 +1128,9 @@ public class TrainBuilder{
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
+		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + " " + car.getColor()
+				+ car.getLength() + FEET + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
@@ -1137,9 +1140,9 @@ public class TrainBuilder{
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
+		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + " " + car.getColor()
+				+ car.getLength() + FEET + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);

@@ -30,11 +30,14 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	public static final String NAME = "Name";	// Sort by choices
+	public static final String TIME = "Time";
+	public static final String ID = "Id";
 
 	CarManagerXml carMangerXml = CarManagerXml.instance();			
 	EngineManagerXml engineMangerXml = EngineManagerXml.instance();
@@ -54,9 +57,9 @@ public class TrainsTableFrame extends JmriJFrame {
 	javax.swing.JLabel textSep2 = new javax.swing.JLabel();
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton("Name");
-    javax.swing.JRadioButton sortByTime = new javax.swing.JRadioButton("Time");
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton("Id");
+    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(NAME);
+    javax.swing.JRadioButton sortByTime = new javax.swing.JRadioButton(TIME);
+    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(ID);
      
 
 	// major buttons
@@ -83,7 +86,7 @@ public class TrainsTableFrame extends JmriJFrame {
     	trainsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	trainsModel.initTable(trainsTable, this);
      	getContentPane().add(trainsPane);
-     	
+     	     	
      	// Set up the control panel
     	JPanel controlPanel = new JPanel();
     	controlPanel.setLayout(new FlowLayout());
@@ -121,7 +124,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		printButton.setToolTipText(rb.getString("PrintSelected"));
 		printButton.setVisible(true);
 		printSwitchButton.setText(rb.getString("SwitchLists"));
-		printSwitchButton.setToolTipText(rb.getString("PrintSwitchLists"));
+		printSwitchButton.setToolTipText(rb.getString("PreviewPrintSwitchLists"));
 		printSwitchButton.setVisible(true);
 		terminateButton.setText(rb.getString("Terminate"));
 		terminateButton.setToolTipText(rb.getString("TerminateSelected"));
@@ -135,6 +138,7 @@ public class TrainsTableFrame extends JmriJFrame {
 		controlPanel.add (printSwitchButton);
 		controlPanel.add (terminateButton);
 		controlPanel.add (saveButton);
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 		
 	   	getContentPane().add(controlPanel);
 	   	
@@ -157,8 +161,9 @@ public class TrainsTableFrame extends JmriJFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     	
     	pack();
-    	if ( (getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight()-50);
-    
+    	setSize(trainManager.getTrainFrameSize());
+    	setLocation(trainManager.getTrainFramePosition());
+    	setSortBy(trainManager.getTrainFrameSortBy());
     }
     
 	private void addRadioButtonAction(JRadioButton b) {
@@ -245,6 +250,17 @@ public class TrainsTableFrame extends JmriJFrame {
 		return trains;
 	}
 	
+	private void setSortBy(String sortBy){
+		if(sortBy.equals(TIME)){
+			sortByTime.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYTIME);
+		}
+		if(sortBy.equals(ID)){
+			sortById.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYID);
+		}
+	}
+	
 	private void addCheckBoxAction(JCheckBox b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -264,6 +280,13 @@ public class TrainsTableFrame extends JmriJFrame {
 	}
 	
 	protected void storeValues(){
+		trainManager.setTrainFrame(this);					//save frame size and location
+		String sortBy = NAME;
+		if (sortById.isSelected())
+			sortBy = ID;
+		else if (sortByTime.isSelected())
+			sortBy = TIME;
+		trainManager.setTrainFrameSortBy(sortBy);					//save how the table is sorted
 		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
 		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
 		trainManagerXml.writeOperationsTrainFile();			//Need to save train status
@@ -274,6 +297,7 @@ public class TrainsTableFrame extends JmriJFrame {
 
     public void dispose() {
     	trainsModel.dispose();
+    	trainManager.setTrainFrame(null);
         super.dispose();
     }
     

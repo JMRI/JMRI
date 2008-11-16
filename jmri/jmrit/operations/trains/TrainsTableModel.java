@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -201,7 +201,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         case ROUTECOLUMN: return train.getTrainRouteName();
         case DEPARTSCOLUMN: return train.getTrainDepartsName();
-        case CURRENTCOLUMN: return train.getCurrentName();
+        case CURRENTCOLUMN: return train.getCurrentLocationName();
         case TERMINATESCOLUMN: return train.getTrainTerminatesName();
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {

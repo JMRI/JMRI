@@ -34,7 +34,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -150,9 +150,9 @@ public class OperationsTrainsTest extends TestCase {
 
 		RouteLocation rl1test;
 		rl1test= rnew.getLocationByName("TESTNEWROUTECURRNAME");
-		t1.setCurrent(rl1test);
-		Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", t1.getCurrentName());
-		rl1test= t1.getCurrent();
+		t1.setCurrentLocation(rl1test);
+		Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", t1.getCurrentLocationName());
+		rl1test= t1.getCurrentLocation();
 		Assert.assertEquals("Train New Route Current Name by Route Location", "TESTNEWROUTECURRNAME", rl1test.getName());
 	}
 
@@ -568,17 +568,17 @@ public class OperationsTrainsTest extends TestCase {
                 
                 //  Move the train!!
                 train1.move();
-		Assert.assertEquals("Train 1 After 1st Move Current Name", "North Industries", train1.getCurrentName());
+		Assert.assertEquals("Train 1 After 1st Move Current Name", "North Industries", train1.getCurrentLocationName());
                 Assert.assertEquals("Train 1 After 1st Move Next Location Name", "South End", train1.getNextLocationName());
 
                 //  Move the train again!!
                 train1.move();
-		Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End", train1.getCurrentName());
+		Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End", train1.getCurrentLocationName());
                 Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "South End", train1.getNextLocationName());
 
                 //  Move the train again!!
                 train1.move();
-		Assert.assertEquals("Train 1 After 3rd Move Current Name", "South End", train1.getCurrentName());
+		Assert.assertEquals("Train 1 After 3rd Move Current Name", "South End", train1.getCurrentLocationName());
                 Assert.assertEquals("Train 1 After 3rd Move Next Location Name", "South End", train1.getNextLocationName());
 
         }

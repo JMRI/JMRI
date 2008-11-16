@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener{
 	
@@ -110,6 +110,7 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
 		findCarTextBox.setToolTipText(rb.getString("findCar"));
 		controlPanel.add (findButton);
 		controlPanel.add (findCarTextBox);
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 		
 	   	getContentPane().add(controlPanel);
 	   	

@@ -21,6 +21,8 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainSwitchLists {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	private static final String FEET = Setup.FEET;
+	private static final String BOX = " [ ] ";
 
 	TrainManager manager = TrainManager.instance();
 	
@@ -105,9 +107,9 @@ public class TrainSwitchLists {
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, rb.getString("Pickup")+" " + car.getRoad() + " "
+		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + " " + car.getColor()
+				+ car.getLength() + FEET + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
@@ -117,9 +119,9 @@ public class TrainSwitchLists {
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, rb.getString("Drop")+ " " + car.getRoad() + " "
+		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + " " + car.getColor()
+				+ car.getLength() + FEET + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);
@@ -139,7 +141,7 @@ public class TrainSwitchLists {
 	
 	public void printSwitchList(Location location, boolean preview){
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-		Train.printReport(buildFile, "Switchlist ", preview, Setup.getFontName());
+		Train.printReport(buildFile, "Switchlist " + location.getName(), preview, Setup.getFontName());
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category
