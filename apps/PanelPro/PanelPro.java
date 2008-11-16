@@ -5,9 +5,17 @@ package apps.PanelPro;
 import apps.Apps;
 import jmri.util.JmriJFrame;
 
+import java.awt.event.ActionEvent;
+
 import java.text.MessageFormat;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The JMRI program for creating control panels.
@@ -31,7 +39,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class PanelPro extends Apps {
 
@@ -56,6 +64,34 @@ public class PanelPro extends Apps {
         return "http://jmri.sf.net/PanelPro ";
     }
 
+    protected JPanel statusPanel() {
+        JPanel j = new JPanel();
+        j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
+        j.add(super.statusPanel());
+
+        // Buttons
+
+        Action quit = new AbstractAction(rb.getString("MenuItemQuit")){
+                public void actionPerformed(ActionEvent e) {
+					Apps.handleQuit();
+                }
+            };
+
+
+        JPanel p3 = new JPanel();
+        p3.setLayout(new java.awt.FlowLayout());
+        JButton h1 = new JButton(rb.getString("ButtonHelp"));
+        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.PanelPro");
+        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        p3.add(h1);
+        JButton q1 = new JButton(rb.getString("ButtonQuit"));
+        q1.addActionListener(quit);
+        q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        p3.add(q1);
+        j.add(p3);
+
+        return j;
+    }
     // Main entry point
     public static void main(String args[]) {
 
