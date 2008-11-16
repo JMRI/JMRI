@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.55 $
+ * @version     $Revision: 1.56 $
  */
 public class DecoderPro extends Apps {
 
@@ -74,6 +74,8 @@ public class DecoderPro extends Apps {
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
         j.add(super.statusPanel());
 
+       // Buttons
+
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(rb.getString("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(rb.getString("MenuItemQuit")){
@@ -82,7 +84,6 @@ public class DecoderPro extends Apps {
                 }
             };
 
-        // Buttons
         JButton b1 = new JButton(rb.getString("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -102,10 +103,18 @@ public class DecoderPro extends Apps {
             m1.setToolTipText(rb.getString("MsgOpsButtonDisabled"));
         }
 
+        JPanel p3 = new JPanel();
+        p3.setLayout(new java.awt.FlowLayout());
+        JButton h1 = new JButton(rb.getString("ButtonHelp"));
+        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DecoderPro.index");
+        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        p3.add(h1);
         JButton q1 = new JButton(rb.getString("ButtonQuit"));
         q1.addActionListener(quit);
         q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        j.add(q1);
+        p3.add(q1);
+        j.add(p3);
+
         return j;
     }
 
