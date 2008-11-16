@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -49,6 +51,7 @@ public class TrainSwitchLists {
 		// get a list of trains
 		List trains = manager.getTrainsByNameList();
 		CarManager carManager = CarManager.instance();
+		EngineManager engineManager = EngineManager.instance();
 		for (int i=0; i<trains.size(); i++){
 			int pickupCars = 0;
 			int dropCars = 0;
@@ -57,6 +60,7 @@ public class TrainSwitchLists {
 			if (!train.getBuilt())
 				continue;	// train wasn't built so skip
 			List carsInTrain = carManager.getCarsByTrainList(train);
+			List enginesInTrain = engineManager.getEnginesByTrainList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
@@ -72,6 +76,14 @@ public class TrainSwitchLists {
 						newLine(fileOut);
 						addLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
 					}
+					// go through the list of engines and determine if the engine departs here
+					for (int j = 0; j < enginesInTrain.size(); j++) {
+						Engine engine = engineManager
+								.getEngineById((String) enginesInTrain.get(j));
+						if (engine.getRouteLocation() == rl	&& !engine.getTrackName().equals("")){
+							pickupEngine(fileOut, engine);
+						}
+					}
 					// get a list of cars and determine if this location is serviced
 					for (int j=0; j<carsInTrain.size(); j++){
 						Car car = carManager.getCarById((String)carsInTrain.get(j));
@@ -79,6 +91,13 @@ public class TrainSwitchLists {
 						if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 							pickupCar(fileOut, car);
 							pickupCars++;
+						}
+					}
+					for (int j = 0; j < enginesInTrain.size(); j++) {
+						Engine engine = engineManager
+								.getEngineById((String) enginesInTrain.get(j));
+						if (engine.getRouteDestination() == rl){
+							dropEngine(fileOut, engine);
 						}
 					}
 					for (int j=0; j<carsInTrain.size(); j++){
@@ -101,6 +120,30 @@ public class TrainSwitchLists {
 		}
 		fileOut.flush();
 		fileOut.close();
+	}
+	
+	private void pickupEngine(PrintWriter file, Engine engine){
+		String comment = (Setup.isAppendCarCommentEnabled() ? " "
+				+ engine.getComment(): "");
+		addLine(file, BOX + rb.getString("Pickup") +" "
+				+ rb.getString("Engine") + " "
+				+ engine.getRoad() + " "
+				+ engine.getNumber() + " ("
+				+ engine.getModel() + ") "
+				+ rb.getString("from") + " "
+				+ engine.getTrackName() + comment);
+	}
+	
+	private void dropEngine(PrintWriter file, Engine engine){
+		String comment = (Setup.isAppendCarCommentEnabled() ? " "
+				+ engine.getComment(): "");
+		addLine(file, BOX + rb.getString("Drop") +" "
+				+ rb.getString("Engine") + " "
+				+ engine.getRoad() + " "
+				+ engine.getNumber() + " ("
+				+ engine.getModel() + ") "
+				+ rb.getString("to") + " "
+				+ engine.getDestinationTrackName() + comment);
 	}
 	
 	private void  pickupCar(PrintWriter file, Car car){

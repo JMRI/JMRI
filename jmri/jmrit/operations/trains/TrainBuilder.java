@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class TrainBuilder{
 	
@@ -1116,7 +1116,7 @@ public class TrainBuilder{
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null)
-					addLine(fileOut, rb.getString("DropEngineTo")+ " "+ engine.getDestinationTrackName()); 
+					addLine(fileOut, BOX +rb.getString("DropEngineTo")+ " "+ engine.getDestinationTrackName()); 
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + rl.getName());
 			}
 		}
