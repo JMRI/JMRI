@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.70 $
+ * @version     $Revision: 1.71 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -103,9 +103,12 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, frame);
 
-        // if the configuration didn't complete OK, pop the prefs frame
+        // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+configOK);
-        if (!configOK) doPreferences();
+        if (!configOK) { 
+            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanel");
+            doPreferences();
+        }
         log.debug("Done with doPreferences, start statusPanel");
 
         add(statusPanel());
