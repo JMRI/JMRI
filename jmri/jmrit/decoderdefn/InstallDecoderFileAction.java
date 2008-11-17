@@ -12,10 +12,10 @@ import java.util.*;
 import org.jdom.*;
 
 /**
- * Check the names in an XML decoder file against the names.xml definitions
+ * Install decoder definition from local file.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.1 $
+ * @author	Bob Jacobsen   Copyright (C) 2008
+ * @version	$Revision: 1.2 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends AbstractAction {
