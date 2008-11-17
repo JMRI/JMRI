@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.List;
 import org.jdom.Comment;
 import org.jdom.Document;
@@ -29,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  */
 public abstract class XmlFile {
 
@@ -87,7 +89,7 @@ public abstract class XmlFile {
         }
         catch (org.jdom.JDOMException e1) {
             // 1st attempt failed, try second using deprecated method
-            if (!openWarn1) reportError1(file, e1);
+            if (!openWarn1) reportError1(file.getName(), e1);
             openWarn1 = true;
             try {
                 InputStream stream = new BufferedInputStream(new FileInputStream(file));
@@ -97,11 +99,60 @@ public abstract class XmlFile {
             }
             catch (org.jdom.JDOMException e2) {
                 // 2nd attempt failed, try third.
-                if (!openWarn2) reportError2(file, e2);
+                if (!openWarn2) reportError2(file.getName(), e2);
                 openWarn2 = true;
                 // All exceptions are allowed to propagate out, 
                 // as we have no retry algorithms left
                 InputStream stream = new BufferedInputStream(new FileInputStream(file));
+                e = getRootViaRelative(verify, stream);
+                log.info("GetRootViaRelative succeeded as 3rd try");
+                new Exception().printStackTrace();
+                return e;
+            }
+            // other errors are allowed to propagate out
+        }
+        // other errors are allowed to propagate out
+    }
+
+    /**
+     * Read a URL as XML, and return the root object.
+     *
+     * Multiple methods are tried to locate the DTD needed to do this.
+     * Exceptions are only thrown when local recovery is impossible.
+     *
+     * @throws org.jdom.JDOMException only when all methods have failed
+     * @throws java.io.FileNotFoundException
+     * @param file File to be parsed.  A FileNotFoundException is thrown if it doesn't exist.
+     * @return root element from the file. This should never be null, as an
+     *          exception should be thrown if anything goes wrong.
+     */
+    public Element rootFromURL(URL url) throws org.jdom.JDOMException, java.io.IOException {
+        Element e;
+        try {
+            InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
+            return getRootViaURI(verify, stream);
+        }
+        catch (org.jdom.input.JDOMParseException e4) {
+            // file opened, but couldn't be parsed; report that up
+            throw e4;
+        }
+        catch (org.jdom.JDOMException e1) {
+            // 1st attempt failed, try second using deprecated method
+            if (!openWarn1) reportError1(url.toString(), e1);
+            openWarn1 = true;
+            try {
+                InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
+                e = getRootViaURL(verify, stream);
+                log.info("getRootViaURL succeeded as 2nd try");
+                return e;
+            }
+            catch (org.jdom.JDOMException e2) {
+                // 2nd attempt failed, try third.
+                if (!openWarn2) reportError2(url.toString(), e2);
+                openWarn2 = true;
+                // All exceptions are allowed to propagate out, 
+                // as we have no retry algorithms left
+                InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
                 e = getRootViaRelative(verify, stream);
                 log.info("GetRootViaRelative succeeded as 3rd try");
                 new Exception().printStackTrace();
@@ -122,10 +173,10 @@ public abstract class XmlFile {
     static public final String dtdLocation = "";
     
     // made members for overriding in tests
-    protected void reportError1(File file, Exception e) {
-        log.warn("Failed to open "+file.getName()+" on 1st attempt, error was: "+e);
+    protected void reportError1(String name, Exception e) {
+        log.warn("Failed to open "+name+" on 1st attempt, error was: "+e);
     }
-    protected void reportError2(File file, Exception e) {
+    protected void reportError2(String name, Exception e) {
         log.warn("Failed to open on 2nd attempt, error was: "+e);
     }
     
@@ -392,7 +443,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.36 2008-09-23 16:07:26 rcoleman Exp $";
+                        +" $Id: XmlFile.java,v 1.37 2008-11-17 02:58:26 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
