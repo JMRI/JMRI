@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -535,7 +535,6 @@ public class TransitTableAction extends AbstractTableAction {
 			initializeSectionCombos();
 		}	
 		sectionTableModel.fireTableDataChanged();
-		return;
 	}
     void createPressed(ActionEvent e) {
 		if (!checkTransitInformation()) {
@@ -558,6 +557,8 @@ public class TransitTableAction extends AbstractTableAction {
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
+		addFrame.dispose();  // remove addFrame from Windows menu
+		addFrame = null;
 	}
 	void updatePressed(ActionEvent e) {
 		if (!checkTransitInformation()) {
@@ -580,6 +581,8 @@ public class TransitTableAction extends AbstractTableAction {
 		if (setTransitInformation()) {
 			// successful update
 			addFrame.setVisible(false);
+			addFrame.dispose();  // remove addFrame from Windows menu
+			addFrame = null;
 		}
 	}
 	private boolean checkTransitInformation() {
@@ -654,7 +657,7 @@ public class TransitTableAction extends AbstractTableAction {
 								sName = sName+"( "+s.getUserName()+" )";
 							alternateSectionBox.addItem(sName);
 							alternateSectionBoxList.add((Object)s);							
-							altSectionDirection[primarySectionBoxList.size()-1] = Section.FORWARD;
+							altSectionDirection[alternateSectionBoxList.size()-1] = Section.FORWARD;
 						}
 						else if ( notIncludedWithSeq(s,curSequenceNum) && 
 											reverseConnected(s,prevSection,prevSectionDirection) ) {
@@ -662,7 +665,7 @@ public class TransitTableAction extends AbstractTableAction {
 								sName = sName+"( "+s.getUserName()+" )";
 							alternateSectionBox.addItem(sName);
 							alternateSectionBoxList.add((Object)s);							
-							altSectionDirection[primarySectionBoxList.size()-1] = Section.REVERSE;
+							altSectionDirection[alternateSectionBoxList.size()-1] = Section.REVERSE;
 						}
 					}
 				}
