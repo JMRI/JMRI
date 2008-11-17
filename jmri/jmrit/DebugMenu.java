@@ -10,7 +10,7 @@ import java.util.*;
  * debugging tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {
@@ -29,6 +29,7 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.MemoryFrameAction(rb.getString("MenuItemMemoryUsageMonitor")));
         add(new JSeparator());
         add(new jmri.jmrit.decoderdefn.InstallDecoderFileAction(rb.getString("MenuItemImportDecoderFile"), panel));
+        add(new jmri.jmrit.decoderdefn.InstallDecoderURLAction(rb.getString("MenuItemImportDecoderURL"), panel));
         add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction(rb.getString("MenuItemRecreateDecoderIndex")));
         add(new jmri.jmrit.roster.RecreateRosterAction(rb.getString("MenuItemRecreateRoster")));
         add(new JSeparator());
