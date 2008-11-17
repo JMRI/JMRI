@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -717,6 +717,7 @@ public class LayoutBlock extends AbstractNamedBean
 				occupancySensor = null;
 				occupancySensorName = "";
 				sensorNameField.setText("");
+				return;
 			}
 			else {
 				sensorNameField.setText(newName);
@@ -745,6 +746,7 @@ public class LayoutBlock extends AbstractNamedBean
 				// invalid memory entered
 				memoryName = "";
 				memoryNameField.setText("");
+				return;
 			}
 			else {
 				memoryNameField.setText(memoryName);
@@ -754,11 +756,15 @@ public class LayoutBlock extends AbstractNamedBean
 		// complete
 		editOpen = false;
 		editLayoutBlockFrame.setVisible(false);
+		editLayoutBlockFrame.dispose();
+		editLayoutBlockFrame = null;
 		if (needsRedraw) redrawLayoutBlockPanels();
 	}
 	void blockEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editLayoutBlockFrame.setVisible(false);
+		editLayoutBlockFrame.dispose();
+		editLayoutBlockFrame = null;
 	}
 	
 	/** 

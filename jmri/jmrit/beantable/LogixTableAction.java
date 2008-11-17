@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -419,6 +419,8 @@ public class LogixTableAction extends AbstractTableAction {
 	 */
 	void cancelAddPressed(ActionEvent e) {
 		addLogixFrame.setVisible(false);
+		addLogixFrame.dispose();
+		addLogixFrame = null;
 		f.setVisible(true);
 	}
 
@@ -478,6 +480,8 @@ public class LogixTableAction extends AbstractTableAction {
 		numConditionals = 0;
 		logixCreated = true;
 		addLogixFrame.setVisible(false);
+		addLogixFrame.dispose();
+		addLogixFrame = null;
 		// create the Edit Logix Window
 		makeEditLogixWindow();
 	}
@@ -656,8 +660,7 @@ public class LogixTableAction extends AbstractTableAction {
 			});
 			done.setToolTipText(rbx.getString("DoneButtonHint"));
 			// Delete Logix
-			panel5
-					.add(delete = new JButton(rbx
+			panel5.add(delete = new JButton(rbx
 							.getString("DeleteLogixButton")));
 			delete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -857,6 +860,8 @@ public class LogixTableAction extends AbstractTableAction {
 		inEditMode = false;
 		showSaveReminder();
 		editLogixFrame.setVisible(false);
+		editLogixFrame.dispose();
+		editLogixFrame = null;
 		// bring Logix Table to front
 		f.setVisible(true);
 	}
@@ -876,6 +881,8 @@ public class LogixTableAction extends AbstractTableAction {
 		logixCreated = true;
 		inEditMode = false;
 		editLogixFrame.setVisible(false);
+		editLogixFrame.dispose();
+		editLogixFrame = null;
 		f.setVisible(true);
 	}
 
@@ -1768,6 +1775,8 @@ public class LogixTableAction extends AbstractTableAction {
 				actionName, actionData, actionString);
 		inEditConditionalMode = false;
 		editConditionalFrame.setVisible(false);
+		editConditionalFrame.dispose();
+		editConditionalFrame = null;
 		editLogixFrame.setVisible(true);
 	}
 
@@ -1778,6 +1787,8 @@ public class LogixTableAction extends AbstractTableAction {
 	void cancelConditionalPressed(ActionEvent e) {
 		inEditConditionalMode = false;
 		editConditionalFrame.setVisible(false);
+		editConditionalFrame.dispose();
+		editConditionalFrame = null;
 		editLogixFrame.setVisible(true);
 	}
 
@@ -1795,6 +1806,8 @@ public class LogixTableAction extends AbstractTableAction {
 		logixCreated = true; // mark the parent Logix as modified
 		inEditConditionalMode = false;
 		editConditionalFrame.setVisible(false);
+		editConditionalFrame.dispose();
+		editConditionalFrame = null;
 		conditionalTableModel.fireTableRowsDeleted(conditionalRowNumber,
 				conditionalRowNumber);
 		if (numConditionals < 1) {

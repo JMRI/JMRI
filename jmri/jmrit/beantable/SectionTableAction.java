@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SectionTableAction extends AbstractTableAction {
@@ -539,9 +539,13 @@ public class SectionTableAction extends AbstractTableAction {
 		sysName.setText(curSection.getSystemName());
 		setSectionInformation();
 		addFrame.setVisible(false);
+		addFrame.dispose();
+		addFrame = null;
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
+		addFrame.dispose();
+		addFrame = null;
 	}
     void updatePressed(ActionEvent e) {
 		if (!checkSectionInformation()) {
@@ -564,6 +568,8 @@ public class SectionTableAction extends AbstractTableAction {
 		if (setSectionInformation()) {
 			// successful update
 			addFrame.setVisible(false);
+			addFrame.dispose();
+			addFrame = null;
 		}
     }
 	private boolean checkSectionInformation() {

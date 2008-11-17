@@ -66,7 +66,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutTurnout
@@ -1378,6 +1378,8 @@ public class LayoutTurnout
 		}
 		editOpen = false;
 		editLayoutTurnoutFrame.setVisible(false);
+		editLayoutTurnoutFrame.dispose();
+		editLayoutTurnoutFrame = null;
 		if (needsBlockUpdate) updateBlockInfo();
 		if (needRedraw) {
 			layoutEditor.redrawPanel();
@@ -1387,6 +1389,8 @@ public class LayoutTurnout
 	void turnoutEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editLayoutTurnoutFrame.setVisible(false);
+		editLayoutTurnoutFrame.dispose();
+		editLayoutTurnoutFrame = null;
 		if (needsBlockUpdate) updateBlockInfo();
 		if (needRedraw) {
 			layoutEditor.redrawPanel();

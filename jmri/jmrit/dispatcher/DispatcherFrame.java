@@ -46,7 +46,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -424,6 +424,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private void cancelInitiateTrain(ActionEvent e) {
 		initiateFrame.setVisible(false);
 		initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
+		initiateFrame = null;
 	}
 	private void addNewTrain(ActionEvent e) {
 		// get information
@@ -523,6 +524,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (at==null) return;  // error message sent by createActiveTrain
 		initiateFrame.setVisible(false);
 		initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
+		initiateFrame = null;
 	}	
 	private void initializeFreeTransitsCombo() {
 		ArrayList allTransits = (ArrayList)transitManager.getSystemNameList();

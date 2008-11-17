@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1094,7 +1094,8 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		else {
 			JOptionPane.showMessageDialog(locoFrame,rb.getString("ErrorEnterLocoID"),
-							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);			
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
 		}
      }    
 
@@ -1219,6 +1220,8 @@ public class LayoutEditor extends JmriJFrame {
 		// success - hide dialog and repaint if needed
 		enterWidthOpen = false;
 		enterTrackWidthFrame.setVisible(false);
+		enterTrackWidthFrame.dispose();
+		enterTrackWidthFrame = null;
 		if (trackWidthChange) {
 			repaint();
 			setDirty(true);
@@ -1227,6 +1230,8 @@ public class LayoutEditor extends JmriJFrame {
 	void trackWidthCancelPressed(ActionEvent a) {
 		enterWidthOpen = false;
 		enterTrackWidthFrame.setVisible(false);
+		enterTrackWidthFrame.dispose();
+		enterTrackWidthFrame = null;
 		if (trackWidthChange) {
 			repaint();
 			setDirty(true);
@@ -1382,6 +1387,8 @@ public class LayoutEditor extends JmriJFrame {
 	void reporterCancelPressed(ActionEvent a) {
 		reporterOpen = false;
 		enterReporterFrame.setVisible(false);
+		enterReporterFrame.dispose();
+		enterReporterFrame = null;
 		repaint();
 	}
 
@@ -1554,9 +1561,11 @@ public class LayoutEditor extends JmriJFrame {
 			else
 				log.error("Error scaling track diagram");
 		}		
-		// success - hide dialog and repaint if needed
+		// success - dispose of the dialog and repaint if needed
 		scaleTrackDiagramOpen = false;
 		scaleTrackDiagramFrame.setVisible(false);
+		scaleTrackDiagramFrame.dispose();
+		scaleTrackDiagramFrame = null;
 		if (scaleChange) {
 			repaint();
 			setDirty(true);
@@ -1565,6 +1574,8 @@ public class LayoutEditor extends JmriJFrame {
 	void scaleTrackDiagramCancelPressed(ActionEvent a) {
 		scaleTrackDiagramOpen = false;
 		scaleTrackDiagramFrame.setVisible(false);
+		scaleTrackDiagramFrame.dispose();
+		scaleTrackDiagramFrame = null;
 	}
 	boolean translateTrack (float xDel, float yDel) {
 		// loop over all defined turnouts
@@ -1799,10 +1810,14 @@ public class LayoutEditor extends JmriJFrame {
 		// success - hide dialog 
 		moveSelectionOpen = false;
 		moveSelectionFrame.setVisible(false);
+		moveSelectionFrame.dispose();
+		moveSelectionFrame = null;
 	}
 	void moveSelectionCancelPressed(ActionEvent a) {
 		moveSelectionOpen = false;
 		moveSelectionFrame.setVisible(false);
+		moveSelectionFrame.dispose();
+		moveSelectionFrame = null;
 	}
 	void undoMoveSelection() {
 		if (canUndoMoveSelection) {

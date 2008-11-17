@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -225,11 +225,13 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
+		optionsFrame = null;
 		initializeMenu();
 	}
 	private void cancelOptions(ActionEvent e) {
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
+		optionsFrame = null;
 	}
 			
 	private void saveRequested(ActionEvent e) {

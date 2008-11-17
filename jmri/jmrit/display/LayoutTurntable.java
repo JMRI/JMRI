@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTurntable
@@ -448,6 +448,8 @@ public class LayoutTurntable
 		// clean up	
 		editOpen = false;
 		editTurntableFrame.setVisible(false);
+		editTurntableFrame.dispose();
+		editTurntableFrame = null;
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();
@@ -456,6 +458,8 @@ public class LayoutTurntable
 	void turntableEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editTurntableFrame.setVisible(false);
+		editTurntableFrame.dispose();
+		editTurntableFrame = null;
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();

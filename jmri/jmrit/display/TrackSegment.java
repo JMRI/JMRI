@@ -27,7 +27,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrackSegment 
@@ -416,12 +416,16 @@ public class TrackSegment
 		}
 		editOpen = false;
 		editTrackSegmentFrame.setVisible(false);
+		editTrackSegmentFrame.dispose();
+		editTrackSegmentFrame = null;
 		if (needsRedraw) layoutEditor.redrawPanel();
 		layoutEditor.setDirty();
 	}
 	void segmentEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editTrackSegmentFrame.setVisible(false);
+		editTrackSegmentFrame.dispose();
+		editTrackSegmentFrame = null;
 		if (needsRedraw) {
 			layoutEditor.setDirty();
 			layoutEditor.redrawPanel();

@@ -37,7 +37,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LevelXing 
@@ -591,6 +591,8 @@ public class LevelXing
 		}
 		editOpen = false;
 		editLevelXingFrame.setVisible(false);
+		editLevelXingFrame.dispose();
+		editLevelXingFrame = null;
 		if (needsBlockUpdate) updateBlockInfo();
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
@@ -600,6 +602,8 @@ public class LevelXing
 	void xingEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editLevelXingFrame.setVisible(false);
+		editLevelXingFrame.dispose();
+		editLevelXingFrame = null;
 		if (needsBlockUpdate) updateBlockInfo();
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
