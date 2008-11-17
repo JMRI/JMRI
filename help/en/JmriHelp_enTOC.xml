@@ -52,6 +52,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="More Information" target="DecoderProManual.index"/>
          <tocitem text="Getting Started" target="html.apps.DecoderPro.index"/>
       </tocitem>
+      <tocitem text="Installing New Decoder Definitions" target="html.apps.DecoderPro.FileUpdate"/>
       <tocitem text="Multi-Decoder Control" target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
       <tocitem text="Error Messages" target="html.tools.programmer.messages"/>
    </tocitem>

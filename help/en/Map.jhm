@@ -57,7 +57,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.apps.AppConfigPanel_advanced" url="package/apps/AppConfigPanel.shtml#advanced" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml" />
 	<mapID target="html.apps.DecoderPro.FileUpdate" url="html/apps/DecoderPro/FileUpdate.shtml" />
-	<mapID target="package.jmri.jmrix.tchtech.serial.assignment.ListFrame" url="package/jmri/jmrix/tchtech/serial/assignment/ListFrame.shtml" />
 	<mapID target="html.doc.Technical.Logging" url="html/doc/Technical/Logging.shtml" />
 	<mapID target="html.apps.DecoderPro.Install" url="html/apps/DecoderPro/Install.shtml" />
 	<mapID target="Acknowledgements_I" url="Acknowledgements.shtml#I" />
@@ -164,6 +163,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/cmri/serial/serialmon/SerialMonFrame.shtml" />
 	<mapID target="html.apps.LocoTools.index_slotmon" url="html/apps/LocoTools/index.shtml#slotmon" />
 	<mapID target="html.doc.Technical.getcode" url="html/doc/Technical/getcode.shtml" />
+	<mapID target="html.apps.DecoderPro.FileUpdate_after236" url="html/apps/DecoderPro/FileUpdate.shtml#after236" />
 	<mapID target="package.apps.Apps" url="package/apps/Apps.shtml" />
 	<mapID target="package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/ecos/swing/packetgen/PacketGenFrame.shtml" />
 	<mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml" />
@@ -192,7 +192,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="TemplatePlain" url="TemplatePlain.shtml" />
 	<mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml" />
 	<mapID target="html.doc.Technical.CVSFAQ_tags" url="html/doc/Technical/CVSFAQ.shtml#tags" />
-	<mapID target="package.jmri.jmrix.tchtech.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/tchtech/serial/serialmon/SerialMonFrame.shtml" />
 	<mapID target="package.jmri.jmrit.dispatcher.Dispatcher_window" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window" />
 	<mapID target="html.tools.Logix" url="html/tools/Logix.shtml" />
 	<mapID target="html.web.index" url="html/web/index.shtml" />
@@ -259,6 +258,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_Acquiring" url="html/tools/throttle/ThrottleChapter2.shtml#Acquiring" />
 	<mapID target="package.jmri.jmrix.ecos.swing.statusframe.StatusFrame" url="package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml" />
+	<mapID target="html.apps.DecoderPro.FileUpdate_before236" url="html/apps/DecoderPro/FileUpdate.shtml#before236" />
 	<mapID target="package.jmri.jmrit.display.EnterTrackWidth" url="package/jmri/jmrit/display/EnterTrackWidth.shtml" />
 	<mapID target="html.doc.Technical.plugins" url="html/doc/Technical/plugins.shtml" />
 	<mapID target="html.doc.Technical.CVSFAQ_refid" url="html/doc/Technical/CVSFAQ.shtml#refid" />
@@ -352,8 +352,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="Acknowledgements_B" url="Acknowledgements.shtml#B" />
 	<mapID target="html.tools.Lights" url="html/tools/Lights.shtml" />
 	<mapID target="html.hardware.nce.NCE_powercab" url="html/hardware/nce/NCE.shtml#powercab" />
-	<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml" />
 	<mapID target="DecoderProManual.Comp_FMap_Top" url="DecoderProManual/Comp_FMap.shtml#Top" />
+	<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml" />
 	<mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCETurnoutLockFeature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCETurnoutLockFeature" />
 	<mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml" />
@@ -372,7 +372,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.nce.NCE_troubleShoot" url="html/hardware/nce/NCE.shtml#troubleShoot" />
 	<mapID target="package.jmri.jmrit.display.EditLevelXing" url="package/jmri/jmrit/display/EditLevelXing.shtml" />
 	<mapID target="package.jmri.jmrit.display.MultiSensorIconFrame" url="package/jmri/jmrit/display/MultiSensorIconFrame.shtml" />
-	<mapID target="package.jmri.jmrix.tchtech.serial.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/tchtech/serial/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="html.apps.DecoderPro.Files" url="html/apps/DecoderPro/Files.shtml" />
 	<mapID target="package.jmri.jmrit.operations.Operations_CarsEdit" url="package/jmri/jmrit/operations/Operations.shtml#CarsEdit" />
@@ -478,7 +477,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml" />
 	<mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.sdfeditor.EditorFrame" url="package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml" />
-	<mapID target="package.jmri.jmrix.tchtech.serial.diagnostic.DiagnosticFrame" url="package/jmri/jmrix/tchtech/serial/diagnostic/DiagnosticFrame.shtml" />
 	<mapID target="html.doc.Technical.JUnit_write" url="html/doc/Technical/JUnit.shtml#write" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_WinConfig" url="html/tools/throttle/ThrottleChapter2.shtml#WinConfig" />
 	<mapID target="html.tools.signaling.index_logix" url="html/tools/signaling/index.shtml#logix" />
@@ -488,8 +486,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter1_MainMenu" url="html/tools/throttle/ThrottleChapter1.shtml#MainMenu" />
 	<mapID target="html.apps.LocoTools.index_pm4" url="html/apps/LocoTools/index.shtml#pm4" />
 	<mapID target="html.apps.DecoderPro.NetworkFiles" url="html/apps/DecoderPro/NetworkFiles.shtml" />
-	<mapID target="html.tools.throttle.ThrottleChapter1_HowToFind" url="html/tools/throttle/ThrottleChapter1.shtml#HowToFind" />
 	<mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml" />
+	<mapID target="html.tools.throttle.ThrottleChapter1_HowToFind" url="html/tools/throttle/ThrottleChapter1.shtml#HowToFind" />
 	<mapID target="index" url="index.html" />
 	<mapID target="html.apps.PanelPro.FAQ_location" url="html/apps/PanelPro/FAQ.shtml#location" />
 	<mapID target="html.tools.signaling.index_widgets" url="html/tools/signaling/index.shtml#widgets" />
@@ -565,8 +563,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.index_Basic Programmer" url="DecoderProManual/index.shtml#Basic Programmer" />
 	<mapID target="html.apps.DecoderPro.index_guide" url="html/apps/DecoderPro/index.shtml#guide" />
 	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml" />
-	<mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit_lightcontrol" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrol" />
+	<mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml" />
 	<mapID target="Acknowledgements_L" url="Acknowledgements.shtml#L" />
 	<mapID target="DecoderProManual.Basic_Programming_Basic 2" url="DecoderProManual/Basic_Programming.shtml#Basic 2" />
 	<mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable" />
