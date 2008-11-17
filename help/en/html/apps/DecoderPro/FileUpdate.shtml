@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FileUpdate.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: FileUpdate.shtml,v 1.2 2008-11-17 03:09:08 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Updating Decoder Definitions</title>
 
 <!-- Style -->
@@ -33,7 +33,54 @@ or in the
 <P>
 To use these xml files you need to download and install them.
 
-<P>
+<p>
+The installation process was simplified in JMRI 2.3.6, where 
+"Import Decoder File" and "Import Decoder URL"
+menu items were added to the Debug menu.
+
+<a name="after236">
+<h2>JMRI Version 2.3.6 And After</h2>
+
+This section describes adding a new decoder definition when you are using JMRI
+version 2.3.6 or later.
+
+<h3>Loading a definition from the web</h3>
+If you have a URL for a decoder definition, perhaps copied from
+a web page or email, and your computer has an active Internet connection, 
+you can directly install the definition.
+
+<ul>
+<li>Select the "Import Decoder URL" item from the "Debug" menu.
+<li>You'll be prompted for the URL. Enter it, and click OK.
+</ul>
+
+Unless there are errors, the file will be copied onto your local computer
+and installed in your JMRI directory.
+
+<h3>Loading a definition from a file</h3>
+If you have local file containing a decoder definition, perhaps downloaded from
+a web page or received via email, 
+you can install that definition in JMRI.
+
+<ul>
+<li>Select the "Import Decoder File" item from the "Debug" menu.
+<li>You'll be shown a file selection dialog. 
+<li>If the file doesn't have a ".xml" extension, you may have to select the "show all files"
+filter at the bottom of the dialog.
+<li>Navigate to your file, and click OK.
+</ul>
+
+Unless there are errors, the file will be copied into your JMRI directory and installed.
+
+
+
+
+<a name="before236">
+<h2>JMRI Version 2.3.5 And Before</h2>
+
+This section describes adding a new decoder definition when you are using JMRI
+version 2.3.5 or before.
+
 <h3>On Windows Systems</h3>
 <UL>
 <LI>Go to the files menu where the decoder.XML file is located and 
@@ -79,18 +126,6 @@ decoder
 
 </UL>
 
-<h3>MAC Classic</h3>
-
-<ul>
-<LI>If you want to down load one of these "option and click" on it.
-
-<LI>Then copy the 
-file into
-the JMRI/xml/decoder folder. 
-<LI>Once the file is moved, rebuild the decoder 
-index through
-use of the "Recreate Decoder Index" found under the Debug menu. 
-</UL>
 
 </div>
     
