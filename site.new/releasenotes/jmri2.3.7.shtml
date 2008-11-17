@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.6.shtml,v 1.11 2008-11-17 15:18:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.7.shtml,v 1.1 2008-11-17 15:18:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
- JMRI: Release Notes for 2.3.6
+ JMRI: Release Notes for 2.3.7
  
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.3.6 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.3.7 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -26,14 +26,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.3.6 release
+      Release Notes for JMRI 2.3.7 release
       </h2>
 
-	<p>Date: November 16, 2008</p>
+	<p>Date: MM DD, 2008</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.3.6 of JMRI/DecoderPro is available for download.
+	<p>Subject: Test version 2.3.7 of JMRI/DecoderPro is available for download.
 
-<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+<br><b>This is a draft release note only; the download links do not yet work</b>
 
 <h3>Notes:</h3>
 
@@ -41,17 +41,12 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the sixth in a series of test versions.
+<p>This is the seventh in a series of test versions.
 
 It contains 
 many new features, including:
 <ul>
-<LI>Improved Throttle options: You can now label what each 
-function key does for each locomotive in DecoderPro, and have
-those automatically shown when you open a throttle for that locomotive.
-<li>Tools to make it easier to download new decoder definitions
-from a local file or via the Internet.
-
+<LI>
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -124,66 +119,18 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 <p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.7.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.7.dmg?download</a>
 
 <p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.exe?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.7.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.7.exe?download</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.6.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.3.7.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.3.7.tgz?download</a>
 
 
 
-<h3>Changes since test version 2.3.5:</h3>
+<h3>Changes since test version 2.3.6:</h3>
 
-Dan Boudreau made several additions to the operations code. He added
-termination of trains to operations for batch mode, AAR type code for
-cars, and the ability to specify a commodity for cars. Fixed a bug when
-adding or editing routes in which the train direction wasn't properly
-saved.
-
-<p>
-Fixed a bug that would result in user names for Blocks being lost when Layout Editor wasn't being used.
-
-
-<p>
-Dan Boudreau made some tweaks to the Throttle window layout and
-added the ability to save your throttle preference. Now you can
-configure how you want your throttle buttons to appear and save it using
-the "Save Throttle Preference" in the Tools->Throttles menu. He also
-changed the Throttle's default text for buttons F0, F1 and F3 to Light,
-Bell, and Horn. The Horn button is also set to momentary.
-
-<p>
-David Duchamp added Logix actions to set variable light intensity and light transition time.
-
-<p>
-You can now configure the labels on the throttle function keys as part of your locomotive roster.
-A new "Function Key Labels" pane in DecoderPro lets you assign a label to each function, which will then be
-displayed on the function button when using a JMRI throttle to control that locomotive.
-For example, F2 in a sound-equipped locomotive might be labelled "Bell".
-
-<p>
-Support for TCH Technology hardware has been removed.
-
-<p>
-David Duchamp fixed a bug where Block system names were being changed when loading a Layout Editor panel while restarting after Layout Editor edits that changed the block structure of the panel.
-
-<p>
-Added a Help button to the DecoderPro and PanelPro main windows, and a Quit button to the PanelPro main window.
-Also, when the setup fails and the preferences window is opened at startup, also open the help window for preferences.
-
-<p>
-Added "Import Decoder File" and "Import Decoder URL " in the Debug menu, which 
-will take a user-selected decoder definition file, copy it in the right place, and 
-rebuild the decoder index. The two forms are for selecting a local file, perhaps downloaded
-from a web page, and for downloading directly from a web page via an internet connection.
-See the 
-<a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/FileUpdate.shtml">help page</a>
-for more information.
-
-<p>
-Added text to the "roster could not be read" message so it's clear this is normal if you haven't added any decoders yet
 
 <!--#include virtual="/Footer" -->
 
