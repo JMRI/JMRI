@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.5 on Sat Nov 01 13:06:11 PDT 2008 $Id: decoderIndex.xml,v 1.129 2008-11-01 20:11:16 jacobsen Exp $-->
-  <decoderIndex version="149">
+  <!--Written by JMRI version Test build 200811091713(jake) on Sun Nov 16 19:50:04 PST 2008 $Id: decoderIndex.xml,v 1.130 2008-11-17 03:51:22 jacobsen Exp $-->
+  <decoderIndex version="151">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -138,6 +138,13 @@
           <output name="Air" connection="unspecified" />
           <output name="Brakes" connection="unspecified" />
         </model>
+        <functionlabels>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn 1</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Rev Up</functionlabel>
+        </functionlabels>
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_steam.xml">
         <model model="Steam" numOuts="3" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
