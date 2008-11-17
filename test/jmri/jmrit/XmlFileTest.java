@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -94,7 +94,7 @@ public class XmlFileTest extends TestCase {
         // try to read
         testFlag = false;
         XmlFile x = new XmlFile() {
-           protected void reportError1(File file, Exception e) {
+           protected void reportError1(String name, Exception e) {
                 log.debug("invoked");
                 testFlag = true;
             }
