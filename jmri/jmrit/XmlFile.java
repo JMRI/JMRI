@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.37 $
+ * @version	$Revision: 1.38 $
  */
 public abstract class XmlFile {
 
@@ -122,7 +122,7 @@ public abstract class XmlFile {
      *
      * @throws org.jdom.JDOMException only when all methods have failed
      * @throws java.io.FileNotFoundException
-     * @param file File to be parsed.  A FileNotFoundException is thrown if it doesn't exist.
+     * @param url URL locating the data file
      * @return root element from the file. This should never be null, as an
      *          exception should be thrown if anything goes wrong.
      */
@@ -443,7 +443,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.37 2008-11-17 02:58:26 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.38 2008-11-17 04:03:12 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
