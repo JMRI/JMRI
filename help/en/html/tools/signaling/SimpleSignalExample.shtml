@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.5 2008-11-17 08:21:41 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.6 2008-11-17 15:18:08 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -45,7 +45,7 @@ A predefined example signaling configuration is provided in the JMRI downloads; 
 To use it:
 <UL>
 <LI>Start the PanelPro program, and select Prefs from the Edit menu.
-On the panel that opens, select "LocoNet Hexfile" as the protocol.
+On the panel that opens, select "LocoNet Simulator" as the protocol.
 Save, and quit the program.  This will let you use the example (which
 uses LocoNet addresses for signals, turnouts and sensors) even when 
 your computer is not connected to a layout of any kind.
