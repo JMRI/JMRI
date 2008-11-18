@@ -16,7 +16,7 @@ import org.jdom.Element;
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2002, 2008
- * @version	   $Revision: 1.8 $
+ * @version	   $Revision: 1.9 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
                          implements java.beans.PropertyChangeListener  {
@@ -79,22 +79,19 @@ public class PaneServiceProgFrame extends PaneProgFrame
     
                 // is the current mode OK?
                 int currentMode = mProgrammer.getMode();
-                log.debug("XML specifies modes:"+paged+directbit+directbyte+register+" now "+currentMode);
-                if ( !( (currentMode == Programmer.PAGEMODE && paged)
-                    || (currentMode == Programmer.DIRECTBYTEMODE && directbyte)
-                    || (currentMode == Programmer.DIRECTBITMODE && directbit)
-                    || (currentMode == Programmer.REGISTERMODE && register) ) ) {
-                    // if not, find a mode to set it to
-                    if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
-                        mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
-                    else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
-                        mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
-                    else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
-                        mProgrammer.setMode(jmri.Programmer.PAGEMODE);
-                    else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
-                        mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
-                    else log.warn("No acceptable mode found, leave as found");
-                }
+                log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+currentMode);
+
+                // find a mode to set it to
+                if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
+                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+                else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
+                    mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
+                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
+                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
+                else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
+                    mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
+                else log.warn("No acceptable mode found, leave as found");
+                
             } else {
                 log.error("Can't set programming mode, no programmer instance");
             }
