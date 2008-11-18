@@ -3,12 +3,17 @@ package jmri.jmrit.operations.trains;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
@@ -26,7 +31,7 @@ import jmri.jmrit.display.LocoIcon;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -52,6 +57,7 @@ public class TrainIcon extends LocoIcon {
 						train.move();
 					}
 				});
+				popup.add(makeTrainRouteMenu()); 
 				popup.add(new AbstractAction("Set X&Y") {
 					public void actionPerformed(ActionEvent e) {
 						train.setTrainIconCordinates();
@@ -61,18 +67,7 @@ public class TrainIcon extends LocoIcon {
 			if (entry != null) {
 				popup.add(new AbstractAction("Throttle") {
 					public void actionPerformed(ActionEvent e) {
-						tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-						if (consist > 0){
-							if (JOptionPane.showConfirmDialog(null,
-									"Send function commands to lead loco?", "Consist Throttle",
-									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-								tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress()); 	// first notify for func button
-							}
-							tf.notifyAddressChosen(consist, false);	// second notify for consist address
-						} else {
-							tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
-						}
-						tf.setVisible(true);
+						createThrottle();
 					}
 				});
 			}
@@ -107,14 +102,67 @@ public class TrainIcon extends LocoIcon {
     	return train;
     }
     
-    int consist = 0;
+    int consistNumber = 0;
     
-    public void setConsistNumber (int consist){
-    	this.consist =   consist;
+    public void setConsistNumber (int cN){
+    	this.consistNumber =   cN;
     }
         
-    public int getConsist (){
-    	return consist;
+    public int getConsistNumber(){
+    	return consistNumber;
+    }
+    
+    private void createThrottle(){
+    	tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+		if (getConsistNumber() > 0){
+			if (JOptionPane.showConfirmDialog(null,
+					"Send function commands to lead loco?", "Consist Throttle",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress()); 	// first notify for func button
+			}
+			tf.notifyAddressChosen(getConsistNumber(), false);	// second notify for consist address
+		} else {
+			tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+		}
+		tf.setVisible(true);
+    }
+    
+    private JMenu makeTrainRouteMenu(){
+    	JMenu routeMenu = new JMenu("Route");
+    	Route route = train.getRoute();
+    	if (route == null)
+    		return routeMenu;
+    	List routeList = route.getLocationsBySequenceList();
+    	CarManager carManager = CarManager.instance();
+    	List carList = carManager.getCarsByTrainList(train);
+    	for (int r=0; r<routeList.size(); r++){
+    		int pickupCars = 0;
+    		int dropCars = 0;
+    		String current = "     ";
+ 			RouteLocation rl = route.getLocationById((String)routeList.get(r));
+			if (train.getCurrentLocation() == rl)
+				current = "-> ";
+			for (int j=0; j<carList.size(); j++){
+				Car car = carManager.getCarById((String)carList.get(j));
+				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
+					pickupCars++;
+				}
+				if (car.getRouteDestination() == rl){
+					dropCars++;
+				}
+			}
+			String pickups = "";
+			String drops = "";
+			if (pickupCars > 0)
+				pickups = " Pickups " + pickupCars;
+			if (dropCars > 0)
+				drops = " Drops " + dropCars;
+			if (pickupCars > 0 || dropCars > 0)
+				routeMenu.add(current + rl.getName() +"  (" + pickups + drops +" )");
+			else
+				routeMenu.add(current + rl.getName());
+    	}
+    	return routeMenu;
     }
     
  

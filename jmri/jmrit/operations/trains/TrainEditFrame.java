@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -224,7 +224,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	   	pdt.setLayout(new GridBagLayout());
 		// build hour and minute menus
 		for (int i=0; i<24; i++){
-			if (i<9)
+			if (i<10)
 				hourBox.addItem("0"+Integer.toString(i));
 			else
 				hourBox.addItem(Integer.toString(i));
@@ -233,7 +233,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		
 		for (int i=0; i<60; i+=5){
-			if (i<9)
+			if (i<10)
 				minuteBox.addItem("0"+Integer.toString(i));
 			else
 				minuteBox.addItem(Integer.toString(i));

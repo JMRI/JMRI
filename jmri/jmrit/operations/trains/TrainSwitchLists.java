@@ -20,7 +20,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
-public class TrainSwitchLists {
+public class TrainSwitchLists extends TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String FEET = Setup.FEET;
@@ -49,7 +49,7 @@ public class TrainSwitchLists {
 		addLine(fileOut, "Valid " + new Date());
 		
 		// get a list of trains
-		List trains = manager.getTrainsByNameList();
+		List trains = manager.getTrainsByTimeList();
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
 		for (int i=0; i<trains.size(); i++){
@@ -59,15 +59,15 @@ public class TrainSwitchLists {
 			Train train = manager.getTrainById((String)trains.get(i));
 			if (!train.getBuilt())
 				continue;	// train wasn't built so skip
-			List carsInTrain = carManager.getCarsByTrainList(train);
-			List enginesInTrain = engineManager.getEnginesByTrainList(train);
+			List carList = carManager.getCarsByTrainList(train);
+			List enginesList = engineManager.getEnginesByTrainList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
 				continue;	// no route for this train
-			List routeLocations = route.getLocationsBySequenceList();
-			for (int r=0; r<routeLocations.size(); r++){
-				RouteLocation rl = route.getLocationById((String)routeLocations.get(r));
+			List routeList = route.getLocationsBySequenceList();
+			for (int r=0; r<routeList.size(); r++){
+				RouteLocation rl = route.getLocationById((String)routeList.get(r));
 				if (rl.getName().equals(location.getName())){
 					if (stops > 1){
 						newLine(fileOut);
@@ -75,33 +75,38 @@ public class TrainSwitchLists {
 					} else {
 						newLine(fileOut);
 						addLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
+						addLine(fileOut, "Departs "+train.getTrainDepartsName()+" at " + train.getDepartureTime());
 					}
 					// go through the list of engines and determine if the engine departs here
-					for (int j = 0; j < enginesInTrain.size(); j++) {
+					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById((String) enginesInTrain.get(j));
+								.getEngineById((String) enginesList.get(j));
 						if (engine.getRouteLocation() == rl	&& !engine.getTrackName().equals("")){
 							pickupEngine(fileOut, engine);
 						}
 					}
 					// get a list of cars and determine if this location is serviced
-					for (int j=0; j<carsInTrain.size(); j++){
-						Car car = carManager.getCarById((String)carsInTrain.get(j));
-						// if car is in train (no track) ignore
-						if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
-							pickupCar(fileOut, car);
-							pickupCars++;
+//					block cars by destination
+					for (int j = 0; j < routeList.size(); j++) {
+						RouteLocation rld = train.getRoute().getLocationById((String) routeList.get(j));
+						for (int k = 0; k < carList.size(); k++) {
+							Car car = carManager.getCarById((String) carList.get(k));
+							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+									&& car.getRouteDestination() == rld) {
+								pickupCar(fileOut, car);
+								pickupCars++;
+							}
 						}
 					}
-					for (int j = 0; j < enginesInTrain.size(); j++) {
+					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById((String) enginesInTrain.get(j));
+								.getEngineById((String) enginesList.get(j));
 						if (engine.getRouteDestination() == rl){
 							dropEngine(fileOut, engine);
 						}
 					}
-					for (int j=0; j<carsInTrain.size(); j++){
-						Car car = carManager.getCarById((String)carsInTrain.get(j));
+					for (int j=0; j<carList.size(); j++){
+						Car car = carManager.getCarById((String)carList.get(j));
 						if (car.getRouteDestination() == rl){
 							dropCar(fileOut, car);
 							dropCars++;
@@ -121,67 +126,7 @@ public class TrainSwitchLists {
 		fileOut.flush();
 		fileOut.close();
 	}
-	
-	private void pickupEngine(PrintWriter file, Engine engine){
-		String comment = (Setup.isAppendCarCommentEnabled() ? " "
-				+ engine.getComment(): "");
-		addLine(file, BOX + rb.getString("Pickup") +" "
-				+ rb.getString("Engine") + " "
-				+ engine.getRoad() + " "
-				+ engine.getNumber() + " ("
-				+ engine.getModel() + ") "
-				+ rb.getString("from") + " "
-				+ engine.getTrackName() + comment);
-	}
-	
-	private void dropEngine(PrintWriter file, Engine engine){
-		String comment = (Setup.isAppendCarCommentEnabled() ? " "
-				+ engine.getComment(): "");
-		addLine(file, BOX + rb.getString("Drop") +" "
-				+ rb.getString("Engine") + " "
-				+ engine.getRoad() + " "
-				+ engine.getNumber() + " ("
-				+ engine.getModel() + ") "
-				+ rb.getString("to") + " "
-				+ engine.getDestinationTrackName() + comment);
-	}
-	
-	private void  pickupCar(PrintWriter file, Car car){
-		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		String[] carType = car.getType().split("-"); // ignore lading
-		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
-				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
-				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
-				+ car.getTrackName() + carComment);
-	}
-	
-	private void dropCar(PrintWriter file, Car car){
-		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		String[] carType = car.getType().split("-"); // ignore lading
-		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
-				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
-				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ rb.getString("to") + " " + car.getDestinationTrackName()
-				+ carComment);
-	}
-	
-	// writes string to console and file
-	private void addLine (PrintWriter file, String string){
-		if(log.isDebugEnabled())
-			log.debug(string);
-		if (file != null)
-			file.println(string);
-	}
-	
-	private void newLine (PrintWriter file){
-		file.println(" ");
-	}
-	
+
 	public void printSwitchList(Location location, boolean preview){
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
 		Train.printReport(buildFile, "Switchlist " + location.getName(), preview, Setup.getFontName());

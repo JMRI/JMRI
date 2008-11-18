@@ -53,9 +53,9 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
-public class TrainBuilder{
+public class TrainBuilder extends TrainCommon{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
@@ -1011,19 +1011,6 @@ public class TrainBuilder{
 		}
 	}
 
-	// writes string to console and file
-	private void addLine (PrintWriter file, String string){
-		if(log.isDebugEnabled())
-			log.debug(string);
-		if (file != null)
-			file.println(string);
-	}
-	
-	private void newLine (PrintWriter file){
-		if (file != null)
-			file.println(" ");
-	}
-	
 	private void buildFailed(PrintWriter file, String string){
 		train.setStatus(BUILDFAILED);
 		if(log.isDebugEnabled())
@@ -1124,30 +1111,6 @@ public class TrainBuilder{
 		fileOut.close();
 	}
 	
-	private void  pickupCar(PrintWriter file, Car car){
-		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		String[] carType = car.getType().split("-"); // ignore lading
-		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
-				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
-				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
-				+ car.getTrackName() + carComment);
-	}
-	
-	private void dropCar(PrintWriter file, Car car){
-		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
-		String[] carType = car.getType().split("-"); // ignore lading
-		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
-		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
-				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
-				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ rb.getString("to") + " " + car.getDestinationTrackName()
-				+ carComment);
-	}
-
 	static org.apache.log4j.Category log = org.apache.log4j.Category
 			.getInstance(TrainBuilder.class.getName());
 

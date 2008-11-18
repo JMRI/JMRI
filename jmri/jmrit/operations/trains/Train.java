@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -82,6 +82,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _engineModel = "";		// required model of engines assigned to this train
 	protected String _cabooseRoad = "";		// required road name for cabooses assigned to this train
 	protected Calendar _departureTime = Calendar.getInstance();	// departure time for this train
+	protected String _leadEngineId ="";		// lead engine for train icon info
 	
 	protected String _comment = "";
 	
@@ -657,6 +658,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean getPrinted(){
 		return _printed;
 	}
+	
+	protected RouteLocation trainIconRl = null; // saves the icon current route location
 
 	/**
 	 * Sets the panel position for the train icon   
@@ -718,8 +721,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 	}
-		
-	RouteLocation trainIconRl = null;  // saves the icon current route location
+	
 	protected void moveTrainIcon(RouteLocation rl){
 		trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
@@ -738,21 +740,29 @@ public class Train implements java.beans.PropertyChangeListener {
 		} 
 	}
 	
+	protected Engine leadEngine = null; 				// lead engine for icon
 	public String getIconName(){
 		String name = getName();
-		if (getBuilt() && iconEngine != null && Setup.isTrainIconAppendEnabled())
-			name += " "+iconEngine.getNumber();
+		if (getBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled())
+			name += " "+ getLeadEngine().getNumber();
 		return name;
 	}
-	
-	private Engine iconEngine; // lead engine for icon
-	
+		
+	/**
+	 * Gets the lead engine, will create it if the program has been restarted
+	 * @return lead engine for this train
+	 */
 	public Engine getLeadEngine(){
-		return iconEngine;
+		if (leadEngine == null  && !_leadEngineId.equals("")){
+			leadEngine = EngineManager.instance().getEngineById(_leadEngineId);
+		}
+		return leadEngine;
 	}
 	
 	public void setLeadEngine(Engine engine){
-		iconEngine = engine;
+		if (engine == null)
+			_leadEngineId = "";
+		leadEngine = engine;
 	}
 
 	private void createTrainIcon() {
@@ -777,16 +787,17 @@ public class Train implements java.beans.PropertyChangeListener {
 			_locoIcon.setText(getIconName());
 			_locoIcon.setTrain(this);
 			// add throttle if JMRI loco roster entry exsist
-			RosterEntry entry = Roster.instance().entryFromTitle(iconEngine.getNumber());
+			RosterEntry entry = Roster.instance().entryFromTitle(getLeadEngine().getNumber());
 			if (entry == null){
-				List entries = Roster.instance().matchingList(null, null, iconEngine.getNumber(), null, null, null, null);
+				List entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
 				if (entries.size() > 0){
 					entry = (RosterEntry)entries.get(0);
 				}
 			}
 			if (entry != null){
 				_locoIcon.setRosterEntry(entry);
-				_locoIcon.setConsistNumber(iconEngine.getConsist().getConsistNumber());
+				if(getLeadEngine().getConsist() != null)
+					_locoIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
 			}
 			setTrainIconColor();
 			if (getIconName().length() > 9) {
@@ -988,6 +999,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_build = a.getValue().equals("true");
 		if ((a = e.getAttribute("printed")) != null)
 			_printed = a.getValue().equals("true");
+		if ((a = e.getAttribute("leadEngine")) != null)
+			_leadEngineId = a.getValue();
 		if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
  
@@ -1042,6 +1055,8 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("built", getBuilt()?"true":"false");
         e.setAttribute("build", getBuild()?"true":"false");
         e.setAttribute("printed", getPrinted()?"true":"false");
+        if(getLeadEngine()!= null)
+        	e.setAttribute("leadEngine", getLeadEngine().getId());
         e.setAttribute("status", getStatus());
         e.setAttribute("comment", getComment());
         return e;
