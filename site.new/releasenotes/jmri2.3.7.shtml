@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.7.shtml,v 1.1 2008-11-17 15:18:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.7.shtml,v 1.2 2008-11-18 03:17:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,6 +130,12 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 
 
 <h3>Changes since test version 2.3.6:</h3>
+
+David Duchamp fixed a bug that would occasionally cause errors when adding Transits.
+
+<p>
+Giorgio Terdina and David Duchamp improved the Window menu.
+
 
 
 <!--#include virtual="/Footer" -->
