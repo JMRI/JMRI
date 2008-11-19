@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -111,11 +111,11 @@ public class MultiSensorIconFrame extends JmriJFrame {
         b.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent a){
                 make();
+				removeWindows();
             }
         });        
         this.getContentPane().add(b);
     }
-    
     
     // Remove an Entry from the panel, 
     // and therefore from the eventual sensor
@@ -141,7 +141,16 @@ public class MultiSensorIconFrame extends JmriJFrame {
 			panelEditor.addMultiSensor(m);
 		else if (layoutEditor!=null)
 			layoutEditor.addMultiSensor(m);
-    }
+    
+	}
+	
+	void removeWindows() {
+		for (int i = 0; i<content.getComponentCount(); i++) {
+			((Entry)content.getComponent(i)).dispose();
+		}
+		defaultsFrame.dispose();
+		super.dispose();
+	}
     
     class Entry extends JPanel {
 
@@ -197,6 +206,9 @@ public class MultiSensorIconFrame extends JmriJFrame {
             
             this.add(b);
         }
+		public void dispose() {
+			edf.dispose();
+		}
     }
     
     // initialize logging

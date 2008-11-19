@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -348,6 +348,10 @@ public class LayoutEditor extends JmriJFrame {
         topEditBar.setLayout(new BoxLayout(topEditBar, BoxLayout.Y_AXIS));
 		// add first row of edit tool bar items
         JPanel top1 = new JPanel();
+		Dimension coordSize = xLabel.getPreferredSize();
+        coordSize.width *= 2;
+        xLabel.setPreferredSize(coordSize);
+        yLabel.setPreferredSize(coordSize);
         top1.add(new JLabel(rb.getString("Location")+" - x:"));
         top1.add(xLabel);
         top1.add(new JLabel(" y:"));
@@ -1043,6 +1047,12 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			});
 			locoRosterFrame.getContentPane().add(rosterBox);
+			locoRosterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent e) {
+						locoRosterFrame.dispose();
+						locoRosterFrame = null;
+					}
+				});			
 			locoRosterFrame.pack();
 		}
     	locoRosterFrame.setVisible(true);	
@@ -1083,6 +1093,12 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			});
 			locoFrame.getContentPane().add(okay);
+			locoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent e) {
+						locoFrame.dispose();
+						locoFrame = null;
+					}
+				});			
 			locoFrame.pack();
 		}
 		locoFrame.setVisible(true);
@@ -3970,6 +3986,8 @@ public class LayoutEditor extends JmriJFrame {
         l.setDisplayLevel(LABELS);
 		setDirty(true);
         putLabel(l);
+		targetPanel.moveToFront(l);
+		repaint();
    }
 
     /**
@@ -3994,6 +4012,7 @@ public class LayoutEditor extends JmriJFrame {
         putLocoIcon(l);
         // always allow new items to be moved
         l.setPositionable(true);
+		targetPanel.moveToFront(l);
 		repaint();
         return l;
      }
@@ -4108,6 +4127,7 @@ public class LayoutEditor extends JmriJFrame {
 		l.setLocation(multiLocX,multiLocY);
 		setDirty(true);
         putMultiSensor(l);
+		multiSensorFrame = null;
     }
     // invoked to install the multi-sensor
     public void putMultiSensor(MultiSensorIcon l) {

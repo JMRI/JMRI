@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.90 $
+ * @version $Revision: 1.91 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -819,6 +819,7 @@ public class PanelEditor extends JmriJFrame {
     public void addMultiSensor(MultiSensorIcon l) {
         setNextLocation(l);
         putMultiSensor(l);
+		multiSensorFrame = null;
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
@@ -1356,6 +1357,12 @@ public class PanelEditor extends JmriJFrame {
 				}
 			});
 			locoRosterFrame.getContentPane().add(rosterBox);
+			locoRosterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent e) {
+						locoRosterFrame.dispose();
+						locoRosterFrame = null;
+					}
+				});			
 			locoRosterFrame.pack();
 		}
     	locoRosterFrame.setVisible(true);	
@@ -1381,6 +1388,12 @@ public class PanelEditor extends JmriJFrame {
 				}
 			});
 			locoFrame.getContentPane().add(okay);
+			locoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent e) {
+						locoFrame.dispose();
+						locoFrame = null;
+					}
+				});			
 			locoFrame.pack();
 		}
 		locoFrame.setVisible(true);
