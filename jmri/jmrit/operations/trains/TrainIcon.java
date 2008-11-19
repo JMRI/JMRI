@@ -31,7 +31,7 @@ import jmri.jmrit.display.LocoIcon;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -108,7 +108,7 @@ public class TrainIcon extends LocoIcon {
     	this.consistNumber =   cN;
     }
         
-    public int getConsistNumber(){
+    private int getConsistNumber(){
     	return consistNumber;
     }
     
@@ -118,11 +118,11 @@ public class TrainIcon extends LocoIcon {
 			if (JOptionPane.showConfirmDialog(null,
 					"Send function commands to lead loco?", "Consist Throttle",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress()); 	// first notify for func button
+				tf.notifyRosterEntryChosen(entry);			 	// first notify for func button
 			}
 			tf.notifyAddressChosen(getConsistNumber(), false);	// second notify for consist address
 		} else {
-			tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+			tf.notifyRosterEntryChosen(entry);
 		}
 		tf.setVisible(true);
     }

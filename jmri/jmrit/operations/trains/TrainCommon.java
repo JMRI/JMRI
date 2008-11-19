@@ -57,8 +57,8 @@ public class TrainCommon {
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
 				+ car.getLength() + FEET + " " + car.getColor()
-				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ (car.hasFred() ? " ("+rb.getString("fred")+") " : " ") + rb.getString("from")+ " "
+				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
+				+ (car.hasFred() ? " ("+rb.getString("fred")+")" : "") + " " + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
 	}
 	

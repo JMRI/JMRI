@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -130,6 +130,13 @@ public class AddressPanel extends JInternalFrame {
 	 */
 	public RosterEntry getRosterEntry(){
 		return rosterEntry;
+	}
+	
+	/**
+	 * Set the RosterEntry for this throttle.
+	 */
+	public void setRosterEntry(RosterEntry entry){
+		rosterEntry = entry;
 	}
 
 	/**
@@ -244,10 +251,10 @@ public class AddressPanel extends JInternalFrame {
 	private void rosterItemSelected() {
 		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {
 			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
-			rosterEntry = Roster.instance().entryFromTitle(
-					rosterEntryTitle);
+			setRosterEntry(Roster.instance().entryFromTitle(
+					rosterEntryTitle));
 
-			addrSelector.setAddress(rosterEntry.getDccLocoAddress());
+			addrSelector.setAddress(getRosterEntry().getDccLocoAddress());
 			consistAddress = null;
 			changeOfAddress();
 		}

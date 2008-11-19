@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -74,7 +74,6 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _build = true;		// when true, build this train
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected Route _route = null;
-	protected TrainIcon _locoIcon = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
 	protected int _requires = 0;			// train requirements, caboose, fred
 	protected String _numberEngines = "0";	// number of engines this train requires
@@ -667,8 +666,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void setTrainIconCordinates(){
 		if (Setup.isTrainIconCordEnabled()){
-			trainIconRl.setTrainIconX(_locoIcon.getX());
-			trainIconRl.setTrainIconY(_locoIcon.getY());
+			trainIconRl.setTrainIconX(trainIcon.getX());
+			trainIconRl.setTrainIconY(trainIcon.getY());
 			RouteManagerXml.setDirty(true);
 		} else {
 			JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
@@ -725,17 +724,17 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected void moveTrainIcon(RouteLocation rl){
 		trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
-		if (rl == getTrainDepartsRouteLocation() || _locoIcon == null){
+		if (rl == getTrainDepartsRouteLocation() || trainIcon == null){
 			createTrainIcon();
 		}
-		if (_locoIcon != null && _locoIcon.isActive()){
+		if (trainIcon != null && trainIcon.isActive()){
 			setTrainIconColor();
 			if (getCurrentLocationName().equals(""))
-				_locoIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
+				trainIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
 			else
-				_locoIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
+				trainIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
 			if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
-				_locoIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+				trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
 			}
 		} 
 	}
@@ -764,11 +763,12 @@ public class Train implements java.beans.PropertyChangeListener {
 			_leadEngineId = "";
 		leadEngine = engine;
 	}
-
+	
+	protected TrainIcon trainIcon = null;
 	private void createTrainIcon() {
-		if (_locoIcon != null && _locoIcon.isActive()) {
-			_locoIcon.remove();
-			_locoIcon.dispose();
+		if (trainIcon != null && trainIcon.isActive()) {
+			trainIcon.remove();
+			trainIcon.dispose();
 		}
 		PanelEditor pe = PanelMenu.instance().getPanelEditorByName(
 				Setup.getPanelName());
@@ -776,32 +776,42 @@ public class Train implements java.beans.PropertyChangeListener {
 				Setup.getPanelName());
 
 		if (pe != null) {
-			_locoIcon = new TrainIcon();
-			pe.putLocoIcon(_locoIcon);
+			trainIcon = new TrainIcon();
+			pe.putLocoIcon(trainIcon);
 			// try layout editor
 		} else if (le != null) {
-			_locoIcon = new TrainIcon();
-			le.putLocoIcon(_locoIcon);
+			trainIcon = new TrainIcon();
+			le.putLocoIcon(trainIcon);
 		}
 		if (pe != null || le != null) {
-			_locoIcon.setText(getIconName());
-			_locoIcon.setTrain(this);
+			trainIcon.setText(getIconName());
+			trainIcon.setTrain(this);
 			// add throttle if JMRI loco roster entry exsist
-			RosterEntry entry = Roster.instance().entryFromTitle(getLeadEngine().getNumber());
-			if (entry == null){
-				List entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
+			RosterEntry entry = null;
+			if (entry == null && getLeadEngine() != null){
+				// first try and find a match based on loco road number
+				List entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(), null, null, null, null, null);
 				if (entries.size() > 0){
 					entry = (RosterEntry)entries.get(0);
 				}
+				if (entry == null){
+					// now try finding a match based on DCC address
+					entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
+					if (entries.size() > 0){
+						entry = (RosterEntry)entries.get(0);
+					}
+				}
 			}
 			if (entry != null){
-				_locoIcon.setRosterEntry(entry);
+				trainIcon.setRosterEntry(entry);
 				if(getLeadEngine().getConsist() != null)
-					_locoIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
+					trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
+			} else{
+				log.debug("Loco entry not found for train ("+getName()+")");
 			}
 			setTrainIconColor();
 			if (getIconName().length() > 9) {
-				_locoIcon.setFontSize(8.f);
+				trainIcon.setFontSize(8.f);
 			}
 		}
 	}
@@ -810,19 +820,19 @@ public class Train implements java.beans.PropertyChangeListener {
 		// set color based on train direction at current location
 		String dir = trainIconRl.getTrainDirection();
 		if (dir.equals(trainIconRl.NORTH))
-			_locoIcon.setLocoColor(Setup.getTrainIconColorNorth());
+			trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
 		if (dir.equals(trainIconRl.SOUTH))
-			_locoIcon.setLocoColor(Setup.getTrainIconColorSouth());
+			trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
 		if (dir.equals(trainIconRl.EAST))
-			_locoIcon.setLocoColor(Setup.getTrainIconColorEast());
+			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
 		if (dir.equals(trainIconRl.WEST))
-			_locoIcon.setLocoColor(Setup.getTrainIconColorWest());
+			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
 		// local train?
 		if (getRoute().getLocationsBySequenceList().size()==1)
-			_locoIcon.setLocoColor(Setup.getTrainIconColorLocal());
+			trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
 		// Terminated train?
 		if (getCurrentLocationName().equals(""))
-			_locoIcon.setLocoColor(Setup.getTrainIconColorTerminate());
+			trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
 	}
 	
 	LocationManager locationManager = LocationManager.instance();
@@ -862,7 +872,11 @@ public class Train implements java.beans.PropertyChangeListener {
 				log.debug("car ("+car.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
 				if(car.getRouteLocation() == car.getRouteDestination()){
 					log.debug("car ("+car.getId()+") has arrived at destination");
-					car.setLocation(car.getDestination(), car.getDestinationTrack());
+					String status = car.setLocation(car.getDestination(), car.getDestinationTrack());
+					if (!status.equals(car.OKAY)){
+						car.setLocation(car.getDestination(), null); // can't place car at destination track
+						log.error("Can't drop car ("+car.getId()+") on track " + car.getDestinationTrack() + " due to " +status);
+					}
 					car.setDestination(null, null); 	// this also clears the route locations
 					car.setTrain(null);
 					dropCars++;

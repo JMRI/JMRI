@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
  
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
@@ -22,6 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 import jmri.util.JmriJFrame;
 
@@ -30,11 +32,14 @@ import jmri.util.JmriJFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class TrainsTableFrame extends JmriJFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	
+	SwingShutDownTask trainDirtyTask;
+	
 	public static final String NAME = "Name";	// Sort by choices
 	public static final String TIME = "Time";
 	public static final String ID = "Id";
@@ -76,8 +81,28 @@ public class TrainsTableFrame extends JmriJFrame {
 
     public TrainsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
+        
+        // create ShutDownTasks
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
+            if (true){
+            	trainDirtyTask = new SwingShutDownTask("Operations Train Window Check", 
+                                                                  rb.getString("PromptQuitWindowNotWritten"), 
+                                                                  rb.getString("PromptSaveQuit"), 
+                                                                  (java.awt.Component)this
+                                                                   ){
+                                                public boolean checkPromptNeeded() {
+                                                    return !getModifiedFlag();
+                                                }
+                                                public boolean doPrompt() {
+                                                	storeValues(); 	
+                                                    return true;
+                                                }
+            };
+            }
+            jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);
+        }
+        
         // general GUI config
-
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
@@ -300,7 +325,7 @@ public class TrainsTableFrame extends JmriJFrame {
     	trainManager.setTrainFrame(null);
         super.dispose();
     }
-    
+      
 	static org.apache.log4j.Category log = org.apache.log4j.Category
 	.getInstance(TrainsTableFrame.class.getName());
 }

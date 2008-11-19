@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.42 $
+ * @version    $Revision: 1.43 $
  */
 /**
  * @author DSM
@@ -159,6 +159,17 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         functionPanel.notifyThrottleDisposed();
         addressPanel.notifyThrottleDisposed();
         throttle = null;
+    }
+    
+    /**
+     * Notify that a new throttle roster entry is to be used.
+     * Works the same way as selecting a roster entry from the 
+     * address menu.
+     * @param entry The RosterEntry to use for this throttle
+     */
+    public void notifyRosterEntryChosen(RosterEntry entry){
+    	addressPanel.setRosterEntry(entry);
+    	notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
     }
     
     /**

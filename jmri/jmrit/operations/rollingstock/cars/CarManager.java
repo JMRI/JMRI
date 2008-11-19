@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -446,8 +446,9 @@ public class CarManager implements java.beans.PropertyChangeListener {
 
    
     /**
-	 * Return a list available cars (no assigned train) on a route, cars are
-	 * ordered least recently moved to most recently moved.
+	 * Return a list available cars (no assigned train or cars already assigned
+	 * to this train) on a route, cars are ordered least recently moved to most
+	 * recently moved.
 	 * 
 	 * @param train
 	 * @return List of cars with no assigned train on a route
