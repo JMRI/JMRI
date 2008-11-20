@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -379,9 +379,12 @@ public class TrainBuilder extends TrainCommon{
 						for (int i=0; i<carList.size(); i++){
 							Car testCar = carManager.getCarById((String) carList.get(i));
 							if (testCar.isCaboose() && testCar != car){
-								addLine(fileOut, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+") from car list");
-								carList.remove(carList.get(i));		// remove this car from the list
-								i--;
+								// need to keep it if departing staging
+								if (departStageTrack != null && testCar.getTrack() != departStageTrack){
+									addLine(fileOut, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+") from car list");
+									carList.remove(carList.get(i));		// remove this car from the list
+									i--;
+								}
 							}
 						}
 						break;
@@ -395,11 +398,13 @@ public class TrainBuilder extends TrainCommon{
 			// check for caboose or car with FRED
 			if (c.isCaboose()){
 				addLine(fileOut, "Car (" +c.getId()+ ") is a caboose");
-				if (departStageTrack != null) foundCaboose = false;		// must move caboose from staging   
+				if (departStageTrack != null && c.getTrack() == departStageTrack) 
+					foundCaboose = false;		// must move caboose from staging   
 			}
 			if (c.hasFred()){
 				addLine(fileOut, "Car (" +c.getId()+ ") has a FRED");
-				if (departStageTrack != null) foundFred = false;		// must move car with FRED from staging
+				if (departStageTrack != null && c.getTrack() == departStageTrack) 
+					foundFred = false;		// must move car with FRED from staging
 			}
 			
 			// remove cabooses and cars with FRED if not needed for train
@@ -694,6 +699,8 @@ public class TrainBuilder extends TrainCommon{
 		boolean leavingStaging = false;
 		if (track != null && reqNumEngines == 0)
 			leavingStaging = true;
+		if (!leavingStaging && reqNumEngines == 0)
+			return true;
 
 		// get list of engines for this route
 		

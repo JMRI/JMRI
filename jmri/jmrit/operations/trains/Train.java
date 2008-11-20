@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -807,9 +807,8 @@ public class Train implements java.beans.PropertyChangeListener {
 				if(getLeadEngine().getConsist() != null)
 					trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
 			} else{
-				log.debug("Loco entry not found for train ("+getName()+")");
+				log.debug("Loco roster entry not found for train ("+getName()+")");
 			}
-			setTrainIconColor();
 			if (getIconName().length() > 9) {
 				trainIcon.setFontSize(8.f);
 			}
@@ -817,6 +816,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	private void setTrainIconColor(){
+		// Terminated train?
+		if (getCurrentLocationName().equals("")){
+			trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
+			return;
+		}
+		// local train?
+		if (getRoute().getLocationsBySequenceList().size()==1){
+			trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
+			return;
+		}
 		// set color based on train direction at current location
 		String dir = trainIconRl.getTrainDirection();
 		if (dir.equals(trainIconRl.NORTH))
@@ -827,12 +836,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
 		if (dir.equals(trainIconRl.WEST))
 			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
-		// local train?
-		if (getRoute().getLocationsBySequenceList().size()==1)
-			trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
-		// Terminated train?
-		if (getCurrentLocationName().equals(""))
-			trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
+
+
 	}
 	
 	LocationManager locationManager = LocationManager.instance();
