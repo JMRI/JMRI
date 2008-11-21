@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.7.shtml,v 1.2 2008-11-18 03:17:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.7.shtml,v 1.3 2008-11-21 05:40:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,7 +136,10 @@ David Duchamp fixed a bug that would occasionally cause errors when adding Trans
 <p>
 Giorgio Terdina and David Duchamp improved the Window menu.
 
-
+<p>
+Previously, when you opened a locomotive entry in DecoderPro it would use your selected programming mode if it was available in your DCC system and the decoder;
+if not, it would select the fastest available mode.
+Now, it will always select the fastest available mode, even if you've already selected a workable mode.
 
 <!--#include virtual="/Footer" -->
 
