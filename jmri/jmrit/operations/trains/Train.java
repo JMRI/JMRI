@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -569,7 +569,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setPrinted(false);
 	}
 
-	public static void printReport (File file, String name, boolean isPreview, String fontName){
+	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport){
 	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
@@ -584,7 +584,6 @@ public class Train implements java.beans.PropertyChangeListener {
         	writer.setFontName(fontName);
         
         // now get the build file to print
-
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(file));
@@ -603,6 +602,42 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			if (line == null)
 				break;
+			// check for build report print level
+			if (isBuildReport) {
+				String[] inputLine = line.split("\\s+");
+				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
+						|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+						|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
+						|| inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+					line = "";
+					// skip the first set of characters
+					for (int i = 1; i < inputLine.length; i++) {
+						line += inputLine[i] + " ";
+					}
+					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)){
+						if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") 
+								|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+								|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+							continue;	// don't print this line
+						}
+					}
+					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)){
+						if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+								|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+							continue;	// don't print this line
+						}
+					}
+					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)){
+						if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+							continue;	// don't print this line
+						}
+					}
+				} else {
+					log
+							.debug("ERROR first characters of build report not valid ("
+									+ line + ")");
+				}
+			}
 			try {
 				writer.write(line + newLine);
 			} catch (IOException e) {
@@ -623,7 +658,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if(_built && TrainManager.instance().getBuildReport()){
 			File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(buildFile, "Train Build Report", isPreview, "");
+			printReport(buildFile, "Train Build Report " + getDescription(), isPreview, "", true);
 		}
 	}
 	
@@ -631,7 +666,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if(_built){
 			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName());
+			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
 			if (!isPreview)
 				setPrinted(true);
 		} else {

@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -39,6 +39,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	javax.swing.JLabel textMaxEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textOwner = new javax.swing.JLabel();
 	javax.swing.JLabel textPrinter = new javax.swing.JLabel();
+	javax.swing.JLabel textBuildReport = new javax.swing.JLabel();
 	javax.swing.JLabel textPanel = new javax.swing.JLabel();
 	javax.swing.JLabel textIconNorth = new javax.swing.JLabel();
 	javax.swing.JLabel textIconSouth = new javax.swing.JLabel();
@@ -71,6 +72,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
     javax.swing.JRadioButton mono = new javax.swing.JRadioButton(rb.getString("Monospaced"));
     javax.swing.JRadioButton sanSerif = new javax.swing.JRadioButton(rb.getString("SansSerif"));
+    
+    javax.swing.JRadioButton buildReportMin = new javax.swing.JRadioButton(rb.getString("Minimal"));
+    javax.swing.JRadioButton buildReportNor = new javax.swing.JRadioButton(rb.getString("Normal"));
+    javax.swing.JRadioButton buildReportMax = new javax.swing.JRadioButton(rb.getString("Detailed"));
+    javax.swing.JRadioButton buildReportVD = new javax.swing.JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
     javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
@@ -150,6 +156,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		textPrinter.setVisible(true);
 		appendCommentCheckBox.setText(rb.getString("CarComment"));
 		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
+		textBuildReport.setText(rb.getString("BuildReport"));
+		textBuildReport.setVisible(true);
 				
 		textIconNorth.setText(rb.getString("IconNorth"));
 		textIconSouth.setText(rb.getString("IconSouth"));
@@ -242,12 +250,24 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		ButtonGroup printerGroup = new ButtonGroup();
 		printerGroup.add(mono);
 		printerGroup.add(sanSerif);
+		ButtonGroup buildReportGroup = new ButtonGroup();
+		buildReportGroup.add(buildReportMin);
+		buildReportGroup.add(buildReportNor);
+		buildReportGroup.add(buildReportMax);
+		buildReportGroup.add(buildReportVD);
+		
 		addItem (pPrinter, textPrinter, 0, 8);
 		addItemLeft (pPrinter, mono, 1, 8);
 		addItemLeft (pPrinter, sanSerif, 2, 8);
-		addItemLeft (pPrinter, appendCommentCheckBox, 1, 9);
+		addItem (pPrinter, textBuildReport, 0, 10);
+		addItemLeft (pPrinter, buildReportMin, 1, 10);
+		addItemLeft (pPrinter, buildReportNor, 2, 10);
+		addItemLeft (pPrinter, buildReportMax, 3, 10);
+		addItemLeft (pPrinter, buildReportVD, 4, 10);
+		addItemWidth (pPrinter, appendCommentCheckBox, 3, 1, 12);
 		pPrinter.setBorder(border);
 		setPrinterFontRadioButton();
+		setBuildReportRadioButton();
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
@@ -351,6 +371,15 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setFontName(Setup.SANSERIF);
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
+			// build report level
+			if (buildReportMin.isSelected())
+				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
+			else if (buildReportNor.isSelected())
+				Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
+			else if (buildReportMax.isSelected())
+				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+			else if (buildReportVD.isSelected())
+				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			// add panel name to setup
 			Setup.setPanelName(panelTextField.getText());
 			// train Icon X&Y
@@ -503,6 +532,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	private void setPrinterFontRadioButton(){
 		mono.setSelected(Setup.getFontName().equals(Setup.MONOSPACED));
 		sanSerif.setSelected(Setup.getFontName().equals(Setup.SANSERIF));
+	}
+	
+	private void setBuildReportRadioButton(){
+		buildReportMin.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL));
+		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
+		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
+		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

@@ -83,8 +83,12 @@ public class Setup {
 	
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
-	
 	public static final String FEET ="'";
+	
+	public static final String BUILD_REPORT_MINIMAL = "1";
+	public static final String BUILD_REPORT_NORMAL = "3";
+	public static final String BUILD_REPORT_DETAILED = "5";
+	public static final String BUILD_REPORT_VERY_DETAILED = "7";
 	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
@@ -100,6 +104,7 @@ public class Setup {
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
 	private static String panelName ="Panel";
+	private static String buildReportLevel = BUILD_REPORT_NORMAL;
 	private static String iconNorthColor ="";
 	private static String iconSouthColor ="";
 	private static String iconEastColor ="";
@@ -189,6 +194,14 @@ public class Setup {
 	
 	public static boolean isTrainIconAppendEnabled(){
 		return appendTrainIcon;
+	}
+	
+	public static void  setBuildReportLevel(String level){
+		buildReportLevel = level;
+	}
+	
+	public static String getBuildReportLevel(){
+		return buildReportLevel;
 	}
 	
 	public static void setTrainIconColorNorth (String color){
@@ -393,6 +406,9 @@ public class Setup {
        	e.addContent(values = new Element("fontName"));
     	values.setAttribute("name", getFontName());
     	
+    	e.addContent(values = new Element("buildReport"));
+    	values.setAttribute("level", getBuildReportLevel());
+    	
        	e.addContent(values = new Element("owner"));
     	values.setAttribute("name", getOwnerName());
      	
@@ -470,6 +486,11 @@ public class Setup {
         	String font = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontName: "+font);
            	Setup.setFontName(font);
+        }
+        if ((a = operations.getChild("buildReport").getAttribute("level"))!= null){
+        	String level = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("buildReport: "+level);
+           	Setup.setBuildReportLevel(level);
         }
         if ((a = operations.getChild("owner").getAttribute("name"))!= null){
         	String owner = a.getValue();

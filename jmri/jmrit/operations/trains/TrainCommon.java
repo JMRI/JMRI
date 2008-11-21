@@ -25,6 +25,11 @@ public class TrainCommon {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String FEET = Setup.FEET;
 	private static final String BOX = " [ ] ";
+	
+	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
+	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;
+	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
+	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
 	protected void pickupEngine(PrintWriter file, Engine engine){
 		String comment = (Setup.isAppendCarCommentEnabled() ? " "
@@ -72,6 +77,14 @@ public class TrainCommon {
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);
+	}
+	
+	// writes string with level to console and file
+	protected void addLine (PrintWriter file, String level, String string){
+		if(log.isDebugEnabled())
+			log.debug(string);
+		if (file != null)
+			file.println(level +"- " + string);
 	}
 	
 	// writes string to console and file
