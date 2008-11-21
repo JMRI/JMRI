@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.13 2008-11-09 18:43:35 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.14 2008-11-21 20:05:34 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -48,7 +48,9 @@ the panel along with the train from location to location.
 
 In the top level menu for JMRI find the "Tools->Operations" menu. There
 are six items in this menu. We recommend that you start with "Settings"
-and work your way down to "Trains". <A NAME="Settings"></A>
+and work your way down to "Trains". 
+
+<A NAME="Settings"></A>
 <H2>Settings</H2>
 
 This is where you provide the name of your railroad and the direction
@@ -103,6 +105,24 @@ You can optionally enter your name in the "Owner" field.
 The program supports two types of fonts for printing. Select the desired
 font using the radio buttons.
 
+<H3>Build Report Details</H3>
+
+You can adjust the amount of information that the build report will
+show. Select one of the four levels using the radio buttons. The program
+when generating the build reports stores the "Very Detailed" information
+to disk. The radio buttons control how much of that data is actually
+printed. The "Minimal" radio button provides the least amount of
+information and "Very Detailed" provides the most. If you're only
+interested why a train won't build, the "Minimal" setting can provide
+you with this information. The "Normal" setting shows which engines and
+cars are being excluded from the train, and which engines and cars are
+being picked up and dropped. The "Detailed" setting will generate quite
+a few pages depending on the size of your railroad. It will show all
+available cars and engines, and a bit how the program finds destinations
+for the cars and engines. The "Very Detailed" setting produces the most
+pages, and will show why cars are not picked up or dropped. Be sure and
+press "Save" after changing the build report selection.
+
 <H3>Append Car Comment to Manifest</H3>
 
 For each car in your roster, you can have an optional comment. If you
@@ -127,8 +147,9 @@ direction using the pull down menus.
 When you're finished with the settings panel, press the save button to
 store the setting in a file called "Operations.xml". You can find this
 file in your JMRI directory in a folder called "operations". The program
-will also create a backup file each time you press the save button. <A
-	NAME="Locations"></A>
+will also create a backup file each time you press the save button. 
+
+<A NAME="Locations"></A>
 <H2>Locations</H2>
 
 Locations are places on your railroad that trains visit to pickup or
@@ -169,7 +190,9 @@ appropriate.
 You can control the rolling stock a location can service. Push the
 "Clear All" to deselect all types, or "Select All" to select all types,
 then select or deselect the rolling stock you wish the location to
-accept. <A NAME="Yards"></A>
+accept. 
+
+<A NAME="Yards"></A>
 <H3>Yards</H3>
 
 To add a yard, press the "Add Yard Track" button. Now enter the name of
@@ -205,8 +228,9 @@ You can enter an optional comment for the yard.
 Press the "Save Yard Track" to save your work. The program will create a
 file (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
-containing the last settings for all of your locations. <A
-	NAME="Sidings"></A>
+containing the last settings for all of your locations. 
+
+<A NAME="Sidings"></A>
 <H3>Sidings</H3>
 
 To add a siding, press the "Add Siding" button. Sidings are very similar
@@ -225,8 +249,9 @@ town's sidings.
 
 The program when generating a switch list for a train with a single
 location (local switcher) will never move a car from a siding to a
-siding or yard to a yard, only yard to siding or siding to yard. <A
-	NAME="Interchange"></A>
+siding or yard to a yard, only yard to siding or siding to yard. 
+
+<A NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
 
 If you want the program to force the exchange of cars between trains you
@@ -275,7 +300,9 @@ this is to terminate the train into staging at location A. Then create a
 location B staging. Doing this causes the program to "move" the train
 and its cars from A to B which is really the same physical track. Later
 you can build a train that departs location B, and the manifest will
-show that the train originated from B and not A. <A NAME="Cars"></A>
+show that the train originated from B and not A. 
+
+<A NAME="Cars"></A>
 <H2>Cars</H2>
 
 The cars panel allows you to edit your car roster. You can enter a car's
@@ -332,7 +359,9 @@ operations program.</P>
 <P>After importing your cars, you must save them if you want to keep
 them as part of your roster. Select any car by pressing the edit button
 and then press the "Save" button that can be found at the bottom right
-of the "Edit Car" panel. <A NAME="CarsEdit"></A></P>
+of the "Edit Car" panel. 
+
+<A NAME="CarsEdit"></A></P>
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
@@ -403,8 +432,9 @@ this car.
 Press "Save" to store the car's settings. The program will create a file
 (OperationsCarRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your cars
-is also created each time the "Save" button is pressed. <A
-	NAME="EditCarAttributes"></A>
+is also created each time the "Save" button is pressed. 
+
+<A NAME="EditCarAttributes"></A>
 <H3>Edit Car Attributes</H3>
 
 To the right of each of the car attributes (Road, Type, Length, Color,
@@ -431,14 +461,17 @@ cars. Press the "Edit" button for any of your cars in the Cars panel,
 and then press the "Edit" button across from Road in the "Car Edit"
 panel. Enter the new road "UPS" in the top box, select "UP" in the menu
 box, and press "Replace". All cars with "UP" as their road will now have
-"UPS" as their road name. <A NAME="CarsSet"></A>
+"UPS" as their road name. 
+
+<A NAME="CarsSet"></A>
 <H3>Car Set Location Button</H3>
 
 After creating a car, you can set the car's location, and optionally the
 car's destination and train. Normally the car's destination and assigned
 train are generated by the program, but you can use these fields to
-force a car to a specific location using a specified train. <A
-	NAME="Engines"></A>
+force a car to a specific location using a specified train. 
+
+<A NAME="Engines"></A>
 <H2>Engines</H2>
 
 The engines panel allows you to edit your engine roster. You can enter
@@ -500,7 +533,9 @@ exists, it will be skipped by the program.</P>
 <P>After importing your engines, you must save them if you want to
 keep them as part of your roster. Select any engine by pressing the edit
 button and then press the "Save" button that can be found at the bottom
-right of the "Edit Engine" panel. <A NAME="EnginesEdit"></A></P>
+right of the "Edit Engine" panel. </P>
+
+<A NAME="EnginesAdd"></A>
 <H3>Adding Engines to your Roster</H3>
 
 To manually add an engine to your roster, press the "Add" button located
@@ -524,8 +559,9 @@ owner and comment for this engine.
 Press "Save" to store the engine's settings. The program will create a
 file (OperationsEngineRoster.xml) in your JMRI directory in a folder
 called "operations". A backup file with the last settings for all of
-your engines is also created each time the "Save" button is pressed. <A
-	NAME="EnginesSet"></A>
+your engines is also created each time the "Save" button is pressed. 
+
+<A NAME="EnginesSet"></A>
 <H3>Engine Set Location Button</H3>
 
 After creating an engine, you can set the engine's location, and
@@ -542,7 +578,9 @@ will read all of the consists out of the NCE system and then will search
 for matching engines in your operations roster. The program will assign
 the consist name nce_xxx where xxx is the consist number. To synchronize
 your consists, select "Synchronize with NCE Consists" under the "Tools"
-menu. <A NAME="Routes"></A>
+menu. 
+
+<A NAME="Routes"></A>
 <H2>Routes</H2>
 
 A route is a list of locations that a train will visit. Later you can
@@ -585,8 +623,9 @@ Route."</P>
 Press "Save" to save your route. The program will create a file
 (OperationsRouteRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-routes is also created each time the "Save" button is pressed. <A
-	NAME="Trains"></A>
+routes is also created each time the "Save" button is pressed. 
+
+<A NAME="Trains"></A>
 <H2>Trains</H2>
 
 Now that we've created our routes we need trains to move cars! Create a
@@ -653,8 +692,9 @@ railroad.
 Press "Save" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-trains is also created each time the "Save" button is pressed. <A
-	NAME="BuildingTrains"></A>
+trains is also created each time the "Save" button is pressed.
+
+<A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
 
 To build one train, press the "Build" button in the row for the desired
