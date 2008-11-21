@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.5 2008-08-20 14:29:58 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.6 2008-11-21 05:38:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -207,9 +207,9 @@ There are several ways to do this:
 <LI>
 Look for a "properties files" download on the 
 <A HREF="http://sourceforge.net/project/showfiles.php?group_id=26788">JMRI downloads</a>
-page.  For example, the files for JMRI version 1.2.5 can
+page.  For example, the files for JMRI version 2.3.6 can
 be downloaded via
-<A HREF="http://prdownloads.sourceforge.net/jmri/properties.1.2.5.zip?download">http://prdownloads.sourceforge.net/jmri/properties.1.2.5.zip?download</a>.
+<A HREF="http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download">http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download</a>.
 <P>This will give you a "classes" directory, which should be placed
 in the same directory as the jmri.jar file.
 <LI>
