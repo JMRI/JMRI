@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.26 $
+ * @version             $Revision: 1.27 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -564,6 +564,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	public void build(){
+		reset();
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);

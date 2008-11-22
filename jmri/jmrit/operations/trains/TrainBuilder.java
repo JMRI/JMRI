@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -78,7 +78,9 @@ public class TrainBuilder extends TrainCommon{
 	double maxWeight;	// the maximum weight of cars in train
 	int reqNumOfMoves;	// the requested number of car moves for a location
 	Location departLocation;	// train departs this location
+	Track departStageTrack;		// departure staging track (null if not staging)
 	Location terminateLocation; // train terminate at this location
+	Track terminateStageTrack; 	// terminate staging track (null if not staging)
 	boolean success;	// true when enough cars have been picked up from a location
 	
 	// managers 
@@ -143,6 +145,7 @@ public class TrainBuilder extends TrainCommon{
 			buildFailed(fileOut, "ERROR Route terminate location missing for train ("+train.getName()+")");
 			return;
 		}
+		  
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS() && Control.fullTrainOnly){
 			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberRS()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
@@ -181,28 +184,49 @@ public class TrainBuilder extends TrainCommon{
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
 		addLine(fileOut, ONE, "Route (" +train.getRoute().getName()+ ") requests " + requested + " cars and " + carMoves +" moves");
-
+		
+		// does train terminate into staging?
+		terminateStageTrack = null;
+		List stagingTracksTerminate = terminateLocation.getTracksByMovesList(Track.STAGING);
+		if (stagingTracksTerminate.size() > 0){
+			addLine(fileOut, ONE, "Train terminates into Staging at "+terminateLocation.getName()+", there are " +stagingTracksTerminate.size()+ " tracks");
+			for (int i=0; i<stagingTracksTerminate.size(); i++){
+				terminateStageTrack = terminateLocation.getTrackById((String)stagingTracksTerminate.get(i));
+				if (terminateStageTrack.getNumberRS() == 0 && terminateStageTrack.getDropRS() == 0){
+					addLine(fileOut, ONE, "Track "+terminateStageTrack.getName()+" is available");
+					break;
+				} else {
+					terminateStageTrack = null;
+				}
+			}
+			if (terminateStageTrack == null){
+				buildFailed(fileOut, "All staging tracks at " + terminateLocation.getName() + " are full or reserved");
+				return;
+			}
+		}
+		
 		// determine if train is departing staging
-		Track departStageTrack = null;
+		departStageTrack = null;
 		List stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
 			addLine(fileOut, ONE, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
 			for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById((String)stagingTracks.get(i));
 				addLine(fileOut, ONE, "Staging track ("+departStageTrack.getName()+") has "+departStageTrack.getNumberRS()+" engines and cars");
-				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut, departStageTrack)){
+				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut)){
 					break;
 				} else {
 					departStageTrack = null;
 				}
 			}
+			if (departStageTrack == null){
+				buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
+				return;
+			}
 		}
-		if (stagingTracks.size()>0 && departStageTrack == null){
-			buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
-			return;
-		}
+
 		// load engines for this train
-		if (departStageTrack == null && !getEngines(fileOut, null)){
+		if (departStageTrack == null && !getEngines(fileOut)){
 			buildFailed(fileOut, "Could not get the required engines for this train");
 			return;
 		}
@@ -463,7 +487,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
-			buildFailed(fileOut, "Train ("+train.getName()+") requires "+textRequires+", none found at departure ("+train.getTrainDepartsName()+")");
+			buildFailed(fileOut, "Train ("+train.getName()+") requires "+textRequires+", can't meet requirements at departure ("+train.getTrainDepartsName()+") and/or termination ("+train.getTrainTerminatesName()+")");
 			return;
 		}
 		addLine(fileOut, THREE, "Requested cars (" +requested+ ") for train (" +train.getName()+ ") the number available (" +carList.size()+ ") building train!");
@@ -548,7 +572,7 @@ public class TrainBuilder extends TrainCommon{
 															&& status.equals(c.OKAY) 
 															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
 														// staging track with zero cars?
-														if (testTrack.getLocType().equals(testTrack.STAGING) && testTrack.getNumberRS() == 0){
+														if (testTrack.getLocType().equals(testTrack.STAGING) && (testTrack.getNumberRS() == 0 || testTrack.getDropRS()>0)){
 															rld.setStagingTrack(testTrack);	// Use this location for all cars
 															trackTemp = testTrack;
 															destinationTemp = testDestination;
@@ -691,11 +715,11 @@ public class TrainBuilder extends TrainCommon{
 
 	}
 	
-	// get the engines for this train. If track != null, then engines must
+	// get the engines for this train. If departStageTrack != null, then engines must
 	// come from that track location (staging).  Returns true if engines found, else false.
 	// This routine will also pick the destination track if the train is
 	// terminating into staging, therefore this routine should only be called once when return is true.
-	private boolean getEngines(PrintWriter fileOut, Track track){
+	private boolean getEngines(PrintWriter fileOut){
 		// show engine requirements for this train
 		addLine(fileOut, ONE, "Train requires "+train.getNumberEngines()+" engine(s) model ("+train.getEngineModel()+") road (" +train.getEngineRoad()+")");
 				
@@ -710,7 +734,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
-		if (track != null && reqNumEngines == 0)
+		if (departStageTrack != null && reqNumEngines == 0)
 			leavingStaging = true;
 		if (!leavingStaging && reqNumEngines == 0)
 			return true;
@@ -729,8 +753,8 @@ public class TrainBuilder extends TrainCommon{
 				indexEng--;
 				continue;
 			}
-			// determine if engine is departing from staging track (track != null if staging) 
-			if(engine.getLocationName().equals(train.getTrainDepartsName()) && (track == null || engine.getTrackName().equals(track.getName()))){
+			// determine if engine is departing from staging track (departStageTrack != null if staging) 
+			if(engine.getLocationName().equals(train.getTrainDepartsName()) && (departStageTrack == null || engine.getTrackName().equals(departStageTrack.getName()))){
 				if ((train.getEngineRoad().equals("") || engine.getRoad().equals(train.getEngineRoad())) && (train.getEngineModel().equals("") || engine.getModel().equals(train.getEngineModel()))){
 					// is this engine part of a consist?  Keep only lead engines in consist if required number is correct.
 					if (engine.getConsist() != null){
@@ -746,12 +770,15 @@ public class TrainBuilder extends TrainCommon{
 								log.debug("Consist ("+engine.getConsist().getName()+") has the required number of engines");
 							}else{
 								log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
+								addLine(fileOut, THREE, "Exclude consist ("+engine.getConsist().getName()+")");
 								engineList.remove(indexEng);
 								indexEng--;
 							}
 						}
-					}
-					continue;
+						continue;
+						// Single engine, does train require a consist?
+					} else if (reqNumEngines == 1)
+						continue;	// no keep this engine
 				} 
 			}
 			addLine(fileOut, THREE, "Exclude engine ("+engine.getId()+")");
@@ -768,14 +795,15 @@ public class TrainBuilder extends TrainCommon{
 			List destTracks = terminateLocation.getTracksByMovesList(null);
 			for (int s = 0; s < destTracks.size(); s++){
 				terminateTrack = terminateLocation.getTrackById((String)destTracks.get(s));
-				if (terminateTrack.getLocType().equals(terminateTrack.STAGING) && terminateTrack.getNumberRS()>0){
+				if (terminateTrack.getLocType().equals(Track.STAGING) && (terminateTrack.getNumberRS()>0 || terminateTrack.getDropRS()>0)){
 					terminateTrack = null;
 					continue;
 				}
 				String status = engine.testDestination(terminateLocation, terminateTrack);
-				if(status == engine.OKAY){
+				if(status == Engine.OKAY){
 					break;
 				} else {
+					addLine(fileOut, FIVE, "Can not drop engine ("+engine.getId()+") to track (" +terminateTrack.getName()+") because of "+status);
 					terminateTrack = null;
 				}
 			}
@@ -1040,9 +1068,9 @@ public class TrainBuilder extends TrainCommon{
 				"Can not build train ("+train.getName()+") " +train.getDescription(),
 				JOptionPane.ERROR_MESSAGE);
 		if (file != null){
-			file.println(string);
+			addLine(file, ONE, string);
 			// Write to disk and close file
-			file.println("Build failed for train ("+train.getName()+")");
+			addLine(file, ONE, "Build failed for train ("+train.getName()+")");
 			file.flush();
 			file.close();
 			if(TrainManager.instance().getBuildReport()){

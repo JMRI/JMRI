@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of staging locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class StagingTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -34,10 +34,11 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int NAMECOLUMN   = 1;
     private static final int LENGTHCOLUMN = 2;
     private static final int USEDLENGTHCOLUMN = 3;
-    private static final int ROLLINGSTOCK = 4;
-    private static final int PICKUPS = 5;
-    private static final int DROPS = 6;
-    private static final int EDITCOLUMN = 7;
+    private static final int RESERVEDCOLUMN = 4;  
+    private static final int ROLLINGSTOCK = 5;
+    private static final int PICKUPS = 6;
+    private static final int DROPS = 7;
+    private static final int EDITCOLUMN = 8;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -93,6 +94,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(4);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(4);
+		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(4);
 		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(4);
 		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(4);
 		table.getColumnModel().getColumn(DROPS).setPreferredWidth(4);
@@ -110,6 +112,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return rb.getString("StagingName");
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
+        case RESERVEDCOLUMN: return rb.getString("Reserved");
         case ROLLINGSTOCK: return rb.getString("RollingStock");
         case PICKUPS: return rb.getString("Pickup");
         case DROPS: return rb.getString("Drop");
@@ -124,6 +127,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return String.class;
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
+        case RESERVEDCOLUMN: return String.class;
         case ROLLINGSTOCK: return String.class;
         case PICKUPS: return String.class;
         case DROPS: return String.class;
@@ -149,6 +153,7 @@ public class StagingTableModel extends javax.swing.table.AbstractTableModel impl
         case NAMECOLUMN: return sl.getName();
         case LENGTHCOLUMN: return Integer.toString(sl.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(sl.getUsedLength());
+        case RESERVEDCOLUMN: return Integer.toString(sl.getReserved());
         case ROLLINGSTOCK: return Integer.toString(sl.getNumberRS());
         case PICKUPS: return Integer.toString(sl.getPickupRS());
         case DROPS: return Integer.toString(sl.getDropRS());
