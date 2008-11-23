@@ -75,7 +75,14 @@ public class TrainSwitchLists extends TrainCommon {
 					} else {
 						newLine(fileOut);
 						addLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
-						addLine(fileOut, "Departs "+train.getTrainDepartsName()+" at " + train.getDepartureTime());
+						String expected = "";
+						if (r != 0)
+							expected = " expected arrival " + train.getExpectedArrivalTime(rl);
+						if (train.isTrainInRoute()){
+							addLine(fileOut, "Departed "+train.getTrainDepartsName()+ ", expect to arrive in "+ train.getExpectedArrivalTime(rl));
+						} else {
+							addLine(fileOut, "Departs "+train.getTrainDepartsName()+" at " + train.getDepartureTime() + expected);
+						}
 					}
 					// go through the list of engines and determine if the engine departs here
 					for (int j = 0; j < enginesList.size(); j++) {

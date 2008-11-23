@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -37,6 +37,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	javax.swing.JLabel textDirection = new javax.swing.JLabel();
 	javax.swing.JLabel textMaxTrain = new javax.swing.JLabel();
 	javax.swing.JLabel textMaxEngine = new javax.swing.JLabel();
+	javax.swing.JLabel textMoveTime = new javax.swing.JLabel();
+	javax.swing.JLabel textTravelTime = new javax.swing.JLabel();
 	javax.swing.JLabel textOwner = new javax.swing.JLabel();
 	javax.swing.JLabel textPrinter = new javax.swing.JLabel();
 	javax.swing.JLabel textBuildReport = new javax.swing.JLabel();
@@ -91,6 +93,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	javax.swing.JTextField railroadNameTextField = new javax.swing.JTextField(35);
 	javax.swing.JTextField maxLengthTextField = new javax.swing.JTextField(10);
 	javax.swing.JTextField maxEngineSizeTextField = new javax.swing.JTextField(3);
+	javax.swing.JTextField switchTimeTextField = new javax.swing.JTextField(3);
+	javax.swing.JTextField travelTimeTextField = new javax.swing.JTextField(3);
 	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
 
 	// for padding out panel
@@ -139,6 +143,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		textMaxEngine.setText(rb.getString("MaxEngine"));
 		textMaxEngine.setVisible(true);
 		maxEngineSizeTextField.setText(Integer.toString(Setup.getEngineSize()));
+		
+		textMoveTime.setText(rb.getString("MoveTime"));
+		textMoveTime.setVisible(true);
+		switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
+		textTravelTime.setText(rb.getString("TravelTime"));
+		textTravelTime.setVisible(true);
+		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
 		
 		textPanel.setText(" "+rb.getString("Panel"));
 		textPanel.setVisible(true);
@@ -197,6 +208,14 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (panel, maxEngineSizeTextField, 1, 4);
 		
 		// row 5
+		addItem (panel, textMoveTime, 0, 5);
+		addItemLeft (panel, switchTimeTextField, 1, 5);
+		
+		// row 6
+		addItem (panel, textTravelTime, 0, 6);
+		addItemLeft (panel, travelTimeTextField, 1, 6);
+		
+		// row 7
 		JPanel p = new JPanel();
 
 		ButtonGroup scaleGroup = new ButtonGroup();
@@ -223,24 +242,24 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		p.add(scaleOn3);
 		p.add(scaleO);
 		p.add(scaleG);
-		addItem(panel, textScale, 0, 5);
-		addItemWidth(panel, p, 3, 1, 5);
+		addItem(panel, textScale, 0, 7);
+		addItemWidth(panel, p, 3, 1, 7);
 		setScale();
 		
-		// row 6
+		// row 9
 		JPanel carTypeButtons = new JPanel();
 		ButtonGroup carTypeGroup = new ButtonGroup();
 		carTypeGroup.add(typeDesc);
 		carTypeGroup.add(typeAAR);
 		carTypeButtons.add(typeDesc);
 		carTypeButtons.add(typeAAR);
-		addItem (panel, textCarType, 0, 6);
-		addItemWidth(panel, carTypeButtons, 3, 1, 6);
+		addItem (panel, textCarType, 0, 9);
+		addItemWidth(panel, carTypeButtons, 3, 1, 9);
 		setCarTypes();
 		
-		// row 7
-		addItem (panel, textOwner, 0, 7);
-		addItemLeft (panel, ownerTextField, 1, 7);
+		// row 10
+		addItem (panel, textOwner, 0, 10);
+		addItemLeft (panel, ownerTextField, 1, 10);
 		
 		Border border = BorderFactory.createEtchedBorder();
 		
@@ -403,6 +422,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setTrainLength(Integer.parseInt(maxLengthTextField.getText()));
 			// set max engine length
 			Setup.setEngineSize(Integer.parseInt(maxEngineSizeTextField.getText()));
+			// set switch time
+			Setup.setSwitchTime(Integer.parseInt(switchTimeTextField.getText()));
+			// set travel time
+			Setup.setTravelTime(Integer.parseInt(travelTimeTextField.getText()));
 			// set scale
 			if (scaleZ.isSelected())
 				Setup.setScale(Setup.Z_SCALE);

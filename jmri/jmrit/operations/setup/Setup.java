@@ -105,6 +105,8 @@ public class Setup {
 	private static String fontName = MONOSPACED;
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;
+	private static int carSwitchTime = 3;		// how long it take to move a car
+	private static int travelTime = 4;// how long it take a train to move one location
 	private static String iconNorthColor ="";
 	private static String iconSouthColor ="";
 	private static String iconEastColor ="";
@@ -202,6 +204,22 @@ public class Setup {
 	
 	public static String getBuildReportLevel(){
 		return buildReportLevel;
+	}
+	
+	public static void setSwitchTime(int minutes){
+		carSwitchTime = minutes;
+	}
+	
+	public static int getSwitchTime(){
+		return carSwitchTime;
+	}
+	
+	public static void setTravelTime(int minutes){
+		travelTime = minutes;
+	}
+	
+	public static int getTravelTime(){
+		return travelTime;
 	}
 	
 	public static void setTrainIconColorNorth (String color){
@@ -396,6 +414,8 @@ public class Setup {
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
     	values.setAttribute("scale", Integer.toString(getScale()));
     	values.setAttribute("carTypes", getCarTypes());
+    	values.setAttribute("switchTime", Integer.toString(getSwitchTime()));
+    	values.setAttribute("travelTime", Integer.toString(getTravelTime()));
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
@@ -466,6 +486,16 @@ public class Setup {
         	String enable = a.getValue();
            	if (log.isDebugEnabled()) log.debug("addCarComment: "+enable);
            	Setup.setAppendCarCommentEnabled(enable.equals("true"));
+        }
+        if ((a = operations.getChild("settings").getAttribute("switchTime"))!= null){
+        	String minutes = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("switchTime: "+minutes);
+           	Setup.setSwitchTime(Integer.parseInt(minutes));
+        }
+        if ((a = operations.getChild("settings").getAttribute("travelTime"))!= null){
+        	String minutes = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("travelTime: "+minutes);
+           	Setup.setTravelTime(Integer.parseInt(minutes));
         }
         if ((a = operations.getChild("panel").getAttribute("name"))!= null){
         	String panel = a.getValue();

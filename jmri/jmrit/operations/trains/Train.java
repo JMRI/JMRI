@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -183,6 +183,79 @@ public class Train implements java.beans.PropertyChangeListener {
 			return "0"+Integer.toString(minute);
 		else
 			return Integer.toString(minute);
+	}
+	
+	/**
+	 * Gets the expected time when this train will arrive at
+	 * the location rl.  Expected arrival time is based on the
+	 * number of car pickup and drops for this train.
+	 * TODO Doesn't provide correct expected arrival time if train
+	 * is in route, instead provides relative time.
+	 * @return expected arrival time
+	 */
+	public String getExpectedArrivalTime(RouteLocation routeLocation){
+		int carPickups = 0;
+		int carDrops = 0;
+		int numberOfLocations = 0;
+		boolean trainAt = false;
+		CarManager carManager = CarManager.instance();
+		List carList = carManager.getCarsByTrainList(this);
+		if (getRoute() != null){
+			List routeList = getRoute().getLocationsBySequenceList();
+			for (int i=0; i<routeList.size(); i++){
+				RouteLocation rl = getRoute().getLocationById((String)routeList.get(i));
+				if (rl == routeLocation)
+					break; // done
+				if (rl == getCurrentLocation())
+					trainAt = true;
+				if (trainAt)
+					numberOfLocations++;
+				if (i == 0)
+					continue; // don't count work at departure
+				for (int j=0; j<carList.size(); j++){
+					Car car = carManager.getCarById((String)carList.get(j));
+					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
+						carPickups++;
+					}
+					if (car.getRouteDestination() == rl){
+						carDrops++;
+					}
+				}
+			}
+		}
+		log.debug("Train (" +getName()+ ") has " +carPickups+ " pickups and "+carDrops+ " drops");
+		// TODO use fast clock to get current time vs departure time
+		// for now use relative
+		int minutes = numberOfLocations*Setup.getTravelTime() + carPickups*Setup.getSwitchTime() + carDrops*Setup.getSwitchTime(); 
+		int hours = 0;
+		int days = 0;
+		
+		if (!isTrainInRoute()){
+			minutes += _departureTime.get(Calendar.MINUTE); 
+			hours = _departureTime.get(Calendar.HOUR_OF_DAY);
+		}
+		
+		if (minutes >= 60){
+			int h = minutes/60;
+			minutes = minutes-h*60;
+			hours += h;
+		}
+		
+		String d = "";
+		if (hours >= 24){
+			int nd = hours/24;
+			hours = hours-nd*24;
+			days += nd;
+			d = Integer.toString(days)+":";
+		}
+		
+		String h = Integer.toString(hours);
+		if (hours < 10)
+			h = "0"+h;
+		if (minutes < 10)
+			return d+h+":0"+minutes;
+		else
+			return d+h+":"+minutes;
 	}
 	
 	
@@ -330,6 +403,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public String getStatus() {
 		return _status;
+	}
+	
+	public boolean isTrainInRoute() {
+		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
 
 	List _skipLocationsList = new ArrayList();
@@ -570,6 +647,45 @@ public class Train implements java.beans.PropertyChangeListener {
 		setPrinted(false);
 	}
 
+	public void printBuildReport(){
+		if(_built && TrainManager.instance().getBuildReport()){
+			File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
+			boolean isPreview = TrainManager.instance().getPrintPreview();
+			printReport(buildFile, "Train Build Report " + getDescription(), isPreview, "", true);
+		}
+	}
+	
+	public void printManifest(){
+		if(_built){
+			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
+			boolean isPreview = TrainManager.instance().getPrintPreview();
+			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
+			if (!isPreview)
+				setPrinted(true);
+		} else {
+			String string = "Need to build train (" +getName()+ ") before printing manifest";
+			log.debug(string);
+			JOptionPane.showMessageDialog(null, string,
+					"Can not print manifest",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void printIfSelected(){
+		if(_build)
+			printManifest();
+		else
+			log.debug("Train ("+getName()+") not selected, skipping printing manifest");
+	}
+	
+	private void setPrinted (boolean printed){
+		_printed = printed;
+	}
+	
+	public boolean getPrinted(){
+		return _printed;
+	}
+	
 	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport){
 	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
@@ -654,46 +770,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
         writer.close();
 	}
-	
-	public void printBuildReport(){
-		if(_built && TrainManager.instance().getBuildReport()){
-			File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
-			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(buildFile, "Train Build Report " + getDescription(), isPreview, "", true);
-		}
-	}
-	
-	public void printManifest(){
-		if(_built){
-			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
-			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
-			if (!isPreview)
-				setPrinted(true);
-		} else {
-			String string = "Need to build train (" +getName()+ ") before printing manifest";
-			log.debug(string);
-			JOptionPane.showMessageDialog(null, string,
-					"Can not print manifest",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	
-	public void printIfSelected(){
-		if(_build)
-			printManifest();
-		else
-			log.debug("Train ("+getName()+") not selected, skipping printing manifest");
-	}
-	
-	private void setPrinted (boolean printed){
-		_printed = printed;
-	}
-	
-	public boolean getPrinted(){
-		return _printed;
-	}
-	
+		
 	protected RouteLocation trainIconRl = null; // saves the icon current route location
 
 	/**
@@ -872,8 +949,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
 		if (dir.equals(trainIconRl.WEST))
 			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
-
-
 	}
 	
 	LocationManager locationManager = LocationManager.instance();
@@ -947,7 +1022,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public void reset(){
 		// is this train in route?
-		if (getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation()){
+		if (isTrainInRoute()){
 			log.error("Train has started its route, can not reset");
 			JOptionPane.showMessageDialog(null,
 					"Train is in route to "+getTrainTerminatesName(), "Can not reset train!",
@@ -1078,7 +1153,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	e.setAttribute("route", getRoute().toString());
         else
         	e.setAttribute("route", "");
-        // build list of location that this train skips
+        // build list of locations that this train skips
         String[] locationIds = getTrainSkipsLocations();
         String names ="";
         for (int i=0; i<locationIds.length; i++){
