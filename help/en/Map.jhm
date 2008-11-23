@@ -12,6 +12,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.loconet.LocoBuffer_flow" url="html/hardware/loconet/LocoBuffer.shtml#flow" />
 	<mapID target="html.tools.Signals" url="html/tools/Signals.shtml" />
 	<mapID target="html.hardware.loconet.DS54" url="html/hardware/loconet/DS54.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Trains" url="package/jmri/jmrit/operations/Operations.shtml#Trains" />
 	<mapID target="html.doc.Technical.Help_limitations" url="html/doc/Technical/Help.shtml#limitations" />
 	<mapID target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl" url="package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter3_WinMenuOptions" url="html/tools/throttle/ThrottleChapter3.shtml#WinMenuOptions" />
@@ -95,6 +96,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="webindex" url="webindex.shtml" />
 	<mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_EnginesSet" url="package/jmri/jmrit/operations/Operations.shtml#EnginesSet" />
 	<mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml" />
 	<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.shtml#turnouts" />
@@ -135,6 +137,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.apps.PanelPro.FAQ_multifile" url="html/apps/PanelPro/FAQ.shtml#multifile" />
 	<mapID target="html.web.MiniServer" url="html/web/MiniServer.shtml" />
 	<mapID target="html.apps.LocoTools.index" url="html/apps/LocoTools/index.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_BuildingTrains" url="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains" />
 	<mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml" />
 	<mapID target="html.hardware.loconet.LocoNetSim" url="html/hardware/loconet/LocoNetSim.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_c_Top" url="DecoderProManual/Comp_PrintData_c.shtml#Top" />
@@ -204,7 +207,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.CVSFAQ_update" url="html/doc/Technical/CVSFAQ.shtml#update" />
 	<mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Engines" url="package/jmri/jmrit/operations/Operations.shtml#Engines" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolbar" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolbar" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Sidings" url="package/jmri/jmrit/operations/Operations.shtml#Sidings" />
 	<mapID target="html.apps.PanelPro.FAQ" url="html/apps/PanelPro/FAQ.shtml" />
 	<mapID target="package.jmri.jmrit.automat.monitor.AutomatTableFrame" url="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Motor_Top" url="DecoderProManual/Comp_Motor.shtml#Top" />
@@ -295,6 +300,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_block" url="package/jmri/jmrit/display/LayoutEditor.shtml#block" />
 	<mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml" />
 	<mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_EditCarAttributes" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes" />
 	<mapID target="html.hardware.XPressNet.LI101Configurationtool" url="html/hardware/XPressNet/LI101Configurationtool.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_tracking" url="package/jmri/jmrit/display/LayoutEditor.shtml#tracking" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_start" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#start" />
@@ -446,6 +452,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter2_SliderBar" url="html/tools/throttle/ThrottleChapter2.shtml#SliderBar" />
 	<mapID target="html.tools.fastclock.index" url="html/tools/fastclock/index.shtml" />
 	<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Interchange" url="package/jmri/jmrit/operations/Operations.shtml#Interchange" />
 	<mapID target="package.jmri.jmrix.rps.swing.polling.PollTableFrame" url="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml" />
 	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.shtml" />
 	<mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml" />
@@ -495,6 +502,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame" url="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter3_EditFrameProperties" url="html/tools/throttle/ThrottleChapter3.shtml#EditFrameProperties" />
+	<mapID target="package.jmri.jmrit.operations.Operations_Locations" url="package/jmri/jmrit/operations/Operations.shtml#Locations" />
 	<mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SectionAddEdit" url="package/jmri/jmrit/beantable/SectionAddEdit.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml" />
@@ -571,9 +579,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable" />
 	<mapID target="package.jmri.jmrit.beantable.BlockTable" url="package/jmri/jmrit/beantable/BlockTable.shtml" />
 	<mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_EnginesAdd" url="package/jmri/jmrit/operations/Operations.shtml#EnginesAdd" />
 	<mapID target="Acknowledgements_X" url="Acknowledgements.shtml#X" />
 	<mapID target="html.tools.scripting.FAQ_windows" url="html/tools/scripting/FAQ.shtml#windows" />
-	<mapID target="package.jmri.jmrit.operations.Operations_EnginesEdit" url="package/jmri/jmrit/operations/Operations.shtml#EnginesEdit" />
 	<mapID target="html.doc.Technical.I8N_code" url="html/doc/Technical/I8N.shtml#code" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_SSL" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#SSL" />
 	<mapID target="html.tools.signaling.SimpleSignalExample_setup" url="html/tools/signaling/SimpleSignalExample.shtml#setup" />
