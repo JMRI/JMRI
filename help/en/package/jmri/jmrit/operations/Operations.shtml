@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.14 2008-11-21 20:05:34 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.15 2008-11-23 05:31:02 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -77,6 +77,15 @@ and is of course dependent on the car lengths assigned to the train.
 Now set the maximum number of engines that you want the program to
 assign to a train. If you don't want the program assigning engines, set
 this value to 0.
+
+<H3>Switch and Travel Times</H3>
+
+The program when generating switch lists for the various locations on
+your railroad, will estimate the arrival times for your trains based on
+the train's departure time and the switch and travel times. Enter the
+average number of minutes it takes to drop or pickup a car on your
+railroad. Then enter the average amount of time in minutes it takes to
+travel from one location to the another.
 
 <H3>Scale</H3>
 
