@@ -1,0 +1,17 @@
+
+# Contact info submission
+
+url: jmri.sourceforge.net/
+site_owner: JMRI
+address1: 
+address2: 
+city: 
+state: 
+country: United States
+postal_code: 
+phone_number: unlisted
+display_email: jmri@pacbell.net
+site_name: JMRI: A Java Model Railroad Interface
+site_description: Open source project to help controlling layouts from a 
+computer. Panel creation, decoder programming and Loco-
+net tools.
