@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -343,6 +343,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// set frame size and location for display
 		pack();
+		setSize(getWidth(), getHeight()+50);
 		//setSize(getWidth(),getHeight()+getHeight()*1/10);
 		setVisible(true);
 	}
@@ -364,6 +365,18 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			if (addOwner.length() > 10){
 				JOptionPane.showMessageDialog(this,rb.getString("ownerText"),
 						"Can not add owner",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			// check input fields
+			try {
+				Integer.parseInt(maxLengthTextField.getText());
+				Integer.parseInt(maxEngineSizeTextField.getText());
+				Integer.parseInt(switchTimeTextField.getText());
+				Integer.parseInt(travelTimeTextField.getText());
+			} catch (NumberFormatException e){
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(),
+						"Can not accept number" ,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}

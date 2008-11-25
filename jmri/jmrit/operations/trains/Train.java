@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -726,11 +726,7 @@ public class Train implements java.beans.PropertyChangeListener {
 						|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
 						|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
 						|| inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
-					line = "";
-					// skip the first set of characters
-					for (int i = 1; i < inputLine.length; i++) {
-						line += inputLine[i] + " ";
-					}
+		
 					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)){
 						if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") 
 								|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
@@ -749,9 +745,31 @@ public class Train implements java.beans.PropertyChangeListener {
 							continue;	// don't print this line
 						}
 					}
+					// do not indent if false
+					if (false){
+						// indent lines based on level
+						if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+							inputLine[0] = "   ";
+						}
+						else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")){
+							inputLine[0] = "  ";
+						}
+						else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")){
+							inputLine[0] = " ";
+						}
+						else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")){
+							inputLine[0] = "";
+						}
+					} else {
+						inputLine[0] = "";
+					}
+					// rebuild line
+					line = "";
+					for (int i = 0; i < inputLine.length; i++) {
+						line += inputLine[i] + " ";
+					}
 				} else {
-					log
-							.debug("ERROR first characters of build report not valid ("
+					log.debug("ERROR first characters of build report not valid ("
 									+ line + ")");
 				}
 			}

@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -193,7 +193,7 @@ public class TrainBuilder extends TrainCommon{
 			for (int i=0; i<stagingTracksTerminate.size(); i++){
 				terminateStageTrack = terminateLocation.getTrackById((String)stagingTracksTerminate.get(i));
 				if (terminateStageTrack.getNumberRS() == 0 && terminateStageTrack.getDropRS() == 0){
-					addLine(fileOut, ONE, "Track "+terminateStageTrack.getName()+" is available");
+					addLine(fileOut, ONE, "Track "+terminateStageTrack.getName()+" is available at "+terminateLocation.getName());
 					break;
 				} else {
 					terminateStageTrack = null;
@@ -212,7 +212,10 @@ public class TrainBuilder extends TrainCommon{
 			addLine(fileOut, ONE, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
 			for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById((String)stagingTracks.get(i));
-				addLine(fileOut, ONE, "Staging track ("+departStageTrack.getName()+") has "+departStageTrack.getNumberRS()+" engines and cars");
+				addLine(fileOut, ONE, "Staging track ("
+						+ departStageTrack.getName() + ") has "
+						+ departStageTrack.getNumberEngines() + " engines and "
+						+ departStageTrack.getNumberCars() + " cars");
 				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut)){
 					break;
 				} else {

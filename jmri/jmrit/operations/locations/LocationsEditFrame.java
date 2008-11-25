@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -323,10 +323,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		
 		// set frame size and location for display
 		pack();
-		if((getWidth()<600)) setSize(600, getHeight());
+		if((getWidth()<670)) setSize(670, getHeight());
 		setSize(getWidth(), 700);
-//		setLocation(500, 300);
-//		setAlwaysOnTop(true);
 		setVisible(true);
 	}
 	

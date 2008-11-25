@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -86,7 +86,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);

@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -43,10 +43,11 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     protected static final int LENGTHCOLUMN = 2;
     protected static final int USEDLENGTHCOLUMN = 3;
     protected static final int RESERVEDCOLUMN = 4;  
-    protected static final int ROLLINGSTOCK = 5;
-    protected static final int PICKUPS = 6;
-    protected static final int DROPS = 7;
-    protected static final int EDITCOLUMN = 8;
+    protected static final int ENGINES = 5;
+    protected static final int CARS = 6;
+    protected static final int PICKUPS = 7;
+    protected static final int DROPS = 8;
+    protected static final int EDITCOLUMN = 9;
     
     protected static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -90,15 +91,18 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(2);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(4);
-		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(4);
-		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(4);
-		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(4);
-		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(4);
-		table.getColumnModel().getColumn(DROPS).setPreferredWidth(4);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(30);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(ENGINES).setPreferredWidth(46);
+		table.getColumnModel().getColumn(CARS).setPreferredWidth(46);
+		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(46);
+		table.getColumnModel().getColumn(DROPS).setPreferredWidth(46);
+		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(60);
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         updateList();
 	}
     
@@ -113,7 +117,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
         case RESERVEDCOLUMN: return rb.getString("Reserved");
-        case ROLLINGSTOCK: return rb.getString("RollingStock");
+        case ENGINES: return rb.getString("Engines");
+        case CARS: return rb.getString("Cars");
         case PICKUPS: return rb.getString("Pickup");
         case DROPS: return rb.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
@@ -128,7 +133,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
         case RESERVEDCOLUMN: return String.class;
-        case ROLLINGSTOCK: return String.class;
+        case ENGINES: return String.class;
+        case CARS: return String.class;
         case PICKUPS: return String.class;
         case DROPS: return String.class;
         case EDITCOLUMN: return JButton.class;
@@ -147,16 +153,17 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 
     public Object getValueAt(int row, int col) {
     	String tracksId = (String)tracksList.get(row);
-    	Track sl = _location.getTrackById(tracksId);
+    	Track track = _location.getTrackById(tracksId);
         switch (col) {
-        case IDCOLUMN: return sl.getId();
-        case NAMECOLUMN: return sl.getName();
-        case LENGTHCOLUMN: return Integer.toString(sl.getLength());
-        case USEDLENGTHCOLUMN: return Integer.toString(sl.getUsedLength());
-        case RESERVEDCOLUMN: return Integer.toString(sl.getReserved());
-        case ROLLINGSTOCK: return Integer.toString(sl.getNumberRS());
-        case PICKUPS: return Integer.toString(sl.getPickupRS());
-        case DROPS: return Integer.toString(sl.getDropRS());
+        case IDCOLUMN: return track.getId();
+        case NAMECOLUMN: return track.getName();
+        case LENGTHCOLUMN: return Integer.toString(track.getLength());
+        case USEDLENGTHCOLUMN: return Integer.toString(track.getUsedLength());
+        case RESERVEDCOLUMN: return Integer.toString(track.getReserved());
+        case ENGINES: return Integer.toString(track.getNumberEngines());
+        case CARS: return Integer.toString(track.getNumberCars());
+        case PICKUPS: return Integer.toString(track.getPickupRS());
+        case DROPS: return Integer.toString(track.getDropRS());
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
