@@ -15,7 +15,7 @@ import jmri.util.JmriInsets;
  * @author	Bob Jacobsen    Copyright (C) 2007
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -122,6 +122,14 @@ public class ReportContextAction extends AbstractAction {
         } catch (Throwable e2) {
             // failed, fall back to standard method
             addString("(Cannot sense screen size due to "+e2.toString()+")");
+        }
+        
+        try {
+            // Find screen resolution. Not expected to fail, but just in case....
+            int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+            addString("Screen resolution: "+dpi);
+        } catch (Throwable e2) {
+            addString("Screen resolution not available");
         }
         
         // look at context
