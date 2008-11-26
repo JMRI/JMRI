@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.71 $
+ * @version     $Revision: 1.72 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -608,7 +608,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 						public void eventDispatched(java.awt.AWTEvent e) {
 							if (!debugFired) {
 								InstanceManager.logixManagerInstance().setLoadDisabled(true);
-								log.debug("Requested load Logixs diabled.");
+								log.info("Requested load Logixs disabled.");
 								debugFired = true;
 							}
 						}
