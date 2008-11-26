@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.14 2008-05-26 02:00:41 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.15 2008-11-26 21:59:11 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -67,10 +67,11 @@
     <tr>
       <th>System Name</th>
       <th>User Name</th>
-      <th>Feedback</th>
-      <th>Invert?</th>
-      <th>Locked?</th>
-      <th>Automate?</th>
+      <th>Fdbk?</th>
+      <th>Inv?</th>
+      <th>Lckd?</th>
+      <th>Auto?</th>
+      <th>Comment</th>
     </tr>
     <!-- index through individual turnout elements -->
     <xsl:apply-templates/>
@@ -85,6 +86,7 @@
   <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
   <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
   <td><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
+  <td><xsl:value-of select="comment"/></td>
 </tr>
 </xsl:template>
 
@@ -93,7 +95,7 @@
 <xsl:template match="layout-config/signalheads">
 <h3>Signal Heads</h3>
     <table border="1">
-    <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Output</th></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Output</th><th>Comment</th></tr>
     <!-- index through individal signalhead elements -->
     <xsl:apply-templates/>
     </table>
@@ -104,7 +106,7 @@
 <xsl:template match="layout-config/sensors">
 <h3>Sensors</h3>
     <table border="1">
-    <tr><th>System Name</th><th>User Name</th><th>Invert?</th></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Inv?</th><th>Comment</th></tr>
     <!-- index through individal sensor elements -->
     <xsl:apply-templates/>
     </table>
@@ -115,7 +117,7 @@
 <xsl:template match="layout-config/memories">
 <h3>Memories</h3>
     <table border="1">
-    <tr><th>System Name</th><th>User Name</th></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
     <!-- index through individal memory elements -->
     <xsl:apply-templates/>
     </table>
@@ -126,7 +128,7 @@
 <xsl:template match="layout-config/reporters">
 <h3>Reporters</h3>
     <table border="1">
-    <tr><th>System Name</th><th>User Name</th></tr>
+    <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
     <!-- index through individal reporter elements -->
     <xsl:apply-templates/>
     </table>
@@ -138,9 +140,10 @@
 <h3>Routes</h3>
     <table border="1">
     <tr><th>System Name</th><th>User Name</th>
-    <th>Input Sensors</th><th>Input Turnouts</th>
-    <th>Output Turnouts</th>
-    <th>Output Sensors</th>
+    <th>In Sensors</th><th>In Turnouts</th>
+    <th>Out Turnouts</th>
+    <th>Out Sensors</th>
+    <th>Comment</th>
     </tr>
     <!-- index through individal route elements -->
     <xsl:apply-templates/>
@@ -161,6 +164,7 @@
 <td><xsl:for-each select="routeOutputSensor">
         <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
     </xsl:for-each></td>
+<td><xsl:value-of select="comment"/></td>
 </tr>
 </xsl:template>
 
@@ -333,21 +337,30 @@
      <xsl:for-each select="turnout">
         <xsl:value-of select="@systemName"/><br/>
      </xsl:for-each></td>
+  <td><xsl:value-of select="comment"/></td>
 </tr>
 </xsl:template>
 
 <xsl:template match="sensor">
 <tr><td><xsl:value-of select="@systemName"/></td>
     <td><xsl:value-of select="@userName"/></td>
-    <td><xsl:if test='(@inverted = "true")'>Yes</xsl:if></td></tr>
+    <td><xsl:if test='(@inverted = "true")'>Yes</xsl:if></td>
+    <td><xsl:value-of select="comment"/></td>
+</tr>
 </xsl:template>
 
 <xsl:template match="memory">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
+<tr>
+  <td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td>
+  <td><xsl:value-of select="comment"/></td>
+</tr>
 </xsl:template>
 
 <xsl:template match="reporter">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
+<tr>
+  <td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td>
+  <td><xsl:value-of select="comment"/></td>
+</tr>
 </xsl:template>
 
 <xsl:template match="logix">
