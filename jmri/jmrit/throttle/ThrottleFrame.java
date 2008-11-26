@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.43 $
+ * @version    $Revision: 1.44 $
  */
 /**
  * @author DSM
@@ -617,8 +617,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         Element me = new Element("ThrottleFrame");
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);
-        bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI)controlPanel.getUI()).getNorthPane().getPreferredSize();
-        me.setAttribute("border",Integer.toString(bDim.height));
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
+            bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI)controlPanel.getUI()).getNorthPane().getPreferredSize();
+            me.setAttribute("border",Integer.toString(bDim.height));
+        }
         java.util.ArrayList children =
             new java.util.ArrayList(1);
         WindowPreferences wp = new WindowPreferences();
@@ -659,13 +661,16 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         wp.setPreferences(this, window);
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         Element functionPanelElement = e.getChild("FunctionPanel");
         functionPanel.setXml(functionPanelElement);
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) functionPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) functionPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) addressPanel.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
         
         setFrameTitle();
     }
