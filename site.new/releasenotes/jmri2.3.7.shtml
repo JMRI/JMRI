@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.7.shtml,v 1.4 2008-11-26 21:59:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.7.shtml,v 1.5 2008-11-27 03:48:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -156,6 +156,10 @@ some resizing to fit page better; better display of Logix and Simple Signal Logi
 
 <p>
 Fixed a problem loading and storing throttle layouts when not using a standard Java GUI appearance.
+
+<p>
+Simple Signal Logic elements now have a comment field, for your convenience in documenting your configuration.
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
