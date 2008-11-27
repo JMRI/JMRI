@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.15 2008-11-26 21:59:11 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.16 2008-11-27 03:22:15 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -189,8 +189,10 @@
     <!-- each one becomes a table -->
     <h3>Simple Signal Logic</h3>
         <table border="1">
-        <tr><th>Controlled Signal</th><th>Watched Signal</th>
-            <th>Turnout</th><th>Sensors</th><th>Options</th></tr>
+        <tr><th>Controls Signal</th><th>Watch Signal</th>
+            <th>Turnout</th><th>Sensors</th><th>Options</th>
+            <th>Comment</th>
+        </tr>
         <!-- index through individal block elements -->
         <xsl:for-each select="block">
             <xsl:call-template name="signalelement"/>
@@ -220,6 +222,8 @@
                 Use Flash Yellow<br/></xsl:if>
             <xsl:if test="@distantsignal = 'true'" >
                 Distant Signal<br/></xsl:if>
+            </td>
+        <td><xsl:value-of select="comment"/>
             </td>
     </tr>
 </xsl:template>
