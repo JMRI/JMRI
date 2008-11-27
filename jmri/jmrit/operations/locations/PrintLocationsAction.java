@@ -22,12 +22,12 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+	String newLine = "\n";
 	LocationManager manager = LocationManager.instance();
 
     public PrintLocationsAction(String actionName, Frame frame, boolean preview, Component pWho) {
@@ -60,12 +60,21 @@ public class PrintLocationsAction  extends AbstractAction {
         }
   
         // Loop through the Roster, printing as needed
-        String newLine = "\n";
+       
         List locations = manager.getLocationsByNameList();
+        int totalLength = 0;
+        int usedLength = 0;
+        int numberRS = 0;
+        int numberCars = 0;
+        int numberEngines = 0;
+        
         try {
         	String s = rb.getString("Location") + "\t\t\t "
 					+ rb.getString("Length") + " " + rb.getString("Used")
-					+ "\t" + rb.getString("RS") + "\t" + rb.getString("Pickup")
+					+ "\t" + rb.getString("RS") 
+					+ "\t" + rb.getString("Cars")
+					+ "\t" + rb.getString("Engines")
+					+ "\t" + rb.getString("Pickup")
 					+ "\t" + rb.getString("Drop") + newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<locations.size(); i++){
@@ -78,9 +87,14 @@ public class PrintLocationsAction  extends AbstractAction {
          		s = name + " \t  " + Integer.toString(location.getLength()) + "\t"
          						+ Integer.toString(location.getUsedLength()) + "\t"
 								+ Integer.toString(location.getNumberRS()) + "\t"
+								+ "\t" + "\t"
 								+ Integer.toString(location.getPickupRS()) + "\t"
 								+ Integer.toString(location.getDropRS())+ newLine;
         		writer.write(s, 0, s.length());
+        		
+        		totalLength += location.getLength();
+        		usedLength += location.getUsedLength();
+        		numberRS += location.getNumberRS();
         		
         		List yards = location.getTracksByNameList(Track.YARD);
         		if (yards.size()>0){
@@ -92,14 +106,10 @@ public class PrintLocationsAction  extends AbstractAction {
                 		for (int j=name.length(); j < YardEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
-                		s = "\t" + name + " "
-								+ Integer.toString(yard.getLength()) + "\t"
-								+ Integer.toString(yard.getUsedLength()) + "\t"
-								+ Integer.toString(yard.getNumberRS()) + "\t"
-								+ Integer.toString(yard.getPickupRS()) + "\t"
-								+ Integer.toString(yard.getDropRS())
-								+ newLine;
+                		s = getTrackString (yard, name);
                 		writer.write(s, 0, s.length());
+                		numberCars += yard.getNumberCars();
+                		numberEngines += yard.getNumberEngines();
          			}
         		}
         		
@@ -113,14 +123,10 @@ public class PrintLocationsAction  extends AbstractAction {
                 		for (int j=name.length(); j < SidingEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
-						s = "\t" + name + " "
-								+ Integer.toString(siding.getLength()) + "\t"
-								+ Integer.toString(siding.getUsedLength()) + "\t"
-								+ Integer.toString(siding.getNumberRS()) + "\t"
-								+ Integer.toString(siding.getPickupRS()) + "\t"
-								+ Integer.toString(siding.getDropRS())
-								+ newLine;
+                		s = getTrackString (siding, name);
                 		writer.write(s, 0, s.length());
+                   		numberCars += siding.getNumberCars();
+                		numberEngines += siding.getNumberEngines();
          			}
         		}
         		
@@ -134,14 +140,10 @@ public class PrintLocationsAction  extends AbstractAction {
                 		for (int j=name.length(); j < InterchangeEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
-                		s = "\t" + name + " "
-								+ Integer.toString(interchange.getLength())	+ "\t"
-								+ Integer.toString(interchange.getUsedLength()) + "\t"
-								+ Integer.toString(interchange.getNumberRS())	+ "\t"
-								+ Integer.toString(interchange.getPickupRS())	+ "\t"
-								+ Integer.toString(interchange.getDropRS())
-								+ newLine;
+                		s = getTrackString (interchange, name);
                 		writer.write(s, 0, s.length());
+                		numberCars += interchange.getNumberCars();
+                		numberEngines += interchange.getNumberEngines();
          			}
         		}
           		
@@ -155,23 +157,43 @@ public class PrintLocationsAction  extends AbstractAction {
                 		for (int j=name.length(); j < StagingEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
-                		s = "\t" + name + " "
-								+ Integer.toString(staging.getLength()) + "\t"
-								+ Integer.toString(staging.getUsedLength()) + "\t"
-								+ Integer.toString(staging.getNumberRS())	+ "\t"
-								+ Integer.toString(staging.getPickupRS())	+ "\t"
-								+ Integer.toString(staging.getDropRS())
-								+ newLine;
+                		s = getTrackString (staging, name);
                 		writer.write(s, 0, s.length());
+                		numberCars += staging.getNumberCars();
+                		numberEngines += staging.getNumberEngines();
          			}
         		}
         		writer.write(newLine, 0, newLine.length());
         	}
+        	s = "Total length "+totalLength+", total used "+usedLength+ ", percentage used "+usedLength*100/totalLength+"%"+ newLine;
+        	writer.write(s, 0, s.length());
+           	s = "Total rolling stock "+numberRS+", number of cars "+numberCars+", number of engines "+numberEngines + newLine;
+        	writer.write(s, 0, s.length());
+        	// are there trains in route, then some cars and engines not counted!
+        	if (numberRS != numberCars+numberEngines){
+        		s = "Note: " + (numberRS-(numberCars+numberEngines)) + " engines and cars are in route and they are not on a siding, yard, interchange" 
+        		+ newLine + "or staging track." + newLine;
+        		writer.write(s, 0, s.length());
+        	}
+        	
         	// and force completion of the printing
         	writer.close();
         } catch (IOException we) {
         	log.error("Error printing ConsistRosterEntry: " + e);
         }
+    }
+    
+    private String getTrackString (Track track, String name){
+   		String s = "\t" + name + " "
+		+ Integer.toString(track.getLength()) + "\t"
+		+ Integer.toString(track.getUsedLength()) + "\t"
+		+ Integer.toString(track.getNumberRS())	+ "\t"
+		+ Integer.toString(track.getNumberCars()) + "\t"
+		+ Integer.toString(track.getNumberEngines()) + "\t"
+		+ Integer.toString(track.getPickupRS())	+ "\t"
+		+ Integer.toString(track.getDropRS())
+		+ newLine;
+   		return s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintLocationsAction.class.getName());

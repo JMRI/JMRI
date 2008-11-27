@@ -18,7 +18,7 @@ import org.jdom.Element;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -330,11 +330,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			}
 			if (_destination != null){
 				_destination.addDropRS();
-				if(_location != null){
+				if(_location != null && _trackLocation != null){
 					_location.addPickupRS();
-					if (_trackLocation != null)
-						_trackLocation.addPickupRS();
+					_trackLocation.addPickupRS();
 				}
+			
 				// Need to know if destination name changes so we can forward to listerners 
 				_destination.addPropertyChangeListener(this);
 			} 

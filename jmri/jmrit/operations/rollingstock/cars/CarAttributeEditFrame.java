@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -213,6 +213,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 				return;
 			}
 			CarLengths.instance().addName(addItem);
+			comboBox.setSelectedItem(addItem);
 		}
 		if(_comboboxName == CarsEditFrame.KERNEL){
 			manager.newKernel(addItem);

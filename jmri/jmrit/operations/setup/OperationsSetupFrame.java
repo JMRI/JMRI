@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -343,8 +343,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// set frame size and location for display
 		pack();
-		setSize(getWidth(), getHeight()+50);
-		//setSize(getWidth(),getHeight()+getHeight()*1/10);
+		setSize(getWidth()+30, getHeight()+50);
 		setVisible(true);
 	}
 	

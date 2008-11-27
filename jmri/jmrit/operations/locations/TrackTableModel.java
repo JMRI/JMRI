@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -43,8 +43,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     protected static final int LENGTHCOLUMN = 2;
     protected static final int USEDLENGTHCOLUMN = 3;
     protected static final int RESERVEDCOLUMN = 4;  
-    protected static final int ENGINES = 5;
-    protected static final int CARS = 6;
+    protected static final int CARS = 5;
+    protected static final int ENGINES = 6;
     protected static final int PICKUPS = 7;
     protected static final int DROPS = 8;
     protected static final int EDITCOLUMN = 9;
