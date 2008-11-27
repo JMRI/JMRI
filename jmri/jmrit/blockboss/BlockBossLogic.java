@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -232,6 +232,10 @@ public class BlockBossLogic extends Siglet {
     public int getMode() {
         return mode;
     }
+    
+    String comment;
+    public void setComment(String comment) { this.comment = comment; }
+    public String getComment() { return this.comment; }
     
     public void setWatchedSignal1(String name, boolean useFlash) {
         if (name == null || name.equals("")) {

@@ -25,7 +25,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -101,6 +101,14 @@ public class BlockBossLogicXml implements XmlAdapter {
             block.setAttribute("limitspeed2", ""+p.getLimitSpeed2());
             block.setAttribute("useflashyellow", ""+p.getUseFlash());
             block.setAttribute("distantsignal", ""+p.getDistantSignal());
+
+            // add comment, if present
+            if (p.getComment() != null) {
+                Element c = new Element("comment");
+                c.addContent(p.getComment());
+                block.addContent(c);
+            }
+    
             blocks.addContent(block);
 
         }
@@ -169,6 +177,12 @@ public class BlockBossLogicXml implements XmlAdapter {
                 if (block.getAttribute("watchedsensor2alt")!=null)
                     bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
             
+                // load comment, if present
+                String c = block.getChildText("comment");
+                if (c != null) {
+                    bb.setComment(c);
+                }
+
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
             }

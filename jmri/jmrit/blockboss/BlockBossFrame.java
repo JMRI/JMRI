@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -101,6 +101,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField outSignalField;
     JTextField approachSensorField1;
 
+    JTextField commentField;
     
     String buttonSingleTooltip = "In direction of traffic";
     String buttonTrailMainTooltip = "<HTML><BODY>Signal head for main track<BR>" 
@@ -262,8 +263,15 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line.setAlignmentX(0.5f);        
         getContentPane().add(line);
 
-        getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
+        line = new JPanel();
+        line.setLayout(new FlowLayout());
+        line.add(new JLabel("Comment: "));
+        line.add(commentField = new JTextField(30));
+        getContentPane().add(line);
+
+        getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
+        
         // add OK button at bottom
         JButton b = new JButton("Apply");
         b.setAlignmentX(0.5f);
@@ -677,6 +685,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
         b.setLimitSpeed1(sLimitBox.isSelected());
         b.setDistantSignal(sDistantBox.isSelected());
+        
+        b.setComment(commentField.getText());
+        
         b.retain();
         b.start();
     }
@@ -694,6 +705,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
         b.setLimitSpeed1(tmLimitBox.isSelected());
         b.setDistantSignal(tmDistantBox.isSelected());
+        
+        b.setComment(commentField.getText());
+        
         b.retain();
         b.start();
     }
@@ -710,6 +724,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
         b.setLimitSpeed2(tdLimitBox.isSelected());
         b.setDistantSignal(tdDistantBox.isSelected());
+        
+        b.setComment(commentField.getText());
+        
         b.retain();
         b.start();
     }
@@ -735,6 +752,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setLimitSpeed2(fdLimitBox.isSelected());
         
         b.setDistantSignal(fDistantBox.isSelected());
+        
+        b.setComment(commentField.getText());
+        
         b.retain();
         b.start();
     }
@@ -781,6 +801,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         sFlashBox.setSelected(b.getUseFlash());
         sDistantBox.setSelected(b.getDistantSignal());
 
+        commentField.setText(b.getComment());
+        
         int mode = b.getMode();
         if (mode == BlockBossLogic.SINGLEBLOCK)
             buttonSingle.setSelected(true);
