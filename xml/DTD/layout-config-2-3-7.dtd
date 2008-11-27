@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-7.dtd,v 1.1 2008-11-17 05:11:33 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-3-7.dtd,v 1.2 2008-11-27 03:12:11 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.3.7 development.  Do not modify it       -->
 <!-- after version 2.3.7 is released.  For more information,                -->
@@ -536,7 +536,7 @@
 <!ELEMENT signalelements (signalelement*) >
   <!ATTLIST signalelements class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT signalelement (sensor*) >
+<!ELEMENT signalelement (sensor*, comment?) >
   <!ATTLIST signalelement signal 			  CDATA #REQUIRED >
   <!ATTLIST signalelement mode				  CDATA #IMPLIED>
   <!ATTLIST signalelement approachsensor1     CDATA #IMPLIED>
