@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.16 2008-11-27 03:22:15 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.17 2008-11-27 03:43:43 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -402,6 +402,7 @@
 		    <xsl:for-each select="conditionalStateVariable">
 		        <xsl:call-template name="conditionalStateVariable"/>
 		    </xsl:for-each>
+		    <p/>
 		    <xsl:for-each select="conditionalAction">
 		        <xsl:call-template name="conditionalAction"/>
 		    </xsl:for-each>
@@ -442,15 +443,20 @@
   <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
 </xsl:choose>
 name="<xsl:value-of select="@systemName"/>"
+<xsl:if test='@num1 != 0'>
 num1="<xsl:value-of select="@num1"/>"
+</xsl:if>
+<xsl:if test='@num2 != 0'>
 num2="<xsl:value-of select="@num2"/>"
+</xsl:if>
+<xsl:if test='@triggerCalc != ""'>
 triggerCalc="<xsl:value-of select="@triggerCalc"/>"
+</xsl:if>
 <br/>
 </xsl:template>
 
 <xsl:template name="conditionalAction">
 <xsl:if test='@type != 1'>
-<p/>
 <!-- decode operator -->
 <xsl:choose>
   <xsl:when test="( @option = 1 )" >On change to true: </xsl:when>
@@ -481,9 +487,15 @@ triggerCalc="<xsl:value-of select="@triggerCalc"/>"
   <xsl:otherwise>(type="<xsl:value-of select="@type"/>") </xsl:otherwise>
 </xsl:choose>
 name="<xsl:value-of select="@systemName"/>"
+<xsl:if test='@data != 0'>
 data="<xsl:value-of select="@data"/>"
+</xsl:if>
+<xsl:if test='@delay != 0'>
 delay="<xsl:value-of select="@delay"/>"
+</xsl:if>
+<xsl:if test='@string != " "'>
 string="<xsl:value-of select="@string"/>"
+</xsl:if>
 <br/>
 </xsl:if>
 </xsl:template>
