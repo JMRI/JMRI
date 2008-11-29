@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.26 2008-11-11 00:09:08 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.27 2008-11-29 21:10:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -168,6 +168,14 @@
 	    <dd>
 		<p>Connection: Serial cable</p>
 	        <p class="dl">Configure: <A HREF="tmcc/index.shtml">TMCC Command Base</a></p>
+	    </dd>
+
+	    <dt class="im"><a href="http://www.maplesystems.com">
+	    <IMG src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="95" height="90" alt="Maple Logo"></a></dt>
+	    <dt>Maple Systems</dt>
+	    <dd>
+		<p>Maple Systems touch panel</p>
+	        <p class="dl">Configure: <A HREF="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
 
 
