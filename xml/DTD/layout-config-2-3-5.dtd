@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-3-5.dtd,v 1.1 2008-10-08 22:45:33 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-3-5.dtd,v 1.2 2008-11-29 22:06:19 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.3.5 development.  Do not modify it       -->
 <!-- after version 2.3.5 is released.  For more information,                -->
@@ -506,11 +506,11 @@
     <!ATTLIST section fstopsensorname	CDATA #IMPLIED>
     <!ATTLIST section rstopsensorname	CDATA #IMPLIED>
 
-    <!ELEMENT blockentry >
+    <!ELEMENT blockentry EMPTY>
 	<!ATTLIST blockentry sName	CDATA #REQUIRED> 
 	<!ATTLIST blockentry order	CDATA #REQUIRED> 
 
-    <!ELEMENT entrypoint >
+    <!ELEMENT entrypoint EMPTY>
         <!ATTLIST entrypoint fromblock	CDATA #REQUIRED> 
         <!ATTLIST entrypoint toblock	CDATA #REQUIRED> 
         <!ATTLIST entrypoint fixed	CDATA #REQUIRED>
@@ -524,7 +524,7 @@
     <!ATTLIST transit systemName	CDATA #REQUIRED>
     <!ATTLIST transit userName		CDATA #IMPLIED>
 
-    <!ELEMENT transitsection >
+    <!ELEMENT transitsection EMPTY>
 	<!ATTLIST transitsection sectionname	CDATA #REQUIRED> 
 	<!ATTLIST transitsection sequence	CDATA #REQUIRED> 
 	<!ATTLIST transitsection direction	CDATA #REQUIRED> 
