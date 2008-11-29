@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.7.shtml,v 1.5 2008-11-27 03:48:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.7.shtml,v 1.6 2008-11-29 21:39:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,6 +159,12 @@ Fixed a problem loading and storing throttle layouts when not using a standard J
 
 <p>
 Simple Signal Logic elements now have a comment field, for your convenience in documenting your configuration.
+
+<p>
+Initial support for 
+<a href="http://jmri.sf.net/help/en/hardware/maple/index.shtml">Maple Systems</a>
+control panels is now available.
+
 
 <!--#include virtual="/Footer" -->
 
