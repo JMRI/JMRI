@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FollowerFrame.shtml,v 1.5 2008-11-04 00:49:46 jacobsen Exp $ -->
+<!-- $Id: FollowerFrame.shtml,v 1.6 2008-11-29 21:24:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,7 +25,8 @@
 
 <H1>Followers</H1>
  
-<img src="images/FollowerFrame.jpg" alt="Screen shot" align="right">
+<img src="images/FollowerFrame.jpg" alt="Screen shot" align="right"><br>
+
 This provides a simple way to set a Turnout to "follow" the state of
 an input sensor.  You might want this so you can connect a fascia
 toggle swith to a Sensor, and have it drive a switch motor that's connected
