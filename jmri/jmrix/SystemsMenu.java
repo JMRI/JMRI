@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -55,6 +55,7 @@ public class SystemsMenu extends JMenu {
 
         addMenu("jmri.jmrix.can.CanMenu");
         addMenu("jmri.jmrix.ecos.Menu");
+        addMenu("jmri.jmrix.maple.MapleMenu");
     }
 
     void addMenu(String className) {
