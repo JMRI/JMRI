@@ -517,7 +517,8 @@ public class Setup {
            	if (log.isDebugEnabled()) log.debug("fontName: "+font);
            	Setup.setFontName(font);
         }
-        if ((a = operations.getChild("buildReport").getAttribute("level"))!= null){
+        if (operations.getChild("buildReport") != null
+				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {
         	String level = a.getValue();
            	if (log.isDebugEnabled()) log.debug("buildReport: "+level);
            	Setup.setBuildReportLevel(level);
