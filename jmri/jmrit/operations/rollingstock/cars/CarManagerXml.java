@@ -41,7 +41,7 @@ public class CarManagerXml extends XmlFile {
 	}
 	
 
-	void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);
@@ -301,6 +301,9 @@ public class CarManagerXml extends XmlFile {
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
+    public static String getOperationsFileName(){
+    	return OperationsFileName;
+    }
     private static String OperationsFileName = "OperationsCarRoster.xml";
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarManagerXml.class.getName());

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.15 2008-11-23 05:31:02 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.16 2008-11-30 02:58:32 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -156,7 +156,21 @@ direction using the pull down menus.
 When you're finished with the settings panel, press the save button to
 store the setting in a file called "Operations.xml". You can find this
 file in your JMRI directory in a folder called "operations". The program
-will also create a backup file each time you press the save button. 
+will also create a backup file each time you press the save button.
+
+<A NAME="BackupRestore"></A>
+<H3>Backup and Restore</H3>
+
+The "Backup" button will store a copy of the operation files. The
+"Restore" button will prompt you to select which set of backup files you
+wish to use to recover your operation files. You must quit and restart 
+JMRI to complete the restoration of the operation files.
+
+<P>When you press the "Backup" button the program creates a new
+directory in operations called "backups", and then stores the operation
+files in a directory that is based on the day you pressed the "Backup"
+button. For example, if today was November 21, 2008, the program will
+create a backup directory named "2008_11_21".</P>
 
 <A NAME="Locations"></A>
 <H2>Locations</H2>

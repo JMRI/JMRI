@@ -18,7 +18,7 @@ import jmri.jmrit.roster.Roster;
  * Location Manager.  Load and stores the locations for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -45,7 +45,7 @@ public class LocationManagerXml extends XmlFile {
 	}
 	
 
-	void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);
@@ -226,6 +226,9 @@ public class LocationManagerXml extends XmlFile {
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
+    public static String getOperationsFileName(){
+    	return OperationsFileName;
+    }
     private static String OperationsFileName = "OperationsLocationRoster.xml";
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocationManagerXml.class.getName());

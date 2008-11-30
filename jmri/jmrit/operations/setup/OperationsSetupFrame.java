@@ -20,10 +20,10 @@ import jmri.jmrit.display.LocoIcon;
 
 
 /**
- * Frame for user edit of car
+ * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -53,6 +53,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 	// major buttons
 	
+	javax.swing.JButton backupButton = new javax.swing.JButton();
+	javax.swing.JButton restoreButton = new javax.swing.JButton();
 	javax.swing.JButton saveButton = new javax.swing.JButton();
 
 	// radio buttons
@@ -182,7 +184,14 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		space1.setText("      ");
 		space1.setVisible(true);
 
+		backupButton.setText(rb.getString("Backup"));
+		backupButton.setToolTipText(rb.getString("BackupToolTip"));
+		backupButton.setVisible(true);
+		restoreButton.setText(rb.getString("Restore"));
+		restoreButton.setToolTipText(rb.getString("RestoreToolTip"));
+		restoreButton.setVisible(true);
 		saveButton.setText(rb.getString("Save"));
+		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 		saveButton.setVisible(true);
 
 		// Layout the panel by rows
@@ -323,10 +332,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				
 		// row 11
 		JPanel pControl = new JPanel();
+		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, space1, 0, 8);
 		
 		// row 13
-		addItem(pControl, saveButton, 2, 9);
+		addItem(pControl, restoreButton, 0, 9);
+		addItem(pControl, backupButton, 1, 9);
+		addItem(pControl, saveButton, 3, 9);
 		
 		getContentPane().add(panel);
 		getContentPane().add(pPrinter);
@@ -334,6 +346,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		getContentPane().add(pControl);
 
 		// setup buttons
+		addButtonAction(backupButton);
+		addButtonAction(restoreButton);
 		addButtonAction(saveButton);
 		addCheckBoxAction(eastCheckBox);
 		addCheckBoxAction(northCheckBox);
@@ -359,6 +373,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	
 	// Save, Delete, Add buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == backupButton){
+			new Backup().backupFiles();
+		}
+		if (ae.getSource() == restoreButton){
+			RestoreFrame rf = new RestoreFrame();
+			rf.initComponents();
+		}
 		if (ae.getSource() == saveButton){
 			String addOwner = ownerTextField.getText();
 			if (addOwner.length() > 10){

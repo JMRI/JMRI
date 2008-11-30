@@ -106,6 +106,9 @@ public class OperationsXml extends XmlFile {
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
+    public static String getOperationsFileName(){
+    	return OperationsFileName;
+    }
     private static String OperationsFileName = "Operations.xml";
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OperationsXml.class.getName());
