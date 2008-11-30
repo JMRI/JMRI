@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Backup extends XmlFile {
 
@@ -132,8 +132,17 @@ public class Backup extends XmlFile {
 	
 	private String date() {
 		Calendar now = Calendar.getInstance();
-		String date = "" + now.get(Calendar.YEAR) + "_"
-				+ (now.get(Calendar.MONTH) + 1) + "_" + now.get(Calendar.DATE);
+		int month = now.get(Calendar.MONTH) + 1;
+		String m = Integer.toString(month);
+		if (month < 10){
+			m = "0"+Integer.toString(month);
+		}
+		int day = now.get(Calendar.DATE);
+		String d = Integer.toString(day);
+		if (day < 10){
+			d = "0"+Integer.toString(day);
+		}
+		String date = "" + now.get(Calendar.YEAR) + "_"	+ m + "_" + d;
 		return date;
 	}
 
