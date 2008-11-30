@@ -8,28 +8,32 @@ import jmri.jmrix.can.CanReply;
 /**
  * Class for replies in a GridConnect based message/reply protocol.
  * <P>
- *
+ * This is a message in the GridConnect format, e.g. ":S123N12345678;"
+ * 
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @author                      Bob Jacobsen Copyright (C) 2008
+ * @version			$Revision: 1.5 $
  */
 public class GridConnectReply extends AbstractMRReply {
+    
+    static final int MAXLEN = 24;
     
     // Creates a new instance of GridConnectReply
     public GridConnectReply() {
         _nDataChars = 0;
-        _dataChars = new int[24];
+        _dataChars = new int[MAXLEN];
     }
 
     // create a new one of given length
     public GridConnectReply(int i) {
 	this();
-        _nDataChars = (i <= 24) ? i : 24;
+        _nDataChars = (i <= MAXLEN) ? i : MAXLEN;
     }
 
     // create a new one from an array
     public GridConnectReply(int [] d) {
 	this();
-	int _nDataChars = (d.length <= 24) ? d.length : 24;
+	int _nDataChars = (d.length <= MAXLEN) ? d.length : MAXLEN;
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = d[i];
         }
@@ -51,19 +55,23 @@ public class GridConnectReply extends AbstractMRReply {
 
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
-    public void setNumDataElements(int n) { _nDataChars = (n <= 24) ? n : 24;}
+    public void setNumDataElements(int n) { _nDataChars = (n <= MAXLEN) ? n : MAXLEN; }
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
-        if (n<24) {
+        if (n < MAXLEN) {
             _dataChars[n] = v;
             _nDataChars = Math.max(_nDataChars, n+1);
         }
     }
 
-    public int maxSize() { return 24; }
+    public boolean isExtended() {return (getElement(2) == 'X');}
+    public boolean isRtr() {return (getElement(6) == 'R');}
+    
+    // 
+    public int maxSize() { return MAXLEN; }
     
     public void setData(int [] d) {
-        int len = (d.length <=24) ? d.length : 24;
+        int len = (d.length <=MAXLEN) ? d.length : MAXLEN;
         for (int i = 0; i < len; i++) {
             _dataChars[i] = d[i];
         }

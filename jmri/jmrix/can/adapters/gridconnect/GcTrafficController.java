@@ -24,7 +24,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -116,8 +116,10 @@ public class GcTrafficController extends TrafficController {
         ret.setPri(gc.getPri());
 	    // and ID
         ret.setId(gc.getID());
-        // Is it an RTR frame
-	    if (gc.getElement(6) == 'R') ret.setRtr(true);
+        // Is it an Extended frame?
+	    if (gc.isExtended()) ret.setExtended(true);
+        // Is it an RTR frame?
+	    if (gc.isRtr()) ret.setRtr(true);
         // Get the data
         for (int i = 0; i < gc.getNumBytes(); i++) {
             ret.setElement(i, gc.getByte(i));
@@ -134,8 +136,12 @@ public class GcTrafficController extends TrafficController {
 	    GridConnectMessage ret = new GridConnectMessage();
         // Prefix
         ret.setElement(0, ':');
-        // Standard frame
-        ret.setElement(1, 'S');
+        // Standard or extended frame
+        if (m.isExtended())
+            ret.setElement(1, 'X');
+        else
+            ret.setElement(1, 'S');
+            
         // CBUS Priority
         ret.setPri(m.getPri());
         // CBUS ID 
