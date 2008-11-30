@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.6 2008-10-26 04:16:52 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.7 2008-11-30 18:18:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -127,7 +127,7 @@ MacOS X 10.4 or later,
 or (almost any?) version of Linux.
 <P>
 To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
-MacOS X 10.4 or later, 
+MacOS X 10.3 or later, 
 or (almost any?) version of Linux.
 
 <h4>JMRI 2.5, 2.6</h4>
@@ -137,7 +137,9 @@ final.
 <p>
 The JRE and JDK choice for JMRI 2.5 development 
 will depend on desired runtime features, and availability on 
-our popular user and development platforms.
+our popular user and development platforms. It is 
+<u>tentatively</u>
+Java 1.5 for both building and running, which is the same as JMRI 2.3.*, 2.4.
 
 
 <h3>Java Release and Operating System Support</h3>
@@ -171,7 +173,8 @@ At some point, we should revisit that.
         </tr>
 <tr><td>1.9.*<br>2.0</td>    <td>Dec 2007</td><td>1.3</td><td>Windows 95</td><td>1.4</td><td>Windows 98 1st Ed</td></tr>
 <tr><td>2.1.*<br>2.2</td>    <td>Aug 2008</td><td>1.4</td><td>Windows 98 1st Ed</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></tr>
-<tr><td>2.3.*<br>2.4</td>    <td>Dec 2008</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.4</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
+<tr><td>2.3.*<br>2.4</td>    <td>Dec 2008</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
+<tr><td>2.5.*<br>2.6</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
 </table>
 
 <!--#include virtual="/Footer" -->
