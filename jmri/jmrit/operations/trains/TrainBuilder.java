@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -990,11 +990,11 @@ public class TrainBuilder extends TrainCommon{
 		int trainDir = 0;
 		if (trainDirection.equals(rl.NORTH))
 			trainDir = Track.NORTH;
-		if (trainDirection.equals(rl.SOUTH))
+		else if (trainDirection.equals(rl.SOUTH))
 			trainDir = Track.SOUTH;
-		if (trainDirection.equals(rl.EAST))
+		else if (trainDirection.equals(rl.EAST))
 			trainDir = Track.EAST;
-		if (trainDirection.equals(rl.WEST))
+		else if (trainDirection.equals(rl.WEST))
 			trainDir = Track.WEST;
 		
 		if ((trainDir & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
@@ -1105,7 +1105,6 @@ public class TrainBuilder extends TrainCommon{
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
 		addLine(fileOut, "Valid " + new Date());
-		addLine(fileOut, "Departs "+train.getDepartureTime());
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}
@@ -1126,12 +1125,15 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Train has " + carList.size() + " cars assigned to it");
 		int cars = 0;
 		List routeList = train.getRoute().getLocationsBySequenceList();
-		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rl = train.getRoute().getLocationById((String) routeList.get(i));
+		for (int r = 0; r < routeList.size(); r++) {
+			RouteLocation rl = train.getRoute().getLocationById((String) routeList.get(r));
 			newLine(fileOut);
-			addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName());
+			if (r == 0)
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", departure time "+train.getDepartureTime());
+			else
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", estimated arrival time "+train.getExpectedArrivalTime(rl));
 			// block cars by destination
-			for (int j = i; j < routeList.size(); j++) {
+			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById((String) routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getCarById((String) carList.get(k));
@@ -1149,7 +1151,7 @@ public class TrainBuilder extends TrainCommon{
 					cars--;
 				}
 			}
-			if (i != routeList.size() - 1) {
+			if (r != routeList.size() - 1) {
 				addLine(fileOut, rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirection()
 						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
