@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -182,7 +182,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			for (int j=0; j<roadNames.length; j++){
 				if (roadNames[j].equals(oldRoad)){
 					train.deleteRoadName(oldRoad);
-					train.addRoadName(newRoad);
+					if (newRoad != null)
+						train.addRoadName(newRoad);
 				}
 			}
 		}

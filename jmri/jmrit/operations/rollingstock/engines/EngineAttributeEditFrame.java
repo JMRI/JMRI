@@ -30,7 +30,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -149,8 +149,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == EnginesEditFrame.ROAD){
-			CarRoads.instance().deleteName(deleteItem);
 			LocationManager.instance().replaceRoad(deleteItem, null);
+			TrainManager.instance().replaceRoad(deleteItem, null);
+			CarRoads.instance().deleteName(deleteItem);
 		}
 		if(_comboboxName == EnginesEditFrame.MODEL){
 			EngineModels.instance().deleteName(deleteItem);

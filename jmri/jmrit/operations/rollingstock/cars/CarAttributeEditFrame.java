@@ -30,7 +30,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -149,8 +149,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == CarsEditFrame.ROAD){
-			CarRoads.instance().deleteName(deleteItem);
 			LocationManager.instance().replaceRoad(deleteItem, null);
+			TrainManager.instance().replaceRoad(deleteItem, null);
+			CarRoads.instance().deleteName(deleteItem);
 		}
 		if(_comboboxName == CarsEditFrame.TYPE){
 			CarTypes.instance().deleteName(deleteItem);
