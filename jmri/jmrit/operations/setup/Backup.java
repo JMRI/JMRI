@@ -19,14 +19,25 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Backup extends XmlFile {
 
 	public Backup() {
 	}
+	
+	/**
+	 * Creates a folder named directoryName in the backups folder, and
+	 * then saves all of the operatons files into that folder.
+	 * @param directoryName
+	 * @return true if successful, false if not.
+	 */
+	public boolean backupFiles(String directoryName){
+		setDirectoryName(directoryName);
+		return backupFiles();
+	}
 
-	public void backupFiles() {
+	public boolean backupFiles() {
 		try {
 			if (!checkFile(fullBackupFilename(OperationsXml.instance()
 					.getOperationsFileName()))) {
@@ -36,6 +47,7 @@ public class Backup extends XmlFile {
 				if (!parentDir.exists()) {
 					if (!parentDir.mkdirs()) {
 						log.error("backup directory not created");
+						return false;
 					}
 				}
 			}
@@ -60,7 +72,9 @@ public class Backup extends XmlFile {
 		} catch (Exception e) {
 			log.error("Exception while making backup, may not be complete: "
 					+ e);
+			return false;
 		}
+		return true;
 	}
 
 	public String[] getBackupList() {
@@ -123,14 +137,27 @@ public class Backup extends XmlFile {
 	}
 
 	private String fullBackupFilename(String name) {
-		return backupDirectory + File.separator + date() + File.separator + name;
+		return backupDirectory + File.separator + getDirectoryName() + File.separator + name;
 	}
 
 	private String backupDirectory = XmlFile.prefsDir() + "operations" + File.separator + "backups";
 
 	private String operationsDirectory = XmlFile.prefsDir() + "operations";
 	
-	private String date() {
+	
+	private String directoryName = "";
+	public String getDirectoryName(){
+		if (directoryName.equals(""))
+			return getDate();
+		else
+			return directoryName;
+	}
+	
+	public void setDirectoryName(String name){
+		directoryName = name;
+	}
+	
+	private String getDate() {
 		Calendar now = Calendar.getInstance();
 		int month = now.get(Calendar.MONTH) + 1;
 		String m = Integer.toString(month);
