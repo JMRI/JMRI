@@ -8,6 +8,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,24 +26,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
-import jmri.util.JmriJFrame;
+
 
 /**
  * Frame for adding and editing the route roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
-public class TrainsTableFrame extends JmriJFrame {
+public class TrainsTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	SwingShutDownTask trainDirtyTask;
 	
-	public static final String NAME = "Name";	// Sort by choices
-	public static final String TIME = "Time";
-	public static final String ID = "Id";
+	public static final String NAME = rb.getString("Name");	// Sort by choices
+	public static final String TIME = rb.getString("Time");
+	public static final String ID = rb.getString("Id");
 
 	CarManagerXml carMangerXml = CarManagerXml.instance();			
 	EngineManagerXml engineMangerXml = EngineManagerXml.instance();
@@ -116,7 +117,7 @@ public class TrainsTableFrame extends JmriJFrame {
     	JPanel controlPanel = new JPanel();
     	controlPanel.setLayout(new FlowLayout());
      	
-    	textSort.setText("Sort by");
+    	textSort.setText(rb.getString("SortBy"));
     	controlPanel.add(textSort);
     	controlPanel.add(sortByName);
     	sortByName.setSelected(true);
@@ -191,14 +192,6 @@ public class TrainsTableFrame extends JmriJFrame {
     	setSortBy(trainManager.getTrainFrameSortBy());
     }
     
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
-	}
-	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByName){
@@ -211,22 +204,14 @@ public class TrainsTableFrame extends JmriJFrame {
 			trainsModel.setSort(trainsModel.SORTBYTIME);
 		}
 	}
-    
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
+ 
 	// add, build, print, switch lists, terminate, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("train button actived");
 		if (ae.getSource() == addButton){
 			TrainEditFrame f = new TrainEditFrame();
 			f.initComponents(null);
-			f.setTitle("Add Train");
+			f.setTitle(rb.getString("TitleTrainAdd"));
 			f.setVisible(true);
 		}
 		if (ae.getSource() == buildButton){
@@ -284,14 +269,6 @@ public class TrainsTableFrame extends JmriJFrame {
 			sortById.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
-	}
-	
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,16 +21,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import jmri.util.JmriJFrame;
+
 
 /**
  * Frame for adding and editing the location roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
-public class LocationsTableFrame extends JmriJFrame {
+public class LocationsTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
@@ -103,14 +104,6 @@ public class LocationsTableFrame extends JmriJFrame {
     	EngineManagerXml.instance();
     }
     
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
-	}
-	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByName){
@@ -125,14 +118,6 @@ public class LocationsTableFrame extends JmriJFrame {
 		}
 	}
     
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("location button actived");

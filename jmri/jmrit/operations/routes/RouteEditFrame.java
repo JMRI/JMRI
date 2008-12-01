@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,7 +50,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	// labels
 	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
 	javax.swing.JLabel textComment = new javax.swing.JLabel();
 
 	// major buttons
@@ -98,9 +97,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		textName.setText(rb.getString("Name"));
 		textName.setVisible(true);
-
-		textOptional.setText("-------------------------------- Optional ------------------------------------");
-		textOptional.setVisible(true);
 		textComment.setText(rb.getString("Comment"));
 		textComment.setVisible(true);
 		space1.setText("     ");

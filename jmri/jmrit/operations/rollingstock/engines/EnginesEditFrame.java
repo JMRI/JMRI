@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -128,7 +128,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		textHp.setVisible(true);
 		textLocation.setText(rb.getString("Location"));
 		textLocation.setVisible(true);
-		textOptional.setText("-------------------------------- Optional ------------------------------------");
+		textOptional.setText(rb.getString("Optional"));
 		textOptional.setVisible(true);
 		textKernel.setText(rb.getString("Consist"));
 		textKernel.setVisible(true);

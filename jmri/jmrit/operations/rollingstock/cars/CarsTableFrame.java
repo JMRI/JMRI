@@ -21,16 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.JmriJFrame;
+import jmri.jmrit.operations.OperationsFrame;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
-public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener{
+public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
@@ -80,13 +80,13 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
     	controlPanel.setLayout(new FlowLayout());
     	numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
     	CarManager.instance().addPropertyChangeListener(this);
-    	textCars.setText("cars");
+    	textCars.setText(rb.getString("cars"));
     	controlPanel.add(numCars);
     	controlPanel.add(textCars);
        	textSep1.setText("          ");
     	controlPanel.add(textSep1);
     	
-    	textSort.setText("Sort by");
+    	textSort.setText(rb.getString("SortBy"));
     	controlPanel.add(textSort);
     	controlPanel.add(sortByNumber);
     	sortByNumber.setSelected(true);
@@ -149,14 +149,6 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
     	
     }
     
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
-	}
-	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByNumber){
@@ -189,14 +181,6 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
 		return carsModel.getSelectedCarList();
 	}
     
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
 	CarsEditFrame f = null;
 	
 	// add or find button
@@ -220,7 +204,7 @@ public class CarsTableFrame extends JmriJFrame implements PropertyChangeListener
 				f.dispose();
 			f = new CarsEditFrame();
 			f.initComponents();
-			f.setTitle("Add Car");
+			f.setTitle(rb.getString("TitleCarAdd"));
 			f.setVisible(true);
 		}
 	}

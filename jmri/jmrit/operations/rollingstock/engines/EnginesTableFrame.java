@@ -22,16 +22,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.JmriJFrame;
+import jmri.jmrit.operations.OperationsFrame;
 
 /**
  * Frame for adding and editing the engine roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
-public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListener{
+public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
@@ -87,7 +87,7 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
        	textSep1.setText("          ");
     	controlPanel.add(textSep1);
     	
-    	textSort.setText("Sort by");
+    	textSort.setText(rb.getString("SortBy"));
     	controlPanel.add(textSort);
     	controlPanel.add(sortByNumber);
     	sortByNumber.setSelected(true);
@@ -151,14 +151,6 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
     	
     }
     
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
-	}
-	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByNumber){
@@ -191,14 +183,6 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
 		return enginesModel.getSelectedEngineList();
 	}
     
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
 	EnginesEditFrame f = null;
 	
 	// add or find button
@@ -222,7 +206,7 @@ public class EnginesTableFrame extends JmriJFrame implements PropertyChangeListe
 				f.dispose();
 			f = new EnginesEditFrame();
 			f.initComponents();
-			f.setTitle("Add Engine");
+			f.setTitle(rb.getString("TitleEngineAdd"));
 			f.setVisible(true);
 		}
 	}

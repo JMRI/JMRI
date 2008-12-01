@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -63,7 +63,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     	
     	getContentPane().removeAll();
      	
-        setTitle(rb.getString("TitleCarAttributeEdit")+" "+ comboboxName);
+        setTitle(rb.getString("TitleCarEdit")+" "+ comboboxName);
         
         // track which combo box is being edited 
         _comboboxName = comboboxName;

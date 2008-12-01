@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -215,11 +215,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         case LENGTHCOLUMN: return c.getLength();
         case TYPECOLUMN: {
         	if (c.isCaboose())
-        		return c.getType()+" (C)";
+        		return c.getType()+" "+rb.getString("(C)");
         	else if (c.hasFred())
-        		return c.getType()+" (F)";
+        		return c.getType()+" "+rb.getString("(F)");
         	else if (c.isHazardous())
-        		return c.getType()+" (H)";
+        		return c.getType()+" "+rb.getString("(H)");
         	else
         		return c.getType();
         }
@@ -243,8 +243,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
         case TRAINCOLUMN: return c.getTrain();
         case MOVESCOLUMN: return Integer.toString(c.getMoves());
-        case SETCOLUMN: return "Set";
-        case EDITCOLUMN: return "Edit";
+        case SETCOLUMN: return rb.getString("Set");
+        case EDITCOLUMN: return rb.getString("Edit");
  
         default: return "unknown "+col;
         }
@@ -275,7 +275,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		cef = new CarsEditFrame();
     		cef.initComponents();
 	    	cef.loadCar(car);
-	    	cef.setTitle("Edit Car");
+	    	cef.setTitle(rb.getString("TitleCarEdit"));
 	    	cef.setVisible(true);
 	    	cef.setExtendedState(cef.NORMAL);
         	break;

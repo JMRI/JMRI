@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
  
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,16 +18,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import jmri.util.JmriJFrame;
+
 
 /**
  * Frame for adding and editing the route roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
-public class RoutesTableFrame extends JmriJFrame {
+public class RoutesTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
@@ -39,8 +40,8 @@ public class RoutesTableFrame extends JmriJFrame {
 	javax.swing.JLabel textSep = new javax.swing.JLabel();
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton("Name");
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton("Id");
+    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
+    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
 
 	// major buttons
 	javax.swing.JButton addButton = new javax.swing.JButton();
@@ -90,14 +91,6 @@ public class RoutesTableFrame extends JmriJFrame {
     	
     }
     
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				radioButtonActionPerformed(e);
-			}
-		});
-	}
-	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByName){
@@ -112,21 +105,13 @@ public class RoutesTableFrame extends JmriJFrame {
 		}
 	}
     
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("route button actived");
 		if (ae.getSource() == addButton){
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(null);
-			f.setTitle("Add Route");
+			f.setTitle(rb.getString("TitleRouteAdd"));
 			f.setVisible(true);
 		}
 	}

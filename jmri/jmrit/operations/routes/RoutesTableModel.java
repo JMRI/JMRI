@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -136,7 +136,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         case IDCOLUMN: return l.getId();
         case NAMECOLUMN: return l.getName();
 
-        case EDITCOLUMN: return "Edit";
+        case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
     }
@@ -155,7 +155,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     	if (lef != null)
     		lef.dispose();
    		lef = new RouteEditFrame();
-    	lef.setTitle("Edit Route");
+    	lef.setTitle(rb.getString("TitleRouteEdit"));
     	Route route = manager.getRouteById((String)sysList.get(row));
     	lef.initComponents(route);
     	

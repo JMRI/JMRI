@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -239,7 +239,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	lef = new TrainEditFrame();
     	Train train = manager.getTrainById((String)sysList.get(row));
        	log.debug("Edit train ("+train.getName()+")");
-     	lef.setTitle("Edit Train");
+     	lef.setTitle(rb.getString("TitleTrainEdit"));
     	lef.initComponents(train);
     }
     

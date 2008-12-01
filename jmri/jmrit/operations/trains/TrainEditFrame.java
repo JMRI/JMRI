@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -69,7 +69,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JLabel textStops = new javax.swing.JLabel();
 	javax.swing.JLabel textTrainRequires = new javax.swing.JLabel();
 	javax.swing.JLabel textCars = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
 	javax.swing.JLabel textComment = new javax.swing.JLabel();
 
 	// major buttons
@@ -161,9 +160,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		textStops.setText("       "+rb.getString("Stops"));
 		textStops.setVisible(true);
 		textCars.setVisible(true);
-		
-		textOptional.setText("-------------------------------- Optional ------------------------------------");
-		textOptional.setVisible(true);
 		textComment.setText(rb.getString("Comment"));
 		textComment.setVisible(true);
 		textType.setText(rb.getString("TypesTrain"));

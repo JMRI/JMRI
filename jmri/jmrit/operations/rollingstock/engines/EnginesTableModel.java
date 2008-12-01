@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -264,7 +264,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     		eef = new EnginesEditFrame();
     		eef.initComponents();
 	    	eef.loadEngine(engine);
-	    	eef.setTitle("Edit Engine");
+	    	eef.setTitle(rb.getString("TitleEngineEdit"));
 	    	eef.setVisible(true);
 	    	eef.setExtendedState(java.awt.Frame.NORMAL);
         	break;
