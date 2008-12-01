@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-11-29 21:10:03 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-12-01 16:31:16 jacobsen Exp $ -->
 <title>JMRI: Maple Systems</title>
 
 <!-- Style -->
@@ -51,6 +51,44 @@ panel configuration can change what's being displayed.
 <p>
 This is still in the very early stages, so details are changing rapidly.
 If you want to use these devices, please contact the JMRI developers.
+
+<p>
+The system letter for Maple connections is "K".
+
+<p>
+You configure the Maple Systems device to use one of the supported speeds
+(see the JMRI preferences pane for Maple connections),
+and to use the "Simple ASCII Protocol". More information on the
+protocol and how to configure the Maple Systems device is
+on the 
+<a href="http://www.maplesystems.com/1033/10330073.PDF">data sheet</a>.
+
+<p>
+JMRI communicates with the Maple Systems device by reading and writing 
+"discrete memory" locations, otherwise known as "LB" registers.
+
+<p>LB registers 1 through 48 are available to JMRI as input "Sensors" 1
+to 48.
+
+<p>LB registers 101 through 148 are available to JMRI as output "Turnouts" 1 through 48.
+
+<P>
+The Maple Systems node number (programmed into "Parameter 5", the "HMI station ID #")
+can be 1 through 99.  It appears as the thousands digit of JMRI Sensor and Turnouts names.
+For example, KS3001 is the 1st sensor on node 3, and would therefore be LB 1 in that Maple
+Systems unit.  KT3001 is the 1st turnout on that node, and would therefore be
+LB 101 in that unit.
+
+<p>
+It is very likely that we will rework and improve the addressing soon.
+
+<p>
+You have to configure a node into JMRI with the "Configure Nodes" button on
+the preferences window. On the new window that appears, enter the node number 
+(e.g. 1 or 2, etc) into the "UA" field, and click "Add".  Leave all the rest alone;
+the Maple Support was created from the JMRI C/MRI support, and in 
+JMRI 2.3.7 the migration is not complete.
+
 
 <!--#include virtual="/Footer" -->
 </body>

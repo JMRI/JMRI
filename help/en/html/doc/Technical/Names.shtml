@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.17 2008-11-11 02:23:50 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.18 2008-12-01 16:31:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -126,7 +126,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>H
 <LI>I Internal, e.g. objects with no associated hardware
 <LI>J
-<LI>K
+<LI>K <a href="../../hardware/maple/index.shtml">Maple Systems</a>
 <LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
 <LI>M Model railroad layout control buses, of which the first is 
       <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>
