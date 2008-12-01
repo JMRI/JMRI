@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -184,14 +184,6 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 		trainBox.setSelectedItem(_engine.getTrain());
 	}
 	
-	private void addComboBoxAction(JComboBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				comboBoxActionPerformed(e);
-			}
-		});
-	}
-	
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource()== locationBox){
@@ -216,14 +208,6 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				}
 			}
 		}
-	}
-	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
 	}
 	
 	// Save, Delete, Add, Clear, Calculate buttons

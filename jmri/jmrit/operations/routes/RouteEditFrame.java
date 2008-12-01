@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -143,21 +143,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addItemWidth(p1, routeNameTextField, 3, 1, 1);
 
 		// row 2
-
-		// row 3
-
-		
-		// row 4
-		
-
-		// row 5
-
-		int y = 6;
-
-		// row 7
-
-		// row 8
-		
     	JPanel p3 = new JPanel();
     	p3.setLayout(new GridBagLayout());
     	addItem(p3, locationBox, 0, 1);
@@ -171,12 +156,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		p3.setBorder(border);
 		
 		// row 9
-
-		
     	JPanel p4 = new JPanel();
     	p4.setLayout(new GridBagLayout());
 		
 		// row 10
+		int y = 10;
 		addItem (p4, space1, 0, ++y);
     	
 		// row 11
@@ -220,16 +204,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		setSize(getWidth(), 600);
 		setVisible(true);
 	}
-	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
-	
 	
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -345,23 +319,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addRouteButton.setEnabled(!enabled);
 	}
 	
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonRadioActionPerformed(e);
-			}
-		});
-	}
-	
-	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
-
-	}
-	
-	private void radioButtonYards (boolean enabled){
-//		yardPane.setVisible(enabled);
-//		addYardButton.setVisible(enabled);
-	}
-	
 	private void enableCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
 			checkBox = (JCheckBox)checkBoxes.get(i);
@@ -369,36 +326,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 		
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
-	}
-	
-	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		JCheckBox b =  (JCheckBox)ae.getSource();
-		log.debug("checkbox change "+ b.getText());
-		if (_route == null)
-			return;
-	}
-	
-	
-	private void addCheckBoxTrainAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionTrainPerformed(e);
-			}
-		});
-	}
-	
-	private void checkBoxActionTrainPerformed(java.awt.event.ActionEvent ae) {
-		// save train directions serviced by this route
-		if (_route == null)
-			return;
-	}
-	
 	public void dispose() {
 		routeModel.dispose();
 		super.dispose();

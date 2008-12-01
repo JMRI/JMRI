@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -334,14 +334,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		commentTextField.setText(engine.getComment());
 	}
 
-	private void addComboBoxAction(JComboBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				comboBoxActionPerformed(e);
-			}
-		});
-	}
-
 	// combo boxes
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource()== modelComboBox){
@@ -366,25 +358,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
-	}
-	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getText());
-	}
-
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
 	}
 
 	// Save, Delete, Add, Clear, Calculate buttons

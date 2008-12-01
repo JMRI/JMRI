@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -293,14 +293,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		setSize(getWidth(), getHeight()+50); // add some room for menu
 		setLocation(500, 200);
 		setVisible(true);	
-	}
-	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
 	}
 	
 	// Save, Delete, Add 
@@ -602,14 +594,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		trainPickup.setEnabled(enabled);
 		routePickup.setEnabled(enabled);
 		enableCheckboxes(enabled);
-	}
-	
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonRadioActionPerformed(e);
-			}
-		});
 	}
 	
 	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
@@ -943,15 +927,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private boolean editActive = false;
 
-	
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
-	}
-	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getText());

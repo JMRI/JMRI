@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -368,14 +368,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		commentTextField.setText(car.getComment());
 	}
 
-	private void addComboBoxAction(JComboBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				comboBoxActionPerformed(e);
-			}
-		});
-	}
-
 	// combo boxes
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource()== locationBox){
@@ -394,14 +386,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 	}
 	
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
-	}
-	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getText());
@@ -411,14 +395,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		if (ae.getSource() == fredCheckBox && fredCheckBox.isSelected()){
 			cabooseCheckBox.setSelected(false);
 		}
-	}
-
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
 	}
 
 	// Save, Delete, Add, Clear, Calculate buttons

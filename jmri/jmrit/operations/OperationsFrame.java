@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -88,6 +88,55 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		gc.weighty = 100.0;
 		gc.anchor = gc.WEST;
 		p.add(c, gc);
+	}
+	
+	protected void addButtonAction(JButton b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonActionPerformed(e);
+			}
+		});
+	}
+	
+	protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("button action not overridden");
+	}
+	
+	protected void addRadioButtonAction(JRadioButton b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonRadioActionPerformed(e);
+			}
+		});
+	}
+	
+	protected void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("radio button action not overridden");
+	}
+	
+	protected void addCheckBoxAction(JCheckBox b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				checkBoxActionPerformed(e);
+			}
+		});
+	}
+	
+	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("check box action not overridden");
+	}
+	
+	protected void addComboBoxAction(JComboBox b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				comboBoxActionPerformed(e);
+			}
+		});
+	}
+	
+	// location combo box
+	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("combo box action not overridden");
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category

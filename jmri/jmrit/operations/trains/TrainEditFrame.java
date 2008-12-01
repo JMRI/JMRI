@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -400,14 +400,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		setVisible(true);
 	}
 	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveTrainButton){
@@ -468,14 +460,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			updateRoadNames();
 		}
 		
-	}
-	
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonRadioActionPerformed(e);
-			}
-		});
 	}
 	
 	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
@@ -634,14 +618,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					_train.deleteTypeName(checkBox.getText());
 			}
 		}
-	}
-	
-	private void addComboBoxAction(JComboBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				comboBoxActionPerformed(e);
-			}
-		});
 	}
 	
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {

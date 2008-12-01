@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -328,15 +328,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		setVisible(true);
 	}
 	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
-	
 	YardEditFrame yef = null;
 	SidingEditFrame sef = null;
 	InterchangeEditFrame ief = null;
@@ -505,14 +496,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		yardTable.setEnabled(enabled);
 	}
 	
-	private void addRadioButtonAction(JRadioButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonRadioActionPerformed(e);
-			}
-		});
-	}
-	
 	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
 		setVisibleLocations();
 	}
@@ -602,15 +585,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 
 //		pack();
 		repaint();
-	}
-	
-		
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

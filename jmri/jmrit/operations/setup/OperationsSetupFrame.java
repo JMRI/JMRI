@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -361,16 +361,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setVisible(true);
 	}
 	
-
-	
-	private void addButtonAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionPerformed(e);
-			}
-		});
-	}
-	
 	// Save, Delete, Add buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == backupButton){
@@ -486,14 +476,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setRailroadName(railroadNameTextField.getText());
 			OperationsXml.writeOperationsFile();
 		}
-	}
-	
-	private void addCheckBoxAction(JCheckBox b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				checkBoxActionPerformed(e);
-			}
-		});
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
