@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -240,6 +240,43 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			box.addItem(l);
 		}
     }
+    
+    public void replaceType(String oldType, String newType){
+		List locs = getLocationsByIdList();
+		for (int i=0; i<locs.size(); i++){
+			Location loc = getLocationById((String)locs.get(i));
+			if (loc.acceptsTypeName(oldType)){
+				loc.deleteTypeName(oldType);
+				loc.addTypeName(newType);
+				// now adjust any track locations
+				List tracks = loc.getTracksByNameList(null);
+				for (int j=0; j<tracks.size(); j++){
+					Track track = loc.getTrackById((String)tracks.get(j));
+					if (track.acceptsTypeName(oldType)){
+						track.deleteTypeName(oldType);
+						track.addTypeName(newType);
+					}
+				}
+			}
+		}
+    }
+    
+	public void replaceRoad(String oldRoad, String newRoad){
+		List locs = getLocationsByIdList();
+		for (int i=0; i<locs.size(); i++){
+			Location loc = getLocationById((String)locs.get(i));
+			// now adjust any track locations
+			List tracks = loc.getTracksByNameList(null);
+			for (int j=0; j<tracks.size(); j++){
+				Track track = loc.getTrackById((String)tracks.get(j));
+				if(track.containsRoadName(oldRoad)){
+					track.deleteRoadName(oldRoad);
+					if(newRoad != null)
+						track.addRoadName(newRoad);
+				}
+			}
+		}
+	}
   
     /**
      * @return Number of locations

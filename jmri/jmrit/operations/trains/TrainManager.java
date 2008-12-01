@@ -12,6 +12,8 @@ import javax.swing.JComboBox;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
@@ -22,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -160,6 +162,31 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	_trainHashTable.remove(train.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
     }
+    
+    public void replaceType(String oldType, String newType){
+		List trains = getTrainsByIdList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = getTrainById((String)trains.get(i));
+			if (train.acceptsTypeName(oldType)){
+				train.deleteTypeName(oldType);
+				train.addTypeName(newType);
+			}
+		}
+    }
+    
+	public void replaceRoad(String oldRoad, String newRoad){
+		List trains = getTrainsByIdList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = getTrainById((String)trains.get(i));
+			String[] roadNames = train.getRoadNames();
+			for (int j=0; j<roadNames.length; j++){
+				if (roadNames[j].equals(oldRoad)){
+					train.deleteRoadName(oldRoad);
+					train.addRoadName(newRoad);
+				}
+			}
+		}
+	}
 
    /**
      * Sort by train name

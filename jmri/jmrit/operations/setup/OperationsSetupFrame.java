@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -361,14 +361,21 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setVisible(true);
 	}
 	
+	BackupFrame bf = null;
+	RestoreFrame rf = null;
+	
 	// Save, Delete, Add buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == backupButton){
-			BackupFrame bf = new BackupFrame();
+			if (bf != null)
+				bf.dispose();
+			bf = new BackupFrame();
 			bf.initComponents();
 		}
 		if (ae.getSource() == restoreButton){
-			RestoreFrame rf = new RestoreFrame();
+			if(rf != null)
+				rf.dispose();
+			rf = new RestoreFrame();
 			rf.initComponents();
 		}
 		if (ae.getSource() == saveButton){

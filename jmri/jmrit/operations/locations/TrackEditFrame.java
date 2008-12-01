@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -106,7 +106,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JLabel space3 = new javax.swing.JLabel();
 	
 	// combo box
-	javax.swing.JComboBox comboBox = CarRoads.instance().getComboBox();
+	javax.swing.JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox comboBoxDropTrains = TrainManager.instance().getComboBox();
 	javax.swing.JComboBox comboBoxDropRoutes = RouteManager.instance().getComboBox();
 	javax.swing.JComboBox comboBoxPickupTrains = TrainManager.instance().getComboBox();
@@ -123,6 +123,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_location = location;
 		_location.addPropertyChangeListener(this);
 		_track = track;
+		CarRoads.instance().addPropertyChangeListener(this);
 
 		// load managers
 		managerXml = LocationManagerXml.instance();
@@ -329,11 +330,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			addNewTrack();
 		}
 		if (ae.getSource() == addRoadButton){
-			_track.addRoadName((String) comboBox.getSelectedItem());
+			_track.addRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
 		}
 		if (ae.getSource() == deleteRoadButton){
-			_track.deleteRoadName((String) comboBox.getSelectedItem());
+			_track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
 		}
 		if (ae.getSource() == setButton){
@@ -864,7 +865,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!roadNameAll.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	p.add(comboBox);
+		    	p.add(comboBoxRoads);
 		    	p.add(addRoadButton);
 		    	p.add(deleteRoadButton);
 				gc.gridy = y++;
@@ -924,7 +925,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		repaint();
 	}
 
-
 	private boolean editActive = false;
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -939,6 +939,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 	
+	private void updateRoadComboBox(){
+		CarRoads.instance().updateComboBox(comboBoxRoads);
+	}
+	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
@@ -948,7 +952,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateTrainDir();
 		}
-		
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
+			updateRoadComboBox();
+			updateRoadNames();
+		}
 		if (e.getPropertyName().equals(DISPOSE)){
 			editActive = false;
 		}
@@ -956,6 +963,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
     public void dispose() {
     	_location.removePropertyChangeListener(this);
+    	CarRoads.instance().removePropertyChangeListener(this);
         super.dispose();
     }
 

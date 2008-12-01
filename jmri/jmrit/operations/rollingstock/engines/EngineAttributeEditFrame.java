@@ -23,15 +23,14 @@ import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.trains.TrainManager;
 import java.util.List;
 
 /**
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -151,7 +150,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == EnginesEditFrame.ROAD){
 			CarRoads.instance().deleteName(deleteItem);
-			roadReplace(deleteItem, null);
+			LocationManager.instance().replaceRoad(deleteItem, null);
 		}
 		if(_comboboxName == EnginesEditFrame.MODEL){
 			EngineModels.instance().deleteName(deleteItem);
@@ -237,51 +236,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 				}
 			}
 		}
-		//		 now adjust locations
-		if(_comboboxName == EnginesEditFrame.MODEL){
-			LocationManager manager = LocationManager.instance();
-			List locs = manager.getLocationsByIdList();
-			for (int i=0; i<locs.size(); i++){
-				String id = (String)locs.get(i);
-				Location loc = manager.getLocationById(id);
-				if (loc.acceptsTypeName(oldItem)){
-					loc.deleteTypeName(oldItem);
-					loc.addTypeName(newItem);
-					// now adjust any track locations
-					List sls = loc.getTracksByNameList(null);
-					for (int j=0; j<sls.size(); j++){
-						String slId = (String)sls.get(j);
-						Track sl = loc.getTrackById(slId);
-						if (sl.acceptsTypeName(oldItem)){
-							sl.deleteTypeName(oldItem);
-							sl.addTypeName(newItem);
-						}
-					}
-				}
-			}
-		}
+		//	now adjust locations and trains
 		if(_comboboxName == EnginesEditFrame.ROAD){
-			roadReplace(oldItem, newItem);
-		}
-	}
-	
-	private void roadReplace(String oldItem, String newItem){
-		LocationManager manager = LocationManager.instance();
-		List locs = manager.getLocationsByIdList();
-		for (int i=0; i<locs.size(); i++){
-			String id = (String)locs.get(i);
-			Location loc = manager.getLocationById(id);
-			// now adjust any track locations
-			List sls = loc.getTracksByNameList(null);
-			for (int j=0; j<sls.size(); j++){
-				String slId = (String)sls.get(j);
-				Track sl = loc.getTrackById(slId);
-				if(sl.containsRoadName(oldItem)){
-					sl.deleteRoadName(oldItem);
-					if(newItem != null)
-						sl.addRoadName(newItem);
-				}
-			}
+			LocationManager.instance().replaceRoad(oldItem, newItem);
+			TrainManager.instance().replaceRoad(oldItem, newItem);
 		}
 	}
 	

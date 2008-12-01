@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -89,6 +89,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	public static final String STOPS_CHANGED_PROPERTY = "stops";
 	public static final String TYPES_CHANGED_PROPERTY = "Types";
+	public static final String ROADS_CHANGED_PROPERTY = "Road";
 	public static final String LENGTH_CHANGED_PROPERTY = "length";
 	public static final String ENGINELOCATION_CHANGED_PROPERTY = "EngineLocation";
 	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
@@ -523,11 +524,13 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_roadList.add(road);
     	log.debug("train (" +getName()+ ") add car road "+road);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteRoadName(String road){
     	_roadList.remove(road);
     	log.debug("train (" +getName()+ ") delete car road "+road);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public boolean acceptsRoadName(String road){

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -112,8 +112,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JComboBox hourBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox minuteBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
+	javax.swing.JComboBox roadCabooseBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox roadBox = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox road2Box = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox roadEngineBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox modelEngineBox = EngineModels.instance().getComboBox();
 	javax.swing.JComboBox numEnginesBox = new javax.swing.JComboBox();
@@ -288,9 +288,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	addItem (trainReq, fredRadioButton, 3, 2);
     	addItem (trainReq, cabooseRadioButton, 4, 2);
      	addItem (trainReq, textRoad3, 5, 2);
-    	roadBox.insertItemAt("",0);
-    	roadBox.setSelectedIndex(0);
-    	addItem (trainReq, roadBox, 6, 2);
+    	roadCabooseBox.insertItemAt("",0);
+    	roadCabooseBox.setSelectedIndex(0);
+    	addItem (trainReq, roadCabooseBox, 6, 2);
     	group.add(noneRadioButton);
     	group.add(cabooseRadioButton);
     	group.add(fredRadioButton);
@@ -357,7 +357,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			roadEngineBox.setSelectedItem(_train.getEngineRoad());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
-			roadBox.setSelectedItem(_train.getCabooseRoad());
+			roadCabooseBox.setSelectedItem(_train.getCabooseRoad());
 			commentTextField.setText(_train.getComment());
 			cabooseRadioButton.setSelected((_train.getRequirements()&_train.CABOOSE)>0);
 			fredRadioButton.setSelected((_train.getRequirements()&_train.FRED)>0);
@@ -384,8 +384,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		//	 get notified if combo box gets modified
 		routeManager.addPropertyChangeListener(this);
-		// get notified if car types gets modified
+		// get notified if car types or roads gets modified
 		CarTypes.instance().addPropertyChangeListener(this);
+		CarRoads.instance().addPropertyChangeListener(this);
 		
 		// set frame size and train for display
 		pack();
@@ -448,11 +449,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				_train.reset();
 		}
 		if (ae.getSource() == addRoadButton){
-			_train.addRoadName((String) road2Box.getSelectedItem());
+			_train.addRoadName((String) roadBox.getSelectedItem());
 			updateRoadNames();
 		}
 		if (ae.getSource() == deleteRoadButton){
-			_train.deleteRoadName((String) road2Box.getSelectedItem());
+			_train.deleteRoadName((String) roadBox.getSelectedItem());
 			updateRoadNames();
 		}
 		
@@ -494,7 +495,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!roadNameAll.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	p.add(road2Box);
+		    	p.add(roadBox);
 		    	p.add(addRoadButton);
 		    	p.add(deleteRoadButton);
 				gc.gridy = y++;
@@ -520,7 +521,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		panelRoadNames.setBorder(border);
 		panelRoadNames.revalidate();
 
-		pack();
+		//pack();
 		repaint();
 	}
 	
@@ -558,7 +559,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			_train.setRequirements(_train.FRED);
 		if (noneRadioButton.isSelected())
 			_train.setRequirements(_train.NONE);
-		_train.setCabooseRoad((String)roadBox.getSelectedItem());
+		_train.setCabooseRoad((String)roadCabooseBox.getSelectedItem());
 		_train.setName(trainNameTextField.getText());
 		_train.setDescription(trainDescriptionTextField.getText());
 		_train.setComment(commentTextField.getText());
@@ -705,8 +706,23 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Border border = BorderFactory.createEtchedBorder();
 		typePanelCheckBoxes.setBorder(border);
 		typePanelCheckBoxes.revalidate();
-		pack();
+		//pack();
 		repaint();
+	}
+	
+	// there are three road combo boxes to update
+	private void updateRoadComboBoxes(){
+		CarRoads.instance().updateComboBox(roadCabooseBox);
+		roadCabooseBox.insertItemAt("",0);
+    	roadCabooseBox.setSelectedIndex(0);
+		CarRoads.instance().updateComboBox(roadBox);
+		CarRoads.instance().updateComboBox(roadEngineBox);
+		roadEngineBox.insertItemAt("",0);
+		roadEngineBox.setSelectedIndex(0);
+		if (_train != null){
+			roadCabooseBox.setSelectedItem(_train.getCabooseRoad());
+			roadEngineBox.setSelectedItem(_train.getEngineRoad());
+		}
 	}
 	
 	private void addTypeCheckBoxAction(JCheckBox b) {
@@ -754,7 +770,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Border border = BorderFactory.createEtchedBorder();
 		locationPanelCheckBoxes.setBorder(border);
 		locationPanelCheckBoxes.revalidate();
-		pack();
+		//pack();
 		repaint();
 	}
 	
@@ -774,6 +790,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	public void dispose() {
 		CarTypes.instance().removePropertyChangeListener(this);
+		CarRoads.instance().removePropertyChangeListener(this);
 		routeManager.removePropertyChangeListener(this);
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
@@ -797,6 +814,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateNumberCars();
+		}
+		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
+			updateRoadComboBoxes();
+			updateRoadNames();
 		}
 	}
  	
