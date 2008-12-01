@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
 
 /**
- * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
+ * Models a serial node, consisting of a (S)USIC and attached cards.
  * <P>
  * Nodes are numbered ala the UA number, from 1 to 63.
  * Node number 1 carries sensors 1 to 999, node 2 1001 to 1999 etc.
@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -159,7 +159,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("C/MRI - Output bit out-of-range for defined node");
+            warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -183,7 +183,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("C/MRI - Output bit out-of-range for defined node");
+            warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -214,9 +214,9 @@ public class SerialNode extends AbstractNode {
 
     	// check consistency
     	if (nodeType==SMINI && result!=1)
-    		warn("C/MRI SMINI node with "+result+" input cards");
+    		warn("SMINI node with "+result+" input cards");
     	if (nodeType==USIC_SUSIC && result>=MAXCARDLOCATIONBYTES)
-    		warn("C/MRI USIC/SUSIC node with "+result+" input cards");
+    		warn("USIC/SUSIC node with "+result+" input cards");
 
     	return result;
     }
@@ -231,9 +231,9 @@ public class SerialNode extends AbstractNode {
 
     	// check consistency
     	if (nodeType==SMINI && result!=2)
-    		warn("C/MRI SMINI node with "+result+" output cards");
+    		warn("SMINI node with "+result+" output cards");
     	if (nodeType==USIC_SUSIC && result>=MAXCARDLOCATIONBYTES)
-    		warn("C/MRI USIC/SUSIC node with "+result+" output cards");
+    		warn("USIC/SUSIC node with "+result+" output cards");
 
     	return result;
     }
@@ -389,7 +389,7 @@ public class SerialNode extends AbstractNode {
      */
     public boolean isOutputCard(int cardNum) {
         if (cardNum>63) {
-            warn("C/MRI - isOutputCard - cardNum out of range");
+            warn("isOutputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==SMINI) {
@@ -406,7 +406,7 @@ public class SerialNode extends AbstractNode {
      */
     public boolean isInputCard(int cardNum) {
         if (cardNum>63) {
-            warn("C/MRI - isInputCard - cardNum out of range");
+            warn("isInputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==SMINI) {
@@ -438,7 +438,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
+        warn("input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -464,7 +464,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
+        warn("input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 

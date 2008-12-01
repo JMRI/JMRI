@@ -5,27 +5,27 @@ package jmri.jmrix.maple;
 import jmri.jmrix.AbstractNode;
 
 /**
- * Utility Class supporting parsing and testing of addresses for C/MRI
+ * Utility Class supporting parsing and testing of addresses
  * <P>
  * Two address formats are supported:
- *   Ctnnnxxx 
+ *   Ktnnnxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, and
  *                      'L' for lights
  *              nn is the node address (0-127)
  *              xxx is a bit number of the input or output bit (001-999)
  *              nnxxx = (node address x 1000) + bit number
- *      examples: CT2 (node address 0, bit 2), CS1003 (node address 1, bit 3), 
- *              CL11234 (node address 11, bit234)
- *   CtnnnBxxxx 
+ *      examples: KT2 (node address 0, bit 2), CS1003 (node address 1, bit 3), 
+ *              KL11234 (node address 11, bit234)
+ *   KtnnnBxxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, and
  *                      'L' for lights
  *              nnn is the node address of the input or output bit (0-127)
  *              xxxx is a bit number of the input or output bit (1-2048)
- *      examples: CT0B2 (node address 0, bit 2), CS1B3 (node address 1, bit 3), 
- *              CL11B234 (node address 11, bit234)
+ *      examples: KT0B2 (node address 0, bit 2), CS1B3 (node address 1, bit 3), 
+ *              KL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -39,7 +39,7 @@ public class SerialAddress {
      */
     public static int getNodeAddressFromSystemName(String systemName) {
         // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'C') || ( (systemName.charAt(1) != 'L') &&
+        if ( (systemName.charAt(0) != 'K') || ( (systemName.charAt(1) != 'L') &&
                 (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
@@ -85,7 +85,7 @@ public class SerialAddress {
 	}
 
     /**
-     * Public static method to parse a C/MRI system name and return the Serial Node
+     * Public static method to parse a system name and return the Serial Node
      *  Note:  Returns 'null' if illegal systemName format or if the node is not found
      */
     public static AbstractNode getNodeFromSystemName(String systemName) {
@@ -100,13 +100,13 @@ public class SerialAddress {
     }
     
     /**
-     * Public static method to parse a C/MRI system name and return the bit number
+     * Public static method to parse a system name and return the bit number
      *   Notes: Bits are numbered from 1.
      *          If an error is found, 0 is returned.
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'C') || ( (systemName.charAt(1) != 'L') &&
+        if ( (systemName.charAt(0) != 'K') || ( (systemName.charAt(1) != 'L') &&
                 (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
@@ -121,7 +121,7 @@ public class SerialAddress {
         }
         int n = 0;
         if (k==0) {
-            // here if 'B' not found, name must be CLnnxxx format
+            // here if 'B' not found, name must be KLnnxxx format
             int num;
             try {
                 num = Integer.valueOf(systemName.substring(2)).intValue();
@@ -158,7 +158,7 @@ public class SerialAddress {
      */
     public static boolean validSystemNameFormat(String systemName,char type) {
         // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'C') || (systemName.charAt(1) != type) ) {
+        if ( (systemName.charAt(0) != 'K') || (systemName.charAt(1) != type) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "
                                                                 +systemName);
@@ -238,7 +238,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate C/MRI system name for configuration
+     * Public static method to validate system name for configuration
      *   returns 'true' if system name has a valid meaning in current configuration, 
      *      else returns 'false'
      */
@@ -274,7 +274,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to convert one format C/MRI system name for the alternate
+     * Public static method to convert one format system name for the alternate
      *      format.
      * If the supplied system name does not have a valid format, or if there is
      *      no representation in the alternate naming scheme, an empty string is 
@@ -320,10 +320,10 @@ public class SerialAddress {
     }
         
     /**
-     * Public static method to normalize a C/MRI system name
+     * Public static method to normalize a system name
      * <P>
      * This routine is used to ensure that each system name is uniquely linked to
-     *      one C/MRI bit, by removing extra zeros inserted by the user.
+     *      bit, by removing extra zeros inserted by the user.
      * <P>
      * If the supplied system name does not have a valid format, an empty string is 
      *      returned.  Otherwise a normalized name is returned in the same format
@@ -365,7 +365,7 @@ public class SerialAddress {
     }
         
     /**
-     * Public static method to construct a C/MRI system name from type character, 
+     * Public static method to construct a system name from type character, 
 	 *		node address, and bit number
      * <P>
      * This routine returns a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
@@ -399,11 +399,11 @@ public class SerialAddress {
         }
 		// construct the address
 		if (bitNum<1000) {
-			nName = "C"+type+Integer.toString((nAddress*1000)+bitNum);
+			nName = "K"+type+Integer.toString((nAddress*1000)+bitNum);
 		}
 		else {
 			// must use other address format
-			nName = "C"+type+Integer.toString(nAddress)+"B"+
+			nName = "K"+type+Integer.toString(nAddress)+"B"+
 											Integer.toString(bitNum);
 		}
 	
@@ -411,7 +411,7 @@ public class SerialAddress {
 	}
 
     /**
-     * Public static method to test if a C/MRI output bit is free for assignment 
+     * Public static method to test if a output bit is free for assignment 
      *   Returns "" (null string) if the specified output bit is free for assignment,
      *      else returns the system name of the conflicting assignment.
 	 *   Test is not performed if the node address or bit number are illegal.
@@ -484,7 +484,7 @@ public class SerialAddress {
 	}
 
     /**
-     * Public static method to test if a C/MRI input bit is free for assignment 
+     * Public static method to test if a input bit is free for assignment 
      *   Returns "" (null string) if the specified input bit is free for assignment,
      *      else returns the system name of the conflicting assignment.
 	 *   Test is not performed if the node address is illegal or bit number is greater
@@ -526,8 +526,8 @@ public class SerialAddress {
      */
     public static String getUserNameFromSystemName(String systemName) {
 		// check for a valid system name
-		if ( (systemName.length() < 3) || (systemName.charAt(0) != 'C') ) {
-			// not a valid system name for C/MRI
+		if ( (systemName.length() < 3) || (systemName.charAt(0) != 'K') ) {
+			// not a valid system name
 			return("");
 		}
 		// check for a sensor

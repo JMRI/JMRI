@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractNode;
 /**
  * Manage the specific Sensor implementation.
  * <P>
- * System names are "CSnnnn", where nnnn is the sensor number without padding.
+ * System names are "KSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
  * <P>
@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -41,9 +41,9 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     }
 
     /**
-     * Return the C/MRI system letter
+     * Return the system letter
      */
-    public char systemLetter() { return 'C'; }
+    public char systemLetter() { return 'K'; }
 
     /**
      * Create a new sensor if all checks are passed
@@ -55,7 +55,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         String sName = SerialAddress.normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid C/MRI Sensor system name - "+systemName);
+            log.error("Invalid sensor system name - "+systemName);
             return null;
         }
         // does this Sensor already exist
@@ -129,8 +129,8 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
             }
             else {
                 log.debug("system name is "+sName);
-                if ( (sName.charAt(0) == 'C') && (sName.charAt(1) == 'S') ) {
-                    // This is a C/MRI Sensor
+                if ( (sName.charAt(0) == 'K') && (sName.charAt(1) == 'S') ) {
+                    // This is a valid Sensor
                     tNode = SerialAddress.getNodeFromSystemName(sName);
                     if (tNode==node) {
                         // This sensor is for this new Serial Node - register it

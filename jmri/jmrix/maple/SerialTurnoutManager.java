@@ -8,10 +8,10 @@ import jmri.Turnout;
 /**
  * Implement turnout manager for serial systems
  * <P>
- * System names are "CTnnn", where nnn is the turnout number without padding.
+ * System names are "KTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -19,7 +19,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         _instance = this;
     }
 
-    public char systemLetter() { return 'C'; }
+    public char systemLetter() { return 'K'; }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
@@ -72,7 +72,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public void notifyTurnoutCreationError(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"ERROR - The output bit, "+
 			bitNum+", is currently assigned to "+conflict+". Turnout can not be "+
-				"created as you specified.","C/MRI Assignment Conflict",
+				"created as you specified."," Assignment Conflict",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 	
@@ -154,8 +154,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectNumberOfControlBits() {
 		int iNum = 0;
 		iNum = javax.swing.JOptionPane.showOptionDialog(null,
-				"How many C/MRI output bits should be used to control this turnout?",
-					"C/MRI Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"How many output bits should be used to control this turnout?",
+					"Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
 		return iNum;
@@ -170,8 +170,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectOutputType() {
 		int iType = 0;
 		iType = javax.swing.JOptionPane.showOptionDialog(null,
-				"Should the C/MRI output bit(s) be 'steady state' or 'pulsed'?",
-					"C/MRI Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"Should the output bit(s) be 'steady state' or 'pulsed'?",
+					"Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
 		return iType;
@@ -184,7 +184,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public void notifySecondBitConflict(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
 			", is currently assigned to "+conflict+". Turnout cannot be created as "+
-					"you specified.","C/MRI Assignment Conflict",
+					"you specified.","Assignment Conflict",
 							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 

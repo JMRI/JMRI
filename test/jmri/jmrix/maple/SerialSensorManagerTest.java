@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -41,7 +41,7 @@ public class SerialSensorManagerTest extends TestCase {
         
         Sensor sensor = s.provideSensor("3");
         Assert.assertTrue("found sensor", sensor!=null);
-        Assert.assertTrue("right name", sensor.getSystemName().equals("CS3"));
+        Assert.assertTrue("right name", sensor.getSystemName().equals("KS3"));
         Assert.assertTrue("UA 0", n0.sensorsActive() );
         Assert.assertTrue("2nd none expected A1", !(n1.sensorsActive()) );
         Assert.assertTrue("2nd none expected A2", !(n2.sensorsActive()) );
@@ -50,7 +50,7 @@ public class SerialSensorManagerTest extends TestCase {
         s.provideSensor("8");
         s.provideSensor("19");
         s.provideSensor("23");
-        s.provideSensor("CS2048");
+        s.provideSensor("KS2048");
         Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
         Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
         Assert.assertTrue("UA 2", n2.sensorsActive() );

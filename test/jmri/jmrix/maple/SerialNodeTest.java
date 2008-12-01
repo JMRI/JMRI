@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -129,10 +129,10 @@ public class SerialNodeTest extends TestCase {
     }
 	
     public void testMarkChangesInitial() {
-        SerialSensor s1 = new SerialSensor("CS1","a");
-        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
-        SerialSensor s2 = new SerialSensor("CS2","ab");
-        SerialSensor s3 = new SerialSensor("CS3","abc");
+        SerialSensor s1 = new SerialSensor("KS1","a");
+        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("KS1"));
+        SerialSensor s2 = new SerialSensor("KS2","ab");
+        SerialSensor s3 = new SerialSensor("KS3","abc");
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
@@ -151,10 +151,10 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testMarkChangesDebounce() {
-        SerialSensor s1 = new SerialSensor("CS1","a");
-        SerialSensor s2 = new SerialSensor("CS2","ab");
-        SerialSensor s3 = new SerialSensor("CS3","abc");
-        SerialSensor s4 = new SerialSensor("CS4","abcd");
+        SerialSensor s1 = new SerialSensor("KS1","a");
+        SerialSensor s2 = new SerialSensor("KS2","ab");
+        SerialSensor s3 = new SerialSensor("KS3","abc");
+        SerialSensor s4 = new SerialSensor("KS4","abcd");
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);

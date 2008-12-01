@@ -12,7 +12,7 @@ import jmri.*;
  *
  * Description:	    tests for the jmri.jmrix.maple.SerialTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -33,22 +33,22 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	}
 
 	public String getSystemName(int n) {
-		return "CT"+n;
+		return "KT"+n;
 	}
 
 	public void testAsAbstractFactory () {
 		// ask for a Turnout, and check type
-		Turnout o = l.newTurnout("CT21", "my name");
+		Turnout o = l.newTurnout("KT21", "my name");
 
 
 		if (log.isDebugEnabled()) log.debug("received turnout value "+o);
 		assertTrue( null != (SerialTurnout)o);
 
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("CT21"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("KT21"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
-		assertTrue(null != l.getBySystemName("CT21"));
+		assertTrue(null != l.getBySystemName("KT21"));
 		assertTrue(null != l.getByUserName("my name"));
 
 	}

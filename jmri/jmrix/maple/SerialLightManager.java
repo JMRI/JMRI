@@ -8,13 +8,13 @@ import jmri.Light;
 /**
  * Implement light manager for serial systems
  * <P>
- * System names are "CLnnn", where nnn is the bit number without padding.
+ * System names are "KLnnn", where nnn is the bit number without padding.
  * <P>
  * Based in part on SerialTurnoutManager.java
  *
  * @author  Bob Jacobsen Copyright (C) 2008
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -25,13 +25,13 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      *  Returns the system letter
      */
-    public char systemLetter() { return 'C'; }
+    public char systemLetter() { return 'K'; }
     
     /**
      * Method to create a new Light based on the system name
      * Returns null if the system name is not in a valid format or
      *    if the system name does not correspond to a configured
-     *    C/MRI digital output bit
+     *    digital output bit
      * Assumes calling method has checked that a Light with this
      *    system name does not already exist
      */
@@ -70,7 +70,7 @@ public class SerialLightManager extends AbstractLightManager {
 	public void notifyLightCreationError(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
 			", is currently assigned to "+conflict+". Light cannot be created as "+
-					"you specified.","C/MRI Assignment Conflict",
+					"you specified.","Assignment Conflict",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);	
 	}
 	

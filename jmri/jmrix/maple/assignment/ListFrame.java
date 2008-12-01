@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.1 $
+ * @version	 $Revision: 1.2 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -271,7 +271,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 						", "+numInputBits+" "+rb.getString("InputBitsAnd")+" "+
 							numOutputBits+" "+rb.getString("OutputBits"));
 			}
-// here insert code for new types of C/MRI nodes
+// here insert code for new types of nodes
 		}
 		// initialize for input or output assignments
 		if (inputSelected) {
@@ -299,11 +299,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
 		// set up a page title
 		String head;
 		if (inputSelected) {
-			head = "C/MRI "+rb.getString("AssignmentPanelInputName")+" - "+
+			head = rb.getString("AssignmentPanelInputName")+" - "+
 													rb.getString("NodeBoxLabel")+" "+selNodeID;
 		}
 		else {
-			head = "C/MRI "+rb.getString("AssignmentPanelOutputName")+" - "+
+			head = rb.getString("AssignmentPanelOutputName")+" - "+
 													rb.getString("NodeBoxLabel")+" "+selNodeID;
 		}
 		// initialize a printer writer
