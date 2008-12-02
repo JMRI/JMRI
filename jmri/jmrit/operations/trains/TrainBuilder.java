@@ -53,20 +53,19 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class TrainBuilder extends TrainCommon{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
+	private static final String BOX = " [ ] ";
+	
 	// build status
 	private static final String BUILDFAILED = rb.getString("BuildFailed");
 	private static final String BUILDING = rb.getString("Building");
 	private static final String BUILT = rb.getString("Built") + " ";
 	private static final String PARTIALBUILT = rb.getString("Partial") + " ";
-	private static final String FEET = Setup.FEET;
-	private static final String BOX = " [ ] ";
-	
+		
 	// build variables shared between local routines
 	Train train;		// the train being built
 	int numberCars;		// how many cars are moved by this train

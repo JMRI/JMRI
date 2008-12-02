@@ -23,9 +23,7 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainSwitchLists extends TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	private static final String FEET = Setup.FEET;
-	private static final String BOX = " [ ] ";
-
+	
 	TrainManager manager = TrainManager.instance();
 	
 	// builds a switchlist for a location

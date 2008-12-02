@@ -83,7 +83,7 @@ public class Setup {
 	
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
-	public static final String FEET ="'";
+	public static final String LENGTHABV =rb.getString("LengthSymbol");
 	
 	public static final String BUILD_REPORT_MINIMAL = "1";
 	public static final String BUILD_REPORT_NORMAL = "3";

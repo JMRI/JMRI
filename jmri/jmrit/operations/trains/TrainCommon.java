@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	private static final String FEET = Setup.FEET;
+	private static final String LENGTHABV = Setup.LENGTHABV;
 	private static final String BOX = " [ ] ";
 	
 	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
@@ -61,7 +61,7 @@ public class TrainCommon {
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
+				+ car.getLength() + LENGTHABV + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+")" : "") + " " + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
@@ -73,7 +73,7 @@ public class TrainCommon {
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + FEET + " " + car.getColor()
+				+ car.getLength() + LENGTHABV + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);
