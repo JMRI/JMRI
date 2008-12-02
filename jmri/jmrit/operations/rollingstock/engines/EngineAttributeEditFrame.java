@@ -30,7 +30,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -266,6 +266,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			comboBox = EngineModels.instance().getComboBox();
 			EngineModels.instance().addPropertyChangeListener(this);
 		}
+		if(_comboboxName == EnginesEditFrame.TYPE){
+			comboBox = EngineTypes.instance().getComboBox();
+			EngineTypes.instance().addPropertyChangeListener(this);
+		}
 		if(_comboboxName == EnginesEditFrame.LENGTH){
 			comboBox = EngineLengths.instance().getComboBox();
 			EngineLengths.instance().addPropertyChangeListener(this);
@@ -283,6 +287,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     public void dispose() {
     	CarRoads.instance().removePropertyChangeListener(this);
     	EngineModels.instance().removePropertyChangeListener(this);
+    	EngineTypes.instance().removePropertyChangeListener(this);
 		EngineLengths.instance().removePropertyChangeListener(this);
     	CarOwners.instance().removePropertyChangeListener(this);
     	manager.removePropertyChangeListener(this);
@@ -296,6 +301,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
 			EngineModels.instance().updateComboBox(comboBox);
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY))
+			EngineTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY))
 			EngineLengths.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
