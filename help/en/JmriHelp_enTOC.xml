@@ -63,6 +63,19 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Panel Controls" target="package.jmri.jmrit.display.PanelTarget"/>
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
    </tocitem>
+   <tocitem text="Dispatcher" target="package.jmri.jmrit.dispatcher.Dispatcher">
+      <tocitem text="Introduction" target="package.jmri.jmrit.dispatcher.Dispatcher">
+         <tocitem text="Glossary" target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
+         <tocitem text="Using Transits and Sections" target="package.jmri.jmrit.dispatcher.Dispatcher_transits"/>
+         <tocitem text="Dispatcher Window" target="package.jmri.jmrit.dispatcher.Dispatcher_window"/>
+         <tocitem text="Active Trains Table" target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
+         <tocitem text="Allocation Requests Table" target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
+      </tocitem>
+      <tocitem text="Options Menu" target="package.jmri.jmrit.dispatcher.Options"/>
+      <tocitem text="Allocated Section Window" target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
+      <tocitem text="Allocate Extra" target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
+      <tocitem text="New Train" target="package.jmri.jmrit.dispatcher.NewTrain"/>
+   </tocitem>
    <tocitem text="Hardware Support" target="html.hardware.index">
       <tocitem text="Acela" target="html.hardware.acela.index"/>
       <tocitem text="CAN Bus" target="html.hardware.can.index"/>
@@ -73,6 +86,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="ECoS" target="html.hardware.ecos.index"/>
       <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
       <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>
+      <tocitem text="Maple Systems" target="html.hardware.maple.index"/>
       <tocitem text="NCE" target="html.hardware.nce.NCE"/>
       <tocitem text="OakTree Systems" target="html.hardware.oaktree.OakTree"/>
       <tocitem text="Powerline (X10)" target="html.hardware.powerline.index"/>
@@ -267,18 +281,5 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="USB" target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
    <tocitem text="Web" target="html.web.index"/>
-   <tocitem text="Dispatcher" target="package.jmri.jmrit.dispatcher.Dispatcher">
-      <tocitem text="Introduction" target="package.jmri.jmrit.dispatcher.Dispatcher">
-         <tocitem text="Glossary" target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
-         <tocitem text="Using Transits and Sections" target="package.jmri.jmrit.dispatcher.Dispatcher_transits"/>
-         <tocitem text="Dispatcher Window" target="package.jmri.jmrit.dispatcher.Dispatcher_window"/>
-         <tocitem text="Active Trains Table" target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
-         <tocitem text="Allocation Requests Table" target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
-      </tocitem>
-      <tocitem text="Options Menu" target="package.jmri.jmrit.dispatcher.Options"/>
-      <tocitem text="Allocated Section Window" target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
-      <tocitem text="Allocate Extra" target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
-      <tocitem text="New Train" target="package.jmri.jmrit.dispatcher.NewTrain"/>
-   </tocitem>
 
 </toc>

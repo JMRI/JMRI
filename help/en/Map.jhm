@@ -98,6 +98,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml" />
 	<mapID target="package.jmri.jmrit.operations.Operations_EnginesSet" url="package/jmri/jmrit/operations/Operations.shtml#EnginesSet" />
 	<mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml" />
+	<mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml" />
 	<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.shtml#turnouts" />
 	<mapID target="html.apps.DecoderPro.index" url="html/apps/DecoderPro/index.shtml" />
@@ -117,6 +118,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.XPressNet.XNetAddressing" url="html/hardware/XPressNet/XNetAddressing.shtml" />
 	<mapID target="html.doc.Technical.TechRoadMap" url="html/doc/Technical/TechRoadMap.shtml" />
 	<mapID target="package.apps.AppConfigPanel_basic" url="package/apps/AppConfigPanel.shtml#basic" />
+	<mapID target="package.jmri.jmrix.maple.serialmon.SerialMonFrame" url="package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml" />
 	<mapID target="Acknowledgements_P" url="Acknowledgements.shtml#P" />
 	<mapID target="package.apps.AppConfigPanel_actions" url="package/apps/AppConfigPanel.shtml#actions" />
 	<mapID target="html.doc.Technical.NetBeans" url="html/doc/Technical/NetBeans.shtml" />
@@ -151,6 +153,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter3" url="html/tools/throttle/ThrottleChapter3.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalAddEdit" url="package/jmri/jmrit/beantable/SignalAddEdit.shtml" />
+	<mapID target="package.jmri.jmrit.operations.Operations_BackupRestore" url="package/jmri/jmrit/operations/Operations.shtml#BackupRestore" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout lock feature" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout lock feature" />
 	<mapID target="package.jmri.jmrit.simpleprog.SimpleProgFrame" url="package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml" />
 	<mapID target="html.apps.DecoderPro.CreateDecoder" url="html/apps/DecoderPro/CreateDecoder.shtml" />
@@ -273,6 +276,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.sprog.console.SprogConsoleFrame" url="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml" />
 	<mapID target="package.jmri.jmrix.powerline.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="html.doc.Technical.Poll2007_raw" url="html/doc/Technical/Poll2007.shtml#raw" />
+	<mapID target="package.jmri.jmrix.maple.assignment.ListFrame" url="package/jmri/jmrix/maple/assignment/ListFrame.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter4_SaveThrottlePreferences" url="html/tools/throttle/ThrottleChapter4.shtml#SaveThrottlePreferences" />
 	<mapID target="package.jmri.jmrit.beantable.BlockAddEdit" url="package/jmri/jmrit/beantable/BlockAddEdit.shtml" />
 	<mapID target="html.apps.DecoderPro.Tour" url="html/apps/DecoderPro/Tour.shtml" />
@@ -447,8 +451,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.Ant" url="html/doc/Technical/Ant.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_StandardActions" url="html/tools/throttle/ThrottleChapter2.shtml#StandardActions" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtTToTTurnout" url="package/jmri/jmrit/display/SetSignalsAtTToTTurnout.shtml" />
-	<mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightAddEdit" url="package/jmri/jmrit/beantable/LightAddEdit.shtml" />
+	<mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_SliderBar" url="html/tools/throttle/ThrottleChapter2.shtml#SliderBar" />
 	<mapID target="html.tools.fastclock.index" url="html/tools/fastclock/index.shtml" />
 	<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q" />
@@ -525,6 +529,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_Basic_Top" url="DecoderProManual/Comp_Basic.shtml#Top" />
 	<mapID target="html.tools.signaling.index_logic" url="html/tools/signaling/index.shtml#logic" />
 	<mapID target="html.tools.signaling.index_intro" url="html/tools/signaling/index.shtml#intro" />
+	<mapID target="package.apps.AppConfigPanel_locale" url="package/apps/AppConfigPanel.shtml#locale" />
 	<mapID target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame" url="package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml" />
 	<mapID target="html.doc.Technical.JVMCapabilities" url="html/doc/Technical/JVMCapabilities.shtml" />
@@ -550,6 +555,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select" url="package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml" />
 	<mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml" />
 	<mapID target="html.tools.Memories" url="html/tools/Memories.shtml" />
+	<mapID target="package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="html.doc.Technical.StartUpScripts_linux" url="html/doc/Technical/StartUpScripts.shtml#linux" />
 	<mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml" />
 	<mapID target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame" url="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml" />

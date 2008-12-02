@@ -305,6 +305,11 @@
 </li>
       
 <li>
+<a href="html/hardware/maple/index.shtml">Maple Systems</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/hardware/nce/NCE.shtml">NCE</a>
 <ul></ul>
 </li>
@@ -509,17 +514,17 @@
 </li>
       
 <li>
-<a href="">Engines</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="">Interchange</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="">Locations</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
 <ul></ul>
 </li>
       
@@ -534,7 +539,7 @@
 </li>
       
 <li>
-<a href="">Sidings</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
 <ul></ul>
 </li>
       
@@ -549,7 +554,7 @@
 </li>
       
 <li>
-<a href="">Trains</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
 <ul></ul>
 </li>
       
