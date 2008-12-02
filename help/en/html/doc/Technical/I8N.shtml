@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.6 2008-11-21 05:38:10 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.7 2008-12-02 00:26:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -62,7 +62,9 @@ ending in just the current locale's language:  foo_de.properties.
 And if that fails, it goes to the defaults with no suffix:  foo.properties.
 <P>
 By installing appropriate files and allowing the user to select 
-a default locale (as part of the advanced preferences), we can
+a default locale (as part of the 
+<a href="../../../package/apps/AppConfigPanel.shtml#locale">advanced preferences</a>), 
+we can
 customize the program to different countries and languages.
 
 <h2>Use of Resource Bundles</h2>
@@ -112,7 +114,19 @@ new locale.  On a Unix machine, this would be:
   cp AppsBundle.properties AppsBundle_xy.properties
   cp AppsConfigBundle.properties AppsConfigBundle_xy.properties
 </PRE>
-and so on.  You can then edit those files to enter text in 
+and so on.  
+The easiest way to get the proper suffix is to set the
+program to your particular language via the 
+<a href="../../../package/apps/AppConfigPanel#locale">advanced preferences</a>, 
+quit and restart the program,
+and then look at the suffix that it displays on the main window.
+You can also check the official 
+<a href="http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt">list of languages</a>
+(first part of the suffix) and 
+<a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">list of countries/regions</a>
+(optional second part of the suffix).
+<p>
+You can then edit those files to enter text in 
 your own language. Please don't edit the lines in the 
 file that contain things like $Release: $; those are used 
 by 
@@ -237,7 +251,6 @@ as your "jmri.jar" file.  E.g. on MacOS X or linux:
 </ol>
 
 </ul>
-
 
 <LI>
 Now, you have to find the correct file to edit, and the correct
