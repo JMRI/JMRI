@@ -19,7 +19,6 @@ public class Engine extends RollingStock {
 	public Engine(String road, String number) {
 		super(road, number);
 		log.debug("New engine " + road + " " + number);
-		setType("Engine");
 	}
 	
 	public void setModel (String model){
@@ -31,6 +30,24 @@ public class Engine extends RollingStock {
 	
 	public String getModel(){
 		return _model;
+	}
+	
+	/**
+	 * Set the engine type
+	 * @param engine type, Steam, Diesel, Traction, etc.
+	 */
+	public void setType (String type){
+		String old = getType();
+		engineModels.setModelType(getModel(), type);
+		if (!old.equals(type))
+			firePropertyChange("type", old, type);	
+	}
+	
+	public String getType(){
+		String type = engineModels.getModelType(getModel());
+		if(type == null)
+			type = super.getType();
+		return type;
 	}
 	
 	/**

@@ -1,6 +1,6 @@
-// CarTypes.java
+// EngineTypes.java
 
-package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.Enumeration;
 
@@ -14,35 +14,34 @@ import javax.swing.JComboBox;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Represents the types of cars a railroad can have.
+ * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.1 $
  */
-public class CarTypes implements java.beans.PropertyChangeListener {
+public class EngineTypes implements java.beans.PropertyChangeListener {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
-	private static final String TYPES = rb.getString("carTypeNames"); 
-		
-	private static final String ARRTYPES = rb.getString("carTypeARR");
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
+	private static final String TYPES = rb.getString("engineTypeNames"); 
+	
 	// for property change
-	public static final String CARTYPES_CHANGED_PROPERTY = "CarTypes";
+	public static final String ENGINETYPES_CHANGED_PROPERTY = "EngineTypes";
 	private static final String LENGTH = "Length";
     
-	public CarTypes() {
+	public EngineTypes() {
     }
     
 	/** record the single instance **/
-	private static CarTypes _instance = null;
+	private static EngineTypes _instance = null;
 
-	public static synchronized CarTypes instance() {
+	public static synchronized EngineTypes instance() {
 		if (_instance == null) {
-			if (log.isDebugEnabled()) log.debug("CarTypes creating instance");
+			if (log.isDebugEnabled()) log.debug("EngineTypes creating instance");
 			// create and load
-			_instance = new CarTypes();
-			// load cars
-			CarManagerXml.instance();
+			_instance = new EngineTypes();
+			// load engines
+			EngineManagerXml.instance();
 		}
-		if (log.isDebugEnabled()) log.debug("CarTypes returns instance "+_instance);
+		if (log.isDebugEnabled()) log.debug("EngineTypes returns instance "+_instance);
 		return _instance;
 	}
 
@@ -64,9 +63,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     public String[] getNames(){
      	if (list.size() == 0){
      		String[] types = TYPES.split("%%");
-     		if(Setup.getCarTypes().equals(Setup.AAR))
-     			types = ARRTYPES.split("%%");
-     		for (int i=0; i<types.length; i++)
+      		for (int i=0; i<types.length; i++)
      			list.add(types[i]);
     	}
      	String[] types = new String[list.size()];
@@ -79,38 +76,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
- 			if (!types[i].equals("Engine"))	// old code used Engine as car type remove
- 				list.add(types[i]);
-    }
-    
-    /**
-     * Changes the car types from descriptive to AAR, or the other way.
-     * Only removes the default car type names from the list
-     */
-    public void changeDefaultNames(String type){
-    	if (type.equals(Setup.DESCRIPTIVE)){
-    		// remove AAR types
-    		String[] types = ARRTYPES.split("%%");
-     		for (int i=0; i<types.length; i++)
-     			list.remove(types[i]);
-     		// add descriptive types
-    		types = TYPES.split("%%");
-    		for (int i=0; i<types.length; i++){
-    			if (!list.contains(types[i]))
-    				list.add(types[i]);
-    		}
-    	} else {
-    		// remove descriptive types
-    		String[] types = TYPES.split("%%");
-     		for (int i=0; i<types.length; i++)
-     			list.remove(types[i]);
-     		// add AAR types
-    		types = ARRTYPES.split("%%");
-    		for (int i=0; i<types.length; i++){
-    			if (!list.contains(types[i]))
-    				list.add(types[i]);
-    		}
-     	}
+ 			list.add(types[i]);
     }
     
     public void addName(String type){
@@ -118,12 +84,12 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (CARTYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINETYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String type){
     	list.remove(type);
-    	firePropertyChange (CARTYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINETYPES_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean containsName(String type){
@@ -154,7 +120,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarTypes.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EngineTypes.class.getName());
 
 }
 

@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -36,6 +36,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	EngineManager manager = EngineManager.instance();
 	EngineManagerXml managerXml = EngineManagerXml.instance();
 	EngineModels engineModels = EngineModels.instance();
+	EngineTypes engineTypes = EngineTypes.instance();
+	EngineLengths engineLengths = EngineLengths.instance();
 	CarManagerXml carManagerXml = CarManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
 
@@ -50,7 +52,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	javax.swing.JLabel textModel = new javax.swing.JLabel();
 	javax.swing.JLabel textHp = new javax.swing.JLabel();
 	javax.swing.JLabel textType = new javax.swing.JLabel();
-	javax.swing.JLabel textEngineType = new javax.swing.JLabel();
 	javax.swing.JLabel textWeight = new javax.swing.JLabel();
 	javax.swing.JLabel textLocation = new javax.swing.JLabel();
 	javax.swing.JLabel textOptional = new javax.swing.JLabel();
@@ -91,7 +92,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	// combo boxes
 	javax.swing.JComboBox roadComboBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox modelComboBox = engineModels.getComboBox();
-	javax.swing.JComboBox lengthComboBox = EngineLengths.instance().getComboBox();
+	javax.swing.JComboBox typeComboBox = engineTypes.getComboBox();
+	javax.swing.JComboBox lengthComboBox = engineLengths.getComboBox();
 	javax.swing.JComboBox ownerComboBox = CarOwners.instance().getComboBox();
 	javax.swing.JComboBox locationBox = locationManager.getComboBox();
 	javax.swing.JComboBox trackLocationBox = new javax.swing.JComboBox();
@@ -99,6 +101,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	public static final String ROAD = rb.getString("Road");
 	public static final String MODEL = rb.getString("Model");
+	public static final String TYPE = rb.getString("Type");
 	public static final String COLOR = rb.getString("Color");
 	public static final String LENGTH = rb.getString("Length");
 	public static final String OWNER = rb.getString("Owner");
@@ -118,8 +121,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		textModel.setVisible(true);
 		textType.setText(rb.getString("Type"));
 		textType.setVisible(true);
-		textEngineType.setText("");
-		textEngineType.setVisible(true);
 		textBuilt.setText(rb.getString("BuildDate"));
 		textBuilt.setVisible(true);
 		textLength.setText(rb.getString("Length"));
@@ -147,7 +148,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		editModelButton.setVisible(true);
 		editTypeButton.setText(rb.getString("Edit"));
 		editTypeButton.setVisible(true);
-		editTypeButton.setEnabled(false);			// need to add code for this button
 		editColorButton.setText(rb.getString("Edit"));
 		editColorButton.setVisible(true);
 		editLengthButton.setText(rb.getString("Edit"));
@@ -182,7 +182,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		addItem(editModelButton, 2, 3);
 		// row4
 		addItem(textType, 0, 4);
-		addItem(textEngineType, 1, 4);
+		addItem(typeComboBox, 1, 4);
 		addItem(editTypeButton, 2, 4);
 		// row 5
 		addItem(textLength, 0, 5);
@@ -233,6 +233,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		addEditButtonAction(editRoadButton);
 		addButtonAction(clearRoadNumberButton);
 		addEditButtonAction(editModelButton);
+		addEditButtonAction(editTypeButton);
 		addEditButtonAction(editLengthButton);
 		addEditButtonAction(editColorButton);
 		addEditButtonAction(editKernelButton);
@@ -260,7 +261,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
 		engineModels.addPropertyChangeListener(this);
-		EngineLengths.instance().addPropertyChangeListener(this);
+		engineTypes.addPropertyChangeListener(this);
+		engineLengths.addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
 		locationManager.addPropertyChangeListener(this);
 		manager.addPropertyChangeListener(this);
@@ -297,13 +299,21 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			}
 		}
 		modelComboBox.setSelectedItem(engine.getModel());
-		textEngineType.setText(engine.getType());
+		
+		if (!engineTypes.containsName(engine.getType())){
+			if (JOptionPane.showConfirmDialog(this,
+					"This engine's type \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine type?",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				engineTypes.addName(engine.getType());
+			}
+		}
+		typeComboBox.setSelectedItem(engine.getType());
 
-		if (!EngineLengths.instance().containsName(engine.getLength())){
+		if (!engineLengths.containsName(engine.getLength())){
 			if (JOptionPane.showConfirmDialog(this,
 					"This engine's length \"" + engine.getLength() + "\" doesn't exist in your roster, add? ", "Add engine length?",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-				EngineLengths.instance().addName(engine.getLength());
+				engineLengths.addName(engine.getLength());
 			}
 		}
 		lengthComboBox.setSelectedItem(engine.getLength());
@@ -343,6 +353,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 				hpTextField.setText(engineModels.getModelHorsepower(model));
 				if(engineModels.getModelLength(model)!= null && !engineModels.getModelLength(model).equals(""))
 					lengthComboBox.setSelectedItem(engineModels.getModelLength(model));
+				if(engineModels.getModelType(model)!= null && !engineModels.getModelType(model).equals(""))
+					typeComboBox.setSelectedItem(engineModels.getModelType(model));
 			}
 		}
 		if (ae.getSource()== locationBox){
@@ -402,7 +414,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 				}
 			}
 			addEngine();
-			
 			managerXml.writeOperationsEngineFile();		//save engine file
 			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
 		}
@@ -447,6 +458,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			_engine = engine;
 			if (modelComboBox.getSelectedItem() != null)
 				engine.setModel(modelComboBox.getSelectedItem().toString());
+			if (typeComboBox.getSelectedItem() != null)
+				engine.setType(typeComboBox.getSelectedItem().toString());
 			if (lengthComboBox.getSelectedItem() != null)
 				engine.setLength(lengthComboBox.getSelectedItem().toString());
 			engine.setBuilt(builtTextField.getText());
@@ -525,6 +538,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			f.initComponents(ROAD);
 		if(ae.getSource() == editModelButton)
 			f.initComponents(MODEL);
+		if(ae.getSource() == editTypeButton)
+			f.initComponents(TYPE);
 		if(ae.getSource() == editColorButton)
 			f.initComponents(COLOR);
 		if(ae.getSource() == editLengthButton)
@@ -543,7 +558,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	private void removePropertyChangeListeners(){
 		CarRoads.instance().removePropertyChangeListener(this);
 		engineModels.removePropertyChangeListener(this);
-		EngineLengths.instance().removePropertyChangeListener(this);
+		engineTypes.removePropertyChangeListener(this);
+		engineLengths.removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
 		locationManager.removePropertyChangeListener(this);
 		manager.removePropertyChangeListener(this);
@@ -559,10 +575,15 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY)){
 			engineModels.updateComboBox(modelComboBox);
 			if (_engine != null)
-				modelComboBox.setSelectedItem(_engine.getType());
+				modelComboBox.setSelectedItem(_engine.getModel());
+		}
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)){
+			engineTypes.updateComboBox(typeComboBox);
+			if (_engine != null)
+				typeComboBox.setSelectedItem(_engine.getType());
 		}
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY)){
-			EngineLengths.instance().updateComboBox(lengthComboBox);
+			engineLengths.updateComboBox(lengthComboBox);
 			if (_engine != null)
 				lengthComboBox.setSelectedItem(_engine.getLength());
 		}

@@ -1,4 +1,4 @@
-// CarLengths.java
+// EngineLengths.java
 
 package jmri.jmrit.operations.rollingstock.engines;
 
@@ -13,9 +13,9 @@ import javax.swing.JComboBox;
 
 
 /**
- * Represents the lengths that cars can have.
+ * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	

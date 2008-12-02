@@ -30,7 +30,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -105,7 +105,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     		setSize(200, getHeight()+10);
     	else
     		setSize(getWidth()+50, getHeight()+10);
-// 		setAlwaysOnTop(true); // this blows up in Java 1.4
     	setVisible(true);
     }
  
@@ -156,6 +155,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		if(_comboboxName == EnginesEditFrame.MODEL){
 			EngineModels.instance().deleteName(deleteItem);
 		}
+		if(_comboboxName == EnginesEditFrame.TYPE){
+			EngineTypes.instance().deleteName(deleteItem);
+		}
 		if(_comboboxName == EnginesEditFrame.LENGTH){
 			EngineLengths.instance().deleteName(deleteItem);
 		}
@@ -173,6 +175,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if(_comboboxName == EnginesEditFrame.MODEL){
 			EngineModels.instance().addName(addItem);
+		}
+		if(_comboboxName == EnginesEditFrame.TYPE){
+			EngineTypes.instance().addName(addItem);
 		}
 		if(_comboboxName == EnginesEditFrame.LENGTH){
 			// convert from inches to feet if needed
@@ -222,6 +227,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 				if (engine.getModel().equals(oldItem))
 					engine.setModel(newItem);
 			}
+			if(_comboboxName == EnginesEditFrame.TYPE){
+				if (engine.getType().equals(oldItem))
+					engine.setType(newItem);
+			}
 			if(_comboboxName == EnginesEditFrame.LENGTH){
 				if (engine.getLength().equals(oldItem))
 					engine.setLength(newItem);
@@ -238,6 +247,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			}
 		}
 		//	now adjust locations and trains
+		if(_comboboxName == EnginesEditFrame.TYPE){
+			LocationManager.instance().replaceType(oldItem, newItem);
+			TrainManager.instance().replaceType(oldItem, newItem);
+		}
 		if(_comboboxName == EnginesEditFrame.ROAD){
 			LocationManager.instance().replaceRoad(oldItem, newItem);
 			TrainManager.instance().replaceRoad(oldItem, newItem);

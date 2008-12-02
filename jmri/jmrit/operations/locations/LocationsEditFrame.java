@@ -7,6 +7,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -222,10 +223,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		Border border = BorderFactory.createEtchedBorder();
 		directionPanel.setBorder(border);
 		// row 3
-
 		
 		// row 4
-		
 
 		// row 5
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
@@ -238,7 +237,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
     	addItem(p2, setButton, 1, 0);
 
 		// row 8
-		
     	JPanel p3 = new JPanel();
     	p3.setLayout(new GridBagLayout());
     	int y=0;
@@ -270,7 +268,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		// row 13
 		addItem(p4, deleteLocationButton, 0, ++y);
 		addItem(p4, addLocationButton, 1, y);
-//		addItem(p4, copyButton, 2, y);
 		addItem(p4, saveLocationButton, 3, y);
 		
 		getContentPane().add(p1);
@@ -310,6 +307,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 
 		// add property listeners
 		CarTypes.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
        	
 
 		// build menu
@@ -552,21 +550,30 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	}
 	
 	private void updateCheckboxes(){
+		 x = 0;
+		 y = 0;
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();
-		int y = 0;		// vertical position in panel
 		addItemWidth(panelCheckBoxes, textType, 3, 1, y++);
-
-		String[]carTypes = CarTypes.instance().getNames();
-		int x = 0;
-		for (int i =0; i<carTypes.length; i++){
+		loadTypes(CarTypes.instance().getNames());
+		loadTypes(EngineTypes.instance().getNames());
+		Border border = BorderFactory.createEtchedBorder();
+		panelCheckBoxes.setBorder(border);
+		panelCheckBoxes.revalidate();
+		repaint();
+	}
+	
+	int x = 0;
+	int y = 0;	// vertical position in panel
+	private void loadTypes(String[] types){
+		for (int i =0; i<types.length; i++){
 			JCheckBox checkBox = new javax.swing.JCheckBox();
 			checkBoxes.add(checkBox);
-			checkBox.setText(carTypes[i]);
+			checkBox.setText(types[i]);
 			addCheckBoxAction(checkBox);
 			addItemLeft(panelCheckBoxes, checkBox, x++, y);
 			if (_location != null){
-				if(_location.acceptsTypeName(carTypes[i]))
+				if(_location.acceptsTypeName(types[i]))
 					checkBox.setSelected(true);
 			} else {
 				checkBox.setEnabled(false);
@@ -576,15 +583,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 				x = 0;
 			}
 		}
-//		addItem (panelCheckBoxes, clearButton, 1, ++y);
-//		addItem (panelCheckBoxes, setButton, 4, y);
-
-		Border border = BorderFactory.createEtchedBorder();
-		panelCheckBoxes.setBorder(border);
-		panelCheckBoxes.revalidate();
-
-//		pack();
-		repaint();
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -643,6 +641,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	
 	public void dispose() {
 		CarTypes.instance().removePropertyChangeListener(this);
+		EngineTypes.instance().removePropertyChangeListener(this);
 		yardModel.dispose();
 		sidingModel.dispose();
 		interchangeModel.dispose();
@@ -653,7 +652,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
 	}

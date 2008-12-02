@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -34,14 +34,15 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int NUMCOLUMN   = 0;
     private static final int ROADCOLUMN   = 1;
     private static final int MODELCOLUMN = 2;
-    private static final int LENGTHCOLUMN = 3;
-    private static final int CONSISTCOLUMN  = 4;
-    private static final int LOCATIONCOLUMN  = 5;
-    private static final int DESTINATIONCOLUMN = 6;
-    private static final int TRAINCOLUMN = 7;
-    private static final int MOVESCOLUMN = 8;
-    private static final int SETCOLUMN = 9;
-    private static final int EDITCOLUMN = 10;
+    private static final int TYPECOLUMN = 3;
+    private static final int LENGTHCOLUMN = 4;
+    private static final int CONSISTCOLUMN  = 5;
+    private static final int LOCATIONCOLUMN  = 6;
+    private static final int DESTINATIONCOLUMN = 7;
+    private static final int TRAINCOLUMN = 8;
+    private static final int MOVESCOLUMN = 9;
+    private static final int SETCOLUMN = 10;
+    private static final int EDITCOLUMN = 11;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -133,6 +134,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		table.getColumnModel().getColumn(NUMCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(MODELCOLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(65);
 		table.getColumnModel().getColumn(CONSISTCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(35);
 		table.getColumnModel().getColumn(LOCATIONCOLUMN).setPreferredWidth(190);
@@ -154,6 +156,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case NUMCOLUMN: return rb.getString("Number");
         case ROADCOLUMN: return rb.getString("Road");
         case MODELCOLUMN: return rb.getString("Model");
+        case TYPECOLUMN: return rb.getString("Type");
         case LENGTHCOLUMN: return rb.getString("Len");
         case CONSISTCOLUMN: return rb.getString("Consist");
         case LOCATIONCOLUMN: return rb.getString("Location");
@@ -172,6 +175,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case ROADCOLUMN: return String.class;
         case LENGTHCOLUMN: return String.class;
         case MODELCOLUMN: return String.class;
+        case TYPECOLUMN: return String.class;
         case CONSISTCOLUMN: return String.class;
         case LOCATIONCOLUMN: return String.class;
         case DESTINATIONCOLUMN: return String.class;
@@ -209,6 +213,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case ROADCOLUMN: return engine.getRoad();
         case LENGTHCOLUMN: return engine.getLength();
         case MODELCOLUMN: return engine.getModel();
+        case TYPECOLUMN: return engine.getType();
         
         case CONSISTCOLUMN: {
         	if (engine.getConsist() != null && engine.getConsist().isLeadEngine(engine))
@@ -230,8 +235,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
         case TRAINCOLUMN: return engine.getTrain();
         case MOVESCOLUMN: return Integer.toString(engine.getMoves());
-        case SETCOLUMN: return "Set";
-        case EDITCOLUMN: return "Edit";
+        case SETCOLUMN: return rb.getString("Set");
+        case EDITCOLUMN: return rb.getString("Edit");
  
         default: return "unknown "+col;
         }
@@ -316,7 +321,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     		fireTableDataChanged();
     	}
     	// Engine lengths are based on model, so multiple changes
-    	else if (e.getPropertyName().equals(Engine.LENGTH)){
+    	else if (e.getPropertyName().equals(Engine.LENGTH) || e.getPropertyName().equals(Engine.TYPE)){
     		fireTableDataChanged();
     	}
     	else {

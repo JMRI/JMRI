@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -30,7 +31,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -670,37 +671,39 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateCheckboxes(){
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();
-		int y = 0;		// vertical position in panel
+		x = 0;
+		y = 0;		// vertical position in panel
 		addItemWidth(panelCheckBoxes, textType, 3, 1, y++);
-
-		String[]carTypes = CarTypes.instance().getNames();
-		int x = 0;
-		for (int i =0; i<carTypes.length; i++){
-			if(_location.acceptsTypeName(carTypes[i])){
-				JCheckBox checkBox = new javax.swing.JCheckBox();
-				checkBoxes.add(checkBox);
-				checkBox.setText(carTypes[i]);
-				addCheckBoxAction(checkBox);
-				addItemLeft(panelCheckBoxes, checkBox, x++, y);
-				if(_track != null && _track.acceptsTypeName(carTypes[i]))
-					checkBox.setSelected(true);
-				if (x > 5){
-					y++;
-					x = 0;
-				}
-			}
-		}
+		loadTypes(CarTypes.instance().getNames());
+		loadTypes(EngineTypes.instance().getNames());
 		enableCheckboxes(_track != null);
-
 		addItem (panelCheckBoxes, clearButton, 1, ++y);
 		addItem (panelCheckBoxes, setButton, 4, y);
-
 		Border border = BorderFactory.createEtchedBorder();
 		panelCheckBoxes.setBorder(border);
 		panelCheckBoxes.revalidate();
-
 		pack();
 		repaint();
+	}
+	
+	int x = 0;
+	int y = 0;	// vertical position in panel
+	private void loadTypes(String[] types){
+		for (int i =0; i<types.length; i++){
+			if(_location.acceptsTypeName(types[i])){
+				JCheckBox checkBox = new javax.swing.JCheckBox();
+				checkBoxes.add(checkBox);
+				checkBox.setText(types[i]);
+				addCheckBoxAction(checkBox);
+				addItemLeft(panelCheckBoxes, checkBox, x++, y);
+				if(_track != null && _track.acceptsTypeName(types[i]))
+					checkBox.setSelected(true);
+			} 
+			if (x > 5){
+				y++;
+				x = 0;
+			}
+		}
 	}
 	
 	private void updateDropOptions(){

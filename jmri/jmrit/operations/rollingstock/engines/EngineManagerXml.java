@@ -98,6 +98,12 @@ public class EngineManagerXml extends XmlFile {
 	        // add top-level elements
 	        Element values;
 	        root.addContent(values = new Element("engineModels"));
+	        String[]models = EngineModels.instance().getNames();
+	        for (int i=0; i<models.length; i++){
+	        	String typeNames = models[i]+"%%";
+	        	values.addContent(typeNames);
+	        }
+	        root.addContent(values = new Element("engineTypes"));
 	        String[]types = EngineModels.instance().getNames();
 	        for (int i=0; i<types.length; i++){
 	        	String typeNames = types[i]+"%%";
@@ -191,6 +197,13 @@ public class EngineManagerXml extends XmlFile {
         
         if (root.getChild("engineModels")!= null){
         	String names = root.getChildText("engineModels");
+        	String[] models = names.split("%%");
+        	if (log.isDebugEnabled()) log.debug("engine models: "+names);
+        	EngineModels.instance().setNames(models);
+        }
+        
+        if (root.getChild("engineTypes")!= null){
+        	String names = root.getChildText("engineTypes");
         	String[] types = names.split("%%");
         	if (log.isDebugEnabled()) log.debug("engine models: "+names);
         	EngineModels.instance().setNames(types);

@@ -19,48 +19,51 @@ import jmri.jmrit.operations.setup.Control;
  * The program provides some default models for the user.  These values
  * can be overridden by the user.
  * 
- * Model Horsepower Length
- * E8		2250	70
- * FT		1350	50		
- * F3		1500	50
- * F7		1500	50
- * F9		1750	50
- * GP20		2000	56
- * GP30		2250	56
- * GP35		2500	56
- * GP38		2000	59
- * GP40		3000	59
- * RS1		1000	51
- * RS2		1500	52
- * RS3		1600	51
- * RS11		1800	53
- * RS18		1800	52
- * RS27		2400	57
- * RSD4		1600	52
- * SD26		2650	61
- * SD45		3600	66
- * SW1200	1200	45
- * SW1500	1500	45
- * SW8		800		44
- * TRAINMASTER	2400	66 
- * U28B		2800	60
+ * Model Horsepower Length 	Type
+ * E8		2250	70		Diesel
+ * FT		1350	50		Diesel		
+ * F3		1500	50		Diesel
+ * F7		1500	50		Diesel
+ * F9		1750	50		Diesel
+ * GP20		2000	56		Diesel
+ * GP30		2250	56		Diesel
+ * GP35		2500	56		Diesel
+ * GP38		2000	59		Diesel
+ * GP40		3000	59		Diesel
+ * RS1		1000	51		Diesel
+ * RS2		1500	52		Diesel
+ * RS3		1600	51		Diesel
+ * RS11		1800	53		Diesel
+ * RS18		1800	52		Diesel
+ * RS27		2400	57		Diesel
+ * RSD4		1600	52		Diesel
+ * SD26		2650	61		Diesel
+ * SD45		3600	66		Diesel
+ * SW1200	1200	45		Diesel
+ * SW1500	1500	45		Diesel
+ * SW8		800		44		Diesel
+ * TRAINMASTER	2400	66	Diesel 
+ * U28B		2800	60		Diesel
+ * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
 	private static final String MODELS = rb.getString("engineModelNames");
-	// Horsepower and length have a one to one correspondence with the above MODELS
+	// Horsepower, length, and type have a one to one correspondence with the above MODELS
 	private static final String HORSEPOWER = rb.getString("engineHorsepowers");
 	private static final String ENGINELENGTHS = rb.getString("engineLengths");
+	private static final String ENGINETYPES = rb.getString("engineTypes");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	private static final String LENGTH = "Length";
 	
 	protected Hashtable _engineHorsepowerHashTable = new Hashtable();
 	protected Hashtable _engineLengthHashTable = new Hashtable();
+	protected Hashtable _engineTypeHashTable = new Hashtable();
     
 	public EngineModels() {
     }
@@ -163,13 +166,28 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	return (String)_engineLengthHashTable.get(model);
     }
     
+    public void setModelType(String model, String type){
+    	_engineTypeHashTable.put(model, type);
+    }
+    
+    public String getModelType(String model){
+    	return (String)_engineTypeHashTable.get(model);
+    }
+    
     private void loadDefaults(){
 		String[] models = MODELS.split("%%");
  		String[] hps = HORSEPOWER.split("%%");
  		String[] lengths = ENGINELENGTHS.split("%%"); 
+ 		String[] types = ENGINETYPES.split("%%"); 
+ 		if (models.length != hps.length || models.length != lengths.length || models.length != types.length){
+ 			log.error("Defaults do not have the right number of items");
+ 			return;
+ 		}
+ 			
  		for (int i=0; i<models.length; i++){
  			setModelHorsepower(models[i], hps[i]);
  			setModelLength(models[i], lengths[i]);
+ 			setModelType(models[i], types[i]);
  		}
     }
         

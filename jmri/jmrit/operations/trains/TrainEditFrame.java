@@ -7,6 +7,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -35,7 +36,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -682,32 +683,36 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateTypeCheckboxes(){
 		typeCheckBoxes.clear();
 		typePanelCheckBoxes.removeAll();
-		int y = 0;		// vertical position in panel
+		x = 0;
+		y = 0;		// vertical position in panel
 		addItemWidth(typePanelCheckBoxes, textType, 3, 1, y++);
-
-		String[]carTypes = CarTypes.instance().getNames();
-		int x = 0;
-		for (int i =0; i<carTypes.length; i++){
-			JCheckBox checkBox = new javax.swing.JCheckBox();
-			typeCheckBoxes.add(checkBox);
-			checkBox.setText(carTypes[i]);
-			addTypeCheckBoxAction(checkBox);
-			addItemLeft(typePanelCheckBoxes, checkBox, x++, y);
-			if(_train != null && _train.acceptsTypeName(carTypes[i]))
-				checkBox.setSelected(true);
-			if (x > 5){
-				y++;
-				x = 0;
-			}
-		}
+		loadTypes(CarTypes.instance().getNames());
+		loadTypes(EngineTypes.instance().getNames());
 		enableCheckboxes(_train != null);
 		addItem (typePanelCheckBoxes, clearButton, 1, ++y);
 		addItem (typePanelCheckBoxes, setButton, 4, y);
 		Border border = BorderFactory.createEtchedBorder();
 		typePanelCheckBoxes.setBorder(border);
 		typePanelCheckBoxes.revalidate();
-		//pack();
 		repaint();
+	}
+	
+	int x = 0;
+	int y = 0;	// vertical position in panel
+	private void loadTypes(String[] types){
+		for (int i =0; i<types.length; i++){
+			JCheckBox checkBox = new javax.swing.JCheckBox();
+			typeCheckBoxes.add(checkBox);
+			checkBox.setText(types[i]);
+			addTypeCheckBoxAction(checkBox);
+			addItemLeft(typePanelCheckBoxes, checkBox, x++, y);
+			if(_train != null && _train.acceptsTypeName(types[i]))
+				checkBox.setSelected(true);
+			if (x > 5){
+				y++;
+				x = 0;
+			}
+		}
 	}
 	
 	// there are three road combo boxes to update
