@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.setup.Setup;
@@ -14,12 +16,14 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
-	private static final String TYPES = "Baggage%%Boxcar%%Caboose%%Coal%%Coilcar%%Engine%%FlatBulkHead%%FlatBHPaper%%FlatBHWood%%FlatTimber%%FlatTrailer%%FlatWood%%Flatcar%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopCoal%%HopCoal-Ety%%HopGrain%%HopSand%%Hopper%%MOW%%MOWBox%%Passenger%%ReefMech%%Reefer%%ReeferIce%%Stock%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg";
-	private static final String ARRTYPES = "BR%%CA%%CS%%DA%%DB%%DL%%Engine%%FA%%FB%%FC%%FCA%%FD%%FL%%FM%%FW%%GA%%GB%%GD%%GH%%GS%%GT%%GW%%HFA%%HK%%HM%%HT%%HTA%%LC%%LF%%LG%%LM%%LO%%LP%%LS%%LU%%MA%%MB%%MWC%%MMA%%NE%%PA%%PAS%%PC%%PL%%PO%%PS%%PT%%PV%%RA%%RB%%RP%%RS%%SA%%SC%%SM%%ST%%T%%TA%%TG%%THI%%TL%%TM%%TMU%%TP%%TPA%%TRGA%%TVI%%TW%%XC%%XF%%XL%%XM%%XP%%XT";
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+	private static final String TYPES = rb.getString("carTypeNames"); 
+		
+	private static final String ARRTYPES = rb.getString("carTypeARR");
 	// for property change
 	public static final String CARTYPES_CHANGED_PROPERTY = "CarTypes";
 	private static final String LENGTH = "Length";

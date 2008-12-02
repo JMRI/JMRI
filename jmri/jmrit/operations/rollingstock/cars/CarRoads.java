@@ -7,29 +7,21 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.swing.JComboBox;
 
 
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CarRoads implements java.beans.PropertyChangeListener {
 	
-	private static final String ROADS = "AA%%ACL%%ADCX%%ADMX%%AESX%%ALTON%%ATM%%ATR%%ATSF"
-		+ "%%ATW%%B&O%%BAR%%BCK%%BM%%BN%%BR%%BR&S%%BREX%%BWCX"
-		+ "%%C&EI%%C&IM%%C&O%%CACX%%CB&Q%%CCBX%%CDLX%%CG%%CG&W%%CM%%CMSF%%CMWX%%CN%%CNJ%%CNW%%CONX%%COPR%%CP%%CRR%%CTSE%%CTT%%CTTX%%CV"
-		+ "%%D&H%%D&M%%D&RGW%%EJ&E%%ERIE%%FCX%%FDD&S%%FEC%%FW&D"
-		+ "%%G&F%%GAT%%GATX%%GCR%%GM&O%%GN%%GPEX%%GRC%%GRCX%%GTW"
-		+ "%%IC%%IGN%%IN%%KCS%%KOT%%KOTX%%LN%%LNE%%LS&I%%LV"
-		+ "%%MEC%%MILW%%MKT%%MNS%%MP%%MPA%%MRL%%MSL"
-		+ "%%N&W%%NC&SL%%NH%%NKP%%NP%%NYC%%OTT%%OTTX"
-		+ "%%PC%%PFE%%PM%%PRR%%PS&N%%RDG%%RE%%REX%%RF&P%%RI%%RP%%RPX%%RTC%%RTCX%%RUT"
-		+ "%%SAL%%SDW%%SDWX%%SHP%%SHPX%%SLSF%%SOO%%SOU%%SP%%SSW%%SUNX"
-		+ "%%T&P%%TC%%TP&W%%UOCX%%UP%%UTL%%UTLX" 
-		+ "%%VGN%%VN%%VTR%%W&LE%%W&LG%%WA%%WAB%%WDL%%WDLX%%WFEX%%WM%%WP%%WRNX";
-	
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+
+	private static final String ROADS = rb.getString("carRoadNames"); 
 	public static final String CARROADS_CHANGED_PROPERTY = "CarRoads";
 	private static final String LENGTH = "Length";
 	
