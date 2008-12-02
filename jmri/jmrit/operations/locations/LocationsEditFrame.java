@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -496,7 +496,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		yardTable.setEnabled(enabled);
 	}
 	
-	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		setVisibleLocations();
 	}
 	

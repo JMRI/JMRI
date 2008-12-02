@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -105,12 +105,12 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected void addRadioButtonAction(JRadioButton b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonRadioActionPerformed(e);
+				radioButtonActionPerformed(e);
 			}
 		});
 	}
 	
-	protected void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
+	protected void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button action not overridden");
 	}
 	

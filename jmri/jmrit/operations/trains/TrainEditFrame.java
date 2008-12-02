@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -459,7 +459,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
 	}
 	
-	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == roadNameAll)
 			_train.setRoadOption(_train.ALLROADS);

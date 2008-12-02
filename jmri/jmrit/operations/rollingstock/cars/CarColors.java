@@ -7,17 +7,21 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.swing.JComboBox;
 
 
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CarColors implements java.beans.PropertyChangeListener {
 	
-	private static final String COLORS = "Black%%Blue%%Brown%%Gray%%Yellow%%Green%%Orange%%Purple%%Red%%Silver%%Tuscan%%White";
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+
+	private static final String COLORS = rb.getString("carColors");
 	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";
 	private static final String LENGTH = "Length";
 	

@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -597,7 +597,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		enableCheckboxes(enabled);
 	}
 	
-	public void buttonRadioActionPerformed(java.awt.event.ActionEvent ae) {
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == roadNameAll){
 			_track.setRoadOption(_track.ALLROADS);
