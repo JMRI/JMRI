@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for backing up operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class BackupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -80,7 +80,7 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 		addButtonAction(backupButton);
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_BackupRestore", true);
 
 		// set frame size and location for display
 		pack();
