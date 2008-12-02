@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -215,7 +215,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
            byte packets.
          */
 	XNetMessage msg;
-        msg = new XNetMessage(packet.length+3);
+        msg = new XNetMessage(packet.length+2);
 	msg.setOpCode((XNetConstants.OPS_MODE_PROG_REQ & 0xF0)>>4);
 	msg.setElement(1,0x30);
 	for(int i=0;i<packet.length;i++) {
