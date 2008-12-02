@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.setup.Control;
@@ -43,20 +45,16 @@ import jmri.jmrit.operations.setup.Control;
  * TRAINMASTER	2400	66 
  * U28B		2800	60
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
-	private static final String MODELS = "E8%%FT%%F3%%F7%%F9%%GP20%%GP30%%GP35%%GP38%%GP40%%" +
-			"RS1%%RS2%%RS3%%RS11%%RS18%%RS27%%RSD4%%SD26%%SD45%%SW1200%%" +
-			"SW1500%%SW8%%TRAINMASTER%%U28B";
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
+
+	private static final String MODELS = rb.getString("engineModelNames");
 	// Horsepower and length have a one to one correspondence with the above MODELS
-	private static final String HORSEPOWER = "2250%%1350%%1500%%1500%%1750%%2000%%2250%%2500%%2000%%3000%%" +
-			"1000%%1500%%1600%%1800%%1800%%2400%%1600%%2650%%3600%%1200%%" +
-			"1500%%800%%2400%%2800";
-	private static final String ENGINELENGTHS = "70%%50%%50%%50%%50%%56%%56%%56%%59%%59%%" +
-			"51%%52%%51%%53%%52%%57%%52%%61%%66%%45%%" +
-			"45%%44%%66%%60";
+	private static final String HORSEPOWER = rb.getString("engineHorsepowers");
+	private static final String ENGINELENGTHS = rb.getString("engineLengths");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	private static final String LENGTH = "Length";
