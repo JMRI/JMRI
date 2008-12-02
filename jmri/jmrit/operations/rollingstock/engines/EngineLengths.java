@@ -7,17 +7,21 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.swing.JComboBox;
 
 
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	
-	private static final String LENGTHS = "32%%34%%36%%38%%40%%42%%44%%45%%46%%48%%50%%51%%52%%53%%54%%55%%56%%57%%58%%59%%60%%61%%65%%66%%70%%75%%80%%85%%90";
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
+	
+	private static final String LENGTHS = rb.getString("engineDefaultLengths");
 	public static final String ENGINELENGTHS_CHANGED_PROPERTY = "EngineLengths";
 	private static final String LENGTH = "Length";
 	
