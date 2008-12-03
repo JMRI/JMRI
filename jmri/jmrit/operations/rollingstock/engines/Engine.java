@@ -34,7 +34,7 @@ public class Engine extends RollingStock {
 	
 	/**
 	 * Set the engine type
-	 * @param engine type, Steam, Diesel, Traction, etc.
+	 * @param type Engine type: Steam, Diesel, Traction, etc.
 	 */
 	public void setType (String type){
 		String old = getType();
