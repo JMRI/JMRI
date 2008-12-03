@@ -34,7 +34,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -337,7 +337,7 @@ public class OperationsTrainsTest extends TestCase {
                 l1.setLocationOps(Location.STAGING);
                 l1.setTrainDirections(15);
                 l1.setSwitchList(true);
-                l1.addTypeName("Engine");
+                l1.addTypeName("Diesel");
                 l1.addTypeName("Boxcar");
                 l1.addTypeName("Caboose");
                 lmanager.register(l1);
@@ -349,7 +349,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s1 LocType", "Staging", l1s1.getLocType());
 		Assert.assertEquals("Location 1s1 Length", 300, l1s1.getLength());
                 l1s1.setTrainDirections(15);
-                l1s1.addTypeName("Engine");
+                l1s1.addTypeName("Diesel");
                 l1s1.addTypeName("Boxcar");
                 l1s1.addTypeName("Caboose");
                 l1s1.setRoadOption("All");
@@ -363,7 +363,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s2 LocType", "Staging", l1s2.getLocType());
 		Assert.assertEquals("Location 1s2 Length", 400, l1s2.getLength());
                 l1s2.setTrainDirections(15);
-                l1s2.addTypeName("Engine");
+                l1s2.addTypeName("Diesel");
                 l1s2.addTypeName("Boxcar");
                 l1s2.addTypeName("Caboose");
                 l1s2.setRoadOption("All");
@@ -393,7 +393,7 @@ public class OperationsTrainsTest extends TestCase {
                 l2.setLocationOps(Location.NORMAL);
                 l2.setTrainDirections(15);
                 l2.setSwitchList(true);
-                l2.addTypeName("Engine");
+                l2.addTypeName("Diesel");
                 l2.addTypeName("Boxcar");
                 l2.addTypeName("Caboose");
                 l2.setLength(200);
@@ -407,7 +407,7 @@ public class OperationsTrainsTest extends TestCase {
                 l3.setLocationOps(Location.STAGING);
                 l3.setTrainDirections(15);
                 l3.setSwitchList(true);
-                l3.addTypeName("Engine");
+                l3.addTypeName("Diesel");
                 l3.addTypeName("Boxcar");
                 l3.addTypeName("Caboose");
                 lmanager.register(l3);
@@ -419,7 +419,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s1 LocType", "Staging", l3s1.getLocType());
 		Assert.assertEquals("Location 3s1 Length", 300, l3s1.getLength());
                 l3s1.setTrainDirections(15);
-                l3s1.addTypeName("Engine");
+                l3s1.addTypeName("Diesel");
                 l3s1.addTypeName("Boxcar");
                 l3s1.addTypeName("Caboose");
                 l3s1.setRoadOption("All");
@@ -433,7 +433,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s2 LocType", "Staging", l3s2.getLocType());
 		Assert.assertEquals("Location 3s2 Length", 400, l3s2.getLength());
                 l3s2.setTrainDirections(15);
-                l3s2.addTypeName("Engine");
+                l3s2.addTypeName("Diesel");
                 l3s2.addTypeName("Boxcar");
                 l3s2.addTypeName("Caboose");
                 l3s2.setRoadOption("All");
