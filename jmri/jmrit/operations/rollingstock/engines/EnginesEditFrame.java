@@ -5,6 +5,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -403,11 +404,11 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 					if (!_engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
 							|| !_engine.getNumber().equals(roadNumberTextField.getText())) {
 						// transfer engine attributes since road name and number have changed
-						Engine e = manager.newEngine(_engine.getRoad(), _engine.getNumber());
+						Engine oldengine = _engine;
 						Engine newEngine = addEngine();
-						newEngine.setDestination(e.getDestination(), e.getDestinationTrack());
-						newEngine.setTrain(e.getTrain());
-						manager.deregister(e);
+						newEngine.setDestination(oldengine.getDestination(), oldengine.getDestinationTrack());
+						newEngine.setTrain(oldengine.getTrain());
+						manager.deregister(oldengine);
 						managerXml.writeOperationsEngineFile();
 						return;
 					}
@@ -419,10 +420,20 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("engine delete button actived");
-			Engine e = manager.newEngine(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
-			manager.deregister(e);
-			// save engine file
-			managerXml.writeOperationsEngineFile();
+			if (_engine != null
+					&& _engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
+					&& _engine.getNumber().equals(roadNumberTextField.getText())) {
+				manager.deregister(_engine);
+				// save engine file
+				managerXml.writeOperationsEngineFile();
+			} else {
+				Engine e = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+				if (e != null){
+					manager.deregister(e);
+					// save engine file
+					managerXml.writeOperationsEngineFile();
+				}
+			}
 		}
 		if (ae.getSource() == addButton){
 			String roadNum = roadNumberTextField.getText();
@@ -453,29 +464,32 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	private Engine addEngine() {
 		if (roadComboBox.getSelectedItem() != null
 				&& !roadComboBox.getSelectedItem().toString().equals("")) {
-			Engine engine = manager.newEngine(roadComboBox.getSelectedItem().toString(),
-					roadNumberTextField.getText());
-			_engine = engine;
+			if (_engine == null
+					|| !_engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
+					|| !_engine.getNumber().equals(roadNumberTextField.getText())) {
+				_engine = manager.newEngine(roadComboBox.getSelectedItem().toString(),
+						roadNumberTextField.getText());
+			}
 			if (modelComboBox.getSelectedItem() != null)
-				engine.setModel(modelComboBox.getSelectedItem().toString());
+				_engine.setModel(modelComboBox.getSelectedItem().toString());
 			if (typeComboBox.getSelectedItem() != null)
-				engine.setType(typeComboBox.getSelectedItem().toString());
+				_engine.setType(typeComboBox.getSelectedItem().toString());
 			if (lengthComboBox.getSelectedItem() != null)
-				engine.setLength(lengthComboBox.getSelectedItem().toString());
-			engine.setBuilt(builtTextField.getText());
+				_engine.setLength(lengthComboBox.getSelectedItem().toString());
+			_engine.setBuilt(builtTextField.getText());
 			if (ownerComboBox.getSelectedItem() != null)
-				engine.setOwner(ownerComboBox.getSelectedItem().toString());
+				_engine.setOwner(ownerComboBox.getSelectedItem().toString());
 			if (consistComboBox.getSelectedItem() != null){
 				if (consistComboBox.getSelectedItem().equals(""))
-					engine.setConsist(null);
+					_engine.setConsist(null);
 				else
-					engine.setConsist(manager.getConsistByName((String)consistComboBox.getSelectedItem()));
+					_engine.setConsist(manager.getConsistByName((String)consistComboBox.getSelectedItem()));
 			}
 			// confirm that horsepower is a number
 			if (!hpTextField.getText().equals("") ){
 				try{
 					Integer.parseInt(hpTextField.getText());
-					engine.setHp(hpTextField.getText());
+					_engine.setHp(hpTextField.getText());
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(this,
 							"Engine horsepower must be a number", "Can not save engine horsepower!",
@@ -507,8 +521,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 					}
 				}
 			}
-			engine.setComment(commentTextField.getText());
-			return engine;
+			_engine.setComment(commentTextField.getText());
+			return _engine;
 		}
 		return null;
 	}

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -444,7 +444,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 							|| !_car.getNumber().equals(roadNumberTextField.getText())) {
 						// transfer car attributes since road name and number have changed
-						Car oldcar = manager.newCar(_car.getRoad(), _car.getNumber());
+						Car oldcar = _car;
 						Car newCar = addCar();
 						// set the car's destination and train
 						newCar.setDestination(oldcar.getDestination(), oldcar.getDestinationTrack());
@@ -461,10 +461,20 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("car delete button actived");
-			Car c = manager.newCar(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
-			manager.deregister(c);
-			// save car file
-			managerXml.writeOperationsCarFile();
+			if (_car != null
+					&& _car.getRoad().equals(roadComboBox.getSelectedItem().toString())
+					&& _car.getNumber().equals(roadNumberTextField.getText())) {
+				manager.deregister(_car);
+				// save car file
+				managerXml.writeOperationsCarFile();
+			} else {
+				Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+				if (car != null){
+					manager.deregister(car);
+					// save car file
+					managerXml.writeOperationsCarFile();
+				}
+			}
 		}
 		if (ae.getSource() == addButton){
 			String roadNum = roadNumberTextField.getText();
@@ -519,28 +529,31 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	private Car addCar() {
 		if (roadComboBox.getSelectedItem() != null
 				&& !roadComboBox.getSelectedItem().toString().equals("")) {
-			Car c = manager.newCar(roadComboBox.getSelectedItem().toString(),
-					roadNumberTextField.getText());
-			_car = c;
+			if (_car == null
+					|| !_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
+					|| !_car.getNumber().equals(roadNumberTextField.getText())) {
+				_car = manager.newCar(roadComboBox.getSelectedItem().toString(),
+						roadNumberTextField.getText());
+			}
 			if (typeComboBox.getSelectedItem() != null)
-				c.setType(typeComboBox.getSelectedItem().toString());
+				_car.setType(typeComboBox.getSelectedItem().toString());
 			if (lengthComboBox.getSelectedItem() != null)
-				c.setLength(lengthComboBox.getSelectedItem().toString());
+				_car.setLength(lengthComboBox.getSelectedItem().toString());
 			if (colorComboBox.getSelectedItem() != null)
-				c.setColor(colorComboBox.getSelectedItem().toString());
-			c.setWeight(weightTextField.getText());
-			c.setWeightTons(weightTonsTextField.getText());
-			c.setCaboose(cabooseCheckBox.isSelected());
-			c.setFred(fredCheckBox.isSelected());
-			c.setHazardous(hazardousCheckBox.isSelected());
-			c.setBuilt(builtTextField.getText());
+				_car.setColor(colorComboBox.getSelectedItem().toString());
+			_car.setWeight(weightTextField.getText());
+			_car.setWeightTons(weightTonsTextField.getText());
+			_car.setCaboose(cabooseCheckBox.isSelected());
+			_car.setFred(fredCheckBox.isSelected());
+			_car.setHazardous(hazardousCheckBox.isSelected());
+			_car.setBuilt(builtTextField.getText());
 			if (ownerComboBox.getSelectedItem() != null)
-				c.setOwner(ownerComboBox.getSelectedItem().toString());
+				_car.setOwner(ownerComboBox.getSelectedItem().toString());
 			if (kernelComboBox.getSelectedItem() != null){
 				if (kernelComboBox.getSelectedItem().equals(""))
-					c.setKernel(null);
+					_car.setKernel(null);
 				else
-					c.setKernel(manager.getKernelByName((String)kernelComboBox.getSelectedItem()));
+					_car.setKernel(manager.getKernelByName((String)kernelComboBox.getSelectedItem()));
 			}
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")) {
@@ -567,8 +580,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					}
 				}
 			}
-			c.setComment(commentTextField.getText());
-			return c;
+			_car.setComment(commentTextField.getText());
+			return _car;
 		}
 		return null;
 	}
