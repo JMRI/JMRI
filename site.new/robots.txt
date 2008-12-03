@@ -1,5 +1,0 @@
-# /robots.txt file for http://jmri.sourceforge.net/
-# mail jmri@pacbell.net with constructive criticism
-#
-# The intent is that this file will allow everybody all access
-#
