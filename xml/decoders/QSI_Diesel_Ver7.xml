@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Diesel_Ver7.xml,v 1.10 2008-09-18 14:05:23 jacobsen Exp $ -->
+<!-- $Id: QSI_Diesel_Ver7.xml,v 1.11 2008-12-03 00:47:08 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+  <version author="Michael Mosher" version="9" lastUpdated="20081202"/>
   <version author="Michael Mosher" version="8" lastUpdated="20080912"/>
   <version author="Michael Mosher" version="7" lastUpdated="20080906"/>
   <version author="Michael Mosher" version="6" lastUpdated="20080811"/>
@@ -32,8 +33,10 @@
 <!-- version 4 - Added new models & better slider layout -->
 <!-- version 5 - Added CV62bit2 & output feature 154 grade crossing -->
 <!-- version 6 - Added new models & CV's -->
-<!-- version 7 - removed leading zeros on IDs -->
 <!-- version 7 - added P2k H10-44 -->
+<!-- version 7 - removed leading zeros on IDs -->
+<!-- version 8 - added P2k H10-44 -->
+<!-- version 9 - fixed light control pane format problem -->
 
 <decoder>
 
@@ -4735,70 +4738,60 @@
       </column>
 	</row>
     <label label=" "/>
-	<row>
-      <column>
-        <display item="CV55.84.0"/>
-        <display item="CV55.84.1"/>
-        <display item="CV55.84.2"/>
-        <display item="CV55.84.3"/>
-        <display item="CV55.84.4"/>
-        <row>
-	        <display item="CV55.84.5" layout="above" label="" />
-	        <display item="CV55.84.5" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.84.10" layout="above" label="" />
-	        <display item="CV55.84.10" layout="above" format="hslider"/>
-        </row>
-  	  </column>
-
-      <column>
-        <display item="CV55.84.0 Horn" format="checkbox"/>
-        <display item="CV55.84.1 Horn" format="checkbox"/>
-        <display item="CV55.84.2 Horn" format="checkbox"/>
-        <display item="CV55.84.3 Horn" format="checkbox"/>
-        <display item="CV55.84.4 Horn" format="checkbox"/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-      </column>
-      <column>
-        <display item="CV55.88.0"/>
-        <display item="CV55.88.1"/>
-        <display item="CV55.88.2"/>
-        <display item="CV55.88.3"/>
-        <display item="CV55.88.4"/>
-        <row>
-	        <display item="CV55.88.5" layout="above" label="" />
-	        <display item="CV55.88.5" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.88.10" layout="above" label="" />
-	        <display item="CV55.88.10" layout="above" format="hslider"/>
-        </row>
-  	  </column>
-      <label label=" "/>
-      <column>
-        <display item="CV55.88.0 Horn" format="checkbox"/>
-        <display item="CV55.88.1 Horn" format="checkbox"/>
-        <display item="CV55.88.2 Horn" format="checkbox"/>
-        <display item="CV55.88.3 Horn" format="checkbox"/>
-        <display item="CV55.88.4 Horn" format="checkbox"/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-      </column>
-  	</row>
+		<row>
+    	  <column>
+ 			<row>
+    		  <column>
+    		    <display item="CV55.84.0"/>
+    		    <display item="CV55.84.1"/>
+    		    <display item="CV55.84.2"/>
+    		    <display item="CV55.84.3"/>
+    		    <display item="CV55.84.4"/>
+    		  </column>
+    		  <column>
+    		    <display item="CV55.84.0 Horn" format="checkbox"/>
+    		    <display item="CV55.84.1 Horn" format="checkbox"/>
+    		    <display item="CV55.84.2 Horn" format="checkbox"/>
+    		    <display item="CV55.84.3 Horn" format="checkbox"/>
+    		    <display item="CV55.84.4 Horn" format="checkbox"/>
+    		  </column>
+    		</row>
+    		<row>
+			    <display item="CV55.84.5" layout="above" label="" />
+			    <display item="CV55.84.5" layout="above" format="hslider"/>
+    		</row>
+    		<row>
+    		   <display item="CV55.84.10" layout="above" label="" />
+    		   <display item="CV55.84.10" layout="above" format="hslider"/>
+    		</row>
+   		  </column>
+   		  <column>
+    		<row>
+    		  <column>
+    		    <display item="CV55.88.0"/>
+    		    <display item="CV55.88.1"/>
+    		    <display item="CV55.88.2"/>
+    		    <display item="CV55.88.3"/>
+    		    <display item="CV55.88.4"/>
+    		  </column>
+    		  <column>
+    		    <display item="CV55.88.0 Horn" format="checkbox"/>
+    		    <display item="CV55.88.1 Horn" format="checkbox"/>
+    		    <display item="CV55.88.2 Horn" format="checkbox"/>
+    		    <display item="CV55.88.3 Horn" format="checkbox"/>
+    		    <display item="CV55.88.4 Horn" format="checkbox"/>
+    		  </column>
+  			</row>
+    		<row>
+    		   <display item="CV55.88.5" layout="above" label="" />
+    		   <display item="CV55.88.5" layout="above" format="hslider"/>
+    		</row>
+    		<row>
+    		   <display item="CV55.88.10" layout="above" label="" />
+    		   <display item="CV55.88.10" layout="above" format="hslider"/>
+    		</row>
+		</column>
+	</row>
     <label label=" "/>
     <row>
       <column>
