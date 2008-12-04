@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.8.shtml,v 1.1 2008-12-03 15:52:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.8.shtml,v 1.2 2008-12-04 01:15:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -41,7 +41,7 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the seventh in a series of test versions.
+<p>This is the eighth in a series of test versions.
 
 It contains 
 many new features, including:
