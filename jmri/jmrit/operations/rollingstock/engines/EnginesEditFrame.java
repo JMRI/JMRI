@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -282,8 +282,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		_engine = engine;
 
 		if (!CarRoads.instance().containsName(engine.getRoad())){
+			String msg = java.text.MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{engine.getRoad()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's road name \""+ engine.getRoad() + "\" doesn't exist in your roster, add? ", "Add road name?",
+					msg, rb.getString("engineAddRoad"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarRoads.instance().addName(engine.getRoad());
 			}
@@ -293,8 +294,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		roadNumberTextField.setText(engine.getNumber());
 
 		if (!engineModels.containsName(engine.getModel())){
+			String msg = java.text.MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engine.getModel()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's model \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine model?",
+					msg, rb.getString("engineAddModel"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				engineModels.addName(engine.getModel());
 			}
@@ -302,8 +304,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		modelComboBox.setSelectedItem(engine.getModel());
 		
 		if (!engineTypes.containsName(engine.getType())){
+			String msg = java.text.MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{engine.getType()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's type \"\"" + engine.getModel() + "\" doesn't exist in your roster, add? ", "Add engine type?",
+					msg, rb.getString("engineAddType"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				engineTypes.addName(engine.getType());
 			}
@@ -311,8 +314,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		typeComboBox.setSelectedItem(engine.getType());
 
 		if (!engineLengths.containsName(engine.getLength())){
+			String msg = java.text.MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{engine.getLength()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's length \"" + engine.getLength() + "\" doesn't exist in your roster, add? ", "Add engine length?",
+					msg, rb.getString("engineAddLength"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				engineLengths.addName(engine.getLength());
 			}
@@ -332,8 +336,9 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		builtTextField.setText(engine.getBuilt());
 
 		if (!CarOwners.instance().containsName(engine.getOwner())){
+			String msg = java.text.MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{engine.getOwner()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This engine's owner \"" + engine.getOwner() + "\" doesn't exist in your roster, add? ", "Add engine owner?",
+					msg, rb.getString("addOwner"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarOwners.instance().addName(engine.getOwner());
 			}

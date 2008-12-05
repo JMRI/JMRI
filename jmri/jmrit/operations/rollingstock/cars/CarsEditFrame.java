@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -359,8 +359,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		builtTextField.setText(car.getBuilt());
 
 		if (!CarOwners.instance().containsName(car.getOwner())){
+			String msg = java.text.MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{car.getOwner()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This car's owner \"" + car.getOwner() + "\" doesn't exist in your roster, add? ", "Add car owner?",
+					msg, rb.getString("addOwner"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarOwners.instance().addName(car.getOwner());
 			}
