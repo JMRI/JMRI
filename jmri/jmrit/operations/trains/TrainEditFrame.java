@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -279,10 +279,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	addItem (trainReq, textModel, 3, 1);
     	modelEngineBox.insertItemAt("",0);
     	modelEngineBox.setSelectedIndex(0);
+    	modelEngineBox.setToolTipText(rb.getString("ModelEngineTip"));
      	addItem (trainReq, modelEngineBox, 4, 1);
     	addItem (trainReq, textRoad2, 5, 1);
     	roadEngineBox.insertItemAt("",0);
     	roadEngineBox.setSelectedIndex(0);
+    	roadEngineBox.setToolTipText(rb.getString("RoadEngineTip"));
     	addItem (trainReq, roadEngineBox, 6, 1);
     	
     	addItem (trainReq, noneRadioButton, 2, 2);
@@ -291,6 +293,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
      	addItem (trainReq, textRoad3, 5, 2);
     	roadCabooseBox.insertItemAt("",0);
     	roadCabooseBox.setSelectedIndex(0);
+    	roadCabooseBox.setToolTipText(rb.getString("RoadCabooseTip"));
     	addItem (trainReq, roadCabooseBox, 6, 2);
     	group.add(noneRadioButton);
     	group.add(cabooseRadioButton);

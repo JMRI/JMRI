@@ -53,7 +53,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1128,9 +1128,9 @@ public class TrainBuilder extends TrainCommon{
 			RouteLocation rl = train.getRoute().getLocationById((String) routeList.get(r));
 			newLine(fileOut);
 			if (r == 0)
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", departure time "+train.getDepartureTime());
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", "+rb.getString("departureTime")+" "+train.getDepartureTime());
 			else
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", estimated arrival time "+train.getExpectedArrivalTime(rl));
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById((String) routeList.get(j));
