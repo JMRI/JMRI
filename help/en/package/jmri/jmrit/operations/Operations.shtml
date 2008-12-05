@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.16 2008-11-30 02:58:32 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.17 2008-12-05 16:29:47 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -49,6 +49,14 @@ the panel along with the train from location to location.
 In the top level menu for JMRI find the "Tools->Operations" menu. There
 are six items in this menu. We recommend that you start with "Settings"
 and work your way down to "Trains". 
+
+<H3>British Railways</H3>
+
+The program supports an alternate set of railway terminology for our
+British modelers. To use British terminologies, go to the JMRI Advanced
+Preferences (Edit->Preferences.. select the Show Advanced Preferences
+checkbox) and select English(United Kingdom) in the Locale: in the menu
+box. 
 
 <A NAME="Settings"></A>
 <H2>Settings</H2>
