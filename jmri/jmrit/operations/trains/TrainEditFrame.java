@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -453,26 +453,31 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				_train.reset();
 		}
 		if (ae.getSource() == addRoadButton){
-			_train.addRoadName((String) roadBox.getSelectedItem());
-			updateRoadNames();
+			if (_train != null){
+				_train.addRoadName((String) roadBox.getSelectedItem());
+				updateRoadNames();
+			}
 		}
 		if (ae.getSource() == deleteRoadButton){
-			_train.deleteRoadName((String) roadBox.getSelectedItem());
-			updateRoadNames();
+			if (_train != null){
+				_train.deleteRoadName((String) roadBox.getSelectedItem());
+				updateRoadNames();
+			}
 		}
-		
 	}
 	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
-		if (ae.getSource() == roadNameAll)
-			_train.setRoadOption(_train.ALLROADS);
-		if (ae.getSource() == roadNameInclude)
-			_train.setRoadOption(_train.INCLUDEROADS);
-		if (ae.getSource() == roadNameExclude)
-			_train.setRoadOption(_train.EXCLUDEROADS);
-		
-		updateRoadNames();
+		if (_train != null){
+			if (ae.getSource() == roadNameAll)
+				_train.setRoadOption(_train.ALLROADS);
+			if (ae.getSource() == roadNameInclude)
+				_train.setRoadOption(_train.INCLUDEROADS);
+			if (ae.getSource() == roadNameExclude)
+				_train.setRoadOption(_train.EXCLUDEROADS);
+
+			updateRoadNames();
+		}
 	}
 	
 	private void updateRoadNames(){
@@ -600,6 +605,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		clearButton.setEnabled(enabled);
 		resetButton.setEnabled(enabled);
 		setButton.setEnabled(enabled);
+		roadNameAll.setEnabled(enabled);
+		roadNameInclude.setEnabled(enabled);
+		roadNameExclude.setEnabled(enabled);
+		addRoadButton.setEnabled(enabled);
+		deleteRoadButton.setEnabled(enabled);
 		saveTrainButton.setEnabled(enabled);
 		deleteTrainButton.setEnabled(enabled);
 		enableCheckboxes(enabled);

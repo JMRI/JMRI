@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -301,8 +301,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		_car = car;
 
 		if (!CarRoads.instance().containsName(car.getRoad())){
+			String msg = java.text.MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{car.getRoad()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This car's road name \""+ car.getRoad() + "\" doesn't exist in your roster, add? ", "Add road name?",
+					msg, rb.getString("carAddRoad"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarRoads.instance().addName(car.getRoad());
 			}
@@ -312,8 +313,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		roadNumberTextField.setText(car.getNumber());
 
 		if (!CarTypes.instance().containsName(car.getType())){
+			String msg = java.text.MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{car.getType()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This car's type \"\"" + car.getType() + "\" doesn't exist in your roster, add? ", "Add car type?",
+					msg, rb.getString("carAddType"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarTypes.instance().addName(car.getType());
 			}
@@ -321,8 +323,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		typeComboBox.setSelectedItem(car.getType());
 
 		if (!CarLengths.instance().containsName(car.getLength())){
+			String msg = java.text.MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{car.getLength()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This car's length \"" + car.getLength() + "\" doesn't exist in your roster, add? ", "Add car length?",
+					msg, rb.getString("carAddLength"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarLengths.instance().addName(car.getLength());
 			}
@@ -330,8 +333,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		lengthComboBox.setSelectedItem(car.getLength());
 
 		if (!CarColors.instance().containsName(car.getColor())){
+			String msg = java.text.MessageFormat.format(rb.getString("colorNameNotExist"),new Object[]{car.getColor()});
 			if (JOptionPane.showConfirmDialog(this,
-					"This car's color \"" + car.getColor() + "\" doesn't exist in your roster, add? ", "Add car color?",
+					msg, rb.getString("carAddColor"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarColors.instance().addName(car.getColor());
 			}
@@ -401,43 +405,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
 			// log.debug("car save button actived");
-			String roadNum = roadNumberTextField.getText();
-			if (roadNum.length() > 10){
-				JOptionPane.showMessageDialog(this,rb.getString("carRoadNum"),
-						"Car road number too long!",
-						JOptionPane.ERROR_MESSAGE);
+			if (!checkCar(_car))
 				return;
-			}
-			// check to see if car with road and number already exists
-			Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
-			if (car != null){
-				if (_car == null || !car.getId().equals(_car.getId())){
-					JOptionPane.showMessageDialog(this,
-							"Car with road name and number already exists", "Can not save car!",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
-			// check car's weight has proper format
-			try{
-				Double.parseDouble(weightTextField.getText());
-			}catch (Exception e){
-				JOptionPane.showMessageDialog(this,
-						"Car's weight must be in the format of xx.x oz",
-						"Car's actual weight incorrect",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			// check car's weight in tons has proper format
-			try{
-				Integer.parseInt(weightTonsTextField.getText());
-			}catch (Exception e){
-				JOptionPane.showMessageDialog(this,
-						"Car's weight must be in the format of xx tons",
-						"Car weight in tons incorrect",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
 			// delete car if edit and road or road number has changed
 			if (_car != null){
 				if (_car.getRoad() != null && !_car.getRoad().equals("")){
@@ -465,6 +434,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					&& _car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 					&& _car.getNumber().equals(roadNumberTextField.getText())) {
 				manager.deregister(_car);
+				_car = null;
 				// save car file
 				managerXml.writeOperationsCarFile();
 			} else {
@@ -477,21 +447,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			}
 		}
 		if (ae.getSource() == addButton){
-			String roadNum = roadNumberTextField.getText();
-			if (roadNum.length() > 10){
-				JOptionPane.showMessageDialog(this,rb.getString("carRoadNum"),
-						"Car road number too long!",
-						JOptionPane.ERROR_MESSAGE);
+			if (!checkCar(null))
 				return;
-			}
-			Car c = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
-			if (c != null){
-				log.info("Can not add, car already exists");
-				JOptionPane.showMessageDialog(this,
-						"Car with road name and number already exists", "Can not add car!",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
 			addCar();
 			// save car file
 			managerXml.writeOperationsCarFile();
@@ -504,6 +461,47 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		if (ae.getSource() == fillWeightButton){
 			calculateWeight ();
 		}
+	}
+	
+	private boolean checkCar(Car c){
+		String roadNum = roadNumberTextField.getText();
+		if (roadNum.length() > 10){
+			JOptionPane.showMessageDialog(this,rb.getString("carRoadNum"),
+					rb.getString("carRoadLong"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// check to see if car with road and number already exists
+		Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+		if (car != null){
+			if (c == null || !car.getId().equals(c.getId())){
+				JOptionPane.showMessageDialog(this,
+						rb.getString("carRoadExists"), rb.getString("carCanNotUpdate"),
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		// check car's weight has proper format
+		try{
+			Double.parseDouble(weightTextField.getText());
+		}catch (Exception e){
+			JOptionPane.showMessageDialog(this,
+					rb.getString("carWeightFormat"),
+					rb.getString("carActualWeight"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// check car's weight in tons has proper format
+		try{
+			Integer.parseInt(weightTonsTextField.getText());
+		}catch (Exception e){
+			JOptionPane.showMessageDialog(this,
+					rb.getString("carWeightFormatTon"),
+					rb.getString("carWeightTon"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 
 	private void calculateWeight() {
