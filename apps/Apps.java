@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.72 $
+ * @version     $Revision: 1.73 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -173,8 +173,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     protected void fileMenu(JMenuBar menuBar, JFrame frame) {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print decoder definitions...", frame, false));
-        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print Preview decoder definitions...", frame, true));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), frame, false));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), frame, true));
 
         // On a Mac, MRJAdapter already takes care of Quit
         if (!onMac) {
