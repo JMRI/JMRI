@@ -22,7 +22,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class HelpUtil {
@@ -38,6 +38,8 @@ public class HelpUtil {
         return helpMenu;
     }
     
+    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
+    
     static public JMenu makeHelpMenu(final JFrame frame, String ref, boolean direct) {
         if (!initOK()) return null;  // initialization failed
         JMenu helpMenu = new JMenu("Help");
@@ -49,7 +51,7 @@ public class HelpUtil {
         helpMenu.add(item);
         
         if (direct) {
-            item = new JMenuItem("General Help ...");
+            item = new JMenuItem(rb.getString("MenuItemWindowHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
         }
@@ -59,7 +61,7 @@ public class HelpUtil {
     static public JMenuItem makeHelpMenuItem(String ref) {
         if (!initOK()) return null;  // initialization failed
         
-        JMenuItem menuItem = new JMenuItem("Window Help..");
+        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemWindowHelp"));
         globalHelpBroker.enableHelpOnButton(menuItem, ref, null);
 
         // start help to see what happend

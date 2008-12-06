@@ -15,7 +15,7 @@ import javax.swing.event.MenuEvent;
  * and allows to bring one in front
  * <P>
  * @author	Giorgio Terdina   Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * 18-Nov-2008 GT Replaced blank menu lines, due to untitled windows, with "Untitled" string
  */
 
@@ -24,8 +24,10 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 	private JFrame parentFrame;	// Keep note of the window containing the menu
 	private List framesList;	// Keep the list of windows, in order to find out which window was selected
 
+    java.util.ResourceBundle rb;
+    
     public WindowMenu(JFrame frame) {
-        super("Window");
+        super(java.util.ResourceBundle.getBundle("apps.AppsBundle").getString("MenuWindow"));
 		parentFrame = frame;
 		addMenuListener(this);
 		// make sure selected at least once
@@ -37,7 +39,9 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 		String windowName;
 		framesList = JmriJFrame.getFrameList();
 		removeAll();
-        add(new AbstractAction("Minimize"){
+		if (rb == null) rb=java.util.ResourceBundle.getBundle("apps.AppsBundle");
+		
+        add(new AbstractAction(rb.getString("MenuItemMinimize")){
             public void actionPerformed(ActionEvent e) {
                 // the next line works on Java 2, but not 1.1.8
 				parentFrame.setState(Frame.ICONIFIED);
