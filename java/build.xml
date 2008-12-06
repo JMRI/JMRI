@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.31 $ -->
+<!-- Revision $Revision: 1.32 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -229,8 +229,8 @@
  </target>
 
   <!-- Force false language/country to check I8N -->
-  <target name="locale" depends="debug" description="check DecoderPro I8N">
-    <java classname="apps.DecoderPro.DecoderPro"
+  <target name="locale" depends="debug" description="check JmriDemo I8N">
+    <java classname="apps.JmriDemo.JMRIdemo"
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
