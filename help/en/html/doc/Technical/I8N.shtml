@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.7 2008-12-02 00:26:15 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.8 2008-12-06 19:09:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -353,6 +353,26 @@ a message, or may need to break it before or after a particular
 value is inserted.  It's therefore better to use "\n" within a
 single message from the properties file to create line breaks, rather
 than providing multiple lines in the code itself.
+
+<a id="testing">
+<h3>Testing</h3>
+
+You should check that you've properly internationalized 
+your code.  We provide a tool for doing this which creates
+and automatically translated version of your properties files,
+following the ideas of Harry Robinson and Arne Thormodsen.
+(Their
+<a href="http://www.geocities.com/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!)
+To use it:
+<ul>
+<li>Make sure your code compiles and builds OK.  We'll be modifying the compiled version.
+<li>Run the "translate.sh" script in your java/ build directory.  This creates new, temporary
+properties files in the classes/ directory tree.
+<li>Run the program via "ant locale", which starts the JmriDemo program
+using the new properties files.  
+</ul>
+If all is well, all the message text will have been translated to upper case.
+Anything you wrote that remains in lower case has not been completely internationalized.
 
 <!--#include virtual="/Footer" -->
 
