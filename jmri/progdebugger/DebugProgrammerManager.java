@@ -16,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -52,7 +52,6 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOopsModeProgrammer(Programmer p) {}
 
     /**
      * Debug programmer does provide Ops Mode

@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 
@@ -35,7 +35,6 @@ public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOopsModeProgrammer(Programmer p) {}
 }
 
 

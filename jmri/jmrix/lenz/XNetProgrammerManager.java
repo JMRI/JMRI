@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.1 $
+ * @version	$Revision: 2.2 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 
@@ -39,7 +39,6 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOopsModeProgrammer(Programmer p) {}
 }
 
 /* @(#)DefaultProgrammerManager.java */

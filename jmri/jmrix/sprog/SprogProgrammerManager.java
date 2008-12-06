@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SprogProgrammerManager  extends DefaultProgrammerManager {
 
@@ -54,7 +54,6 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOopsModeProgrammer(Programmer p) {}
 }
 
 
