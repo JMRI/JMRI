@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.17 2008-12-05 16:29:47 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.18 2008-12-07 03:44:50 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -48,14 +48,17 @@ the panel along with the train from location to location.
 
 In the top level menu for JMRI find the "Tools->Operations" menu. There
 are six items in this menu. We recommend that you start with "Settings"
-and work your way down to "Trains". 
+and work your way down to "Trains". We also recommend that when defining
+your locations that you first use yard and siding tracks, and try
+staging and interchange tracks when you're more comfortable with how the
+program operates.
 
 <H3>British Railways</H3>
 
 The program supports an alternate set of railway terminology for our
 British modelers. To use British terminologies, go to the JMRI Advanced
 Preferences (Edit->Preferences.. select the Show Advanced Preferences
-checkbox) and select English(United Kingdom) in the Locale: in the menu
+checkbox) and select English (United Kingdom) in the Locale: in the menu
 box. 
 
 <A NAME="Settings"></A>
@@ -303,13 +306,20 @@ off cars at an interchange track.</P>
 <H3>Staging Tracks</H3>
 
 A staging track allows you to have all cars and engines in a train
-delivered to one track. When departing a location with a staging track,
-all cars and engines on one track will be assigned to the train. A
-location can have multiple staging tracks, but can't have any other
-types of tracks, sidings, yards, etc. Note if you are running a train to
-and from the same staging track, you must define two staging tracks for
-the program, one to depart on and one to return on. Physically the two
-staging tracks can be the same one.
+delivered to one track. When terminating a train into staging, the
+program will search for a completely empty track, one with no engines or
+cars. Trains can not share staging tracks; the program will only place
+one train per track. When departing a location with a staging track, all
+cars and engines on one track will be assigned to the train. A location
+can have multiple staging tracks, but can't have any other types of
+tracks, sidings, yards, etc.  Staging tracks can be at the start of a
+route, the end of the route, or both.  Staging tracks in the middle of a
+route are ignored by the program. 
+
+<p>Note if you are running a train to and from the same staging
+track, you must define two staging tracks for the program, one to depart
+on and one to return on. Physically the two staging tracks can be the
+same one.</p>
 
 <P>If you require a train leaving staging to have a certain number
 of engines, engine model, or road name; the program will search all
@@ -506,12 +516,12 @@ force a car to a specific location using a specified train.
 <H2>Engines</H2>
 
 The engines panel allows you to edit your engine roster. You can enter
-an engine's number, road, model, length. You can optionally add the
-engine's build date and owner. If you want a group of engines to be
-assigned as a unit, you can create a "consist". All engines are assigned
-the rolling stock type "Engine". This will allow you to control where
-engines are picked up and or stored at the various locations on your
-layout.
+an engine's number, road, model, type, and length. You can optionally
+add the engine's build date and owner. If you want a group of engines to
+be assigned as a unit, you can create a "consist". The engine type is
+used by the program to determine where engines are picked up and or
+stored at the various locations on your layout.  Some of default engine
+types are electric, diesel, gas turbine, and steam.
 
 <H3>Import Engines</H3>
 
@@ -574,7 +584,7 @@ at the bottom of the "Engines" panel. Then select the road for the
 engine. If the desired road doesn't exist, press the "Edit" button
 across from the road select menu box. This will allow you to add a new
 road or delete any that you don't need. Now enter the engine's number,
-model, length and horsepower. The engine's horsepower, the train's
+model, type, length and horsepower. The engine's horsepower, the train's
 weight, and track grade is used by the program to calculate how many
 engines are required when using the "Auto" feature when building trains.
 
