@@ -34,7 +34,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -460,18 +460,18 @@ public class OperationsTrainsTest extends TestCase {
                 // Place Engines on Staging tracks
                 Assert.assertEquals("Location 1s1 Init Used Length", 0, l1s1.getUsedLength());
                 Assert.assertEquals("Location 1 Init Used Length", 0, l1s1.getUsedLength());
-                Assert.assertEquals("Place e1", "Okay", e1.setLocation(l1, l1s1));
+                Assert.assertEquals("Place e1", e1.OKAY, e1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e1 Used Length", 63, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e1 Used Length", 63, l1.getUsedLength());
-                Assert.assertEquals("Place e2", "Okay", e2.setLocation(l1, l1s1));
+                Assert.assertEquals("Place e2", e2.OKAY, e2.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e2 Used Length", 126, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e2 Used Length", 126, l1.getUsedLength());
 
                 Assert.assertEquals("Location 1s2 Init Used Length", 0, l1s2.getUsedLength());
-                Assert.assertEquals("Place e3", "Okay", e3.setLocation(l1, l1s2));
+                Assert.assertEquals("Place e3", e3.OKAY, e3.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e3 Used Length", 70, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e3 Used Length", 196, l1.getUsedLength());
-                Assert.assertEquals("Place e4", "Okay", e4.setLocation(l1, l1s2));
+                Assert.assertEquals("Place e4", e4.OKAY, e4.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e4 Used Length", 140, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e4 Used Length", 266, l1.getUsedLength());
 
@@ -479,26 +479,26 @@ public class OperationsTrainsTest extends TestCase {
                 Assert.assertTrue("l1 Accepts Boxcar", l1.acceptsTypeName("Boxcar"));
                 Assert.assertTrue("l1s1 Accepts Boxcar", l1s1.acceptsTypeName("Boxcar"));
 
-                Assert.assertEquals("Place c3", "Okay", c3.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c3", c3.OKAY, c3.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c3 Used Length", 170, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c3 Used Length", 310, l1.getUsedLength());
-                Assert.assertEquals("Place c4", "Okay", c4.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c4", c4.OKAY, c4.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c4 Used Length", 214, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c4 Used Length", 354, l1.getUsedLength());
 
-                Assert.assertEquals("Place c5", "Okay", c5.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c5", c5.OKAY, c5.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c5 Used Length", 184, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c5 Used Length", 398, l1.getUsedLength());
-                Assert.assertEquals("Place c6", "Okay", c6.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c6", c6.OKAY, c6.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c6 Used Length", 228, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c6 Used Length", 442, l1.getUsedLength());
 
                 // Place Cabooses on Staging tracks
-                Assert.assertEquals("Place c1", "Okay", c1.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c1", c1.OKAY, c1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c1 Used Length", 250, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c1 Used Length", 478, l1.getUsedLength());
 
-                Assert.assertEquals("Place c2", "Okay", c2.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c2", c2.OKAY, c2.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c2 Used Length", 264, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c2 Used Length", 514, l1.getUsedLength());
 
