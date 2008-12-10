@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -188,6 +188,7 @@ public class LayoutEditor extends JmriJFrame {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
+    private JCheckBoxMenuItem scrollOff = null;
 	private JCheckBoxMenuItem snapToGridOnAddItem = null;
 	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
 	private JCheckBoxMenuItem antialiasingOnItem = null;
@@ -278,6 +279,8 @@ public class LayoutEditor extends JmriJFrame {
     private boolean savedControlLayout = true;
     private boolean savedAnimatingLayout = true;
 	private boolean savedShowHelpBar = false;
+	private boolean savedSliders = false;
+	private JScrollPane js;
 	// Antialiasing rendering
 	private static final RenderingHints antialiasing = new RenderingHints(
 			RenderingHints.KEY_ANTIALIASING,
@@ -533,7 +536,8 @@ public class LayoutEditor extends JmriJFrame {
                 }
             });
 
-        JScrollPane js = new JScrollPane(targetPanel);
+//        JScrollPane js = new JScrollPane(targetPanel); //RDP
+        js = new JScrollPane(targetPanel);
         js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
         js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
 		vertScroll = js.getVerticalScrollBar();
@@ -801,7 +805,20 @@ public class LayoutEditor extends JmriJFrame {
                 }
             });                    
         snapToGridOnMoveItem.setSelected(snapToGridOnMove);
-		// antialiasing
+
+		// Show/Hide Scroll Bars
+		scrollOff = new JCheckBoxMenuItem(rb.getString("ScrollBarsOff"));
+        optionMenu.add(scrollOff);
+        scrollOff.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                	savedSliders = !scrollOff.isSelected();
+                	setScroll(savedSliders);
+					repaint();
+                }
+            });                    
+        scrollOff.setSelected(savedSliders);
+       
+        // antialiasing
 		antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
         antialiasingOnItem.addActionListener(new ActionListener() {
@@ -1934,13 +1951,18 @@ public class LayoutEditor extends JmriJFrame {
 	}
     
     public void setEditMode(boolean visible) {
+    	boolean restoreScroll = savedSliders;
         editMode = visible;
         topEditBar.setVisible(visible);
         setAllEditable(visible);
-		if (visible)
-			helpBar.setVisible(showHelpBar);
-		else
-			helpBar.setVisible(false);
+        if (visible) {
+        	setScroll(true);
+        	savedSliders = restoreScroll;
+        	helpBar.setVisible(showHelpBar);
+        } else {
+        	setScroll(savedSliders);
+        	helpBar.setVisible(false);
+        }
         repaint();
     }
 	
@@ -3033,6 +3055,9 @@ public class LayoutEditor extends JmriJFrame {
 				selectionHeight = yLoc - selectionY;
 				repaint();
 			}
+		} else {
+			Rectangle r = new Rectangle(event.getX(), event.getY(), 1, 1);
+			(       (JComponent) event.getSource()).scrollRectToVisible(r);
         }
     }
 
@@ -4255,6 +4280,19 @@ public class LayoutEditor extends JmriJFrame {
 		editModeItem.setSelected(editMode);
 		setEditMode(editMode);
 	}
+	public void setScroll(boolean state) {
+		if (state) {
+			js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
+			js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
+		} else {
+			if (!editMode) {
+				js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_NEVER);
+				js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_NEVER);
+			}
+		}
+		savedSliders = state;
+		scrollOff.setSelected(!savedSliders);
+	}
     public boolean isPositionable() {
         return positionable;
     }
@@ -4270,6 +4308,7 @@ public class LayoutEditor extends JmriJFrame {
 	public int getWindowHeight() {return windowHeight;}
 	public int getUpperLeftX() {return upperLeftX;}
 	public int getUpperLeftY() {return upperLeftY;}
+	public boolean getScroll() {return savedSliders;}
 	public int getMainlineTrackWidth() {
 		int wid = (int)mainlineTrackWidth;
 		return wid;
