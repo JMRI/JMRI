@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -179,10 +179,10 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
    /**
-     * Sort by car road name
-     * @return list of car ids ordered by road name
+     * Sort by car id
+     * @return list of car ids ordered by id
      */
-    public List getCarsByRoadNameList() {
+    public List getCarsByIdNameList() {
         String[] arr = new String[_carHashTable.size()];
         List out = new ArrayList();
         Enumeration en = _carHashTable.keys();
@@ -194,6 +194,39 @@ public class CarManager implements java.beans.PropertyChangeListener {
         jmri.util.StringUtil.sort(arr);
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
+    }
+    
+    /**
+     * Sort by car road name
+     * @return list of car ids ordered by road name
+     */
+    public List getCarsByRoadNameList() {
+      	// first get by id list
+    	List sortById = getCarsByIdNameList();
+    	// now re-sort
+    	List out = new ArrayList();
+    	String carRoad = "";
+    	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		carAdded = false;
+    		c = getCarById ((String)sortById.get(i));
+    		carRoad = c.getRoad();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById ((String)out.get(j));
+    			String outCarRoad = c.getRoad();
+    			if (carRoad.compareToIgnoreCase(outCarRoad)<0){
+    				out.add(j, sortById.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
     }
     
     /**

@@ -16,6 +16,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -155,6 +156,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		editLengthButton.setVisible(true);
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
+		builtTextField.setToolTipText(rb.getString("buildDateTip"));
 		editOwnerButton.setText(rb.getString("Edit"));
 		editOwnerButton.setVisible(true);
 		deleteButton.setText(rb.getString("Delete"));
@@ -282,7 +284,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		_engine = engine;
 
 		if (!CarRoads.instance().containsName(engine.getRoad())){
-			String msg = java.text.MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{engine.getRoad()});
+			String msg = MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{engine.getRoad()});
 			if (JOptionPane.showConfirmDialog(this,
 					msg, rb.getString("engineAddRoad"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -294,7 +296,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		roadNumberTextField.setText(engine.getNumber());
 
 		if (!engineModels.containsName(engine.getModel())){
-			String msg = java.text.MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engine.getModel()});
+			String msg = MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engine.getModel()});
 			if (JOptionPane.showConfirmDialog(this,
 					msg, rb.getString("engineAddModel"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -304,7 +306,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		modelComboBox.setSelectedItem(engine.getModel());
 		
 		if (!engineTypes.containsName(engine.getType())){
-			String msg = java.text.MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{engine.getType()});
+			String msg = MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{engine.getType()});
 			if (JOptionPane.showConfirmDialog(this,
 					msg, rb.getString("engineAddType"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -314,7 +316,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		typeComboBox.setSelectedItem(engine.getType());
 
 		if (!engineLengths.containsName(engine.getLength())){
-			String msg = java.text.MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{engine.getLength()});
+			String msg = MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{engine.getLength()});
 			if (JOptionPane.showConfirmDialog(this,
 					msg, rb.getString("engineAddLength"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -336,7 +338,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		builtTextField.setText(engine.getBuilt());
 
 		if (!CarOwners.instance().containsName(engine.getOwner())){
-			String msg = java.text.MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{engine.getOwner()});
+			String msg = MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{engine.getOwner()});
 			if (JOptionPane.showConfirmDialog(this,
 					msg, rb.getString("addOwner"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -388,7 +390,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			String roadNum = roadNumberTextField.getText();
 			if (roadNum.length() > 10){
 				JOptionPane.showMessageDialog(this,rb.getString("engineRoadNum"),
-						"Engine road number too long!",
+						rb.getString("engineRoadLong"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -397,7 +399,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			if (engine != null){
 				if (_engine == null || !engine.getId().equals(_engine.getId())){
 					JOptionPane.showMessageDialog(this,
-							"Engine with road name and number already exists", "Can not save engine!",
+							rb.getString("engineExists"), rb.getString("engineCanNotUpdate"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -443,8 +445,8 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == addButton){
 			String roadNum = roadNumberTextField.getText();
 			if (roadNum.length() > 10){
-				JOptionPane.showMessageDialog(this,rb.getString("engineRoadNum"),
-						"Engine road number too long!",
+				JOptionPane.showMessageDialog(this, rb.getString("engineRoadNum"),
+						rb.getString("engineRoadLong"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -452,7 +454,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			if (e != null){
 				log.info("Can not add, engine already exists");
 				JOptionPane.showMessageDialog(this,
-						"Engine with road name and number already exists", "Can not add engine!",
+						rb.getString("engineExists"), rb.getString("engineCanNotUpdate"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -497,7 +499,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 					_engine.setHp(hpTextField.getText());
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(this,
-							"Engine horsepower must be a number", "Can not save engine horsepower!",
+							rb.getString("engineHorsepower"), rb.getString("engineCanNotHp"),
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -509,8 +511,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 							|| trackLocationBox.getSelectedItem()
 							.equals("")) {
 						JOptionPane.showMessageDialog(this,
-								"Must fully select a engine's location",
-								"Can not update engine location",
+								rb.getString("engineFullySelect"), rb.getString("engineCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 
 					} else {
@@ -519,8 +520,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 						if (!status.equals(Engine.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
 							JOptionPane.showMessageDialog(this,
-									"Can't set engine's location because of location's "+ status,
-									"Can not update engine location",
+									rb.getString("engineCanNotLocMsg")+ status, rb.getString("engineCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}

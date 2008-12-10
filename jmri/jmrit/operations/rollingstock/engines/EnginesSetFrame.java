@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,7 +33,7 @@ import java.util.ResourceBundle;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -219,8 +220,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (trackLocationBox.getSelectedItem() == null
 						|| trackLocationBox.getSelectedItem().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Must fully select a engine's location",
-							"Can not update engine location",
+							rb.getString("engineFullySelect"), rb.getString("engineCanNotLoc"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -229,8 +229,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (!status.equals(Engine.OKAY)){
 					log.debug ("Can't set engine's location because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							"Can't set engine's location because of location's "+ status,
-							"Can not update engine location",
+							rb.getString("engineCanNotLocMsg")+ status, rb.getString("engineCanNotLoc"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -241,8 +240,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (trackDestinationBox.getSelectedItem() == null
 						|| trackDestinationBox.getSelectedItem().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Must fully select a engine's destination",
-							"Can not update engine destination",
+							rb.getString("engineFullyDest"), rb.getString("engineCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -251,8 +249,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (!status.equals(Engine.OKAY)){
 					log.debug ("Can't set engine's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							"Can't set engine's destination because of destination's "+ status,
-							"Can not update engine destination",
+							rb.getString("engineCanNotDestMsg")+ status, rb.getString("engineCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -275,15 +272,15 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				}
 				if (rl == null){
 					JOptionPane.showMessageDialog(this,
-							"Engine's location ("+_engine.getLocationName()+") not serviced by train "+ train.getName(),
-							"Engine will not move!",
+							MessageFormat.format(rb.getString("engineLocNotServ"), new Object[]{_engine.getLocationName(), train.getName()}),
+							rb.getString("engineNotMove"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				if (rd == null && !_engine.getDestinationName().equals("")){
 					JOptionPane.showMessageDialog(this,
-							"Engine's destination ("+_engine.getDestinationName()+") not serviced by train "+ train.getName(),
-							"Engine will not move!",
+							MessageFormat.format(rb.getString("engineDestNotServ"), new Object[]{_engine.getDestinationName(), train.getName()}),
+							rb.getString("engineNotMove"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				} 
@@ -304,10 +301,10 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 						}
 						
 					}
-					if (!foundDes){
-						JOptionPane.showMessageDialog(this,
-								"Engine's destination ("+_engine.getDestinationName()+") is before location ("+_engine.getLocationName()+") when serviced by train "+ train.getName(),
-								"Engine will not move!",
+					if (!foundDes) {
+						JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineLocOrder"),
+										new Object[] {_engine.getDestinationName(),	_engine.getLocationName(),
+										train.getName() }), rb.getString("engineNotMove"),
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -316,8 +313,8 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 			// is this engine part of a consist?
 			if (_engine.getConsist() != null){
 				if (JOptionPane.showConfirmDialog(this,
-						"This engine is part of a consist, do you want the other engines to also have the same settings?",
-						"Engine is part of a consist",
+						rb.getString("engineInConsist"),
+						rb.getString("enginePartConsist"),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					List engines = _engine.getConsist().getEngines();
 					for(int i=0; i<engines.size(); i++){
@@ -332,8 +329,8 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 							if (!status.equals(Engine.OKAY)){
 								log.debug ("Can't set the location for all of the engines in the consist because of "+ status);
 								JOptionPane.showMessageDialog(this,
-										"Can't set the location for all of the engines in the consist because of "+ status,
-										"Can not update engine location",
+										rb.getString("engineCanNotLocMsg")+ status,
+										rb.getString("engineCanNotLoc"),
 										JOptionPane.ERROR_MESSAGE);
 								return;
 							}
@@ -346,8 +343,8 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 							if (!status.equals(Engine.OKAY)){
 								log.debug ("Can't set the destination for all of the engines in the consist because of "+ status);
 								JOptionPane.showMessageDialog(this,
-										"Can't set the destination for all of the engines in the consist because of "+ status,
-										"Can not update engine destination",
+										rb.getString("engineCanNotDestMsg")+ status,
+										rb.getString("engineCanNotDest"),
 										JOptionPane.ERROR_MESSAGE);
 								return;
 							}

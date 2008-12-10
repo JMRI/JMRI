@@ -16,12 +16,12 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineTypes implements java.beans.PropertyChangeListener {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
-	private static final String TYPES = rb.getString("engineTypeNames"); 
+	private static final String TYPES = rb.getString("engineDefaultTypes"); 
 	
 	// for property change
 	public static final String ENGINETYPES_CHANGED_PROPERTY = "EngineTypes";

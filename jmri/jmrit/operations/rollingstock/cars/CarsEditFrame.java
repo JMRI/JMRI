@@ -17,13 +17,14 @@ import javax.swing.*;
 
 import java.io.*;
 import java.util.ResourceBundle;
+import java.text.MessageFormat;
 
 
 /**
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -162,7 +163,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		fillWeightButton.setVisible(true);
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
-		builtTextField.setToolTipText(rb.getString("buildDate"));
+		builtTextField.setToolTipText(rb.getString("buildDateTip"));
 		editOwnerButton.setText(rb.getString("Edit"));
 		editOwnerButton.setVisible(true);
 		deleteButton.setText(rb.getString("Delete"));
@@ -293,7 +294,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		else
 			setSize(getWidth()+50, getHeight()+20);
 		setLocation(500, 300);
-// 		setAlwaysOnTop(true);	// this blows up in Java 1.4
 		setVisible(true);	
 	}
 
@@ -301,9 +301,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		_car = car;
 
 		if (!CarRoads.instance().containsName(car.getRoad())){
-			String msg = java.text.MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{car.getRoad()});
 			if (JOptionPane.showConfirmDialog(this,
-					msg, rb.getString("carAddRoad"),
+					MessageFormat.format(rb.getString("roadNameNotExist"),new Object[]{car.getRoad()}),
+					rb.getString("carAddRoad"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarRoads.instance().addName(car.getRoad());
 			}
@@ -313,9 +313,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		roadNumberTextField.setText(car.getNumber());
 
 		if (!CarTypes.instance().containsName(car.getType())){
-			String msg = java.text.MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{car.getType()});
 			if (JOptionPane.showConfirmDialog(this,
-					msg, rb.getString("carAddType"),
+					MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{car.getType()}),
+					rb.getString("carAddType"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarTypes.instance().addName(car.getType());
 			}
@@ -323,9 +323,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		typeComboBox.setSelectedItem(car.getType());
 
 		if (!CarLengths.instance().containsName(car.getLength())){
-			String msg = java.text.MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{car.getLength()});
 			if (JOptionPane.showConfirmDialog(this,
-					msg, rb.getString("carAddLength"),
+					MessageFormat.format(rb.getString("lengthNameNotExist"),new Object[]{car.getLength()}),
+					rb.getString("carAddLength"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarLengths.instance().addName(car.getLength());
 			}
@@ -333,9 +333,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		lengthComboBox.setSelectedItem(car.getLength());
 
 		if (!CarColors.instance().containsName(car.getColor())){
-			String msg = java.text.MessageFormat.format(rb.getString("colorNameNotExist"),new Object[]{car.getColor()});
 			if (JOptionPane.showConfirmDialog(this,
-					msg, rb.getString("carAddColor"),
+					MessageFormat.format(rb.getString("colorNameNotExist"),new Object[]{car.getColor()}),
+					rb.getString("carAddColor"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarColors.instance().addName(car.getColor());
 			}
@@ -359,9 +359,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		builtTextField.setText(car.getBuilt());
 
 		if (!CarOwners.instance().containsName(car.getOwner())){
-			String msg = java.text.MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{car.getOwner()});
 			if (JOptionPane.showConfirmDialog(this,
-					msg, rb.getString("addOwner"),
+					MessageFormat.format(rb.getString("ownerNameNotExist"),new Object[]{car.getOwner()}),
+					rb.getString("addOwner"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				CarOwners.instance().addName(car.getOwner());
 			}
@@ -439,7 +439,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				// save car file
 				managerXml.writeOperationsCarFile();
 			} else {
-				Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+				Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
+						roadNumberTextField.getText());
 				if (car != null){
 					manager.deregister(car);
 					// save car file
@@ -473,7 +474,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			return false;
 		}
 		// check to see if car with road and number already exists
-		Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+		Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
+				roadNumberTextField.getText());
 		if (car != null){
 			if (c == null || !car.getId().equals(c.getId())){
 				JOptionPane.showMessageDialog(this,
@@ -487,8 +489,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			Double.parseDouble(weightTextField.getText());
 		}catch (Exception e){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("carWeightFormat"),
-					rb.getString("carActualWeight"),
+					rb.getString("carWeightFormat"), rb.getString("carActualWeight"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -497,8 +498,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			Integer.parseInt(weightTonsTextField.getText());
 		}catch (Exception e){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("carWeightFormatTon"),
-					rb.getString("carWeightTon"),
+					rb.getString("carWeightFormatTon"), rb.getString("carWeightTon"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -518,8 +518,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				weightTonsTextField.setText(Integer.toString((int)(carWeight*Setup.getScaleTonRatio())));
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this,
-						"Car length must be a number in feet",
-						"Can not calculate car weight!",
+						rb.getString("carLengthMustBe"), rb.getString("carWeigthCanNot"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -562,8 +561,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 							|| trackLocationBox.getSelectedItem()
 							.equals("")) {
 						JOptionPane.showMessageDialog(this,
-								"Must fully select a car's location",
-								"Can not update car location",
+								rb.getString("carFullySelect"), rb.getString("carCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 
 					} else {
@@ -572,8 +570,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 						if (!status.equals(Car.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
 							JOptionPane.showMessageDialog(this,
-									"Can't set car's location because of location's "+ status,
-									"Can not update car location",
+									rb.getString("carCanNotLocMsg")+ status,
+									rb.getString("carCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}

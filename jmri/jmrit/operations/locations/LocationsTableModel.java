@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -158,7 +158,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return Integer.toString(l.getNumberRS());
         case PICKUPS: return Integer.toString(l.getPickupRS());
         case DROPS: return Integer.toString(l.getDropRS());
-        case EDITCOLUMN: return "Edit";
+        case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
     }
@@ -186,7 +186,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		lef.dispose();
     	lef = new LocationsEditFrame();
     	Location loc = manager.getLocationById((String)sysList.get(row));
-     	lef.setTitle("Edit Location");
+     	lef.setTitle(rb.getString("TitleLocationEdit"));
     	lef.initComponents(loc);
    }
 

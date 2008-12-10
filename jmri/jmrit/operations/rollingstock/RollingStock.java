@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -18,10 +19,12 @@ import org.jdom.Element;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+	
 	protected String _id = "";
 	protected String _number = "";
 	protected String _road = "";
@@ -44,15 +47,15 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected RouteLocation _routeDestination = null;
 	protected int _moves = 0;
 	
-	public static final String OKAY = "Okay";			// return status when placing rolling stock at a location
-	public static final String LENGTH = "length";
-	public static final String TYPE = "type";
-	public static final String ROAD = "road";
+	public static final String OKAY = rb.getString("okay");			// return status when placing rolling stock at a location
+	public static final String LENGTH = rb.getString("length");
+	public static final String TYPE = rb.getString("type");
+	public static final String ROAD = rb.getString("road");
 	
-	public static final String LOCATION = "rolling stock location";  		// property change descriptions
-	public static final String TRACK = "rolling stock track location";
-	public static final String DESTINATION = "rolling stock destination";
-	public static final String DESTINATIONTRACK = "rolling stock track destination";
+	public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location";  		// property change descriptions
+	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location";
+	public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination";
+	public static final String DESTINATIONTRACK_CHANGED_PROPERTY = "rolling stock track destination";
 	
 	public static final int COUPLER = 4;		// draw bar length between rolling stocks
 
@@ -288,8 +291,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 					_trackLocation.addPickupRS();
 				}
 			} 
-			firePropertyChange(LOCATION, oldLocation, location);
-			firePropertyChange(TRACK, oldTrack, track);
+			firePropertyChange(LOCATION_CHANGED_PROPERTY, oldLocation, location);
+			firePropertyChange(TRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
 		return OKAY;
 	}
@@ -350,8 +353,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				setRouteLocation(null);
 				setRouteDestination(null);
 			}
-			firePropertyChange(DESTINATION, oldDestination, destination);
-			firePropertyChange(DESTINATIONTRACK, oldTrack, track);
+			firePropertyChange(DESTINATION_CHANGED_PROPERTY, oldDestination, destination);
+			firePropertyChange(DESTINATIONTRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
 		return status;
 	}

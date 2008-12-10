@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -116,7 +117,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String addItem = addTextBox.getText();
 			if (addItem.length() > 12){
 				JOptionPane.showMessageDialog(this,rb.getString("newCarText"),
-						"Can not add " + _comboboxName,
+						rb.getString("canNotAdd") + _comboboxName,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -130,14 +131,14 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String newItem = addTextBox.getText();
 			if (newItem.length() > 12){
 				JOptionPane.showMessageDialog(this,rb.getString("newCarText"),
-						"Can not add " + _comboboxName,
+						rb.getString("canNotAdd") + _comboboxName,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldItem = (String) comboBox.getSelectedItem();
 			if (JOptionPane.showConfirmDialog(this,
-							"Replace \"" + oldItem + "\" with \"" + newItem + "\"",
-							"Replace All?", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+						MessageFormat.format(rb.getString("replaceMsg"),new Object[]{oldItem, newItem}),
+						rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			
@@ -198,6 +199,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 				int carLength = Integer.parseInt(addItem);
 				if (carLength > 9999){
 					log.error("car length must be less than 10,000 feet");
+					JOptionPane.showMessageDialog(this,rb.getString("carAttribute5"),
+							rb.getString("canNotAdd") + _comboboxName,
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			} catch (NumberFormatException e){

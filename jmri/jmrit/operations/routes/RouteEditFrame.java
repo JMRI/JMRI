@@ -20,6 +20,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,7 +30,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -219,7 +220,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 				saveNewRoute();
 			} else {
 				if (route != null && route != _route){
-					reportRouteExists("save");
+					reportRouteExists(rb.getString("save"));
 					return;
 				}
 				saveRoute();
@@ -241,7 +242,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addRouteButton){
 			Route route = manager.getRouteByName(routeNameTextField.getText());
 			if (route != null){
-				reportRouteExists("add");
+				reportRouteExists(rb.getString("add"));
 				return;
 			}
 			saveNewRoute();
@@ -286,10 +287,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(){
+		if (routeNameTextField.getText().trim().equals(""))
+			return false;
 		if (routeNameTextField.getText().length() > 25){
 			log.error("Route name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
-					"Route name must be less than 26 charaters", "Can not add route!",
+					rb.getString("RouteNameLess"), rb.getString("CanNotAddRoute"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -299,7 +302,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	private void reportRouteExists(String s){
 		log.info("Can not " + s + ", route already exists");
 		JOptionPane.showMessageDialog(this,
-				"Route with this name already exists", "Can not " + s + " route!",
+				rb.getString("ReportExists"), MessageFormat.format(rb.getString("CanNotRoute"),new Object[]{s}),
 				JOptionPane.ERROR_MESSAGE);
 	}
 	

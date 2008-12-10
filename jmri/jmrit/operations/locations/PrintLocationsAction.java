@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -53,7 +54,7 @@ public class PrintLocationsAction  extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "Locations", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, rb.getString("TitleLocationsTable"), 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -73,7 +74,7 @@ public class PrintLocationsAction  extends AbstractAction {
 					+ rb.getString("Length") + " " + rb.getString("Used")
 					+ "\t" + rb.getString("RS") 
 					+ "\t" + rb.getString("Cars")
-					+ "\t" + rb.getString("Engines")
+					+ "\t" + rb.getString("Engines").substring(0, 7)
 					+ "\t" + rb.getString("Pickup")
 					+ "\t" + rb.getString("Drop") + newLine;
         	writer.write(s, 0, s.length());
@@ -165,14 +166,23 @@ public class PrintLocationsAction  extends AbstractAction {
         		}
         		writer.write(newLine, 0, newLine.length());
         	}
-        	s = "Total length "+totalLength+", total used "+usedLength+ ", percentage used "+usedLength*100/totalLength+"%"+ newLine;
+        	s = MessageFormat.format(rb.getString("TotalLengthMsg"),
+					new Object[] { Integer.toString(totalLength),
+							Integer.toString(usedLength),
+							Integer.toString(usedLength * 100 / totalLength) })
+					+ newLine;
         	writer.write(s, 0, s.length());
-           	s = "Total rolling stock "+numberRS+", number of cars "+numberCars+", number of engines "+numberEngines + newLine;
-        	writer.write(s, 0, s.length());
+           	s = MessageFormat.format(rb.getString("TotalRollingMsg"),
+					new Object[] { Integer.toString(numberRS),
+							Integer.toString(numberCars),
+							Integer.toString(numberEngines) })
+					+ newLine;
+           	writer.write(s, 0, s.length());
         	// are there trains in route, then some cars and engines not counted!
         	if (numberRS != numberCars+numberEngines){
-        		s = "Note: " + (numberRS-(numberCars+numberEngines)) + " engines and cars are in route and they are not on a siding, yard, interchange" 
-        		+ newLine + "or staging track." + newLine;
+        		s = MessageFormat.format(rb.getString("NoteRSMsg"),
+    					new Object[] { Integer.toString(numberRS-(numberCars+numberEngines)) })
+    					+ newLine;
         		writer.write(s, 0, s.length());
         	}
         	

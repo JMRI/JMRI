@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -94,6 +94,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String ENGINELOCATION_CHANGED_PROPERTY = "EngineLocation";
 	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
 	public static final String STATUS_CHANGED_PROPERTY = "status";
+	public static final String DEPARTURETIME_CHANGED_PROPERTY = "departureTime";
 	
 	private static final String LENGTH = "Length";
 	
@@ -167,7 +168,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void setDepartureTime(String hour, String minute){
 		_departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
 		_departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
-		firePropertyChange("departureTime", null, hour+":"+minute);
+		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, null, hour+":"+minute);
 	}
 	
 	public String getDepartureTimeHour(){
@@ -749,6 +750,7 @@ public class Train implements java.beans.PropertyChangeListener {
 						}
 					}
 					// do not indent if false
+					int start = 0;
 					if (false){
 						// indent lines based on level
 						if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
@@ -764,11 +766,11 @@ public class Train implements java.beans.PropertyChangeListener {
 							inputLine[0] = "";
 						}
 					} else {
-						inputLine[0] = "";
+						start = 1;
 					}
 					// rebuild line
 					line = "";
-					for (int i = 0; i < inputLine.length; i++) {
+					for (int i = start; i < inputLine.length; i++) {
 						line += inputLine[i] + " ";
 					}
 				} else {
@@ -920,35 +922,38 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (pe != null || le != null) {
 			trainIcon.setText(getIconName());
 			trainIcon.setTrain(this);
-			// add throttle if JMRI loco roster entry exsist
-			RosterEntry entry = null;
-			if (entry == null && getLeadEngine() != null){
-				// first try and find a match based on loco road number
-				List entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(), null, null, null, null, null);
-				if (entries.size() > 0){
-					entry = (RosterEntry)entries.get(0);
-				}
-				if (entry == null){
-					// now try finding a match based on DCC address
-					entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
-					if (entries.size() > 0){
-						entry = (RosterEntry)entries.get(0);
-					}
-				}
-			}
-			if (entry != null){
-				trainIcon.setRosterEntry(entry);
-				if(getLeadEngine().getConsist() != null)
-					trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
-			} else{
-				log.debug("Loco roster entry not found for train ("+getName()+")");
-			}
 			if (getIconName().length() > 9) {
 				trainIcon.setFontSize(8.f);
 			}
+			// add throttle if there's a throttle manager
+			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
+				// add throttle if JMRI loco roster entry exsist
+				RosterEntry entry = null;
+				if (getLeadEngine() != null){
+					// first try and find a match based on loco road number
+					List entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(), null, null, null, null, null);
+					if (entries.size() > 0){
+						entry = (RosterEntry)entries.get(0);
+					}
+					if (entry == null){
+						// now try finding a match based on DCC address
+						entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
+						if (entries.size() > 0){
+							entry = (RosterEntry)entries.get(0);
+						}
+					}
+				}
+				if (entry != null){
+					trainIcon.setRosterEntry(entry);
+					if(getLeadEngine().getConsist() != null)
+						trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
+				} else{
+					log.debug("Loco roster entry not found for train ("+getName()+")");
+				}
+			}
 		}
 	}
-	
+
 	private void setTrainIconColor(){
 		// Terminated train?
 		if (getCurrentLocationName().equals("")){
@@ -1123,10 +1128,6 @@ public class Train implements java.beans.PropertyChangeListener {
 //        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
         	setTypeNames(Types);
         }
-        if ((a = e.getAttribute("current")) != null ){
-        	if (_route != null)
-        		_current = _route.getLocationById(a.getValue());
-        }
         if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
         if ((a = e.getAttribute("carRoads")) != null ) {
         	String names = a.getValue();
@@ -1154,6 +1155,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			_leadEngineId = a.getValue();
 		if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute("current")) != null ){
+        	if (_route != null){
+        		_current = _route.getLocationById(a.getValue());
+        		// place train icon on panel
+        		moveTrainIcon(_current);
+        	}
+        }
  
     }
 

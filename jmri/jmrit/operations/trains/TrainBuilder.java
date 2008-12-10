@@ -16,6 +16,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.text.MessageFormat;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -53,7 +54,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -120,34 +121,34 @@ public class TrainBuilder extends TrainCommon{
 			return;
 		}
 		
-		Date now = new Date();
-		addLine(fileOut, ONE, "Build Report for train ("+train.getName()+") built on "+now);
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("BuildReportMsg"),new Object[]{train.getName(), new Date()}));
 		
 		if (train.getRoute() == null){
-			buildFailed(fileOut, "ERROR Can't build train ("+train.getName()+"), needs a route");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorRoute"),new Object[]{train.getName()}));
 			return;
 		}
 		routeList = train.getRoute().getLocationsBySequenceList();
 		if (routeList.size() < 1){
-			buildFailed(fileOut, "ERROR Route needs at least one location to build train ("+train.getName()+")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNeedRoute"),new Object[]{train.getName()}));
 			return;
 		}
 		// train departs
 		departLocation = locationManager.getLocationByName(train.getTrainDepartsName());
 		if (departLocation == null){
-			buildFailed(fileOut, "ERROR Route departure location missing for train ("+train.getName()+")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNeedDepLoc"),new Object[]{train.getName()}));
 			return;
 		}
 		// train terminates
 		terminateLocation = locationManager.getLocationByName(train.getTrainTerminatesName());
 		if (terminateLocation == null){
-			buildFailed(fileOut, "ERROR Route terminate location missing for train ("+train.getName()+")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNeedTermLoc"),new Object[]{train.getName()}));
 			return;
 		}
 		  
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS() && Control.fullTrainOnly){
-			buildFailed(fileOut, "Not enough cars ("+departLocation.getNumberRS()+") at departure ("+train.getTrainDepartsName()+") to build train ("+train.getName()+")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCars"),new Object[]{Integer.toString(departLocation.getNumberRS()),
+				train.getTrainDepartsName(), train.getName()}));
 			return;
 		}
 		// get the number of requested car moves
@@ -157,13 +158,13 @@ public class TrainBuilder extends TrainCommon{
 			// check to see if there's a location for each stop in the route
 			Location l = locationManager.getLocationByName(rl.getName());
 			if (l == null){
-				buildFailed(fileOut, "ERROR location missing in route ("+train.getRoute().getName()+")");
+				buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorLocMissing"),new Object[]{train.getRoute().getName()}));
 				return;
 			}
 			// train doesn't drop or pickup cars from staging locations found in middle of a route
 			List slStage = l.getTracksByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i!=0 && i!=routeList.size()-1){
-				addLine(fileOut, ONE, "Location ("+rl.getName()+") has only staging tracks");
+				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildLocStaging"),new Object[]{rl.getName()}));
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
 			}
 			// if a location is skipped, no drops or pickups
@@ -182,24 +183,24 @@ public class TrainBuilder extends TrainCommon{
 		int carMoves = requested;
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
-		addLine(fileOut, ONE, "Route (" +train.getRoute().getName()+ ") requests " + requested + " cars and " + carMoves +" moves");
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(moves)}));
 		
 		// does train terminate into staging?
 		terminateStageTrack = null;
 		List stagingTracksTerminate = terminateLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracksTerminate.size() > 0){
-			addLine(fileOut, ONE, "Train terminates into Staging at "+terminateLocation.getName()+", there are " +stagingTracksTerminate.size()+ " tracks");
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTerminateStaging"),new Object[]{terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
 			for (int i=0; i<stagingTracksTerminate.size(); i++){
 				terminateStageTrack = terminateLocation.getTrackById((String)stagingTracksTerminate.get(i));
 				if (terminateStageTrack.getNumberRS() == 0 && terminateStageTrack.getDropRS() == 0){
-					addLine(fileOut, ONE, "Track "+terminateStageTrack.getName()+" is available at "+terminateLocation.getName());
+					addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStagingAvail"),new Object[]{terminateStageTrack.getName(), terminateLocation.getName()}));
 					break;
 				} else {
 					terminateStageTrack = null;
 				}
 			}
 			if (terminateStageTrack == null){
-				buildFailed(fileOut, "All staging tracks at " + terminateLocation.getName() + " are full or reserved");
+				buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorStagingFull"),new Object[]{terminateLocation.getName()}));
 				return;
 			}
 		}
@@ -208,13 +209,12 @@ public class TrainBuilder extends TrainCommon{
 		departStageTrack = null;
 		List stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
-			addLine(fileOut, ONE, "Train will depart staging, there are "+stagingTracks.size()+" tracks");
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildDepartStaging"),new Object[]{Integer.toString(stagingTracks.size())}));
 			for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById((String)stagingTracks.get(i));
-				addLine(fileOut, ONE, "Staging track ("
-						+ departStageTrack.getName() + ") has "
-						+ departStageTrack.getNumberEngines() + " engines and "
-						+ departStageTrack.getNumberCars() + " cars");
+				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
+						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
+						Integer.toString(departStageTrack.getNumberCars())}));
 				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut)){
 					break;
 				} else {
@@ -222,14 +222,14 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			if (departStageTrack == null){
-				buildFailed(fileOut, "Could not meet train requirements from staging ("+departLocation.getName()+")");
+				buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorStagingReq"),new Object[]{departLocation.getName()}));
 				return;
 			}
 		}
 
 		// load engines for this train
 		if (departStageTrack == null && !getEngines(fileOut)){
-			buildFailed(fileOut, "Could not get the required engines for this train");
+			buildFailed(fileOut, rb.getString("buildErrorEngines"));
 			return;
 		}
 
@@ -237,7 +237,8 @@ public class TrainBuilder extends TrainCommon{
 		carList = carManager.getCarsAvailableTrainList(train);
 		// TODO: DAB this needs to be controled by each train
 		if (requested > carList.size() && Control.fullTrainOnly){
-			buildFailed(fileOut, "The number of requested cars (" +requested+ ") for train (" +train.getName()+ ") is greater than the number available (" +carList.size()+ ")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNumReq"),new Object[]{Integer.toString(requested),
+				train.getName(), Integer.toString(carList.size())}));
 			return;
 		}
 		// get any requirements for this train
@@ -245,22 +246,22 @@ public class TrainBuilder extends TrainCommon{
 		boolean requiresFred = false;
 		boolean foundFred = true;
 		boolean foundCaboose = true;
-		String textRequires = "none";
+		String textRequires = rb.getString("None");
 		if (train.getRequirements()>0){
 			if ((train.getRequirements()& train.FRED) > 0){
 				requiresFred = true;
 				foundFred = false;
-				textRequires = "FRED";
+				textRequires = rb.getString("FRED");
 			} 
 			if ((train.getRequirements()& train.CABOOSE) > 0){
 				requiresCaboose = true;
 				foundCaboose = false;
-				textRequires = "caboose";
+				textRequires = rb.getString("Caboose");
 			}
 			if (!train.getCabooseRoad().equals("")){
 				textRequires += " road ("+train.getCabooseRoad()+")";
 			}
-			addLine(fileOut, ONE, "Train ("+train.getName()+") requires "+textRequires);
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainRequires"),new Object[]{train.getName(), textRequires}));
 		}
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(train.ALLROADS)){
@@ -280,9 +281,9 @@ public class TrainBuilder extends TrainCommon{
     	addLine(fileOut, FIVE, "Train ("+train.getName()+") services car types: "+typeNames);
     	for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getCarById((String) carList.get(carIndex));
-    		// remove cars that don't have a valid track location
+    		// remove cars that don't have a valid track
     		if (c.getTrack() == null){
-    			addLine(fileOut, ONE, "ERROR Exclude car ("+c.getId()+") at location ("+c.getLocationName()+", "+c.getTrackName()+") no track location");
+    			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildErrorCarNoLoc"),new Object[]{c.getId(), c.getLocationName(), c.getTrackName()}));
 				carList.remove(carList.get(carIndex));
 				carIndex--;
 				continue;
@@ -334,12 +335,12 @@ public class TrainBuilder extends TrainCommon{
     		}
 		}
 
-		addLine(fileOut, ONE, "Found " +carList.size()+ " cars for train (" +train.getName()+ ")");
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCars"),new Object[]{Integer.toString(carList.size()), train.getName()}));
 
 		// adjust carlist to only have cars from one staging track
 		if (departStageTrack != null){
 			// Make sure that all cars in staging are moved
-			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberRS());  // neg number moves more cars
+			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberCars());  // neg number moves more cars
 			int numCarsFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById((String) carList.get(carIndex));
@@ -357,7 +358,8 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// error if all of the cars in staging aren't available
 			if (numCarsFromStaging + numberEngines != departStageTrack.getNumberRS()){
-				buildFailed(fileOut, "ERROR not all cars or engines in staging can be serviced by this train, " +(departStageTrack.getNumberRS()- (numCarsFromStaging + numberEngines))+" cars or engines can't be serviced");
+				buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNotAll"),
+						new Object[]{Integer.toString(departStageTrack.getNumberRS()- (numCarsFromStaging + numberEngines))}));
 				return;
 			}
 		}
@@ -379,13 +381,14 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// does car have a destination that is part of this train's route?
 			if (c.getDestination() != null) {
-				addLine(fileOut, THREE, "Car (" + c.getId()+ ") has a destination (" +c.getDestination().getName()+ ")");
+				addLine(fileOut, THREE, "Car (" + c.getId()+ ") has assigned destination (" +c.getDestination().getName()+ ")");
 				RouteLocation rld = train.getRoute().getLocationByName(c.getDestination().getName());
 				if (rld == null){
 					addLine(fileOut, THREE, "Exclude car (" + c.getId()+ ") destination (" +c.getDestination().getName()+ ") not part of this train's route (" +train.getRoute().getName() +")");
 					// is this car departing staging?
 					if (c.getLocationName().equals(departLocation.getName()) && departStageTrack != null){
-						buildFailed(fileOut, "Car (" + c.getId()+ ") departing staging with destination that isn't part of this train's route");
+						buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarNotPartRoute"),
+								new Object[]{c.getId()}));
 						return;
 					}
 					carList.remove(carList.get(carIndex));		// remove this car from the list
@@ -400,7 +403,7 @@ public class TrainBuilder extends TrainCommon{
 				Car car = carManager.getCarById((String) carList.get(carIndex));
 				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())){
 					if (car.getDestination() == null || car.getDestination() == terminateLocation){
-						addLine(fileOut, ONE, "Found caboose (" +car.getId()+ ") that matches engine road");
+						addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.getId()}));
 						// remove all other cabooses from list
 						for (int i=0; i<carList.size(); i++){
 							Car testCar = carManager.getCarById((String) carList.get(i));
@@ -489,7 +492,8 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
-			buildFailed(fileOut, "Train ("+train.getName()+") requires "+textRequires+", can't meet requirements at departure ("+train.getTrainDepartsName()+") and/or termination ("+train.getTrainTerminatesName()+")");
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorRequirements"),
+					new Object[]{train.getName(), textRequires, train.getTrainDepartsName(), train.getTrainTerminatesName()}));
 			return;
 		}
 		addLine(fileOut, THREE, "Requested cars (" +requested+ ") for train (" +train.getName()+ ") the number available (" +carList.size()+ ") building train!");
@@ -501,7 +505,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int locationIndex=0; locationIndex<numLocs; locationIndex++){
 			RouteLocation rl = train.getRoute().getLocationById((String)routeList.get(locationIndex));
 			if(train.skipsLocation(rl.getId())){
-				addLine(fileOut, ONE, "Location (" +rl.getName()+ ") is skipped by train (" +train.getName()+ ")");
+				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildLocSkipped"),new Object[]{rl.getName(), train.getName()}));
 			}else{
 				moves = 0;
 				success = false;
@@ -521,7 +525,7 @@ public class TrainBuilder extends TrainCommon{
 								continue; // no
 							// does car have a destination?
 							if (c.getDestination() != null) {
-								addLine(fileOut, THREE, "Car (" + c.getId()+ ") at location (" +c.getLocation()+ ") has a destination (" +c.getDestination()+ ")");
+								addLine(fileOut, THREE, "Car (" + c.getId()+ ") at location (" +c.getLocation()+ ") has assigned destination (" +c.getDestination()+ ")");
 								RouteLocation rld = train.getRoute().getLocationByName(c.getDestination().getName());
 								if (rld == null){
 									addLine(fileOut, THREE, "Car (" + c.getId()+ ") destination not part of route (" +train.getRoute().getName() +")");
@@ -529,9 +533,22 @@ public class TrainBuilder extends TrainCommon{
 									if (c.getRouteLocation() != null){ 
 										addLine(fileOut, THREE, "Car (" + c.getId()+ ") already assigned to this train");
 									} 
-									if (rld.getCarMoves() < rld.getMaxCarMoves() && 
-											addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getDestinationTrack())&& success){
-										break;
+									boolean carAdded = false;
+									if (rld.getCarMoves() < rld.getMaxCarMoves()){  
+										carAdded = addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getDestinationTrack());
+										// done with this location?
+										if (carAdded && success)
+											break;	//yes
+									} else {
+										addLine(fileOut, THREE, "No available moves for destination ("+rld.getName()+")");
+									}
+									if (!carAdded)
+										addLine(fileOut, THREE, "Car (" + c.getId()+ ") can not be dropped to track (" + c.getDestinationTrack() + ")");
+									// is this car departing staging?
+									if (!carAdded && c.getLocationName().equals(departLocation.getName()) && departStageTrack != null){
+										buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
+												new Object[]{c.getId()}));
+										return;
 									}
 								}
 							// car does not have a destination, search for one	
@@ -559,7 +576,8 @@ public class TrainBuilder extends TrainCommon{
 											noMoreMoves = false;
 											Location testDestination = locationManager.getLocationByName(rld.getName());
 											if (testDestination == null){
-												buildFailed(fileOut, "Route ("+train.getRoute().getName()+") missing location ("+rld.getName()+")");
+												buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorRouteLoc"),
+														new Object[]{train.getRoute().getName(), rld.getName()}));
 												return;
 											}
 											// is there a track assigned for staging cars?
@@ -638,7 +656,8 @@ public class TrainBuilder extends TrainCommon{
 												}
 											}
 											if(destinationTemp != null){
-												addLine(fileOut, THREE, "Car ("+c.getId()+") can drop to (" +destinationTemp.getName()+ ", " +trackTemp.getName()+ ") with " +rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
+												addLine(fileOut, THREE, "Car ("+c.getId()+") can drop to (" +destinationTemp.getName()+ ", " +trackTemp.getName()+ ") with " 
+														+rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
 												// if there's more than one available destination use the one with the least moves
 												if (rldSave != null){
 													double saveCarMoves = rldSave.getCarMoves();
@@ -676,7 +695,8 @@ public class TrainBuilder extends TrainCommon{
 								} 
 								// car leaving staging without a destinaton?
 								if (c.getTrack().getLocType().equals(Track.STAGING) && (!carAdded  || destinationSave == null)){
-									buildFailed(fileOut, "Could not find a destination for car ("+c.getId()+") at location (" + rld.getName()+")");
+									buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarDest"),
+											new Object[]{c.getId(), c.getLocationName()}));
 									return;
 									// are there still moves available?
 								} 
@@ -692,7 +712,8 @@ public class TrainBuilder extends TrainCommon{
 					// could not find enough cars
 					reqNumOfMoves = 0;
 				}
-				addLine(fileOut, ONE, (success?"Success, ":"Partial, ") +moves+ "/" +saveReqMoves+ " cars at location (" +rl.getName()+ ") assigned to train ("+train.getName()+")");
+				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
+				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
 			}
 		}
 
@@ -723,7 +744,7 @@ public class TrainBuilder extends TrainCommon{
 	// terminating into staging, therefore this routine should only be called once when return is true.
 	private boolean getEngines(PrintWriter fileOut){
 		// show engine requirements for this train
-		addLine(fileOut, ONE, "Train requires "+train.getNumberEngines()+" engine(s) model ("+train.getEngineModel()+") road (" +train.getEngineRoad()+")");
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
 				
 		numberEngines = 0;
 		int reqNumEngines = 0; 	
@@ -810,7 +831,8 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			if (terminateTrack == null && (reqNumEngines>0 || leavingStaging)){
-				addLine(fileOut, ONE, "Could not find valid destination for engine ("+engine.getId()+") at (" +terminateLocation.getName()+ ") for train (" +train.getName()+ ")");
+				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildNoDestEngine"),new Object[]{engine.getId(),
+				terminateLocation.getName(), train.getName()}));
 			}
 			if (terminateTrack != null){
 				if (engine.getConsist() != null){
@@ -820,7 +842,7 @@ public class TrainBuilder extends TrainCommon{
 						for (int j=0; j<cEngines.size(); j++){
 							numberEngines++;
 							Engine cEngine = (Engine)cEngines.get(j);
-							addLine(fileOut, ONE, "Engine ("+cEngine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateTrack.getName()+")");
+							addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{cEngine.getId(), terminateLocation.getName(), terminateTrack.getName()}));
 							cEngine.setTrain(train);
 							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
 							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
@@ -836,7 +858,7 @@ public class TrainBuilder extends TrainCommon{
 					// engine isn't part of a consist
 				} else if (reqNumEngines ==1 || leavingStaging){
 					numberEngines++;
-					addLine(fileOut, ONE, "Engine ("+engine.getId()+") assigned destination ("+terminateLocation.getName()+", "+terminateTrack.getName()+")");
+					addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{engine.getId(), terminateLocation.getName(), terminateTrack.getName()}));
 					engine.setTrain(train);
 					engine.setRouteLocation(train.getTrainDepartsRouteLocation());
 					engine.setRouteDestination(train.getTrainTerminatesRouteLocation());
@@ -847,7 +869,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		if (numberEngines < reqNumEngines){
-			addLine(fileOut, ONE, "Could not get the proper engines at departure location");
+			addLine(fileOut, ONE, rb.getString("buildCouldNotFindEng"));
 			return false;
 		}
 		
@@ -867,7 +889,7 @@ public class TrainBuilder extends TrainCommon{
 	// maximum user specified in setup.
 	// Based on maximum allowable train length and grade between locations,
 	// and the maximum cars that the train can have at the maximum train length.
-	// Currently ignores the cars weight and engine horsepower
+	// TODO Currently ignores the cars weight and engine horsepower
 	private int getAutoEngines(PrintWriter fileOut){
 		double numberEngines = 1;
 		int moves = 0;
@@ -892,7 +914,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		int nE = (int)numberEngines;
-		addLine(fileOut, ONE, "Auto engines calculates that "+nE+ " engines are required for this train");
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildAutoBuildMsg"),new Object[]{Integer.toString(nE)}));
 		if (nE > Setup.getEngineSize()){
 			addLine(fileOut, THREE, "The maximum number of engines that can be assigned is "+Setup.getEngineSize());
 			nE = Setup.getEngineSize();
@@ -1067,17 +1089,17 @@ public class TrainBuilder extends TrainCommon{
 		if(log.isDebugEnabled())
 			log.debug(string);
 		JOptionPane.showMessageDialog(null, string,
-				"Can not build train ("+train.getName()+") " +train.getDescription(),
+				MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
 				JOptionPane.ERROR_MESSAGE);
 		if (file != null){
 			addLine(file, ONE, string);
 			// Write to disk and close file
-			addLine(file, ONE, "Build failed for train ("+train.getName()+")");
+			addLine(file, ONE, MessageFormat.format(rb.getString("buildFailedMsg"),new Object[]{train.getName()}));
 			file.flush();
 			file.close();
 			if(TrainManager.instance().getBuildReport()){
 				File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(train.getName());
-				printBuildReport(buildFile, "Train Build Failure Report "+train.getDescription(), true);
+				printBuildReport(buildFile, MessageFormat.format(rb.getString("buildFailureReport"),new Object[]{train.getDescription()}), true);
 			}
 		}
 	}
@@ -1118,7 +1140,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 		
 		if (engine != null)
-			addLine(fileOut, "Pickup engine(s) at "+engine.getLocationName()+", "+engine.getTrackName());
+			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+engine.getLocationName()+", "+engine.getTrackName());
 		
 		List carList = carManager.getCarsByTrainList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");

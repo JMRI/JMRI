@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -30,7 +31,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -115,7 +116,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			String addItem = addTextBox.getText();
 			if (addItem.length() > 12){
 				JOptionPane.showMessageDialog(this,rb.getString("newEngineText"),
-						"Can not add " + _comboboxName,
+						rb.getString("canNotAdd") + _comboboxName,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -129,14 +130,14 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			String newItem = addTextBox.getText();
 			if (newItem.length() > 12){
 				JOptionPane.showMessageDialog(this,rb.getString("newEngineText"),
-						"Can not add " + _comboboxName,
+						rb.getString("canNotAdd") + _comboboxName,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldItem = (String) comboBox.getSelectedItem();
 			if (JOptionPane.showConfirmDialog(this,
-							"Replace \"" + oldItem + "\" with \"" + newItem + "\"",
-							"Replace All?", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					MessageFormat.format(rb.getString("replaceMsg"),new Object[]{oldItem, newItem}),
+					rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			
@@ -197,6 +198,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 				int engineLength = Integer.parseInt(addItem);
 				if (engineLength > 9999){
 					log.error("engine length must be less than 10,000 feet");
+					JOptionPane.showMessageDialog(this,rb.getString("engineAttribute5"),
+							rb.getString("canNotAdd") + _comboboxName,
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			} catch (NumberFormatException e){

@@ -46,17 +46,17 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-	private static final String MODELS = rb.getString("engineModelNames");
+	private static final String MODELS = rb.getString("engineDefaultModels");
 	// Horsepower, length, and type have a one to one correspondence with the above MODELS
-	private static final String HORSEPOWER = rb.getString("engineHorsepowers");
-	private static final String ENGINELENGTHS = rb.getString("engineLengths");
-	private static final String ENGINETYPES = rb.getString("engineTypes");
+	private static final String HORSEPOWER = rb.getString("engineModelHorsepowers");
+	private static final String ENGINELENGTHS = rb.getString("engineModelLengths");
+	private static final String ENGINETYPES = rb.getString("engineModelTypes");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	private static final String LENGTH = "Length";
@@ -180,7 +180,8 @@ public class EngineModels implements java.beans.PropertyChangeListener {
  		String[] lengths = ENGINELENGTHS.split("%%"); 
  		String[] types = ENGINETYPES.split("%%"); 
  		if (models.length != hps.length || models.length != lengths.length || models.length != types.length){
- 			log.error("Defaults do not have the right number of items");
+ 			log.error("Defaults do not have the right number of items, " +
+ 					"models="+models.length+" hps="+hps.length+" lengths="+lengths.length+" types="+types.length);
  			return;
  		}
  			

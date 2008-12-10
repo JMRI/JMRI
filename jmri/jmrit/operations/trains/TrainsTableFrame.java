@@ -33,7 +33,7 @@ import javax.swing.WindowConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -84,22 +84,22 @@ public class TrainsTableFrame extends OperationsFrame {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
         
         // create ShutDownTasks
-        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            if (true){
-            	trainDirtyTask = new SwingShutDownTask("Operations Train Window Check", 
-                                                                  rb.getString("PromptQuitWindowNotWritten"), 
-                                                                  rb.getString("PromptSaveQuit"), 
-                                                                  (java.awt.Component)this
-                                                                   ){
-                                                public boolean checkPromptNeeded() {
-                                                    return !getModifiedFlag();
-                                                }
-                                                public boolean doPrompt() {
-                                                	storeValues(); 	
-                                                    return true;
-                                                }
-            };
-            }
+        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+			if (true) {
+				trainDirtyTask = new SwingShutDownTask(
+						"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
+						rb.getString("PromptSaveQuit"),
+						(java.awt.Component) this) {
+					public boolean checkPromptNeeded() {
+						return !getModifiedFlag();
+					}
+
+					public boolean doPrompt() {
+						storeValues();
+						return true;
+					}
+				};
+			}
             jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);
         }
         
@@ -210,9 +210,8 @@ public class TrainsTableFrame extends OperationsFrame {
 //		log.debug("train button actived");
 		if (ae.getSource() == addButton){
 			TrainEditFrame f = new TrainEditFrame();
-			f.initComponents(null);
 			f.setTitle(rb.getString("TitleTrainAdd"));
-			f.setVisible(true);
+			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton){
 			List trains = getTrainList();
@@ -233,7 +232,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		if (ae.getSource() == printSwitchButton){
 			TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
 			f.initComponents();
-			f.setTitle("Switchlists by location");
+			f.setTitle(rb.getString("TitleSwitchLists"));
 			f.setVisible(true);
 		}
 		if (ae.getSource() == terminateButton){
@@ -288,7 +287,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			sortBy = ID;
 		else if (sortByTime.isSelected())
 			sortBy = TIME;
-		trainManager.setTrainFrameSortBy(sortBy);					//save how the table is sorted
+		trainManager.setTrainFrameSortBy(sortBy);			//save how the table is sorted
 		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
 		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
 		trainManagerXml.writeOperationsTrainFile();			//Need to save train status

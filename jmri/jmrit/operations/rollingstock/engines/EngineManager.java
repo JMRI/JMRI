@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -180,10 +180,10 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     }
     
    /**
-     * Sort by engine road name
-     * @return list of engine ids ordered by road name
+     * Sort by engine id
+     * @return list of engine ids ordered by id
      */
-    public List getEnginesByRoadNameList() {
+    public List getEnginesByIdList() {
         String[] arr = new String[_engineHashTable.size()];
         List out = new ArrayList();
         Enumeration en = _engineHashTable.keys();
@@ -196,6 +196,41 @@ public class EngineManager implements java.beans.PropertyChangeListener {
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
+    
+    /**
+     * Sort by engine road name
+     * @return list of engine ids ordered by road name
+     */
+    public List getEnginesByRoadNameList() {
+       	// first get by id list
+    	List sortById = getEnginesByIdList();
+
+    	// now re-sort
+    	List out = new ArrayList();
+    	String engineRoad = "";
+    	boolean engineAdded = false;
+    	Engine engine;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		engineAdded = false;
+    		engine = getEngineById ((String)sortById.get(i));
+    		engineRoad = engine.getRoad();
+    		for (int j=0; j<out.size(); j++ ){
+    			engine = getEngineById ((String)out.get(j));
+    			String outEngineRoad = engine.getRoad();
+    			if (engineRoad.compareToIgnoreCase(outEngineRoad)<0){
+    				out.add(j, sortById.get(i));
+    				engineAdded = true;
+    				break;
+    			}
+    		}
+    		if (!engineAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
     
     /**
      * Sort by engine number, number can alpha numeric

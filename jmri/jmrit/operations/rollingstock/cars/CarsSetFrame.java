@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -218,8 +219,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (trackLocationBox.getSelectedItem() == null
 						|| trackLocationBox.getSelectedItem().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Must fully select a car's location",
-							"Can not update car location",
+							rb.getString("carFullySelect"),	rb.getString("carCanNotLoc"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -228,8 +228,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (!status.equals(Car.OKAY)){
 					log.debug ("Can't set car's location because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							"Can't set car's location because of location's "+ status,
-							"Can not update car location",
+							rb.getString("carCanNotLocMsg")+ status,
+							rb.getString("carCanNotLoc"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -240,8 +240,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (trackDestinationBox.getSelectedItem() == null
 						|| trackDestinationBox.getSelectedItem().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Must fully select a car's destination",
-							"Can not update car destination",
+							rb.getString("carFullyDest"),
+							rb.getString("carCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -250,8 +250,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (!status.equals(Car.OKAY)){
 					log.debug ("Can't set car's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							"Can't set car's destination because of destination's "+ status,
-							"Can not update car destination",
+							rb.getString("carCanNotLocMsg")+ status,
+							rb.getString("carCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -274,15 +274,15 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				}
 				if (rl == null){
 					JOptionPane.showMessageDialog(this,
-							"Car's location ("+_car.getLocationName()+") not serviced by train "+ train.getName(),
-							"Car will not move!",
+							MessageFormat.format(rb.getString("carLocNotServ"), new Object[]{_car.getLocationName(), train.getName()}),
+							rb.getString("carNotMove"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				if (rd == null && !_car.getDestinationName().equals("")){
 					JOptionPane.showMessageDialog(this,
-							"Car's destination ("+_car.getDestinationName()+") not serviced by train "+ train.getName(),
-							"Car will not move!",
+							MessageFormat.format(rb.getString("carDestNotServ"), new Object[]{_car.getDestinationName(), train.getName()}),
+							rb.getString("carNotMove"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				} 
@@ -304,9 +304,9 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 						
 					}
 					if (!foundDes){
-						JOptionPane.showMessageDialog(this,
-								"Car's destination ("+_car.getDestinationName()+") is before location ("+_car.getLocationName()+") when serviced by train "+ train.getName(),
-								"Car will not move!",
+						JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carLocOrder"),
+								new Object[] {_car.getDestinationName(),	_car.getLocationName(),
+								train.getName() }), rb.getString("carNotMove"),
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -315,8 +315,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 			// is this car part of a kernel?
 			if (_car.getKernel() != null){
 				if (JOptionPane.showConfirmDialog(this,
-						"This car is part of a kernel, do you want the other cars to also have the same settings?",
-						"Car is part of a kernel",
+						rb.getString("carInKernel"),
+						rb.getString("carPartKernel"),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					List kCars = _car.getKernel().getCars();
 					for(int i=0; i<kCars.size(); i++){
@@ -331,8 +331,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 							if (!status.equals(Car.OKAY)){
 								log.debug ("Can't set the location for all of the cars in the kernel because of "+ status);
 								JOptionPane.showMessageDialog(this,
-										"Can't set the location for all of the cars in the kernel because of "+ status,
-										"Can not update car location",
+										rb.getString("carCanNotLocMsg")+ status,
+										rb.getString("carCanNotLoc"),
 										JOptionPane.ERROR_MESSAGE);
 								return;
 							}
@@ -345,8 +345,8 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 							if (!status.equals(Car.OKAY)){
 								log.debug ("Can't set the destination for all of the cars in the kernel because of "+ status);
 								JOptionPane.showMessageDialog(this,
-										"Can't set the destination for all of the cars in the kernel because of "+ status,
-										"Can not update car destination",
+										rb.getString("carCanNotDestMsg")+ status,
+										rb.getString("carCanNotDest"),
 										JOptionPane.ERROR_MESSAGE);
 								return;
 							}

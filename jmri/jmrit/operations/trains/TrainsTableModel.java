@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -263,7 +263,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals("listLength")) {
+    	if (e.getPropertyName().equals(manager.LISTLENGTH_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

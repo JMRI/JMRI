@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -314,7 +315,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				int rs = _track.getNumberRS();
 				if (rs > 0){
 					if (JOptionPane.showConfirmDialog(this,
-							"There are " + rs + " cars or engines at this location, delete?", "Delete track?",
+							MessageFormat.format(rb.getString("ThereAreCars"),new Object[]{Integer.toString(rs)}), rb.getString("deleteTrack?"),
 							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
 						return;
 					}
@@ -354,7 +355,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				id = train.getId();
 				if (!checkRoute(route)){
 					JOptionPane.showMessageDialog(this,
-							"This interchange track is not serviced by train ("+ train.getName() + ")", "Error!",
+							MessageFormat.format(rb.getString("TrackNotByTrain"),new Object[]{train.getName()}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -365,7 +366,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				id = route.getId();
 				if (!checkRoute(route)){
 					JOptionPane.showMessageDialog(this,
-							"This interchange track is not serviced by route ("+ route.getName() + ")", "Error!",
+							MessageFormat.format(rb.getString("TrackNotByRoute"),new Object[]{route.getName()}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -397,7 +398,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				id = train.getId();
 				if (!checkRoute(route)){
 					JOptionPane.showMessageDialog(this,
-							"This interchange track is not serviced by train ("+ train.getName() + ")", "Error!",
+							MessageFormat.format(rb.getString("TrackNotByTrain"),new Object[]{train.getName()}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -408,7 +409,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				id = route.getId();
 				if (!checkRoute(route)){
 					JOptionPane.showMessageDialog(this,
-							"This interchange track is not serviced by route ("+ route.getName() + ")", "Error!",
+							MessageFormat.format(rb.getString("TrackNotByRoute"),new Object[]{route.getName()}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -450,7 +451,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// check to see if track already exsists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), _type);
 		if (check != null){
-			reportTrackExists("add");
+			reportTrackExists(rb.getString("add"));
 			return;
 		}
 		// add track to this location
@@ -477,7 +478,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// check to see if track already exsists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), _type);
 		if (check != null && check != track){
-			reportTrackExists("save");
+			reportTrackExists(rb.getString("save"));
 			return;
 		}
 		// check track length
@@ -515,7 +516,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (trackNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Track name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters");
 			JOptionPane.showMessageDialog(this,
-					"Track name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters", "Can not add location!",
+					MessageFormat.format(rb.getString("TrackNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
+					rb.getString("canNotAddTrack"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -534,7 +536,21 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			} catch (NumberFormatException e){
 				log.error("Can not convert from inches to feet");
 				JOptionPane.showMessageDialog(this,
-						"Can not convert from inches to feet", "Track length incorrect",
+						rb.getString("CanNotConvertFeet"), rb.getString("ErrorTrackLength"),
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		if (length.endsWith("cm")){
+			length = length.substring(0, length.length()-2);
+			try {
+				double cm = Double.parseDouble(length);
+				int meter = (int)(cm * Setup.getScaleRatio() / 100);
+				length = Integer.toString(meter);
+			} catch (NumberFormatException e){
+				log.error("Can not convert from cm to meters");
+				JOptionPane.showMessageDialog(this,
+						rb.getString("CanNotConvertMeter"), rb.getString("ErrorTrackLength"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
@@ -546,14 +562,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			if (trackLength > 99999){
 				log.error("Track length must be less than 100,000 feet");
 				JOptionPane.showMessageDialog(this,
-						"Track length must be less than 100,000 feet", "Track length incorrect",
+						rb.getString("TrackMustBeLessThan"), rb.getString("ErrorTrackLength"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		} catch (NumberFormatException e){
 			log.error("Track length not an integer");
 			JOptionPane.showMessageDialog(this,
-					"Track length must be a number", "Track length incorrect",
+					rb.getString("TrackMustBeNumber"), rb.getString("ErrorTrackLength"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -561,7 +577,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (trackLength < track.getUsedLength() + track.getReserved()){
 			log.error("Track length can not be less than used and reserved");
 			JOptionPane.showMessageDialog(this,
-					"Track length must be greater than the sum of Used and Reserved", "Track length incorrect",
+					rb.getString("TrackMustBeGreater"), rb.getString("ErrorTrackLength"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -573,7 +589,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void reportTrackExists(String s){
 		log.info("Can not " + s + ", track already exists");
 		JOptionPane.showMessageDialog(this,
-				"Track with this name already exists", "Can not " + s + " track!",
+				rb.getString("TrackAlreadyExists"), MessageFormat.format(rb.getString("CanNotTrack"),new Object[]{s }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 
@@ -730,10 +746,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!anyDrops.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	if (trainDrop.isSelected())
+		    	if (trainDrop.isSelected()){
+		    		TrainManager.instance().updateComboBox(comboBoxDropTrains);
 		    		p.add(comboBoxDropTrains);
-		    	else
+		    	} else {
+		    		RouteManager.instance().updateComboBox(comboBoxDropRoutes);
 		    		p.add(comboBoxDropRoutes);
+		    	}
 		    	p.add(addDropButton);
 		    	p.add(deleteDropButton);
 				gc.gridy = y++;
@@ -799,10 +818,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!anyPickups.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	if (trainPickup.isSelected())
+		    	if (trainPickup.isSelected()){
+		    		TrainManager.instance().updateComboBox(comboBoxPickupTrains);
 		    		p.add(comboBoxPickupTrains);
-		    	else
+		    	} else {
+		    		RouteManager.instance().updateComboBox(comboBoxPickupRoutes);
 		    		p.add(comboBoxPickupRoutes);
+		    	}
 		    	p.add(addPickupButton);
 		    	p.add(deletePickupButton);
 				gc.gridy = y++;

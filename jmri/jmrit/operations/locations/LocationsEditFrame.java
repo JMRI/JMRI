@@ -18,6 +18,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -364,7 +365,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 				saveNewLocation();
 			} else {
 				if (l != null && l != _location){
-					reportLocationExists("save");
+					reportLocationExists(rb.getString("save"));
 					return;
 				}
 				saveLocation();
@@ -375,10 +376,10 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 			Location l = manager.getLocationByName(locationNameTextField.getText());
 			if (l == null)
 				return;
-			int cars = l.getNumberRS();
-			if (cars > 0){
+			int rs = l.getNumberRS();
+			if (rs > 0){
 				if (JOptionPane.showConfirmDialog(this,
-						"There are " + cars + " cars at this location, delete?", "Delete location?",
+						MessageFormat.format(rb.getString("ThereAreCars"),new Object[]{Integer.toString(rs)}), rb.getString("deletelocation?"),
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
 					return;
 				}
@@ -397,7 +398,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		if (ae.getSource() == addLocationButton){
 			Location l = manager.getLocationByName(locationNameTextField.getText());
 			if (l != null){
-				reportLocationExists("add");
+				reportLocationExists(rb.getString("add"));
 				return;
 			}
 			saveNewLocation();
@@ -454,10 +455,13 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(){
+		if (locationNameTextField.getText().trim().equals(""))
+			return false;
 		if (locationNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
 			JOptionPane.showMessageDialog(this,
-					"Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters", "Can not add location!",
+					MessageFormat.format(rb.getString("LocationNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
+					rb.getString("canNotAddLocation"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -467,7 +471,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	private void reportLocationExists(String s){
 		log.info("Can not " + s + ", location already exists");
 		JOptionPane.showMessageDialog(this,
-				"Location with this name already exists", "Can not " + s + " location!",
+				rb.getString("LocationAlreadyExists"), MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
