@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.60 2008-12-03 01:04:21 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.61 2008-12-11 19:39:59 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -161,6 +161,7 @@
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
 	<LI>Paul Fraker, who wrote the documentation for the Throttles
+	    and provided an MRC decoder definition
 	<li>Joe Fugate and the other people of 
 	<a href="http://model-railroad-hobbyist.com">Model Railroad Hobbyist</a> emagazine for
 	putting the 
