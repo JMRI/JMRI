@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.8.shtml,v 1.4 2008-12-09 15:08:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.8.shtml,v 1.5 2008-12-11 16:15:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -144,6 +144,11 @@ Dan Boudreau added some more terminology customization for British users of the 
 David Harris fixed up some messages and updated the terminology in general parts of the program.
 
 <p>
+Dick Bronson updated the decoder definition file for the Tower Controller 64.
+
+<p>
+Ronnie Pinkerton added a control so you can turn off scroll bars on the Layout Editor.
+
 
 <!--#include virtual="/Footer" -->
 
