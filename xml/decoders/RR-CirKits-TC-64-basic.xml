@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.13 2008-11-01 20:12:56 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.14 2008-12-11 03:23:28 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,14 +17,20 @@
 
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1.05" lastUpdated="20081029"/>
+					version="1.06" lastUpdated="20081209"/>
+		
         <version author="dick@rr-cirkits.com" 
-                    version="1.03" lastUpdated="20071227"/>
+ 					version="1.05" lastUpdated="20081029"/>
+        
         <version author="dick@rr-cirkits.com" 
-                    version="1.04" lastUpdated="20081007"/>
+                     version="1.03" lastUpdated="20071227"/>
+        
+        <version author="dick@rr-cirkits.com" 
+                     version="1.04" lastUpdated="20081007"/>
 
 		<!-- Version 1.04  Update to include paired output drive option -->
 		<!-- Version 1.05  Changed 'paired output' drive option to '* Dual Coil' -->
+		<!-- Version 1.06 Correction of typos in secondary addressing (change at line 10544) -->
 		
 <decoder>
 	<family name="Tower Controller" mfg="RR-CirKits" type="stationary"
@@ -1658,7 +1664,7 @@
 			</variable>
 
 		<variable label="2C Secondary Address" CV="65" mask="VVVVVVVV">
-			<splitVal highCV="34" upperMask="XXXXVVVV"/>
+			<splitVal highCV="66" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="2C Secondary Polarity" CV="66" mask="VVXXXXXX">
@@ -3245,7 +3251,7 @@
 			</variable>
 
 		<variable label="3G Secondary Address" CV="113" mask="VVVVVVVV">
-			<splitVal highCV="50" upperMask="XXXXVVVV"/>
+			<splitVal highCV="114" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="3G Secondary Polarity" CV="114" mask="VVXXXXXX">
@@ -3777,7 +3783,7 @@
 			</variable>
 
 		<variable label="4C Secondary Address" CV="129" mask="VVVVVVVV">
-			<splitVal highCV="98" upperMask="XXXXVVVV"/>
+			<splitVal highCV="130" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="4C Secondary Polarity" CV="130" mask="VVXXXXXX">
@@ -4634,6 +4640,7 @@
 				<enumChoice choice="inverted"/>
 				</enumVal>
 			</variable>
+
 		<variable label="5B I Type" CV="156" mask="XVVVXXXX">
 			<enumVal>
 				<enumChoice choice="debounce"/>
@@ -5896,7 +5903,7 @@
 			</variable>
 
 		<variable label="6C Secondary Address" CV="193" mask="VVVVVVVV">
-			<splitVal highCV="162" upperMask="XXXXVVVV"/>
+			<splitVal highCV="194" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="6C Secondary Polarity" CV="194" mask="VVXXXXXX">
@@ -7483,7 +7490,7 @@
 			</variable>
 
 		<variable label="7G Secondary Address" CV="241" mask="VVVVVVVV">
-			<splitVal highCV="178" upperMask="XXXXVVVV"/>
+			<splitVal highCV="242" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="7G Secondary Polarity" CV="242" mask="VVXXXXXX">
@@ -8015,7 +8022,7 @@
 			</variable>
 
 		<variable label="8C Secondary Address" CV="257" mask="VVVVVVVV">
-			<splitVal highCV="226" upperMask="XXXXVVVV"/>
+			<splitVal highCV="258" upperMask="XXXXVVVV"/>
 			</variable>
 
   		<variable label="8C Secondary Polarity" CV="258" mask="VVXXXXXX">
@@ -10543,6 +10550,7 @@
 		<row><column>
 	 	<label label="* Note: Firmware Version 5 or later is required." />
 	 	<label label="Use DecoderPro Version 2.3.2 or later to upgrade." />
+	 	<label label="Decoder File Version: 1.06." />
 		</column></row>
    </column>
 
