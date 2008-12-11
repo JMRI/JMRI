@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Gallery.shtml,v 1.4 2008-02-05 05:45:00 jacobsen Exp $ -->
+<!-- $Id: Gallery.shtml,v 1.5 2008-12-11 20:29:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -70,9 +70,9 @@ He's created a very nice series of web pages on
 <h3>Jim Thompson's Cashaway Valley Railroad</h3>
 
 Jim Thompson is using PanelPro to make a dispatcher's panel for
-his <a href="http://home.comcast.net/~jthompson999/index.htm">Cashaway Valley Railroad</a>.
-He has a page that 
-<a href="http://home.comcast.net/~jthompson999/jmri.htm">describes the project</a>.
+his <a href="http://www.cashawayvalleyrr.com">Cashaway Valley Railroad</a>.
+He has a series of pages that describe
+<a href="http://www.cashawayvalleyrr.com/jmri.html">how he operates his layout with JMRI</a>.
 
 <h3>Alan Huberty's Bloomfield &amp; Oakland RR</h3>
 
