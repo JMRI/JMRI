@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.18 $ -->
+<!-- Revision $Revision: 1.19 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -87,23 +87,7 @@
   	</copy> 
   </target>
   
-  <target name="reserved" depends="init, copyDTD, copyXML" 
-  			description="create CSV file listing reserved CVs used by decoders">
-	<copy todir="${target}" >
-    	<fileset dir="." >
-      		<include name="CSVindex.html"/>
-    	</fileset>
-  	</copy> 
-    <xslt  basedir="${target}"
-    		destdir="${target}"
-    		style="reservedCSV.xsl"
-    		in="pages/decoderIndex.xml"
-    		out="pages/reservedCVs.csv"
-    	>
-	</xslt>
-  </target>
-  
-  <target name="csv" depends="init, copyDTD, copyXML" 
+  <target name="csv" depends="init, copyDTD, copyXML, alldecodercsv, reservedcsv" 
   			description="create CSV file listing CVs available on all decoders">
 	<copy todir="${target}" >
     	<fileset dir="." >
@@ -124,16 +108,33 @@
     		out="pages/decoderpower.csv"
     	>
 	</xslt>
-  <!-- the following no longer works because it runs out of memeory making the page -->
-  <!-- which is supposed to contain every CV for every decoder.  Maybe switch to -->
-  <!-- a more column oriented form, showing who uses each CV on one page? -->
-<!--    <style  basedir="${target}" -->
-<!--    		destdir="${target}" -->
-<!--    		style="CSVsummary.xsl" -->
-<!--    		in="pages/decoderIndex.xml" -->
-<!--    		out="pages/cvsummary.csv" -->
-<!--    	> -->
-<!--	</style> -->
+  </target>
+
+  <target name="alldecodercsv" depends="init, copyDTD, copyXML" 
+  			description="create CSV file listing CVs available on all decoders">
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		style="CSVsummary.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/cvsummary.csv"
+    	>
+	</style>
+  </target>
+  
+  <target name="reservedcsv" depends="init, copyDTD, copyXML" 
+  			description="create CSV file listing reserved CVs used by decoders">
+	<copy todir="${target}" >
+    	<fileset dir="." >
+      		<include name="CSVindex.html"/>
+    	</fileset>
+  	</copy> 
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="reservedCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/reservedCVs.csv"
+    	>
+	</xslt>
   </target>
   
   <target name="index" depends="init, copyDTD, copyXML" 
