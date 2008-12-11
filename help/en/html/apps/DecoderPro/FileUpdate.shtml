@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FileUpdate.shtml,v 1.2 2008-11-17 03:09:08 jacobsen Exp $ -->
+<!-- $Id: FileUpdate.shtml,v 1.3 2008-12-11 20:16:37 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Updating Decoder Definitions</title>
 
 <!-- Style -->
@@ -55,7 +55,7 @@ you can directly install the definition.
 </ul>
 
 Unless there are errors, the file will be copied onto your local computer
-and installed in your JMRI directory.
+and installed in your JMRI preferences directory.
 
 <h3>Loading a definition from a file</h3>
 If you have local file containing a decoder definition, perhaps downloaded from
@@ -70,8 +70,27 @@ filter at the bottom of the dialog.
 <li>Navigate to your file, and click OK.
 </ul>
 
-Unless there are errors, the file will be copied into your JMRI directory and installed.
+Unless there are errors, the file will be copied into your JMRI preferences
+directory and installed.
 
+<h3>How This Works</h3>
+
+Both of these tools take the decoder definition information
+from the source you indicate and copy it to your local JMRI preferences
+directory so that it will be available from now on.  For this to 
+work, you can't already have a decoder definition file there by the same name.
+If such a file does exist, the program will indicate an error and not 
+replace the file.
+
+<p>
+The definition is stored in your preferences directory, instead of the JMRI 
+distribution directory, so that installing a new version of JMRI doesn't 
+delete it.  Note, however, that if a newer version of JMRI comes along with
+a copy of this decoder definition installed, the program will give priority to the
+specific version that you imported.  JMRI thinks you knew what you were doing
+when you specifically imported that specific version.  If you'd prefer to use 
+the one in the new JMRI version, just delete yours from your preferences directory
+and select "Rebuild Decoder Index" in the debug menu.
 
 
 
