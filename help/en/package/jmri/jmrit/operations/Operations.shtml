@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.18 2008-12-07 03:44:50 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.19 2008-12-12 02:42:01 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -59,7 +59,9 @@ The program supports an alternate set of railway terminology for our
 British modelers. To use British terminologies, go to the JMRI Advanced
 Preferences (Edit->Preferences.. select the Show Advanced Preferences
 checkbox) and select English (United Kingdom) in the Locale: in the menu
-box. 
+box. The program will also convert from centimeters to meters when
+entering wagon, locomotive, or location lengths, just append "cm" to any
+length. 
 
 <A NAME="Settings"></A>
 <H2>Settings</H2>
@@ -232,9 +234,10 @@ accept.
 To add a yard, press the "Add Yard Track" button. Now enter the name of
 the yard along with the length of the track in scale feet or in actual
 inches. Append a double quote (") to the length when entering actual
-inches and the program will convert the length into scale feet. Press
-the "Add Yard Track" button at the bottom of the panel and the disabled
-fields should now appear.
+inches and the program will convert the length into scale feet. Append
+cm if you want to convert from centimeters to meters. Press the "Add
+Yard Track" button at the bottom of the panel and the disabled fields
+should now appear.
 
 <H3>Rolling Stock Serviced</H3>
 
