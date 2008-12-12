@@ -31,7 +31,7 @@ import java.util.List;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -184,12 +184,29 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			// convert from inches to feet if needed
 			if (addItem.endsWith("\"")){
 				addItem = addItem.substring(0, addItem.length()-1);
-				double inches = Double.parseDouble(addItem);
 				try {
+					double inches = Double.parseDouble(addItem);
 					int feet = (int)(inches * Setup.getScaleRatio() / 12);
 					addItem = Integer.toString(feet);
 				} catch (NumberFormatException e){
 					log.error("can not convert from inches to feet");
+					JOptionPane.showMessageDialog(this,
+							rb.getString("CanNotConvertFeet"), rb.getString("ErrorEngineLength"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			if (addItem.endsWith("cm")){
+				addItem = addItem.substring(0, addItem.length()-2);
+				try {
+					double cm = Double.parseDouble(addItem);
+					int meter = (int)(cm * Setup.getScaleRatio() / 100);
+					addItem = Integer.toString(meter);
+				} catch (NumberFormatException e){
+					log.error("Can not convert from cm to meters");
+					JOptionPane.showMessageDialog(this,
+							rb.getString("CanNotConvertMeter"), rb.getString("ErrorEngineLength"),
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
