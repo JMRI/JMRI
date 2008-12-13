@@ -18,7 +18,7 @@ import javax.vecmath.Point3d;
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RpsTrackingPanelTest extends TestCase {
 
@@ -60,29 +60,29 @@ public class RpsTrackingPanelTest extends TestCase {
         f.setSize(400,400);
         f.setVisible(true);
         
-        Reading loco = new Reading(21, null);
-        Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 0, "source");
+        Reading loco = new Reading("21", null);
+        Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
         p.notify(m);
         
-        loco = new Reading(21, null);
-        m = new Measurement(loco, 5., 5., 0.0, 0.133, 0, "source");
+        loco = new Reading("21", null);
+        m = new Measurement(loco, 5., 5., 0.0, 0.133, 5, "source");
         p.notify(m);
         
-        loco = new Reading(21, null);
-        m = new Measurement(loco, 0., 5., 0.0, 0.133, 0, "source");
+        loco = new Reading("21", null);
+        m = new Measurement(loco, 0., 5., 0.0, 0.133, 5, "source");
         p.notify(m);
 
-        loco = new Reading(21, null);
-        m = new Measurement(loco, 5., 0., 0.0, 0.133, 0, "source");
+        loco = new Reading("21", null);
+        m = new Measurement(loco, 5., 0., 0.0, 0.133, 5, "source");
         p.notify(m);
         
         // check separate locos
         int NUM_LOCO = 64;
         for (int i=0; i<NUM_LOCO; i++) {
-            loco = new Reading(i, null);
-            m = new Measurement(loco, 6.+1.*i, 0., 0.0, 0.133, 0, "source");
+            loco = new Reading(""+i, null);
+            m = new Measurement(loco, 6.+1.*i, 0., 0.0, 0.133, 5, "source");
             p.notify(m);
-            m = new Measurement(loco, 6.+1.*i, 2., 0.0, 0.133, 0, "source");
+            m = new Measurement(loco, 6.+1.*i, 12., 0.0, 0.133, 5, "source");
             p.notify(m);
         }
         

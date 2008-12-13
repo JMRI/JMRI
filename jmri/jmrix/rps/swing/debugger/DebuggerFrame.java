@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 
 
@@ -275,13 +275,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
             }
         }
 
-        // get the id number
-        int idnum = 21;
-        try {
-            idnum = Integer.valueOf(id.getText()).intValue();
-        } catch (Exception e) {}
-
-        Reading r = new Reading(idnum, values);
+        // get the id number and make reading
+        Reading r = new Reading(id.getText(), values);
         return r;
     }
         
@@ -306,12 +301,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     void doMeasurementFromPositionFields() {
         // contain dummy Reading
-        int idnum = 21;
-        try {
-            idnum = Integer.valueOf(id.getText()).intValue();
-        } catch (Exception e) {}
-        
-        Reading r = new Reading(idnum, new double[]{0.,0.,0.,0.});
+        Reading r = new Reading(id.getText(), new double[]{0.,0.,0.,0.});
         
         Measurement m = new Measurement(r, 
                             Double.valueOf(x.getText()).doubleValue(),

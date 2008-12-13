@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * flip the sign of Z coordinates to keep this bias working for us.
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {
@@ -393,7 +393,7 @@ public class AlignmentPanel extends javax.swing.JPanel
         for (int i = 0; i<NREADINGS; i++)
             vals[i] = lines[i].getTime(index);
 
-        return new Reading(21, vals);
+        return new Reading("(from alignment)", vals);
     }
     
     JTextField x1l = new JTextField(5);
@@ -470,7 +470,7 @@ public class AlignmentPanel extends javax.swing.JPanel
         }
         
         Reading getReading() {
-            return new Reading(21, new double[]{getTime(0), getTime(1), getTime(2), getTime(3)});
+            return new Reading("(from alignment)", new double[]{getTime(0), getTime(1), getTime(2), getTime(3)});
         }
         
         void reset() {

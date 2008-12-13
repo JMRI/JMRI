@@ -10,12 +10,21 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Reading class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RpsPositionIconTest extends TestCase {
 
 	public void testCtorAndID() {
+        // init test system
+        new Engine(){ void reset() { _instance = null; }}.reset();
+
         new jmri.configurexml.ConfigXmlManager().load(new java.io.File("java/test/jmri/jmrix/rps/LocationTestPanel.xml"));        
+
+        // and push a good measurement
+        Reading loco = new Reading("27", null);
+        Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
+        Distributor.instance().submitMeasurement(m);
+        
   	}
         
 	// from here down is testing infrastructure

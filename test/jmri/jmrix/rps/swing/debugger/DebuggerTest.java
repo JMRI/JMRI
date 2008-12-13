@@ -14,7 +14,7 @@ import javax.vecmath.Point3d;
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class DebuggerTest extends TestCase {
 
@@ -27,7 +27,7 @@ public class DebuggerTest extends TestCase {
         Engine.instance().setReceiver(3,new Receiver(new Point3d(1,2,3)));
         Engine.instance().setReceiver(4,new Receiver(new Point3d(1,2,3)));
         
-        Reading r = new Reading(21, new double[]{11,12,13,14});
+        Reading r = new Reading("21", new double[]{11,12,13,14});
         Measurement m = new Measurement(r, -0.5, 0.5, 0.0, 0.133, 3, "source");
         
         // show frame

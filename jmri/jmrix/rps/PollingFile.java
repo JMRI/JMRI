@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class PollingFile extends XmlFile {
 
@@ -25,7 +25,7 @@ public class PollingFile extends XmlFile {
      */
     public void prepare() {
         root = new Element("rpsfile");
-        doc = newDocument(root, dtdLocation+"rpsroster.dtd");
+        doc = newDocument(root, dtdLocation+"rpsroster-2-3-8.dtd");
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/rpsroster.xsl"?>
@@ -48,6 +48,10 @@ public class PollingFile extends XmlFile {
     
     public void setTransmitter(int r) {
         Element e = new Element("transmitter");
+        if (Engine.instance().getTransmitter(r).getRosterName() != null )
+            e.setAttribute("rostername", Engine.instance().getTransmitter(r).getRosterName());
+        else
+            e.setAttribute("id", Engine.instance().getTransmitter(r).getID());
         e.setAttribute("id", Engine.instance().getTransmitter(r).getID());
         e.setAttribute("address", ""+Engine.instance().getTransmitter(r).getAddress());
         e.setAttribute("long", Engine.instance().getTransmitter(r).isLongAddress()?"true":"false");
@@ -108,13 +112,20 @@ public class PollingFile extends XmlFile {
         for (int i = 0; i<l.size(); i++) {  // i indexes over the elements in the file
             Element e = (Element)l.get(i);
             String id = e.getAttribute("id").getValue();
+            if (e.getAttribute("rostername")!=null) {
+                id = e.getAttribute("rostername").getValue();
+             } else {
+                log.warn("Using ID as roster name for "+id+", please save your polling information to remove this warning");
+            }
+            
             // find the matching transmitter (from Roster) and load poll value
             for (int j = 0; j<engine.getNumTransmitters(); j++) { // j indexes over transmitters
-                if (engine.getTransmitter(j).getID().equals(id)) {
+                if (engine.getTransmitter(j).getRosterName().equals(id)) {
                     Attribute a = e.getAttribute("poll");
                     boolean poll = false;
                     if (a != null && a.getValue().equals("true")) poll = true;
                     engine.getTransmitter(j).setPolled(poll);
+                    engine.getTransmitter(j).setID(e.getAttribute("id").getValue());
                     break;
                 }
             }

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -49,7 +49,7 @@ public class RpsPositionIconXml implements XmlAdapter {
         
         element.setAttribute("showid", p.isShowID()?"true":"false");
 
-        if (p.getFilter() > 0) 
+        if (p.getFilter()!=null) 
             element.setAttribute("filter", ""+p.getFilter());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.RpsPositionIconXml");
 
@@ -120,15 +120,9 @@ public class RpsPositionIconXml implements XmlAdapter {
         l.setLocation(x,y);
 
         // find coordinates
-        int filter = -1;
         a = element.getAttribute("filter");
         if (a!=null) {
-            try {
-                filter = a.getIntValue();
-            } catch ( org.jdom.DataConversionException e) {
-                log.error("failed to convert filter attribute");
-            }
-            l.setFilter(filter);
+            l.setFilter(a.getValue());
         }
         
         double sxScale = 0.;
@@ -141,7 +135,7 @@ public class RpsPositionIconXml implements XmlAdapter {
             sxOrigin = element.getAttribute("sxorigin").getIntValue();
             syOrigin = element.getAttribute("syorigin").getIntValue();
         } catch ( NullPointerException e1) {
-            log.error("missing transform attribute "+filter);
+            log.error("missing transform attribute");
         } catch ( org.jdom.DataConversionException e2) {
             log.error("failed to convert transform attributes");
         }

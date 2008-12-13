@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class PositionFileTest extends TestCase {
 
@@ -38,7 +38,7 @@ public class PositionFileTest extends TestCase {
     public void testReadingElement() {
         PositionFile f = new PositionFile();
         
-        Reading in = new Reading(21, new double[]{0.,11,12,13,14});
+        Reading in = new Reading("21", new double[]{0.,11,12,13,14});
 
         Element e = f.readingElement(in);
 
@@ -67,7 +67,7 @@ public class PositionFileTest extends TestCase {
         fout.prepare();
         fout.setReceiver(2,new Point3d(1.0f,2.0f,3.0f), true);
         
-        Reading rout = new Reading(21, new double[]{11,12,13,14});
+        Reading rout = new Reading("21", new double[]{11,12,13,14});
         fout.setCalibrationPoint(new Point3d(-1.0f,-2.0f,-3.0f), rout);
         
         jmri.jmrit.XmlFile.ensurePrefsPresent("temp");

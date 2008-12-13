@@ -22,23 +22,24 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
 
-    static final int IDCOL   = 0;
-    static final int ADDRCOL = 1;
-    static final int LONGCOL = 2;
-    static final int POLLCOL = 3;
-    static final int LASTXCOL = 4;
-    static final int LASTYCOL = 5;
-    static final int LASTZCOL = 6;
-    static final int LASTTIME = 7;
+    static final int NAMECOL   = 0;
+    static final int IDCOL   = 1;
+    static final int ADDRCOL = 2;
+    static final int LONGCOL = 3;
+    static final int POLLCOL = 4;
+    static final int LASTXCOL = 5;
+    static final int LASTYCOL = 6;
+    static final int LASTZCOL = 7;
+    static final int LASTTIME = 8;
 
-    static final int LAST = 7;
+    static final int LAST = 8;
     jmri.ModifiedFlag modifiedFlag;
     
     static final int TYPECOL = -1;
@@ -47,6 +48,7 @@ public class PollDataModel extends AbstractTableModel
         super();
         this.modifiedFlag = flag;
         Distributor.instance().addMeasurementListener(this);
+        fireTableDataChanged();
     }
     
     public int getColumnCount () {return LAST+1;}
@@ -57,6 +59,8 @@ public class PollDataModel extends AbstractTableModel
 
     public String getColumnName(int c) {
         switch (c) {
+        case NAMECOL:
+            return rb.getString("TitleName");
         case IDCOL:
             return rb.getString("TitleIdCol");
         case ADDRCOL:
@@ -94,7 +98,7 @@ public class PollDataModel extends AbstractTableModel
     }
 
     public boolean isCellEditable(int r,int c) {
-        if (c == POLLCOL || c == TYPECOL )
+        if (c == IDCOL || c == POLLCOL || c == TYPECOL )
             return true;
         else 
             return false;
@@ -105,6 +109,8 @@ public class PollDataModel extends AbstractTableModel
         Measurement m;
         double val;
         switch (c) {
+        case NAMECOL:
+            return Engine.instance().getTransmitter(r).getRosterName();
         case IDCOL:
             return Engine.instance().getTransmitter(r).getID();
         case ADDRCOL:
@@ -144,6 +150,11 @@ public class PollDataModel extends AbstractTableModel
     public void setValueAt(Object value,int r,int c) {
         // r is row number, from 0
         switch (c) {
+        case IDCOL:
+            String s = ((String)value);
+            Engine.instance().getTransmitter(r).setID(s);
+            modifiedFlag.setModifiedFlag(true);
+            return;
         case POLLCOL:
             boolean p = ((Boolean)value).booleanValue();
             Engine.instance().getTransmitter(r).setPolled(p);

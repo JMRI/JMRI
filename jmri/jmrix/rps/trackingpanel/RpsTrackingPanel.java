@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -194,7 +194,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     }
     
     public void notify(Measurement m) {
-        Integer id = new Integer(m.getID());
+        String id = m.getID();
         TransmitterStatus transmitter = (TransmitterStatus)transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
@@ -227,6 +227,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         r.rep2 = new Ellipse2D.Double(xend-MEASUREMENT_ACCURACY/2, 
                                yend-MEASUREMENT_ACCURACY/2, 
                                MEASUREMENT_ACCURACY, MEASUREMENT_ACCURACY);
+
         if (showErrors || (lastMessage.isOkPoint() && m.isOkPoint())) {
             // also draw line
             double xinit = lastMessage.getX();

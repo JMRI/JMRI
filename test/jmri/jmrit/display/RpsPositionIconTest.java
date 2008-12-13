@@ -14,7 +14,7 @@ import jmri.jmrix.rps.*;
  * Tests for the RpsIcon class.
  *
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class RpsPositionIconTest extends TestCase {
 
@@ -63,7 +63,7 @@ public class RpsPositionIconTest extends TestCase {
         JButton loco21Button = new JButton("Loco 21");
         loco21Button.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				locoButtonPushed(21);
+				locoButtonPushed("21");
 			}
 		});
         jf.getContentPane().add(loco21Button);
@@ -71,7 +71,7 @@ public class RpsPositionIconTest extends TestCase {
         JButton loco33Button = new JButton("Loco 33");
         loco33Button.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				locoButtonPushed(33);
+				locoButtonPushed("33");
 			}
 		});
         jf.getContentPane().add(loco33Button);
@@ -82,14 +82,14 @@ public class RpsPositionIconTest extends TestCase {
 
 	}
 
-    int id = 20;
+    String id = "20";
     // animate the visible frame
     public void measButtonPushed(double x, double y) {
         Reading loco = new Reading(id, null);
         Measurement m = new Measurement(loco, x, y, 0.0, 0.133, 0, "source");
         rpsIcon.notify(m);
     }
-    public void locoButtonPushed(int newID) {
+    public void locoButtonPushed(String newID) {
         id = newID;
     }
 

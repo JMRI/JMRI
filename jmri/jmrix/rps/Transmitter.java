@@ -8,9 +8,13 @@ import jmri.ThrottleListener;
 
 /**
  * Represents a RPS transmitter, generally a locomotive.
+ *<p>
+ * The "ID" is used to identify this transmitter in RPS.
+ * The "rosterName" is the name (ID) of the roster entry this was
+ * originally created from.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class Transmitter implements ThrottleListener {
@@ -25,6 +29,10 @@ public class Transmitter implements ThrottleListener {
     String id;
     public void setID(String id) { this.id = id; }
     
+    public String getRosterName() { return rosterName; }
+    String rosterName;
+    public void setRosterName(String rosterName) { this.rosterName = rosterName; }
+    
     public boolean isLongAddress() { return longAddress; }
     boolean longAddress;
     public void setLongAddress(boolean longAddress) { this.longAddress = longAddress; }
@@ -32,7 +40,7 @@ public class Transmitter implements ThrottleListener {
     public int getAddress() { return address; }
     int address;
     public void setAddress(int address) { this.address = address; }
-    
+        
     public boolean isPolled() { return polled; }
     boolean polled;
     public void setPolled(boolean polled) { this.polled = polled; }

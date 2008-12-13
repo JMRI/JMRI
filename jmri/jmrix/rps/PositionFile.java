@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PositionFile extends XmlFile {
 
@@ -117,7 +117,7 @@ public class PositionFile extends XmlFile {
     }
     
     public Reading readingFromElement(Element reading) {
-        int id = Integer.parseInt(reading.getChild("id").getText());
+        String id = reading.getChild("id").getText();
         List kids = reading.getChildren("time");
         int count = kids.size();
         double[] vals = new double[count+1];

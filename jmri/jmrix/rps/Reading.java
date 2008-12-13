@@ -16,22 +16,22 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Reading {
 
-    public Reading(int id, double[] values) {
+    public Reading(String id, double[] values) {
         this.id = id;
         this.values = values;
     }
         
-    public Reading(int id, double[] values, String raw) {
+    public Reading(String id, double[] values, String raw) {
         this.id = id;
         this.values = values;
         this.rawData = raw;
     }
         
-    public Reading(int id, double[] values, int time) {
+    public Reading(String id, double[] values, int time) {
         this.id = id;
         this.values = values;
         this.time = time;
@@ -53,7 +53,7 @@ public class Reading {
      * Return the ID int of the transmitter
      * this reading describes
      */
-    public int getID() {
+    public String getID() {
         return id;
     }
     
@@ -80,7 +80,7 @@ public class Reading {
         return retval;
     }
         
-    int id;
+    String id;
     double[] values;
     int time; // in msec since epoch
         

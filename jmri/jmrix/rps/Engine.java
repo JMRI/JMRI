@@ -28,9 +28,14 @@ import java.io.*;
  *<ul>
  *<li>vSound - velocity of sound, in whatever units are in use
  *</ul>
+ *<p>
+ * This class maintains a collection of "Transmitter" objects representing
+ * the RPS-equipped rolling stock (usually engines) on the layout.
+ * This is an extension to the common Roster, and every entry in this
+ * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  */
 
 
@@ -179,9 +184,9 @@ public class Engine implements ReadingListener {
     }
     
     // Store the lastMeasurement 
-    void saveLastMeasurement(int addr, Measurement m) {
+    void saveLastMeasurement(String id, Measurement m) {
         for (int i=0; i<getNumTransmitters(); i++) {
-            if (getTransmitter(i).getAddress() == addr && getTransmitter(i).isPolled()) {
+            if (getTransmitter(i).getID() == id && getTransmitter(i).isPolled()) {
                 getTransmitter(i).setLastMeasurement(m);
                 // might be more than one, so don't end here
             }
@@ -277,10 +282,7 @@ public class Engine implements ReadingListener {
     
     void loadInitialTransmitters() {
         transmitters = new java.util.ArrayList();
-        // put in two dummies
-        transmitters.add(new Transmitter("sample 1", true, 1234, true));
-        transmitters.add(new Transmitter("sample 2", false, 4321, true));
-        // add the roster
+        // load transmitters from the JMRI roster
         java.util.List l = Roster.instance().matchingList(null, null, null, null, null, null, null);
         log.debug("Got "+l.size()+" roster entries");
         for (int i=0; i<l.size(); i++) {
@@ -289,6 +291,7 @@ public class Engine implements ReadingListener {
                 r = (RosterEntry)l.get(i);
                 int address = Integer.parseInt(r.getDccAddress());
                 Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
+                t.setRosterName(r.getId());
                 transmitters.add(t);
             } catch (Exception e) {
                 // just skip this entry
@@ -299,7 +302,7 @@ public class Engine implements ReadingListener {
             } 
         }
         
-        // get polling status, if possible
+        // load the polling status, custom IDs, etc, from file if possible
         try {
             loadPollConfig(new File(PollingFile.defaultFilename()));
         } catch (Exception e) {
@@ -349,12 +352,17 @@ public class Engine implements ReadingListener {
         return transmitters.size();
     }
     
+    public String getPolledID() {
+        Transmitter t = getTransmitter(pollIndex);
+        if (t==null) return "";
+        return t.getID();
+    }
+    
     public int getPolledAddress() {
         Transmitter t = getTransmitter(pollIndex);
         if (t==null) return -1;
         return t.getAddress();
     }
-    
     /**
      * The real core of the polling, this selects the next one to 
      * poll. -1 means none selected, try again later.

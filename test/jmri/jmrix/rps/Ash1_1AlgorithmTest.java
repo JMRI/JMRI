@@ -18,7 +18,7 @@ import javax.vecmath.Point3d;
  * The default transmitter location is (3,2,1)
  * 
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Ash1_1AlgorithmTest extends TestCase {
         
@@ -41,13 +41,13 @@ public class Ash1_1AlgorithmTest extends TestCase {
 	    Point3d s5 = new Point3d(0.0f,  13.0f, 9.0f);
 	    Point3d s[] = new Point3d[]{s1,s2,s3,s4,s5};
 	    
-	    Reading r = new Reading(21, new double[]{time(s1), time(s2), time(s3), 
+	    Reading r = new Reading("21", new double[]{time(s1), time(s2), time(s3), 
 	                                            time(s4), time(s5)});
 
 	    Calculator c = new Ash1_1Algorithm(s, vs);
 	    
 	    Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-	    Assert.assertEquals("ID ok", 21, m.getID());
+	    Assert.assertEquals("ID ok", "21", m.getID());
 	    Assert.assertEquals("x close", true, Math.abs(m.x-3.)<0.001);
 	    Assert.assertEquals("y close", true, Math.abs(m.y-2.)<0.001);
 	    Assert.assertEquals("z close", true, Math.abs(m.z-1.)<0.001);
@@ -60,13 +60,13 @@ public class Ash1_1AlgorithmTest extends TestCase {
 	    Point3d s5 = new Point3d(0.0f,  13.0f, 9.0f);
 	    Point3d s[] = new Point3d[]{s2,s3,s4,s5};
 	    
-	    Reading r = new Reading(21, new double[]{time(s2), time(s3), 
+	    Reading r = new Reading("21", new double[]{time(s2), time(s3), 
 	                                            time(s4), time(s5)});
 
 	    Calculator c = new Ash1_1Algorithm(s, vs);
 	    
 	    Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-	    Assert.assertEquals("ID ok", 21, m.getID());
+	    Assert.assertEquals("ID ok", "21", m.getID());
 	    Assert.assertEquals("x close", true, Math.abs(m.x-3.)<0.001);
 	    Assert.assertEquals("y close", true, Math.abs(m.y-2.)<0.001);
 	    Assert.assertEquals("z close", true, Math.abs(m.z-1.)<0.001);
@@ -79,13 +79,13 @@ public class Ash1_1AlgorithmTest extends TestCase {
 	    Point3d s5 = new Point3d(0.0f,  13.0f, 9.0f);
 	    Point3d s[] = new Point3d[]{s1,s3,s4,s5};
 	    
-	    Reading r = new Reading(21, new double[]{time(s1), time(s3), 
+	    Reading r = new Reading("21", new double[]{time(s1), time(s3), 
 	                                            time(s4), time(s5)});
 
 	    Calculator c = new Ash1_1Algorithm(s, vs);
 	    
 	    Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-	    Assert.assertEquals("ID ok", 21, m.getID());
+	    Assert.assertEquals("ID ok", "21", m.getID());
 	    Assert.assertEquals("x close", true, Math.abs(m.x-3.)<0.001);
 	    Assert.assertEquals("y close", true, Math.abs(m.y-2.)<0.001);
 	    Assert.assertEquals("z close", true, Math.abs(m.z-1.)<0.001);
@@ -98,13 +98,13 @@ public class Ash1_1AlgorithmTest extends TestCase {
 	    Point3d s5 = new Point3d(0.0f,  13.0f, 9.0f);
 	    Point3d s[] = new Point3d[]{s1,s2,s4,s5};
 	    
-	    Reading r = new Reading(21, new double[]{time(s1), time(s2), 
+	    Reading r = new Reading("21", new double[]{time(s1), time(s2), 
 	                                            time(s4), time(s5)});
 
 	    Calculator c = new Ash1_1Algorithm(s, vs);
 	    
 	    Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-	    Assert.assertEquals("ID ok", 21, m.getID());
+	    Assert.assertEquals("ID ok", "21", m.getID());
 	    Assert.assertEquals("x close", true, Math.abs(m.x-3.)<0.001);
 	    Assert.assertEquals("y close", true, Math.abs(m.y-2.)<0.001);
 	    Assert.assertEquals("z close", true, Math.abs(m.z-1.)<0.001);

@@ -21,7 +21,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -246,8 +246,8 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
      */
     public void notify(Measurement m) {
         // only honor measurements to this icon if filtered
-        if (filterNumber >= 0 && m.getReading() != null && 
-                filterNumber != m.getReading().getID()) 
+        if (filterNumber != null && m.getReading() != null && 
+                !filterNumber.equals(m.getReading().getID())) 
             return;
         
         // remember this measurement for last position, e.g. for
@@ -283,20 +283,14 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         // Popup menu has trigger request for filter value
         String inputValue = JOptionPane.showInputDialog("Please enter a filter value");
         if (inputValue == null) return; // cancelled
-        try {
-            int filt = Integer.parseInt(inputValue);
-            // and store
-            setFilter(filt);
-        } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid ID value, filter not set", "Alert", JOptionPane.ERROR_MESSAGE);
-        }
+        setFilter(inputValue);
     }
     
-    public void setFilter(int num) {
-        filterNumber = num;
+    public void setFilter(String val) {
+        filterNumber = val;
     }
-    public int getFilter() { return filterNumber; }
-    int filterNumber = -1;
+    public String getFilter() { return filterNumber; }
+    String filterNumber = null;
     
     /**
      * (Temporarily) change occupancy on click

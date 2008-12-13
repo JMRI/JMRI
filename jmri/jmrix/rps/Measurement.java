@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Measurement {
 
@@ -44,8 +44,8 @@ public class Measurement {
      * Return the ID int of the transmitter
      * this measurement describes
      */
-    public int getID() {
-        if (r==null) return -1;
+    public String getID() {
+        if (r==null) return "<none>";
         return r.getID();
     }
     

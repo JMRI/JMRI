@@ -14,7 +14,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the RPS Sensor class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RpsSensorTest extends TestCase {
 
@@ -40,7 +40,7 @@ public class RpsSensorTest extends TestCase {
         
         Assert.assertTrue("1: not active",s.getKnownState()==Sensor.UNKNOWN);
 	
-        Reading loco = new Reading(21, null);
+        Reading loco = new Reading("21", null);
         Measurement m = new Measurement(loco, 0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);
         Assert.assertTrue("2: active",s.getKnownState()==Sensor.ACTIVE);
@@ -55,8 +55,8 @@ public class RpsSensorTest extends TestCase {
         
         Assert.assertTrue("1: not active",s.getKnownState()==Sensor.UNKNOWN);
 	
-        Reading loco1 = new Reading(21, null);
-        Reading loco2 = new Reading(34, null);
+        Reading loco1 = new Reading("21", null);
+        Reading loco2 = new Reading("34", null);
 	
         Measurement m = new Measurement(loco1, 0.5, 0.5, 0.0, 0.133, 3, "source");
         s.notify(m);

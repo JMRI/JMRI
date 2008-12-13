@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 abstract public class AbstractAlgorithmTest extends TestCase {
         
@@ -174,13 +174,13 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     
 	public void testCalc(Point3d[] receivers, double[] distances, Point3d result, String label,
 	                    int codemax, int codemin) {
-	    Reading r = new Reading(21, distances);
+	    Reading r = new Reading("21", distances);
 	    	    
 	    Calculator c = getAlgorithm(receivers, vs);
 	    
 	    Measurement m = c.convert(r, result);
 
-	    Assert.assertEquals(label+" ID ok", 21, m.getID());
+	    Assert.assertEquals(label+" ID ok", "21", m.getID());
 
 	    if (!(Math.abs(m.x-result.x)<tolerance)) System.err.println(label+" x not close "+m.x+" "+result.x);
 	    Assert.assertEquals(label+" x close", true, Math.abs(m.x-result.x)<tolerance);
