@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.24 2008-10-16 02:30:13 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.25 2008-12-14 19:32:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
- JMRI: MacOS X Install Guide
+ JMRI: Mac OS X Install Guide
  
  </TITLE>
 <!-- Style -->
@@ -55,22 +55,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <H1> 
-      JMRI Install Guide: MacOS X
+      JMRI Install Guide: Mac OS X
       </H1>
 
       <OL>
         <LI>Determine if your system software is up to date</LI>
 
-	    <p>MacOS X version 10.3 or later is required for JMRI.
-	    </p>
-
+	    <p>Mac OS X version 10.3 or later is required for JMRI.
+	    In the near future, Mac OS X version 10.4 or later will be 
+	    required, so if you're buying a computer for use on your 
+	    railroad you should probably get one that's
+	    <a href="http://support.apple.com/kb/HT1514?viewlocale=en_US">able to run Mac OS X 10.4</a>.
+	    <p>
+	    You should have enough memory for your computer to run well, but you don't need
+	    any more than that.
+        Having 50MB of free disk space is sufficient.
+        
 		<LI>Determine if you have the needed hardware.
 		
 	    <P>
-	    	No Macintosh that runs MacOS X has built-in serial ports,
+	    	No Macintosh that runs Mac OS X has built-in serial ports,
 	    	so you're likely to have to use a USB to serial adapter.
 
-	    <p>You will need MacOS X drivers for the serial hardware you're using.
+	    <p>You will need Mac OS X drivers for the serial hardware you're using.
 	      We test using a Keyspan PDA Adapter; those drivers are available at
 	      <a href="http://www.keyspan.com/downloads/">
 	      http://www.keyspan.com/downloads/</a>. Some device drivers will list
@@ -79,17 +86,17 @@
 	      must select the one that starts with "cu", e.g.
 	      "/dev/cu.KeyUSA19181.1".</p>
 	    <P>As of October, 2006, Belkin doesn't make a USB-to-serial
-	    adapter that works with MacOS X.  Their technical support
-	    has confirmed that they don't (yet) have MacOS X drivers for
+	    adapter that works with Mac OS X.  Their technical support
+	    has confirmed that they don't (yet) have Mac OS X drivers for
 	    their adapters.  
-	    <p>There's a MacOS X driver for USB-serial adapters
+	    <p>There's a Mac OS X driver for USB-serial adapters
 	    based on the Prolific PL2303 chipset 
 	    <a href="http://osx-pl2303.sourceforge.net/">available here</a>.
 	    If you can't access your USB dongle and it seems to use that
 	    chipset (you can check in the USB tab of System Profiler), 
 	    this driver will make it available as /dev/cu.PL2303-xxx.
 	     
-	    <P>Note that because of baud rate limitations in MacOS X itself,
+	    <P>Note that because of baud rate limitations in Mac OS X itself,
 	    it's not possible to use a Digitrax MS100 currently.
 	    <P>
 	    See our page on 
@@ -98,34 +105,34 @@
       
 	<LI>Install the serial communications libraries</LI>
 
-	 <p>Although MacOS X comes with an up-to-date Java, it doesn't
+	 <p>Although Mac OS X comes with an up-to-date Java, it doesn't
 	 include the Java communications libraries.  These are needed to
 	 talk to a command station, so we provide an installer.
 	 
 	 <P>
-	 If you're using MacOS X 10.5, 
+	 If you're using Mac OS X 10.5, 
 	 download the installer for the default communications library from
      <A HREF="http://prdownloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip?download">http://prdownloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip?download</a>
-     (This installer works for both PowerPC and Intel-based Macintoshes running MacOS X 10.5 only. The
+     (This installer works for both PowerPC and Intel-based Macintoshes running Mac OS X 10.5 only. The
      file name will be RXT-Leopard.pkg, but the splash screen will say "Tiger" and "10.4" due to an oversight; just ignore that)
 	 If the installer doesn't start automatically, double click on the downloaded and expanded file to install it.
-	 You will need the MacOS X administrator password to run the
+	 You will need the Mac OS X administrator password to run the
 	 installer.</p>
 	 <P>
-	 If you're using MacOS X 10.4, 
+	 If you're using Mac OS X 10.4, 
 	 download the installer for the default communications library from
      <A HREF="http://prdownloads.sourceforge.net/jmri/RXTX-for-Intel-Mac.pkg.zip?download">http://prdownloads.sourceforge.net/jmri/RXTX-for-Intel-Mac.pkg.zip?download</a>
      (This installer works for both PowerPC and Intel-based Macintoshes)
 	 Double click on the downloaded and expanded file to install it.
-	 You will need the MacOS X administrator password to run the
+	 You will need the Mac OS X administrator password to run the
 	 installer.</p>
 
      <P>
-	 If you're using MacOS X 10.2 or 10.3, 
+	 If you're using Mac OS X 10.2 or 10.3, 
 	 download the necessary installer for the default communications library from
      <A HREF="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller2.hqx?download">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller2.hqx?download</a>
 	 If the installer doesn't start automatically, double click on the downloaded and expanded file to install it.
-	 You will need the MacOS X administrator password to run the
+	 You will need the Mac OS X administrator password to run the
 	 installer.</p>
 
 	<p>Note that you will have to reinstall the driver and javax.com
@@ -183,7 +190,7 @@ have a configuration that doesn't use a layout connection so you can
 work with the program on a laptop away from the layout.
 
 <p>
-With MacOS X, JMRI makes this easy to do.  PanelPro and DecoderPro save
+With Mac OS X, JMRI makes this easy to do.  PanelPro and DecoderPro save
 their preferences separately, so they can be configured independently.
 
 <p>
