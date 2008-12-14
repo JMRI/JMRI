@@ -202,6 +202,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.Logix" url="html/tools/Logix.shtml" />
 	<mapID target="html.web.index" url="html/web/index.shtml" />
 	<mapID target="html.tools.signaling.Logic_face" url="html/tools/signaling/Logic.shtml#face" />
+	<mapID target="package.apps.AppConfigPanelErrorPage_locale" url="package/apps/AppConfigPanelErrorPage.shtml#locale" />
+	<mapID target="package.apps.AppConfigPanelErrorPage" url="package/apps/AppConfigPanelErrorPage.shtml" />
 	<mapID target="html.apps.DecoderPro.Files_location" url="html/apps/DecoderPro/Files.shtml#location" />
 	<mapID target="DecoderProManual.Comp_Speed_Top" url="DecoderProManual/Comp_Speed.shtml#Top" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_option" url="package/jmri/jmrit/display/LayoutEditor.shtml#option" />
@@ -335,6 +337,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.ScaleTrackDiagram" url="package/jmri/jmrit/display/ScaleTrackDiagram.shtml" />
 	<mapID target="package.jmri.jmrit.dispatcher.AllocateExtra" url="package/jmri/jmrit/dispatcher/AllocateExtra.shtml" />
 	<mapID target="Acknowledgements_F" url="Acknowledgements.shtml#F" />
+	<mapID target="package.apps.AppConfigPanelErrorPage_advanced" url="package/apps/AppConfigPanelErrorPage.shtml#advanced" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_xing" url="package/jmri/jmrit/display/LayoutEditor.shtml#xing" />
 	<mapID target="Acknowledgements_J" url="Acknowledgements.shtml#J" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_filemenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#filemenu" />
@@ -457,6 +460,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.fastclock.index" url="html/tools/fastclock/index.shtml" />
 	<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q" />
 	<mapID target="package.jmri.jmrit.operations.Operations_Interchange" url="package/jmri/jmrit/operations/Operations.shtml#Interchange" />
+	<mapID target="package.apps.AppConfigPanelErrorPage_basic" url="package/apps/AppConfigPanelErrorPage.shtml#basic" />
 	<mapID target="package.jmri.jmrix.rps.swing.polling.PollTableFrame" url="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml" />
 	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.shtml" />
 	<mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml" />
@@ -501,6 +505,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter1_HowToFind" url="html/tools/throttle/ThrottleChapter1.shtml#HowToFind" />
 	<mapID target="index" url="index.html" />
+	<mapID target="package.apps.AppConfigPanelErrorPage_actions" url="package/apps/AppConfigPanelErrorPage.shtml#actions" />
 	<mapID target="html.apps.PanelPro.FAQ_location" url="html/apps/PanelPro/FAQ.shtml#location" />
 	<mapID target="html.tools.signaling.index_widgets" url="html/tools/signaling/index.shtml#widgets" />
 	<mapID target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame" url="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml" />
@@ -582,8 +587,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml" />
 	<mapID target="Acknowledgements_L" url="Acknowledgements.shtml#L" />
 	<mapID target="DecoderProManual.Basic_Programming_Basic 2" url="DecoderProManual/Basic_Programming.shtml#Basic 2" />
-	<mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable" />
 	<mapID target="package.jmri.jmrit.beantable.BlockTable" url="package/jmri/jmrit/beantable/BlockTable.shtml" />
+	<mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable" />
 	<mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml" />
 	<mapID target="package.jmri.jmrit.operations.Operations_EnginesAdd" url="package/jmri/jmrit/operations/Operations.shtml#EnginesAdd" />
 	<mapID target="Acknowledgements_X" url="Acknowledgements.shtml#X" />
