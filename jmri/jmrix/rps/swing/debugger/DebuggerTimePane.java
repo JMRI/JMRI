@@ -16,7 +16,7 @@ import java.io.*;
  * as the RPS hardware number.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -104,14 +104,8 @@ public class DebuggerTimePane extends JPanel
     Measurement lastPoint = null;
     
     public void notify(Reading r) {
-        // This implementation creates a new Calculator
-        // each time to ensure that the most recent
-        // receiver positions are used; this should be
-        // replaced with some notification system
-        // to reduce the work used.
-
         // Display this set of time values
-        for (int i = 1; i<=Math.min(r.getNValues(), times.length); i++) {
+        for (int i = 1; i<=Math.min(r.getNValues(), times.length-1); i++) {
             times[i].setText(nf.format(r.getValue(i)));
         }
         
