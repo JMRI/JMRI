@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.32 $ -->
+<!-- Revision $Revision: 1.33 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -379,6 +379,15 @@
     </exec>
   </target>
 
+  <target name="zip" depends="init" 
+            description="build a .zip file of decoders">
+    <zip
+        basedir="${jartarget}"
+        destfile="decoders.zip"
+        includes="xml/decoders/*.xml"
+    />
+  </target>
+  
   <target name="mark" depends="init" 
             description="mark the Version.java file with today's date">
     <replaceregexp file="${source}/jmri/Version.java"
