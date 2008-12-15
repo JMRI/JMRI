@@ -51,7 +51,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.61 $
+ * @version    $Revision: 1.62 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -187,6 +187,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         this.setIsForward(throttle.getIsForward());
         this.setSpeedValues((int) throttle.getSpeedIncrement(),
                             (int) throttle.getSpeedSetting());
+        this.setSpeedSteps(throttle.getSpeedStepMode());
         this.throttle.addPropertyChangeListener(this);
         if(log.isDebugEnabled()) {
            jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
@@ -761,7 +762,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.61 $
+     * @version    $Revision: 1.62 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
