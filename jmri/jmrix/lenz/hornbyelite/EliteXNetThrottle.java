@@ -17,11 +17,15 @@ import jmri.jmrix.lenz.XNetConstants;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
 {
+
+    protected static final int statTimeoutValue = 5000;//Interval to check the
+                                                        //status of the throttle
+
     /**
      * Constructor
      */
@@ -55,6 +59,10 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
                                                          XNetInterface.THROTTLE, this);
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor called for address " + address ); }
+        // because the elite is not sending out a broadcast message when 
+        // another throttle takes over, we need to send a status request 
+        // periodically to find out if we are still in control.
+        startStatusTimer();
     }
     
     /**
@@ -98,7 +106,71 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
 		log.debug("Momentary function request not supported by Elite.");
           return;
     }
-    
+ 
+
+   // Status Information processing routines
+   // Used for return values from Status requests.
+
+   // Get SpeedStep and availability information
+   protected void parseSpeedandAvailability(int b1)
+   {
+       /* the first data bite indicates the speed step mode, and
+          if the locomotive is being controlled by another throttle */
+
+          if((b1 & 0x08)==0x08 && this.isAvailable)
+          {
+              log.info("Loco " +getDccAddress() + " In use by another device");               setIsAvailable(false);
+          } else if ((b1&0x08)==0x00 && !this.isAvailable) {
+              if(log.isDebugEnabled()) { log.debug("Loco Is Available"); }
+              setIsAvailable(true);
+          }                                              
+          // The Hornby Elite ALWAYS sends 14 speed steps in its responses,
+          // so ignore the Speed Step portion of this byte (i.e. use the 
+          // speed step mode set by the user in the throttle front end).
+    }
+
+    /*
+     * Set up the status timer, and start it.
+     */
+    protected void startStatusTimer() {
+        if(statTimer==null) {
+            statTimer = new javax.swing.Timer(statTimeoutValue,new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        /* If the timer times out, just send a status
+                           request message */
+                        sendStatusInformationRequest();
+                    }
+                });
+        }
+        statTimer.stop();
+        statTimer.setInitialDelay(statTimeoutValue);
+        statTimer.setRepeats(true);
+        statTimer.start();
+    }
+
+    /*
+     * Stop the Status Timer
+     * NOTE: This overrides the default behavior, because we don't 
+     * want to stop the status timer with the Elite.
+     */
+    protected void stopStatusTimer() 
+    {
+	//no-op
+    }
+
+   /**
+    * Dispose when finished with this object.  After this, further usage of
+    * this Throttle object will result in a JmriException.
+    *
+    * This is quite problematic, because a using object doesn't know when
+    * it's the last user.
+    */
+    public void dispose()
+    {
+       if(statTimer!=null) statTimer.stop();
+       super.dispose();
+    }
+
     // register for notification
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetThrottle.class.getName());
 }
