@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.7 on Tue Dec 02 16:55:26 PST 2008 $Id: decoderIndex.xml,v 1.132 2008-12-03 00:57:03 jacobsen Exp $-->
+  <!--Written by JMRI version 2.3.7 on Sun Dec 14 21:36:29 PST 2008 $Id: decoderIndex.xml,v 1.133 2008-12-15 05:38:42 jacobsen Exp $-->
   <decoderIndex version="153">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1320,6 +1320,11 @@
         <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="70" width="9.2" height="5.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1638.xml">
+        <model model="Mini HO EMD Modern Large Diesel Sound 1638" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="33.0" width="10.5" height="5.0" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1639.xml">
