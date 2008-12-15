@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.8.shtml,v 1.6 2008-12-11 20:20:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.8.shtml,v 1.7 2008-12-15 05:40:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -152,6 +152,13 @@ Ronnie Pinkerton added a control so you can turn off scroll bars on the Layout E
 <p>
 Paul Fraker provided a ecoder definition file for the 
 MRC Sheer Brilliance Mini HO EMD Modern Large Diesel Sound Decoder model 1638.
+
+<P>
+Transmitter IDs in the <a href="">RPS</a> system can now be set to any string
+instead of just the transmitter address number.  The polling control table has a
+column where you can change the ID string for each transmitter.  
+Initially, they're the name (ID) of the corresponding entry in the main 
+DecoderPro roster.
 
 <!--#include virtual="/Footer" -->
 
