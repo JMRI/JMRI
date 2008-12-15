@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.73 $
+ * @version     $Revision: 1.74 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -106,7 +106,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+configOK);
         if (!configOK) { 
-            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanel");
+            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
             doPreferences();
         }
         log.debug("Done with doPreferences, start statusPanel");
