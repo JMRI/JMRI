@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -69,10 +69,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         
         // get ready to display
         pack();
-
-        // start the timer for updates
-        timer.setRepeats(true);     // in case we run by
-        timer.start();
 
     }
     
@@ -144,6 +140,9 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
  
     public void setSource(DataSource s) {
         source = s;
+        // start the timer for updates
+        timer.setRepeats(true);     // in case we run by
+        timer.start();
     }
     
     public void dispose() {
