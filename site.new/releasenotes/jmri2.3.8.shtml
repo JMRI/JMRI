@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.3.8.shtml,v 1.8 2008-12-15 07:52:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.3.8.shtml,v 1.9 2008-12-15 08:05:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,7 +49,10 @@ production release.
 It contains 
 many new features, including:
 <ul>
-<LI>
+<LI>Several decoder updates
+<li>Control over Layout Editor scroll bars
+<li>Improvements to RPS support
+<li>British terminology updates
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -153,7 +156,7 @@ Dick Bronson updated the decoder definition file for the Tower Controller 64.
 Ronnie Pinkerton added a control so you can turn off scroll bars on the Layout Editor.
 
 <p>
-Paul Fraker provided a ecoder definition file for the 
+Paul Fraker provided a decoder definition file for the 
 MRC Sheer Brilliance Mini HO EMD Modern Large Diesel Sound Decoder model 1638.
 
 <P>
