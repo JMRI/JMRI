@@ -17,13 +17,13 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class BlockBossLogicTest extends TestCase {
 
 	synchronized void releaseThread() {
 		try {
-		    Thread.sleep(20);
+		    Thread.sleep(100);
 			// super.wait(100);
 		}
 		catch (InterruptedException e) {
