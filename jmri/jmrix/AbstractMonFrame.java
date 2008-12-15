@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -60,11 +60,15 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
 
+	// for locking
+	AbstractMonFrame self;
+	
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
     public AbstractMonFrame() {
 	    super();
+    	self = this;
     }
 
     public void initComponents() throws Exception {
@@ -222,7 +226,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
         // display decoded data
         sb.append(line);
-		synchronized( linesBuffer )
+		synchronized( self )
 		{
 			linesBuffer.append( sb.toString() );
 		}
@@ -231,7 +235,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
                 public void run() {
-					synchronized( linesBuffer )
+					synchronized( self )
 					{
 						monTextPane.append( linesBuffer.toString() );
 						int LineCount = monTextPane.getLineCount() ;
