@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Backup extends XmlFile {
 
@@ -93,6 +93,22 @@ public class Backup extends XmlFile {
 					+ e);
 		}
 		return backupDirectoryNames;
+	}
+	
+	/**
+	 * Check to see if a backup operations directory already exists
+	 * @param directoryName
+	 * @return true if it exists
+	 */
+	public boolean checkDirectoryExists(String directoryName){
+		try {
+			File file = new File(backupDirectory + File.separator + directoryName);
+			if (file.exists())
+				return true;
+		} catch (Exception e) {
+			log.error("Exception during directory exists check");
+		}
+		return false;
 	}
 	
 	/**

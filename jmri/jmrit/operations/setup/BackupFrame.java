@@ -23,7 +23,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for backing up operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class BackupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -92,6 +92,14 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == backupButton){
 			log.debug("backup button activated");
+			// check to see if directory already exists
+			if (backup.checkDirectoryExists(backupTextField.getText())){
+				if(JOptionPane.showConfirmDialog(this, "Directory "
+						+ backupTextField.getText() + " already exists, overwrite it?",
+						"Overwrite backup directory?", JOptionPane.OK_CANCEL_OPTION)!= JOptionPane.OK_OPTION) {
+					return;
+				}
+			}
 			boolean success = backup.backupFiles(backupTextField.getText());
 			if (success){
 				dispose();
