@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.19 2008-12-12 02:42:01 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.20 2008-12-16 18:33:23 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -260,7 +260,7 @@ you want to exclude from the yard.
 
 You can enter an optional comment for the yard.
 
-<H3>Save Yard</H3>
+<H3>Save Yard Track</H3>
 
 Press the "Save Yard Track" to save your work. The program will create a
 file (OperationsLocationRoster.xml) in your JMRI directory in a folder
@@ -662,12 +662,12 @@ setting the number of moves, maximum length, or coordinates, click on
 the table to make sure it is recognized by the program, then hit "Save
 Route."</P>
 
-<H3>Save</H3>
+<H3>Save Route</H3>
 
-Press "Save" to save your route. The program will create a file
+Press "Save Route" to save your route. The program will create a file
 (OperationsRouteRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-routes is also created each time the "Save" button is pressed. 
+routes is also created each time the "Save Route" button is pressed. 
 
 <A NAME="Trains"></A>
 <H2>Trains</H2>
@@ -731,12 +731,12 @@ been assigned to a train. Useful when you want to try various build
 options and don't what to physically move engines and cars on the
 railroad.
 
-<H3>Save</H3>
+<H3>Save Train</H3>
 
-Press "Save" to save your train. The program will create a file
+Press "Save Train" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-trains is also created each time the "Save" button is pressed.
+trains is also created each time the "Save Train" button is pressed.
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
@@ -811,7 +811,7 @@ train, car, engine, and location xml files. Anytime you "Move" a train
 the operations program will make changes to the train, car, engine, and
 location databases. These databases must be saved before you shut down
 JMRI, otherwise you will lose all of the changes that the operations
-program made to move a train to the next location. Pressing the "Saves
+program made to move a train to the next location. Pressing the "Save
 Builds" button before quitting JMRI allows the operations program to
 resume exactly at the point where you pressed the "Save Builds" button.
 
