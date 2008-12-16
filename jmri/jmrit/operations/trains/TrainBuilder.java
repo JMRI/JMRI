@@ -27,6 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -54,7 +55,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -66,6 +67,7 @@ public class TrainBuilder extends TrainCommon{
 	private static final String BUILDING = rb.getString("Building");
 	private static final String BUILT = rb.getString("Built") + " ";
 	private static final String PARTIALBUILT = rb.getString("Partial") + " ";
+	private static final String NEWLINE = "\n";
 		
 	// build variables shared between local routines
 	Train train;		// the train being built
@@ -278,7 +280,7 @@ public class TrainBuilder extends TrainCommon{
     	for (int i=0; i<types.length; i++){
     		typeNames = typeNames + types[i]+" ";
     	}
-    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services car types: "+typeNames);
+    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services rolling stock types: "+typeNames);
     	for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getCarById((String) carList.get(carIndex));
     		// remove cars that don't have a valid track
@@ -743,6 +745,14 @@ public class TrainBuilder extends TrainCommon{
 	// This routine will also pick the destination track if the train is
 	// terminating into staging, therefore this routine should only be called once when return is true.
 	private boolean getEngines(PrintWriter fileOut){
+		// show engine types that this train will service
+		String[] engineTypes = EngineTypes.instance().getNames();
+		String typeNames ="";
+    	for (int i=0; i<engineTypes.length; i++){
+    		if (train.acceptsTypeName(engineTypes[i]))
+    			typeNames = typeNames + engineTypes[i]+" ";
+    	}
+    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+typeNames);
 		// show engine requirements for this train
 		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
 				
@@ -768,7 +778,14 @@ public class TrainBuilder extends TrainCommon{
 		// remove engines not at departure, wrong road name, or part of consist (not lead)
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
-			addLine(fileOut, FIVE, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
+			addLine(fileOut, FIVE, "Engine ("+engine.getId()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") type ("+engine.getType()+")"+NEWLINE+" at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
+			// remove engines with types that train does not service
+			if (!train.acceptsTypeName(engine.getType())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getId()+"), type ("+engine.getType()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
 			// remove engines that have been assigned destinations
 			if (engine.getDestination() != null && !engine.getDestination().equals(terminateLocation)){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getId()+") it has an assigned destination ("+engine.getDestination().getName()+")");
@@ -1021,8 +1038,8 @@ public class TrainBuilder extends TrainCommon{
 		if ((trainDir & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
 			return true;
 		else {
-			addLine(file, FIVE, "Can't add car ("+car.getId()+") to "
-					+trainDirection+"bound train, location ("+car.getLocation().getName()
+			addLine(file, FIVE, "Can not pick up car ("+car.getId()+") using "
+					+trainDirection+"bound train, location"+NEWLINE+" ("+car.getLocation().getName()
 					+", "+car.getTrack().getName()+") does not service this direction");
 			return false;
 		}
@@ -1053,7 +1070,7 @@ public class TrainBuilder extends TrainCommon{
 			if (car.getKernel() != null)
 				length = car.getKernel().getLength();
 			if (carInTrain && rlt.getTrainLength()+ length > rlt.getMaxTrainLength()){
-				addLine(file, FIVE, "Can't add car ("+car.getId()+") length ("+length+") to train, it would exceed train length restrication at "+rlt.getName());
+				addLine(file, FIVE, "Can not pick up car ("+car.getId()+") length ("+length+") using train,"+NEWLINE+" it would exceed train length restrication at "+rlt.getName());
 				return false;
 			}
 		}
@@ -1079,7 +1096,7 @@ public class TrainBuilder extends TrainCommon{
 		if ((serviceTrainDir & trainDir) >0){
 			return true;
 		} else {
-			addLine(file, FIVE, "Can't add car ("+car.getId()+") to "+trainDirection+"bound train, destination ("+track+") does not service this direction");
+			addLine(file, FIVE, "Can not drop car ("+car.getId()+") using "+trainDirection+"bound train,"+NEWLINE+" destination track ("+track+") does not service this direction");
 			return false;
 		}
 	}

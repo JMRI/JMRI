@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -40,7 +40,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     
 	/** record the single instance **/
 	private static TrainManager _instance = null;
-	private static int _id = 0;
+	private static int _id = 0;		// train ids
+	private static boolean trainsloaded = false;
 
 	public static synchronized TrainManager instance() {
 		if (_instance == null) {
@@ -49,12 +50,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			_instance = new TrainManager();
 			OperationsXml.instance();				// load setup
 			TrainManagerXml.instance();				// load trains
-			log.debug("Trains have been loaded!");
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("TrainManager returns instance "+_instance);
 		return _instance;
 	}
 
+	public void setTrainsLoaded(){
+		trainsloaded = true;
+		log.debug("Trains have been loaded!");
+	}
  
     public boolean getBuildReport(){
     	return _buildReport;
@@ -103,18 +107,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
      
     public Train getTrainByName(String name) {
-    	Train l;
+		if (!trainsloaded)
+			log.error("TrainManager getTrainByName called before trains completely loaded!");
+    	Train train;
     	Enumeration en =_trainHashTable.elements();
     	for (int i = 0; i < _trainHashTable.size(); i++){
-    		l = (Train)en.nextElement();
-    		if (l.getName().equals(name))
-    			return l;
+    		train = (Train)en.nextElement();
+    		if (train.getName().equals(name))
+    			return train;
       	}
     	log.debug("train "+name+" doesn't exist");
         return null;
     }
     
     public Train getTrainById (String id){
+		if (!trainsloaded)
+			log.error("TrainManager getTrainById called before trains completely loaded!");
     	return (Train)_trainHashTable.get(id);
     }
  
@@ -301,6 +309,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     private List getList() {
+		if (!trainsloaded)
+			log.error("TrainManager getList called before trains completely loaded!");
         String[] arr = new String[_trainHashTable.size()];
         List out = new ArrayList();
         Enumeration en = _trainHashTable.keys();

@@ -185,14 +185,23 @@ public class TrainManagerXml extends XmlFile {
             for (int i=0; i<l.size(); i++) {
                 manager.register(new Train((Element)l.get(i)));
             }
+            
+            manager.setTrainsLoaded();	// set flag
 
             List trainList = manager.getTrainsByIdList();
+            
+            // load train icon if needed
+            for (int i = 0; i < trainList.size(); i++) {
+                //Get a RosterEntry object for this index
+            	Train train = manager.getTrainById((String)trainList.get(i));
+            	train.loadTrainIcon();
+            }
+                
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < trainList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	String trainId = (String)trainList.get(i);
-	        	Train train = manager.getTrainById(trainId);
+            	Train train = manager.getTrainById((String)trainList.get(i));
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = train.getComment();

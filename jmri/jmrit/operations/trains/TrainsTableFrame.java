@@ -29,11 +29,11 @@ import javax.swing.WindowConstants;
 
 
 /**
- * Frame for adding and editing the route roster for operations.
+ * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
