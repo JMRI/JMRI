@@ -34,7 +34,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -546,6 +546,7 @@ public class OperationsTrainsTest extends TestCase {
                 train1.setCabooseRoad("CP");
                 train1.addTypeName("Caboose");
                 train1.addTypeName("Boxcar");
+                train1.addTypeName("Diesel");
                 train1.setRoadOption("All");
                 train1.addTrainSkipsLocation("North Industries");
                 train1.setRoute(r1);
