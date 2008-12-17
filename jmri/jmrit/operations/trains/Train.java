@@ -54,7 +54,7 @@ import org.jdom.Element;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.32 $
+ * @version             $Revision: 1.33 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -225,7 +225,8 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
-		log.debug("Train (" +getName()+ ") has " +carPickups+ " pickups and "+carDrops+ " drops");
+		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), "+numberOfLocations+" locations and a total " 
+				+carPickups+ " pickups and "+carDrops+ " drops");
 		// TODO use fast clock to get current time vs departure time
 		// for now use relative
 		int minutes = numberOfLocations*Setup.getTravelTime() + carPickups*Setup.getSwitchTime() + carDrops*Setup.getSwitchTime(); 
@@ -548,15 +549,9 @@ public class Train implements java.beans.PropertyChangeListener {
      * The number of cars worked by this train
      */
     public int getNumberCarsWorked(){
-    	int NumCars = 0;
     	CarManager carManager = CarManager.instance();
-    	List cars = carManager.getCarsByTrainList();
-    	for (int i=0; i<cars.size(); i++){
-    		Car car = carManager.getCarById((String)cars.get(i));
-    		if(this == car.getTrain() && car.getRouteLocation() != null)
-    			NumCars++;
-    	}
-    	return NumCars;
+    	List cars = carManager.getCarsByTrainList(this);
+    	return cars.size();
     }
     
     public void setDescription(String description) {
@@ -837,6 +832,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * engines, cars, and train icon.
 	 */
 	public void move() {
+		log.debug("Move train "+getName());
 		if (getRoute() == null || getCurrentLocation() == null)
 			return;
 		List routeList = getRoute().getLocationsBySequenceList();
@@ -1007,9 +1003,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	private void moveCars(RouteLocation old, RouteLocation next){
-		int oldNum = getNumberCarsWorked();
+		log.debug("Move cars in train "+getName());
 		CarManager carManager = CarManager.instance();
-		List cars = carManager.getCarsByTrainList();
+		List cars = carManager.getCarsByTrainList(this);
+		int oldNum = cars.size();
 		int dropCars = 0;
 		int pickupCars = 0;
 		int departCars = 0;

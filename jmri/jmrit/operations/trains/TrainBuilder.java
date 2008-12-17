@@ -55,7 +55,7 @@ import org.jdom.Element;
  * Utilities to build trains and move them. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1159,7 +1159,7 @@ public class TrainBuilder extends TrainCommon{
 		if (engine != null)
 			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+engine.getLocationName()+", "+engine.getTrackName());
 		
-		List carList = carManager.getCarsByTrainList(train);
+		List carList = carManager.getCarsByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
 		int cars = 0;
 		List routeList = train.getRoute().getLocationsBySequenceList();

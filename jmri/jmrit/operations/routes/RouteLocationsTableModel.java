@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -87,7 +87,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(80);
+		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);

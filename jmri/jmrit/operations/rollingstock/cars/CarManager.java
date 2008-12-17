@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 /**
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -546,7 +546,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	 * @param train
 	 * @return Ordered list of cars assigned to the train
 	 */
-    public List getCarsByTrainList(Train train) {
+    public List getCarsByTrainDestinationList(Train train) {
     	// get cars available list
     	List available = getCarsAvailableTrainList(train);
     	List inTrain = new ArrayList();
@@ -587,6 +587,28 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	}
     	return out;
     }
+    
+    /**
+	 * return a list of cars assigned to a train 
+	 * 
+	 * @param train
+	 * @return List of cars assigned to the train
+	 */
+    public List getCarsByTrainList(Train train) {
+    	// get cars available list
+    	List byId = getCarsByIdNameList();
+    	List inTrain = new ArrayList();
+    	Car car;
+
+    	for (int i = 0; i < byId.size(); i++) {
+    		car = getCarById((String) byId.get(i));
+    		// get only cars that are assigned to this train
+    		if(car.getTrain() == train)
+    			inTrain.add(byId.get(i));
+    	}
+    	return inTrain;
+    }
+
 
     /**
      * The PropertyChangeListener interface in this class is
