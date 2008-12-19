@@ -24,9 +24,9 @@ import javax.swing.JComboBox;
 
 
 /**
- *
+ * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	

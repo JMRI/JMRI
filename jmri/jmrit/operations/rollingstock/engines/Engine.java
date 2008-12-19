@@ -9,6 +9,12 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.TrainManager;
 
+/**
+ * Represents an engine on the layout
+ * 
+ * @author Daniel Boudreau (C) Copyright 2008
+ * @version $Revision: 1.5 $
+ */
 public class Engine extends RollingStock {
 	
 	private Consist _consist = null;
@@ -68,6 +74,9 @@ public class Engine extends RollingStock {
 		return hp;
 	}
 	
+	/**
+	 * Set the engine length
+	 */
 	public void setLength(String length){
 		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
@@ -82,6 +91,10 @@ public class Engine extends RollingStock {
 		return length;
 	}
 	
+	/**
+	 * Place engine in a consist
+	 * @param consist
+	 */
 	public void setConsist(Consist consist) {
 		if (_consist == consist)
 			return;
@@ -101,6 +114,10 @@ public class Engine extends RollingStock {
 			firePropertyChange("consist", old, newName);
 	}
 
+	/**
+	 * Get the consist for this engine
+	 * @return null if engine isn't in a consist
+	 */
 	public Consist getConsist() {
 		return _consist;
 	}
@@ -112,6 +129,10 @@ public class Engine extends RollingStock {
 			return "";
 	}
 
+	/**
+	 * Used to check destination track to see if it will accept engine
+	 * @return status, see RollingStock.java
+	 */
 	public String testDestination(Location destination, Track track) {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(OKAY))

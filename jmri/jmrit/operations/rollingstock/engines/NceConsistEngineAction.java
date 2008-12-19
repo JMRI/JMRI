@@ -20,11 +20,10 @@ import jmri.util.StringUtil;
 
 
 /**
- * This routine can synchronize NCE consist with the operation's
- * engines.
+ * Starts the NceConsistEngine thread
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 

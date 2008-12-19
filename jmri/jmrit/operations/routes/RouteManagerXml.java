@@ -14,6 +14,12 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.roster.Roster;
 
+/**
+ * Loads and stores routes using xml files. 
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.6 $
+ */
 public class RouteManagerXml extends XmlFile {
 	
 	public RouteManagerXml(){

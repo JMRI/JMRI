@@ -1,5 +1,11 @@
 package jmri.jmrit.operations.setup;
 
+/**
+ * Operations settings. 
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.13 $
+ */
 import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;

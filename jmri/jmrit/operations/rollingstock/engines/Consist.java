@@ -3,6 +3,12 @@
 package jmri.jmrit.operations.rollingstock.engines;
 import java.util.*;
 
+/**
+ * A consist is a group of engines that is managed as one engine
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.3 $
+ */
 public class Consist {
 	
 	protected String _name ="";

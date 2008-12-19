@@ -17,6 +17,15 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 
+/**
+ * This routine will import cars into the operation database.
+ * 
+ * Each field is space delimited.  Field order:
+ * Number Road Type Length Weight Color Owner Year Location
+ * Note that all fields must be single words except for Location.
+ * @author Dan Boudreau Copyright (C) 2008
+ * @version $Revision: 1.3 $
+ */
 public class ImportCars extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");

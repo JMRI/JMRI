@@ -18,16 +18,10 @@ import jmri.util.StringUtil;
 
 
 /**
- * This routine will import engines into the operation database.
- * 
- * Each field is space delimited.  Field order:
- * Number Road Type Length Owner Year Location
- * Note that all fields must be single words except for Location.
+ * Starts the ImportEngines thread
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-
-
 public class ImportEngineAction extends AbstractAction {
 	
     public ImportEngineAction(String actionName, Component frame) {

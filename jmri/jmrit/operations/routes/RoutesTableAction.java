@@ -9,11 +9,11 @@ import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
- * PowerPanelFrame object.
+ * RoutesTableFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001
  * @author 	Daniel Boudreau Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class RoutesTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");

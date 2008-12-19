@@ -3,6 +3,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 import java.util.*;
 
+/**
+ * A Kernel is a group of cars that is managed as one car.
+ *
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version	$Revision: 1.2 $
+ */
 public class Kernel {
 	
 	protected String _name ="";

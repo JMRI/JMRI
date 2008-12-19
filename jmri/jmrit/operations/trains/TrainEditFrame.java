@@ -34,10 +34,10 @@ import java.text.MessageFormat;
 
 
 /**
- * Frame for user edit of route
+ * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

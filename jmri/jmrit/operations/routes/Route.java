@@ -19,8 +19,8 @@ import org.jdom.Element;
 /**
  * Represents a route on the layout
  * 
- * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version             $Revision: 1.5 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -81,6 +81,11 @@ public class Route implements java.beans.PropertyChangeListener {
     	firePropertyChange (DISPOSE, null, DISPOSE);
     }
  
+    /**
+     * Adds a location to the end of this route
+     * @param location
+     * @return RouteLocation created for the location added
+     */
     public RouteLocation addLocation (Location location){
     	_IdNumber++;
     	_sequenceNum++;
@@ -133,7 +138,10 @@ public class Route implements java.beans.PropertyChangeListener {
         // rl.addPropertyChangeListener(this);
     }
 
-	
+	/**
+	 * Delete a RouteLocation
+	 * @param rl
+	 */
     public void deleteLocation (RouteLocation rl){
     	if (rl != null){
     		rl.removePropertyChangeListener(this);
@@ -163,6 +171,11 @@ public class Route implements java.beans.PropertyChangeListener {
         return null;
     }
     
+    /**
+     * Get a RouteLocation by id
+     * @param id
+     * @return
+     */
     public RouteLocation getLocationById (String id){
     	return (RouteLocation)_routeHashTable.get(id);
     }
@@ -182,8 +195,8 @@ public class Route implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort ids by location sequence id.  
-     * @return list of location ids ordered by sequence ids
+     * Get a list of RouteLocation ids sorted by route order  
+     * @return list of RouteLocation ids ordered by sequence
      */
     public List getLocationsBySequenceList() {
 		// first get id list
@@ -216,8 +229,8 @@ public class Route implements java.beans.PropertyChangeListener {
 	}
     
     /**
-     * Moves a location up in the route table by decrementing the
-     * sequenceId for the location
+     * Moves a RouteLocation earlier in the route by decrementing the
+     * sequenceId for the RouteLocation
      * @param rl
      */
     public void moveLocationUp(RouteLocation rl){
@@ -248,6 +261,11 @@ public class Route implements java.beans.PropertyChangeListener {
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
     
+    /**
+     * Moves a RouteLocation later in the route by incrementing the
+     * sequenceId for the RouteLocation
+     * @param rl
+     */
     public void moveLocationDown(RouteLocation rl){
     	int sequenceId = rl.getSequenceId();
     	sequenceId++;

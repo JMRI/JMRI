@@ -19,7 +19,7 @@ import org.jdom.Element;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -188,6 +188,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _location;
 	}
 	
+	/**
+	 * Get rolling stock's location name
+	 * @return empty string if rolling stock isn't on layout
+	 */
 	public String getLocationName() {
 		if (_location != null)
 			return _location.getName();
@@ -195,6 +199,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			return "";
 	}
 	
+	/**
+	 * Get rolling stock's location id
+	 * @return empty string if rolling stock isn't on the layout
+	 */
 	public String getLocationId() {
 		if (_location != null)
 			return _location.getId();
@@ -206,6 +214,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _trackLocation;
 	}
 	
+	/**
+	 * Get rolling stock's track name
+	 * @return empty string if rolling stock isn't on a track
+	 */
 	public String getTrackName() {
 		if (_trackLocation != null)
 			return _trackLocation.getName();
@@ -213,6 +225,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			return "";
 	}
 	
+	/**
+	 * Get rolling stock's track id
+	 * @return empty string if rolling stock isn't on a track
+	 */
 	public String getTrackId() {
 		if (_trackLocation != null)
 			return _trackLocation.getId();
@@ -359,6 +375,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return status;
 	}
 	
+	/**
+	 * Used to check destination track to see if it will accept rolling stock
+	 * @param destination
+	 * @param track
+	 * @return status
+	 */
 	public String testDestination(Location destination, Track track) {
 		return RsTestDestination(destination, track);
 	}

@@ -15,10 +15,10 @@ import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.roster.Roster;
 
 /**
- * Location Manager.  Load and stores the locations for operations.
+ * Load and stores locations for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LocationManagerXml extends XmlFile {
 	

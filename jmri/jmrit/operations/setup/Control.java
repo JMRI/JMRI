@@ -1,5 +1,12 @@
 package jmri.jmrit.operations.setup;
 
+/**
+ * Controls for operations developers. Debug Property changes and instance
+ * creation, maximum panel width, etc.
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * 
+ */
 public class Control {
 	
 	// debug flags

@@ -19,8 +19,8 @@ import org.jdom.Element;
  * Represents a location in a route, a location can appear more
  * than once in a route.
  * 
- * @author Daniel Boudreau
- * @version             $Revision: 1.6 $
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version             $Revision: 1.7 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -118,6 +118,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _maxTrainLength;
 	}
 	
+	/**
+	 * Set the train length departing this location when building a train
+	 * @param length
+	 */
 	public void setTrainLength(int length){
 		int old = _trainLength;
 		_trainLength = length;
@@ -129,6 +133,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _trainLength;
 	}
 	
+	/**
+	 * Set the train weight departing this location when building a train
+	 * @param weight
+	 */
 	public void setTrainWeight(int weight){
 		int old = _trainWeight;
 		_trainWeight = weight;
@@ -147,10 +155,18 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 			firePropertyChange("maxCarMoves", Integer.toString(old), Integer.toString(moves));
 	}
 	
+	/**
+	 * Get the maximum number of moves for this location
+	 * @return maximum number of moves
+	 */
 	public int getMaxCarMoves(){
 		return _maxCarMoves;
 	}
 	
+	/**
+	 * Set the number of moves that this location has when building a train
+	 * @param moves
+	 */
 	public void setCarMoves(int moves){
 		int old = _carMoves;
 		_carMoves = moves;
@@ -195,6 +211,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _trainIconY;
 	}
 	
+	/**
+	 * Set that this location has a staging track when building a train
+	 * @param track
+	 */
 	public void setStagingTrack(Track track){
 		_stagingTrack = track;
 	}

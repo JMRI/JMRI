@@ -12,6 +12,12 @@ import jmri.jmrit.operations.setup.Setup;
 
 import jmri.jmrit.roster.Roster;
 
+/**
+ * Loads and stores the operation setup using xml files. 
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.4 $
+ */
 public class OperationsXml extends XmlFile {
 	
 	public OperationsXml(){

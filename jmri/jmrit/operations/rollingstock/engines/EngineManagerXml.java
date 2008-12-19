@@ -16,6 +16,13 @@ import jmri.jmrit.operations.setup.OperationsXml;
 
 import jmri.jmrit.roster.Roster;
 
+/**
+ * Loads and stores engines using xml files. Also loads and stores engine
+ * models, engine types, engine lengths, and engine consist names.
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.7 $
+ */
 public class EngineManagerXml extends XmlFile {
 	
 	public EngineManagerXml(){

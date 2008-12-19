@@ -23,9 +23,10 @@ import javax.swing.JComboBox;
 
 
 /**
+ * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -57,6 +58,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	}
 
 	/**
+	 * Get the number of cars in the roster
 	 * @return Number of cars in the Roster
 	 */
     public int getNumEntries() {
@@ -69,11 +71,19 @@ public class CarManager implements java.beans.PropertyChangeListener {
 
  
     /**
+     * Get Car by id
      * @return requested Car object or null if none exists
      */
     public Car getCarById(String carId) {
         return (Car)_carHashTable.get(carId);
     }
+    
+    /**
+     * Get Car by road and number
+     * @param carRoad car road
+     * @param carNumber car number
+     * @return requested Car object or null if none exists
+     */
     
     public Car getCarByRoadAndNumber (String carRoad, String carNumber){
     	String carId = Car.createId (carRoad, carNumber);
@@ -81,11 +91,11 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
  
     /**
-     * Finds an exsisting car or creates a new car if needed
+     * Finds an exsisting Car or creates a new Car if needed
      * requires car's road and number
-     * @param carRoad
-     * @param carNumber
-     * @return new car or existing car
+     * @param carRoad car road
+     * @param carNumber car number
+     * @return new car or existing Car
      */
     public Car newCar (String carRoad, String carNumber){
     	Car car = getCarByRoadAndNumber(carRoad, carNumber);
@@ -99,7 +109,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Load a car.
+     * Load a Car.
  	 */
     public void register(Car car) {
     	Integer oldSize = new Integer(_carHashTable.size());
@@ -108,7 +118,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Unload a car.
+     * Unload a Car.
      */
     public void deregister(Car car) {
     	car.setKernel(null);
@@ -119,6 +129,11 @@ public class CarManager implements java.beans.PropertyChangeListener {
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));
     }
     
+    /**
+     * Create a new Kernel
+     * @param name 
+     * @return Kernel
+     */
     public Kernel newKernel(String name){
     	Kernel kernel = getKernelByName(name);
     	if (kernel == null){
@@ -130,6 +145,10 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	return kernel;
     }
     
+    /**
+     * Delete a Kernel by name
+     * @param name
+     */
     public void deleteKernel(String name){
     	Kernel kernel = getKernelByName(name);
     	if (kernel != null){
@@ -140,6 +159,11 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	}
     }
     
+   /**
+    * Get a Kernel by name
+    * @param name
+    * @return named Kernel
+    */
     public Kernel getKernelByName(String name){
     	Kernel kernel = (Kernel)_kernelHashTable.get(name);
     	return kernel;
@@ -164,6 +188,10 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	}
     }
     
+    /**
+     * Get a list of kernel names
+     * @return ordered list of kernel names
+     */
     public List getKernelNameList(){
     	String[] arr = new String[_kernelHashTable.size()];
     	List out = new ArrayList();
@@ -182,7 +210,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car id
      * @return list of car ids ordered by id
      */
-    public List getCarsByIdNameList() {
+    public List getCarsByIdList() {
         String[] arr = new String[_carHashTable.size()];
         List out = new ArrayList();
         Enumeration en = _carHashTable.keys();
@@ -202,7 +230,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
      */
     public List getCarsByRoadNameList() {
       	// first get by id list
-    	List sortById = getCarsByIdNameList();
+    	List sortById = getCarsByIdList();
     	// now re-sort
     	List out = new ArrayList();
     	String carRoad = "";
@@ -271,7 +299,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort by car type
+     * Sort by car type names
      * @return list of car ids ordered by car type
      */
     public List getCarsByTypeList() {
@@ -305,7 +333,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort by car kernel
+     * Sort by car kernel names
      * @return list of car ids ordered by car kernel
      */
     public List getCarsByKernelList() {
@@ -445,7 +473,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort by cars moves
+     * Sort by car moves
      * @return list of car ids ordered by car moves
      */
     public List getCarsByMovesList() {
@@ -497,7 +525,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	RouteLocation destination = null;
     	if (routeList.size()>1){
     		destination = route.getLocationById((String)routeList.get(routeList.size()-1));
-    		// However, if the destination is visited at least once, must include all cars
+    		// However, if the destination is visited more than once, must include all cars
     		RouteLocation test;
     		for (int i=0; i<routeList.size()-1; i++){
     			test = route.getLocationById((String)routeList.get(i));
@@ -507,58 +535,36 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			}
     		}
     	}
-    	// get cars by number list
-    	List carsSortByNum = getCarsByNumberList();
+    	// get cars by moves list
+    	List carsSortByMoves = getCarsByMovesList();
     	// now build list of available cars for this route
     	
     	boolean carAdded = false;
-    	Car c;
+    	Car car;
  
-    	for (int i = 0; i < carsSortByNum.size(); i++) {
-    		carAdded = false;
-    		c = getCarById((String) carsSortByNum.get(i));
-    		RouteLocation rl = route.getLocationByName(c.getLocationName());
+    	for (int i = 0; i < carsSortByMoves.size(); i++) {
+    		car = getCarById((String) carsSortByMoves.get(i));
+    		RouteLocation rl = route.getLocationByName(car.getLocationName());
     		// get cars that don't have an assigned train, or the assigned train is this one 
-    		if (rl != null && rl != destination && (c.getTrain() == null || train.equals(c.getTrain()))){
-    			// sort by car moves
-    			int inMoves = c.getMoves();
-    			for (int j = 0; j < out.size(); j++) {
-    				c = getCarById((String) out.get(j));
-    				int outMoves = c.getMoves();
-    				if (inMoves < outMoves) {
-    					out.add(j, carsSortByNum.get(i));
-    					carAdded = true;
-    					break;
-    				}
-    			}
-    			if (!carAdded) {
-    				out.add(carsSortByNum.get(i));
-    			}
+    		if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))){
+    			out.add(carsSortByMoves.get(i));
     		}
     	}
     	return out;
     }
     
     /**
-	 * return a list of cars assigned to a train sorted by destination.
+	 * Get a list of Cars assigned to a train sorted by destination.
 	 * Caboose or car with FRED will be the last car in the list 
 	 * 
 	 * @param train
-	 * @return Ordered list of cars assigned to the train
+	 * @return Ordered list of Cars assigned to the train
 	 */
     public List getCarsByTrainDestinationList(Train train) {
-    	// get cars available list
-    	List available = getCarsAvailableTrainList(train);
-    	List inTrain = new ArrayList();
+     	List inTrain = getCarsByTrainList(train);
     	Car car;
 
-    	for (int i = 0; i < available.size(); i++) {
-    		car = getCarById((String) available.get(i));
-    		// get only cars that are assigned to this train
-    		if(car.getTrain() == train)
-    			inTrain.add(available.get(i));
-    	}
-    	// now sort by track destination
+     	// now sort by track destination
     	List out = new ArrayList();
     	boolean carAdded;
     	boolean lastCarAdded = false;	// true if caboose or car with FRED added to train 
@@ -589,14 +595,14 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-	 * return a list of cars assigned to a train 
+	 * Get a list of Cars assigned to a train 
 	 * 
 	 * @param train
-	 * @return List of cars assigned to the train
+	 * @return List of Cars assigned to the train
 	 */
     public List getCarsByTrainList(Train train) {
     	// get cars available list
-    	List byId = getCarsByIdNameList();
+    	List byId = getCarsByIdList();
     	List inTrain = new ArrayList();
     	Car car;
 

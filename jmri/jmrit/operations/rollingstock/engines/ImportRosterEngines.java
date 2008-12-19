@@ -1,4 +1,4 @@
-// ImportEngines.java
+// ImportRosterEngines.java
 
 package jmri.jmrit.operations.rollingstock.engines;
 
@@ -21,6 +21,11 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+/**
+ * Import engines from the jmri Roster
+ * @author Daniel Boudreau Copyright (C) 2008
+ *
+ */
 public class ImportRosterEngines extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");

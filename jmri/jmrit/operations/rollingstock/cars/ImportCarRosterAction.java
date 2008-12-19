@@ -18,13 +18,9 @@ import jmri.util.StringUtil;
 
 
 /**
- * This routine will import cars into the operation database.
- * 
- * Each field is space delimited.  Field order:
- * Number Road Type Length Weight Color Owner Year Location
- * Note that all fields must be single words except for Location.
- * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * Starts the ImportCars thread
+ * @author Dan Boudreau Copyright (C) 2008
+ * @version $Revision: 1.2 $
  */
 
 

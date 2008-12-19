@@ -20,6 +20,11 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
+/**
+ * Builds a switchlist for a location on the railroad
+ * @author Daniel Boudreau (C) Copyright 2008
+ *
+ */
 public class TrainSwitchLists extends TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");

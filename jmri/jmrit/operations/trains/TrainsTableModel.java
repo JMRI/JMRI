@@ -26,10 +26,10 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.util.JmriJFrame;
 
 /**
- * Table Model for edit of routes used by operations
+ * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

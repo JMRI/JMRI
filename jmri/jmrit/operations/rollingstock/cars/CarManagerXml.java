@@ -16,6 +16,14 @@ import jmri.jmrit.operations.setup.OperationsXml;
 
 import jmri.jmrit.roster.Roster;
 
+/**
+ * Loads and stores cars using xml files.  Also loads and stores
+ * car road names, car types, car colors, car lengths, car owners,
+ * and car kernels.
+ *
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version	$Revision: 1.4 $
+ */
 public class CarManagerXml extends XmlFile {
 	
 	public CarManagerXml(){

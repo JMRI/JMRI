@@ -15,6 +15,13 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.roster.Roster;
 
+/**
+ * Loads and stores trains using xml files. Also stores various train
+ * parameters managed by the TrainManager.
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.5 $
+ */
 public class TrainManagerXml extends XmlFile {
 	
 	public TrainManagerXml(){

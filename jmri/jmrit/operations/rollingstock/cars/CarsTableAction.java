@@ -8,12 +8,11 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- * PowerPanelFrame object.
- *
- * @author	    Bob Jacobsen    Copyright (C) 2001
- * @author 	Daniel Boudreau Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * Swing action to create and register a CarsTableFrame object.
+ * 
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Daniel Boudreau Copyright (C) 2008
+ * @version $Revision: 1.2 $
  */
 public class CarsTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
