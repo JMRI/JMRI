@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.4.shtml,v 1.1 2008-12-20 04:19:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.4.shtml,v 1.2 2008-12-20 06:36:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -46,9 +46,23 @@ many new features, including:
    
 <li>New systems and devices supported:
         <ul>
-    	<li>
+    	<li><a href="http://jmri.sourceforge.net/help/en/html/hardware/can/cbus/index.shtml">CBUS</a>
+    	<li><a href="http://jmri.sourceforge.net/help/en/html/hardware/ecos/index.shtml">ESU ECoS</a>
+    	<li><a href="http://jmri.sourceforge.net/help/en/html/hardware/maple/index.shtml">Maple Systems</a>
+    	<li><a href="http://jmri.sourceforge.net/help/en/html/hardware/rps/index.shtml">RPS</a>
         </ul>
-<li>Improvements to:
+
+<li>Many new decoders, including:
+        <ul>
+        <li>New Lenz Standard decoder definition
+        <li>Several new MRC sound decoder definitions
+        <li>New Team Digital SRC16 definition
+        <li>Many new Tsunami definitions, including several diesels
+        <li>New definition for the Hornby 8249
+        <li>Many new and updated QSI definitions
+        </ul>
+
+<li>New features:
         <ul>
     	<li>
     	</ul>
@@ -58,7 +72,19 @@ many new features, including:
     
 <li>New sample scripts:
         <ul>
-	 	<li>
+	 	<li><a href="http://jmri.sourceforge.net/jython/DebounceSensor.py">DebounceSensor</a>, showing how to
+	 	    use JMRI scripting to "debounce" a sensor, removing momentary noise on the input
+	 	<li><a href="http://jmri.sourceforge.net/jython/NumberInput.py">NumberInput</a>, showing how to 
+	 	    use a series of sensors on a control panel to e.g. enter a track number in a memory
+	 	<li><a href="http://jmri.sourceforge.net/jython/ParallelPortTest.py">ParallelPortTest</a>
+	 	    and <a href="http://jmri.sourceforge.net/jython/ParallelPortTurnouts.py">ParallelPortTurnouts</a>, which
+	 	    demonstrate connecting JMRI to layout hardware through a parallel (printer) port.
+	 	<li><a href="http://jmri.sourceforge.net/jython/RosterLoop.py">RosterLoop</a> shows how to access
+	 	    the entire locomotive roster
+	 	<li><a href="http://jmri.sourceforge.net/jython/RobotThrottle.py">RobotThrottle</a> for automated
+	 	    running of trains
+	 	<li><a href="http://jmri.sourceforge.net/jython/USBThrottle.py">USBThrottle</a> for configuring a
+	 	    USB joystick or other control to act as a throttle.
         </ul>
 </ul>
 along with lots of other changes. The complete list can be found in the 
