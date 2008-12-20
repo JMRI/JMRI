@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialAddress {
 
@@ -70,7 +70,9 @@ public class SerialAddress {
         if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2){
             // This is a PLaxx address
             try {
-                num = 16*(hCodes.group(1).charAt(0)-minHouseCode) + ((Integer.parseInt(hCodes.group(2))) & 0x0F);
+            	int houseNum = hCodes.group(1).charAt(0);
+            	int deviceNum = ((Integer.parseInt(hCodes.group(2)) - 1) & 0x0F) + 1;
+                num = 16 * (houseNum - minHouseCode) + deviceNum;
             }
             catch (Exception e) {
                 log.error("illegal character in unit number field system name: " + systemName);
