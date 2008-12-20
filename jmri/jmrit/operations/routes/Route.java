@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -174,7 +174,7 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Get a RouteLocation by id
      * @param id
-     * @return
+     * @return route location
      */
     public RouteLocation getLocationById (String id){
     	return (RouteLocation)_routeHashTable.get(id);
