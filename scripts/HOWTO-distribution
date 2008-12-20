@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.80 $)
+distribution.  ($Revision: 1.81 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -114,19 +114,19 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs -Q tag -F Release-2-3-7 
+	cvs -Q tag -F Release-2-3-8 
 
 ( ) Create a new working directory, if you haven't already:
     
     cd <project directory>
     mkdir X-Y-Z-cand
     cd X-Y-Z-cand
-    cvs co -r Release-2-3-7 all
+    cvs co -r Release-2-3-8 all
     
     This gives it a sticky tag.  If your working directory
     already has that name, just
     
-    cvs update -r Release-2-3-7
+    cvs -q update -r Release-2-3-8
     
     to make sure it's got the tag
     
@@ -140,16 +140,16 @@ change that (temporarily) for a production release
 
 ( ) Come back to Distributions and 
     cd scripts
-	cvs -Q tag -F Release-2-3-7
+	cvs -Q tag -F Release-2-3-8
     cd ../java
-	cvs -Q tag -F Release-2-3-7
+	cvs -Q tag -F Release-2-3-8
     cd ..
     
 ( ) Announce the tag to jmri-developers list
 
 ( ) Start the actual build! In the Distributions directory:
 
-	ant -f dist.xml -Drelease=Release-2-3-7 -Dnumber=2.3.7 release1
+	ant -f dist.xml -Drelease=Release-2-3-8 -Dnumber=2.3.8 release1
 	
 	Ensure tests pass
 	
@@ -168,7 +168,7 @@ change that (temporarily) for a production release
 
 ( ) Upload the MacOS X and Linux files
 
-    ant -f dist.xml -Drelease=Release-2-3-7 -Dnumber=2.3.7 -Duser.name=jacobsen release2
+    ant -f dist.xml -Drelease=Release-2-3-8 -Dnumber=2.3.8 -Duser.name=jacobsen release2
 
     (The user.name only needs to be provided if your SourceForge.net ID 
      is different than your current login ID)
@@ -185,8 +185,8 @@ change that (temporarily) for a production release
     
     Or:
     
-    echo put JMRI.2.3.7.dmg | sftp jacobsen@frs.sf.net:uploads
-    echo put JMRI.2.3.7.tgz | sftp jacobsen@frs.sf.net:uploads
+    echo put JMRI.2.3.8.dmg | sftp jacobsen@frs.sf.net:uploads
+    echo put JMRI.2.3.8.tgz | sftp jacobsen@frs.sf.net:uploads
     
 
 ( ) Any time after release1 is complete, start building the Windows installer.
@@ -204,7 +204,7 @@ change that (temporarily) for a production release
 
 	Click the "test archive" button (right one of the pair)
 	
-	Name the installer JMRI.2.3.7.exe
+	Name the installer JMRI.2.3.8.exe
 	
 	After the installer runs, run DecoderPro from desktop icon and check.
 	
@@ -217,14 +217,14 @@ change that (temporarily) for a production release
 ( ) Any time after release1 is complete, create and upload the JavaDocs
     and XSLT'd decoder pages
     
-	ant -f dist.xml -Drelease=Release-2-3-7 -Dnumber=2.3.7 release3
+	ant -f dist.xml -Drelease=Release-2-3-8 -Dnumber=2.3.8 release3
 	
 	Manual form:
-	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-3-7/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
+	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-3-8/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
 
 ( ) When ready to upload the Windows release:
 	
-	ant -f dist.xml -Drelease=Release-2-3-7 -Dnumber=2.3.7 -Duser.name=jacobsen release4
+	ant -f dist.xml -Drelease=Release-2-3-8 -Dnumber=2.3.8 -Duser.name=jacobsen release4
 		
 ( ) Format the release note page, change date, etc
 
@@ -241,18 +241,18 @@ change that (temporarily) for a production release
 		Mac OS X
 		Windows
 		
-	The name convention is "JMRI 2.3.7 test version for Linux"
+	The name convention is "JMRI 2.3.8 test version for Linux"
         or "JMRI 2.2 production version for Linux"
         
     The note says:
 
-The JMRI 2.3.7 test release is now available for download. 
+The JMRI 2.3.8 test release is now available for download. 
 This is the specific version for Windows users. 
-For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.3.7.shtml
+For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.3.8.shtml
 
     The change log says:
     
-The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.3.7.shtml
+The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.3.8.shtml
 
 	Don't select "preserve preformatted text"
 	
@@ -272,7 +272,7 @@ The complete list of changes is in the release note at http://jmri.sf.net/releas
 ( ) Commit site and update on server
 	
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.3.7 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 2.3.8 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
@@ -280,7 +280,7 @@ The complete list of changes is in the release note at http://jmri.sf.net/releas
 
 ( ) News item from JMRI sourceforge page
 
-	Title is of the form "JMRI 2.3.7 test version is available";
+	Title is of the form "JMRI 2.3.8 test version is available";
 	text is pretty much directly taken from the release note
 
 ( ) If a production version, update the SF automatic download pages
