@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.4 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.5 2008-12-20 02:17:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,11 +25,32 @@
 
 <H1>JMRI Throttle</H1>
 
-
-Until we get a better help page set up, please go to the
+This is the quick reference page for the JMRI Throttle tool.
+<p>
+For more information, please go to the
 <a href="../../../../html/tools/throttle/ThrottleMain.shtml">general throttle page</a>.
 
-<p>
+
+<h3>Keyboard Shortcuts</h3>
+You can operate the Throttle using your keyboard.  Keys include:
+
+<dl>
+<dt>Numeric Keypad 0 - 9<dd>Functions 0 to 9
+<dt>Numeric Keypad .<dd>Function 10
+<dt>F11 - F24<dd>Function 11 to Function 24
+<dt>Numeric Keypad +<dd>Increase Speed
+<dt>Numeric Keypad -<dd>Decrease Speed
+<dt>Left Arrow<dd>Increase Speed
+<dt>Right Arrow<dd>Decrease Speed
+<dt>Page Up<dd>Big Increase Speed 
+<dt>Page Down<dd>Big Decrease Speed
+<dt>Up Arrow<dd>Reverse
+<dt>Down Arrow<dd>Forward
+<dt>Numeric Pad /<dd>Stop (estop)
+<dt>Numeric Pad *<dd>Idle (speed 0)
+</dl>
+
+<h3>Hints</h3>
 The "Program" button in the lower left opens an
 ops-mode (programming on the main) DecoderPro programmer 
 for the selected locomotive. It's only active when
