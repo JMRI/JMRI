@@ -37,6 +37,123 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="html/hardware/index.shtml">Hardware Support</a>
+<ul>
+      
+<li>
+<a href="html/hardware/acela/index.shtml">Acela</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/can/index.shtml">CAN Bus</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/can/cbus/index.shtml">CBUS</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/cmri/CMRI.shtml">CMRI</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/misc/DccSpecialties.shtml">DCC Specialties</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/ecos/index.shtml">ECoS</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/grapevine/index.shtml">Grapevine (ProTrak)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/loconet/Digitrax.shtml">LocoNet (Digitrax)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/maple/index.shtml">Maple Systems</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/nce/NCE.shtml">NCE</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/oaktree/OakTree.shtml">OakTree Systems</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/powerline/index.shtml">Powerline (X10)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/qsi/index.shtml">QSI</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/raildriver/index.shtml">RailDriver Throttle</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/rps/index.shtml">RPS</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/secsi/index.shtml">SECSI (TrakTronix)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/sprog/SPROG.shtml">SPROG</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/qsi/index.shtml">SRCP</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/tmcc/index.shtml">TMCC (Lionel)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/XPressNet/index.shtml">XPressNet (Lenz)</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/zimo/Zimo.shtml">Zimo</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
 <li>DecoderPro<ul>
       
 <li>
@@ -334,116 +451,63 @@
 </li>
    
 <li>
-<a href="html/hardware/index.shtml">Hardware Support</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml">Operations</a>
 <ul>
       
 <li>
-<a href="html/hardware/acela/index.shtml">Acela</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/hardware/can/index.shtml">CAN Bus</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/hardware/cmri/CMRI.shtml">CMRI</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/hardware/misc/DccSpecialties.shtml">DCC Specialties</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/ecos/index.shtml">ECoS</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/grapevine/index.shtml">Grapevine (ProTrak)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/loconet/Digitrax.shtml">LocoNet (Digitrax)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/maple/index.shtml">Maple Systems</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/nce/NCE.shtml">NCE</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/oaktree/OakTree.shtml">OakTree Systems</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/powerline/index.shtml">Powerline (X10)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/qsi/index.shtml">QSI</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/raildriver/index.shtml">RailDriver Throttle</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/rps/index.shtml">RPS</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/secsi/index.shtml">SECSI (TrakTronix)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/sprog/SPROG.shtml">SPROG</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/qsi/index.shtml">SRCP</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/tmcc/index.shtml">TMCC (Lionel)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/XPressNet/index.shtml">XPressNet (Lenz)</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="html/hardware/zimo/Zimo.shtml">Zimo</a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List</a>
 <ul></ul>
 </li>
    
@@ -1089,70 +1153,6 @@
 <li>
 <a href="html/doc/Technical/Names.shtml">Names</a>
 <ul></ul>
-</li>
-   
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">Operations</a>
-<ul>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations</a>
-<ul>
-         
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging</a>
-<ul></ul>
-</li>
-      
-</ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Engines">Engines</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains</a>
-<ul></ul>
-</li>
-      
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List</a>
-<ul></ul>
-</li>
-   
-</ul>
 </li>
    
 <li>
