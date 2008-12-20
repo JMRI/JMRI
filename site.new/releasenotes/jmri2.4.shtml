@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.4.shtml,v 1.2 2008-12-20 06:36:08 jacobsen Exp $ -->
+<!-- $Id: jmri2.4.shtml,v 1.3 2008-12-20 16:31:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -62,18 +62,23 @@ many new features, including:
         <li>Many new and updated QSI definitions
         </ul>
 
+<li>A new <a href="http://jmri.sf.net/help/en/package/jmri/jmrit/operations/Operations.shtml">operations</a> section.
+
 <li>New features:
         <ul>
     	<li>
     	</ul>
+
+<li>Updates:
+        <ul>
+    	<li>
+    	</ul>
+
 <li>Many new and updated help pages.
 
-<li>A new <a href="http://jmri.sf.net/help/en/package/jmri/jmrit/operations/Operations.shtml">operations</a> section.
     
 <li>New sample scripts:
         <ul>
-	 	<li><a href="http://jmri.sourceforge.net/jython/DebounceSensor.py">DebounceSensor</a>, showing how to
-	 	    use JMRI scripting to "debounce" a sensor, removing momentary noise on the input
 	 	<li><a href="http://jmri.sourceforge.net/jython/NumberInput.py">NumberInput</a>, showing how to 
 	 	    use a series of sensors on a control panel to e.g. enter a track number in a memory
 	 	<li><a href="http://jmri.sourceforge.net/jython/ParallelPortTest.py">ParallelPortTest</a>
