@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: MRC_sounder1666.xml,v 1.1 2008-05-07 05:30:55 billchown Exp $ -->
+<!-- $Id: MRC_sounder1666.xml,v 1.2 2008-12-20 02:49:16 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,12 +16,15 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Christopher Zurek"
+			version="2" lastUpdated="20081218" />
 		<version author="Pete Cesaro"
 			version="1" lastUpdated="20080307" />
 <!-- made from the MRC_1645 file by Bill Chown -->
 <!-- added many decoder-specific tool tips -->
 <!-- added CV identities to all tool tips -->
 <!-- Added local panel for Lights since I needed to add some text description for its use -->
+<!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
 
 <decoder>
 	<family name="MRC Sounder Decoders" mfg="MRC"
@@ -121,9 +124,44 @@
 			</enumVal>
 		</variable>
 			
-		<variable label="Horn type" CV="50" item="Sound Option 1" default="4" tooltip="CV50, range 0-33"
+		<variable label="Horn type" CV="50" item="Sound Option 1" default="4" tooltip="CV50"
 				comment="Range 0-33">
-			<decVal max="33"/>
+			<enumVal>	
+				<enumChoice choice="Horn 1"/>
+				<enumChoice choice="Horn 2"/>
+				<enumChoice choice="Horn 3"/>
+				<enumChoice choice="Horn 4"/>
+				<enumChoice choice="Horn 5"/>
+				<enumChoice choice="Horn 6"/>
+				<enumChoice choice="Horn 7"/>
+				<enumChoice choice="Horn 8"/>
+				<enumChoice choice="Horn 9"/>
+				<enumChoice choice="Horn 10"/>
+				<enumChoice choice="Horn 11"/>
+				<enumChoice choice="Horn 12"/>
+				<enumChoice choice="Horn 13"/>
+				<enumChoice choice="Horn 14"/>
+				<enumChoice choice="Horn 15"/>
+				<enumChoice choice="Horn 16"/>
+				<enumChoice choice="Horn 17"/>
+				<enumChoice choice="Horn 18"/>
+				<enumChoice choice="Horn 19"/>
+				<enumChoice choice="Horn 20"/>
+				<enumChoice choice="Horn 21"/>
+				<enumChoice choice="Horn 22"/>
+				<enumChoice choice="Horn 23"/>
+				<enumChoice choice="Horn 24"/>
+				<enumChoice choice="Horn 25"/>
+				<enumChoice choice="Horn 26"/>
+				<enumChoice choice="Horn 27"/>
+				<enumChoice choice="Horn 28"/>
+				<enumChoice choice="Horn 29"/>
+				<enumChoice choice="Horn 30"/>
+				<enumChoice choice="Horn 31"/>
+				<enumChoice choice="Horn 32"/>
+				<enumChoice choice="Horn 33"/>
+				<enumChoice choice="Horn 34"/>
+			</enumVal>
 		</variable>
 								
 		<variable label="Horn volume" CV="51" item="Sound Setting 1" default="3" tooltip="CV51, range 0-3"
@@ -131,9 +169,16 @@
 			<decVal max="3"/>
 		</variable>	
 			
-		<variable label="Bell type" CV="52" item="Sound Option 2" default="3" tooltip="CV52, range 0-6 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time"
+		<variable label="Bell type" CV="52" item="Sound Option 2" default="3" tooltip="CV52 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time"
 				comment="Range 0-6">
-			<decVal max="6"/>
+			<enumVal>
+				<enumChoice choice="Bell 1"/>
+				<enumChoice choice="Bell 2"/>
+				<enumChoice choice="Bell 3"/>
+				<enumChoice choice="Bell 4"/>
+				<enumChoice choice="Bell 5"/>
+				<enumChoice choice="Bell 6"/>
+			</enumVal>
 		</variable>
 
 		<variable label="Bell volume" CV="53" item="Sound Setting 2" default="3" tooltip="CV53, range 0-3 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time"
@@ -263,12 +308,12 @@ Brake and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot
 	         </enumVal>
 		</variable>
 		
-		<variable label="Prime mover sound" item="Sound Option 6" CV="123" default="0" tooltip="CV123, ALCO 244(0), ALCO SD60(1 -default), ALCO SD70(2) or EMD 567B(3)">
+		<variable label="Prime mover sound" item="Sound Option 6" CV="123" default="1" tooltip="CV123, EMD SD60(0), EMD 567B(1 -default), ALCO 244(2) or EMD SD70(3)">
 		     <enumVal>
-		         <enumChoice choice="Alco 244 " value="0"/>
-		         <enumChoice choice="Alco SD60" value="1"/>
-		         <enumChoice choice="Alco SD70" value="2"/>
-		         <enumChoice choice="EMD 567B" value="3"/>
+		         <enumChoice choice="EMD SD60" value="0"/>
+		         <enumChoice choice="EMD 567B" value="1"/>
+		         <enumChoice choice="Alco 244" value="2"/>
+		         <enumChoice choice="EMD SD70" value="3"/>
             </enumVal>
 			</variable>
 			
@@ -321,3 +366,5 @@ Brake and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot
 
 
 
+
+ 	  	 
