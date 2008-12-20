@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.3.7 on Sun Dec 14 21:36:29 PST 2008 $Id: decoderIndex.xml,v 1.133 2008-12-15 05:38:42 jacobsen Exp $-->
-  <decoderIndex version="153">
+  <!--Written by JMRI version 2.4 on Fri Dec 19 19:38:52 PST 2008 $Id: decoderIndex.xml,v 1.134 2008-12-20 03:41:29 jacobsen Exp $-->
+  <decoderIndex version="155">
     <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1358,6 +1358,11 @@
         <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note All 28 functions are NMRA compatible -->
           <size length="45" width="18" height="6.2" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sounder1662.xml">
+        <model model="Diesel Sound Decoder 1662 SD45-SW1500" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="17.4" width="17.4" height="4.0" units="mm" />
         </model>
       </family>
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sounder1666.xml">
