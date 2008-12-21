@@ -13,7 +13,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Engine extends RollingStock {
 	
@@ -27,6 +27,12 @@ public class Engine extends RollingStock {
 		log.debug("New engine " + road + " " + number);
 	}
 	
+	/**
+	 * Set the engine's model. Note a model has only one length, type, and
+	 * horsepower rating.
+	 * 
+	 * @param model
+	 */
 	public void setModel (String model){
 		String old = _model;
 		_model = model;
@@ -39,7 +45,7 @@ public class Engine extends RollingStock {
 	}
 	
 	/**
-	 * Set the engine type
+	 * Set the engine type for this engine's model
 	 * @param type Engine type: Steam, Diesel, Traction, etc.
 	 */
 	public void setType (String type){
@@ -57,7 +63,7 @@ public class Engine extends RollingStock {
 	}
 	
 	/**
-	 * Set the engine horsepower rating
+	 * Set the engine horsepower rating for this engine's model
 	 * @param hp engine horsepower
 	 */
 	public void setHp (String hp){
@@ -75,7 +81,8 @@ public class Engine extends RollingStock {
 	}
 	
 	/**
-	 * Set the engine length
+	 * Set the engine length for this engine's model
+	 * @param length engine length
 	 */
 	public void setLength(String length){
 		String old = getLength();
