@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.4.shtml,v 1.5 2008-12-21 21:23:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.4.shtml,v 1.6 2008-12-21 23:01:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.4 release
       </h2>
 
-	<p>Date: MMM DD, 2008</p>
+	<p>Date: December 21, 2008</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Production version 2.4 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -198,13 +198,13 @@ and if so a warning message will appear at startup requesting that AIU broadcast
 <p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.4.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4A.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.4A.dmg?download</a>
 
 <p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.4.exe?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4A.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.4A.exe?download</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.4.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.4A.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.4A.tgz?download</a>
 
 
 
