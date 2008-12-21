@@ -32,7 +32,8 @@ public class ImportRosterEngines extends Thread {
 	
 	private static boolean fileValid = false;		// used to flag status messages
 	EngineManager manager = EngineManager.instance();
-	private static String defaultEngineLength = "50";
+	private static String defaultEngineLength = rb.getString("engineDefaultLength");
+	private static String defaultEngineType = rb.getString("engineDefaultType");
 	
 	javax.swing.JLabel textEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textId = new javax.swing.JLabel();
@@ -78,6 +79,9 @@ public class ImportRosterEngines extends Thread {
 					// does this model already have a length?
 					if (engine.getLength().equals(""))
 						engine.setLength(defaultEngineLength);
+					// does this model already have a type?
+					if (engine.getType().equals(""))
+						engine.setType(defaultEngineType);
 					engine.setOwner(re.getOwner());
 					enginesAdded++;
 				} else{

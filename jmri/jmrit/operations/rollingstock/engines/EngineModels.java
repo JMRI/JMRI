@@ -46,7 +46,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -115,7 +115,8 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	if (models.length == 0) return;
     	jmri.util.StringUtil.sort(models);
  		for (int i=0; i<models.length; i++)
- 			list.add(models[i]);
+ 			if (!list.contains(models[i]))
+ 				list.add(models[i]);
     }
     
     public void addName(String model){

@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CarRoads implements java.beans.PropertyChangeListener {
 	
@@ -73,7 +73,8 @@ public class CarRoads implements java.beans.PropertyChangeListener {
     	if (roads.length == 0) return;
     	jmri.util.StringUtil.sort(roads);
  		for (int i=0; i<roads.length; i++)
- 			list.add(roads[i]);
+ 			if (!list.contains(roads[i]))
+ 				list.add(roads[i]);
     }
     
     public void addName(String road){

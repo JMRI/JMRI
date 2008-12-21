@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EngineTypes implements java.beans.PropertyChangeListener {
 	
@@ -76,7 +76,8 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
- 			list.add(types[i]);
+			if (!list.contains(types[i]))
+				list.add(types[i]);
     }
     
     public void addName(String type){
