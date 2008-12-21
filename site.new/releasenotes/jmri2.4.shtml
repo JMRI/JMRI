@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.4.shtml,v 1.4 2008-12-21 21:18:38 jacobsen Exp $ -->
+<!-- $Id: jmri2.4.shtml,v 1.5 2008-12-21 21:23:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -137,7 +137,7 @@ JMRI is now only available under the
 see our 
 <a href="/Copyright.html">copyright and licensing page</a>.</p></b>
 
-<h3>New warnings for this version:</h3>
+<h3>Warnings:</h3>
 
 Linux users, especially Ubuntu users, of Panel Editor and Layout Editor 
 may experience trouble with displaying popup menus and  
@@ -145,21 +145,22 @@ repositioning items on their panels.  This is a known problem that is
 being worked on. It is expected to be fixed in an early 2.5.x test  
 version.
 
-<h3>Warnings from older versions:</h3>
-
+<p>
 Windows desktop shortcuts have been restructured to make them more reliable.
 If you have custom shortcuts (ones you made), you may have to update them.
 The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
 will not be effected by this change.
 
 <p>
-Starting with the 2.3.4 test release, by default JMRI is allowed to use
+By default JMRI is now allowed to use
 up to 200MB of memory (up from a limit of 60MB or 64MB previously).
-If this is more memory than you have available, and you notice JMRI
+If this is more memory than you have available, e.g. on an older computer,
+and you notice JMRI
 slowing down a lot, please let us know so we can provide a work-around.
+
 <p>
-Staring with the 2.3.3 test release, JMRI builds the classpath (the
-list of .jar libraries used by the program) dynamically on Windows.  
+When starting up, JMRI now builds the classpath (the
+list of libraries used by the program) dynamically on Windows.  
 We'll use this in the future for plug-ins and other features, and
 other platforms have been doing this for a while.
 If you have added any .jar files to your JMRI program directory, they
@@ -178,9 +179,11 @@ on the
 version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
 <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
 
-<p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. 
-We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. 
-Code has been added to detect if AIU broadcasts are enabled, and if so a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+<p>To improve reliability for NCE users, 
+we recommend that if you use NCE AIUs, that you upgrade the command station EPROM
+to version 2007 or newer and turn off AIU broadcasts. 
+Code has been added to detect if AIU broadcasts are enabled, 
+and if so a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
 <p>Indexed CVs will not be included in any printouts for this release.
  
@@ -232,8 +235,11 @@ Chris Zurek added a new MRC 1662 definition,
 and updated the MRC 1666 definition to include more info on bells and horn.
 
 <p>
-Kem Cameron fixed a problem in the X10 support that was preventing the 16th device from working.
+Ken Cameron fixed a problem in the X10 support that was preventing the 16th device ona housecode from working.
 
+<p>
+Dan Boudreau fixed a problem in the operations code that could cause lots of additional
+entries in various operations tables.
 
 <!--#include virtual="/Footer" -->
 
