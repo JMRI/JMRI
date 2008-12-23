@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.stml,v 1.1 2008-12-20 04:19:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.stml,v 1.2 2008-12-23 04:38:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -135,6 +135,10 @@ Code has been added to detect if AIU broadcasts are enabled, and if so a warning
 
 <h3>Changes since production version 2.4:</h3>
 
+Fixed an error with the Digitrax SoundLoader if you cancelled before opening a file.
+
+<p>
+Reformatted the DecoderPro speed table to fit better on narrow screens.
 
 <!--#include virtual="/Footer" -->
 
