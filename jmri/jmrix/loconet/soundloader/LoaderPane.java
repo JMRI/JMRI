@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.7 $
+ * @version	    $Revision: 1.8 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -217,10 +217,10 @@ public class LoaderPane extends javax.swing.JPanel {
      * Get rid of any held resources
      */
     void dispose() {
-        file.dispose();
+        if (file!=null) file.dispose();
         file = null;  // not for GC, this flags need to reinit
         
-        engine.dispose();
+        if (engine!=null) engine.dispose();
         engine = null;  // not for GC, this flags need to reinit
     }
 
