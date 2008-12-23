@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.5 2008-12-20 02:17:24 jacobsen Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.6 2008-12-23 16:31:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -31,6 +31,26 @@ For more information, please go to the
 <a href="../../../../html/tools/throttle/ThrottleMain.shtml">general throttle page</a>.
 
 
+<h2>Hints</h2>
+The "Program" button in the lower left opens an
+ops-mode (programming on the main) DecoderPro programmer 
+for the selected locomotive. It's only active when
+a roster entry has been selected on the throttle.
+
+<h3>Changing the Window Title</h3>
+<a href="../../../../html/tools/throttle/images/EditThrottleFrame.jpg"><img src="../../../../html/tools/throttle/images/EditThrottleFrame.jpg" align="right" height="79" width="234"></a>
+If you select "Frame Properties" from the Edit menu on the throttle
+window, you can change the title on top of your throttle window.
+There are four choices you can select from:
+<ul>
+<li> Address - Automatically display the address of whatever locomotive is selected. This is the default.
+<li>Text - Display the text that you enter in the field at the top of this window
+<li>Text Address - Display the text you entered, followed by the selected address
+<li>Address Text - Display the selected address, followed by the text you entered
+</ul>
+
+Note that if you enter text, it won't be visible unless one of the last three modes is selected.
+
 <h3>Keyboard Shortcuts</h3>
 You can operate the Throttle using your keyboard.  Keys include:
 
@@ -50,11 +70,6 @@ You can operate the Throttle using your keyboard.  Keys include:
 <dt>Numeric Pad *<dd>Idle (speed 0)
 </dl>
 
-<h3>Hints</h3>
-The "Program" button in the lower left opens an
-ops-mode (programming on the main) DecoderPro programmer 
-for the selected locomotive. It's only active when
-a roster entry has been selected on the throttle.
 
 <p>
 (This is the jmri.jmrit.throttle.ThrottleFrame help page)
