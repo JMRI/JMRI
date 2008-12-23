@@ -13,6 +13,7 @@ import java.util.Vector;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -58,7 +59,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -256,7 +257,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             Component v = decVal.getValue();
             ((JTextField)v).setToolTipText("Step "+(i+1)+" CV "+(getCvNum()+i));
-
+            ((JComponent)v).setBorder(null);
+            
             g.setConstraints(v, cs);
 
             if (i==0 && log.isDebugEnabled()) log.debug("Font size "+v.getFont().getSize());
