@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -73,6 +73,12 @@ public class ThrottleFramePropertyEditor extends JDialog
 
         titleField = new JTextField();
         titleField.setColumns(24);
+        titleField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                titleFieldChanged();
+            }
+        });
+        
         propertyPanel.add(new JLabel(rb.getString("FrameTitlePrompt")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
@@ -150,6 +156,16 @@ public class ThrottleFramePropertyEditor extends JDialog
             if (bSize.height == 0) borderOff.setSelected(true);
             else borderOff.setSelected(false);
         }
+    }
+
+    /**
+     * TItle field has been changed. If it has
+     * text, make sure that's displayed.
+     */
+    protected void titleFieldChanged() {
+        if (titleField.getText().equals("")) return;
+        if (titleType.getSelectedValue().equals(rb.getString("SelectTitleTypeADDRESS")))
+            titleType.setSelectedValue(rb.getString("SelectTitleTypeTEXT"), true);
     }
 
     /**
