@@ -102,7 +102,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                 int functionNumber = functionButton[i].getIdentity();
                 java.lang.reflect.Method getter =
                         throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
-                Boolean state = (Boolean)getter.invoke(throttle, (Class[])null);
+                Boolean state = (Boolean)getter.invoke(throttle, (Object[])null);
                 functionButton[i].setState(state.booleanValue());
                 if (rosterEntry != null){
                 	String text = rosterEntry.getFunctionLabel(functionNumber);
@@ -390,7 +390,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.42 $
+	 * @version $Revision: 1.43 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
