@@ -85,7 +85,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -591,7 +591,7 @@ public class Section extends AbstractNamedBean
 	 * This checks block connectivity, removes redundant EntryPoints,
 	 *  and otherwise checks internal consistency of the Section.
 	 */
-	public boolean validate(jmri.util.JmriJFrame frame) {
+	public boolean validate() {
 // add code
 		return true;
 	}
