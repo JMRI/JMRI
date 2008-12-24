@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.shtml,v 1.7 2008-01-20 06:08:22 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2008-12-24 15:45:43 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -52,12 +52,7 @@ using HTML4 and Cascading Style Sheets.
 If the formatting looks odd, you might need to update your browser. </span>
 
 <div align="right">
-<p><a href="Archive.zip" target="_blank">
-Download a .ZIP archive<br>of this entire manual.</a>
-</div>
-
-<div align="right">
-<p><a href="http://prdownloads.sourceforge.net/jmri/DecoderProManual.1.1.9.pdf?download" target="_blank">
+<p><a href="http://groups.yahoo.com/group/jmriusers/files/%2A%20Problems%20being%20worked%20on/JMRI_User_Guide_old.pdf">
 Download a .PDF file<br>of this entire manual.</a>
 </div>
 
