@@ -16,8 +16,10 @@ import java.util.List;
  *
  * Based in part on code from the Java Tutorial for glass panes (java.sun.com).
  *
+ * Used in PaneProgFrame to control cursor operations during programming.
+ *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BusyGlassPane extends JComponent {
 
@@ -143,7 +145,7 @@ class CBListener extends MouseInputAdapter {
                                                    e.getClickCount(),
                                                    e.isPopupTrigger()));
         } else {
-            parentFrame.setCursor(Cursor.WAIT_CURSOR);
+            parentFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         }
 
     }

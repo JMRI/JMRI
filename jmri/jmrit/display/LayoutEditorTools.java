@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutEditorTools 
@@ -233,7 +233,7 @@ public class LayoutEditorTools
             panel6.add(changeSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalIcon.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					}
 				});
             changeSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
@@ -1636,7 +1636,7 @@ public class LayoutEditorTools
             panel6.add(changeSignalAtBoundaryIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalAtBoundaryIcon.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					}
 				});
             changeSignalAtBoundaryIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
@@ -2255,7 +2255,7 @@ public class LayoutEditorTools
             panel6.add(changeXoverSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXoverSignalIcon.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					}
 				});
             changeXoverSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
@@ -3318,7 +3318,7 @@ public class LayoutEditorTools
             panel6.add(changeXingSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXingSignalIcon.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					}
 				});
             changeXingSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
@@ -4209,7 +4209,7 @@ public class LayoutEditorTools
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeTToTSignalIcon.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					}
 				});
             changeTToTSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );

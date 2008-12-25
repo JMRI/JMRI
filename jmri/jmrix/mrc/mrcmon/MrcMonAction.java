@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *       			MrcMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MrcMonAction 			extends AbstractAction {
 
@@ -27,7 +27,7 @@ public class MrcMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("MrcMonAction starting MrcMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MrcMonAction.class.getName());

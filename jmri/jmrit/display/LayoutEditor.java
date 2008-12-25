@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -428,11 +428,11 @@ public class LayoutEditor extends JmriJFrame {
         changeIcon.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
 					if (sensorBox.isSelected())
-						sensorFrame.show();
+						sensorFrame.setVisible(true);
 					else if (signalBox.isSelected())
-						signalFrame.show();
+						signalFrame.setVisible(true);
 					else if (iconLabelBox.isSelected())
-						iconFrame.show();
+						iconFrame.setVisible(true);
                 }
             } );
         top4.add(changeIcon);

@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Start a LayoutEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class LayoutEditorAction extends AbstractAction {
@@ -31,7 +31,7 @@ public class LayoutEditorAction extends AbstractAction {
         }
         LayoutEditor panel = new LayoutEditor(name);
         panel.pack();
-        panel.show();
+        panel.setVisible(true);
         panel.setEditMode(true);
         panel.setCurrentPositionAndSize();
 	}
