@@ -22,9 +22,6 @@ package jmri;
  * When the route transitions from disabled to enabled, it may act, 
  * depending on the conditions: Edge triggered conditions will not be satisfied,
  * but level-conditions may be.
- *<P>
- * Note that this class has a large number of deprecated methods.
- * These <i>will</> eventually be removed.
  *
  * <hr>
  * This file is part of JMRI.
@@ -44,7 +41,7 @@ package jmri;
  * @author			Bob Jacobsen Copyright (C) 2007
  * @author          Simon Reader Copyright (C) 2008
  * 
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public interface Route extends NamedBean {
 
@@ -68,43 +65,6 @@ public interface Route extends NamedBean {
      * Get locked status.
     */
     public boolean getLocked();
-
-    // Old interface for outputs 
-    
-    /**
-     * @deprecated since 1.7.6
-     */
-    public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState);
-
-    /**
-     * @deprecated
-     */
-    public void clearRouteTurnouts();
-    
-    /**
-     * @deprecated
-     */
-    public boolean isTurnoutIncluded(String turnoutSystemName);
-
-    /**
-     * @deprecated
-     */
-    public int getTurnoutSetState(String turnoutSystemName);
-
-    /**
-     * @deprecated
-     */
-    public String getRouteTurnoutByIndex(int index);
-
-    /**
-     * @deprecated
-	 */
-    public Turnout getRouteTurnout(int k);
-
-    /**
-     * @deprecated
-	 */
-    public int getRouteTurnoutState(int k);
 
     // new interface for outputs 
 

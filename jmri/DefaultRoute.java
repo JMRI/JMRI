@@ -9,7 +9,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2006, 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -87,13 +87,6 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
-     * @deprecated
-     */
-    public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState) {
-        return addOutputTurnout(turnoutSystemName, turnoutState);
-    } 
-    
-    /**
      * Add an output Turnout to this Route
      * @param turnoutSystemName The turnout system name
      * @param turnoutState must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
@@ -117,23 +110,10 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * @deprecated
-     */
-    public void clearRouteTurnouts() {
-        clearOutputTurnouts();
-    }
-    /**
      * Delete all output Turnouts from this Route
      */
     public void clearOutputTurnouts() {
         mNumOutputTurnouts = 0;
-    }
-
-    /**
-     * @deprecated
-     */
-    public String getRouteTurnoutByIndex(int index) {
-        return getOutputTurnoutByIndex(index);
     }
 
     /**
@@ -147,12 +127,6 @@ public class DefaultRoute extends AbstractNamedBean
         return mOutputTurnout[index];
     }
     
-    /**
-     * @deprecated
-     */
-    public boolean isTurnoutIncluded(String turnoutSystemName){
-        return isOutputTurnoutIncluded(turnoutSystemName);
-    }
     /**
      * Method to inquire if a Turnout is included in this Route.
      * <P>
@@ -169,13 +143,6 @@ public class DefaultRoute extends AbstractNamedBean
             }
         }
         return false;
-    }
-
-    /**
-     * @deprecated
-     */
-    public int getTurnoutSetState(String turnoutSystemName) {
-        return getOutputTurnoutSetState(turnoutSystemName);
     }
     
     /**
@@ -197,12 +164,6 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * @deprecated
-	 */
-    public Turnout getRouteTurnout(int k) {
-        return getOutputTurnout(k);
-    }
-    /**
      * Method to return the 'k'th Turnout of the Route.
      * @return null if there are less than 'k' Turnouts defined
 	 */
@@ -215,12 +176,6 @@ public class DefaultRoute extends AbstractNamedBean
 		}
 	}
 	
-    /**
-     * @deprecated
-	 */
-    public int getRouteTurnoutState(int k) {
-        return getOutputTurnoutState(k);
-    }
     /**
      * Method to get the desired state of 'k'th Turnout of the Route.
      *   Returns -1 if there are less than 'k' Turnouts defined
