@@ -10,7 +10,6 @@ import java.awt.*;
 import jmri.CommonTurnoutOperation;
 import jmri.TurnoutOperation;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.util.JSpinnerUtil;
 
 /**
  * Extension of TurnoutOperationConfig to handle config for common aspects of some
@@ -20,8 +19,8 @@ import jmri.util.JSpinnerUtil;
  */
 public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 
-	JComponent intervalSpinner;   // actually a JSpinner
-	JComponent maxTriesSpinner;   // actually a JSpinner
+	JSpinner intervalSpinner;   // actually a JSpinner
+	JSpinner maxTriesSpinner;   // actually a JSpinner
 	CommonTurnoutOperation myOp;
 	
 	/**
@@ -31,15 +30,8 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		super(op);
 		myOp = (CommonTurnoutOperation)op;
 
-	    maxTriesSpinner = JSpinnerUtil.getJSpinner();
-		intervalSpinner = JSpinnerUtil.getJSpinner();
-		if ( (maxTriesSpinner == null) || (intervalSpinner == null)) {
-			JOptionPane.showMessageDialog(null,
-					"Turnout automation parameters cannot be modified with the Java Virtual Machine you are using",
-					"Cannot modify parameters", JOptionPane.ERROR_MESSAGE);
-			valid = false;
-			return;
-		}
+                maxTriesSpinner = new JSpinner();
+		intervalSpinner = new JSpinner();
 		Box vbox = Box.createVerticalBox();
 		Box hbox1 = Box.createHorizontalBox();
 		Box hbox2 = Box.createHorizontalBox();
@@ -50,22 +42,18 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		hbox1.add(Box.createHorizontalGlue());
 		intervalSpinner.setMinimumSize(new Dimension(100,20));
 
-		JSpinnerUtil.setModelMaximum(intervalSpinner, new Integer(myOp.maxInterval));
-		JSpinnerUtil.setModelMinimum(intervalSpinner, new Integer(myOp.minInterval));
-		JSpinnerUtil.setModelStepSize(intervalSpinner, new Integer(myOp.intervalStepSize));
+                intervalSpinner.setModel(
+                        new SpinnerNumberModel((int)myOp.getInterval(), myOp.minInterval, myOp.maxInterval, myOp.intervalStepSize)); // val, min, max, step
 
 		hbox1.add(intervalSpinner);
 		hbox2.add(new JLabel("Times to try:   "));
 		hbox2.add(Box.createHorizontalGlue());
 		maxTriesSpinner.setMinimumSize(new Dimension(100,20));
 
-		JSpinnerUtil.setModelMaximum(maxTriesSpinner, new Integer(myOp.maxMaxTries));
-		JSpinnerUtil.setModelMinimum(maxTriesSpinner, new Integer(myOp.minMaxTries));
+                maxTriesSpinner.setModel(
+                        new SpinnerNumberModel(myOp.getMaxTries(), myOp.minMaxTries, myOp.maxMaxTries, 1)); // val, min, max, step
 
 		hbox2.add(maxTriesSpinner);
-
-		JSpinnerUtil.setValue(intervalSpinner, new Integer((int)myOp.getInterval()));
-		JSpinnerUtil.setValue(maxTriesSpinner, new Integer(myOp.getMaxTries()));
 
 		Box hbox3 = Box.createHorizontalBox();
 		hbox3.add(Box.createHorizontalStrut(150));
@@ -77,9 +65,9 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 	 * called when OK button pressed in config panel, to retrieve and set new values
 	 */
 	public void endConfigure() {
-		int newInterval = ((Integer)JSpinnerUtil.getValue(intervalSpinner)).intValue();
+		int newInterval = ((Integer)intervalSpinner.getValue()).intValue();
 		myOp.setInterval(newInterval);
-		int newMaxTries = ((Integer)JSpinnerUtil.getValue(maxTriesSpinner)).intValue();
+		int newMaxTries = ((Integer)maxTriesSpinner.getValue()).intValue();
 		myOp.setMaxTries(newMaxTries);
 	}
 	

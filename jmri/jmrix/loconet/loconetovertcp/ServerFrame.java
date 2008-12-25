@@ -4,10 +4,10 @@ package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.event.*;
 import javax.swing.*;
-import jmri.util.JSpinnerUtil;
 import jmri.util.SwingUtil;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Frame displaying and programming a LocoNet clock monitor.
@@ -20,7 +20,7 @@ import javax.swing.event.ChangeEvent;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
@@ -30,14 +30,10 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    portNumber = JSpinnerUtil.getJSpinner();
-    if (portNumber != null) {
-        JSpinnerUtil.setModelMaximum(portNumber, new Integer(65535));
-        JSpinnerUtil.setModelMinimum(portNumber, new Integer(1024));
-        JSpinnerUtil.setValue(portNumber, new Integer( 65535 ));
-    } else {
-        portNumber = new JTextField();
-    }
+    portNumber = new JSpinner();
+    portNumberModel = new SpinnerNumberModel(65535,1,65535,1);
+    portNumber.setModel(portNumberModel);
+
     SwingUtil.setFocusable(portNumber,false);
     
     // add GUI items
@@ -76,7 +72,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     saveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent a) {
         Server.getInstance().setAutoStart( autoStartCheckBox.isSelected() );
-        Server.getInstance().setPortNumber( ((Integer)JSpinnerUtil.getValue( portNumber )).intValue() );
+        Server.getInstance().setPortNumber( ((Integer)portNumber.getValue()).intValue() );
         Server.getInstance().saveSettings();
       }
     });
@@ -88,7 +84,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     });
 
     if(portNumber !=null)
-      JSpinnerUtil.addChangeListener(portNumber, new ChangeListener() {
+      portNumber.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
           saveButton.setEnabled( true );
         }
@@ -125,7 +121,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     Server server = Server.getInstance() ;
     autoStartCheckBox.setSelected( server.getAutoStart() );
     autoStartCheckBox.setEnabled( !server.isEnabled() );
-    if (portNumber!=null) JSpinnerUtil.setValue( portNumber, new Integer( server.getPortNumber() ) ) ;
+    if (portNumber!=null) portNumber.setValue(new Integer( server.getPortNumber() ) ) ;
     portNumber.setEnabled( !server.isEnabled() );
     portNumberLabel.setEnabled( !server.isEnabled() );
     startButton.setEnabled( !server.isEnabled() );
@@ -153,7 +149,8 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         }}) ;
   }
 
-  JComponent portNumber ;
+  JSpinner portNumber;
+  SpinnerNumberModel portNumberModel;
   JLabel portNumberLabel = new JLabel("  Port Number: ");
   JLabel serverStatus = new JLabel("Server Status:         " );
   JLabel clientStatus = new JLabel("   Client Count:  " );

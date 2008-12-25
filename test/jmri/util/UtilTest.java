@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class UtilTest extends TestCase {
 
@@ -29,7 +29,6 @@ public class UtilTest extends TestCase {
         suite.addTest(jmri.util.OrderedHashtableTest.suite());
         suite.addTest(jmri.util.FileUtilTest.suite());
         suite.addTest(jmri.util.JUnitAppenderTest.suite());
-        suite.addTest(jmri.util.JSpinnerUtilTest.suite());
         suite.addTest(jmri.util.StringUtilTest.suite());
 
         return suite;

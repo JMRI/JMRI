@@ -2,7 +2,6 @@ package jmri.jmrit.throttle;
 
 import jmri.DccThrottle;
 import jmri.util.SwingUtil;
-import jmri.util.JSpinnerUtil;
 import java.util.ResourceBundle;
 import jmri.util.MouseInputAdapterInstaller;
 
@@ -32,8 +31,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -51,7 +52,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.62 $
+ * @version    $Revision: 1.63 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -60,7 +61,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private DccThrottle throttle;
     
     private JSlider speedSlider;
-    private JComponent speedSpinner;
+    private JSpinner speedSpinner;
+    private SpinnerNumberModel speedSpinnerModel;
     private JRadioButton SpeedStep128Button;
     private JRadioButton SpeedStep28Button;
     private JRadioButton SpeedStep27Button;
@@ -132,21 +134,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
           }
         });
 	    
-        try {
-            speedSpinner = JSpinnerUtil.getJSpinner();
-            if (speedSpinner !=null) {
-                JSpinnerUtil.setModelMaximum(speedSpinner, new Integer(MAX_SPEED));
-                JSpinnerUtil.setModelMinimum(speedSpinner, new Integer(0));
-                JSpinnerUtil.setValue(speedSpinner, new Integer(0));
-                SwingUtil.setFocusable(speedSpinner,false);
-            }
-        } catch (NoClassDefFoundError e1) {
-            // we can't use a JSpinner Object.
-            speedSpinner = null;
-        } catch (Exception e2) {
-            // we can't use a JSpinner Object.
-            speedSpinner = null;
-        }
+        speedSpinner = new JSpinner();
+
+        speedSpinnerModel = new SpinnerNumberModel(0, 0, MAX_SPEED, 1);
+        speedSpinner.setModel(speedSpinnerModel);
+        SwingUtil.setFocusable(speedSpinner,false);
+
         SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
         SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
         SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
@@ -301,13 +294,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setPaintLabels(true);
         
         
-        if(speedSpinner!=null) {
-            JSpinnerUtil.setModelMaximum(speedSpinner, new Integer(MAX_SPEED));
-            JSpinnerUtil.setModelMinimum(speedSpinner, new Integer(0));
+            speedSpinnerModel.setMaximum(new Integer(MAX_SPEED));
+            speedSpinnerModel.setMinimum(new Integer(0));
             // rescale the speed value to match the new speed step mode
             internalAdjust=true;
-            JSpinnerUtil.setValue(speedSpinner,new Integer(speedSlider.getValue()));
-        }
+            speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
     }
     
     /**
@@ -395,7 +386,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setValue(speed * speedIncrement);
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)
-            JSpinnerUtil.setValue(speedSpinner, new Integer(speed));
+            speedSpinnerModel.setValue(new Integer(speed));
     }
     
     public JSlider getSpeedSlider() { return speedSlider; }
@@ -462,7 +453,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
                                                       throttle.setSpeedSetting( newSpeed );
                                                       if(speedSpinner!=null)
-                                                          JSpinnerUtil.setValue(speedSpinner, new Integer(speedSlider.getValue()));
+                                                          speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
                                                   }
                                               } else {
                                                   internalAdjust=false;
@@ -479,7 +470,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedControlPanel.add(spinnerPanel);
         // remove old actions
         if(speedSpinner!=null)
-            JSpinnerUtil.addChangeListener(speedSpinner,
+            speedSpinner.addChangeListener(
                                            new ChangeListener()
                                            {
                                                public void stateChanged(ChangeEvent e)
@@ -487,11 +478,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                    if ( !internalAdjust) {
                                                        //if (!speedSpinner.getValueIsAdjusting())
                                                        //{
-                                                       float newSpeed = ((Integer)JSpinnerUtil.getValue(speedSpinner)).floatValue() / ( MAX_SPEED * 1.0f );
-                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + JSpinnerUtil.getValue(speedSpinner) + " speed: " + newSpeed );}
+                                                       float newSpeed = ((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f );
+                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );}
                                                        if (throttle != null) {
                                                            throttle.setSpeedSetting( newSpeed );
-                                                           speedSlider.setValue(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue());
+                                                           speedSlider.setValue(((Integer)speedSpinner.getValue()).intValue());
                                                        } else {
                                                            log.warn("no throttle object in stateChanged, ignoring change of speed to "+newSpeed);
                                                        }
@@ -624,7 +615,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                          {
                                              speedSlider.setValue(0);
                                              if(speedSpinner!=null)
-                                                 JSpinnerUtil.setValue(speedSpinner, new Integer(0));
+                                                 speedSpinner.setValue(new Integer(0));
                                              throttle.setSpeedSetting(0);
                                          }
                                      });
@@ -664,7 +655,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if(this.throttle==null) return;
         speedSlider.setValue(0);
         if(speedSpinner!=null)
-            JSpinnerUtil.setValue(speedSpinner, new Integer(0));
+            speedSpinnerModel.setValue(new Integer(0));
         throttle.setSpeedSetting(-1);
     }
     
@@ -694,9 +685,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSlider.setValue(speedSlider.getValue() + 1);
             }
         } else if(speedSpinner!=null && speedSpinner.isEnabled()) {
-            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-               ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() ) {
-                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 1));
+            if (((Integer)speedSpinner.getValue()).intValue() < ((Integer)speedSpinnerModel.getMaximum()).intValue() &&
+               ((Integer)speedSpinner.getValue()).intValue() >= ((Integer)speedSpinnerModel.getMinimum()).intValue() ) {
+                    speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() + 1));
             }
         }
     }
@@ -711,14 +702,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         else if (speedSpinner!=null && speedSpinner.isEnabled())
             {
-                if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() < ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                    ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() >= ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
+                if (((Integer)speedSpinner.getValue()).intValue() < ((Integer)speedSpinnerModel.getMaximum()).intValue() &&
+                    ((Integer)speedSpinner.getValue()).intValue() >= ((Integer)speedSpinnerModel.getMinimum()).intValue() )
                     {
-                        Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() + 10);
-                        if(speedvalue.intValue()<((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue())
-                            JSpinnerUtil.setValue(speedSpinner,speedvalue);
+                        Integer speedvalue= new Integer(((Integer)speedSpinner.getValue()).intValue() + 10);
+                        if(speedvalue.intValue()<((Integer)speedSpinnerModel.getMaximum()).intValue())
+                            speedSpinner.setValue(speedvalue);
                         else
-                            JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)));
+                            speedSpinner.setValue(((Integer)speedSpinnerModel.getMaximum()));
                     }
             }
     }
@@ -729,9 +720,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSlider.setValue(speedSlider.getValue() - 1);
             }
         } else if (speedSpinner!=null && speedSpinner.isEnabled()) {
-            if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() ) {
-                    JSpinnerUtil.setValue(speedSpinner, new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 1));
+            if (((Integer)speedSpinner.getValue()).intValue() <= ((Integer)speedSpinnerModel.getMaximum()).intValue() &&
+                ((Integer)speedSpinner.getValue()).intValue() > ((Integer)speedSpinnerModel.getMinimum()).intValue() ) {
+                    speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() - 1));
             }
         }
     }
@@ -746,14 +737,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         else if (speedSpinner!=null && speedSpinner.isEnabled())
             {
-                if (((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() <= ((Integer)JSpinnerUtil.getModelMaximum(speedSpinner)).intValue() &&
-                    ((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() > ((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue() )
+                if (((Integer)speedSpinner.getValue()).intValue() <= ((Integer)speedSpinnerModel.getMaximum()).intValue() &&
+                    ((Integer)speedSpinner.getValue()).intValue() > ((Integer)speedSpinnerModel.getMinimum()).intValue() )
                     {
-                        Integer speedvalue= new Integer(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue() - 10);
-                        if(speedvalue.intValue()>((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)).intValue())
-                            JSpinnerUtil.setValue(speedSpinner,speedvalue);
+                        Integer speedvalue= new Integer(((Integer)speedSpinner.getValue()).intValue() - 10);
+                        if(speedvalue.intValue()>((Integer)speedSpinnerModel.getMinimum()).intValue())
+                            speedSpinner.setValue(speedvalue);
                         else
-                            JSpinnerUtil.setValue(speedSpinner,((Integer)JSpinnerUtil.getModelMinimum(speedSpinner)));
+                            speedSpinner.setValue(((Integer)speedSpinnerModel.getMinimum()));
                     }
             }
     }
@@ -762,7 +753,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.62 $
+     * @version    $Revision: 1.63 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -819,7 +810,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (log.isDebugEnabled()) {log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
             speedSlider.setValue( newSliderSetting );
             if(speedSpinner!=null)
-                JSpinnerUtil.setValue(speedSpinner, new Integer(newSliderSetting));
+                speedSpinner.setValue(new Integer(newSliderSetting));
         } else if (e.getPropertyName().equals("SpeedSteps")) {
             int steps=((Integer) e.getNewValue()).intValue();
             setSpeedSteps(steps);

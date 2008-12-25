@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.56 $
+ * @version     $Revision: 1.57 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -624,10 +624,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         JMenu opsMenu = new JMenu("Automation");
         menuBar.add(opsMenu);
         JMenuItem item = new JMenuItem("Edit...");
-        if (!jmri.util.JSpinnerUtil.isJSpinnerAvailable()) {
-            item.setEnabled(false);
-            item.setToolTipText("Disabled, because this version of Java cannot support it");
-        }
         opsMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
