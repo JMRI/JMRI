@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.1 2008-12-23 16:49:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.2 2008-12-25 21:33:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -67,11 +67,18 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-Linux users, especially Ubuntu users, of Panel Editor and Layout Editor 
+<p>JMRI now requires Java 1.5 or later.
+If you are using an older version of Java, please
+<a href="http://www.sun.com/getjava">upgrade your Java installation</a>.  
+To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>Linux users, especially Ubuntu users, of Panel Editor and Layout Editor 
 may experience trouble with displaying popup menus and  
 repositioning items on their panels.  This is a known problem that is  
 being worked on. It is expected to be fixed in an early 2.5.x test  
 version.
+
 
 <h3>Warnings from older versions:</h3>
 
@@ -102,9 +109,6 @@ For more information on this, please see this
 on the 
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list</a>.
 
-<p>JMRI is moving toward requiring Java 1.5 or later.  Certain new features may not work if you are using an earlier
-version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
-<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
 
 <p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. 
 We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. 
@@ -145,6 +149,17 @@ Update Throttle
 "<a href="http://jmri.sf.net/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">Edit Throttle Frame</a>" so user is less likely
 to enter a new frame title and not have it appear.
 
+<p>
+Several technical updates were made. These shouldn't effect users, but
+things don't always go perfectly...
+<ul>
+<li>Standard build for debugging now uses Java 1.5, builds Java 1.5 classes.
+    This required some minor code edits to remove warnings.s
+<li>Removed obsolete methods from Routes, deprecated since JMRI 1.7.6
+<li>Removed varoius Ugly Hacks associated with the JSpinner class not being
+    available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over Tcp.
+<li>
+</ul>
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
