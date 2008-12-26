@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.2 2008-12-25 21:33:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.3 2008-12-26 20:13:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -160,6 +160,17 @@ things don't always go perfectly...
     available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over Tcp.
 <li>
 </ul>
+
+<li>
+Dan Boudreau added two new features to the operations code: 
+<ul>
+<li>The  ability to copy a route.  
+<li>The ability to control whether there are car drops and pickups at a location in a route.
+</ul>
+
+<p>
+A duplicate definition for the Hornby 8215 was removed.
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
