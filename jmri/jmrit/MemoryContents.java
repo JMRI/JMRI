@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class MemoryContents {
 
@@ -72,16 +72,16 @@ public class MemoryContents {
     public void setAddress24Bit(boolean v) { address24bit = v; }
     
     public void readHex(File file) throws FileNotFoundException {
-        DataInputStream fileStream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+        BufferedReader fileStream = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
         // start reading the file
         try {
             byte bval;
             int ival;
-            while (fileStream.available() > 3) {
+            String s;
+            while ( (s = fileStream.readLine()) != null) {
                 // this loop reads one line per turn
-                String s = fileStream.readLine();
-                
+
                 // decode line type
                 int len = s.length();
                 if (len<1) return;
