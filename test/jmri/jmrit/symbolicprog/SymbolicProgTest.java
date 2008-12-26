@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -44,10 +44,8 @@ public class SymbolicProgTest extends TestCase {
         TestSuite suite = new TestSuite(SymbolicProgTest.class);
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.EnumVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.HexVariableValueTest.suite());
@@ -57,6 +55,10 @@ public class SymbolicProgTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
+
+        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
         return suite;
     }
 
