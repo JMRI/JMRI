@@ -6,7 +6,7 @@ import jmri.jmrit.display.LayoutBlockManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -31,11 +31,11 @@ import java.util.HashMap;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class InstanceManager {
 
-    static private HashMap<Class,ArrayList> managerLists = new  HashMap<Class,ArrayList>();
+    static private HashMap<Class,ArrayList> managerLists;
     
     static public <T> void store(T val, Class<T> type) {
         ArrayList<T> l = managerLists.get(type);
@@ -46,8 +46,12 @@ public class InstanceManager {
         l.add(val);
     }
     
+    static public <T> List<T> getList(Class<T> type) {
+        return managerLists.get(type);
+    }
+    
     static public <T> T getDefault(Class<T> type) {
-        ArrayList<T> l = managerLists.get(type);
+        List<T> l = getList(type);
         if (l == null) return null;
         if (l.size()<1) return null;
         return l.get(l.size()-1);
@@ -194,6 +198,7 @@ public class InstanceManager {
     // This is a separate, protected member so it
     // can be overridden in unit tests
     protected void init() {
+        managerLists = new  HashMap<Class,ArrayList>();
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
         lightManager = new jmri.managers.ProxyLightManager();

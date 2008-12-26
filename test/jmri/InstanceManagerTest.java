@@ -11,7 +11,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -60,6 +60,21 @@ public class InstanceManagerTest extends TestCase {
         m2 = InstanceManager.getDefault(PowerManager.class);
 
         Assert.assertEquals("retrieved same object", m1, m2);
+    }
+    
+    public void testGenericStoreList() {
+        PowerManager m1 = new PowerManagerScaffold();
+        PowerManager m2 = new PowerManagerScaffold();
+        
+        InstanceManager.store(m1, PowerManager.class);
+        InstanceManager.store(m2, PowerManager.class);
+
+        Assert.assertEquals("list length", 2, 
+                        InstanceManager.getList(PowerManager.class).size());
+        Assert.assertEquals("retrieved 1st PowerManager", m1, 
+                        InstanceManager.getList(PowerManager.class).get(0));
+        Assert.assertEquals("retrieved 2nd PowerManager", m2, 
+                        InstanceManager.getList(PowerManager.class).get(1));
     }
     
     public void testGenericStoreAndGetTwoDifferentTypes() {
