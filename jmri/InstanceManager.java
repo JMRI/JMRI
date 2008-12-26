@@ -31,7 +31,7 @@ import java.util.HashMap;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  */
 public class InstanceManager {
 
@@ -46,16 +46,35 @@ public class InstanceManager {
         l.add(val);
     }
     
-    static public <T> T get(Class<T> type) {
+    static public <T> T getDefault(Class<T> type) {
         ArrayList<T> l = managerLists.get(type);
         if (l == null) return null;
         if (l.size()<1) return null;
         return l.get(l.size()-1);
     }
     
-    static public PowerManager powerManagerInstance()  { return instance().powerManager; }
+    static public PowerManager powerManagerInstance()  { 
+        return getDefault(PowerManager.class);
+    }
+    static public void setPowerManager(PowerManager p) {
+        store(p, PowerManager.class);
+    }
 
-    static public ProgrammerManager programmerManagerInstance()  { return instance().programmerManager; }
+    static public ProgrammerManager programmerManagerInstance()  { 
+        return getDefault(ProgrammerManager.class);
+    }
+
+    static public void setProgrammerManager(ProgrammerManager p) {
+        store(p, ProgrammerManager.class);
+
+    	// Now that we have a programmer manager, install the default
+        // Consist manager if Ops mode is possible, and there isn't a
+        // consist manager already.
+		if(programmerManagerInstance().isOpsModePossible() 
+		    && consistManagerInstance() == null) {
+			setConsistManager(new DccConsistManager());
+		}
+    }
 
     static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
 
@@ -187,32 +206,6 @@ public class InstanceManager {
      * changes during JUnit testing.
      */
     static protected InstanceManager root;
-
-    private PowerManager powerManager = null;
-    static public void setPowerManager(PowerManager p) {
-        instance().addPowerManager(p);
-    }
-    protected void addPowerManager(PowerManager p) {
-        if (p!=powerManager && powerManager!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
-        if (p!=powerManager && powerManager==null && log.isDebugEnabled()) log.debug("PowerManager instance is being installed: "+p);
-        powerManager = p;
-    }
-
-    private ProgrammerManager programmerManager = null;
-    static public void setProgrammerManager(ProgrammerManager p) {
-        instance().addProgrammerManager(p);
-    }
-    protected void addProgrammerManager(ProgrammerManager p) {
-        if (p!=programmerManager && programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
-        if (p!=programmerManager && programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
-        programmerManager = p;
-	// Now that we have a programmer manager, install the default
-        // Consist manager if Ops mode is possible, and there isn't a
-        // consist manager already.
-		if(programmerManager.isOpsModePossible() && consistManager == null) {
-			setConsistManager(new DccConsistManager());
-		}
-    }
 
     private SensorManager sensorManager = null;
     static public void setSensorManager(SensorManager p) {
