@@ -1,5 +1,8 @@
-SymbolicProg is a JMRI package for programming decoders symbolically.
+DO NOT ADD ANY NEW FILES TO THIS DIRECTORY.
 
-This has now been moved to the jmrit (note final "t") package.
+The jmri.symbolicprog package been moved
+to the jmri.jmrit.symbolicprog package.
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+Due to CVS limitations, jmri/symbolicprog directory 
+cannot be removed. We have therefore left it here, empty
+except for this file.
