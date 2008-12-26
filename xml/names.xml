@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.11 2007-09-21 05:49:29 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.12 2008-12-26 19:54:13 jacobsen Exp $ -->
 <names-config>
+		<version author="jake@physics.berkeley.edu" 
+			version="8" lastUpdated="20081226"/>
 		<version author="jake@physics.berkeley.edu" 
 			version="7.1" lastUpdated="20031008"/>
 
-   <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+   <!-- Version 7 - changed spelling of "behavior" (Jack Shall)       -->
+   <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests -->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -23,9 +26,13 @@
 	<!-- 		What each function does			-->
 	<!-- 		What each output does			-->
 	<!--		Map functions to/from outputs	-->
+	<!--	Advanced section					-->
+	<!-- 		Advanced group 1                -->
+	<!-- 		Advanced group 2                -->
 	<!--	Sound section						-->
 	<!-- 		Sound group 1, typically foreground sound configuration -->
 	<!-- 		Sound group 2, typically background sound configuration -->
+	<!-- 		Sound group 3                   -->
 	<!-- 		Volumes and other analog settings -->		
 	<!-- 		Global sound options 			-->
 	
@@ -68,13 +75,12 @@
 		<definition item="Locomotive Direction" CV="29" mask="XXXXXXXV" />
 		<definition item="Speed Step Mode" CV="29" mask="XXXXXXVX" />
 		<definition item="Speed Table Definition" CV="29" mask="XXXVXXXX" />
+		<definition item="Speed Table Selection" />
 
 		<definition item="Kick Start" CV="65" />
 		<definition item="Forward Trim" CV="66" />
 		<definition item="Speed Table" CV="67" />
 		<definition item="Reverse Trim" CV="95" />
-
-		<definition item="Total PWM Period" CV="9" />
 
 	</definitiongroup>
 
@@ -86,24 +92,70 @@
 		<definition item="Packet Time-out Value" CV="11" />
 		<definition item="DC Brake Momentum" />
 
+		<definition item="Analog Vstart" />
+
 		<definition item="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
 		<definition item="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
 		<definition item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
 		<definition item="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
 		<definition item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
 		
+		<definition item="FMZ(Fleischmann)" />
+
 		<!-- Function outputs in analog -->
 		<definition item="Analog Mode Function Status - FL(f)"/>
 		<definition item="Analog Mode Function Status - FL(r)"/>
-		<definition item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
-		<definition item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
-		<definition item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
-		<definition item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
-		<definition item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
-		<definition item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
-		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
-		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		<definition item="Analog Mode Function Status - F0(f)" />
+		<definition item="Analog Mode Function Status - F0(r)" />
 		
+		<definition item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
+		<definition item="Analog Mode Function Status - F1(r)" />
+		<definition item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
+		<definition item="Analog Mode Function Status - F2(r)" />
+		<definition item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
+		<definition item="Analog Mode Function Status - F3(r)" />
+		<definition item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
+		<definition item="Analog Mode Function Status - F4(r)" />
+		<definition item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
+		<definition item="Analog Mode Function Status - F5(r)" />
+		<definition item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
+		<definition item="Analog Mode Function Status - F6(r)" />
+		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
+		<definition item="Analog Mode Function Status - F7(r)" />
+		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		<definition item="Analog Mode Function Status - F8(r)" />
+		
+		<definition item="Analog Mode Function Status - F9" />
+		<definition item="Analog Mode Function Status - F9(f)" />
+		<definition item="Analog Mode Function Status - F9(r)" />
+		<definition item="Analog Mode Function Status - F10" />
+		<definition item="Analog Mode Function Status - F10(f)" />
+		<definition item="Analog Mode Function Status - F10(r)" />
+		<definition item="Analog Mode Function Status - F11" />
+		<definition item="Analog Mode Function Status - F11(f)" />
+		<definition item="Analog Mode Function Status - F11(r)" />
+		<definition item="Analog Mode Function Status - F12" />
+		<definition item="Analog Mode Function Status - F12(f)" />
+		<definition item="Analog Mode Function Status - F12(r)" />
+		<definition item="Analog Mode Function Status - F13" />
+		<definition item="Analog Mode Function Status - F13(f)" />
+		<definition item="Analog Mode Function Status - F13(r)" />
+		<definition item="Analog Mode Function Status - F14" />
+		<definition item="Analog Mode Function Status - F14(f)" />
+		<definition item="Analog Mode Function Status - F14(r)" />
+		<definition item="Analog Mode Function Status - F15" />
+		<definition item="Analog Mode Function Status - F15(f)" />
+		<definition item="Analog Mode Function Status - F15(r)" />
+		<definition item="Analog Mode Function Status - F16" />
+		<definition item="Analog Mode Function Status - F16(f)" />
+		<definition item="Analog Mode Function Status - F16(r)" />
+		<definition item="Analog Mode Function Status - F17" />
+		<definition item="Analog Mode Function Status - F17(f)" />
+		<definition item="Analog Mode Function Status - F17(r)" />
+		<definition item="Analog Mode Function Status - F18" />
+		<definition item="Analog Mode Function Status - F18(f)" />
+		<definition item="Analog Mode Function Status - F18(r)" />
+
 	</definitiongroup>
 
 	<!-- Identification -->
@@ -116,6 +168,8 @@
 		<definition item="Decoder Version" CV="7" />
 		<definition item="Manufacturer" CV="8" />
 
+		<definition item="Product Number" />
+
 	</definitiongroup>
 
 	<!-- Consisting variables -->
@@ -124,6 +178,10 @@
 		<definition item="Consist Address" CV="19" />
 		<definition item="Consist Direction"/>
 		
+		<definition item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
+		<definition item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+
+		<definition item="Consist Address Active For F0" />
 		<definition item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
 		<definition item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
 		<definition item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
@@ -132,9 +190,18 @@
 		<definition item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" />
 		<definition item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" />
 		<definition item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
-		<definition item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
-		<definition item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+
+		<definition item="Consist Address Active For F9" />
+		<definition item="Consist Address Active For F9 in Forward" />
+		<definition item="Consist Address Active For F9 in Reverse" />
+
+		<definition item="Consist Address Active For F10" />
+		<definition item="Consist Address Active For F10 in Forward" />
+		<definition item="Consist Address Active For F10 in Reverse" />
 		
+		<definition item="Consist Address Active For F11" />
+		<definition item="Consist Address Active For F12" />
+
 		<definition item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
 		<definition item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
 		<definition item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
@@ -149,14 +216,19 @@
 		
 	<definitiongroup name="BEMF and Motor Control">
 
+		<definition item="Total PWM Period" CV="9" />
+		<definition item="Motor PWM Frequency" CV="9" />
+
+		<definition item="Dither frequency" />
+		<definition item="Dither option" />
+
 		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
 		<definition item="EMF Static Config" />
 		<definition item="EMF Dynamic Config" />
 		<definition item="EMF Droop Config" />
+		<definition item="EMF Control Reference" />
+		<definition item="Load Control" />
 
-
-		<definition item="Dither frequency" />
-		<definition item="Dither option" />
 		
 	</definitiongroup>
 
@@ -181,18 +253,30 @@
 		<definition item="Function F0F effect generated"/>
 		<definition item="Function F0F behavior"/>
 		<definition item="Function F0F options"/>
+		<definition item="Function F0F option 2"/>
+		<definition item="Function F0F option 3"/>
+		<definition item="Function F0F option 4"/>
 
 		<definition item="Function F0R effect generated"/>
 		<definition item="Function F0R behavior"/>
 		<definition item="Function F0R options"/>
+		<definition item="Function F0R option 2"/>
+		<definition item="Function F0R option 3"/>
+		<definition item="Function F0R option 4"/>
 
 		<definition item="Function 1 effect generated"/>
 		<definition item="Function 1 behavior"/>
 		<definition item="Function 1 options"/>
+		<definition item="Function 1 option 2"/>
+		<definition item="Function 1 option 3"/>
+		<definition item="Function 1 option 4"/>
 
 		<definition item="Function 2 effect generated"/>
 		<definition item="Function 2 behavior"/>
 		<definition item="Function 2 options"/>
+		<definition item="Function 2 option 2"/>
+		<definition item="Function 2 option 3"/>
+		<definition item="Function 2 option 4"/>
 
 		<definition item="Function 3 effect generated"/>
 		<definition item="Function 3 behavior"/>
@@ -476,6 +560,33 @@
 		
 	</definitiongroup>
 
+	<!-- Advanced section -->
+	
+	<definitiongroup name="Sound">
+
+		<!-- Advanced group 1 -->
+		<!-- <definition item="Advanced Group 1 Control" /> -->
+		<definition item="Advanced Group 1 Option 1" />
+		<definition item="Advanced Group 1 Option 2" />
+		<definition item="Advanced Group 1 Option 3" />
+		<definition item="Advanced Group 1 Option 4" />
+		<definition item="Advanced Group 1 Option 5" />
+		<definition item="Advanced Group 1 Option 6" />
+		<definition item="Advanced Group 1 Option 7" />
+		<definition item="Advanced Group 1 Option 8" />
+
+		<!-- <definition item="Advanced Group 2 Control" /> -->
+		<definition item="Advanced Group 2 Option 1" />
+		<definition item="Advanced Group 2 Option 2" />
+		<definition item="Advanced Group 2 Option 3" />
+		<definition item="Advanced Group 2 Option 4" />
+		<definition item="Advanced Group 2 Option 5" />
+		<definition item="Advanced Group 2 Option 6" />
+		<definition item="Advanced Group 2 Option 7" />
+		<definition item="Advanced Group 2 Option 8" />
+		
+	</definitiongroup>
+
 	<!-- Sound section -->
 	
 	<definitiongroup name="Sound">
@@ -490,6 +601,14 @@
 		<definition item="Sound Group 1 Option 6" />
 		<definition item="Sound Group 1 Option 7" />
 		<definition item="Sound Group 1 Option 8" />
+		<definition item="Sound Group 1 Option 9" />
+		<definition item="Sound Group 1 Option 10" />
+		<definition item="Sound Group 1 Option 11" />
+		<definition item="Sound Group 1 Option 12" />
+		<definition item="Sound Group 1 Option 13" />
+		<definition item="Sound Group 1 Option 14" />
+		<definition item="Sound Group 1 Option 15" />
+		<definition item="Sound Group 1 Option 16" />
 		
 		<!-- Sound group 2, typically background sound configuration -->
 		<definition item="Sound Group 2 Control" />
@@ -501,6 +620,25 @@
 		<definition item="Sound Group 2 Option 6" />
 		<definition item="Sound Group 2 Option 7" />
 		<definition item="Sound Group 2 Option 8" />
+		<definition item="Sound Group 2 Option 9" />
+		<definition item="Sound Group 2 Option 10" />
+		<definition item="Sound Group 2 Option 11" />
+		<definition item="Sound Group 2 Option 12" />
+		<definition item="Sound Group 2 Option 13" />
+		<definition item="Sound Group 2 Option 14" />
+		<definition item="Sound Group 2 Option 15" />
+		<definition item="Sound Group 2 Option 16" />
+		
+		<!-- Sound group 3  -->
+		<definition item="Sound Group 3 Control" />
+		<definition item="Sound Group 3 Option 1" />
+		<definition item="Sound Group 3 Option 2" />
+		<definition item="Sound Group 3 Option 3" />
+		<definition item="Sound Group 3 Option 4" />
+		<definition item="Sound Group 3 Option 5" />
+		<definition item="Sound Group 3 Option 6" />
+		<definition item="Sound Group 3 Option 7" />
+		<definition item="Sound Group 3 Option 8" />
 		
 		<!-- Volumes and other analog settings -->
 		<definition item="Sound Setting 1" />
@@ -511,6 +649,28 @@
 		<definition item="Sound Setting 6" />
 		<definition item="Sound Setting 7" />
 		<definition item="Sound Setting 8" />
+		<definition item="Sound Setting 9" />
+		<definition item="Sound Setting 10" />
+		<definition item="Sound Setting 11" />
+		<definition item="Sound Setting 12" />
+		<definition item="Sound Setting 13" />
+		<definition item="Sound Setting 14" />
+		<definition item="Sound Setting 15" />
+		<definition item="Sound Setting 16" />
+		<definition item="Sound Setting 17" />
+		<definition item="Sound Setting 18" />
+		<definition item="Sound Setting 19" />
+		<definition item="Sound Setting 20" />
+		<definition item="Sound Setting 21" />
+		<definition item="Sound Setting 22" />
+		<definition item="Sound Setting 23" />
+		<definition item="Sound Setting 24" />
+		<definition item="Sound Setting 25" />
+		<definition item="Sound Setting 26" />
+		<definition item="Sound Setting 27" />
+		<definition item="Sound Setting 28" />
+		<definition item="Sound Setting 29" />
+		<definition item="Sound Setting 30" />
 		
 		<!-- Global sound options -->
 		<definition item="Sound Option 1" />
@@ -521,6 +681,14 @@
 		<definition item="Sound Option 6" />
 		<definition item="Sound Option 7" />
 		<definition item="Sound Option 8" />
+		<definition item="Sound Option 9" />
+		<definition item="Sound Option 10" />
+		<definition item="Sound Option 11" />
+		<definition item="Sound Option 12" />
+		<definition item="Sound Option 13" />
+		<definition item="Sound Option 14" />
+		<definition item="Sound Option 15" />
+		<definition item="Sound Option 16" />
 
 	</definitiongroup>
 
