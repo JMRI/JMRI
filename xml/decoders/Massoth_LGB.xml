@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_LGB.xml,v 1.5 2008-02-03 18:43:42 jacobsen Exp $ -->
+<!-- $Id: Massoth_LGB.xml,v 1.6 2008-12-26 19:53:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -508,7 +508,7 @@
 		<!-- Do not attempt to read CV 105 on an LGB decoder -->
 
 		<variable label="ID for Decoder Type" CV="106" readOnly="yes" 
-			item="Product number"
+			item="Product Number"
 			tooltip="ID for Decoder Type (read only) CV106">
 			<decVal/>
 		</variable>
@@ -541,7 +541,7 @@
 			<label label=" "/>
 			<display item="Manufacturer" />
 			<display item="Decoder Version" />
-			<display item="Product number" />
+			<display item="Product Number" />
 		</column>
 	</pane>
 

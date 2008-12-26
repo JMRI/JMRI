@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.21 2008-07-29 17:20:46 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.22 2008-12-26 19:53:40 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -51,7 +51,7 @@
                 <label label=" "/>
                 <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
                 <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
-                <display item="Product number" tooltip="The decoder product number (if used) (read only)"/>
+                <display item="Product Number" tooltip="The decoder product number (if used) (read only)"/>
             </column>
         </pane>
         <pane name="Motor">

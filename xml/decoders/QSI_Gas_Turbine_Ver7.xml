@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.7 2008-09-07 04:41:02 jacobsen Exp $ -->
+<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.8 2008-12-26 19:53:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -3663,8 +3663,8 @@
     			include="5000,5050"
                readOnly="yes" item="CV56.254.18"> <indexedVal/> </ivariable>
 
-    <ivariable label="Product number" CVname="56.254.5" CV="56" PI="254" SI="5"
-               readOnly="yes" item="Product number" >
+    <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5"
+               readOnly="yes" item="Product Number" >
         <indexedPairVal highCVname="56.254.4" factor="256" />
     </ivariable>
 
@@ -4324,7 +4324,7 @@
 	<display item="Decoder Version" />
     <display item="CV56.254.6"/>
     <display item="CV56.254.8"/>
-	<display item="Product number" />
+	<display item="Product Number" />
     <display item="Sound Set"/>
     <display item="Sound Set Number"/>
 	<display item="Hardware Profile"/>

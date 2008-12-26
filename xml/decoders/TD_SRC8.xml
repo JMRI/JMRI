@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TD_SRC8.xml,v 1.3 2007-09-21 05:49:34 jacobsen Exp $ -->
+<!-- $Id: TD_SRC8.xml,v 1.4 2008-12-26 19:53:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -554,7 +554,7 @@
 				tooltip="The manufacturer's ID number (read only)" />
 			<display item="Decoder Version"
 				tooltip="The decoder version number (read only)" />
-			<display item="Product number"
+			<display item="Product Number"
 				tooltip="The decoder product number (if used) (read only)" />
 	</column>
 </pane>

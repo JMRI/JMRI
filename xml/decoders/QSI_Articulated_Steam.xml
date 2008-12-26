@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.10 2008-05-10 04:47:28 jacobsen Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.11 2008-12-26 19:53:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -1132,8 +1132,8 @@
                readOnly="yes" comment="QSI" item="CV56.254.12"> <indexedVal/> </ivariable>
 
 <!-- QSI Product ID -->
-    <ivariable label="Product number" CVname="56.254.5" CV="56" PI="254" SI="5"
-               readOnly="yes" item="Product number" >
+    <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5"
+               readOnly="yes" item="Product Number" >
         <indexedPairVal highCVname="56.254.4" factor="256" />
     </ivariable>
 
