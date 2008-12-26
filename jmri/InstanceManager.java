@@ -4,6 +4,10 @@ package jmri;
 
 import jmri.jmrit.display.LayoutBlockManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 /**
  * Provides static members for locating various interface implementations.
  * These are the base of how JMRI objects are located.
@@ -27,10 +31,28 @@ import jmri.jmrit.display.LayoutBlockManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class InstanceManager {
 
+    static private HashMap<Class,ArrayList> managerLists = new  HashMap<Class,ArrayList>();
+    
+    static public <T> void store(T val, Class<T> type) {
+        ArrayList<T> l = managerLists.get(type);
+        if (l==null) {
+            l = new ArrayList<T>();
+            managerLists.put(type, l);
+        }
+        l.add(val);
+    }
+    
+    static public <T> T get(Class<T> type) {
+        ArrayList<T> l = managerLists.get(type);
+        if (l == null) return null;
+        if (l.size()<1) return null;
+        return l.get(l.size()-1);
+    }
+    
     static public PowerManager powerManagerInstance()  { return instance().powerManager; }
 
     static public ProgrammerManager programmerManagerInstance()  { return instance().programmerManager; }
