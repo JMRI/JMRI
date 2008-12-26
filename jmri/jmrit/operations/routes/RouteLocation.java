@@ -20,7 +20,7 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -182,7 +182,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * When true allow car pickups at this location
-	 * @param when true pickups allowed at this location
+	 * @param pickups when true pickups allowed at this location
 	 */
 	public void setCanPickup (boolean pickups){
 		boolean old = _pickups;
