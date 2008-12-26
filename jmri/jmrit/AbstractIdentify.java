@@ -9,7 +9,7 @@ package jmri.jmrit;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -72,9 +72,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         // we abort if the status isn't normal
         if (status != jmri.ProgListener.OK) {
             log.warn("Stopping due to error: "
-                     +jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().decodeErrorCode(status));
+                     +jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
             statusUpdate("Stopping due to error: "
-                         +jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().decodeErrorCode(status));
+                         +jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
             state = 0;
             error();
             return;
@@ -135,7 +135,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * Access a single CV for the next step
      */
     protected void readCV(int cv) {
-        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         if (p == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -148,7 +148,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     protected void writeCV(int cv, int value) {
-        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         if (p == null) {
             statusUpdate("No programmer connected");
         } else {

@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -20,35 +20,84 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
 
-    public Programmer getServiceModeProgrammer() {
+    public Programmer getGlobalProgrammer() {
         if (log.isDebugEnabled()) log.debug("return default service-mode programmer");
         return mProgrammer;
     }
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
-    public Programmer reserveServiceModeProgrammer() {
+    public Programmer reserveGlobalProgrammer() {
         return mProgrammer;
     }
-    public void releaseServiceModeProgrammer(Programmer p) {}
+    public void releaseGlobalProgrammer(Programmer p) {}
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOpsModeProgrammer(Programmer p) {}
+    public void releaseAddressedProgrammer(Programmer p) {}
 
     /**
      * Default programmer does not provide Ops Mode
      * @return false if there's no chance of getting one
      */
-    public boolean isOpsModePossible() {return false;}
+    public boolean isAddressedModePossible() {return false;}
 
     /**
      * Allow for implementations that do not support Service mode programming
      * @return false if there's no chance of getting one
      */
-    public boolean isServiceModePossible() {return true;}
+    public boolean isGlobalProgrammerAvailable() {return true;}
+
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer getServiceModeProgrammer() {
+        return getGlobalProgrammer();
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+        return getAddressedProgrammer(pLongAddress, pAddress);
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer reserveServiceModeProgrammer() {
+        return reserveGlobalProgrammer();
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public void releaseServiceModeProgrammer(Programmer p) {
+        releaseGlobalProgrammer(p);
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+        return reserveAddressedProgrammer(pLongAddress, pAddress);
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public void releaseOpsModeProgrammer(Programmer p) {
+        releaseAddressedProgrammer(p);
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public boolean isServiceModePossible() {
+        return isGlobalProgrammerAvailable();
+    }
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public boolean isOpsModePossible() {
+        return isAddressedModePossible();
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultProgrammerManager.class.getName());
 }

@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.2 $
+ * @version	$Revision: 2.3 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 
@@ -26,17 +26,17 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
      * We should make this return false based on what command station 
      * we're using but for now, we'll return true
      */
-    public boolean isOpsModePossible() {
+    public boolean isAddressedModePossible() {
         return XNetTrafficController.instance()
                                 .getCommandStation()
                                 .isOpsModePossible();
     }
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new XNetOpsModeProgrammer(pAddress);
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 }

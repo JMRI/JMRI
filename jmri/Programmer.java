@@ -10,10 +10,10 @@ import java.beans.PropertyChangeListener;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Service Mode, e.g. on a programming track
- * <LI>Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously Service Mode, e.g. on a programming track
+ * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
  * </UL>
- * depending on which type you have, only certain modes can
+ * Depending on which type you have, only certain modes can
  * be set. Valid modes are specified by the class static constants.
  * <P>
  * You get a Programmer object from a {@link ProgrammerManager},
@@ -33,8 +33,8 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  * @see         jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.18 $
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @version	$Revision: 1.19 $
  */
 public interface Programmer  {
 

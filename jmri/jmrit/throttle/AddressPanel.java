@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -337,7 +337,7 @@ public class AddressPanel extends JInternalFrame {
         boolean longAddr = true;
         if (address<100) longAddr = false;
         Programmer programmer = InstanceManager.programmerManagerInstance()
-                                    .getOpsModeProgrammer(longAddr, address);
+                                    .getAddressedProgrammer(longAddr, address);
         // and created the frame
         JFrame p = new PaneOpsProgFrame(null, re,
                                          title, "programmers"+File.separator+"Comprehensive.xml",

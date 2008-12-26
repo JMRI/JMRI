@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -252,7 +252,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
 	// Obtain an ops mode programmer instance
         Programmer opsProg = jmri.InstanceManager.programmerManagerInstance()
-                                    .getOpsModeProgrammer(false,00);
+                                    .getAddressedProgrammer(false,00);
 
 	// write the values to the power station.
 	writeVoltSetting(opsProg);
@@ -262,7 +262,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         // we're done now, so we can release the programmer.
         jmri.InstanceManager.programmerManagerInstance()
-                    .releaseOpsModeProgrammer(opsProg);
+                    .releaseAddressedProgrammer(opsProg);
     }
 
     // Write the voltage setting

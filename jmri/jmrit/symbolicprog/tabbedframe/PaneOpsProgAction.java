@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -55,7 +55,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
         // disable ourself if ops programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             setEnabled(false);
             // This needs to return so the xmlThread is not started;
 	    return;
@@ -90,7 +90,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
                 Programmer programmer = InstanceManager.programmerManagerInstance()
-                                            .getOpsModeProgrammer(longAddr, address);
+                                            .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",

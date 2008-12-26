@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -607,7 +607,7 @@ public class AbstractAutomaton implements Runnable {
     public boolean writeServiceModeCV(int CV, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
-                        .getServiceModeProgrammer();
+                        .getGlobalProgrammer();
 
         // do the write, response will wake the thread
         try {
@@ -639,7 +639,7 @@ public class AbstractAutomaton implements Runnable {
     public int readServiceModeCV(int CV) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
-                        .getServiceModeProgrammer();
+                        .getGlobalProgrammer();
 
         // do the write, response will wake the thread
         cvReturnValue = -1;
@@ -673,7 +673,7 @@ public class AbstractAutomaton implements Runnable {
     public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
-                        .getOpsModeProgrammer(longAddress, loco);
+                        .getAddressedProgrammer(longAddress, loco);
 
         // do the write, response will wake the thread
         try {

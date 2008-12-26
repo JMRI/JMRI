@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Test the DebugProgrammerManager class.
  *
  * @author	Bob Jacobsen Copyright 2002
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DebugProgrammerManagerTest extends TestCase {
 
@@ -24,7 +24,7 @@ public class DebugProgrammerManagerTest extends TestCase {
             InstanceManager.setProgrammerManager(
                 new DebugProgrammerManager());
             Programmer p = InstanceManager.programmerManagerInstance()
-                                        .getServiceModeProgrammer();
+                                        .getGlobalProgrammer();
             Assert.assertTrue("got service mode", p!=null);
             Assert.assertTrue("correct type", (p instanceof ProgDebugger));
 	}
@@ -36,10 +36,10 @@ public class DebugProgrammerManagerTest extends TestCase {
             InstanceManager.setProgrammerManager(
                 new DebugProgrammerManager());
             Programmer p = InstanceManager.programmerManagerInstance()
-                                        .getServiceModeProgrammer();
+                                        .getGlobalProgrammer();
             Assert.assertTrue("same service mode programmer",
                                 InstanceManager.programmerManagerInstance()
-                                        .getServiceModeProgrammer()==p);
+                                        .getGlobalProgrammer()==p);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class DebugProgrammerManagerTest extends TestCase {
             InstanceManager.setProgrammerManager(
                 new DebugProgrammerManager());
             Programmer p = InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 777);
+                                        .getAddressedProgrammer(true, 777);
             Assert.assertTrue("got ops mode", p!=null);
             Assert.assertTrue("correct type", (p instanceof ProgDebugger));
 	}
@@ -61,10 +61,10 @@ public class DebugProgrammerManagerTest extends TestCase {
             InstanceManager.setProgrammerManager(
                 new DebugProgrammerManager());
             Programmer p = InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 777);
+                                        .getAddressedProgrammer(true, 777);
             Assert.assertTrue("same ops mode programmer",
                                 InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 777)==p);
+                                        .getAddressedProgrammer(true, 777)==p);
 	}
 
         /**
@@ -74,13 +74,13 @@ public class DebugProgrammerManagerTest extends TestCase {
             InstanceManager.setProgrammerManager(
                 new DebugProgrammerManager());
             Programmer p = InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 777);
+                                        .getAddressedProgrammer(true, 777);
             Assert.assertTrue("different ops mode programmer",
                                 InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 888)!=p);
+                                        .getAddressedProgrammer(true, 888)!=p);
             Assert.assertTrue("same ops mode programmer",
                                 InstanceManager.programmerManagerInstance()
-                                        .getOpsModeProgrammer(true, 777)==p);
+                                        .getAddressedProgrammer(true, 777)==p);
 	}
 
 	// from here down is testing infrastructure

@@ -12,7 +12,7 @@ import jmri.*;
  * Frame for configuring a NCE booster
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class BoosterProgFrame extends jmri.util.JmriJFrame {
     JTextField start = new JTextField(6);
@@ -77,13 +77,13 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
     
     static void getProgrammer() {
         p = InstanceManager.programmerManagerInstance().
-                            getOpsModeProgrammer(true, 0);
+                            getAddressedProgrammer(true, 0);
     }
     
     static void releaseProgrammer() {
         if (p!=null)
             InstanceManager.programmerManagerInstance().
-                            releaseOpsModeProgrammer(p);
+                            releaseAddressedProgrammer(p);
         p = null;
     }
     

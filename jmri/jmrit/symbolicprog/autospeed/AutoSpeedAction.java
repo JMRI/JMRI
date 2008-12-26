@@ -23,7 +23,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class AutoSpeedAction 			extends AbstractAction {
 
@@ -37,7 +37,7 @@ public class AutoSpeedAction 			extends AbstractAction {
 
         // disable ourself if ops programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             setEnabled(false);
         }
 
@@ -69,7 +69,7 @@ public class AutoSpeedAction 			extends AbstractAction {
                 boolean longAddr = true;
                 if (address<100) longAddr = false;
                 Programmer programmer = InstanceManager.programmerManagerInstance()
-                                            .getOpsModeProgrammer(longAddr, address);
+                                            .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",

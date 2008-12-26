@@ -16,7 +16,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -37,7 +37,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     static public final SprogProgrammer instance() {
         if (self == null) self = new SprogProgrammer();
         // change default
-        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible())
+        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
             _mode = Programmer.OPSBYTEMODE;
         return self;
     }
@@ -74,7 +74,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @return True if paged or direct mode
      */
     public boolean hasMode(int mode) {
-        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()){
+        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
             log.debug("hasMode request on mode "+mode+" returns false");
             return false;
         }else{
@@ -90,7 +90,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     public int getMode() { return _mode; }
 
     public boolean getCanRead() {
-        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible())
+        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
             return false;
         else 
             return true;

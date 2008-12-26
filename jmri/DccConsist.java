@@ -206,7 +206,7 @@ public class DccConsist implements Consist, ProgListener{
          */
 	private void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
-				    .getOpsModeProgrammer(LocoAddress.isLongAddress(),
+				    .getAddressedProgrammer(LocoAddress.isLongAddress(),
 							LocoAddress.getNumber());
 		if(directionNormal) {
 			try {
@@ -223,7 +223,7 @@ public class DccConsist implements Consist, ProgListener{
 		}
 
 		InstanceManager.programmerManagerInstance()
-                               .releaseOpsModeProgrammer(opsProg);
+                               .releaseAddressedProgrammer(opsProg);
 	}
 
         /*
@@ -232,7 +232,7 @@ public class DccConsist implements Consist, ProgListener{
          */
 	public void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
-				    .getOpsModeProgrammer(LocoAddress.isLongAddress(),
+				    .getAddressedProgrammer(LocoAddress.isLongAddress(),
 							LocoAddress.getNumber());
 		try {
 			opsProg.writeCV(19,0,this);
@@ -240,7 +240,7 @@ public class DccConsist implements Consist, ProgListener{
 			// Don't do anything with this yet
 		}
 		InstanceManager.programmerManagerInstance()
-                               .releaseOpsModeProgrammer(opsProg);
+                               .releaseAddressedProgrammer(opsProg);
 	}
 
         /*

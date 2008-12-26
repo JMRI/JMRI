@@ -42,7 +42,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -64,7 +64,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      */
     public Programmer getProgrammer() {
         if (InstanceManager.programmerManagerInstance()!=null)
-            return InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+            return InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         else
             log.warn("request for service mode programmer with no ProgrammerManager configured");
         return null;
@@ -88,8 +88,8 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         // update to current status & watch for changes
         int mode = 0;
         if (InstanceManager.programmerManagerInstance() != null
-            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-            mode = InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getMode();
+            && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
+            mode = InstanceManager.programmerManagerInstance().getGlobalProgrammer().getMode();
         updateStatus(mode);
         connect();
 
@@ -147,9 +147,9 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     private void connect() {
         if (!connected) {
             if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null) {
+                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 InstanceManager.programmerManagerInstance()
-                    .getServiceModeProgrammer().addPropertyChangeListener(this);
+                    .getGlobalProgrammer().addPropertyChangeListener(this);
                 connected = true;
                 log.debug("Connecting to programmer");
             } else {
@@ -162,8 +162,8 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     public void dispose() {
         if (connected) {
             if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-                InstanceManager.programmerManagerInstance().getServiceModeProgrammer().removePropertyChangeListener(this);
+                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
+                InstanceManager.programmerManagerInstance().getGlobalProgrammer().removePropertyChangeListener(this);
             connected = false;
         }
     }

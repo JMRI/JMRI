@@ -21,7 +21,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class ProgModePane extends ProgModeSelector {
 
@@ -45,7 +45,7 @@ public class ProgModePane extends ProgModeSelector {
         // ops mode support
         mOpsPane = null;
         if (InstanceManager.programmerManagerInstance()!=null &&
-            InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+            InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
 
             add(new JSeparator());
             mOpsPane = new ProgOpsModePane(direction, group);

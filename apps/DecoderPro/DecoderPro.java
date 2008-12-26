@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.56 $
+ * @version     $Revision: 1.57 $
  */
 public class DecoderPro extends Apps {
 
@@ -89,7 +89,7 @@ public class DecoderPro extends Apps {
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isServiceModePossible()) {
+            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(rb.getString("MsgServiceButtonDisabled"));
         }
@@ -98,7 +98,7 @@ public class DecoderPro extends Apps {
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(rb.getString("MsgOpsButtonDisabled"));
         }

@@ -23,7 +23,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -59,7 +59,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
                     provideSensor(sensorName);
 
         programmer = InstanceManager.programmerManagerInstance()
-                        .getOpsModeProgrammer(locoLong, locoNumber);
+                        .getAddressedProgrammer(locoLong, locoNumber);
 
 		if (sensor!=null) {
 			// set up the initial correlation

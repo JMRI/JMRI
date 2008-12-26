@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -30,7 +30,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
     // steps of the identification state machine
     public boolean test1() {
-        Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         // if long address, we have to use some mode other
         // than register, so remember where we are now
         originalMode = p.getMode();
@@ -47,7 +47,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             shortAddr = false;
             // might now be in register mode, which is no good.
             // can we use original mode?
-            Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+            Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
             if (originalMode==Programmer.PAGEMODE ||
                 originalMode==Programmer.DIRECTBITMODE ||
                 originalMode==Programmer.DIRECTBYTEMODE) {

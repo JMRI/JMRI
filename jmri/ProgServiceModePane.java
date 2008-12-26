@@ -33,7 +33,7 @@ import javax.swing.BoxLayout;
  * for more details.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -51,7 +51,7 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
      */
     public Programmer getProgrammer() {
         if (InstanceManager.programmerManagerInstance()!=null)
-            return InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+            return InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         else
             log.warn("request for service mode programmer with no ProgrammerManager configured");
         return null;
@@ -94,8 +94,8 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
 
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null
-            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null) {
-            Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+            && InstanceManager.programmerManagerInstance().getGlobalProgrammer()!=null) {
+            Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
             if (!p.hasMode(Programmer.PAGEMODE)) pagedButton.setEnabled(false);
             if (!p.hasMode(Programmer.DIRECTBYTEMODE)) directByteButton.setEnabled(false);
             if (!p.hasMode(Programmer.DIRECTBITMODE)) directBitButton.setEnabled(false);
@@ -226,9 +226,9 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
     private void connect() {
         if (!connected) {
             if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null) {
+                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 InstanceManager.programmerManagerInstance()
-                    .getServiceModeProgrammer().addPropertyChangeListener(this);
+                    .getGlobalProgrammer().addPropertyChangeListener(this);
                 connected = true;
                 log.debug("Connecting to programmer");
             } else {
@@ -241,8 +241,8 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
     private void setProgrammerMode(int mode) {
         log.debug("Setting programmer to mode "+mode);
         if (InstanceManager.programmerManagerInstance() != null
-            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-            InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
+            && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
+            InstanceManager.programmerManagerInstance().getGlobalProgrammer().setMode(mode);
     }
 
     /**
@@ -251,7 +251,7 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
      */
     void updateMode() {
         if (connected) {
-            int mode = InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getMode();
+            int mode = InstanceManager.programmerManagerInstance().getGlobalProgrammer().getMode();
             if (log.isDebugEnabled()) log.debug("setting mode buttons: "+mode);
             setButtonMode(mode);
         }
@@ -264,8 +264,8 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
     public void dispose() {
         if (connected) {
             if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-                InstanceManager.programmerManagerInstance().getServiceModeProgrammer().removePropertyChangeListener(this);
+                && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
+                InstanceManager.programmerManagerInstance().getGlobalProgrammer().removePropertyChangeListener(this);
             connected = false;
         }
     }

@@ -16,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -32,7 +32,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
     Hashtable opsProgrammers = new Hashtable();
 
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         int address = pAddress;
         if (!pLongAddress) address = -address;
         // look for an existing entry by getting something from hash table
@@ -49,7 +49,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return saw;
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 
@@ -57,7 +57,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      * Debug programmer does provide Ops Mode
      * @return true
      */
-    public boolean isOpsModePossible() {return true;}
+    public boolean isAddressedModePossible() {return true;}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebugProgrammerManager.class.getName());
 }

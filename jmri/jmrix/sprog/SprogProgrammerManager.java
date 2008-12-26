@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SprogProgrammerManager  extends DefaultProgrammerManager {
 
@@ -37,21 +37,21 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
      * SPROG Command Station is Ops mode only
      * @return true
      */
-    public boolean isOpsModePossible() {
+    public boolean isAddressedModePossible() {
       if (mode == OPS) {return true;}
       else return false;
     }
 
-    public boolean isServiceModePossible() {
+    public boolean isGlobalProgrammerAvailable() {
       if (mode == SERVICE) {return true;}
       else return false;
     }
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new SprogOpsModeProgrammer(pAddress, pLongAddress);
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 }

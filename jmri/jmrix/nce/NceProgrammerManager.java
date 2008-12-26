@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 
@@ -26,7 +26,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
      * Works with command station to provide Ops Mode, so say it works
      * @return true
      */
-    public boolean isOpsModePossible() {return true;}
+    public boolean isAddressedModePossible() {return true;}
     
     /**
 	 * Works with PH command station to provide Service Mode and USB connect to
@@ -34,7 +34,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	 * 
 	 * @return true if not USB connect to SB3
 	 */
-    public boolean isServiceModePossible() {
+    public boolean isGlobalProgrammerAvailable() {
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3)
 			return false;
 		else
@@ -42,11 +42,11 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	}
 
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new NceOpsModeProgrammer(pAddress, pLongAddress);
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 }

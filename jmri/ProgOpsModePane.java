@@ -12,7 +12,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 
@@ -46,7 +46,7 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null) {
             ProgrammerManager p = InstanceManager.programmerManagerInstance();
-            if (!p.isOpsModePossible()) mOpsByteButton.setEnabled(false);
+            if (!p.isAddressedModePossible()) mOpsByteButton.setEnabled(false);
         } else {
             log.warn("No programmer available, so modes not set");
         }
@@ -76,7 +76,7 @@ public class ProgOpsModePane extends javax.swing.JPanel {
 			log.debug("ops programmer for address " + address
 					+ ", long address " + longAddr);
 			Programmer p = InstanceManager.programmerManagerInstance()
-					.getOpsModeProgrammer(longAddr, address);
+					.getAddressedProgrammer(longAddr, address);
 			p.setMode(getMode());
 			return p;
 		} else {
@@ -100,8 +100,8 @@ public class ProgOpsModePane extends javax.swing.JPanel {
     private void setProgrammerMode(int mode) {
         log.debug("Setting programmer to mode "+mode);
         if (InstanceManager.programmerManagerInstance() != null
-            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-            InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
+            && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)
+            InstanceManager.programmerManagerInstance().getGlobalProgrammer().setMode(mode);
     }
 
     /**

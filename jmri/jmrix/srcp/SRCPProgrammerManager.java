@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 
@@ -26,13 +26,13 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
      * Works with command station to provide Ops Mode, so say it works
      * @return true
      */
-    public boolean isOpsModePossible() {return true;}
+    public boolean isAddressedModePossible() {return true;}
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new SRCPOpsModeProgrammer(pAddress, pLongAddress);
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 }

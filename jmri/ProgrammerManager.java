@@ -7,11 +7,11 @@ package jmri;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Service Mode, e.g. on a programming track
- * <LI>Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously Service Mode, e.g. on a programming track
+ * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
  * </UL>
- * You get a Programmer object from a ProgrammerManager, which in turn can be located
- * from the InstanceManager.
+ * You get a {@link Programmer} object from a ProgrammerManager, which in turn can be located
+ * from the {@link InstanceManager}.
  * <P>
  * The ProgramerManager also provides a reserve/release
  * system for tools that want to pretend they have exclusive use of a Programmer.
@@ -31,64 +31,100 @@ package jmri;
  * for more details.
  * <P>
  * @see             jmri.Programmer
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008
+ * @version			$Revision: 1.8 $
  */
 public interface ProgrammerManager  {
 
     /**
-     * Gain access to the Service Mode Programmer without reservation.
-     * @return null only if there isn't a Service Mode Programmer in the system
+     * Gain access to the Global Mode Programmer without reservation.
+     * @return null only if there isn't a Global Mode Programmer available 
+     * via this Manager.
      */
-    public Programmer getServiceModeProgrammer();
+    public Programmer getGlobalProgrammer();
+    
     /**
-     * Gain access to a Ops Mode Programmer without reservation.
+     * Gain access to a Addressed Mode Programmer without reservation.
      * @param pLongAddress true if this is a long (14 bit) address, else false
      * @param pAddress Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress);
-
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress);
+    
     /**
-     * Gain access to the Service Mode Programmer, in the process reserving it
+     * Gain access to the Global Mode Programmer, in the process reserving it
      * for yourself.
-     * @return null if the existing Service Mode programmer is in use
+     * @return null if the existing Global Mode programmer is in use
      */
-    public Programmer reserveServiceModeProgrammer();
+    public Programmer reserveGlobalProgrammer();
+    
     /**
-     * Return access to the Service Mode Programmer, so that it can
+     * Return access to the Global Mode Programmer, so that it can
      * be used elsewhere.
      */
-    public void releaseServiceModeProgrammer(Programmer p);
+    public void releaseGlobalProgrammer(Programmer p);
 
     /**
-     * Gain access to a (the) Ops Mode Programmer, in the process
+     * Gain access to a (the) Addressed Mode Programmer, in the process
      * reserving it for yourself.
      * @param pLongAddress true if this is a long (14 bit) address, else false
      * @param pAddress Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress);
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
+    
     /**
-     * Return access to the Service Mode Programmer, so that it can
+     * Return access to the Global Mode Programmer, so that it can
      * be used elsewhere.
      */
-    public void releaseOpsModeProgrammer(Programmer p);
+    public void releaseAddressedProgrammer(Programmer p);
 
     /**
      * Convenience method to check whether you'll be able to get
-     * an Ops Mode programmer.
+     * a Global Mode programmer.
      * @return false if there's no chance of getting one
      */
-    public boolean isOpsModePossible();
-
+    public boolean isGlobalProgrammerAvailable();
+    
     /**
      * Convenience method to check whether you'll be able to get
-     * a Service Mode programmer.
+     * an Addressed Mode programmer.
      * @return false if there's no chance of getting one
+     */
+    public boolean isAddressedModePossible();
+    
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer getServiceModeProgrammer();
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress);
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer reserveServiceModeProgrammer();
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public void releaseServiceModeProgrammer(Programmer p);
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress);
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public void releaseOpsModeProgrammer(Programmer p);
+    /** 
+     * Deprecated Since 2.5.1
      */
     public boolean isServiceModePossible();
-
+    /** 
+     * Deprecated Since 2.5.1
+     */
+    public boolean isOpsModePossible();
 
 }
 

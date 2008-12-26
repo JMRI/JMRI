@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class LnProgrammerManager  extends DefaultProgrammerManager {
 
@@ -27,13 +27,13 @@ public class LnProgrammerManager  extends DefaultProgrammerManager {
      * LocoNet command station does provide Ops Mode
      * @return true
      */
-    public boolean isOpsModePossible() {return true;}
+    public boolean isAddressedModePossible() {return true;}
 
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new LnOpsModeProgrammer(mSlotManager, pAddress, pLongAddress);
     }
 
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
+    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
 }

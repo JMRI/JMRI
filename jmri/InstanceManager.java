@@ -31,7 +31,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 public class InstanceManager {
 
@@ -74,7 +74,7 @@ public class InstanceManager {
     	// Now that we have a programmer manager, install the default
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
-		if(programmerManagerInstance().isOpsModePossible() 
+		if(programmerManagerInstance().isAddressedModePossible() 
 		    && consistManagerInstance() == null) {
 			setConsistManager(new DccConsistManager());
 		}

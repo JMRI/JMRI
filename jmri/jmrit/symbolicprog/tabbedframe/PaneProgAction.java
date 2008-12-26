@@ -36,7 +36,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -58,7 +58,7 @@ public class PaneProgAction 			extends AbstractAction {
 
         // disable ourself if programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isServiceModePossible()) {
+            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             setEnabled(false);
             // This needs to return, so we don't start the xmlThread
 	    return;

@@ -51,7 +51,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -104,8 +104,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JToggleButton iddecoder = new JToggleButton(rbt.getString("ButtonReadType"));
         iddecoder.setToolTipText(rbt.getString("TipSelectType"));
             if (jmri.InstanceManager.programmerManagerInstance()!= null
-                    && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
-                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
+                    && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer()!=null
+                    && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText(rbt.getString("TipNoRead"));
@@ -174,8 +174,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         idloco = new JToggleButton("Ident");
         idloco.setToolTipText("Read the locomotive's address and attempt to select the right settings");
         if (jmri.InstanceManager.programmerManagerInstance() != null &&
-            jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!= null
-            && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
+            jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer()!= null
+            && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             idloco.setEnabled(false);
             idloco.setToolTipText("Button disabled because configured command station can't read CVs");

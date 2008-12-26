@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -24,7 +24,7 @@ public class SymbolicProgTest extends TestCase {
         // initialize the system
         Programmer p = new ProgDebugger();
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
-        assertTrue(InstanceManager.programmerManagerInstance().getServiceModeProgrammer() == p);
+        assertTrue(InstanceManager.programmerManagerInstance().getGlobalProgrammer() == p);
     }
 
     // from here down is testing infrastructure
