@@ -20,33 +20,39 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
-	protected Location _location = null;
-	protected Track _stagingTrack = null;  // used for staging cars
+	protected Location _location = null;	// the location in the route
 	protected String _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
-	protected String _comment = "";
 	protected int _maxTrainLength = Setup.getTrainLength();
-	protected int _trainLength = 0;			// used during build
 	protected int _maxCarMoves = Setup.getCarMoves();
-	protected int _carMoves = 0;			// used during build
-	protected int _trainWeight = 0;			// used during build
-	protected int _sequenceId = 0;			// used to determine location order
-	protected double _grade = 0;				// maximum grade between locations
+	protected boolean _drops = true;		// when true drops allowed at this location
+	protected boolean _pickups = true;		// when truen pickups allowed at this location
+	protected int _sequenceId = 0;			// used to determine location order in route
+	protected double _grade = 0;			// maximum grade between locations
 	protected int _trainIconX = 0;			// the x & y coordinates for the train icon
 	protected int _trainIconY = 0;
+	protected String _comment = "";
 	
-	public static final String EAST = "East";		// train directions
-	public static final String WEST = "West";
-	public static final String NORTH = "North";
-	public static final String SOUTH = "South";
+	protected int _carMoves = 0;			// number of moves at this location 
+	protected int _trainWeight = 0;			// total car weight departing this location
+	protected int _trainLength = 0;			// train length departing this location
+	protected Track _stagingTrack = null;  	// staging track if not null
+	
+	public static final String EAST = Setup.EAST_DIR;		// train directions
+	public static final String WEST = Setup.WEST_DIR;
+	public static final String NORTH = Setup.NORTH_DIR;
+	public static final String SOUTH = Setup.SOUTH_DIR;
 	
 	public static final String DISPOSE = "dispose";
 	private static final String DELETED = "<location deleted>";
 	
+	public static final String DROP_CHANGED_PROPERTY = "dropChange";
+	public static final String PICKUP_CHANGED_PROPERTY = "pickupChange";
+	public static final String MAXMOVES_CHANGED_PROPERTY = "maxMovesChange";
 	
 	public RouteLocation(String id, Location location) {
 		log.debug("New route location " + location.getName() + " " + id);
@@ -81,12 +87,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	
 	public void setSequenceId(int sequence) {
 		// property change not needed
-//		int old = _sequenceId;
 		_sequenceId = sequence;
-//		if (old != sequence){
-//			firePropertyChange("sequence", Integer.toString(old), Integer.toString(sequence));
-//		}
 	}
+	
 	public void setComment(String comment) {
 		_comment = comment;
 	}
@@ -95,7 +98,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _comment;
 	}
 
-    
 	public void setTrainDirection(String direction){
 		String old = _trainDir;
 		_trainDir = direction;
@@ -152,7 +154,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _maxCarMoves;
 		_maxCarMoves = moves;
 		if (old != moves)
-			firePropertyChange("maxCarMoves", Integer.toString(old), Integer.toString(moves));
+			firePropertyChange(MAXMOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
 	}
 	
 	/**
@@ -161,6 +163,37 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 */
 	public int getMaxCarMoves(){
 		return _maxCarMoves;
+	}
+	
+	/**
+	 * When true allow car drops at this location
+	 * @param when true drops allowed at this location
+	 */
+	public void setCanDrop (boolean drops){
+		boolean old = _drops;
+		_drops = drops;
+		if (old != drops)
+			firePropertyChange(DROP_CHANGED_PROPERTY, old?"true":"false", drops?"true":"false");
+	}
+	
+	public boolean canDrop(){
+		return _drops;
+	}
+	
+	/**
+	 * When true allow car pickups at this location
+	 * @param when true pickups allowed at this location
+	 */
+	public void setCanPickup (boolean pickups){
+		boolean old = _pickups;
+		_pickups = pickups;
+		if (old != pickups)
+			firePropertyChange(PICKUP_CHANGED_PROPERTY, old?"true":"false", pickups?"true":"false");
+
+	}
+	
+	public boolean canPickup(){
+		return _pickups;
 	}
 	
 	/**
@@ -246,10 +279,17 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         	if (_location != null)
         		_location.addPropertyChangeListener(this);
         }
-        if ((a = e.getAttribute("trainDirection")) != null )  _trainDir = a.getValue();
+        if ((a = e.getAttribute("trainDirection")) != null ){
+        	if (Setup.getList().contains(a.getValue()))
+        		_trainDir = a.getValue();
+        	else
+        		log.error("Route location ("+getName()+") direction ("+a.getValue()+") is unknown");
+        }
         if ((a = e.getAttribute("maxTrainLength")) != null )  _maxTrainLength = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("grade")) != null )  _grade = Double.parseDouble(a.getValue());
         if ((a = e.getAttribute("maxCarMoves")) != null )  _maxCarMoves = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("pickups")) != null ) _pickups = a.getValue().equals("yes");
+        if ((a = e.getAttribute("drops")) != null ) _drops = a.getValue().equals("yes");
         if ((a = e.getAttribute("trainIconX")) != null )  _trainIconX = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconY")) != null )  _trainIconY = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
@@ -270,7 +310,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	e.setAttribute("maxTrainLength", Integer.toString(getMaxTrainLength()));
     	e.setAttribute("grade", Double.toString(getGrade()));
        	e.setAttribute("maxCarMoves", Integer.toString(getMaxCarMoves()));
-      	e.setAttribute("trainIconX", Integer.toString(getTrainIconX()));
+       	e.setAttribute("pickups", canPickup()?"yes":"no");
+       	e.setAttribute("drops", canDrop()?"yes":"no");
+       	e.setAttribute("trainIconX", Integer.toString(getTrainIconX()));
       	e.setAttribute("trainIconY", Integer.toString(getTrainIconY()));
     	e.setAttribute("comment", getComment());
 

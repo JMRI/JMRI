@@ -4,15 +4,16 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.XmlFile;
-
 import org.jdom.Element;
+
 
 public class Setup {
 	
@@ -83,6 +84,11 @@ public class Setup {
 	public static final int WEST = 2;
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
+	
+	public static final String EAST_DIR = rb.getString("East");
+	public static final String WEST_DIR = rb.getString("West");
+	public static final String NORTH_DIR = rb.getString("North");
+	public static final String SOUTH_DIR = rb.getString("South");
 	
 	public static final String DESCRIPTIVE = "Descriptive"; // Car types
 	public static final String AAR = "ARR Codes"; // Car types
@@ -398,14 +404,31 @@ public class Setup {
     public static JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	if ((traindir & EAST)>0)
-			box.addItem(rb.getString("East"));
+			box.addItem(EAST_DIR);
     	if ((traindir & WEST)>0)
-			box.addItem(rb.getString("West"));
+			box.addItem(WEST_DIR);
     	if ((traindir & NORTH)>0)
-			box.addItem(rb.getString("North"));
+			box.addItem(NORTH_DIR);
     	if ((traindir & SOUTH)>0)
-			box.addItem(rb.getString("South"));
+			box.addItem(SOUTH_DIR);
     	return box;
+    }
+    
+    /**
+     * Get train directions
+     * @return List of valid train directions
+     */
+    public static List getList(){
+    	List directions = new ArrayList();
+    	if ((traindir & EAST)>0)
+    		directions.add(EAST_DIR);
+    	if ((traindir & WEST)>0)
+    		directions.add(WEST_DIR);
+    	if ((traindir & NORTH)>0)
+    		directions.add(NORTH_DIR);
+    	if ((traindir & SOUTH)>0)
+    		directions.add(SOUTH_DIR);
+    	return directions;
     }
     
     public static org.jdom.Element store(){

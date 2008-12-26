@@ -12,17 +12,13 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsSetupAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
     public OperationsSetupAction(String s) {
-	super(s);
-    }
-
-    public OperationsSetupAction() {
-        this(rb.getString("TitleOperationsSetup"));
+    	super(s);
     }
 
     OperationsSetupFrame f = null;
@@ -33,6 +29,7 @@ public class OperationsSetupAction extends AbstractAction {
     		f.initComponents();
     	}
         f.setExtendedState(f.NORMAL);
+        f.setVisible(true);
     }
 }
 

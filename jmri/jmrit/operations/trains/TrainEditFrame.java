@@ -37,7 +37,7 @@ import java.text.MessageFormat;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -782,9 +782,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				RouteLocation rl = route.getLocationById((String)locations.get(i));
 				JCheckBox checkBox = new javax.swing.JCheckBox();
 				locationCheckBoxes.add(checkBox);
-				checkBox.setSelected(!_train.skipsLocation(rl.getId()));
 				checkBox.setText(rl.toString());
 				checkBox.setName(rl.getId());
+				// check can drop and pickup, and moves > 0
+				if ((rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
+					checkBox.setSelected(!_train.skipsLocation(rl.getId()));
+				else
+					checkBox.setEnabled(false);
 				addLocationCheckBoxAction(checkBox);
 				addItemLeft(locationPanelCheckBoxes, checkBox, 0, y++);
 			}

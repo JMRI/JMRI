@@ -15,7 +15,7 @@ import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents the various engine models a railroad can have.
- * Each model has a horsepower rating and length that is kept here.
+ * Each model has a type, horsepower rating and length that is kept here.
  * The program provides some default models for the user.  These values
  * can be overridden by the user.
  * 
@@ -46,7 +46,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	

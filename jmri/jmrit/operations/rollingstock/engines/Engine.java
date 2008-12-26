@@ -13,7 +13,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class Engine extends RollingStock {
 	
@@ -164,12 +164,15 @@ public class Engine extends RollingStock {
 	 */
 	public Engine(org.jdom.Element e) {
 		org.jdom.Attribute a;
+		// must set _model first so engine hp, length and type is set properly
 		if ((a = e.getAttribute("model")) != null)
 			_model = a.getValue();
 		if ((a = e.getAttribute("hp")) != null)
 			setHp(a.getValue());
 		if ((a = e.getAttribute("length")) != null)
 			setLength(a.getValue());
+		if ((a = e.getAttribute("type")) != null)
+			setType(a.getValue());
 		if ((a = e.getAttribute("consist")) != null){
 			setConsist(EngineManager.instance().getConsistByName(a.getValue()));
 			if ((a = e.getAttribute("leadConsist")) != null){
@@ -179,7 +182,7 @@ public class Engine extends RollingStock {
 				_consist.setConsistNumber(Integer.parseInt(a.getValue()));
 			}
 		}
-		super.rollingStock(e); // must set _model first so engine length is calculated properly
+		super.rollingStock(e); 
 	}
 	
 	boolean verboseStore = false;

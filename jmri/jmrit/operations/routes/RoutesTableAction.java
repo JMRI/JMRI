@@ -13,17 +13,13 @@ import javax.swing.AbstractAction;
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001
  * @author 	Daniel Boudreau Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class RoutesTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
     public RoutesTableAction(String s) {
-	super(s);
-    }
-
-    public RoutesTableAction() {
-        this(rb.getString("TitleRoutesTable"));
+    	super(s);
     }
 
     RoutesTableFrame f = null;
@@ -31,9 +27,9 @@ public class RoutesTableAction extends AbstractAction {
         // create a route table frame
     	if (f == null || !f.isVisible()){
     		f = new RoutesTableFrame();
-    		f.setVisible(true);
-    	}
+     	}
     	f.setExtendedState(f.NORMAL);
+    	f.setVisible(true);
     }
 }
 

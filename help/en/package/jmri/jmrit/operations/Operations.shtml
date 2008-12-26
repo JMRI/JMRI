@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.20 2008-12-16 18:33:23 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.21 2008-12-26 17:03:20 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -127,6 +127,7 @@ You can optionally enter your name in the "Owner" field.
 The program supports two types of fonts for printing. Select the desired
 font using the radio buttons.
 
+<A NAME="BuildReportDetails"></A>
 <H3>Build Report Details</H3>
 
 You can adjust the amount of information that the build report will
@@ -643,13 +644,14 @@ be traveling through. Each time you add a location to the route, the
 table shows the order in which the train will visit. You can move a
 location up or down in the sequence if needed.
 
-<H3>Route Train Direction, Moves, Train Length, Grade, X and Y</H3>
+<H3>Route Train Direction, Moves, Drops, Pickups, Train Length, Grade, X and Y</H3>
 
-Each location has the train direction, number of desired car moves,
-along with the maximum train length that can depart that location. A car
-move can be a car pickup or car drop at that location. For example, 5
-moves can be 5 pickups or 5 drops or any combination of 5 pickups or
-drops.
+Each location has the train's departure direction, number of desired car
+moves, and whether car pickups and or car drops are allowed at that
+location. You can also adjust the maximum train length that can depart
+that location. A car move can be a car pickup or car drop at that
+location. For example, 5 moves can be 5 pickups or 5 drops or any
+combination of 5 pickups or drops.
 
 <P>The grade is used to determine how many engines the train will
 require for that segment. The X and Y are the coordinates on your
@@ -669,6 +671,13 @@ Press "Save Route" to save your route. The program will create a file
 "operations". A backup file with the last settings for all of your
 routes is also created each time the "Save Route" button is pressed. 
 
+<A NAME="CopyRoute"></A>
+<H3>Copy Route</H3>
+
+In the Route frame select "Tools->Copy Route" to make a copy of your
+route. Enter the name of the new route and select the route that you
+want to copy. If you want the route reversed check the "Invert" box. 
+
 <A NAME="Trains"></A>
 <H2>Trains</H2>
 
@@ -687,8 +696,8 @@ You can deselect any location that you don't want the train to work.
 
 Enter the time that this train will depart the first location in its
 route. You can use the departure time to sort your trains in the order
-that you want them built when using the <A HREF="#BuildingTrains">"Build
-Selected Trains"</A> button.
+that you want them built when using the <A HREF="#BuildingTrains">Build
+Selected Trains</A> button.
 
 <H3>Train Rolling Stock</H3>
 
@@ -752,6 +761,19 @@ press individual buttons for each train, select the trains that you want
 built and press the "Build" button found at the bottom of the trains
 panel. The program will then build manifests for all of the selected
 trains.
+
+<A NAME="TroubleShootingBuildingTrains"></A>
+<H2>Problems Building Trains</H2>
+
+If you have a problem building a train you can select the "Build
+Reports" checkbox at the bottom of the train frame. When a build fails
+for any reason and the "Build Reports" checkbox is selected, the program
+will send a report to your printer if the "Preview Manifests" isn't
+selected; or to a preview frame if the "Preview Manifest" is selected.
+The build report can print out different levels of detail, from minimal
+to very detailed. See the Settings section <A HREF="#BuildReportDetails">Build
+Report Details</A> for more information on how to change the build
+report detail level.
 
 <H3>Printing Manifests</H3>
 

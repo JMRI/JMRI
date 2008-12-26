@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -97,8 +97,8 @@ public class Route implements java.beans.PropertyChangeListener {
     	_routeHashTable.put(rl.getId(), rl);
 
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
-    	// listen for name and state changes to forward
-    	// rl.addPropertyChangeListener(this);
+    	// listen for drop and pickup changes to forward
+    	rl.addPropertyChangeListener(this);
     	return rl;
     }
     
@@ -134,8 +134,8 @@ public class Route implements java.beans.PropertyChangeListener {
         if (rl.getSequenceId() > _sequenceNum)
         	_sequenceNum = rl.getSequenceId();
        	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
-        // listen for name and state changes to forward
-        // rl.addPropertyChangeListener(this);
+        // listen for drop and pickup changes to forward
+        rl.addPropertyChangeListener(this);
     }
 
 	/**
@@ -342,8 +342,14 @@ public class Route implements java.beans.PropertyChangeListener {
     		log.debug("route (" + getName() + ") sees property change: "
     				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
     				+ e.getNewValue());
-    	// forward property change 
-    	// firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+    	// forward drops, pickups, and max moves as a list change
+    	if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
+			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null,
+					"RouteLocation");
+		}
+    	
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(

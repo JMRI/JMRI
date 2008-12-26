@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -35,7 +35,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private static final int NAMECOLUMN   = IDCOLUMN +1;
     private static final int TRAINCOLUMN = NAMECOLUMN +1;
     private static final int MAXMOVESCOLUMN = TRAINCOLUMN +1;
-    private static final int MAXLENGTHCOLUMN = MAXMOVESCOLUMN +1;
+    private static final int PICKUPCOLUMN = MAXMOVESCOLUMN +1;
+    private static final int DROPCOLUMN = PICKUPCOLUMN +1;
+    private static final int MAXLENGTHCOLUMN = DROPCOLUMN +1;
     private static final int GRADE = MAXLENGTHCOLUMN +1;
     private static final int TRAINICONX = GRADE +1;
     private static final int TRAINICONY = TRAINICONX + 1;
@@ -89,13 +91,15 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
 		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(40);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(80);
-		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(80);
+		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
         updateList();
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -111,6 +115,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case NAMECOLUMN: return rb.getString("Name");
         case TRAINCOLUMN: return rb.getString("TrainDirection");
         case MAXMOVESCOLUMN: return rb.getString("MaxMoves");
+        case PICKUPCOLUMN: return rb.getString("Pickups");
+        case DROPCOLUMN: return rb.getString("Drops");
         case MAXLENGTHCOLUMN: return rb.getString("MaxLength");
         case GRADE: return rb.getString("Grade");
         case TRAINICONX: return rb.getString("X");
@@ -128,6 +134,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case NAMECOLUMN: return String.class;
         case TRAINCOLUMN: return JComboBox.class;
         case MAXMOVESCOLUMN: return String.class;
+        case PICKUPCOLUMN: return JComboBox.class;
+        case DROPCOLUMN: return JComboBox.class;
         case MAXLENGTHCOLUMN: return String.class;
         case GRADE: return String.class;
         case TRAINICONX: return String.class;
@@ -144,6 +152,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case DELETECOLUMN:
         case TRAINCOLUMN:
         case MAXMOVESCOLUMN:
+        case PICKUPCOLUMN:
+        case DROPCOLUMN:
         case MAXLENGTHCOLUMN:
         case GRADE:
         case TRAINICONX:
@@ -162,18 +172,28 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case IDCOLUMN: return rl.getId();
         case NAMECOLUMN: return rl.getName();
         case TRAINCOLUMN:{
-        	JComboBox c = Setup.getComboBox();
-        	c.setSelectedItem(rl.getTrainDirection());	//TODO: Doesn't work properly if user deleted direction
-        	return c;
+        	JComboBox cb = Setup.getComboBox();
+        	cb.setSelectedItem(rl.getTrainDirection());	//TODO: Doesn't work properly if user deleted direction
+        	return cb;
         }
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
+        case PICKUPCOLUMN:{
+        	JComboBox cb = getYesNoComboBox();
+        	cb.setSelectedItem(rl.canPickup()?rb.getObject("yes"):rb.getObject("no")); 
+        	return cb;
+        }
+        case DROPCOLUMN:{
+        	JComboBox cb = getYesNoComboBox();
+        	cb.setSelectedItem(rl.canDrop()?rb.getObject("yes"):rb.getObject("no")); 
+        	return cb;
+        }
         case MAXLENGTHCOLUMN: return Integer.toString(rl.getMaxTrainLength());
         case GRADE: return Double.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
         case TRAINICONY: return Integer.toString(rl.getTrainIconY());
-        case UPCOLUMN: return "Up";
-        case DOWNCOLUMN: return "Down";
-        case DELETECOLUMN: return "Delete";
+        case UPCOLUMN: return rb.getObject("Up");
+        case DOWNCOLUMN: return rb.getObject("Down");
+        case DELETECOLUMN: return rb.getObject("Delete");
         default: return "unknown "+col;
         }
     }
@@ -192,6 +212,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 			break;
 		case MAXMOVESCOLUMN:
 			setMaxTrainMoves(value, row);
+			break;
+		case PICKUPCOLUMN:
+			setPickup(value, row);
+			break;
+		case DROPCOLUMN:
+			setDrop(value, row);
 			break;
 		case MAXLENGTHCOLUMN:
 			setMaxTrainLength(value, row);
@@ -260,6 +286,16 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 					"Location moves can not exceed 100", "Can not change number of moves!",
 					JOptionPane.ERROR_MESSAGE);
      	}
+    }
+    
+    private void setDrop (Object value, int row){
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	rl.setCanDrop(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
+    }
+    
+    private void setPickup (Object value, int row){
+    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	rl.setCanPickup(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
     }
     
     private int _maxTrainLength = Setup.getTrainLength();
@@ -331,6 +367,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	rl.setTrainIconY(y);
     }
 
+    private JComboBox getYesNoComboBox(){
+    	JComboBox cb = new JComboBox();
+    	cb.addItem(rb.getObject("yes"));
+    	cb.addItem(rb.getObject("no"));
+    	return cb;
+    }
 
     // this table listens for changes to a route and it's locations
     public void propertyChange(PropertyChangeEvent e) {

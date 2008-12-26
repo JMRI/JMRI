@@ -2,16 +2,19 @@
 
 package jmri.jmrit.operations.routes;
  
+import jmri.jmrit.operations.locations.PrintLocationsAction;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
@@ -25,7 +28,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
@@ -83,7 +86,14 @@ public class RoutesTableFrame extends OperationsFrame {
 		addRadioButtonAction (sortByName);
 		addRadioButtonAction (sortById);
     	
-        // add help menu to window
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy")));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
+ 
+		// add help menu to window
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
     	
     	pack();
