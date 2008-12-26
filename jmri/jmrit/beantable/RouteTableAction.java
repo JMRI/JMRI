@@ -32,7 +32,7 @@ import jmri.util.JmriJFrame;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Simon Reader Copyright (C) 2008
  *
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -749,7 +749,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
         // Create the new Route
-        g = jmri.InstanceManager.routeManagerInstance().createNewRoute(sName,uName);
+        g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName,uName);
         if (g==null) {
             // should never get here
             log.error("Unknown failure to create Route with System Name: "+sName);
