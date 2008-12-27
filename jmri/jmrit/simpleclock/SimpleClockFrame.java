@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -81,6 +81,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      *  Initialize the config window
      */
+    @SuppressWarnings("deprecation")
     public void initComponents() throws Exception {
         setTitle(rb.getString("SimpleClockWindowTitle"));
 
@@ -429,6 +430,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      * Method to handle Set Time button
      */
+    @SuppressWarnings("deprecation")
     public void setTimeButtonActionPerformed() {
         int hours = 0;
         int minutes = 0;
@@ -486,6 +488,7 @@ public class SimpleClockFrame extends JmriJFrame
 	/** 
 	 * Method to handle start set time check box change
 	 */
+	@SuppressWarnings("deprecation")
 	private void startSetTimeChanged() {
         int hours = 0;
         int minutes = 0;
@@ -574,6 +577,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      * Method to set the current Timebase time into timeLabel
      */
+    @SuppressWarnings("deprecation")
     void setTimeLabel() {
         // Get time
         Date now = clock.getTime();

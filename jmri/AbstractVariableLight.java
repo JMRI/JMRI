@@ -36,7 +36,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -229,6 +229,7 @@ public abstract class AbstractVariableLight extends AbstractLight
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
     
+    @SuppressWarnings("deprecation")
     private void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
     	int origState = mState;

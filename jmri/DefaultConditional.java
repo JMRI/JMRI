@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -292,6 +292,7 @@ public class DefaultConditional extends AbstractNamedBean
 	*  <P>
 	*  Returns true if variable evaluates true, otherwise false. 
 	*/
+	@SuppressWarnings("deprecation")
 	private boolean evaluateStateVariable(int index) {
 		// check vNOT and translate to the proper Conditional operator designation
 		boolean result = true;
@@ -507,6 +508,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 * <P>
 	 * Only get here if a change in state has occurred when calculating this Conditional
 	 */
+	@SuppressWarnings("deprecation")
 	private void takeActionIfNeeded() {
 		// cycle over both actions
 		for (int i = 0;i<2;i++) {

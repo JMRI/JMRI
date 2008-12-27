@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -451,6 +451,7 @@ public class SimpleTimebase implements Timebase {
 	 *<P>
 	 * Listeners won't be notified if the minute value hasn't changed since the last time.
 	 */	 
+	@SuppressWarnings("deprecation")
 	void handleAlarm() {
 	    // on first pass, set up the timer to call this routine
 	    if (timer==null) {

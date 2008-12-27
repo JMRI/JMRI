@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2395,6 +2395,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * If data checks out, this method returns the current state of the state
 	 * variable
 	 */
+	@SuppressWarnings("deprecation")
 	boolean checkStateVariable(int index) {
 		// check vNOT and translate to the proper Conditional operator
 		// designation
