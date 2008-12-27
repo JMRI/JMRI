@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -343,9 +343,16 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
     protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
+    // use deprecated stop method to stop thread,
+    // which will be sitting waiting for input
+    @SuppressWarnings("deprecation")
+    void stopThread(Thread t) {
+        t.stop();
+    }
+
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread!=null) readerThread.stop();
+        if (readerThread!=null) stopThread(readerThread);
 
         // release port
         if (activeSerialPort != null) activeSerialPort.close();

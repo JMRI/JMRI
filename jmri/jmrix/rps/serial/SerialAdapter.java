@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -239,9 +239,16 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
     // flag for protocol version
     int version = 1;
 
+    // use deprecated stop method to stop thread,
+    // which will be sitting waiting for input
+    @SuppressWarnings("deprecation")
+    void stopThread(Thread t) {
+        t.stop();
+    }
+
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread!=null) readerThread.stop();
+        if (readerThread!=null) stopThread(readerThread);
 
         // release port
         if (activeSerialPort != null) activeSerialPort.close();

@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.11 $
+ * @version	    $Revision: 1.12 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -286,9 +286,7 @@ public class LoaderPane extends javax.swing.JPanel {
             javax.swing.SwingUtilities.invokeLater(r);
 
             // stop this thread
-            // use deprecated stop method to stop thread,
-            // which will be sitting waiting for input
-            readerThread.stop();
+            stopThread(readerThread);
 
         }
 
@@ -350,9 +348,16 @@ public class LoaderPane extends javax.swing.JPanel {
         } // end class Notify
      } // end class LocalReader
 
+    // use deprecated stop method to stop thread,
+    // which will be sitting waiting for input
+    @SuppressWarnings("deprecation")
+    void stopThread(Thread t) {
+        t.stop();
+    }
+        
     public void dispose() {
-        // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread!=null) readerThread.stop();
+        // stop operations if in process
+        if (readerThread!=null) stopThread(readerThread);
 
         // release port
         if (activeSerialPort != null) activeSerialPort.close();
