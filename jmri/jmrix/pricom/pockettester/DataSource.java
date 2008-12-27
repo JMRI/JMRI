@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -259,6 +259,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             = new javax.swing.JComboBox(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
+    @SuppressWarnings("deprecation")
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread!=null) readerThread.stop();
