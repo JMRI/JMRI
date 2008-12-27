@@ -29,33 +29,49 @@ import java.util.Date;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2004, 2007
- * @version			$Revision: 1.8 $
+ * @author			Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @version			$Revision: 1.9 $
  */
 public interface Timebase {
 
-    // methods for setting and getting the current time
+    /**
+     * Set the current time
+     */
     public void setTime(Date d);
-    // the method below is used only when the user changes fast clock time in Setup Fast Clock
+    /**
+     * Special method for  when the user changes 
+     * fast clock time in Setup Fast Clock.
+     */
     public void userSetTime(Date d);
+    
     public Date getTime();
     
-    // methods for setting and getting run status of the fast clock
     public void setRun(boolean y);
     public boolean getRun();
     
-    // methods for setting and getting fast clock rate
+    /**
+     * Set fast clock rate factor
+     * @throws TimebaseRateException if the implementation can't do the requested rate
+     */
     public void setRate(double factor) throws TimebaseRateException;
-    // the method below is used when the user changes fast clock rate in Setup Fast Clock  and by 
-    //		hardware ClockControl implementations that fiddle with the fast clock rate to synchronize
+    
+    /**
+     * Used when the user changes fast clock rate in Setup Fast Clock and by 
+     * hardware ClockControl implementations that fiddle with the fast clock rate to synchronize
+     */
     public void userSetRate(double factor) throws TimebaseRateException;
-    // Caution: The method below may return a fiddled clock rate if certain hardware clocks
-    //   are the Time Source.  Use "userGetRate" if you want the real clock rate instead.
+    
+    /**
+     *  Caution: This method may return a fiddled clock rate if certain hardware clocks
+     *  are the Time Source.  Use "userGetRate" if you want the real clock rate instead.
+     */
     public double getRate();
-    // The method below is used by Setup Fast Clock when an external change in fast 
-    //   clock rate occurs because of the peculiar way some hardware clocks attempt to 
-    //   synchronize with the JMRI fast clock. This call will return the "true" rate even if the
-    //   master Timebase rate has been fiddled by a hardware clock.
+    /** 
+     * This method is used by Setup Fast Clock when an external change in fast 
+     * clock rate occurs because of the peculiar way some hardware clocks attempt to 
+     * synchronize with the JMRI fast clock. This call will return the "true" rate even if the
+     * master Timebase rate has been fiddled by a hardware clock.
+     */
     public double userGetRate();
     
     // methods for setting and getting master time source
@@ -74,8 +90,8 @@ public interface Timebase {
     public boolean getCorrectHardware();
     
     /**
-     * Methods for setting and getting 12 or 24 hour display option
-     * 'display' should be true if a 12-hour display is requested, false for 24-hour display
+     * Set 12 or 24 hour display option
+     * @param display true if a 12-hour display is requested, false for 24-hour display
      */
     public void set12HourDisplay(boolean display, boolean update);
     public boolean use12HourDisplay();
@@ -92,19 +108,27 @@ public interface Timebase {
     // methods to get set clock start start up option		
     public void setStartClockOption(int option);
     public int getStartClockOption();
+
     // Note the following method should only be invoked at start up
     public void initializeClock();
+
     // clock start options
     public static final int NONE			= 0x00;
     public static final int NIXIE_CLOCK     = 0x01;
     public static final int ANALOG_CLOCK	= 0x02;
     public static final int LCD_CLOCK       = 0x04;
     
-    // method to initialize hardware clock at start up after all options are set up
-    // Note: This method is always called at start up. It should be ignored if there
-    //			is no communication with a hardware clock
+    /**
+     * Initialize hardware clock at start up after all options are set up.<p>
+     * Note: This method is always called at start up. It should be ignored if there
+     *		is no communication with a hardware clock
+     */
     public void initializeHardwareClock();
-    public boolean getIsInitialized();  // returns true if call to initialize Hardware Clock has occurred.
+    
+    /**
+     * @return true if call to initialize Hardware Clock has occurred
+     */
+    public boolean getIsInitialized();
     
     /**
      * Request a call-back when the bound Rate or Run property changes.
@@ -130,7 +154,7 @@ public interface Timebase {
      * Remove references to and from this object, so that it can
      * eventually be garbage-collected.
      */
-    public void dispose();  // remove _all_ connections!
+    public void dispose();
     
 }
 
