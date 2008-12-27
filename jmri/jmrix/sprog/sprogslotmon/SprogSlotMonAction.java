@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  *              Andrew Crosland           (C) 2006 ported to SPROG
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SprogSlotMonAction extends AbstractAction {
@@ -29,7 +29,7 @@ public class SprogSlotMonAction extends AbstractAction {
 
         // create a SprogSlotMonFrame
         SprogSlotMonFrame f = new SprogSlotMonFrame();
-        f.show();
+        f.setVisible(true);
 
     }
 }
