@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  * LnHexFilePort implements a LnPortController via a
@@ -27,10 +29,11 @@ import java.io.PipedOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
+    BufferedReader sFile = null;
 
     public LnHexFilePort() {
         try {
@@ -51,7 +54,7 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
         // create the pipe stream for output, also store as the input stream if somebody wants to send
         // (This will emulate the LocoNet echo)
         try {
-            sFile = new DataInputStream(new FileInputStream(file));
+            sFile = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         } catch (Exception e) {
             log.error("load (pipe): Exception: "+e.toString());
         }
@@ -67,9 +70,8 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
                     byte bval;
                     int ival;
                     int len;
-                    while (sFile.available() > 3) {
+                    while ( (s = sFile.readLine()) != null) {
                         // this loop reads one line per turn
-                        s = sFile.readLine();
                         // ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
                         len = s.length();
                         for (int i=0; i<len; i+=3) {
@@ -131,9 +133,6 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-
-    // internal access to the input file
-    DataInputStream sFile = null;
 
     public boolean okToSend() { return true; }
     // define operation
