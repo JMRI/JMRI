@@ -18,7 +18,7 @@ import jmri.jmrix.maple.SerialSensorManager;
  * Frame for user configuration of nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2008
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -227,7 +227,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TableModel searchlightConfigModel = new SearchlightConfigModel();
         JTable searchlightConfigTable = new JTable(searchlightConfigModel);
         searchlightConfigTable.setRowSelectionAllowed(false);
-        searchlightConfigTable.sizeColumnsToFit(true);
         searchlightConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(208,100));
         TableColumnModel searchlightColumnModel = searchlightConfigTable.getColumnModel();
         TableColumn portColumn = searchlightColumnModel.getColumn(SearchlightConfigModel.PORT_COLUMN);

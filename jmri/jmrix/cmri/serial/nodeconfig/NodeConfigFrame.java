@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -227,7 +227,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TableModel searchlightConfigModel = new SearchlightConfigModel();
         JTable searchlightConfigTable = new JTable(searchlightConfigModel);
         searchlightConfigTable.setRowSelectionAllowed(false);
-        searchlightConfigTable.sizeColumnsToFit(true);
         searchlightConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(208,100));
         TableColumnModel searchlightColumnModel = searchlightConfigTable.getColumnModel();
         TableColumn portColumn = searchlightColumnModel.getColumn(SearchlightConfigModel.PORT_COLUMN);
