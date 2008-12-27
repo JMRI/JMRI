@@ -55,7 +55,7 @@ import org.jdom.Element;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -416,7 +416,7 @@ public class TrainBuilder extends TrainCommon{
 							Car testCar = carManager.getCarById((String) carList.get(i));
 							if (testCar.isCaboose() && testCar != car){
 								// need to keep it if departing staging
-								if (departStageTrack != null && testCar.getTrack() != departStageTrack){
+								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
 									addLine(fileOut, FIVE, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+")");
 									carList.remove(carList.get(i));		// remove this car from the list
 									i--;
