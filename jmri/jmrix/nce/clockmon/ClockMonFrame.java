@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -682,6 +682,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         }
     }
     
+    @SuppressWarnings("deprecation")
     private void alarmSyncStart(){
         // initialize things if not running
         Date now = internalClock.getTime();
@@ -774,6 +775,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         return(nceTime);
     }
     
+    @SuppressWarnings("deprecation")
     private Date getNceDate() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -784,6 +786,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         return(now);
     }
     
+    @SuppressWarnings("deprecation")
     private double getIntTime() {
         Date now = internalClock.getTime();
         int ms = (int)(now.getTime() % 1000);
@@ -805,6 +808,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         }
     }
     
+    @SuppressWarnings("deprecation")
     private void internalSyncInitStates() {
         Date now = internalClock.getTime();
         int priorState = internalSyncInitStateCounter;
@@ -934,6 +938,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         } while (priorState != internalSyncInitStateCounter);
     }
 
+    @SuppressWarnings("deprecation")
     private void internalSyncRunStates() {
         double intTime = 0;
         double nceTime = 0;
@@ -1522,6 +1527,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         nceDisplayStatus.setText(txt);
     }
     
+    @SuppressWarnings("deprecation")
     private void updateInternalClockDisplay() {
         String txt = "";
         Date now = internalClock.getTime();

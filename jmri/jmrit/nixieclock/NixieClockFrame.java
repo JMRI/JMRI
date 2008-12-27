@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -154,6 +154,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
       return ;
     }
 
+    @SuppressWarnings("deprecation")
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();

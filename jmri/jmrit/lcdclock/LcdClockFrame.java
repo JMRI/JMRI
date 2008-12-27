@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * 
  * This was a very direct steal from the Nixie clock code, ver 1.12.
  * Thank you Bob Jacobson.
@@ -157,6 +157,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
       return ;
     }
 
+    @SuppressWarnings("deprecation")
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();

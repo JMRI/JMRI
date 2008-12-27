@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.15 $
+ * @version                    $Revision: 1.16 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -263,6 +263,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         }
     }
     
+    @SuppressWarnings("deprecation")
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();

@@ -37,7 +37,7 @@ import java.util.Date;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -484,7 +484,6 @@ public abstract class AbstractLight extends AbstractNamedBean
 	    // change value and tell listeners
         notifyStateChange(mState, newState);
 	}
-	
 
     /**
      * Change the stored target intensity value and do notification, but don't
@@ -520,6 +519,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 	 *  Updates the status of a Light under FAST_CLOCK_CONTROL.  This
 	 *   method is called every FastClock minute.
 	 */
+    @SuppressWarnings("deprecation")
 	public void updateClockControlLight() {
 		if (mClock!=null) {
 			Date now = mClock.getTime();

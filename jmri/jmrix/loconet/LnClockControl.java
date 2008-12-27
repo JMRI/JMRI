@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -111,12 +111,16 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	}
 	public boolean requiresIntegerRate() {return true;};
 	public double getRate() {return (double) curRate;}
+
+    @SuppressWarnings("deprecation")
 	public void setTime(Date now) {
 		curDays = now.getDate();
 		curHours = now.getHours();
 		curMinutes = now.getMinutes();
 		setClock();
 	}
+
+    @SuppressWarnings("deprecation")
 	public Date getTime() {
 		Date tem = clock.getTime();
 		int cHours = tem.getHours();
@@ -137,6 +141,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		curRate = 0;
 		setClock();
 	}
+
+    @SuppressWarnings("deprecation")
 	public void initializeHardwareClock(double rate, Date now, boolean getTime) {
 		synchronizeWithInternalClock= clock.getSynchronize();
 		correctFastClock = clock.getCorrectHardware();
@@ -178,6 +184,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	/** 
 	 * Corrects the Loconet Fast Clock 
 	 */
+    @SuppressWarnings("deprecation")
 	public void newMinute()
     {
 		// ignore if waiting on Loconet clock read
@@ -216,6 +223,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	 *			3) a slot not involving the clock changing
      * @param s
      */
+    @SuppressWarnings("deprecation")
     public void notifyChangedSlot(LocoNetSlot s) {
 		// only watch the clock slot
         if (s.getSlot()!= LnConstants.FC_SLOT ) return; 

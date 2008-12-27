@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -292,6 +292,7 @@ public class DefaultLogix extends AbstractNamedBean
      * A Logix must be activated before it will calculate any of its
 	 *    Conditionals.
      */
+    @SuppressWarnings("deprecation")
     public void activateLogix() {
 		// if the Logix is already busy, simply return
 		if (mBusy) return;
@@ -339,6 +340,7 @@ public class DefaultLogix extends AbstractNamedBean
 	 * <P>
 	 * This method is invoked when the minute listener fires.
 	 */
+    @SuppressWarnings("deprecation")
 	void checkFastClock() {
 		// update current minutes since midnight
 		Date currentTime = mFastClock.getTime();

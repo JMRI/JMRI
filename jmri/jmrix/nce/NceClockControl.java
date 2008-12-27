@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -297,6 +297,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	}
 	
 	/** set the time, the date part is ignored */
+    @SuppressWarnings("deprecation")
 	public void setTime(Date now) {
 		if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()){
 			log.debug("setTime: " + now);
@@ -305,6 +306,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	}
 	
 	/** returns the current Nce time, does not have a date component */
+    @SuppressWarnings("deprecation")
 	public Date getTime() {
 		issueReadOnlyRequest();	// go get the current time value
 		issueDeferredGetTime = true;
@@ -329,6 +331,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	}
 	
 	/** set Nce clock and start clock */
+    @SuppressWarnings("deprecation")
 	public void startHardwareClock(Date now) {
 		if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()){
 			log.debug("startHardwareClock: " + now);
@@ -376,6 +379,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         }
     }
     
+    @SuppressWarnings("deprecation")
     private void readClockPacket (NceReply r) {
     	NceReply priorClockReadPacket = lastClockReadPacket;
     	int priorNceRatio = nceLastRatio;
@@ -482,6 +486,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         jmri.jmrix.nce.NceTrafficController.instance().sendNceMessage(cmdNce, this);
     }
    
+    @SuppressWarnings("deprecation")
     private Date getNceDate() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -503,6 +508,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return(nceTime);
     }
 
+    @SuppressWarnings("deprecation")
     private double getIntTime() {
         Date now = internalClock.getTime();
         int ms = (int)(now.getTime() % 1000);
