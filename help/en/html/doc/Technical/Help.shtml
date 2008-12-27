@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.6 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.7 2008-12-27 16:10:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -57,20 +57,24 @@ use in the help system.
 <a name="limitations">
 <h3>Limitations of JavaHelp HTML</h3></a>
 
-JavaHelp displays "plain old HTML", without providing some of the
+JavaHelp displays "plain old HTML 4.0", without providing some of the
 syntactic sugar provided by many browsers to allow poor HTML to render.
 In particular, there are a couple things to watch for.
 <ul>
-<li>Anchor tags can't be self contained. Specifically,
+<li>Anchor tags aren't XML. Specifically,
 <code><pre>
 &lt;a id="foo"/&gt;Foo!
 </pre></code>
 needs to be replaced by
 <code><pre>
+&lt;a id="foo"&gt;Foo!
+</pre></code>
+or
+<code><pre>
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
 </pre></code>
 The indicator that you have to do this is an
-&lt; character just appearing on the rendered page.
+&lt; character just appearing by itself on the rendered page.
 
 <li>Anchors also need to use the "name" attribute rather than
 the "id" attribute.  See the item above for an example.
@@ -81,8 +85,7 @@ on the local machine, so all links to other help pages need to be relative.
 <li>Links to web pages outside the help system work,
 but JavaHelp can't display PDF files.  Links to those 
 should be shown explicitly as links, so they can be copied to
-an outside web browser.  (We hope to eventually have an automated
-solution to make this work better)
+an outside web browser.
 
 </ul>
 
