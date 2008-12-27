@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 1.10 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -60,6 +60,9 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         trafficController = lt;
     }
 
+    // readline is deprecated, but there are no problems
+    // with multi-byte characters here.
+    @SuppressWarnings("deprecation") 
     public void run() {
       boolean debug = log.isDebugEnabled();
 
