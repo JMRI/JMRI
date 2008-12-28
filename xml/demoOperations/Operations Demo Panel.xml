@@ -11,8 +11,8 @@
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="705" y="19" level="5" text="Farmington" size="11" style="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="827" y="19" level="5" text="Lakeview" size="11" style="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="9" y="19" level="5" text="Susanville" size="11" style="0" />
-    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="833" y="1" level="5" text="North" size="11" style="1" />
-    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="11" y="1" level="5" text="South" size="11" style="1" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="833" y="1" level="5" text="East" size="11" style="1" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="11" y="1" level="5" text="West" size="11" style="1" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="418" y="45" level="3" size="11" style="0" icon="resources/icons/smallschematics/tracksegments/block.gif" rotate="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="48" y="45" level="3" size="11" style="0" icon="resources/icons/smallschematics/tracksegments/block.gif" rotate="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="122" y="69" level="3" size="11" style="0" icon="resources/icons/smallschematics/tracksegments/block.gif" rotate="0" />
@@ -44,6 +44,6 @@
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="714" y="69" level="3" size="11" style="0" icon="resources/icons/smallschematics/tracksegments/block.gif" rotate="0" />
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="714" y="45" level="3" size="11" style="0" icon="resources/icons/smallschematics/tracksegments/block.gif" rotate="0" />
   </paneleditor>
-  <!--Written by JMRI version 2.4DB1 on Sat Dec 27 22:01:40 EST 2008 $Id: Operations Demo Panel.xml,v 1.1 2008-12-28 04:10:49 dan_boudreau Exp $-->
+  <!--Written by JMRI version 2.4DB1 on Sat Dec 27 22:01:40 EST 2008 $Id: Operations Demo Panel.xml,v 1.2 2008-12-28 17:24:17 dan_boudreau Exp $-->
 </layout-config>
 
