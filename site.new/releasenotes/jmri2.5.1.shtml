@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.4 2008-12-27 21:22:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.5 2008-12-28 05:34:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -175,6 +175,10 @@ A duplicate definition for the Hornby 8215 was removed.
 Much internal work on handling multiple types of programmers.
 The first indication of this at the user level is in the "Single CV programmer",
 which now will let you pick a programmer if more than one is present.
+
+<p>
+Dan Boudreau added an
+<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
 
 <!--#include virtual="/Footer" -->
 
