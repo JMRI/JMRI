@@ -55,7 +55,7 @@ import org.jdom.Element;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -718,7 +718,7 @@ public class TrainBuilder extends TrainCommon{
 									// are there still moves available?
 								} 
 								if (noMoreMoves) {
-									log.debug("No available destinations for any car");
+									addLine(fileOut, FIVE, "No available destinations for any car");
 									reqNumOfMoves = 0;
 									break;
 								}

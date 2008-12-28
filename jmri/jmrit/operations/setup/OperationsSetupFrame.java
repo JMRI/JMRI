@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.routes.RouteCopyAction;
 import jmri.jmrit.operations.OperationsFrame;
 
 import jmri.jmrit.display.LocoIcon;
@@ -23,7 +24,7 @@ import jmri.jmrit.display.LocoIcon;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -352,7 +353,12 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addCheckBoxAction(eastCheckBox);
 		addCheckBoxAction(northCheckBox);
 
-		// build menu
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		// set frame size and location for display

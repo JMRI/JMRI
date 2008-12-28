@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Backup extends XmlFile {
 
@@ -111,14 +111,18 @@ public class Backup extends XmlFile {
 		return false;
 	}
 	
+	public boolean restore(String directoryName) {
+		return restore(backupDirectory, directoryName);
+	}
+	
 	/**
 	 * Copies operation files from directoryName
 	 * @param directoryName
 	 * @return true if successful, false if not.
 	 */
-	public boolean restore(String directoryName) {
+	public boolean restore(String directoryPath, String directoryName) {
 		try {
-			File file = new File(backupDirectory + File.separator + directoryName);
+			File file = new File(directoryPath + File.separator + directoryName);
 			if (!file.exists())
 				return false;
 			String[] operationFileNames = file.list();
@@ -130,7 +134,7 @@ public class Backup extends XmlFile {
 			// TODO check for the correct operation file names
 			for (int i = 0; i < operationFileNames.length; i++) {
 				log.debug("found file: " + operationFileNames[i]);
-				file = new File(backupDirectory + File.separator + directoryName
+				file = new File(directoryPath + File.separator + directoryName
 						+ File.separator + operationFileNames[i]);
 				File fileout = new File(operationsDirectory + File.separator + operationFileNames[i]);
 
@@ -151,6 +155,10 @@ public class Backup extends XmlFile {
 			return false; 
 		}
 	}
+	
+	public boolean loadDemoFiles(){
+		return restore(XmlFile.xmlDir(), "demoOperations");
+	}
 
 	private String fullBackupFilename(String name) {
 		return backupDirectory + File.separator + getDirectoryName() + File.separator + name;
@@ -159,6 +167,8 @@ public class Backup extends XmlFile {
 	private String backupDirectory = XmlFile.prefsDir() + "operations" + File.separator + "backups";
 
 	private String operationsDirectory = XmlFile.prefsDir() + "operations";
+	
+	private String operationsDemoDirectory = XmlFile.xmlDir() + "demoOperations";
 	
 	
 	private String directoryName = "";
