@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Backup extends XmlFile {
 
@@ -133,6 +133,10 @@ public class Backup extends XmlFile {
 			}
 			// TODO check for the correct operation file names
 			for (int i = 0; i < operationFileNames.length; i++) {
+			    // skip non-xml files
+			    if ( ! operationFileNames[i].toUpperCase().endsWith(".XML") )
+			         continue;
+			    //
 				log.debug("found file: " + operationFileNames[i]);
 				file = new File(directoryPath + File.separator + directoryName
 						+ File.separator + operationFileNames[i]);
