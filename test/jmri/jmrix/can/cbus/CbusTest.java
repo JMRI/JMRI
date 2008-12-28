@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class CbusTest extends TestCase {
 
@@ -34,6 +34,8 @@ public class CbusTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.can.cbus.CbusTest");
         suite.addTest(jmri.jmrix.can.cbus.CbusAddressTest.suite());
+        suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerTest.suite());
+        suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerManagerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
