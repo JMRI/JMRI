@@ -34,7 +34,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -509,21 +509,21 @@ public class OperationsTrainsTest extends TestCase {
                 
 		RouteLocation rl1 = new RouteLocation("1r1", l1);
                 rl1.setSequenceId(1);
-                rl1.setTrainDirection("South");
+                rl1.setTrainDirection(rl1.SOUTH);
                 rl1.setMaxCarMoves(5);
                 rl1.setMaxTrainLength(1000);
                 Assert.assertEquals("Route Location 1 Id", "1r1", rl1.getId());
 		Assert.assertEquals("Route Location 1 Name", "North End", rl1.getName());
 		RouteLocation rl2 = new RouteLocation("1r2", l2);
                 rl2.setSequenceId(2);
-                rl2.setTrainDirection("South");
+                rl2.setTrainDirection(rl1.SOUTH);
                 rl2.setMaxCarMoves(5);
                 rl2.setMaxTrainLength(1000);
 		Assert.assertEquals("Route Location 2 Id", "1r2", rl2.getId());
 		Assert.assertEquals("Route Location 2 Name", "North Industries", rl2.getName());
 		RouteLocation rl3 = new RouteLocation("1r3", l3);
                 rl3.setSequenceId(3);
-                rl3.setTrainDirection("South");
+                rl3.setTrainDirection(rl1.SOUTH);
                 rl3.setMaxCarMoves(5);
                 rl3.setMaxTrainLength(1000);
 		Assert.assertEquals("Route Location 3 Id", "1r3", rl3.getId());

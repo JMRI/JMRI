@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Tests for the OperationsRoutes class
  * @author	Bob Coleman
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -87,10 +87,10 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
 
-		Assert.assertEquals("Route Constant EAST", "East", rl1.EAST);
-		Assert.assertEquals("Route Constant WEST", "West", rl1.WEST);
-		Assert.assertEquals("Route Constant NORTH", "North", rl1.NORTH);
-		Assert.assertEquals("Route Constant SOUTH", "South", rl1.SOUTH);
+		Assert.assertEquals("Route Constant EAST", 1, rl1.EAST);
+		Assert.assertEquals("Route Constant WEST", 2, rl1.WEST);
+		Assert.assertEquals("Route Constant NORTH", 4, rl1.NORTH);
+		Assert.assertEquals("Route Constant SOUTH", 8, rl1.SOUTH);
 	}
 
 	// test route location attributes
@@ -126,16 +126,16 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Location Icon Y", 8, rl1.getTrainIconY());
 
 		rl1.setTrainDirection(rl1.EAST);
-		Assert.assertEquals("Route Location Train Direction East", "East", rl1.getTrainDirection());
+		Assert.assertEquals("Route Location Train Direction East", 1, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(rl1.WEST);
-		Assert.assertEquals("Route Location Train Direction West", "West", rl1.getTrainDirection());
+		Assert.assertEquals("Route Location Train Direction West", 2, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(rl1.NORTH);
-		Assert.assertEquals("Route Location Train Direction North", "North", rl1.getTrainDirection());
+		Assert.assertEquals("Route Location Train Direction North", 4, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(rl1.SOUTH);
-		Assert.assertEquals("Route Location Train Direction South", "South", rl1.getTrainDirection());
+		Assert.assertEquals("Route Location Train Direction South", 8, rl1.getTrainDirection());
 	}
 
 	// test route location management
