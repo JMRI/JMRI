@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class JmritTest extends TestCase {
 
@@ -42,6 +42,7 @@ public class JmritTest extends TestCase {
         suite.addTest(jmri.jmrit.tracker.TrackerTest.suite());
         suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
         suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
+        suite.addTest(jmri.jmrit.MemoryContentsTest.suite());
         suite.addTest(jmri.jmrit.XmlFileTest.suite());
         return suite;
     }
