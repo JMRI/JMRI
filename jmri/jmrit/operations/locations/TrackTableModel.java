@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import java.awt.event.*;
 import java.beans.*;
 
 import javax.swing.*;
@@ -12,10 +11,7 @@ import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
-import jmri.*;
-import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -23,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

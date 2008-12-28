@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.Enumeration;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -46,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	

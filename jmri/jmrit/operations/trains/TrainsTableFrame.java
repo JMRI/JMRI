@@ -2,29 +2,23 @@
 
 package jmri.jmrit.operations.trains;
  
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import jmri.implementation.swing.SwingShutDownTask;
+import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.OperationsFrame;
-
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.ResourceBundle;
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 
 
 
@@ -33,7 +27,7 @@ import javax.swing.WindowConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	

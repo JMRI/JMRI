@@ -11,14 +11,12 @@ import org.jdom.ProcessingInstruction;
 
 import jmri.jmrit.XmlFile;
 
-import jmri.jmrit.operations.setup.OperationsXml;
-import jmri.jmrit.roster.Roster;
 
 /**
  * Load and stores locations for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LocationManagerXml extends XmlFile {
 	

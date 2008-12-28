@@ -12,9 +12,6 @@ import org.jdom.ProcessingInstruction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.setup.OperationsXml;
-
-import jmri.jmrit.roster.Roster;
 
 /**
  * Loads and stores cars using xml files.  Also loads and stores
@@ -22,7 +19,7 @@ import jmri.jmrit.roster.Roster;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CarManagerXml extends XmlFile {
 	

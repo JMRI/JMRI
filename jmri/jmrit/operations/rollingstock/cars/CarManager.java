@@ -2,10 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -26,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -538,11 +535,8 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	// get cars by moves list
     	List carsSortByMoves = getCarsByMovesList();
     	// now build list of available cars for this route
-    	
-    	boolean carAdded = false;
-    	Car car;
- 
-    	for (int i = 0; i < carsSortByMoves.size(); i++) {
+     	Car car;
+     	for (int i = 0; i < carsSortByMoves.size(); i++) {
     		car = getCarById((String) carsSortByMoves.get(i));
     		RouteLocation rl = route.getLocationByName(car.getLocationName());
     		// get cars that don't have an assigned train, or the assigned train is this one 

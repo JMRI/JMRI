@@ -2,28 +2,21 @@
 
 package jmri.jmrit.operations.setup;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import java.io.*;
+import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.OperationsFrame;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import jmri.jmrit.display.LocoIcon;
+import jmri.jmrit.operations.OperationsFrame;
 
 
 /**
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

@@ -2,20 +2,15 @@
 
 package jmri.jmrit.operations.trains;
 
-import java.util.Enumeration;
-
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import java.awt.Dimension;
-import java.awt.Point;
 
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
@@ -24,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";

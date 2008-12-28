@@ -2,31 +2,26 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
-
-import jmri.jmrit.operations.trains.Train;
-
-import java.util.Enumeration;
-
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.trains.Train;
+
 
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	

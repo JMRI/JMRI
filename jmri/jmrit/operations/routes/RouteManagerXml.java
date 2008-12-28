@@ -5,20 +5,17 @@ package jmri.jmrit.operations.routes;
 import java.io.File;
 import java.util.List;
 
+import jmri.jmrit.XmlFile;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-
-import jmri.jmrit.XmlFile;
-
-import jmri.jmrit.operations.setup.OperationsXml;
-import jmri.jmrit.roster.Roster;
 
 /**
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class RouteManagerXml extends XmlFile {
 	

@@ -2,34 +2,27 @@
 
 package jmri.jmrit.operations.trains;
 
-import java.awt.event.*;
-import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Vector;
-import java.util.Calendar;
-
-import jmri.*;
+import jmri.jmrit.beantable.EnablingCheckboxRenderer;
+import jmri.jmrit.operations.setup.Control;
+import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
-
-import jmri.util.JmriJFrame;
 
 /**
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

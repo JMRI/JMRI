@@ -2,33 +2,28 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GridBagLayout;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+
+import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.OperationsFrame;
-
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.text.MessageFormat;
-
-import javax.swing.*;
-
-import java.io.*;
-import java.util.ResourceBundle;
 
 
 /**
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -255,7 +250,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		// setup checkbox
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
+//		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);

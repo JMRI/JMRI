@@ -1,23 +1,20 @@
 // DeleteEngineRosterAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
-import javax.swing.*;
-
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.io.*;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import jmri.util.StringUtil;
-import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 
 
 /**
  * This routine will remove all engines from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 

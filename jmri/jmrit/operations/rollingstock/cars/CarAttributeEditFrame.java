@@ -2,23 +2,12 @@
 
  package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox; 
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -31,7 +20,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	

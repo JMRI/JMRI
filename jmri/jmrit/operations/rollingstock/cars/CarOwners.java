@@ -2,18 +2,14 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.util.Enumeration;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
-
 
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CarOwners implements java.beans.PropertyChangeListener {
 	

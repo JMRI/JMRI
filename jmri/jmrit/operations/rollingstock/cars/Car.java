@@ -1,24 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Setup;
-
-import org.jdom.Element;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 

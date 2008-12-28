@@ -1,30 +1,20 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Font;
 import java.awt.Frame;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -34,7 +24,6 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
@@ -45,16 +34,13 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.LocoIcon;
-
-import org.jdom.Element;
 
 
 /**
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.33 $
+ * @version             $Revision: 1.34 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -967,14 +953,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		}
 		// set color based on train direction at current location
-		String dir = trainIconRl.getTrainDirection();
-		if (dir.equals(trainIconRl.NORTH))
+		if (trainIconRl.getTrainDirection() == trainIconRl.NORTH)
 			trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
-		if (dir.equals(trainIconRl.SOUTH))
+		if (trainIconRl.getTrainDirection() == trainIconRl.SOUTH)
 			trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
-		if (dir.equals(trainIconRl.EAST))
+		if (trainIconRl.getTrainDirection() == trainIconRl.EAST)
 			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
-		if (dir.equals(trainIconRl.WEST))
+		if (trainIconRl.getTrainDirection() == trainIconRl.WEST)
 			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
 	}
 	

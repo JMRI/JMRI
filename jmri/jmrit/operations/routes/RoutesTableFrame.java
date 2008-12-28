@@ -2,24 +2,18 @@
 
 package jmri.jmrit.operations.routes;
  
-import jmri.jmrit.operations.locations.PrintLocationsAction;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.OperationsFrame;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 
 
@@ -28,7 +22,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	

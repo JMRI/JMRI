@@ -2,22 +2,13 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -49,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -69,8 +60,6 @@ jmri.jmrix.nce.NceListener {
 	private static final int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
 	private static final int CS_CON_MEM_REAR = 0x100; 	// array offset rear consist locos
 	private static final int CS_CON_MEM_MID = 0x200; 	// array offset mid consist locos
-	private static final int LOC_ADR_MIN = 1; 			// loco address range
-	private static final int LOC_ADR_MAX = 9999;
 	
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
 	private static int replyLen = 0;				// expected byte length

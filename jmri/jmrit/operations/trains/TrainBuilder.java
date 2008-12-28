@@ -55,7 +55,7 @@ import org.jdom.Element;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1040,22 +1040,11 @@ public class TrainBuilder extends TrainCommon{
 	private boolean checkPickUpTrainDirection (PrintWriter file, Car car, RouteLocation rl){
 		if (routeList.size() == 1) // ignore local train direction
 			return true;
-		String trainDirection = rl.getTrainDirection();	// train direction North, South, East and West
-		int trainDir = 0;
-		if (trainDirection.equals(rl.NORTH))
-			trainDir = Track.NORTH;
-		else if (trainDirection.equals(rl.SOUTH))
-			trainDir = Track.SOUTH;
-		else if (trainDirection.equals(rl.EAST))
-			trainDir = Track.EAST;
-		else if (trainDirection.equals(rl.WEST))
-			trainDir = Track.WEST;
-		
-		if ((trainDir & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
+		if ((rl.getTrainDirection() & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
 			return true;
 		else {
 			addLine(file, FIVE, "Can not pick up car ("+car.getId()+") using "
-					+trainDirection+"bound train, location");
+					+rl.getTrainDirectionString()+"bound train, location");
 			addLine(file, FIVE, " ("+car.getLocation().getName()
 					+", "+car.getTrack().getName()+") does not service this direction");
 			return false;
@@ -1099,22 +1088,12 @@ public class TrainBuilder extends TrainCommon{
 		// is the destination the last location on the route? 
 		if (rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
-		String trainDirection = rld.getTrainDirection();	// train direction North, South, East or West
-		// convert train direction to binary bit map, only one bit set 
-		int trainDir = 0;
-		if (trainDirection.equals(rld.NORTH))
-			trainDir = Track.NORTH;
-		else if (trainDirection.equals(rld.SOUTH))
-			trainDir = Track.SOUTH;
-		else if (trainDirection.equals(rld.EAST))
-			trainDir = Track.EAST;
-		else if (trainDirection.equals(rld.WEST))
-			trainDir = Track.WEST;
-		int serviceTrainDir = (destination.getTrainDirections() & track.getTrainDirections()); // this location only services trains with these directions
-		if ((serviceTrainDir & trainDir) >0){
+		// this location only services trains with these directions
+		int serviceTrainDir = (destination.getTrainDirections() & track.getTrainDirections()); 
+		if ((rld.getTrainDirection() & serviceTrainDir) >0){
 			return true;
 		} else {
-			addLine(file, FIVE, "Can not drop car ("+car.getId()+") using "+trainDirection+"bound train,");
+			addLine(file, FIVE, "Can not drop car ("+car.getId()+") using "+rld.getTrainDirectionString()+"bound train,");
 			addLine(file, FIVE, " destination track ("+track+") does not service this direction");
 			return false;
 		}
@@ -1172,7 +1151,8 @@ public class TrainBuilder extends TrainCommon{
 		for (int i =0; i < engineList.size(); i++){
 			engine = engineManager.getEngineById((String) engineList.get(i));
 			comment = (Setup.isAppendCarCommentEnabled() ? " "+engine.getComment() : "");
-			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "+rb.getString("assignedToThisTrain") + comment);
+			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.getRoad() + " " + engine.getNumber() + " (" +engine.getModel()+  ") "
+					+rb.getString("assignedToThisTrain") + comment);
 		}
 		
 		if (engine != null)
@@ -1186,9 +1166,11 @@ public class TrainBuilder extends TrainCommon{
 			RouteLocation rl = train.getRoute().getLocationById((String) routeList.get(r));
 			newLine(fileOut);
 			if (r == 0)
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", "+rb.getString("departureTime")+" "+train.getDepartureTime());
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() 
+						+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
 			else
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() +", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + rl.getName() 
+						+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById((String) routeList.get(j));
@@ -1209,7 +1191,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			if (r != routeList.size() - 1) {
-				addLine(fileOut, rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirection()
+				addLine(fileOut, rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirectionString()
 						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {

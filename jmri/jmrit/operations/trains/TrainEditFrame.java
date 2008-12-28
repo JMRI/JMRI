@@ -2,42 +2,45 @@
 
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.locations.Location;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.routes.RouteEditFrame;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.Route;
-
-
+import jmri.jmrit.operations.routes.RouteEditFrame;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.setup.OperationsXml;
-
-import jmri.jmrit.operations.OperationsFrame;
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.text.MessageFormat;
 
 
 /**
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

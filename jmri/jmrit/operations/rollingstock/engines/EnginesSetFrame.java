@@ -2,38 +2,29 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import jmri.jmrit.operations.setup.OperationsXml;
-import jmri.jmrit.operations.setup.Setup;
+import java.awt.GridBagLayout;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+
+import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.OperationsFrame;
-
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
-import java.io.*;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 
 /**
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -139,7 +130,6 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 		addComboBoxAction(destinationBox);
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
 
 		//	 get notified if combo box gets modified

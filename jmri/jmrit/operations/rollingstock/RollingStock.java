@@ -1,25 +1,22 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-
-import org.jdom.Element;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Represents rolling stock, both powered (engines) and not powered (cars) on
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 

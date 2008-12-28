@@ -3,31 +3,30 @@
 package jmri.jmrit.operations.trains;
 
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import java.io.*;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

@@ -1,22 +1,18 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
-import java.util.List;
+
+import jmri.jmrit.XmlFile;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.Setup;
-
-import jmri.jmrit.roster.Roster;
-
 /**
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsXml extends XmlFile {
 	

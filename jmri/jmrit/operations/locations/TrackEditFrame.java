@@ -10,18 +10,14 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import java.io.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -950,8 +946,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		repaint();
 	}
 
-	private boolean editActive = false;
-
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getText());
@@ -980,9 +974,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateRoadComboBox();
 			updateRoadNames();
-		}
-		if (e.getPropertyName().equals(DISPOSE)){
-			editActive = false;
 		}
 	}
 	

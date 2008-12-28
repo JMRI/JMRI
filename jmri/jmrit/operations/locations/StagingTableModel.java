@@ -4,15 +4,13 @@ package jmri.jmrit.operations.locations;
 
 import java.beans.*;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class StagingTableModel extends TrackTableModel {
 

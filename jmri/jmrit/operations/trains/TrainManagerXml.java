@@ -5,22 +5,19 @@ package jmri.jmrit.operations.trains;
 import java.io.File;
 import java.util.List;
 
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Control;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-
-import jmri.jmrit.XmlFile;
-
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
-import jmri.jmrit.roster.Roster;
 
 /**
  * Loads and stores trains using xml files. Also stores various train
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TrainManagerXml extends XmlFile {
 	

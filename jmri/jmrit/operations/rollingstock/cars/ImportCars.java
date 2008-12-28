@@ -24,13 +24,12 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ImportCars extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
-	private static boolean fileValid = false;		// used to flag status messages
 	CarManager manager = CarManager.instance();
 	
 	javax.swing.JLabel textLine = new javax.swing.JLabel();

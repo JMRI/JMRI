@@ -2,9 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -12,15 +10,12 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import java.io.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -28,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -312,7 +307,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
        	
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
+//		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);

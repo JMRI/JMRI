@@ -2,10 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.util.Enumeration;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	

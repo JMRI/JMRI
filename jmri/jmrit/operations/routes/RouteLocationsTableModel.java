@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.routes;
 
-import java.awt.event.*;
 import java.beans.*;
 
 import javax.swing.*;
@@ -12,9 +11,7 @@ import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
-import jmri.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -24,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -173,7 +170,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case NAMECOLUMN: return rl.getName();
         case TRAINCOLUMN:{
         	JComboBox cb = Setup.getComboBox();
-        	cb.setSelectedItem(rl.getTrainDirection());	//TODO: Doesn't work properly if user deleted direction
+        	cb.setSelectedItem(rl.getTrainDirectionString());	
         	return cb;
         }
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
@@ -257,15 +254,15 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	_route.deleteLocation(rl);
     }
     
-   private String _trainDirection = (String)Setup.getComboBox().getItemAt(0);
+   private int _trainDirection = Setup.getDirectionInt((String)Setup.getComboBox().getItemAt(0));
    
-   public String getLastTrainDirection(){
+   public int getLastTrainDirection(){
 	   return _trainDirection;
    }
     
     private void setTrainDirection (Object value, int row){
     	RouteLocation rl = _route.getLocationById((String)list.get(row));
-    	_trainDirection = (String)((JComboBox)value).getSelectedItem();
+    	_trainDirection = Setup.getDirectionInt((String)((JComboBox)value).getSelectedItem());
     	rl.setTrainDirection(_trainDirection);
     }
     

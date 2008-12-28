@@ -5,19 +5,13 @@ package jmri.jmrit.operations.routes;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Setup;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -30,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -153,15 +147,15 @@ public class RouteCopyFrame extends OperationsFrame {
 			newRl.setCanDrop(oldRl.canPickup());
 			newRl.setCanPickup(oldRl.canDrop());
 			// invert train directions
-			String oldDirection = oldRl.getTrainDirection();
-			if (oldDirection.equals(Setup.NORTH_DIR))
-				newRl.setTrainDirection(Setup.SOUTH_DIR);
-			else if (oldDirection.equals(Setup.SOUTH_DIR))
-				newRl.setTrainDirection(Setup.NORTH_DIR);
-			else if (oldDirection.equals(Setup.EAST_DIR))
-				newRl.setTrainDirection(Setup.WEST_DIR);
-			else if (oldDirection.equals(Setup.WEST_DIR))
-				newRl.setTrainDirection(Setup.EAST_DIR);
+			int oldDirection = oldRl.getTrainDirection();
+			if (oldDirection == oldRl.NORTH)
+				newRl.setTrainDirection(newRl.SOUTH);
+			else if (oldDirection == oldRl.SOUTH)
+				newRl.setTrainDirection(newRl.NORTH);
+			else if (oldDirection == oldRl.EAST)
+				newRl.setTrainDirection(newRl.WEST);
+			else if (oldDirection == oldRl.WEST)
+				newRl.setTrainDirection(oldRl.EAST);
 			// get the max length between location
 			newRl.setMaxTrainLength(oldNextRl.getMaxTrainLength());
 		}

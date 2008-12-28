@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -429,6 +429,39 @@ public class Setup {
     	if ((traindir & SOUTH)>0)
     		directions.add(SOUTH_DIR);
     	return directions;
+    }
+    
+    /**
+     * Converts binary direction to String direction
+     * @param direction EAST, WEST, NORTH, SOUTH 
+     * @return String representation of a direction
+     */
+    public static String getDirectionString(int direction){
+    	switch (direction){
+    	case EAST: return EAST_DIR; 
+    	case WEST: return WEST_DIR; 
+    	case NORTH: return NORTH_DIR; 
+    	case SOUTH: return SOUTH_DIR; 
+    	default: return "unknown";
+    	}
+    }
+    
+    /**
+     * Converts String direction to binary direction
+     * @param direction EAST_DIR WEST_DIR NORTH_DIR SOUTH_DIR
+     * @return int representation of a direction
+     */
+    public static int getDirectionInt(String direction){
+    	if (direction.equals(EAST_DIR))
+    		return EAST;
+    	else if (direction.equals(WEST_DIR))
+    		return WEST;
+    	else if (direction.equals(NORTH_DIR))
+    		return NORTH;
+    	else if (direction.equals(SOUTH_DIR))
+    		return SOUTH;
+    	else
+    		return 0; // return unkown
     }
     
     public static org.jdom.Element store(){

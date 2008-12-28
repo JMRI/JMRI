@@ -2,9 +2,9 @@
 
 package jmri.jmrit.operations.setup;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Calendar;
 
 import jmri.jmrit.XmlFile;
@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class Backup extends XmlFile {
 
@@ -171,9 +171,7 @@ public class Backup extends XmlFile {
 	private String backupDirectory = XmlFile.prefsDir() + "operations" + File.separator + "backups";
 
 	private String operationsDirectory = XmlFile.prefsDir() + "operations";
-	
-	private String operationsDemoDirectory = XmlFile.xmlDir() + "demoOperations";
-	
+		
 	
 	private String directoryName = "";
 	public String getDirectoryName(){

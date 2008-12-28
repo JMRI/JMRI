@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import jmri.jmrit.operations.trains.Train;
@@ -10,14 +9,12 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 
-import org.jdom.Element;
-
 /**
  * Represents a location (track) on the layout
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 

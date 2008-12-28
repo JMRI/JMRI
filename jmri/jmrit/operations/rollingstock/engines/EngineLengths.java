@@ -2,10 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.Enumeration;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,7 +12,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	

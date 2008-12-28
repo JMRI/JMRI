@@ -11,9 +11,7 @@ import javax.swing.table.TableColumnModel;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
-import jmri.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -22,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

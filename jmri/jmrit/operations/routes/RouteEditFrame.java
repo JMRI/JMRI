@@ -5,24 +5,14 @@ package jmri.jmrit.operations.routes;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.SidingEditFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.setup.OperationsXml;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import java.io.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -30,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -186,7 +176,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
        	
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
+//		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
@@ -318,13 +308,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addRouteButton.setEnabled(!enabled);
 	}
 	
-	private void enableCheckboxes(boolean enable){
-		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
-			checkBox.setEnabled(enable);
-		}
-	}
-		
 	public void dispose() {
 		routeModel.dispose();
 		super.dispose();

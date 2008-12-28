@@ -2,21 +2,11 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ResourceBundle;
 import java.util.List;
+import java.util.ResourceBundle;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -30,7 +20,6 @@ public class ImportRosterEngines extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
-	private static boolean fileValid = false;		// used to flag status messages
 	EngineManager manager = EngineManager.instance();
 	private static String defaultEngineLength = rb.getString("engineDefaultLength");
 	private static String defaultEngineType = rb.getString("engineDefaultType");
@@ -56,7 +45,6 @@ public class ImportRosterEngines extends Thread {
 		fstatus.setVisible (true);
 
 		// Now get engines from the JMRI roster 
-		boolean importOkay = true;
 		int enginesAdded = 0;
 		
 		List engines = Roster.instance().matchingList(null, null, null, null, null, null, null);
@@ -100,27 +88,6 @@ public class ImportRosterEngines extends Thread {
 			JOptionPane.showMessageDialog(null,
 					enginesAdded+" "+rb.getString("ImportEnginesAdded"),
 					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-
-
-
-	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
-		
-		public boolean accept(File f){
-			if (f.isDirectory())
-			return true;
-			String name = f.getName();
-			if (name.matches(".*\\.txt"))
-				return true;
-			else
-				return false;
-		}
-		
-		public String getDescription() {
-			return "Text Documents (*.txt)";
 		}
 	}
 

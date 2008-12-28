@@ -2,21 +2,16 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.Enumeration;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
-import jmri.jmrit.operations.setup.Setup;
-
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EngineTypes implements java.beans.PropertyChangeListener {
 	

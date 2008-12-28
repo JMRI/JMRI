@@ -5,23 +5,18 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.io.File;
 import java.util.List;
 
+import jmri.jmrit.XmlFile;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-
-import jmri.jmrit.XmlFile;
-//import jmri.jmrit.operations.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.setup.OperationsXml;
-
-import jmri.jmrit.roster.Roster;
 
 /**
  * Loads and stores engines using xml files. Also loads and stores engine
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class EngineManagerXml extends XmlFile {
 	

@@ -1,19 +1,15 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 
 /**
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class Engine extends RollingStock {
 	

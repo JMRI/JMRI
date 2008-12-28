@@ -2,29 +2,29 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.locations.LocationManager; 
-import jmri.jmrit.operations.locations.Location; 
-import jmri.jmrit.operations.locations.Track; 
-import jmri.jmrit.operations.setup.Setup; 
-import jmri.jmrit.operations.setup.Control; 
-import jmri.jmrit.operations.OperationsFrame; 
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-
-import javax.swing.*;
-
-import java.io.*;
-import java.util.ResourceBundle;
+import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -272,7 +272,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addCheckBoxAction(fredCheckBox);
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
+//		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);

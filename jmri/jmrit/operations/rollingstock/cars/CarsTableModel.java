@@ -2,27 +2,28 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import java.util.ResourceBundle;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Vector;
-
-import jmri.*;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+
 
 /**
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -284,15 +285,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
     
-    private boolean buttonEnabled(int row){
-		Car car = manager.getCarById((String)sysList.get(row));
-		if (car.getRouteLocationId() == null)
-			return true;
-		else
-			return false;
-    }
-
-    public void actionPerformed(ActionEvent e) {
+   public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
         char b = e.getActionCommand().charAt(0);
         int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();

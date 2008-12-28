@@ -20,13 +20,13 @@ import org.jdom.Element;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected Location _location = null;	// the location in the route
-	protected String _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
+	protected int _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
 	protected int _maxTrainLength = Setup.getTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
 	protected boolean _drops = true;		// when true drops allowed at this location
@@ -42,10 +42,15 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _trainLength = 0;			// train length departing this location
 	protected Track _stagingTrack = null;  	// staging track if not null
 	
-	public static final String EAST = Setup.EAST_DIR;		// train directions
-	public static final String WEST = Setup.WEST_DIR;
-	public static final String NORTH = Setup.NORTH_DIR;
-	public static final String SOUTH = Setup.SOUTH_DIR;
+	public static final int EAST = 1;		// train direction 
+	public static final int WEST = 2;
+	public static final int NORTH = 4;
+	public static final int SOUTH = 8;
+	
+	public static final String EAST_DIR = Setup.EAST_DIR;		// train directions text
+	public static final String WEST_DIR = Setup.WEST_DIR;
+	public static final String NORTH_DIR = Setup.NORTH_DIR;
+	public static final String SOUTH_DIR = Setup.SOUTH_DIR;
 	
 	public static final String DISPOSE = "dispose";
 	private static final String DELETED = "<location deleted>";
@@ -98,15 +103,29 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _comment;
 	}
 
-	public void setTrainDirection(String direction){
-		String old = _trainDir;
+	public void setTrainDirection(int direction){
+		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
 			firePropertyChange("trainDirection", old, direction);
 	}
 	
-	public String getTrainDirection(){
+	/**
+	 * Gets the binary representation of the train's direction at this location
+	 * 
+	 * @return int representing train direction EAST WEST NORTH SOUTH
+	 */
+	public int getTrainDirection() {
 		return _trainDir;
+	}
+	
+	/**
+	 * Gets the String representation of the train's direction at this location
+	 * 
+	 * @return String representing train direction at this location
+	 */
+	public String getTrainDirectionString(){
+		return Setup.getDirectionString(getTrainDirection());
 	}
 	
 	public void setMaxTrainLength(int length){
@@ -280,10 +299,18 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         		_location.addPropertyChangeListener(this);
         }
         if ((a = e.getAttribute("trainDirection")) != null ){
-        	if (Setup.getList().contains(a.getValue()))
-        		_trainDir = a.getValue();
-        	else
-        		log.error("Route location ("+getName()+") direction ("+a.getValue()+") is unknown");
+        	// early releases had text for train direction
+        	if (Setup.getList().contains(a.getValue())){
+        		_trainDir = Setup.getDirectionInt(a.getValue());
+        		log.debug("found old train direction "+a.getValue()+" new direction "+_trainDir);
+        	} else {
+        		try {
+        			_trainDir = Integer.parseInt(a.getValue());
+        		} catch (NumberFormatException ee){
+        			log.error("Route location ("+getName()+") direction ("+a.getValue()+") is unknown");
+        		}
+        		
+        	}
         }
         if ((a = e.getAttribute("maxTrainLength")) != null )  _maxTrainLength = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("grade")) != null )  _grade = Double.parseDouble(a.getValue());
@@ -306,7 +333,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	e.setAttribute("id", getId());
     	e.setAttribute("name", getName());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
-    	e.setAttribute("trainDirection", getTrainDirection());
+    	e.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	e.setAttribute("maxTrainLength", Integer.toString(getMaxTrainLength()));
     	e.setAttribute("grade", Double.toString(getGrade()));
        	e.setAttribute("maxCarMoves", Integer.toString(getMaxCarMoves()));

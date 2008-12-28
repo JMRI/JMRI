@@ -2,21 +2,22 @@
 
 package jmri.jmrit.operations;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-
-import javax.swing.*;
-
-import java.io.*;
+import java.awt.GridBagConstraints;
 import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 
 /**
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
