@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/operations-routes.xsl" type="text/xsl"?>
+<!DOCTYPE operations-config SYSTEM "operations-routes.dtd">
+
+<operations-config>
+  <!--Written by JMRI version 2.4DB1 on Sat Dec 27 21:31:34 EST 2008 $Id: OperationsRouteRoster.xml,v 1.1 2008-12-28 04:10:49 dan_boudreau Exp $-->
+  <routes>
+    <route id="1" name="Bksfld-Frmnt" comment="">
+      <location id="1r1" name="Bakersfield" sequenceId="1" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="12" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r12" name="Fremont" sequenceId="12" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r3" name="Port Arthur" sequenceId="3" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r4" name="Danville" sequenceId="4" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r5" name="Hillsboro" sequenceId="5" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r6" name="Farmington" sequenceId="8" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+    <route id="4" name="Bksfld-Loop" comment="">
+      <location id="4r1" name="Bakersfield" sequenceId="1" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="no" drops="no" trainIconX="221" trainIconY="38" comment="" />
+      <location id="4r14" name="Hillsboro" sequenceId="14" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="no" trainIconX="593" trainIconY="65" comment="" />
+      <location id="4r15" name="Danville" sequenceId="15" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="no" trainIconX="482" trainIconY="64" comment="" />
+      <location id="4r16" name="Port Arthur" sequenceId="16" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="no" trainIconX="334" trainIconY="64" comment="" />
+      <location id="4r18" name="Bakersfield" sequenceId="18" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="7" pickups="yes" drops="yes" trainIconX="221" trainIconY="72" comment="" />
+      <location id="4r3" name="Port Arthur" sequenceId="3" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="no" trainIconX="334" trainIconY="39" comment="" />
+      <location id="4r4" name="Danville" sequenceId="4" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="no" trainIconX="482" trainIconY="39" comment="" />
+      <location id="4r5" name="Hillsboro" sequenceId="5" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="no" trainIconX="592" trainIconY="39" comment="" />
+      <location id="4r6" name="Farmington" sequenceId="6" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="no" trainIconX="704" trainIconY="39" comment="" />
+    </route>
+    <route id="5" name="Frmnt-Bksfld" comment="">
+      <location id="5r1" name="Fremont" sequenceId="1" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r10" name="Bakersfield" sequenceId="10" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r5" name="Farmington" sequenceId="5" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r6" name="Hillsboro" sequenceId="6" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="7" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r7" name="Danville" sequenceId="7" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="7" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r8" name="Port Arthur" sequenceId="8" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="8" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+    <route id="10" name="Susnville-Bksfld" comment="">
+      <location id="10r10" name="Port Arthur" sequenceId="10" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="368" trainIconY="72" comment="" />
+      <location id="10r12" name="Bakersfield" sequenceId="12" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="10" pickups="yes" drops="yes" trainIconX="9" trainIconY="39" comment="" />
+      <location id="10r2" name="Susanville" sequenceId="2" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="10r3" name="Fremont" sequenceId="3" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="yes" trainIconX="1799" trainIconY="227" comment="" />
+      <location id="10r4" name="&lt;location deleted&gt;" sequenceId="4" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="1597" trainIconY="227" comment="" />
+      <location id="10r7" name="Farmington" sequenceId="7" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="4" pickups="yes" drops="yes" trainIconX="1148" trainIconY="74" comment="" />
+      <location id="10r8" name="Hillsboro" sequenceId="8" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="830" trainIconY="122" comment="" />
+      <location id="10r9" name="Danville" sequenceId="9" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="571" trainIconY="96" comment="" />
+    </route>
+    <route id="11" name="Lakeview-Bksfld" comment="">
+      <location id="11r10" name="Lakeview" sequenceId="1" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="845" trainIconY="38" comment="" />
+      <location id="11r2" name="Farmington" sequenceId="3" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="705" trainIconY="64" comment="" />
+      <location id="11r5" name="Hillsboro" sequenceId="6" trainDirection="South" maxTrainLength="600" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="592" trainIconY="64" comment="" />
+      <location id="11r6" name="Danville" sequenceId="7" trainDirection="South" maxTrainLength="800" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="481" trainIconY="63" comment="" />
+      <location id="11r7" name="Port Arthur" sequenceId="8" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="332" trainIconY="65" comment="" />
+      <location id="11r9" name="Bakersfield" sequenceId="10" trainDirection="South" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="221" trainIconY="64" comment="" />
+    </route>
+    <route id="12" name="Blsfld-Lakeview" comment="">
+      <location id="12r1" name="Bakersfield" sequenceId="1" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="221" trainIconY="38" comment="" />
+      <location id="12r3" name="Port Arthur" sequenceId="3" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="334" trainIconY="39" comment="" />
+      <location id="12r4" name="Danville" sequenceId="4" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="482" trainIconY="39" comment="" />
+      <location id="12r5" name="Hillsboro" sequenceId="5" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="593" trainIconY="38" comment="" />
+      <location id="12r8" name="Farmington" sequenceId="8" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="704" trainIconY="37" comment="" />
+      <location id="12r9" name="Lakeview" sequenceId="9" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="855" trainIconY="39" comment="" />
+    </route>
+    <route id="13" name="Bksfld-Susnville" comment="">
+      <location id="13r1" name="Bakersfield" sequenceId="1" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />
+      <location id="13r10" name="Fremont" sequenceId="10" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="2" pickups="yes" drops="yes" trainIconX="1769" trainIconY="203" comment="" />
+      <location id="13r11" name="Susanville" sequenceId="11" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="1839" trainIconY="158" comment="" />
+      <location id="13r3" name="Port Arthur" sequenceId="3" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="224" trainIconY="96" comment="" />
+      <location id="13r4" name="Danville" sequenceId="4" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="429" trainIconY="74" comment="" />
+      <location id="13r5" name="Hillsboro" sequenceId="5" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="837" trainIconY="109" comment="" />
+      <location id="13r6" name="Farmington" sequenceId="6" trainDirection="North" maxTrainLength="1200" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="1009" trainIconY="74" comment="" />
+    </route>
+    <route id="14" name="Lakeview-Susanville" comment="">
+      <location id="14r1" name="Lakeview" sequenceId="1" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="856" trainIconY="40" comment="" />
+      <location id="14r13" name="Fremont" sequenceId="13" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="112" trainIconY="65" comment="" />
+      <location id="14r14" name="Susanville" sequenceId="14" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="0" trainIconY="66" comment="" />
+      <location id="14r2" name="Farmington" sequenceId="2" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="704" trainIconY="64" comment="" />
+      <location id="14r5" name="Hillsboro" sequenceId="5" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="593" trainIconY="63" comment="" />
+      <location id="14r6" name="Danville" sequenceId="6" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="482" trainIconY="63" comment="" />
+      <location id="14r7" name="Port Arthur" sequenceId="7" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="333" trainIconY="63" comment="" />
+      <location id="14r9" name="Bakersfield" sequenceId="9" trainDirection="South" maxTrainLength="1300" grade="0.0" maxCarMoves="8" pickups="yes" drops="yes" trainIconX="221" trainIconY="68" comment="" />
+    </route>
+    <route id="15" name="Susanville-Lakeview" comment="">
+      <location id="15r1" name="Susanville" sequenceId="1" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="0" trainIconY="38" comment="" />
+      <location id="15r10" name="Hillsboro" sequenceId="10" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="593" trainIconY="38" comment="" />
+      <location id="15r11" name="Farmington" sequenceId="11" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="704" trainIconY="38" comment="" />
+      <location id="15r14" name="Lakeview" sequenceId="14" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="15" pickups="yes" drops="yes" trainIconX="845" trainIconY="38" comment="" />
+      <location id="15r2" name="Fremont" sequenceId="2" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="111" trainIconY="38" comment="" />
+      <location id="15r6" name="Bakersfield" sequenceId="6" trainDirection="North" maxTrainLength="900" grade="0.0" maxCarMoves="8" pickups="yes" drops="yes" trainIconX="222" trainIconY="39" comment="" />
+      <location id="15r8" name="Port Arthur" sequenceId="8" trainDirection="North" maxTrainLength="900" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="334" trainIconY="39" comment="" />
+      <location id="15r9" name="Danville" sequenceId="9" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="3" pickups="yes" drops="yes" trainIconX="481" trainIconY="38" comment="" />
+    </route>
+    <route id="17" name="Port Arthur" comment="">
+      <location id="17r1" name="Port Arthur" sequenceId="1" trainDirection="North" maxTrainLength="1300" grade="0.0" maxCarMoves="5" pickups="yes" drops="yes" trainIconX="333" trainIconY="86" comment="" />
+    </route>
+  </routes>
+</operations-config>
+
