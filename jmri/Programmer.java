@@ -8,10 +8,16 @@ import java.beans.PropertyChangeListener;
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <P>
- * Programmers come in two types:
+ * Programmers come in multiple types:
  * <UL>
  * <LI>Global, previously Service Mode, e.g. on a programming track
  * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * </UL>
+ * Different equipment may also require different programmers:
+ * <LI>DCC CV programming, on service mode track or on the main
+ * <LI>CBUS Node Variable programmers
+ * <LI>LocoNet System Variable programmers
+ * <LI>LocoNet Op Switch programmers
  * </UL>
  * Depending on which type you have, only certain modes can
  * be set. Valid modes are specified by the class static constants.
@@ -34,7 +40,7 @@ import java.beans.PropertyChangeListener;
  * <P>
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public interface Programmer  {
 
@@ -104,6 +110,11 @@ public interface Programmer  {
      * using only the bit-wise operations and "extended" addressing.
      */
     public static final int OPSACCEXTBITMODE  = 122;
+
+    /**
+     * CBUS mode for programming node variables.
+     */
+    public static final int CBUSNODEVARMODE  = 140;
 
     /**
      * Perform a CV write in the system-specific manner,
