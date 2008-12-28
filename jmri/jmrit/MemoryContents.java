@@ -21,8 +21,8 @@ import java.util.ArrayList;
  * This will eventually have to be extended to full 24-bit addressing,
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
- * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.6 $
+ * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
+ * @version         $Revision: 1.7 $
  */
 public class MemoryContents {
 
@@ -40,7 +40,7 @@ public class MemoryContents {
     
     void initPage(int page) {
         if (pageArray[page]!=null) {
-            log.warn("initPage too late: "+page);
+            log.debug("note: initPage called for already initialized page: "+page);
             return;
         }
         
