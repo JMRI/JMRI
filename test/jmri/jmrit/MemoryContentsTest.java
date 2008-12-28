@@ -14,7 +14,7 @@ import javax.swing.*;
  * Test simple functioning of MemoryContents
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class MemoryContentsTest extends TestCase {
@@ -42,6 +42,10 @@ public class MemoryContentsTest extends TestCase {
 		TestSuite suite = new TestSuite(MemoryContentsTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryContentsTest.class.getName());
 
