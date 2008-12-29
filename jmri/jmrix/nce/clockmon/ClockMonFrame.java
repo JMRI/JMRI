@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -116,9 +116,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private double internalLastRatio;
     private boolean internalLastRunning;
     private double pollingInterval = DEFAULT_POLLING_INTERVAL;
-    private ArrayList priorDiffs = new ArrayList();
-    private ArrayList priorOffsetErrors = new ArrayList();
-    private ArrayList priorCorrections = new ArrayList();
+    private ArrayList<Double> priorDiffs = new ArrayList<Double>();
+    private ArrayList<Double> priorOffsetErrors = new ArrayList<Double>();
+    private ArrayList<Double> priorCorrections = new ArrayList<Double>();
     private double syncInterval = TARGET_SYNC_DELAY;
     private int internalSyncInitStateCounter = 0;
     private int internalSyncRunStateCounter = 0;

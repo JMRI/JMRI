@@ -30,16 +30,16 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -164,8 +164,6 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
 		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
 
 	}
-
-    private Thread sinkThread;
 
     // base class methods for the NcePortController interface
     public DataInputStream getInputStream() {

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManager
 
     public void load(Element sensors) {
         // create the master object
-        NceSensorManager mgr = NceSensorManager.instance();
+        NceSensorManager.instance();
         // load individual sensors
         loadSensors(sensors);
     }

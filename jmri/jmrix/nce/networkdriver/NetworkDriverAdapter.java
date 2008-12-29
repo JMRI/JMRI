@@ -8,7 +8,6 @@ import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
 import jmri.jmrix.nce.NceProgrammerManager;
 import jmri.jmrix.nce.NceSensorManager;
-import jmri.jmrix.nce.NceThrottleManager;
 import jmri.jmrix.nce.NceTrafficController;
 
 import java.io.*;
@@ -22,7 +21,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -57,8 +56,6 @@ public class NetworkDriverAdapter extends NcePortController {
             NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         }
     }
-
-    private Thread sinkThread;
 
     // base class methods for the NcePortController interface
     public DataInputStream getInputStream() {
@@ -139,9 +136,9 @@ public class NetworkDriverAdapter extends NcePortController {
         if (this.hostName.equals("")) this.hostName = "(none)";
      }
     
-    Vector portNameVector = null;
-    public Vector getPortNames() {
-    	portNameVector = new Vector();
+    Vector<String> portNameVector = null;
+    public Vector<String> getPortNames() {
+    	portNameVector = new Vector<String>();
     	portNameVector.addElement(hostName);
         return portNameVector;
     }

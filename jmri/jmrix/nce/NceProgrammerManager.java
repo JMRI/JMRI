@@ -10,16 +10,12 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 
-    private Programmer localProgrammer;
-
     public NceProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
-        localProgrammer = serviceModeProgrammer;
-
     }
 
     /**
