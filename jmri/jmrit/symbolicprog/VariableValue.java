@@ -15,9 +15,18 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.30 $
+ * @version  $Revision: 1.31 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
+
+    private String _label;
+    private String _item;
+    private String _cvName;
+
+    protected Vector<CvValue> _cvVector;   // Vector of CV objects used to look up CVs
+    protected JLabel _status = null;
+
+    protected String _tooltipText = null;
 
     // The actual stored value is internal, not showing in the interface.
     // Instead, you can get a (Object) representation for display in
@@ -118,7 +127,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     // methods implemented here:
     public VariableValue(String label, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                         int cvNum, String mask, Vector v, JLabel status, String item) {
+                         int cvNum, String mask, Vector<CvValue> v, JLabel status, String item) {
         _label = label;
         _comment = comment;
         _cvName = cvName;
@@ -142,14 +151,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public String label() { return _label; }
     public String item() { return _item; }
     public String cvName() { return _cvName; }
-    private String _label;
-    private String _item;
-    private String _cvName;
 
-    protected Vector _cvVector;   // Vector of CV objects used to look up CVs
-    protected JLabel _status = null;
-
-    protected String _tooltipText = null;
     /**
      * Set tooltip text to be used by both the "value" and
      * representations of this Variable.
