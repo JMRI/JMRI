@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.65 $
+ * @version   $Revision: 1.66 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -321,7 +321,7 @@ public class PaneProgPane extends javax.swing.JPanel
             readAllButton.setEnabled(true);
         }
     }
-    
+
     /**
      * Enable the compare all and compare changes button if possible.
      * This checks to make sure this is appropriate, given
@@ -349,7 +349,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * operation.  They are stored as a list of Integer objects, each of which
      * is the index of the Variable in the VariableTable.
      */
-    List varList = new ArrayList();
+    List<Integer> varList = new ArrayList<Integer>();
     int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet
@@ -358,7 +358,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * separately, and the CVs that are represented by variables are not
      * entered here.  So far (sic), the only use of this is for the cvtable rep.
      */
-    List cvList = new ArrayList();
+    List<Integer> cvList = new ArrayList<Integer>();
     int cvListIndex;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
@@ -367,7 +367,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * we can read/write them as a variable.  So far (sic), the only use of this is
      * for the IndexedCvTable rep.
      */
-    List indexedCvList = new ArrayList();
+    List<Integer> indexedCvList = new ArrayList<Integer>();
     int indexedCvListIndex;
 
     JToggleButton readChangesButton  = new JToggleButton(rbt.getString("ButtonReadChangesSheet"));
@@ -388,7 +388,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
 
     public int countOpsNeeded(boolean read, boolean changes) {
-        Set set = new HashSet(cvList.size()+varList.size()+50);
+        Set<Integer> set = new HashSet<Integer>(cvList.size()+varList.size()+50);
         return makeOpsNeededSet(read, changes, set).size();
     }
 
@@ -405,7 +405,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @return the same set as the parameter, for convenient
      *      chaining of operations.
      */
-    public Set makeOpsNeededSet(boolean read, boolean changes, Set set) {
+    public Set makeOpsNeededSet(boolean read, boolean changes, Set<Integer> set) {
 
         // scan the variable list
         for (int i =0; i<varList.size(); i++) {
@@ -1553,9 +1553,9 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /** list of fnMapping objects to dispose */
-    ArrayList fnMapList = new ArrayList();
+    ArrayList<FnMapPanel> fnMapList = new ArrayList<FnMapPanel>();
     /** list of JPanel objects to removeAll */
-    ArrayList panelList = new ArrayList();
+    ArrayList<JPanel> panelList = new ArrayList<JPanel>();
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
@@ -1656,7 +1656,7 @@ public class PaneProgPane extends javax.swing.JPanel
             // already.  If they have been printed, they will be skipped.
             // Using a vector here since we don't know how many variables will
             // be printed and it allows expansion as necessary
-            Vector printedVariables = new Vector(10,5);
+            Vector<String> printedVariables = new Vector<String>(10,5);
             // index over variables
             for (int i=0; i<varList.size(); i++) {
                 int varNum = ((Integer)varList.get(i)).intValue();
