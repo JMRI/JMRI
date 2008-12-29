@@ -27,6 +27,7 @@ import org.jdom.Element;
 import jmri.util.BusyGlassPane;
 import java.awt.event.ItemListener;
 import java.awt.Cursor;
+import java.awt.Rectangle;
 
 import java.awt.event.ItemEvent;
 import jmri.ProgDeferredServiceModePane;
@@ -36,7 +37,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.69 $
+ * @version   $Revision: 1.70 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -61,11 +62,11 @@ abstract public class PaneProgFrame extends JmriJFrame
     RosterEntryPane     _rPane          = null;
     FunctionLabelPane   _flPane         = null;
     
-    List                paneList        = new ArrayList();
+    List<JPanel>        paneList        = new ArrayList<JPanel>();
     int                 paneListIndex;
 
     BusyGlassPane       glassPane;
-    List                activeComponents = new ArrayList();
+    List<JComponent>    activeComponents = new ArrayList<JComponent>();
 
     String              filename        = null;
 
@@ -807,7 +808,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      */
     void prepGlassPane(AbstractButton activeButton) {
-        List rectangles = new ArrayList();
+        List<Rectangle> rectangles = new ArrayList<Rectangle>();
 
         if (glassPane != null) {
             glassPane.dispose();

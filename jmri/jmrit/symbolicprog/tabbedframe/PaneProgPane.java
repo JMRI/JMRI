@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.66 $
+ * @version   $Revision: 1.67 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -410,7 +410,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // scan the variable list
         for (int i =0; i<varList.size(); i++) {
 
-            int varNum = ((Integer)varList.get(i)).intValue();
+            int varNum = varList.get(i).intValue();
             VariableValue var = _varModel.getVariable( varNum );
 
             // must decide whether this one should be counted
@@ -524,7 +524,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (!_parentFrame.isBusy() ||  // the frame has already setToRead
            (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
             for (int i = 0; i < varList.size(); i++) {
-                int varNum = ( (Integer) varList.get(i)).intValue();
+                int varNum = varList.get(i).intValue();
                 VariableValue var = _varModel.getVariable(varNum);
                 if (justChanges) {
                     if (var.isChanged()) {
@@ -539,7 +539,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
             for (int i = 0; i < cvList.size(); i++) {
-                int cvNum = ( (Integer) cvList.get(i)).intValue();
+                int cvNum = cvList.get(i).intValue();
                 CvValue cv = _cvModel.getCvByRow(cvNum);
                 if (justChanges) {
                     if (VariableValue.considerChanged(cv)) {
@@ -579,7 +579,7 @@ public class PaneProgPane extends javax.swing.JPanel
            (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
            log.debug("about to start setToWrite of varList");
            for (int i = 0; i < varList.size(); i++) {
-               int varNum = ( (Integer) varList.get(i)).intValue();
+               int varNum = varList.get(i).intValue();
                VariableValue var = _varModel.getVariable(varNum);
                if (justChanges) {
                    if (var.isChanged()) {
@@ -595,7 +595,7 @@ public class PaneProgPane extends javax.swing.JPanel
            }
            log.debug("about to start setToWrite of cvList");
            for (int i = 0; i < cvList.size(); i++) {
-               int cvNum = ( (Integer) cvList.get(i)).intValue();
+               int cvNum = cvList.get(i).intValue();
                CvValue cv = _cvModel.getCvByRow(cvNum);
                if (justChanges) {
                    if (VariableValue.considerChanged(cv)) {
@@ -673,7 +673,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextRead() {
         // look for possible variables
         while ((varList.size() >= 0) && (varListIndex < varList.size())){
-            int varNum = ((Integer)varList.get(varListIndex)).intValue();
+            int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState( varNum );
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState+"  label: "+var.label());
@@ -689,7 +689,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no variables needing read, try CVs
         while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
+            int cvNum = cvList.get(cvListIndex).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
@@ -711,7 +711,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no CVs needing read, try indexed CVs
         while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
                 "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
@@ -759,7 +759,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextConfirm() {
         // look for possible CVs
         while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
+            int cvNum = cvList.get(cvListIndex).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextConfirm cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
@@ -780,7 +780,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no CVs needing read, try indexed CVs
         while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
                 "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
@@ -869,7 +869,7 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("start nextWrite");
         // look for possible variables
         while ((varList.size() >= 0) && (varListIndex < varList.size())){
-            int varNum = ((Integer)varList.get(varListIndex)).intValue();
+            int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState( varNum );
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+VariableValue.stateNameFromValue(vState)
@@ -886,7 +886,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // check for CVs to handle (e.g. for CV table)
         while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
+            int cvNum = cvList.get(cvListIndex).intValue();
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
@@ -907,7 +907,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
         while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
                 "nextWrite indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
@@ -1659,7 +1659,7 @@ public class PaneProgPane extends javax.swing.JPanel
             Vector<String> printedVariables = new Vector<String>(10,5);
             // index over variables
             for (int i=0; i<varList.size(); i++) {
-                int varNum = ((Integer)varList.get(i)).intValue();
+                int varNum = varList.get(i).intValue();
                 VariableValue var = _varModel.getVariable(varNum);
                 String name = var.label();
                 if (name == null) name = var.item();
@@ -1848,7 +1848,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // get each CV and value
               for (int i = 0; i < cvList.size(); i++) {
 
-                int cvNum = ( (Integer) cvList.get(i)).intValue();
+                int cvNum = cvList.get(i).intValue();
                 CvValue cv = _cvModel.getCvByRow(cvNum);
 
                 int num = cv.number();

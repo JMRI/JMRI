@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Represents the contents of a single slot in the LocoNet command station.
@@ -29,7 +30,7 @@ import java.util.Vector;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class LocoNetSlot {
 
@@ -291,36 +292,36 @@ public class LocoNetSlot {
     private long lastUpdateTime ; // Time of last update for detecting stale slots
 
     // data members to hold contact with the slot listeners
-    final private Vector slotListeners = new Vector();
+    final private List<SlotListener> slotListeners = new ArrayList<SlotListener>();
 
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
         if (!slotListeners.contains(l)) {
-            slotListeners.addElement(l);
+            slotListeners.add(l);
         }
     }
 
     public synchronized void removeSlotListener(SlotListener l) {
         if (slotListeners.contains(l)) {
-            slotListeners.removeElement(l);
+            slotListeners.remove(l);
         }
     }
 
     public long getLastUpdateTime() { return lastUpdateTime ; }
 
     protected void notifySlotListeners() {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        // make a copy of the listener list to synchronized not needed for transmit
+        List<SlotListener> v;
         synchronized(this)
             {
-                v = (Vector) slotListeners.clone();
+                v = new ArrayList<SlotListener>(slotListeners);
             }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" SlotListeners");
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            SlotListener client = (SlotListener) v.elementAt(i);
+            SlotListener client = v.get(i);
             client.notifyChangedSlot(this);
         }
     }
