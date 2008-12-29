@@ -2,19 +2,13 @@
 
 package jmri.jmrix.nce.consist;
 
-import jmri.DccLocoAddress;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import jmri.util.davidflanagan.HardcopyWriter;
 
+import jmri.util.davidflanagan.HardcopyWriter;
 
 import org.jdom.Element;
 
@@ -37,7 +31,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see NceConsistRoster
  * 
  */
@@ -311,13 +305,6 @@ public class NceConsistRosterEntry {
     }
  
     /**
-     * Store the root element of the JDOM tree representing this
-     * RosterEntry.
-     */
-    private Element mRootElement = null;
-
-  
-    /**
      *Prints the roster information. Updated to allow for multiline
      *comment field.
      *Created separate write statements for text and line feeds to work
@@ -431,7 +418,7 @@ public class NceConsistRosterEntry {
       // Tokenize the string using \n to separate the text on mulitple lines
       // and create a vector to hold the processed text pieces
       StringTokenizer commentTokens = new StringTokenizer (comment,"\n",true);
-      Vector textVector = new Vector(commentTokens.countTokens());
+      Vector<String> textVector = new Vector<String>(commentTokens.countTokens());
       String newLine = "\n";
       while (commentTokens.hasMoreTokens())
       {

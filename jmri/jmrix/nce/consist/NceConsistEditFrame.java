@@ -2,19 +2,30 @@
 
 package jmri.jmrix.nce.consist;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import jmri.DccLocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.nce.*;
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceTrafficController;
 
 /**
  * Frame for user edit of NCE Consists
@@ -44,7 +55,7 @@ import java.util.List;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -128,100 +139,99 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private int emptyConsistSearchStart = CONSIST_MAX;	// where to begin search for empty consist
 	
 	private int consistCount = 0; 					// search count not to exceed CONSIST_MAX
-	private boolean consistModified = false; 		// when true, consist has been modified by user
 
 	private boolean refresh = false; 				// when true, refresh loco info from CS
 
 	// member declarations
-	javax.swing.JLabel textConsist = new javax.swing.JLabel();
-	javax.swing.JLabel textStatus = new javax.swing.JLabel();
-	javax.swing.JLabel consistStatus = new javax.swing.JLabel();
+	JLabel textConsist = new JLabel();
+	JLabel textStatus = new JLabel();
+	JLabel consistStatus = new JLabel();
 
 	// major buttons
-	javax.swing.JButton previousButton = new javax.swing.JButton();
-	javax.swing.JButton nextButton = new javax.swing.JButton();
-	javax.swing.JButton getButton = new javax.swing.JButton();
-	javax.swing.JButton throttleButton = new javax.swing.JButton();
-	javax.swing.JButton clearCancelButton = new javax.swing.JButton();
-	javax.swing.JButton saveLoadButton = new javax.swing.JButton();
-	javax.swing.JButton deleteButton = new javax.swing.JButton();
-	javax.swing.JButton backUpButton = new javax.swing.JButton();
-	javax.swing.JButton restoreButton = new javax.swing.JButton();
+	JButton previousButton = new JButton();
+	JButton nextButton = new JButton();
+	JButton getButton = new JButton();
+	JButton throttleButton = new JButton();
+	JButton clearCancelButton = new JButton();
+	JButton saveLoadButton = new JButton();
+	JButton deleteButton = new JButton();
+	JButton backUpButton = new JButton();
+	JButton restoreButton = new JButton();
 
 	// check boxes
-	javax.swing.JCheckBox checkBoxEmpty = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox checkBoxVerify = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox checkBoxConsist = new javax.swing.JCheckBox();
+	JCheckBox checkBoxEmpty = new JCheckBox();
+	JCheckBox checkBoxVerify = new JCheckBox();
+	JCheckBox checkBoxConsist = new JCheckBox();
 
 	// consist text field
-	javax.swing.JTextField consistTextField = new javax.swing.JTextField(4);
+	JTextField consistTextField = new JTextField(4);
 
 	// labels
-	javax.swing.JLabel textLocomotive = new javax.swing.JLabel();
-	javax.swing.JLabel textRoster = new javax.swing.JLabel();
-	javax.swing.JLabel textAddress = new javax.swing.JLabel();
-	javax.swing.JLabel textAddrType = new javax.swing.JLabel();
-	javax.swing.JLabel textDirection = new javax.swing.JLabel();
+	JLabel textLocomotive = new JLabel();
+	JLabel textRoster = new JLabel();
+	JLabel textAddress = new JLabel();
+	JLabel textAddrType = new JLabel();
+	JLabel textDirection = new JLabel();
 
-	javax.swing.JLabel textConRoster = new javax.swing.JLabel();
-	javax.swing.JLabel textConRoadName = new javax.swing.JLabel();
-	javax.swing.JLabel textConRoadNumber = new javax.swing.JLabel();
-	javax.swing.JLabel textConModel = new javax.swing.JLabel();
+	JLabel textConRoster = new JLabel();
+	JLabel textConRoadName = new JLabel();
+	JLabel textConRoadNumber = new JLabel();
+	JLabel textConModel = new JLabel();
 	
-	javax.swing.JComboBox conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
+	JComboBox conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 
 	// lead loco
-	javax.swing.JLabel textLoco1 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField1 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox1 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton1 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton1 = new javax.swing.JButton();
-	javax.swing.JButton dirButton1 = new javax.swing.JButton();
+	JLabel textLoco1 = new JLabel();
+	JTextField locoTextField1 = new JTextField(4);
+	JComboBox locoRosterBox1 = Roster.instance().fullRosterComboBox();
+	JButton adrButton1 = new JButton();
+	JButton cmdButton1 = new JButton();
+	JButton dirButton1 = new JButton();
 
 	// rear loco
-	javax.swing.JLabel textLoco2 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField2 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox2 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton2 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton2 = new javax.swing.JButton();
-	javax.swing.JButton dirButton2 = new javax.swing.JButton();
+	JLabel textLoco2 = new JLabel();
+	JTextField locoTextField2 = new JTextField(4);
+	JComboBox locoRosterBox2 = Roster.instance().fullRosterComboBox();
+	JButton adrButton2 = new JButton();
+	JButton cmdButton2 = new JButton();
+	JButton dirButton2 = new JButton();
 
 	// mid loco
-	javax.swing.JLabel textLoco3 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField3 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox3 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton3 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton3 = new javax.swing.JButton();
-	javax.swing.JButton dirButton3 = new javax.swing.JButton();
+	JLabel textLoco3 = new JLabel();
+	JTextField locoTextField3 = new JTextField(4);
+	JComboBox locoRosterBox3 = Roster.instance().fullRosterComboBox();
+	JButton adrButton3 = new JButton();
+	JButton cmdButton3 = new JButton();
+	JButton dirButton3 = new JButton();
 
 	// mid loco
-	javax.swing.JLabel textLoco4 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField4 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox4 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton4 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton4 = new javax.swing.JButton();
-	javax.swing.JButton dirButton4 = new javax.swing.JButton();
+	JLabel textLoco4 = new JLabel();
+	JTextField locoTextField4 = new JTextField(4);
+	JComboBox locoRosterBox4 = Roster.instance().fullRosterComboBox();
+	JButton adrButton4 = new JButton();
+	JButton cmdButton4 = new JButton();
+	JButton dirButton4 = new JButton();
 
 	// mid loco
-	javax.swing.JLabel textLoco5 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField5 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox5 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton5 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton5 = new javax.swing.JButton();
-	javax.swing.JButton dirButton5 = new javax.swing.JButton();
+	JLabel textLoco5 = new JLabel();
+	JTextField locoTextField5 = new JTextField(4);
+	JComboBox locoRosterBox5 = Roster.instance().fullRosterComboBox();
+	JButton adrButton5 = new JButton();
+	JButton cmdButton5 = new JButton();
+	JButton dirButton5 = new JButton();
 
 	// mid loco
-	javax.swing.JLabel textLoco6 = new javax.swing.JLabel();
-	javax.swing.JTextField locoTextField6 = new javax.swing.JTextField(4);
-	javax.swing.JComboBox locoRosterBox6 = Roster.instance().fullRosterComboBox();
-	javax.swing.JButton adrButton6 = new javax.swing.JButton();
-	javax.swing.JButton cmdButton6 = new javax.swing.JButton();
-	javax.swing.JButton dirButton6 = new javax.swing.JButton();
+	JLabel textLoco6 = new JLabel();
+	JTextField locoTextField6 = new JTextField(4);
+	JComboBox locoRosterBox6 = Roster.instance().fullRosterComboBox();
+	JButton adrButton6 = new JButton();
+	JButton cmdButton6 = new JButton();
+	JButton dirButton6 = new JButton();
 
 	public NceConsistEditFrame() {
 		super();

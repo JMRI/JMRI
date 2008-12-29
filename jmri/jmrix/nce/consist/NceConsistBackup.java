@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 
@@ -52,13 +52,12 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
 	private static int replyLen = 0;				// expected byte length
 	private static int waiting = 0;					// to catch responses not intended for this module
-	private static boolean secondRead = false;		// when true, another 16 byte read expected
 	private static boolean fileValid = false;		// used to flag backup status messages
 	
 	private static byte[] nceConsistData = new byte [CONSIST_LNTH];
 	
-	javax.swing.JLabel textConsist = new javax.swing.JLabel();
-	javax.swing.JLabel consistNumber = new javax.swing.JLabel();
+	JLabel textConsist = new JLabel();
+	JLabel consistNumber = new JLabel();
 	
 	public void run() {
 

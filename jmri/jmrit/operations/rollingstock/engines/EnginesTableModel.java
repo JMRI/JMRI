@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -169,7 +169,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case NUMCOLUMN: return String.class;
         case ROADCOLUMN: return String.class;

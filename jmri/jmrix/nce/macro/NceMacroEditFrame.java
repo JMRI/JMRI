@@ -2,12 +2,21 @@
 
 package jmri.jmrix.nce.macro;
 
-import jmri.jmrix.nce.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
-import java.awt.*;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
-import java.io.*;
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceTrafficController;
 
 /**
  * Frame for user edit of NCE macros
@@ -56,7 +65,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -90,98 +99,98 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	private boolean macroModified = false;		// when true, macro has been modified by user
 	
 	// member declarations
-    javax.swing.JLabel textMacro = new javax.swing.JLabel();
-    javax.swing.JLabel textReply = new javax.swing.JLabel();
-    javax.swing.JLabel macroReply = new javax.swing.JLabel();
+    JLabel textMacro = new JLabel();
+    JLabel textReply = new JLabel();
+    JLabel macroReply = new JLabel();
     
     // major buttons
-    javax.swing.JButton previousButton = new javax.swing.JButton();
-    javax.swing.JButton nextButton = new javax.swing.JButton();
-    javax.swing.JButton getButton = new javax.swing.JButton();
-    javax.swing.JButton saveButton = new javax.swing.JButton();
-    javax.swing.JButton backUpButton = new javax.swing.JButton();
-    javax.swing.JButton restoreButton = new javax.swing.JButton();
+    JButton previousButton = new JButton();
+    JButton nextButton = new JButton();
+    JButton getButton = new JButton();
+    JButton saveButton = new JButton();
+    JButton backUpButton = new JButton();
+    JButton restoreButton = new JButton();
     
     // check boxes
-    javax.swing.JCheckBox checkBoxEmpty = new javax.swing.JCheckBox ();
-    javax.swing.JCheckBox checkBoxNce = new javax.swing.JCheckBox ();
+    JCheckBox checkBoxEmpty = new JCheckBox ();
+    JCheckBox checkBoxNce = new JCheckBox ();
     
     // macro text field
-    javax.swing.JTextField macroTextField = new javax.swing.JTextField(4);
+    JTextField macroTextField = new JTextField(4);
     
     // for padding out panel
-    javax.swing.JLabel space1 = new javax.swing.JLabel();
-    javax.swing.JLabel space2 = new javax.swing.JLabel();
+    JLabel space1 = new JLabel();
+    JLabel space2 = new JLabel();
     
     // accessory row 1
-    javax.swing.JLabel num1 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy1 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField1 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton1 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton1 = new javax.swing.JButton();
+    JLabel num1 = new JLabel();
+    JLabel textAccy1 = new JLabel();
+    JTextField accyTextField1 = new JTextField(4);
+    JButton cmdButton1 = new JButton();
+    JButton deleteButton1 = new JButton();
     
     //  accessory row 2
-    javax.swing.JLabel num2 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy2 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField2 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton2 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton2 = new javax.swing.JButton();
+    JLabel num2 = new JLabel();
+    JLabel textAccy2 = new JLabel();
+    JTextField accyTextField2 = new JTextField(4);
+    JButton cmdButton2 = new JButton();
+    JButton deleteButton2 = new JButton();
     
     //  accessory row 3
-    javax.swing.JLabel num3 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy3 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField3 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton3 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton3 = new javax.swing.JButton();	
+    JLabel num3 = new JLabel();
+    JLabel textAccy3 = new JLabel();
+    JTextField accyTextField3 = new JTextField(4);
+    JButton cmdButton3 = new JButton();
+    JButton deleteButton3 = new JButton();	
     
     //  accessory row 4
-    javax.swing.JLabel num4 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy4 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField4 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton4 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton4 = new javax.swing.JButton();	
+    JLabel num4 = new JLabel();
+    JLabel textAccy4 = new JLabel();
+    JTextField accyTextField4 = new JTextField(4);
+    JButton cmdButton4 = new JButton();
+    JButton deleteButton4 = new JButton();	
     
     //  accessory row 5
-    javax.swing.JLabel num5 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy5 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField5 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton5 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton5 = new javax.swing.JButton();	
+    JLabel num5 = new JLabel();
+    JLabel textAccy5 = new JLabel();
+    JTextField accyTextField5 = new JTextField(4);
+    JButton cmdButton5 = new JButton();
+    JButton deleteButton5 = new JButton();	
     
     //  accessory row 6
-    javax.swing.JLabel num6 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy6 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField6 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton6 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton6 = new javax.swing.JButton();	
+    JLabel num6 = new JLabel();
+    JLabel textAccy6 = new JLabel();
+    JTextField accyTextField6 = new JTextField(4);
+    JButton cmdButton6 = new JButton();
+    JButton deleteButton6 = new JButton();	
     
     //  accessory row 7
-    javax.swing.JLabel num7 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy7 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField7 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton7 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton7 = new javax.swing.JButton();	
+    JLabel num7 = new JLabel();
+    JLabel textAccy7 = new JLabel();
+    JTextField accyTextField7 = new JTextField(4);
+    JButton cmdButton7 = new JButton();
+    JButton deleteButton7 = new JButton();	
     
     //  accessory row 8
-    javax.swing.JLabel num8 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy8 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField8 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton8 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton8 = new javax.swing.JButton();	
+    JLabel num8 = new JLabel();
+    JLabel textAccy8 = new JLabel();
+    JTextField accyTextField8 = new JTextField(4);
+    JButton cmdButton8 = new JButton();
+    JButton deleteButton8 = new JButton();	
     
     //  accessory row 9
-    javax.swing.JLabel num9 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy9 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField9 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton9 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton9 = new javax.swing.JButton();	
+    JLabel num9 = new JLabel();
+    JLabel textAccy9 = new JLabel();
+    JTextField accyTextField9 = new JTextField(4);
+    JButton cmdButton9 = new JButton();
+    JButton deleteButton9 = new JButton();	
     
     //  accessory row 10
-    javax.swing.JLabel num10 = new javax.swing.JLabel();
-    javax.swing.JLabel textAccy10 = new javax.swing.JLabel();
-    javax.swing.JTextField accyTextField10 = new javax.swing.JTextField(4);
-    javax.swing.JButton cmdButton10 = new javax.swing.JButton();
-    javax.swing.JButton deleteButton10 = new javax.swing.JButton();	
+    JLabel num10 = new JLabel();
+    JLabel textAccy10 = new JLabel();
+    JTextField accyTextField10 = new JTextField(4);
+    JButton cmdButton10 = new JButton();
+    JButton deleteButton10 = new JButton();	
     
     public NceMacroEditFrame() {
         super();

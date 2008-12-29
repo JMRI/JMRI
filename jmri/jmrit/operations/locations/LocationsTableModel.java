@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -114,7 +114,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;

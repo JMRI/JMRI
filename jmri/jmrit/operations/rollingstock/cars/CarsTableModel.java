@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -170,7 +170,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case NUMCOLUMN: return String.class;
         case ROADCOLUMN: return String.class;

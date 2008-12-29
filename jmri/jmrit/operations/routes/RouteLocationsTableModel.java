@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -125,7 +125,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;

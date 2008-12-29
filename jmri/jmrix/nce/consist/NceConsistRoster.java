@@ -2,16 +2,15 @@
 
 package jmri.jmrix.nce.consist;
 
-import jmri.jmrit.roster.Roster;
-
-import jmri.jmrit.XmlFile;
 import java.io.File;
-
-import javax.swing.*;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Hashtable;
+
+import javax.swing.JComboBox;
+
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.roster.Roster;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -43,7 +42,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -162,17 +161,17 @@ public class NceConsistRoster extends XmlFile {
     /**
      * List of contained RosterEntry elements.
      */
-    protected List _list = new ArrayList();
+    protected List<NceConsistRosterEntry> _list = new ArrayList<NceConsistRosterEntry>();
 
     /**
      *	Get a List of entries matching some information. The list may have
      *  null contents.
      */
-    public List matchingList(String roadName, String roadNumber,
+    public List<NceConsistRosterEntry> matchingList(String roadName, String roadNumber,
 			String consistNumber, String eng1Address, String eng2Address,
 			String eng3Address, String eng4Address, String eng5Address,
 			String eng6Address, String id) {
-		List l = new ArrayList();
+		List<NceConsistRosterEntry> l = new ArrayList<NceConsistRosterEntry>();
 		for (int i = 0; i < numEntries(); i++) {
 			if (checkEntry(i, roadName, roadNumber, consistNumber, eng1Address,
 					eng2Address, eng3Address, eng4Address, eng5Address,
@@ -224,7 +223,7 @@ public class NceConsistRoster extends XmlFile {
         Document doc = newDocument(root, dtdLocation+"consist-roster-config.dtd");
 
         // add XSLT processing instruction
-        java.util.Map m = new java.util.HashMap();
+        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation+"consistRoster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
