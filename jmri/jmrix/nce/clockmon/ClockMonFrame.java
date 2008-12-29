@@ -8,7 +8,6 @@ import jmri.TimebaseRateException;
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceUSB;
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -30,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
