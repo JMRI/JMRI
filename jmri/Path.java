@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Path  {
 
@@ -65,7 +65,7 @@ public class Path  {
 		_beans.add(t);
     }
     
-    public List getSettings() {
+    public List<BeanSetting> getSettings() {
 		return _beans;
     }
 	
@@ -183,8 +183,8 @@ public class Path  {
         if (b.length()!=0) b.append(", ");
         b.append(t);
     }
-    
-	private ArrayList _beans = new ArrayList();
+
+	private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;
