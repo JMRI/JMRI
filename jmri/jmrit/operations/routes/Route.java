@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -23,9 +23,10 @@ public class Route implements java.beans.PropertyChangeListener {
 
 	protected String _comment = "";
 	
-	protected Hashtable _routeHashTable = new Hashtable();   // stores location names for this route
-	protected int _IdNumber = 0;							// each location in a route gets its own id
-	protected int _sequenceNum = 0;							// each location has a unique sequence number
+	//	 stores location names for this route
+	protected Hashtable <String, RouteLocation> _routeHashTable = new Hashtable<String, RouteLocation>();   
+	protected int _IdNumber = 0;			// each location in a route gets its own id
+	protected int _sequenceNum = 0;			// each location has a unique sequence number
 
 	public static final int EAST = 1;		// train direction 
 	public static final int WEST = 2;
@@ -174,9 +175,9 @@ public class Route implements java.beans.PropertyChangeListener {
     	return (RouteLocation)_routeHashTable.get(id);
     }
     
-    private List getLocationsByIdList() {
+    private List<String> getLocationsByIdList() {
         String[] arr = new String[_routeHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _routeHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
@@ -192,11 +193,11 @@ public class Route implements java.beans.PropertyChangeListener {
      * Get a list of RouteLocation ids sorted by route order  
      * @return list of RouteLocation ids ordered by sequence
      */
-    public List getLocationsBySequenceList() {
+    public List<String> getLocationsBySequenceList() {
 		// first get id list
-		List sortList = getLocationsByIdList();
+		List<String> sortList = getLocationsByIdList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		int locNum;
 		boolean locAdded = false;
 		RouteLocation rl;

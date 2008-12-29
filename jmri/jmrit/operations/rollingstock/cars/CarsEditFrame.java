@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JMenuBar;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -24,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,62 +40,62 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	Car _car;
 
 	// labels
-	javax.swing.JLabel textRoad = new javax.swing.JLabel();
-	javax.swing.JLabel textRoadNumber = new javax.swing.JLabel();
-	javax.swing.JLabel textColor = new javax.swing.JLabel();
-	javax.swing.JLabel textBuilt = new javax.swing.JLabel();
-	javax.swing.JLabel textLength = new javax.swing.JLabel();
-	javax.swing.JLabel textType = new javax.swing.JLabel();
-	javax.swing.JLabel textWeight = new javax.swing.JLabel();
-	javax.swing.JLabel textWeightTons = new javax.swing.JLabel();
-	javax.swing.JLabel textLocation = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
-	javax.swing.JLabel textKernel = new javax.swing.JLabel();
-	javax.swing.JLabel textOwner = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textRoad = new JLabel();
+	JLabel textRoadNumber = new JLabel();
+	JLabel textColor = new JLabel();
+	JLabel textBuilt = new JLabel();
+	JLabel textLength = new JLabel();
+	JLabel textType = new JLabel();
+	JLabel textWeight = new JLabel();
+	JLabel textWeightTons = new JLabel();
+	JLabel textLocation = new JLabel();
+	JLabel textOptional = new JLabel();
+	JLabel textKernel = new JLabel();
+	JLabel textOwner = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
-	javax.swing.JButton editRoadButton = new javax.swing.JButton();
-	javax.swing.JButton clearRoadNumberButton = new javax.swing.JButton();
-	javax.swing.JButton editTypeButton = new javax.swing.JButton();
-	javax.swing.JButton editColorButton = new javax.swing.JButton();
-	javax.swing.JButton editLengthButton = new javax.swing.JButton();
-	javax.swing.JButton fillWeightButton = new javax.swing.JButton();
-	javax.swing.JButton editKernelButton = new javax.swing.JButton();
-	javax.swing.JButton editOwnerButton = new javax.swing.JButton();
+	JButton editRoadButton = new JButton();
+	JButton clearRoadNumberButton = new JButton();
+	JButton editTypeButton = new JButton();
+	JButton editColorButton = new JButton();
+	JButton editLengthButton = new JButton();
+	JButton fillWeightButton = new JButton();
+	JButton editKernelButton = new JButton();
+	JButton editOwnerButton = new JButton();
 
-	javax.swing.JButton saveButton = new javax.swing.JButton();
-	javax.swing.JButton deleteButton = new javax.swing.JButton();
-	javax.swing.JButton copyButton = new javax.swing.JButton();
-	javax.swing.JButton addButton = new javax.swing.JButton();
+	JButton saveButton = new JButton();
+	JButton deleteButton = new JButton();
+	JButton copyButton = new JButton();
+	JButton addButton = new JButton();
 
 	// check boxes
-	javax.swing.JCheckBox autoCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox cabooseCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox fredCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox hazardousCheckBox = new javax.swing.JCheckBox();
+	JCheckBox autoCheckBox = new JCheckBox();
+	JCheckBox cabooseCheckBox = new JCheckBox();
+	JCheckBox fredCheckBox = new JCheckBox();
+	JCheckBox hazardousCheckBox = new JCheckBox();
 
 	// text field
-	javax.swing.JTextField roadNumberTextField = new javax.swing.JTextField(8);
-	javax.swing.JTextField builtTextField = new javax.swing.JTextField(8);
-	javax.swing.JTextField weightTextField = new javax.swing.JTextField(4);
-	javax.swing.JTextField weightTonsTextField = new javax.swing.JTextField(4);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField roadNumberTextField = new JTextField(8);
+	JTextField builtTextField = new JTextField(8);
+	JTextField weightTextField = new JTextField(4);
+	JTextField weightTonsTextField = new JTextField(4);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 
 	// combo boxes
-	javax.swing.JComboBox roadComboBox = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox typeComboBox = CarTypes.instance().getComboBox();
-	javax.swing.JComboBox colorComboBox = CarColors.instance().getComboBox();
-	javax.swing.JComboBox lengthComboBox = CarLengths.instance().getComboBox();
-	javax.swing.JComboBox ownerComboBox = CarOwners.instance().getComboBox();
-	javax.swing.JComboBox locationBox = locationManager.getComboBox();
-	javax.swing.JComboBox trackLocationBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox kernelComboBox = manager.getKernelComboBox(); 
+	JComboBox roadComboBox = CarRoads.instance().getComboBox();
+	JComboBox typeComboBox = CarTypes.instance().getComboBox();
+	JComboBox colorComboBox = CarColors.instance().getComboBox();
+	JComboBox lengthComboBox = CarLengths.instance().getComboBox();
+	JComboBox ownerComboBox = CarOwners.instance().getComboBox();
+	JComboBox locationBox = locationManager.getComboBox();
+	JComboBox trackLocationBox = new JComboBox();
+	JComboBox kernelComboBox = manager.getKernelComboBox(); 
 
 	public static final String ROAD = rb.getString("Road");
 	public static final String TYPE = rb.getString("Type");

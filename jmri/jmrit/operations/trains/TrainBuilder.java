@@ -1,61 +1,34 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Font;
-import java.awt.Frame;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.text.MessageFormat;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.text.MessageFormat;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-
-
-
-import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
-
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.LocoIcon;
-
-
-import org.jdom.Element;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -187,7 +160,6 @@ public class TrainBuilder extends TrainCommon{
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
 		}
-		int carMoves = requested;
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
 		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(moves)}));
@@ -968,7 +940,6 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private boolean addCarToTrain(PrintWriter file, Car car, RouteLocation rl, RouteLocation rld, Location destination, Track track){
 		if (checkTrainLength(file, car, rl, rld)){
-			int oldNum = moves;
 			// car could be part of a kernel
 			if (car.getKernel()!=null){
 				List kCars = car.getKernel().getCars();

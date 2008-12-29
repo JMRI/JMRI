@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class CarColors implements java.beans.PropertyChangeListener {
 	
@@ -51,7 +51,7 @@ public class CarColors implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
-    List list = new ArrayList();
+    List<String> list = new ArrayList<String>();
     
     public String[] getNames(){
      	if (list.size() == 0){

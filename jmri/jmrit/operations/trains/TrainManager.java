@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -94,8 +94,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void dispose() {
         _trainHashTable.clear();
     }
-
-    protected Hashtable _trainHashTable = new Hashtable();   // stores known Train instances by id
+	
+	//	 stores known Train instances by id
+    protected Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();   
 
     /**
      * @return requested Train object or null if none exists
@@ -200,7 +201,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		// first get id list
 		List sortList = getList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		String trainName = "";
 		boolean trainAdded = false;
 		Train train;
@@ -213,13 +214,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				train = getTrainById((String) out.get(j));
 				String outTrainName = train.getName();
 				if (trainName.compareToIgnoreCase(outTrainName) < 0) {
-					out.add(j, sortList.get(i));
+					out.add(j,(String)sortList.get(i));
 					trainAdded = true;
 					break;
 				}
 			}
 			if (!trainAdded) {
-				out.add(sortList.get(i));
+				out.add((String)sortList.get(i));
 			}
 		}
 		return out;
@@ -234,7 +235,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		// first get train by name list
 		List sortList = getTrainsByNameList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		int trainTime;
 		int outTrainTime;
 		boolean trainAdded = false;
@@ -248,13 +249,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				train = getTrainById((String) out.get(j));
 				outTrainTime = train.getDepartTimeMinutes();
 				if (trainTime < outTrainTime) {
-					out.add(j, sortList.get(i));
+					out.add(j,(String)sortList.get(i));
 					trainAdded = true;
 					break;
 				}
 			}
 			if (!trainAdded) {
-				out.add(sortList.get(i));
+				out.add((String)sortList.get(i));
 			}
 		}
 		return out;
@@ -270,7 +271,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	// first get id list
     	List sortList = getList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	int trainNumber = 0;
     	boolean trainAdded = false;
     	Train train;
@@ -288,7 +289,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         		try{
         			int outTrainNumber = Integer.parseInt (train.getId());
         			if (trainNumber < outTrainNumber){
-        				out.add(j, sortList.get(i));
+        				out.add(j,(String)sortList.get(i));
         				trainAdded = true;
         				break;
         			}
@@ -297,7 +298,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         		}
     		}
     		if (!trainAdded){
-    			out.add( sortList.get(i));
+    			out.add((String)sortList.get(i));
     		}
     	}
         return out;
@@ -307,7 +308,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		if (!trainsloaded)
 			log.error("TrainManager getList called before trains completely loaded!");
         String[] arr = new String[_trainHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _trainHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {

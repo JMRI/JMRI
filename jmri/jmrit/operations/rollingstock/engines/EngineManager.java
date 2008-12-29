@@ -21,13 +21,13 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
 	LocationManager locationManager = LocationManager.instance();
-	protected Hashtable _engineHashTable = new Hashtable();   		// stores Engines by id
-	protected Hashtable _consistHashTable = new Hashtable();   	// stores Kernels by number
+	protected Hashtable<String, Engine> _engineHashTable = new Hashtable<String, Engine>();   		// stores Engines by id
+	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
 
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "EngineListLength";
 	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
@@ -160,9 +160,9 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	}
     }
     
-    public List getConsistNameList(){
+    public List<String> getConsistNameList(){
     	String[] arr = new String[_consistHashTable.size()];
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
        	Enumeration en = _consistHashTable.keys();
        	int i=0;
     	while (en.hasMoreElements()) {
@@ -178,9 +178,9 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine id
      * @return list of engine ids ordered by id
      */
-    public List getEnginesByIdList() {
+    public List<String> getEnginesByIdList() {
         String[] arr = new String[_engineHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _engineHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
@@ -196,12 +196,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine road name
      * @return list of engine ids ordered by road name
      */
-    public List getEnginesByRoadNameList() {
+    public List<String> getEnginesByRoadNameList() {
        	// first get by id list
     	List sortById = getEnginesByIdList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String engineRoad = "";
     	boolean engineAdded = false;
     	Engine engine;
@@ -214,13 +214,13 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			engine = getEngineById ((String)out.get(j));
     			String outEngineRoad = engine.getRoad();
     			if (engineRoad.compareToIgnoreCase(outEngineRoad)<0){
-    				out.add(j, sortById.get(i));
+    				out.add(j, (String)sortById.get(i));
     				engineAdded = true;
     				break;
     			}
     		}
     		if (!engineAdded){
-    			out.add(sortById.get(i));
+    			out.add((String)sortById.get(i));
     		}
     	}
     	return out;
@@ -231,11 +231,11 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine number, number can alpha numeric
      * @return list of engine ids ordered by number
      */
-    public List getEnginesByNumberList() {
+    public List<String> getEnginesByNumberList() {
     	// first get by road list
     	List sortByRoad = getEnginesByRoadNameList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	int engineNumber = 0;
     	boolean engineAdded = false;
     	Engine engine;
@@ -253,7 +253,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
         		try{
         			int outEngineNumber = Integer.parseInt (engine.getNumber());
         			if (engineNumber < outEngineNumber){
-        				out.add(j, sortByRoad.get(i));
+        				out.add(j, (String)sortByRoad.get(i));
         				engineAdded = true;
         				break;
         			}
@@ -262,7 +262,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
         		}
     		}
     		if (!engineAdded){
-    			out.add( sortByRoad.get(i));
+    			out.add((String)sortByRoad.get(i));
     		}
     	}
         return out;
@@ -272,12 +272,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine type
      * @return list of engine ids ordered by engine type
      */
-    public List getEnginesByTypeList() {
+    public List<String> getEnginesByTypeList() {
     	// first get by road list
-    	List sortByRoad = getEnginesByRoadNameList();
+    	List<String> sortByRoad = getEnginesByRoadNameList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String engineModel = "";
     	boolean engineAdded = false;
     	Engine engine;
@@ -306,12 +306,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine consist
      * @return list of engine ids ordered by engine consist
      */
-    public List getEnginesByConsistList() {
+    public List<String> getEnginesByConsistList() {
     	// first get by road list
-    	List sortByRoad = getEnginesByRoadNameList();
+    	List<String> sortByRoad = getEnginesByRoadNameList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String engineConsistName = "";
     	boolean engineAdded = false;
     	Engine engine;
@@ -341,12 +341,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine location
      * @return list of engine ids ordered by engine location
      */
-    public List getEnginesByLocationList() {
+    public List<String> getEnginesByLocationList() {
     	// first get by road list
-    	List sortByRoad = getEnginesByRoadNameList();
+    	List<String> sortByRoad = getEnginesByRoadNameList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String engineLocation = "";
     	boolean engineAdded = false;
     	Engine engine;
@@ -375,21 +375,21 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine destination
      * @return list of engine ids ordered by engine destination
      */
-    public List getEnginesByDestinationList() {
+    public List<String> getEnginesByDestinationList() {
     	// first get by location list
-    	List sortByLocation = getEnginesByLocationList();
+    	List<String> sortByLocation = getEnginesByLocationList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String engineDestination = "";
     	boolean engineAdded = false;
     	Engine engine;
 
-    	for (int i = 0; i < sortByLocation.size(); i++) {
+    	for (int i=0; i<sortByLocation.size(); i++) {
 			engineAdded = false;
 			engine = getEngineById((String) sortByLocation.get(i));
 			engineDestination = engine.getDestinationName()+engine.getDestinationTrackName();
-			for (int j = 0; j < out.size(); j++) {
+			for (int j=0; j<out.size(); j++) {
 				engine = getEngineById((String) out.get(j));
 				String outEngineDestination = engine.getDestinationName()+engine.getDestinationTrackName();
 				if (engineDestination.compareToIgnoreCase(outEngineDestination) < 0 ) {
@@ -409,12 +409,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engines in trains
      * @return list of engine ids ordered by trains
      */
-    public List getEnginesByTrainList() {
+    public List<String> getEnginesByTrainList() {
     	// first get by road list
     	List sortByRoad = getEnginesByLocationList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
      	boolean engineAdded = false;
     	Engine engine;
 
@@ -430,13 +430,13 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			if(engine.getTrain() != null)
     				outEngineTrainName = engine.getTrain().getName();
     			if (engineTrainName.compareToIgnoreCase(outEngineTrainName)<0){
-    				out.add(j, sortByRoad.get(i));
+    				out.add(j,(String)sortByRoad.get(i));
     				engineAdded = true;
     				break;
     			}
     		}
     		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
+    			out.add((String)sortByRoad.get(i));
     		}
     	}
     	return out;
@@ -446,12 +446,12 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engines moves
      * @return list of engine ids ordered by engine moves
      */
-    public List getEnginesByMovesList() {
+    public List<String> getEnginesByMovesList() {
     	// first get by road list
     	List sortByRoad = getEnginesByRoadNameList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
      	boolean engineAdded = false;
     	Engine engine;
 
@@ -459,17 +459,17 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		engineAdded = false;
     		engine = getEngineById ((String)sortByRoad.get(i));
 				int inMoves = engine.getMoves();
-				for (int j = 0; j < out.size(); j++) {
+				for (int j=0; j<out.size(); j++) {
 					engine = getEngineById((String) out.get(j));
 					int outMoves = engine.getMoves();
 					if (inMoves < outMoves) {
-						out.add(j, sortByRoad.get(i));
+						out.add(j,(String)sortByRoad.get(i));
 						engineAdded = true;
 						break;
 					}
 				}
      		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
+    			out.add((String)sortByRoad.get(i));
     		}
     	}
     	return out;
@@ -483,10 +483,10 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	 * @param train
 	 * @return Ordered list of engines not assigned to a train
 	 */
-    public List getEnginesAvailableTrainList(Train train) {
+    public List<String> getEnginesAvailableTrainList(Train train) {
     	Route route = train.getRoute();
     	// get a list of locations served by this route
-    	List routeList = route.getLocationsBySequenceList();
+    	List<String> routeList = route.getLocationsBySequenceList();
     	// don't include engines at route destination
     	RouteLocation destination = null;
     	if (routeList.size()>1){
@@ -502,9 +502,9 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		}
     	}
     	// get engines by number list
-    	List enginesSortByNum = getEnginesByNumberList();
+    	List<String> enginesSortByNum = getEnginesByNumberList();
     	// now build list of available engines for this route
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	boolean engineAdded = false;
     	Engine engine;
  
@@ -539,10 +539,10 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	 * @param train
 	 * @return Ordered list of assigned engines
 	 */
-    public List getEnginesByTrainList(Train train) {
+    public List<String> getEnginesByTrainList(Train train) {
     	// get engines available list
-    	List available = getEnginesAvailableTrainList(train);
-    	List inTrain = new ArrayList();
+    	List<String> available = getEnginesAvailableTrainList(train);
+    	List<String> inTrain = new ArrayList<String>();
     	Engine engine;
 
     	for (int i = 0; i < available.size(); i++) {
@@ -552,7 +552,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			inTrain.add(available.get(i));
     	}
     	// now sort by track destination
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	boolean engineAdded;
     	boolean lastEngineAdded = false;	// true if caboose or engine with FRED added to train 
     	for (int i = 0; i < inTrain.size(); i++) {

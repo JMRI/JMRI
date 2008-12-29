@@ -23,13 +23,13 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
 	LocationManager locationManager = LocationManager.instance();
-	protected Hashtable _carHashTable = new Hashtable();   		// stores Cars by id
-	protected Hashtable _kernelHashTable = new Hashtable();   	// stores Kernels by number
+	protected Hashtable<String, Car> _carHashTable = new Hashtable<String, Car>();   		// stores Cars by id
+	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
 
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "CarListLength";
 	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
@@ -189,9 +189,9 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Get a list of kernel names
      * @return ordered list of kernel names
      */
-    public List getKernelNameList(){
+    public List<String> getKernelNameList(){
     	String[] arr = new String[_kernelHashTable.size()];
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
        	Enumeration en = _kernelHashTable.keys();
        	int i=0;
     	while (en.hasMoreElements()) {
@@ -207,9 +207,9 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car id
      * @return list of car ids ordered by id
      */
-    public List getCarsByIdList() {
+    public List<String> getCarsByIdList() {
         String[] arr = new String[_carHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _carHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
@@ -225,11 +225,11 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car road name
      * @return list of car ids ordered by road name
      */
-    public List getCarsByRoadNameList() {
+    public List<String> getCarsByRoadNameList() {
       	// first get by id list
     	List sortById = getCarsByIdList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String carRoad = "";
     	boolean carAdded = false;
     	Car c;
@@ -242,13 +242,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			c = getCarById ((String)out.get(j));
     			String outCarRoad = c.getRoad();
     			if (carRoad.compareToIgnoreCase(outCarRoad)<0){
-    				out.add(j, sortById.get(i));
+    				out.add(j, (String)sortById.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			out.add(sortById.get(i));
+    			out.add((String)sortById.get(i));
     		}
     	}
     	return out;
@@ -258,11 +258,11 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car number, number can alpha numeric
      * @return list of car ids ordered by number
      */
-    public List getCarsByNumberList() {
+    public List<String> getCarsByNumberList() {
     	// first get by road list
     	List sortByRoad = getCarsByRoadNameList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	int carNumber = 0;
     	boolean carAdded = false;
     	Car c;
@@ -280,7 +280,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
         		try{
         			int outCarNumber = Integer.parseInt (c.getNumber());
         			if (carNumber < outCarNumber){
-        				out.add(j, sortByRoad.get(i));
+        				out.add(j, (String)sortByRoad.get(i));
         				carAdded = true;
         				break;
         			}
@@ -289,7 +289,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
         		}
     		}
     		if (!carAdded){
-    			out.add( sortByRoad.get(i));
+    			out.add((String) sortByRoad.get(i));
     		}
     	}
         return out;
@@ -299,12 +299,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car type names
      * @return list of car ids ordered by car type
      */
-    public List getCarsByTypeList() {
+    public List<String> getCarsByTypeList() {
     	// first get by number list
     	List sortByNumber = getCarsByNumberList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String carType = "";
     	boolean carAdded = false;
     	Car c;
@@ -317,13 +317,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			c = getCarById ((String)out.get(j));
     			String outCarType = c.getType();
     			if (carType.compareToIgnoreCase(outCarType)<0){
-    				out.add(j, sortByNumber.get(i));
+    				out.add(j, (String)sortByNumber.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			out.add(sortByNumber.get(i));
+    			out.add((String)sortByNumber.get(i));
     		}
     	}
     	return out;
@@ -333,12 +333,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car kernel names
      * @return list of car ids ordered by car kernel
      */
-    public List getCarsByKernelList() {
+    public List<String> getCarsByKernelList() {
     	// first get by number list
     	List sortByNumber = getCarsByNumberList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String carKernelName = "";
     	boolean carAdded = false;
     	Car c;
@@ -351,13 +351,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			c = getCarById ((String)out.get(j));
     			String outCarKernelName = c.getKernelName();
     			if (carKernelName.compareToIgnoreCase(outCarKernelName)<0){
-    				out.add(j, sortByNumber.get(i));
+    				out.add(j, (String)sortByNumber.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			out.add(sortByNumber.get(i));
+    			out.add((String)sortByNumber.get(i));
     		}
     	}
     	return out;
@@ -368,12 +368,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car location
      * @return list of car ids ordered by car location
      */
-    public List getCarsByLocationList() {
+    public List<String> getCarsByLocationList() {
     	// first get by number list
-    	List sortByNumber = getCarsByNumberList();
+    	List<String> sortByNumber = getCarsByNumberList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String carLocation = "";
     	boolean carAdded = false;
     	Car c;
@@ -386,13 +386,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			c = getCarById ((String)out.get(j));
     			String outCarLocation = c.getLocationName()+c.getTrackName();
     			if (carLocation.compareToIgnoreCase(outCarLocation)<0){
-    				out.add(j, sortByNumber.get(i));
+    				out.add(j, (String)sortByNumber.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			out.add(sortByNumber.get(i));
+    			out.add((String)sortByNumber.get(i));
     		}
     	}
     	return out;
@@ -402,12 +402,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car destination
      * @return list of car ids ordered by car destination
      */
-    public List getCarsByDestinationList() {
+    public List<String> getCarsByDestinationList() {
     	// first get by location list
     	List sortByLocation = getCarsByLocationList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	String carDestination = "";
     	boolean carAdded = false;
     	Car c;
@@ -420,13 +420,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
 				c = getCarById((String) out.get(j));
 				String outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
 				if (carDestination.compareToIgnoreCase(outCarDestination) < 0 ) {
-					out.add(j, sortByLocation.get(i));
+					out.add(j, (String)sortByLocation.get(i));
 					carAdded = true;
 					break;
 				}
 			}
 			if (!carAdded) {
-				out.add(sortByLocation.get(i));
+				out.add((String)sortByLocation.get(i));
     		}
     	}
     	return out;
@@ -441,7 +441,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	List sortByLocation = getCarsByLocationList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
      	boolean carAdded = false;
     	Car c;
 
@@ -457,13 +457,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			if(c.getTrain() != null)
     				outCarTrainName = c.getTrain().getName();
     			if (carTrainName.compareToIgnoreCase(outCarTrainName)<0){
-    				out.add(j, sortByLocation.get(i));
+    				out.add(j, (String)sortByLocation.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			out.add(sortByLocation.get(i));
+    			out.add((String)sortByLocation.get(i));
     		}
     	}
     	return out;
@@ -473,12 +473,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Sort by car moves
      * @return list of car ids ordered by car moves
      */
-    public List getCarsByMovesList() {
+    public List<String> getCarsByMovesList() {
     	// first get by road list
-    	List sortByRoad = getCarsByRoadNameList();
+    	List<String> sortByRoad = getCarsByRoadNameList();
 
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
      	boolean carAdded = false;
     	Car c;
 
@@ -490,13 +490,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
 					c = getCarById((String) out.get(j));
 					int outMoves = c.getMoves();
 					if (inMoves < outMoves) {
-						out.add(j, sortByRoad.get(i));
+						out.add(j, (String)sortByRoad.get(i));
 						carAdded = true;
 						break;
 					}
 				}
      		if (!carAdded){
-    			out.add(sortByRoad.get(i));
+    			out.add((String)sortByRoad.get(i));
     		}
     	}
     	return out;
@@ -512,7 +512,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	 * @return List of cars with no assigned train on a route
 	 */
     public List getCarsAvailableTrainList(Train train) {
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	Route route = train.getRoute();
     	if (route == null)
     		return out;
@@ -541,7 +541,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		RouteLocation rl = route.getLocationByName(car.getLocationName());
     		// get cars that don't have an assigned train, or the assigned train is this one 
     		if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))){
-    			out.add(carsSortByMoves.get(i));
+    			out.add((String)carsSortByMoves.get(i));
     		}
     	}
     	return out;
@@ -559,7 +559,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	Car car;
 
      	// now sort by track destination
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	boolean carAdded;
     	boolean lastCarAdded = false;	// true if caboose or car with FRED added to train 
     	for (int i = 0; i < inTrain.size(); i++) {
@@ -570,16 +570,16 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			Car carOut = getCarById ((String)out.get(j));
     			String carOutDest = carOut.getDestinationTrackName();
     			if (carDestination.compareToIgnoreCase(carOutDest)<0 && !car.isCaboose() && !car.hasFred()){
-    				out.add(j, inTrain.get(i));
+    				out.add(j, (String)inTrain.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
     			if (lastCarAdded)
-    				out.add(out.size()-1,inTrain.get(i));
+    				out.add(out.size()-1,(String)inTrain.get(i));
     			else
-    				out.add(inTrain.get(i));
+    				out.add((String)inTrain.get(i));
     			if (car.isCaboose()||car.hasFred()){
     				lastCarAdded = true;
     			}
@@ -594,17 +594,17 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	 * @param train
 	 * @return List of Cars assigned to the train
 	 */
-    public List getCarsByTrainList(Train train) {
+    public List<String> getCarsByTrainList(Train train) {
     	// get cars available list
-    	List byId = getCarsByIdList();
-    	List inTrain = new ArrayList();
+    	List<String> byId = getCarsByIdList();
+    	List<String> inTrain = new ArrayList<String>();
     	Car car;
 
     	for (int i = 0; i < byId.size(); i++) {
     		car = getCarById((String) byId.get(i));
     		// get only cars that are assigned to this train
     		if(car.getTrain() == train)
-    			inTrain.add(byId.get(i));
+    			inTrain.add((String)byId.get(i));
     	}
     	return inTrain;
     }

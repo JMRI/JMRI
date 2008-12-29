@@ -6,7 +6,10 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -23,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -39,30 +42,30 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 	Car _car;
 		
 	// labels
-	javax.swing.JLabel textCar = new javax.swing.JLabel();
-	javax.swing.JLabel textCarRoad = new javax.swing.JLabel();
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textTrack = new javax.swing.JLabel();
-	javax.swing.JLabel textLocation = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
-	javax.swing.JLabel textDestination = new javax.swing.JLabel();
-	javax.swing.JLabel textTrain = new javax.swing.JLabel();
+	JLabel textCar = new JLabel();
+	JLabel textCarRoad = new JLabel();
+	JLabel textName = new JLabel();
+	JLabel textTrack = new JLabel();
+	JLabel textLocation = new JLabel();
+	JLabel textOptional = new JLabel();
+	JLabel textDestination = new JLabel();
+	JLabel textTrain = new JLabel();
 
 	// major buttons
 	
-	javax.swing.JButton saveButton = new javax.swing.JButton();
+	JButton saveButton = new JButton();
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 	
 	// combo boxes
-	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
-	javax.swing.JComboBox trackLocationBox = new javax.swing.JComboBox(); 
-	javax.swing.JComboBox destinationBox = LocationManager.instance().getComboBox();
-	javax.swing.JComboBox trackDestinationBox = new javax.swing.JComboBox(); 
-	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
+	JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox trackLocationBox = new JComboBox(); 
+	JComboBox destinationBox = LocationManager.instance().getComboBox();
+	JComboBox trackDestinationBox = new JComboBox(); 
+	JComboBox trainBox = TrainManager.instance().getComboBox();
 		
 	public CarsSetFrame() {
 		super();

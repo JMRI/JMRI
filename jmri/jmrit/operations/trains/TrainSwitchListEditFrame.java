@@ -10,9 +10,12 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -26,7 +29,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -37,31 +40,31 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	
 	// load managers
 	LocationManager manager = LocationManager.instance(); 
-	List locationCheckBoxes = new ArrayList();
+	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// labels
-	javax.swing.JLabel textName = new javax.swing.JLabel();
+	JLabel textName = new JLabel();
 
 	// major buttons
-	javax.swing.JButton clearButton = new javax.swing.JButton();
-	javax.swing.JButton setButton = new javax.swing.JButton();
-	javax.swing.JButton printButton = new javax.swing.JButton();
-	javax.swing.JButton previewButton = new javax.swing.JButton();
-	javax.swing.JButton saveButton = new javax.swing.JButton();
+	JButton clearButton = new JButton();
+	JButton setButton = new JButton();
+	JButton printButton = new JButton();
+	JButton previewButton = new JButton();
+	JButton saveButton = new JButton();
 
 	// text field
-	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(18);
-	javax.swing.JTextField trainDescriptionTextField = new javax.swing.JTextField(30);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField trainNameTextField = new JTextField(18);
+	JTextField trainDescriptionTextField = new JTextField(30);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space0 = new javax.swing.JLabel();
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
-	javax.swing.JLabel space4 = new javax.swing.JLabel();
-	javax.swing.JLabel space5 = new javax.swing.JLabel();
+	JLabel space0 = new JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
+	JLabel space4 = new JLabel();
+	JLabel space5 = new JLabel();
 	
 	// combo boxes
 
@@ -169,7 +172,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		
 		for (int i =0; i<locations.size(); i++){
 			Location l = manager.getLocationById((String)locations.get(i));
-			JCheckBox checkBox = new javax.swing.JCheckBox();
+			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
 			checkBox.setSelected(l.getSwitchList());
 			checkBox.setText(l.toString());

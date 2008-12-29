@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RouteManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -41,12 +41,12 @@ public class RouteManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
- 
     public void dispose() {
         _routeHashTable.clear();
     }
-
-    protected Hashtable _routeHashTable = new Hashtable();   // stores known Route instances by id
+    
+    //  stores known Route instances by id
+    protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();   
 
     /**
      * @return requested Route object or null if none exists
@@ -126,9 +126,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
      */
     public List getRoutesByNameList() {
 		// first get id list
-		List sortList = getList();
+		List<String> sortList = getList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		String routeName = "";
 		boolean routeAdded = false;
 		Route route;
@@ -159,11 +159,11 @@ public class RouteManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return list of route ids ordered by number
 	 */
-    public List getRoutesByIdList() {
+    public List<String> getRoutesByIdList() {
     	// first get id list
-    	List sortList = getList();
+    	List<String> sortList = getList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	int routeNumber = 0;
     	boolean routeAdded = false;
     	Route route;
@@ -196,9 +196,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
         return out;
     }
     
-    private List getList() {
+    private List<String> getList() {
         String[] arr = new String[_routeHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _routeHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {

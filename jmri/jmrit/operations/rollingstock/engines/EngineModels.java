@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -59,9 +59,9 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	private static final String LENGTH = "Length";
 	
-	protected Hashtable _engineHorsepowerHashTable = new Hashtable();
-	protected Hashtable _engineLengthHashTable = new Hashtable();
-	protected Hashtable _engineTypeHashTable = new Hashtable();
+	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
+	protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
+	protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
     
 	public EngineModels() {
     }
@@ -95,7 +95,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
-    List list = new ArrayList();
+    List<String> list = new ArrayList<String>();
     
     public String[] getNames(){
      	if (list.size() == 0){

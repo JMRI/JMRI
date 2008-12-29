@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -277,32 +277,24 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             break;
         }
     }
-    
-    private boolean buttonEnabled(int row){
-		Engine engine = manager.getEngineById((String)sysList.get(row));
-		if (engine.getRouteLocationId() == null)
-			return true;
-		else
-			return false;
-    }
 
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
-        char b = e.getActionCommand().charAt(0);
-        int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-        if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
+    	if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
+    	char b = e.getActionCommand().charAt(0);
+    	int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
+    	if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
     }
 
-   public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose EngineTableModel");
-        manager.removePropertyChangeListener(this);
-        removePropertyChangeEngines();
-        if (esf != null)
-        	esf.dispose();
-        if (eef != null)
-        	eef.dispose();
-     }
-    
+    public void dispose() {
+    	if (log.isDebugEnabled()) log.debug("dispose EngineTableModel");
+    	manager.removePropertyChangeListener(this);
+    	removePropertyChangeEngines();
+    	if (esf != null)
+    		esf.dispose();
+    	if (eef != null)
+    		eef.dispose();
+    }
+
     private void removePropertyChangeEngines() {
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {

@@ -10,12 +10,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
@@ -25,40 +30,40 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	CarsTableModel carsModel = new CarsTableModel();
-	javax.swing.JTable carsTable = new javax.swing.JTable(carsModel);
+	JTable carsTable = new JTable(carsModel);
 	JScrollPane carsPane;
 	
 	// labels
-	javax.swing.JLabel numCars = new javax.swing.JLabel();
-	javax.swing.JLabel textCars = new javax.swing.JLabel();
-	javax.swing.JLabel textSort = new javax.swing.JLabel();
-	javax.swing.JLabel textSep1 = new javax.swing.JLabel();
-	javax.swing.JLabel textSep2 = new javax.swing.JLabel();
+	JLabel numCars = new JLabel();
+	JLabel textCars = new JLabel();
+	JLabel textSort = new JLabel();
+	JLabel textSep1 = new JLabel();
+	JLabel textSep2 = new JLabel();
 	
 	// radio buttons
 	
-    javax.swing.JRadioButton sortByNumber = new javax.swing.JRadioButton(rb.getString("Number"));
-    javax.swing.JRadioButton sortByRoad = new javax.swing.JRadioButton(rb.getString("Road"));
-    javax.swing.JRadioButton sortByType = new javax.swing.JRadioButton(rb.getString("Type"));
-    javax.swing.JRadioButton sortByKernel = new javax.swing.JRadioButton(rb.getString("Kernel"));
-    javax.swing.JRadioButton sortByLocation = new javax.swing.JRadioButton(rb.getString("Location"));
-    javax.swing.JRadioButton sortByDestination = new javax.swing.JRadioButton(rb.getString("Destination"));
-    javax.swing.JRadioButton sortByTrain = new javax.swing.JRadioButton(rb.getString("Train"));
-    javax.swing.JRadioButton sortByMoves = new javax.swing.JRadioButton(rb.getString("Moves"));
+    JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
+    JRadioButton sortByRoad = new JRadioButton(rb.getString("Road"));
+    JRadioButton sortByType = new JRadioButton(rb.getString("Type"));
+    JRadioButton sortByKernel = new JRadioButton(rb.getString("Kernel"));
+    JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
+    JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
+    JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
+    JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
-	javax.swing.JButton findButton = new javax.swing.JButton();
+	JButton addButton = new JButton();
+	JButton findButton = new JButton();
 	
-	javax.swing.JTextField findCarTextBox = new javax.swing.JTextField(6);
+	JTextField findCarTextBox = new JTextField(6);
 
     public CarsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString("TitleCarsTable"));

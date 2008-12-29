@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -418,8 +418,8 @@ public class Setup {
      * Get train directions
      * @return List of valid train directions
      */
-    public static List getList(){
-    	List directions = new ArrayList();
+    public static List<String> getList(){
+    	List<String> directions = new ArrayList<String>();
     	if ((traindir & EAST)>0)
     		directions.add(EAST_DIR);
     	if ((traindir & WEST)>0)

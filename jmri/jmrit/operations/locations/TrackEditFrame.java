@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -80,17 +80,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JCheckBox westCheckBox = new JCheckBox();
 	
 	// radio buttons
-    JRadioButton roadNameAll = new JRadioButton("Accept all");
-    JRadioButton roadNameInclude = new JRadioButton("Accept only");
-    JRadioButton roadNameExclude = new JRadioButton("Exclude");
+    JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
+    JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
+    JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
     ButtonGroup roadGroup = new ButtonGroup();
-    JRadioButton anyDrops = new JRadioButton("Any");
-    JRadioButton trainDrop = new JRadioButton("Trains");
-    JRadioButton routeDrop = new JRadioButton("Routes");
+    JRadioButton anyDrops = new JRadioButton(rb.getString("Any"));
+    JRadioButton trainDrop = new JRadioButton(rb.getString("Trains"));
+    JRadioButton routeDrop = new JRadioButton(rb.getString("Routes"));
     ButtonGroup dropGroup = new ButtonGroup();
-    JRadioButton anyPickups = new JRadioButton("Any");
-    JRadioButton trainPickup = new JRadioButton("Trains");
-    JRadioButton routePickup = new JRadioButton("Routes");
+    JRadioButton anyPickups = new JRadioButton(rb.getString("Any"));
+    JRadioButton trainPickup = new JRadioButton(rb.getString("Trains"));
+    JRadioButton routePickup = new JRadioButton(rb.getString("Routes"));
     ButtonGroup pickupGroup = new ButtonGroup();
     
 	// text field

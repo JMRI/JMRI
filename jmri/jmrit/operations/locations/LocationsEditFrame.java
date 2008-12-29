@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,7 +47,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	ArrayList<javax.swing.JCheckBox> checkBoxes = new ArrayList<javax.swing.JCheckBox>();
+	ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane typePane;
 	JPanel directionPanel = new JPanel();

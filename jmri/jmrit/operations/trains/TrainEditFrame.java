@@ -16,7 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -53,8 +52,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteManager routeManager;
 
 	Train _train = null;
-	List typeCheckBoxes = new ArrayList();
-	List locationCheckBoxes = new ArrayList();
+	List<JCheckBox> typeCheckBoxes = new ArrayList<JCheckBox>();
+	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
 	JPanel typePanelCheckBoxes = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	JPanel locationPanelCheckBoxes = new JPanel();
@@ -378,7 +377,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 
 		// build menu
-		JMenuBar menuBar = new JMenuBar();
+//		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);

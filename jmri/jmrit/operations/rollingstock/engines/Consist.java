@@ -7,7 +7,7 @@ import java.util.*;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Consist {
 	
@@ -30,7 +30,7 @@ public class Consist {
 		return _name;
 	}
 	
-	List _engines = new ArrayList();
+	List<Engine> _engines = new ArrayList<Engine>();
 	
 	public void addEngine(Engine engine){
 		if (_engines.contains(engine)){

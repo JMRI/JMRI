@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -55,7 +55,7 @@ public class EngineManagerXml extends XmlFile {
 	        Document doc = newDocument(root, dtdLocation+"operations-engines.dtd");
 
 	        // add XSLT processing instruction
-	        java.util.Map m = new java.util.HashMap();
+	        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
 	        m.put("type", "text/xsl");
 	        m.put("href", xsltLocation+"operations-engines.xsl");
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);

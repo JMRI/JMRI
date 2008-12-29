@@ -40,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -51,8 +51,8 @@ jmri.jmrix.nce.NceListener {
 	
 	private static boolean syncOK = true;		// used to flag status messages
 	EngineManager engineManager = EngineManager.instance();
-	List engineList;
-	List consists;
+	List<String> engineList;
+	List<String> consists;
 	
 	javax.swing.JLabel textConsist = new javax.swing.JLabel();
 	javax.swing.JLabel indexNumber = new javax.swing.JLabel();
@@ -116,7 +116,7 @@ jmri.jmrix.nce.NceListener {
 		if (syncOK){
 			// now check each engine in the operations to see if there are any matches
 			engineList = engineManager.getEnginesByNumberList();
-			consists = new ArrayList();
+			consists = new ArrayList<String>();
 
 			// look for lead engines
 			for (int consistNum=1; consistNum<128; consistNum++){

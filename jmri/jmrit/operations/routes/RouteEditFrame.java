@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -28,7 +28,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 	
 	RouteLocationsTableModel routeModel = new RouteLocationsTableModel();
-	javax.swing.JTable routeTable = new javax.swing.JTable(routeModel);
+	JTable routeTable = new JTable(routeModel);
 	JScrollPane routePane;
 	
 	RouteManager manager;
@@ -40,35 +40,34 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	ArrayList checkBoxes;
 
 	// labels
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textName = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
-	
-	javax.swing.JButton addLocationButton = new javax.swing.JButton();
-	javax.swing.JButton saveRouteButton = new javax.swing.JButton();
-	javax.swing.JButton deleteRouteButton = new javax.swing.JButton();
-	javax.swing.JButton addRouteButton = new javax.swing.JButton();
+	JButton addLocationButton = new JButton();
+	JButton saveRouteButton = new JButton();
+	JButton deleteRouteButton = new JButton();
+	JButton addRouteButton = new JButton();
 
 	// check boxes
-	javax.swing.JCheckBox checkBox;
+	JCheckBox checkBox;
 	
 	// radio buttons
-    javax.swing.JRadioButton addLocAtTop = new javax.swing.JRadioButton(rb.getString("Top"));
-    javax.swing.JRadioButton addLocAtBottom = new javax.swing.JRadioButton(rb.getString("Bottom"));
+    JRadioButton addLocAtTop = new JRadioButton(rb.getString("Top"));
+    JRadioButton addLocAtBottom = new JRadioButton(rb.getString("Bottom"));
     ButtonGroup group = new ButtonGroup();
 	
 	// text field
-	javax.swing.JTextField routeNameTextField = new javax.swing.JTextField(20);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField routeNameTextField = new JTextField(20);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 	
 	// combo boxes
-	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox locationBox = LocationManager.instance().getComboBox();
 
 	public static final String NAME = rb.getString("Name");
 	public static final String LENGTH = rb.getString("Length");

@@ -8,6 +8,10 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -20,7 +24,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -29,19 +33,19 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	CarManager manager = CarManager.instance();
 	
 	// labels
-	javax.swing.JLabel textAttribute = new javax.swing.JLabel();
-	javax.swing.JLabel textSep = new javax.swing.JLabel();
+	JLabel textAttribute = new JLabel();
+	JLabel textSep = new JLabel();
 
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
-	javax.swing.JButton deleteButton = new javax.swing.JButton();
-	javax.swing.JButton replaceButton = new javax.swing.JButton();
+	JButton addButton = new JButton();
+	JButton deleteButton = new JButton();
+	JButton replaceButton = new JButton();
 	
 	// combo box
-	javax.swing.JComboBox comboBox;
+	JComboBox comboBox;
 	
 	// text box
-	javax.swing.JTextField addTextBox = new javax.swing.JTextField(10);
+	JTextField addTextBox = new JTextField(10);
 
     public CarAttributeEditFrame() {}
     

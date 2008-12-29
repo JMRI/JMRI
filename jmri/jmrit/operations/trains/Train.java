@@ -40,7 +40,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.34 $
+ * @version             $Revision: 1.35 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -398,7 +398,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
 
-	List _skipLocationsList = new ArrayList();
+	List<String> _skipLocationsList = new ArrayList<String>();
 
 	private String[] getTrainSkipsLocations(){
 		String[] locationIds = new String[_skipLocationsList.size()];
@@ -433,7 +433,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _skipLocationsList.contains(locationId);
 	}
 
-    List _typeList = new ArrayList();
+    List<String> _typeList = new ArrayList<String>();
     public String[] getTypeNames(){
       	String[] types = new String[_typeList.size()];
      	for (int i=0; i<_typeList.size(); i++)
@@ -484,7 +484,7 @@ public class Train implements java.beans.PropertyChangeListener {
     	_roadOption = option;
     }
 
-    List _roadList = new ArrayList();
+    List<String> _roadList = new ArrayList<String>();
     private void setRoadNames(String[] roads){
     	if (roads.length == 0) return;
     	jmri.util.StringUtil.sort(roads);

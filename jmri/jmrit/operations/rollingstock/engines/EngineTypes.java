@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EngineTypes implements java.beans.PropertyChangeListener {
 	
@@ -53,7 +53,7 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
-    List list = new ArrayList();
+    List<String> list = new ArrayList<String>();
     
     public String[] getNames(){
      	if (list.size() == 0){

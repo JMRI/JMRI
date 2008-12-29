@@ -1,26 +1,17 @@
 package jmri.jmrit.operations.routes;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.LocationManager;
-
-import org.jdom.Element;
 
 /**
  * Represents a location in a route, a location can appear more
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
