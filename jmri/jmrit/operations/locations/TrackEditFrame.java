@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,7 +41,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	Location _location = null;
 	Track _track = null;
 	String _type = "";
-	List checkBoxes = new ArrayList();
+	List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
@@ -49,66 +49,66 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelPickupOptions = new JPanel();
 	
 	// labels
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textLength = new javax.swing.JLabel();
-	javax.swing.JLabel textTrain = new javax.swing.JLabel();
-	javax.swing.JLabel textType = new javax.swing.JLabel();
-	javax.swing.JLabel textRoad = new javax.swing.JLabel();
-	javax.swing.JLabel textDrops = new javax.swing.JLabel();
-	javax.swing.JLabel textPickups = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textName = new JLabel();
+	JLabel textLength = new JLabel();
+	JLabel textTrain = new JLabel();
+	JLabel textType = new JLabel();
+	JLabel textRoad = new JLabel();
+	JLabel textDrops = new JLabel();
+	JLabel textPickups = new JLabel();
+	JLabel textOptional = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
-	javax.swing.JButton clearButton = new javax.swing.JButton();
-	javax.swing.JButton setButton = new javax.swing.JButton();
-	javax.swing.JButton saveTrackButton = new javax.swing.JButton();
-	javax.swing.JButton deleteTrackButton = new javax.swing.JButton();
-	javax.swing.JButton addTrackButton = new javax.swing.JButton();
-	javax.swing.JButton deleteRoadButton = new javax.swing.JButton();
-	javax.swing.JButton addRoadButton = new javax.swing.JButton();
-	javax.swing.JButton deleteDropButton = new javax.swing.JButton();
-	javax.swing.JButton addDropButton = new javax.swing.JButton();
-	javax.swing.JButton deletePickupButton = new javax.swing.JButton();
-	javax.swing.JButton addPickupButton = new javax.swing.JButton();
+	JButton clearButton = new JButton();
+	JButton setButton = new JButton();
+	JButton saveTrackButton = new JButton();
+	JButton deleteTrackButton = new JButton();
+	JButton addTrackButton = new JButton();
+	JButton deleteRoadButton = new JButton();
+	JButton addRoadButton = new JButton();
+	JButton deleteDropButton = new JButton();
+	JButton addDropButton = new JButton();
+	JButton deletePickupButton = new JButton();
+	JButton addPickupButton = new JButton();
 	
 	// check boxes
-	javax.swing.JCheckBox checkBox;
-	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox southCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox westCheckBox = new javax.swing.JCheckBox();
+	JCheckBox checkBox;
+	JCheckBox northCheckBox = new JCheckBox();
+	JCheckBox southCheckBox = new JCheckBox();
+	JCheckBox eastCheckBox = new JCheckBox();
+	JCheckBox westCheckBox = new JCheckBox();
 	
 	// radio buttons
-    javax.swing.JRadioButton roadNameAll = new javax.swing.JRadioButton("Accept all");
-    javax.swing.JRadioButton roadNameInclude = new javax.swing.JRadioButton("Accept only");
-    javax.swing.JRadioButton roadNameExclude = new javax.swing.JRadioButton("Exclude");
+    JRadioButton roadNameAll = new JRadioButton("Accept all");
+    JRadioButton roadNameInclude = new JRadioButton("Accept only");
+    JRadioButton roadNameExclude = new JRadioButton("Exclude");
     ButtonGroup roadGroup = new ButtonGroup();
-    javax.swing.JRadioButton anyDrops = new javax.swing.JRadioButton("Any");
-    javax.swing.JRadioButton trainDrop = new javax.swing.JRadioButton("Trains");
-    javax.swing.JRadioButton routeDrop = new javax.swing.JRadioButton("Routes");
+    JRadioButton anyDrops = new JRadioButton("Any");
+    JRadioButton trainDrop = new JRadioButton("Trains");
+    JRadioButton routeDrop = new JRadioButton("Routes");
     ButtonGroup dropGroup = new ButtonGroup();
-    javax.swing.JRadioButton anyPickups = new javax.swing.JRadioButton("Any");
-    javax.swing.JRadioButton trainPickup = new javax.swing.JRadioButton("Trains");
-    javax.swing.JRadioButton routePickup = new javax.swing.JRadioButton("Routes");
+    JRadioButton anyPickups = new JRadioButton("Any");
+    JRadioButton trainPickup = new JRadioButton("Trains");
+    JRadioButton routePickup = new JRadioButton("Routes");
     ButtonGroup pickupGroup = new ButtonGroup();
     
 	// text field
-	javax.swing.JTextField trackNameTextField = new javax.swing.JTextField(20);
-	javax.swing.JTextField trackLengthTextField = new javax.swing.JTextField(5);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField trackNameTextField = new JTextField(20);
+	JTextField trackLengthTextField = new JTextField(5);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 	
 	// combo box
-	javax.swing.JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox comboBoxDropTrains = TrainManager.instance().getComboBox();
-	javax.swing.JComboBox comboBoxDropRoutes = RouteManager.instance().getComboBox();
-	javax.swing.JComboBox comboBoxPickupTrains = TrainManager.instance().getComboBox();
-	javax.swing.JComboBox comboBoxPickupRoutes = RouteManager.instance().getComboBox();
+	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
+	JComboBox comboBoxDropTrains = TrainManager.instance().getComboBox();
+	JComboBox comboBoxDropRoutes = RouteManager.instance().getComboBox();
+	JComboBox comboBoxPickupTrains = TrainManager.instance().getComboBox();
+	JComboBox comboBoxPickupRoutes = RouteManager.instance().getComboBox();
 
 	public static final String DISPOSE = "dispose" ;
 	public static final int MAX_NAME_LENGTH = 25;
@@ -703,7 +703,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void loadTypes(String[] types){
 		for (int i =0; i<types.length; i++){
 			if(_location.acceptsTypeName(types[i])){
-				JCheckBox checkBox = new javax.swing.JCheckBox();
+				JCheckBox checkBox = new JCheckBox();
 				checkBoxes.add(checkBox);
 				checkBox.setText(types[i]);
 				addCheckBoxAction(checkBox);
@@ -759,7 +759,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	int x = 0;
 		    	String name;
 		    	for (int i =0; i<dropIds.length; i++){
-		    		JLabel names = new javax.swing.JLabel();
+		    		JLabel names = new JLabel();
 		    		name = "";
 		    		if (trainDrop.isSelected()){
 		    			Train train = TrainManager.instance().getTrainById(dropIds[i]);
@@ -831,7 +831,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	int x = 0;
 		    	String name;
 		    	for (int i =0; i<pickupIds.length; i++){
-		    		JLabel names = new javax.swing.JLabel();
+		    		JLabel names = new JLabel();
 		    		name = "";
 		    		if (trainPickup.isSelected()){
 		    			Train train = TrainManager.instance().getTrainById(pickupIds[i]);
@@ -896,7 +896,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	String[]carRoads = _track.getRoadNames();
 		    	int x = 0;
 		    	for (int i =0; i<carRoads.length; i++){
-		    		JLabel road = new javax.swing.JLabel();
+		    		JLabel road = new JLabel();
 		    		road.setText(carRoads[i]);
 		    		addItem(panelRoadNames, road, x++, y);
 		    		if (x > 5){

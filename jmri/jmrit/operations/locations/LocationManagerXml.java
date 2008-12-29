@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -55,7 +55,7 @@ public class LocationManagerXml extends XmlFile {
 	        Document doc = newDocument(root, dtdLocation+"operations-locations.dtd");
 
 	        // add XSLT processing instruction
-	        java.util.Map m = new java.util.HashMap();
+	        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
 	        m.put("type", "text/xsl");
 	        m.put("href", xsltLocation+"operations-locations.xsl");
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);

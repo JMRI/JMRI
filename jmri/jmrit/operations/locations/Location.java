@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -33,7 +33,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _usedLength = 0;			//length of track filled by cars and engines 
 	protected String _comment = "";
 	protected boolean _switchList = true;	//when true print switchlist for this location 
-	protected Hashtable _subLocationHashTable = new Hashtable();   // stores sublocations 
+	protected Hashtable<String, Track> _subLocationHashTable = new Hashtable<String, Track>(); // stores
+																								// sublocations
 	
 	public static final int NORMAL = 1;		// ops mode for this location
 	public static final int STAGING = 2;
@@ -266,7 +267,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _comment;
 	}
 	
-    List list = new ArrayList();
+    List<String> list  = new ArrayList<String>();
     
     private String[] getTypeNames(){
       	String[] types = new String[list.size()];
@@ -405,30 +406,32 @@ public class Location implements java.beans.PropertyChangeListener {
     	return (Track)_subLocationHashTable.get(id);
     }
     
-    private List getTracksByIdList() {
-        String[] arr = new String[_subLocationHashTable.size()];
-        List out = new ArrayList();
-        Enumeration en = _subLocationHashTable.keys();
-        int i=0;
-        while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
-            i++;
-        }
-        jmri.util.StringUtil.sort(arr);
-        for (i=0; i<arr.length; i++) out.add(arr[i]);
-        return out;
-    }
+    private List<String> getTracksByIdList() {
+		String[] arr = new String[_subLocationHashTable.size()];
+		List<String> out = new ArrayList<String>();
+		Enumeration en = _subLocationHashTable.keys();
+		int i = 0;
+		while (en.hasMoreElements()) {
+			arr[i] = (String) en.nextElement();
+			i++;
+		}
+		jmri.util.StringUtil.sort(arr);
+		for (i = 0; i < arr.length; i++)
+			out.add(arr[i]);
+		return out;
+	}
     
     /**
-     * Sort ids by track location name.  Returns a list of a given location type
-     * if type is not null, otherwise all track locations are returned.  
-     * @return list of track location ids ordered by name
-     */
+	 * Sort ids by track location name. Returns a list of a given location type
+	 * if type is not null, otherwise all track locations are returned.
+	 * 
+	 * @return list of track location ids ordered by name
+	 */
     public List getTracksByNameList(String type) {
 		// first get id list
-		List sortList = getTracksByIdList();
+		List<String> sortList = getTracksByIdList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		String locName = "";
 		boolean locAdded = false;
 		Track track;
@@ -441,13 +444,15 @@ public class Location implements java.beans.PropertyChangeListener {
 			for (int j = 0; j < out.size(); j++) {
 				trackOut = getTrackById((String) out.get(j));
 				String outLocName = trackOut.getName();
-				if (locName.compareToIgnoreCase(outLocName) < 0 && (type !=null && track.getLocType().equals(type) || type == null)) {
+				if (locName.compareToIgnoreCase(outLocName) < 0
+						&& (type != null && track.getLocType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type !=null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded
+					&& (type != null && track.getLocType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -461,9 +466,9 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List getTracksByMovesList(String type) {
 		// first get id list
-		List sortList = getTracksByIdList();
+		List<String> sortList = getTracksByIdList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		boolean locAdded = false;
 		Track track;
 		Track trackOut;
@@ -475,13 +480,15 @@ public class Location implements java.beans.PropertyChangeListener {
 			for (int j = 0; j < out.size(); j++) {
 				trackOut = getTrackById((String) out.get(j));
 				int outLocMoves = trackOut.getMoves();
-				if (moves < outLocMoves && (type !=null && track.getLocType().equals(type) || type == null)) {
+				if (moves < outLocMoves
+						&& (type != null && track.getLocType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type !=null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded
+					&& (type != null && track.getLocType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}

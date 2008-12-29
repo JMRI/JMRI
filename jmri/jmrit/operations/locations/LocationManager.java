@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -49,7 +49,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         _locationHashTable.clear();
     }
 
-    protected Hashtable _locationHashTable = new Hashtable();   // stores known Location instances by id
+    protected Hashtable<String, Location> _locationHashTable = new Hashtable<String, Location>();   // stores known Location instances by id
 
     /**
      * @return requested Location object or null if none exists
@@ -129,9 +129,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      */
     public List getLocationsByNameList() {
 		// first get id list
-		List sortList = getList();
+		List<String> sortList = getList();
 		// now re-sort
-		List out = new ArrayList();
+		List<String> out = new ArrayList<String>();
 		String locName = "";
 		boolean locAdded = false;
 		Location l;
@@ -164,9 +164,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 */
     public List getLocationsByIdList() {
     	// first get id list
-    	List sortList = getList();
+    	List<String> sortList = getList();
     	// now re-sort
-    	List out = new ArrayList();
+    	List<String> out = new ArrayList<String>();
     	int locationNumber = 0;
     	boolean locationAdded = false;
     	Location l;
@@ -199,9 +199,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         return out;
     }
     
-    private List getList() {
+    private List<String> getList() {
         String[] arr = new String[_locationHashTable.size()];
-        List out = new ArrayList();
+        List<String> out = new ArrayList<String>();
         Enumeration en = _locationHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {

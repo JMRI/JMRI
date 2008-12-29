@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,53 +47,53 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	LocationManagerXml managerXml;
 
 	Location _location = null;
-	ArrayList checkBoxes = new ArrayList();
+	ArrayList<javax.swing.JCheckBox> checkBoxes = new ArrayList<javax.swing.JCheckBox>();
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane typePane;
 	JPanel directionPanel = new JPanel();
 
 	// labels
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textLength = new javax.swing.JLabel();
-	javax.swing.JLabel textTrain = new javax.swing.JLabel();
-	javax.swing.JLabel textLoc = new javax.swing.JLabel();
-	javax.swing.JLabel textType = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textName = new JLabel();
+	JLabel textLength = new JLabel();
+	JLabel textTrain = new JLabel();
+	JLabel textLoc = new JLabel();
+	JLabel textType = new JLabel();
+	JLabel textOptional = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
-	javax.swing.JButton clearButton = new javax.swing.JButton();
-	javax.swing.JButton setButton = new javax.swing.JButton();
-	javax.swing.JButton saveLocationButton = new javax.swing.JButton();
-	javax.swing.JButton deleteLocationButton = new javax.swing.JButton();
-	javax.swing.JButton addLocationButton = new javax.swing.JButton();
-	javax.swing.JButton addYardButton = new javax.swing.JButton();
-	javax.swing.JButton addSidingButton = new javax.swing.JButton();
-	javax.swing.JButton addInterchangeButton = new javax.swing.JButton();
-	javax.swing.JButton addStagingButton = new javax.swing.JButton();
+	JButton clearButton = new JButton();
+	JButton setButton = new JButton();
+	JButton saveLocationButton = new JButton();
+	JButton deleteLocationButton = new JButton();
+	JButton addLocationButton = new JButton();
+	JButton addYardButton = new JButton();
+	JButton addSidingButton = new JButton();
+	JButton addInterchangeButton = new JButton();
+	JButton addStagingButton = new JButton();
 	
 
 	// check boxes
-	javax.swing.JCheckBox checkBox;
-	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox southCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox westCheckBox = new javax.swing.JCheckBox();
+	JCheckBox checkBox;
+	JCheckBox northCheckBox = new JCheckBox();
+	JCheckBox southCheckBox = new JCheckBox();
+	JCheckBox eastCheckBox = new JCheckBox();
+	JCheckBox westCheckBox = new JCheckBox();
 	
 	
 	// radio buttons
-    javax.swing.JRadioButton stageRadioButton = new javax.swing.JRadioButton(rb.getString("Staging"));
-    javax.swing.JRadioButton interchangeRadioButton = new javax.swing.JRadioButton(rb.getString("Interchange"));
-    javax.swing.JRadioButton normalRadioButton = new javax.swing.JRadioButton(rb.getString("Yards&Sidings"));
+    JRadioButton stageRadioButton = new JRadioButton(rb.getString("Staging"));
+    JRadioButton interchangeRadioButton = new JRadioButton(rb.getString("Interchange"));
+    JRadioButton normalRadioButton = new JRadioButton(rb.getString("Yards&Sidings"));
         
 	// text field
-	javax.swing.JTextField locationNameTextField = new javax.swing.JTextField(20);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField locationNameTextField = new JTextField(20);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 	
 	// combo boxes
 
@@ -566,7 +566,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	int y = 0;	// vertical position in panel
 	private void loadTypes(String[] types){
 		for (int i =0; i<types.length; i++){
-			JCheckBox checkBox = new javax.swing.JCheckBox();
+			JCheckBox checkBox = new JCheckBox();
 			checkBoxes.add(checkBox);
 			checkBox.setText(types[i]);
 			addCheckBoxAction(checkBox);
