@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -626,7 +626,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void selectCheckboxes(boolean enable){
 		for (int i=0; i < typeCheckBoxes.size(); i++){
-			JCheckBox checkBox = (JCheckBox)typeCheckBoxes.get(i);
+			JCheckBox checkBox = typeCheckBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_train != null){
 				if (enable)
@@ -658,7 +658,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void enableCheckboxes(boolean enable){
 		for (int i=0; i < typeCheckBoxes.size(); i++){
-			JCheckBox checkBox = (JCheckBox)typeCheckBoxes.get(i);
+			JCheckBox checkBox = typeCheckBoxes.get(i);
 			checkBox.setEnabled(enable);
 		}
 	}
@@ -779,9 +779,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null)
 			route = _train.getRoute();
 		if (route !=null){
-			List locations = route.getLocationsBySequenceList();
+			List<String> locations = route.getLocationsBySequenceList();
 			for (int i =0; i<locations.size(); i++){
-				RouteLocation rl = route.getLocationById((String)locations.get(i));
+				RouteLocation rl = route.getLocationById(locations.get(i));
 				JCheckBox checkBox = new javax.swing.JCheckBox();
 				locationCheckBoxes.add(checkBox);
 				checkBox.setText(rl.toString());

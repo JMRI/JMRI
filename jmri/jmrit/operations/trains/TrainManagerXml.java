@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -70,7 +70,7 @@ public class TrainManagerXml extends XmlFile {
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
 	        TrainManager manager = TrainManager.instance();
-	        List trainList = manager.getTrainsByIdList();
+	        List<String> trainList = manager.getTrainsByIdList();
 	        
 	        for (int i=0; i<trainList.size(); i++){
 
@@ -78,7 +78,7 @@ public class TrainManagerXml extends XmlFile {
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String trainId = (String)trainList.get(i);
+	        	String trainId = trainList.get(i);
 	        	Train train = manager.getTrainById(trainId);
 	            String tempComment = train.getComment();
 	            String xmlComment = new String();
@@ -107,7 +107,7 @@ public class TrainManagerXml extends XmlFile {
 	        root.addContent(values = new Element("trains"));
 	        // add entries
 	        for (int i=0; i<trainList.size(); i++) {
-	        	String trainId = (String)trainList.get(i);
+	        	String trainId = trainList.get(i);
 	        	Train train = manager.getTrainById(trainId);
  	            values.addContent(train.store());
 	        }
@@ -118,7 +118,7 @@ public class TrainManagerXml extends XmlFile {
 	        //Comment and Decoder comment fields, otherwise it can cause problems in
 	        //other parts of the program (e.g. in copying a roster)
 	        for (int i=0; i<trainList.size(); i++){
-	        	String trainId = (String)trainList.get(i);
+	        	String trainId = trainList.get(i);
 	        	Train train = manager.getTrainById(trainId);
 	            String xmlComment = train.getComment();
 	            String tempComment = new String();
@@ -184,20 +184,20 @@ public class TrainManagerXml extends XmlFile {
         }
         
         if (root.getChild("trains") != null) {
-            List l = root.getChild("trains").getChildren("train");
+            List<Element> l = root.getChild("trains").getChildren("train");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" trains");
             for (int i=0; i<l.size(); i++) {
-                manager.register(new Train((Element)l.get(i)));
+                manager.register(new Train(l.get(i)));
             }
             
             manager.setTrainsLoaded();	// set flag
 
-            List trainList = manager.getTrainsByIdList();
+            List<String> trainList = manager.getTrainsByIdList();
             
             // load train icon if needed
             for (int i = 0; i < trainList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	Train train = manager.getTrainById((String)trainList.get(i));
+            	Train train = manager.getTrainById(trainList.get(i));
             	train.loadTrainIcon();
             }
                 
@@ -205,7 +205,7 @@ public class TrainManagerXml extends XmlFile {
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < trainList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	Train train = manager.getTrainById((String)trainList.get(i));
+            	Train train = manager.getTrainById(trainList.get(i));
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = train.getComment();

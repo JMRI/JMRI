@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -106,9 +106,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		if (!trainsloaded)
 			log.error("TrainManager getTrainByName called before trains completely loaded!");
     	Train train;
-    	Enumeration en =_trainHashTable.elements();
+    	Enumeration<Train> en =_trainHashTable.elements();
     	for (int i = 0; i < _trainHashTable.size(); i++){
-    		train = (Train)en.nextElement();
+    		train = en.nextElement();
     		if (train.getName().equals(name))
     			return train;
       	}
@@ -119,7 +119,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public Train getTrainById (String id){
 		if (!trainsloaded)
 			log.error("TrainManager getTrainById called before trains completely loaded!");
-    	return (Train)_trainHashTable.get(id);
+    	return _trainHashTable.get(id);
     }
  
     /**
@@ -168,9 +168,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     public void replaceType(String oldType, String newType){
-		List trains = getTrainsByIdList();
+		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
-			Train train = getTrainById((String)trains.get(i));
+			Train train = getTrainById(trains.get(i));
 			if (train.acceptsTypeName(oldType)){
 				train.deleteTypeName(oldType);
 				train.addTypeName(newType);
@@ -179,9 +179,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
 	public void replaceRoad(String oldRoad, String newRoad){
-		List trains = getTrainsByIdList();
+		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
-			Train train = getTrainById((String)trains.get(i));
+			Train train = getTrainById(trains.get(i));
 			String[] roadNames = train.getRoadNames();
 			for (int j=0; j<roadNames.length; j++){
 				if (roadNames[j].equals(oldRoad)){
@@ -197,9 +197,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Sort by train name
      * @return list of train ids ordered by name
      */
-    public List getTrainsByNameList() {
+    public List<String> getTrainsByNameList() {
 		// first get id list
-		List sortList = getList();
+		List<String> sortList = getList();
 		// now re-sort
 		List<String> out = new ArrayList<String>();
 		String trainName = "";
@@ -208,19 +208,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			trainAdded = false;
-			train = getTrainById((String) sortList.get(i));
+			train = getTrainById(sortList.get(i));
 			trainName = train.getName();
 			for (int j = 0; j < out.size(); j++) {
-				train = getTrainById((String) out.get(j));
+				train = getTrainById(out.get(j));
 				String outTrainName = train.getName();
 				if (trainName.compareToIgnoreCase(outTrainName) < 0) {
-					out.add(j,(String)sortList.get(i));
+					out.add(j,sortList.get(i));
 					trainAdded = true;
 					break;
 				}
 			}
 			if (!trainAdded) {
-				out.add((String)sortList.get(i));
+				out.add(sortList.get(i));
 			}
 		}
 		return out;
@@ -231,9 +231,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Sort by train departure time
      * @return list of train ids ordered by departure time
      */
-    public List getTrainsByTimeList() {
+    public List<String> getTrainsByTimeList() {
 		// first get train by name list
-		List sortList = getTrainsByNameList();
+		List<String> sortList = getTrainsByNameList();
 		// now re-sort
 		List<String> out = new ArrayList<String>();
 		int trainTime;
@@ -243,19 +243,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			trainAdded = false;
-			train = getTrainById((String) sortList.get(i));
+			train = getTrainById(sortList.get(i));
 			trainTime = train.getDepartTimeMinutes();
 			for (int j = 0; j < out.size(); j++) {
-				train = getTrainById((String) out.get(j));
+				train = getTrainById(out.get(j));
 				outTrainTime = train.getDepartTimeMinutes();
 				if (trainTime < outTrainTime) {
-					out.add(j,(String)sortList.get(i));
+					out.add(j,sortList.get(i));
 					trainAdded = true;
 					break;
 				}
 			}
 			if (!trainAdded) {
-				out.add((String)sortList.get(i));
+				out.add(sortList.get(i));
 			}
 		}
 		return out;
@@ -267,9 +267,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return list of train ids ordered by number
 	 */
-    public List getTrainsByIdList() {
+    public List<String> getTrainsByIdList() {
     	// first get id list
-    	List sortList = getList();
+    	List<String> sortList = getList();
     	// now re-sort
     	List<String> out = new ArrayList<String>();
     	int trainNumber = 0;
@@ -278,18 +278,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	
     	for (int i=0; i<sortList.size(); i++){
     		trainAdded = false;
-    		train = getTrainById ((String)sortList.get(i));
+    		train = getTrainById (sortList.get(i));
     		try{
     			trainNumber = Integer.parseInt (train.getId());
     		}catch (NumberFormatException e) {
     			log.debug("train id number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
-    			train = getTrainById ((String)out.get(j));
+    			train = getTrainById (out.get(j));
         		try{
         			int outTrainNumber = Integer.parseInt (train.getId());
         			if (trainNumber < outTrainNumber){
-        				out.add(j,(String)sortList.get(i));
+        				out.add(j,sortList.get(i));
         				trainAdded = true;
         				break;
         			}
@@ -298,21 +298,21 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         		}
     		}
     		if (!trainAdded){
-    			out.add((String)sortList.get(i));
+    			out.add(sortList.get(i));
     		}
     	}
         return out;
     }
     
-    private List getList() {
+    private List<String> getList() {
 		if (!trainsloaded)
 			log.error("TrainManager getList called before trains completely loaded!");
         String[] arr = new String[_trainHashTable.size()];
         List<String> out = new ArrayList<String>();
-        Enumeration en = _trainHashTable.keys();
+        Enumeration<String> en = _trainHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         jmri.util.StringUtil.sort(arr);
@@ -323,9 +323,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	box.addItem("");
-		List trains = getTrainsByNameList();
+		List<String> trains = getTrainsByNameList();
 		for (int i = 0; i < trains.size(); i++){
-			Train train = getTrainById((String)trains.get(i));
+			Train train = getTrainById(trains.get(i));
 			box.addItem(train);
 		}
     	return box;
@@ -334,9 +334,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-		List trains = getTrainsByNameList();
+		List<String> trains = getTrainsByNameList();
 		for (int i = 0; i < trains.size(); i++){
-			Train train = getTrainById((String)trains.get(i));
+			Train train = getTrainById(trains.get(i));
 			box.addItem(train);
 		}
     }

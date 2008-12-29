@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -62,8 +62,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public String toString(){
 		if (_location != null)
 			return _location.getName();
-		else
-			return DELETED;
+		return DELETED;
 	}
 
 	public String getId() {
@@ -73,8 +72,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public String getName() {
 		if (_location != null)
 			return _location.getName();
-		else
-			return DELETED;
+		return DELETED;
 	}
 	
 	public int getSequenceId(){
@@ -98,7 +96,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange("trainDirection", old, direction);
+			firePropertyChange("trainDirection", Integer.toString(old), Integer.toString(direction));
 	}
 	
 	/**

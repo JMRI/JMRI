@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -82,8 +82,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			if (true) {
 				trainDirtyTask = new SwingShutDownTask(
 						"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
-						rb.getString("PromptSaveQuit"),
-						(java.awt.Component) this) {
+						rb.getString("PromptSaveQuit"), this) {
 					public boolean checkPromptNeeded() {
 						return !getModifiedFlag();
 					}
@@ -208,18 +207,18 @@ public class TrainsTableFrame extends OperationsFrame {
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton){
-			List trains = getTrainList();
+			List<String> trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
-				Train train = trainManager.getTrainById((String)trains.get(i));
+				Train train = trainManager.getTrainById(trains.get(i));
 				boolean build = train.buildIfSelected();
 				if (build)
 					setModifiedFlag(true);
 			}
 		}
 		if (ae.getSource() == printButton){
-			List trains = getTrainList();
+			List<String> trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
-				Train train = trainManager.getTrainById((String)trains.get(i));
+				Train train = trainManager.getTrainById(trains.get(i));
 				train.printIfSelected();
 			}
 		}
@@ -230,9 +229,9 @@ public class TrainsTableFrame extends OperationsFrame {
 			f.setVisible(true);
 		}
 		if (ae.getSource() == terminateButton){
-			List trains = getTrainList();
+			List<String> trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
-				Train train = trainManager.getTrainById((String)trains.get(i));
+				Train train = trainManager.getTrainById(trains.get(i));
 				train.terminateIfSelected();
 			}
 		}
@@ -242,8 +241,8 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 	}
 	
-	private List getTrainList(){
-		List trains;
+	private List<String> getTrainList(){
+		List<String> trains;
 		if (sortById.isSelected())
 			trains = trainManager.getTrainsByIdList();
 		else if (sortByTime.isSelected())

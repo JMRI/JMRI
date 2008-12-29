@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -122,18 +122,18 @@ public class TrainIcon extends LocoIcon {
     	Route route = train.getRoute();
     	if (route == null)
     		return routeMenu;
-    	List routeList = route.getLocationsBySequenceList();
+    	List<String> routeList = route.getLocationsBySequenceList();
     	CarManager carManager = CarManager.instance();
-    	List carList = carManager.getCarsByTrainList(train);
+    	List<String> carList = carManager.getCarsByTrainList(train);
     	for (int r=0; r<routeList.size(); r++){
     		int pickupCars = 0;
     		int dropCars = 0;
     		String current = "     ";
- 			RouteLocation rl = route.getLocationById((String)routeList.get(r));
+ 			RouteLocation rl = route.getLocationById(routeList.get(r));
 			if (train.getCurrentLocation() == rl)
 				current = "-> ";
 			for (int j=0; j<carList.size(); j++){
-				Car car = carManager.getCarById((String)carList.get(j));
+				Car car = carManager.getCarById(carList.get(j));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 					pickupCars++;
 				}

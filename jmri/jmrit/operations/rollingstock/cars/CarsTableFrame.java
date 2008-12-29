@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -179,7 +179,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		}
 	}
 	
-	public List getSortByList(){
+	public List<String> getSortByList(){
 		return carsModel.getSelectedCarList();
 	}
     
@@ -195,10 +195,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 						"Car with road number "+ findCarTextBox.getText()+ " not found", "Could not find car!",
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
-				
-			}else{
-				carsTable.changeSelection(rowindex, 0, false, false);
 			}
+			carsTable.changeSelection(rowindex, 0, false, false);
 			return;
 		}
 		if (ae.getSource() == addButton){

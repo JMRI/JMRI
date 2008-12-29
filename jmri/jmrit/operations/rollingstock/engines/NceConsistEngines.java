@@ -40,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -126,7 +126,7 @@ jmri.jmrix.nce.NceListener {
 					log.debug("NCE consist "+consistNum+" has lead engine "+engNum);
 					boolean engMatch = false;
 					for (int indexEng=0; indexEng<engineList.size(); indexEng++){
-						Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
+						Engine engine = engineManager.getEngineById(engineList.get(indexEng));
 						if (engine.getNumber().equals(Integer.toString(engNum))){
 							log.debug("found lead engine match "+engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE+consistNum);
@@ -167,7 +167,7 @@ jmri.jmrix.nce.NceListener {
 				log.debug("NCE consist "+consistNum+" has engine "+engNum);
 				boolean engMatch = false;
 				for (int indexEng=0; indexEng<engineList.size(); indexEng++){
-					Engine engine = engineManager.getEngineById((String) engineList.get(indexEng));
+					Engine engine = engineManager.getEngineById(engineList.get(indexEng));
 					if (engine.getNumber().equals(Integer.toString(engNum))){
 						log.debug("found engine match "+engine.getNumber());
 						engMatch = true;
@@ -175,12 +175,11 @@ jmri.jmrix.nce.NceListener {
 						if (engConsist != null){
 							engine.setConsist(engConsist);
 							break;
-						}else{
-							log.warn("Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum);
-							JOptionPane.showMessageDialog(null, "Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum, "NCE Consist",
-									JOptionPane.ERROR_MESSAGE);
-							syncOK = false;
 						}
+						log.warn("Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum);
+						JOptionPane.showMessageDialog(null, "Engine "+ engNum +" needs lead engine "+getEngineNumberFromArray(consistNum, 0, 2)+" for consist "+consistNum, "NCE Consist",
+								JOptionPane.ERROR_MESSAGE);
+						syncOK = false;
 					}
 				}
 				if (!engMatch){

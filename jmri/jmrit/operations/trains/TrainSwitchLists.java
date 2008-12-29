@@ -52,25 +52,25 @@ public class TrainSwitchLists extends TrainCommon {
 		addLine(fileOut, "Valid " + new Date());
 		
 		// get a list of trains
-		List trains = manager.getTrainsByTimeList();
+		List<String> trains = manager.getTrainsByTimeList();
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
 		for (int i=0; i<trains.size(); i++){
 			int pickupCars = 0;
 			int dropCars = 0;
 			int stops = 1;
-			Train train = manager.getTrainById((String)trains.get(i));
+			Train train = manager.getTrainById(trains.get(i));
 			if (!train.getBuilt())
 				continue;	// train wasn't built so skip
-			List carList = carManager.getCarsByTrainDestinationList(train);
-			List enginesList = engineManager.getEnginesByTrainList(train);
+			List<String> carList = carManager.getCarsByTrainDestinationList(train);
+			List<String> enginesList = engineManager.getEnginesByTrainList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
 				continue;	// no route for this train
-			List routeList = route.getLocationsBySequenceList();
+			List<String> routeList = route.getLocationsBySequenceList();
 			for (int r=0; r<routeList.size(); r++){
-				RouteLocation rl = route.getLocationById((String)routeList.get(r));
+				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (rl.getName().equals(location.getName())){
 					if (stops > 1){
 						newLine(fileOut);
@@ -90,7 +90,7 @@ public class TrainSwitchLists extends TrainCommon {
 					// go through the list of engines and determine if the engine departs here
 					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById((String) enginesList.get(j));
+								.getEngineById(enginesList.get(j));
 						if (engine.getRouteLocation() == rl	&& !engine.getTrackName().equals("")){
 							pickupEngine(fileOut, engine);
 						}
@@ -98,9 +98,9 @@ public class TrainSwitchLists extends TrainCommon {
 					// get a list of cars and determine if this location is serviced
 //					block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {
-						RouteLocation rld = train.getRoute().getLocationById((String) routeList.get(j));
+						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 						for (int k = 0; k < carList.size(); k++) {
-							Car car = carManager.getCarById((String) carList.get(k));
+							Car car = carManager.getCarById(carList.get(k));
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
 								pickupCar(fileOut, car);
@@ -110,13 +110,13 @@ public class TrainSwitchLists extends TrainCommon {
 					}
 					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById((String) enginesList.get(j));
+								.getEngineById(enginesList.get(j));
 						if (engine.getRouteDestination() == rl){
 							dropEngine(fileOut, engine);
 						}
 					}
 					for (int j=0; j<carList.size(); j++){
-						Car car = carManager.getCarById((String)carList.get(j));
+						Car car = carManager.getCarById(carList.get(j));
 						if (car.getRouteDestination() == rl){
 							dropCar(fileOut, car);
 							dropCars++;

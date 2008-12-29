@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -69,7 +69,7 @@ public class RouteManagerXml extends XmlFile {
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
 	        RouteManager manager = RouteManager.instance();
-	        List routeList = manager.getRoutesByIdList();
+	        List<String> routeList = manager.getRoutesByIdList();
 	        
 	        for (int i=0; i<routeList.size(); i++){
 
@@ -77,7 +77,7 @@ public class RouteManagerXml extends XmlFile {
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String routeId = (String)routeList.get(i);
+	        	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
 	            String tempComment = route.getComment();
 	            String xmlComment = new String();
@@ -103,7 +103,7 @@ public class RouteManagerXml extends XmlFile {
 	        root.addContent(values = new Element("routes"));
 	        // add entries
 	        for (int i=0; i<routeList.size(); i++) {
-	        	String routeId = (String)routeList.get(i);
+	        	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
  	            values.addContent(route.store());
 	        }
@@ -114,7 +114,7 @@ public class RouteManagerXml extends XmlFile {
 	        //Comment and Decoder comment fields, otherwise it can cause problems in
 	        //other parts of the program (e.g. in copying a roster)
 	        for (int i=0; i<routeList.size(); i++){
-	        	String routeId = (String)routeList.get(i);
+	        	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
 	            String xmlComment = route.getComment();
 	            String tempComment = new String();
@@ -183,18 +183,18 @@ public class RouteManagerXml extends XmlFile {
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("routes") != null) {
         	
-            List l = root.getChild("routes").getChildren("route");
+            List<Element> l = root.getChild("routes").getChildren("route");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
             for (int i=0; i<l.size(); i++) {
-                manager.register(new Route((Element)l.get(i)));
+                manager.register(new Route(l.get(i)));
             }
 
-            List routeList = manager.getRoutesByIdList();
+            List<String> routeList = manager.getRoutesByIdList();
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < routeList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	String routeId = (String)routeList.get(i);
+            	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
 
                 //Extract the Comment field and create a new string for output

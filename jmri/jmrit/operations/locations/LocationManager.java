@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -67,7 +67,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
     public Location getLocationById (String id){
-    	return (Location)_locationHashTable.get(id);
+    	return _locationHashTable.get(id);
     }
  
     /**
@@ -127,7 +127,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Sort by location name
      * @return list of location ids ordered by name
      */
-    public List getLocationsByNameList() {
+    public List<String> getLocationsByNameList() {
 		// first get id list
 		List<String> sortList = getList();
 		// now re-sort
@@ -138,10 +138,10 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			l = getLocationById((String) sortList.get(i));
+			l = getLocationById(sortList.get(i));
 			locName = l.getName();
 			for (int j = 0; j < out.size(); j++) {
-				l = getLocationById((String) out.get(j));
+				l = getLocationById(out.get(j));
 				String outLocName = l.getName();
 				if (locName.compareToIgnoreCase(outLocName) < 0) {
 					out.add(j, sortList.get(i));
@@ -173,14 +173,14 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	
     	for (int i=0; i<sortList.size(); i++){
     		locationAdded = false;
-    		l = getLocationById ((String)sortList.get(i));
+    		l = getLocationById (sortList.get(i));
     		try{
     			locationNumber = Integer.parseInt (l.getId());
     		}catch (NumberFormatException e) {
     			log.debug("location id number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
-    			l = getLocationById ((String)out.get(j));
+    			l = getLocationById (out.get(j));
         		try{
         			int outLocationNumber = Integer.parseInt (l.getId());
         			if (locationNumber < outLocationNumber){

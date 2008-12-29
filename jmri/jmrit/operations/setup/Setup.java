@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -515,9 +515,9 @@ public class Setup {
         org.jdom.Attribute a;
         
         if ((a = operations.getChild("railRoad").getAttribute("name"))!= null){
-        	String railroadName = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("railroadName: "+railroadName);
-           	Setup.setRailroadName(railroadName);
+        	String name = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("railroadName: "+name);
+           	Setup.setRailroadName(name);
         }
         if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         	String dir = a.getValue();

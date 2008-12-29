@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -225,9 +225,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void replaceItem (String oldItem, String newItem){
-		List engines = manager.getEnginesByNumberList();
+		List<String> engines = manager.getEnginesByNumberList();
 		for (int i=0; i<engines.size(); i++){
-			Engine engine = manager.getEngineById((String)engines.get(i));
+			Engine engine = manager.getEngineById(engines.get(i));
 
 			if(_comboboxName == EnginesEditFrame.ROAD){
 				if (engine.getRoad().equals(oldItem))

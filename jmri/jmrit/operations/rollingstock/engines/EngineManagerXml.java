@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -69,7 +69,7 @@ public class EngineManagerXml extends XmlFile {
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
 	        EngineManager manager = EngineManager.instance();
-	        List engineList = manager.getEnginesByRoadNameList();
+	        List<String> engineList = manager.getEnginesByRoadNameList();
 	        
 	        for (int i=0; i<engineList.size(); i++){
 
@@ -77,7 +77,7 @@ public class EngineManagerXml extends XmlFile {
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String engineId = (String)engineList.get(i);
+	        	String engineId = engineList.get(i);
 	        	Engine c = manager.getEngineById(engineId);
 	            String tempComment = c.getComment();
 	            String xmlComment = new String();
@@ -118,15 +118,15 @@ public class EngineManagerXml extends XmlFile {
 	        	values.addContent(lengthNames);
 	        }
 	        root.addContent(values = new Element("consists"));
-	        List consists = manager.getConsistNameList();
+	        List<String> consists = manager.getConsistNameList();
 	        for (int i=0; i<consists.size(); i++){
-	        	String consistNames = (String)consists.get(i)+"%%";
+	        	String consistNames = consists.get(i)+"%%";
 	        	values.addContent(consistNames);
 	        }
 	        root.addContent(values = new Element("engines"));
 	        // add entries
 	        for (int i=0; i<engineList.size(); i++) {
-	        	String engineId = (String)engineList.get(i);
+	        	String engineId = engineList.get(i);
 	        	Engine c = manager.getEngineById(engineId);
 	            values.addContent(c.store());
 	        }
@@ -137,7 +137,7 @@ public class EngineManagerXml extends XmlFile {
 	        //Comment and Decoder comment fields, otherwise it can cause problems in
 	        //other parts of the program (e.g. in copying a roster)
 	        for (int i=0; i<engineList.size(); i++){
-	        	String engineId = (String)engineList.get(i);
+	        	String engineId = engineList.get(i);
 	        	Engine c = manager.getEngineById(engineId);
 	            String xmlComment = c.getComment();
 	            String tempComment = new String();
@@ -231,18 +231,18 @@ public class EngineManagerXml extends XmlFile {
          
         if (root.getChild("engines") != null) {
         	
-            List l = root.getChild("engines").getChildren("engine");
+            List<Element> l = root.getChild("engines").getChildren("engine");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" engines");
             for (int i=0; i<l.size(); i++) {
-                manager.register(new Engine((Element)l.get(i)));
+                manager.register(new Engine(l.get(i)));
             }
 
-            List engineList = manager.getEnginesByRoadNameList();
+            List<String> engineList = manager.getEnginesByRoadNameList();
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < engineList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	String engineId = (String)engineList.get(i);
+            	String engineId = engineList.get(i);
 	        	Engine c = manager.getEngineById(engineId);
 
                 //Extract the Comment field and create a new string for output

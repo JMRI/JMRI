@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -78,12 +78,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++){
 //			log.debug("route ids: " + (String) sysList.get(i));
-			manager.getTrainById((String) sysList.get(i))
+			manager.getTrainById(sysList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
 
-	List sysList = null;
+	List<String> sysList = null;
 	JTable table = null;
 	JmriJFrame frame = null;
     
@@ -128,8 +128,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case IDCOLUMN: {
         	if (_sort == SORTBYID)
         		return rb.getString("Id");
-        	else
-        		return rb.getString("Time");
+        	return rb.getString("Time");
         }
         case BUILDBOXCOLUMN: return rb.getString("Build");
         case BUILDCOLUMN: return "";
@@ -177,14 +176,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public Object getValueAt(int row, int col) {
-    	Train train = manager.getTrainById((String)sysList.get(row));
+    	Train train = manager.getTrainById(sysList.get(row));
         switch (col) {
         case IDCOLUMN: {
         	if (_sort == SORTBYID){
            		return train.getId();
         	}
-        	else
-           		return train.getDepartureTime();
+        	return train.getDepartureTime();
         }
         case NAMECOLUMN: return train.getIconName();
         case DESCRIPTIONCOLUMN: return train.getDescription();
@@ -200,8 +198,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case BUILDCOLUMN: {
         	if (!train.getBuilt())
         		return rb.getString("Build");
-        	else
-        		return rb.getString("Print");
+        	return rb.getString("Print");
         }
         case MOVECOLUMN: return rb.getString("Move");
         case EDITCOLUMN: return rb.getString("Edit");
@@ -218,8 +215,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case MOVECOLUMN: moveTrain (row);
 			break;
         case BUILDBOXCOLUMN:{
-        	Train train = manager.getTrainById((String)sysList.get(row));
+        	Train train = manager.getTrainById(sysList.get(row));
         	train.setBuild(((Boolean) value).booleanValue());
+        	break;
         }
         default:
             break;
@@ -230,14 +228,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	if (lef != null)
     		lef.dispose();
     	lef = new TrainEditFrame();
-    	Train train = manager.getTrainById((String)sysList.get(row));
+    	Train train = manager.getTrainById(sysList.get(row));
        	log.debug("Edit train ("+train.getName()+")");
      	lef.setTitle(rb.getString("TitleTrainEdit"));
     	lef.initComponents(train);
     }
     
     private void buildTrain (int row){
-     	Train train = manager.getTrainById((String)sysList.get(row));
+     	Train train = manager.getTrainById(sysList.get(row));
      	if (!train.getBuilt()){
      		frame.setModifiedFlag(true);
      		train.build();
@@ -248,7 +246,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     private void moveTrain (int row){
-    	Train train = manager.getTrainById((String)sysList.get(row));
+    	Train train = manager.getTrainById(sysList.get(row));
        	if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
        	frame.setModifiedFlag(true);
      	train.move();
@@ -274,7 +272,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Train l = manager.getTrainById((String) sysList.get(i));
+    			Train l = manager.getTrainById(sysList.get(i));
     			if (l != null)
     				l.removePropertyChangeListener(this);
     		}

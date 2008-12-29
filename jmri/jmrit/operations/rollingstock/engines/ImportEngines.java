@@ -24,7 +24,7 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ImportEngines extends Thread {
 	
@@ -301,8 +301,7 @@ public class ImportEngines extends Thread {
 			String name = f.getName();
 			if (name.matches(".*\\.txt"))
 				return true;
-			else
-				return false;
+			return false;
 		}
 		
 		public String getDescription() {

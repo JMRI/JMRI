@@ -7,7 +7,7 @@ import java.util.*;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Consist {
 	
@@ -56,12 +56,12 @@ public class Consist {
 		_engines.remove(engine);
 		if(isLeadEngine(engine) && _engines.size()>0){
 			// need a new lead engine
-			setLeadEngine((Engine)_engines.get(0));
+			setLeadEngine(_engines.get(0));
 		}
 		firePropertyChange("listLength", Integer.toString(oldSize), new Integer(_engines.size()));
 	}
 	
-	public List getEngines(){
+	public List<Engine> getEngines(){
 		return _engines;
 	}
 	
@@ -79,8 +79,7 @@ public class Consist {
 	public boolean isLeadEngine(Engine engine){
 		if(engine == _leadEngine)
 			return true;
-		else
-			return false;
+		return false;
 	}
 	
 	public void setLeadEngine(Engine engine){
@@ -97,7 +96,7 @@ public class Consist {
 	
 	public void dispose(){
 		while (_engines.size()>0){
-			Engine engine = (Engine)_engines.get(0);
+			Engine engine = _engines.get(0);
 			if (engine != null){
 				engine.setConsist(null);
 			}

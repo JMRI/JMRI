@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -272,7 +272,7 @@ public class Location implements java.beans.PropertyChangeListener {
     private String[] getTypeNames(){
       	String[] types = new String[list.size()];
      	for (int i=0; i<list.size(); i++)
-     		types[i] = (String)list.get(i);
+     		types[i] = list.get(i);
    		return types;
     }
     
@@ -330,9 +330,9 @@ public class Location implements java.beans.PropertyChangeListener {
      * Reset the move count for all tracks at this location
      */
     public void resetMoves(){
-    	List tracks = getTracksByIdList();
+    	List<String> tracks = getTracksByIdList();
     	for (int i=0; i<tracks.size(); i++) {
-    		Track track = getTrackById((String)tracks.get(i));
+    		Track track = getTrackById(tracks.get(i));
     		track.setMoves(0);
     	}
     }
@@ -393,9 +393,9 @@ public class Location implements java.beans.PropertyChangeListener {
     
     public Track getTrackByName(String name, String type) {
     	Track track;
-    	Enumeration en =_subLocationHashTable.elements();
+    	Enumeration<Track> en =_subLocationHashTable.elements();
     	for (int i = 0; i < _subLocationHashTable.size(); i++){
-    		track = (Track)en.nextElement();
+    		track = en.nextElement();
     		if (track.getName().equals(name) && track.getLocType().equals(type))
     			return track;
       	}
@@ -403,16 +403,16 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     public Track getTrackById (String id){
-    	return (Track)_subLocationHashTable.get(id);
+    	return _subLocationHashTable.get(id);
     }
     
     private List<String> getTracksByIdList() {
 		String[] arr = new String[_subLocationHashTable.size()];
 		List<String> out = new ArrayList<String>();
-		Enumeration en = _subLocationHashTable.keys();
+		Enumeration<String> en = _subLocationHashTable.keys();
 		int i = 0;
 		while (en.hasMoreElements()) {
-			arr[i] = (String) en.nextElement();
+			arr[i] = en.nextElement();
 			i++;
 		}
 		jmri.util.StringUtil.sort(arr);
@@ -427,7 +427,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return list of track location ids ordered by name
 	 */
-    public List getTracksByNameList(String type) {
+    public List<String> getTracksByNameList(String type) {
 		// first get id list
 		List<String> sortList = getTracksByIdList();
 		// now re-sort
@@ -439,10 +439,10 @@ public class Location implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			track = getTrackById((String) sortList.get(i));
+			track = getTrackById(sortList.get(i));
 			locName = track.getName();
 			for (int j = 0; j < out.size(); j++) {
-				trackOut = getTrackById((String) out.get(j));
+				trackOut = getTrackById(out.get(j));
 				String outLocName = trackOut.getName();
 				if (locName.compareToIgnoreCase(outLocName) < 0
 						&& (type != null && track.getLocType().equals(type) || type == null)) {
@@ -464,7 +464,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * if type is not null, otherwise all track locations are returned.  
      * @return list of track location ids ordered by moves
      */
-    public List getTracksByMovesList(String type) {
+    public List<String> getTracksByMovesList(String type) {
 		// first get id list
 		List<String> sortList = getTracksByIdList();
 		// now re-sort
@@ -475,10 +475,10 @@ public class Location implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			track = getTrackById((String) sortList.get(i));
+			track = getTrackById(sortList.get(i));
 			int moves = track.getMoves();
 			for (int j = 0; j < out.size(); j++) {
-				trackOut = getTrackById((String) out.get(j));
+				trackOut = getTrackById(out.get(j));
 				int outLocMoves = trackOut.getMoves();
 				if (moves < outLocMoves
 						&& (type != null && track.getLocType().equals(type) || type == null)) {
@@ -503,9 +503,9 @@ public class Location implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-    	List tracks = getTracksByNameList(null);
+    	List<String> tracks = getTracksByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
-			String Id = (String)tracks.get(i);
+			String Id = tracks.get(i);
 			Track track = getTrackById(Id);
 			box.addItem(track);
 		}
@@ -539,17 +539,17 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // early version of operations called tracks "secondary"
         if (e.getChildren("secondary") != null) {
-            List l = e.getChildren("secondary");
+            List<Element> l = e.getChildren("secondary");
             if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
             for (int i=0; i<l.size(); i++) {
-                register(new Track((Element)l.get(i)));
+                register(new Track(l.get(i)));
             }
         }
         if (e.getChildren("track") != null) {
-            List l = e.getChildren("track");
+            List<Element> l = e.getChildren("track");
             if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" tracks");
             for (int i=0; i<l.size(); i++) {
-                register(new Track((Element)l.get(i)));
+                register(new Track(l.get(i)));
             }
         }
     }
@@ -576,9 +576,9 @@ public class Location implements java.beans.PropertyChangeListener {
         
         e.setAttribute("comment", getComment());
         
-        List tracks = getTracksByIdList();
+        List<String> tracks = getTracksByIdList();
         for (int i=0; i<tracks.size(); i++) {
-        	String id = (String)tracks.get(i);
+        	String id = tracks.get(i);
         	Track track = getTrackById(id);
 	            e.addContent(track.store());
         }

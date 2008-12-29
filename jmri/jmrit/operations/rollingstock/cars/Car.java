@@ -12,7 +12,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -95,8 +95,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	public String getKernelName() {
 		if (_kernel != null)
 			return _kernel.getName();
-		else
-			return "";
+		return "";
 	}
 	
 	public String testDestination(Location destination, Track track) {

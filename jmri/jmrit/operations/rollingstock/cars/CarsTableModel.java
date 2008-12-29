@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -77,7 +77,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public int findCarByRoadNumber (String roadNumber){
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
-				Car c = manager.getCarById((String) sysList.get(i));
+				Car c = manager.getCarById(sysList.get(i));
 				if (c != null){
 					if (c.getNumber().equals(roadNumber)){
 //						log.debug("found road number match "+roadNumber);
@@ -95,12 +95,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
      	sysList = getSelectedCarList();
  		// and add listeners back in
 		for (int i = 0; i < sysList.size(); i++)
-			manager.getCarById((String) sysList.get(i))
+			manager.getCarById(sysList.get(i))
 					.addPropertyChangeListener(this);
 	}
     
-    public List getSelectedCarList(){
-    	List list;
+    public List<String> getSelectedCarList(){
+    	List<String> list;
 		if (_sort == SORTBYROAD)
 			list = manager.getCarsByRoadNameList();
 		else if (_sort == SORTBYTYPE)
@@ -120,7 +120,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		return list;
     }
 
-	List sysList = null;
+	List<String> sysList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -207,7 +207,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public Object getValueAt(int row, int col) {
-    	String carId = (String)sysList.get(row);
+    	String carId = sysList.get(row);
     	Car c = manager.getCarById(carId);
         switch (col) {
         case NUMCOLUMN: return c.getNumber();
@@ -227,8 +227,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         case KERNELCOLUMN: {
         	if (c.getKernel() != null && c.getKernel().isLeadCar(c))
         		return c.getKernelName()+"*";
-        	else
-        		return c.getKernelName();
+        	return c.getKernelName();
         }
         case LOCATIONCOLUMN: {
         	String s ="";
@@ -255,7 +254,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarsSetFrame csf = null;
     
     public void setValueAt(Object value, int row, int col) {
-		String carId = (String)sysList.get(row);
+		String carId = sysList.get(row);
     	Car car = manager.getCarById(carId);
         switch (col) {
         case SETCOLUMN:
@@ -306,7 +305,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Car c = manager.getCarById((String) sysList.get(i));
+				Car c = manager.getCarById(sysList.get(i));
 				if (c != null)
 					c.removePropertyChangeListener(this);
 			}

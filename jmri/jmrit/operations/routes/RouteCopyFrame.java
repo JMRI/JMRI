@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -107,10 +107,10 @@ public class RouteCopyFrame extends OperationsFrame {
 			}
 			newRoute = manager.newRoute(routeNameTextField.getText());
 			// now copy
-			List oldRouteLocations = oldRoute.getLocationsBySequenceList();
+			List<String> oldRouteLocations = oldRoute.getLocationsBySequenceList();
 			if (!invertCheckBox.isSelected()){
 				for (int i=0; i<oldRouteLocations.size(); i++){
-					copyRouteLocation(oldRoute, newRoute, (String)oldRouteLocations.get(i), null, invertCheckBox.isSelected());
+					copyRouteLocation(oldRoute, newRoute, oldRouteLocations.get(i), null, invertCheckBox.isSelected());
 				}
 			// invert route order
 			} else {

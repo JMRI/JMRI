@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -530,14 +530,14 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	
 	private void enableCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
+			checkBox = checkBoxes.get(i);
 			checkBox.setEnabled(enable);
 		}
 	}
 	
 	private void selectCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
+			checkBox = checkBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_location != null){
 				if (enable)

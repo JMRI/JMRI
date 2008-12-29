@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -72,7 +72,7 @@ public class CarManagerXml extends XmlFile {
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
 	        CarManager manager = CarManager.instance();
-	        List carList = manager.getCarsByRoadNameList();
+	        List<String> carList = manager.getCarsByRoadNameList();
 	        
 	        for (int i=0; i<carList.size(); i++){
 
@@ -80,7 +80,7 @@ public class CarManagerXml extends XmlFile {
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String carId = (String)carList.get(i);
+	        	String carId = carList.get(i);
 	        	Car c = manager.getCarById(carId);
 	            String tempComment = c.getComment();
 	            String xmlComment = new String();
@@ -133,15 +133,15 @@ public class CarManagerXml extends XmlFile {
 	        	values.addContent(ownerNames);
 	        }
 	        root.addContent(values = new Element("kernels"));
-	        List kernels = manager.getKernelNameList();
+	        List<String> kernels = manager.getKernelNameList();
 	        for (int i=0; i<kernels.size(); i++){
-	        	String kernelNames = (String)kernels.get(i)+"%%";
+	        	String kernelNames = kernels.get(i)+"%%";
 	        	values.addContent(kernelNames);
 	        }
 	        root.addContent(values = new Element("cars"));
 	        // add entries
 	        for (int i=0; i<carList.size(); i++) {
-	        	String carId = (String)carList.get(i);
+	        	String carId = carList.get(i);
 	        	Car c = manager.getCarById(carId);
 	            values.addContent(c.store());
 	        }
@@ -152,7 +152,7 @@ public class CarManagerXml extends XmlFile {
 	        //Comment and Decoder comment fields, otherwise it can cause problems in
 	        //other parts of the program (e.g. in copying a roster)
 	        for (int i=0; i<carList.size(); i++){
-	        	String carId = (String)carList.get(i);
+	        	String carId = carList.get(i);
 	        	Car c = manager.getCarById(carId);
 	            String xmlComment = c.getComment();
 	            String tempComment = new String();
@@ -260,18 +260,18 @@ public class CarManagerXml extends XmlFile {
          
         if (root.getChild("cars") != null) {
         	
-            List l = root.getChild("cars").getChildren("car");
+            List<Element> l = root.getChild("cars").getChildren("car");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
             for (int i=0; i<l.size(); i++) {
-                manager.register(new Car((Element)l.get(i)));
+                manager.register(new Car(l.get(i)));
             }
 
-            List carList = manager.getCarsByRoadNameList();
+            List<String> carList = manager.getCarsByRoadNameList();
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < carList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	String carId = (String)carList.get(i);
+            	String carId = carList.get(i);
 	        	Car c = manager.getCarById(carId);
 
                 //Extract the Comment field and create a new string for output

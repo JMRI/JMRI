@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -155,11 +155,11 @@ public class Route implements java.beans.PropertyChangeListener {
 	 * @return route location
 	 */
     public RouteLocation getLocationByName(String name) {
-    	List routeSequenceList = getLocationsBySequenceList();
+    	List<String> routeSequenceList = getLocationsBySequenceList();
     	RouteLocation rl;
     	
     	for (int i = routeSequenceList.size()-1; i >= 0; i--){
-    		rl = getLocationById((String)routeSequenceList.get(i));
+    		rl = getLocationById(routeSequenceList.get(i));
     		if (rl.getName().equals(name))
     			return rl;
       	}
@@ -172,16 +172,16 @@ public class Route implements java.beans.PropertyChangeListener {
      * @return route location
      */
     public RouteLocation getLocationById (String id){
-    	return (RouteLocation)_routeHashTable.get(id);
+    	return _routeHashTable.get(id);
     }
     
     private List<String> getLocationsByIdList() {
         String[] arr = new String[_routeHashTable.size()];
         List<String> out = new ArrayList<String>();
-        Enumeration en = _routeHashTable.keys();
+        Enumeration<String> en = _routeHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         jmri.util.StringUtil.sort(arr);
@@ -205,10 +205,10 @@ public class Route implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			rl = getLocationById((String) sortList.get(i));
+			rl = getLocationById(sortList.get(i));
 			locNum = rl.getSequenceId();
 			for (int j = 0; j < out.size(); j++) {
-				rlout = getLocationById((String) out.get(j));
+				rlout = getLocationById(out.get(j));
 				int outLocNum = rlout.getSequenceId();
 				if (locNum < outLocNum) {
 					out.add(j, sortList.get(i));
@@ -238,11 +238,11 @@ public class Route implements java.beans.PropertyChangeListener {
     	sequenceId++;
     	//now find and adjust the other location taken by this one
     	boolean found = false;
-    	List sortList = getLocationsByIdList();
+    	List<String> sortList = getLocationsByIdList();
     	RouteLocation rladjust;
     	while (!found){
     		for (int i = 0; i < sortList.size(); i++) {
-    			rladjust = getLocationById((String) sortList.get(i));
+    			rladjust = getLocationById(sortList.get(i));
     			if (rladjust.getSequenceId() == searchId && rladjust != rl){
     				rladjust.setSequenceId(sequenceId);
     				found = true;
@@ -271,11 +271,11 @@ public class Route implements java.beans.PropertyChangeListener {
     	sequenceId--;
     	//now find and adjust the other location taken by this one
     	boolean found = false;
-    	List sortList = getLocationsByIdList();
+    	List<String> sortList = getLocationsByIdList();
     	RouteLocation rladjust;
     	while (!found){
     		for (int i = 0; i < sortList.size(); i++) {
-    			rladjust = getLocationById((String) sortList.get(i));
+    			rladjust = getLocationById(sortList.get(i));
     			if (rladjust.getSequenceId() == searchId && rladjust != rl){
     				rladjust.setSequenceId(sequenceId);
     				found = true;
@@ -304,10 +304,10 @@ public class Route implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
         if (e.getChildren("location") != null) {
-            List l = e.getChildren("location");
+            List<Element> l = e.getChildren("location");
             if (log.isDebugEnabled()) log.debug("route: "+getName()+" has "+l.size()+" locations");
             for (int i=0; i<l.size(); i++) {
-                register(new RouteLocation((Element)l.get(i)));
+                register(new RouteLocation(l.get(i)));
             }
         }
     }
@@ -322,9 +322,9 @@ public class Route implements java.beans.PropertyChangeListener {
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("comment", getComment());
-        List l = getLocationsByIdList();
+        List<String> l = getLocationsByIdList();
         for (int i=0; i<l.size(); i++) {
-        	String id = (String)l.get(i);
+        	String id = l.get(i);
         	RouteLocation rl = getLocationById(id);
 	            e.addContent(rl.store());
         }

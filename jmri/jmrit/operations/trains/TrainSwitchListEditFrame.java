@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -141,10 +141,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void buildSwitchList(boolean isPreview){
-		List locations = manager.getLocationsByNameList();
+		List<String> locations = manager.getLocationsByNameList();
 		TrainSwitchLists ts = new TrainSwitchLists();
 		for (int i =0; i<locations.size(); i++){
-			Location location = manager.getLocationById((String)locations.get(i));
+			Location location = manager.getLocationById(locations.get(i));
 			if (location.getSwitchList()){
 				ts.buildSwitchList(location);
 				ts.printSwitchList(location, isPreview);
@@ -153,17 +153,17 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void selectCheckboxes(boolean enable){
-		List locations = manager.getLocationsByNameList();
+		List<String> locations = manager.getLocationsByNameList();
 		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById((String)locations.get(i));
+			Location l = manager.getLocationById(locations.get(i));
 			l.setSwitchList(enable);
 		}
 	}
 	
 	private void updateLocationCheckboxes(){
-		List locations = manager.getLocationsByNameList();
+		List<String> locations = manager.getLocationsByNameList();
 		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById((String)locations.get(i));
+			Location l = manager.getLocationById(locations.get(i));
 			l.removePropertyChangeListener(this);
 		}
 		locationCheckBoxes.clear();
@@ -171,7 +171,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		int y = 0;		// vertical position in panel
 		
 		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById((String)locations.get(i));
+			Location l = manager.getLocationById(locations.get(i));
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
 			checkBox.setSelected(l.getSwitchList());
@@ -205,9 +205,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
 	public void dispose() {
 		manager.removePropertyChangeListener(this);
-		List locations = manager.getLocationsByNameList();
+		List<String> locations = manager.getLocationsByNameList();
 		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById((String)locations.get(i));
+			Location l = manager.getLocationById(locations.get(i));
 			l.removePropertyChangeListener(this);
 		}
 		super.dispose();

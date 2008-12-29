@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -652,14 +652,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void enableCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
+			checkBox = checkBoxes.get(i);
 			checkBox.setEnabled(enable);
 		}
 	}
 	
 	private void selectCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
+			checkBox = checkBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_track != null){
 				if (enable)
@@ -672,7 +672,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void copyCheckboxes(){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = (JCheckBox)checkBoxes.get(i);
+			checkBox = checkBoxes.get(i);
 			if (checkBox.isSelected() && _track != null)
 				_track.addTypeName(checkBox.getText());
 			else

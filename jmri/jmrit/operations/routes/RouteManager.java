@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class RouteManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -54,9 +54,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
      
     public Route getRouteByName(String name) {
     	Route l;
-    	Enumeration en =_routeHashTable.elements();
+    	Enumeration<Route> en =_routeHashTable.elements();
     	for (int i = 0; i < _routeHashTable.size(); i++){
-    		l = (Route)en.nextElement();
+    		l = en.nextElement();
     		if (l.getName().equals(name))
     			return l;
       	}
@@ -64,7 +64,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     }
     
     public Route getRouteById (String id){
-    	return (Route)_routeHashTable.get(id);
+    	return _routeHashTable.get(id);
     }
  
     /**
@@ -124,7 +124,7 @@ public class RouteManager implements java.beans.PropertyChangeListener {
      * Sort by route name
      * @return list of route ids ordered by name
      */
-    public List getRoutesByNameList() {
+    public List<String> getRoutesByNameList() {
 		// first get id list
 		List<String> sortList = getList();
 		// now re-sort
@@ -135,10 +135,10 @@ public class RouteManager implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			routeAdded = false;
-			route = getRouteById((String) sortList.get(i));
+			route = getRouteById(sortList.get(i));
 			routeName = route.getName();
 			for (int j = 0; j < out.size(); j++) {
-				route = getRouteById((String) out.get(j));
+				route = getRouteById(out.get(j));
 				String outRouteName = route.getName();
 				if (routeName.compareToIgnoreCase(outRouteName) < 0) {
 					out.add(j, sortList.get(i));
@@ -170,14 +170,14 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     	
     	for (int i=0; i<sortList.size(); i++){
     		routeAdded = false;
-    		route = getRouteById ((String)sortList.get(i));
+    		route = getRouteById (sortList.get(i));
     		try{
     			routeNumber = Integer.parseInt (route.getId());
     		}catch (NumberFormatException e) {
     			log.debug("route id number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
-    			route = getRouteById ((String)out.get(j));
+    			route = getRouteById (out.get(j));
         		try{
         			int outRouteNumber = Integer.parseInt (route.getId());
         			if (routeNumber < outRouteNumber){
@@ -199,10 +199,10 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     private List<String> getList() {
         String[] arr = new String[_routeHashTable.size()];
         List<String> out = new ArrayList<String>();
-        Enumeration en = _routeHashTable.keys();
+        Enumeration<String> en = _routeHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         jmri.util.StringUtil.sort(arr);
@@ -213,9 +213,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	box.addItem("");
-		List routes = getRoutesByNameList();
+		List<String> routes = getRoutesByNameList();
 		for (int i = 0; i < routes.size(); i++){
-			Route route = getRouteById((String)routes.get(i));
+			Route route = getRouteById(routes.get(i));
 			box.addItem(route);
 		}
     	return box;
@@ -224,9 +224,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-		List routes = getRoutesByNameList();
+		List<String> routes = getRoutesByNameList();
 		for (int i = 0; i < routes.size(); i++){
-			Route route = getRouteById((String)routes.get(i));
+			Route route = getRouteById(routes.get(i));
 			box.addItem(route);
 		}
     }

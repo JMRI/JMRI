@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -68,7 +68,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	}
      	String[] types = new String[list.size()];
      	for (int i=0; i<list.size(); i++)
-     		types[i] = (String)list.get(i);
+     		types[i] = list.get(i);
    		return types;
     }
     

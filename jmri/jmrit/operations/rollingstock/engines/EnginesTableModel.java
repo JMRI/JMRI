@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -76,7 +76,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public int findEngineByRoadNumber (String roadNumber){
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
-				Engine c = manager.getEngineById((String) sysList.get(i));
+				Engine c = manager.getEngineById(sysList.get(i));
 				if (c != null){
 					if (c.getNumber().equals(roadNumber)){
 //						log.debug("found road number match "+roadNumber);
@@ -94,12 +94,12 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      	sysList = getSelectedEngineList();
  		// and add listeners back in
 		for (int i = 0; i < sysList.size(); i++)
-			manager.getEngineById((String) sysList.get(i))
+			manager.getEngineById(sysList.get(i))
 					.addPropertyChangeListener(this);
 	}
     
-    public List getSelectedEngineList(){
-    	List list;
+    public List<String> getSelectedEngineList(){
+    	List<String> list;
 		if (_sort == SORTBYROAD)
 			list = manager.getEnginesByRoadNameList();
 		else if (_sort == SORTBYTYPE)
@@ -119,7 +119,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		return list;
     }
 
-	List sysList = null;
+	List<String> sysList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -206,7 +206,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public Object getValueAt(int row, int col) {
-    	String engineId = (String)sysList.get(row);
+    	String engineId = sysList.get(row);
     	Engine engine = manager.getEngineById(engineId);
         switch (col) {
         case NUMCOLUMN: return engine.getNumber();
@@ -218,8 +218,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case CONSISTCOLUMN: {
         	if (engine.getConsist() != null && engine.getConsist().isLeadEngine(engine))
         		return engine.getConsistName()+"*";
-        	else
-        		return engine.getConsistName();
+        	return engine.getConsistName();
         }
         case LOCATIONCOLUMN: {
         	String s ="";
@@ -246,7 +245,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EnginesSetFrame esf = null;
     
     public void setValueAt(Object value, int row, int col) {
-		String engineId = (String)sysList.get(row);
+		String engineId = sysList.get(row);
     	Engine engine = manager.getEngineById(engineId);
         switch (col) {
         case SETCOLUMN:
@@ -299,7 +298,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Engine c = manager.getEngineById((String) sysList.get(i));
+				Engine c = manager.getEngineById(sysList.get(i));
 				if (c != null)
 					c.removePropertyChangeListener(this);
 			}

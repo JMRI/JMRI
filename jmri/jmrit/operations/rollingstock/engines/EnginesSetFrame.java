@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -276,11 +276,11 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				} 
 				if (rd != null){
 					// now determine if destination is after location
-					List routeSequence = route.getLocationsBySequenceList();
+					List<String> routeSequence = route.getLocationsBySequenceList();
 					boolean foundLoc = false;	// when true, found the engine's location in the route
 					boolean foundDes = false;
 					for (int i=0; i<routeSequence.size(); i++){
-						String locId = (String)routeSequence.get(i);
+						String locId = routeSequence.get(i);
 						RouteLocation location = route.getLocationById(locId);
 						if (rl.getName().equals(location.getName())){
 							foundLoc = true;
@@ -306,9 +306,9 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 						rb.getString("engineInConsist"),
 						rb.getString("enginePartConsist"),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-					List engines = _engine.getConsist().getEngines();
+					List<Engine> engines = _engine.getConsist().getEngines();
 					for(int i=0; i<engines.size(); i++){
-						Engine engine = (Engine)engines.get(i);
+						Engine engine = engines.get(i);
 						if (engine == _engine)
 							continue;
 						if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {

@@ -7,7 +7,7 @@ import java.util.*;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Kernel {
 	
@@ -65,12 +65,12 @@ public class Kernel {
 		_cars.remove(car);
 		if(isLeadCar(car) && _cars.size()>0){
 			// need a new lead car
-			setLeadCar((Car)_cars.get(0));
+			setLeadCar(_cars.get(0));
 		}
 		firePropertyChange("listLength", Integer.toString(oldSize), new Integer(_cars.size()));
 	}
 	
-	public List getCars(){
+	public List<Car> getCars(){
 		return _cars;
 	}
 	
@@ -104,8 +104,7 @@ public class Kernel {
 	public boolean isLeadCar(Car car){
 		if(car == _leadCar)
 			return true;
-		else
-			return false;
+		return false;
 	}
 	
 	public void setLeadCar(Car car){
@@ -114,7 +113,7 @@ public class Kernel {
 	
 	public void dispose(){
 		while (_cars.size()>0){
-			Car car = (Car)_cars.get(0);
+			Car car = _cars.get(0);
 			if (car != null){
 				car.setKernel(null);
 			}

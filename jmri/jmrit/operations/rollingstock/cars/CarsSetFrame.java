@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -281,11 +281,11 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				} 
 				if (rd != null){
 					// now determine if destination is after location
-					List routeSequence = route.getLocationsBySequenceList();
+					List<String> routeSequence = route.getLocationsBySequenceList();
 					boolean foundLoc = false;	// when true, found the car's location in the route
 					boolean foundDes = false;
 					for (int i=0; i<routeSequence.size(); i++){
-						String locId = (String)routeSequence.get(i);
+						String locId = routeSequence.get(i);
 						RouteLocation location = route.getLocationById(locId);
 						if (rl.getName().equals(location.getName())){
 							foundLoc = true;
@@ -311,9 +311,9 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 						rb.getString("carInKernel"),
 						rb.getString("carPartKernel"),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-					List kCars = _car.getKernel().getCars();
+					List<Car> kCars = _car.getKernel().getCars();
 					for(int i=0; i<kCars.size(); i++){
-						Car kCar = (Car)kCars.get(i);
+						Car kCar = kCars.get(i);
 						if (kCar == _car)
 							continue;
 						if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {

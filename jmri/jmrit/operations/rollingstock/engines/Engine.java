@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class Engine extends RollingStock {
 	
@@ -128,8 +128,7 @@ public class Engine extends RollingStock {
 	public String getConsistName() {
 		if (_consist != null)
 			return _consist.getName();
-		else
-			return "";
+		return "";
 	}
 
 	/**

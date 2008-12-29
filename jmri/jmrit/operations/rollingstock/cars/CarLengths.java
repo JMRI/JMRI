@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
@@ -61,7 +61,7 @@ public class CarLengths implements java.beans.PropertyChangeListener {
     	}
      	String[] lengths = new String[list.size()];
      	for (int i=0; i<list.size(); i++)
-     		lengths[i] = (String)list.get(i);
+     		lengths[i] = list.get(i);
    		return lengths;
     }
     

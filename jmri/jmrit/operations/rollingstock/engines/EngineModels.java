@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -105,7 +105,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	}
      	String[] models = new String[list.size()];
      	for (int i=0; i<list.size(); i++)
-     		models[i] = (String)list.get(i);
+     		models[i] = list.get(i);
    		return models;
     }
     
@@ -154,7 +154,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     }
     
     public String getModelHorsepower(String model){
-    	return (String)_engineHorsepowerHashTable.get(model);
+    	return _engineHorsepowerHashTable.get(model);
     }
     
     public void setModelLength(String model, String horsepower){
@@ -162,7 +162,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     }
     
     public String getModelLength(String model){
-    	return (String)_engineLengthHashTable.get(model);
+    	return _engineLengthHashTable.get(model);
     }
     
     public void setModelType(String model, String type){
@@ -170,7 +170,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     }
     
     public String getModelType(String model){
-    	return (String)_engineTypeHashTable.get(model);
+    	return _engineTypeHashTable.get(model);
     }
     
     private void loadDefaults(){

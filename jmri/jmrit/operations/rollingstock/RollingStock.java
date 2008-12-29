@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -159,15 +159,14 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getWeightTons() {
 		if (!_weightTons.equals(""))
 			return _weightTons;
-		else {
-			double weight = 0;
-			try{
-				weight = Double.parseDouble(getWeight());
-			}catch (Exception e){
-				// log.debug("Weight not set for rolling stock ("+getId()+")");
-			}
-			return Integer.toString((int)(weight*Setup.getScaleTonRatio()));
+
+		double weight = 0;
+		try{
+			weight = Double.parseDouble(getWeight());
+		}catch (Exception e){
+			// log.debug("Weight not set for rolling stock ("+getId()+")");
 		}
+		return Integer.toString((int)(weight*Setup.getScaleTonRatio()));
 	}
 
 	public void setBuilt(String built) {
@@ -192,8 +191,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getLocationName() {
 		if (_location != null)
 			return _location.getName();
-		else
-			return "";
+		return "";
 	}
 	
 	/**
@@ -203,8 +201,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getLocationId() {
 		if (_location != null)
 			return _location.getId();
-		else
-			return "";
+		return "";
 	}
 	
 	public Track getTrack() {
@@ -218,8 +215,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getTrackName() {
 		if (_trackLocation != null)
 			return _trackLocation.getName();
-		else
-			return "";
+		return "";
 	}
 	
 	/**
@@ -229,8 +225,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getTrackId() {
 		if (_trackLocation != null)
 			return _trackLocation.getId();
-		else
-			return "";
+		return "";
 	}
 	
 	/**
@@ -419,15 +414,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getDestinationName() {
 		if (_destination != null)
 			return _destination.getName();
-		else
-			return "";
+		return "";
 	}
 	
 	public String getDestinationId() {
 		if (_destination != null)
 			return _destination.getId();
-		else
-			return "";
+		return "";
 	}
 
 	public Track getDestinationTrack() {
@@ -437,15 +430,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getDestinationTrackName() {
 		if (_trackDestination != null)
 			return _trackDestination.getName();
-		else
-			return "";
+		return "";
 	}
 	
 	public String getDestinationTrackId() {
 		if (_trackDestination != null)
 			return _trackDestination.getId();
-		else
-			return "";
+		return "";
 	}
 	
 	public void setMoves(int moves){
@@ -491,8 +482,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getRouteLocationId(){
 		if(_routeLocation != null)
 			return _routeLocation.getId();
-		else
-			return "";
+		return "";
 	}
 	
 	public String getSavedRouteId(){
@@ -516,8 +506,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getRouteDestinationId(){
 		if(_routeDestination != null)
 			return _routeDestination.getId();
-		else
-			return "";
+		return "";
 	}
 
 	public void setOwner(String owner) {

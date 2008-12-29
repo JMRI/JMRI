@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -58,13 +58,13 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
  		list = _route.getLocationsBySequenceList();
 		// and add them back in
 		for (int i = 0; i < list.size(); i++){
-			log.debug("location ids: " + (String) list.get(i));
-			_route.getLocationById((String) list.get(i))
+			log.debug("location ids: " + list.get(i));
+			_route.getLocationById(list.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
 
-	List list = new ArrayList();
+	List<String> list = new ArrayList<String>();
     
 	void initTable(JTable table, Route route) {
 		_route = route;
@@ -164,7 +164,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
 
     public Object getValueAt(int row, int col) {
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
         switch (col) {
         case IDCOLUMN: return rl.getId();
         case NAMECOLUMN: return rl.getName();
@@ -235,21 +235,21 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     
     private void moveUpRouteLocation (int row){
     	log.debug("move location up");
-		String id = (String)list.get(row);
+		String id = list.get(row);
 		RouteLocation rl = _route.getLocationById(id);
     	_route.moveLocationUp(rl);
     }
     
     private void moveDownRouteLocation (int row){
     	log.debug("move location down");
-		String id = (String)list.get(row);
+		String id = list.get(row);
 		RouteLocation rl = _route.getLocationById(id);
     	_route.moveLocationDown(rl);
     }
 
     private void deleteRouteLocation (int row){
     	log.debug("Delete location");
-		String id = (String)list.get(row);
+		String id = list.get(row);
 		RouteLocation rl = _route.getLocationById(id);
     	_route.deleteLocation(rl);
     }
@@ -261,13 +261,13 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
    }
     
     private void setTrainDirection (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	_trainDirection = Setup.getDirectionInt((String)((JComboBox)value).getSelectedItem());
     	rl.setTrainDirection(_trainDirection);
     }
     
     private void setMaxTrainMoves (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	int moves;
     	try{
      		moves = Integer.parseInt(value.toString());
@@ -286,12 +286,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setDrop (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	rl.setCanDrop(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
     }
     
     private void setPickup (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	rl.setCanPickup(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
     }
     
@@ -302,7 +302,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setMaxTrainLength (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	int length;
     	try{
      		length = Integer.parseInt(value.toString());
@@ -322,7 +322,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setGrade (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	double grade;
     	try{
      		grade = Double.parseDouble(value.toString());
@@ -341,7 +341,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setTrainIconX (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	int x;
     	try{
      		x = Integer.parseInt(value.toString());
@@ -353,7 +353,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
     
     private void setTrainIconY (Object value, int row){
-    	RouteLocation rl = _route.getLocationById((String)list.get(row));
+    	RouteLocation rl = _route.getLocationById(list.get(row));
     	int y;
     	try{
      		y = Integer.parseInt(value.toString());
@@ -392,7 +392,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private void removePropertyChangeRouteLocations() {
     	for (int i = 0; i < list.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		RouteLocation rl = _route.getLocationById((String) list.get(i));
+    		RouteLocation rl = _route.getLocationById(list.get(i));
     		if (rl != null)
     			rl.removePropertyChangeListener(this);
     	}

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * This routine will remove all engines from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -29,7 +29,6 @@ public class DeleteEngineRosterAction extends AbstractAction {
 	
     public DeleteEngineRosterAction(String actionName, Component frame) {
         super(actionName);
-
     }
 	
 	public void actionPerformed(ActionEvent ae) {
@@ -37,9 +36,9 @@ public class DeleteEngineRosterAction extends AbstractAction {
 				"Are you sure you want to delete all the engines in your roster?", "Delete all engines?",
 				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 			log.debug("removing all engines from roster");
-			List engines = manager.getEnginesByNumberList();
+			List<String> engines = manager.getEnginesByNumberList();
 			for (int i=0; i<engines.size(); i++){
-				Engine engine = manager.getEngineById((String)engines.get(i));
+				Engine engine = manager.getEngineById(engines.get(i));
 				manager.deregister(engine);
 			}
 		}

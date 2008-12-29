@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -67,7 +67,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         String type;
         String weight;
         String color;
-        List cars = panel.getSortByList();
+        List<String> cars = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
 					+ "\t" + rb.getString("Type") + "\t"
@@ -77,7 +77,7 @@ public class PrintCarRosterAction  extends AbstractAction {
 					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<cars.size(); i++){
-        		Car car = manager.getCarById((String)cars.get(i));
+        		Car car = manager.getCarById(cars.get(i));
         		location = "";
         		if (!car.getLocationName().equals("")){
         			location = car.getLocationName() + " - " + car.getTrackName();

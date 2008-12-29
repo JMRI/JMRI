@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	
@@ -59,12 +59,11 @@ public class PrintEngineRosterAction  extends AbstractAction {
             return;
         }
         
- 
         // Loop through the Roster, printing as needed
         String newLine = "\n";
         String location;
         String model;		
-        List engines = panel.getSortByList();
+        List<String> engines = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
 					+ "\t" + rb.getString("Model") + "\t"
@@ -73,26 +72,14 @@ public class PrintEngineRosterAction  extends AbstractAction {
 					+ rb.getString("Location") + newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<engines.size(); i++){
-        		Engine engine = manager.getEngineById((String)engines.get(i));
+        		Engine engine = manager.getEngineById(engines.get(i));
         		location = "";
         		if (!engine.getLocationName().equals("")){
         			location = engine.getLocationName() + " - " + engine.getTrackName();
         		}
          		model = engine.getModel();
-        		switch (model.length()){
-        		case 0: model = model+" ";
-        		case 1: model = model+" ";
-        		case 2: model = model+" ";
-        		case 3: model = model+" ";
-        		case 4: model = model+" ";
-        		case 5: model = model+" ";
-        		case 6: model = model+" ";
-        		case 7: model = model+" ";
-        		case 8: model = model+" ";
-        		case 9: model = model+" ";
-        		case 10: model = model+" ";
-        		case 11: model = model+" ";
-        		}
+         		for (int j=model.length(); j<11; j++)
+         			model += " ";
          		
 				s = engine.getNumber() + "\t" + engine.getRoad() + "\t"
 						+ model + " " + engine.getLength() + "\t "

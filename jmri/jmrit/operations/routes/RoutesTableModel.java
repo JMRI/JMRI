@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -65,12 +65,12 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++){
 //			log.debug("route ids: " + (String) sysList.get(i));
-			manager.getRouteById((String) sysList.get(i))
+			manager.getRouteById(sysList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
 
-	List sysList = null;
+	List<String> sysList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -128,7 +128,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public Object getValueAt(int row, int col) {
-    	String locId = (String)sysList.get(row);
+    	String locId = sysList.get(row);
     	Route l = manager.getRouteById(locId);
         switch (col) {
         case IDCOLUMN: return l.getId();
@@ -154,7 +154,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     		lef.dispose();
    		lef = new RouteEditFrame();
     	lef.setTitle(rb.getString("TitleRouteEdit"));
-    	Route route = manager.getRouteById((String)sysList.get(row));
+    	Route route = manager.getRouteById(sysList.get(row));
     	lef.initComponents(route);
     	
     }
@@ -178,7 +178,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Route l = manager.getRouteById((String) sysList.get(i));
+    			Route l = manager.getRouteById(sysList.get(i));
     			if (l != null)
     				l.removePropertyChangeListener(this);
     		}

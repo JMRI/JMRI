@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -512,7 +512,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			String item = (String) lengthComboBox.getSelectedItem();
 			try {
 				double carLength = Double.parseDouble(item)*12/Setup.getScaleRatio();
-				double carWeight = (double) (Setup.getInitalWeight() + carLength
+				double carWeight = (Setup.getInitalWeight() + carLength
 						* Setup.getAddWeight()) / 1000;
 				NumberFormat nf = NumberFormat.getNumberInstance();
 				nf.setMaximumFractionDigits(1);

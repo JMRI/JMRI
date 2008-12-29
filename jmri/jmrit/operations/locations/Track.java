@@ -14,7 +14,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -260,7 +260,7 @@ public class Track implements java.beans.PropertyChangeListener {
     public String[] getTypeNames(){
       	String[] types = new String[_typeList.size()];
      	for (int i=0; i<_typeList.size(); i++)
-     		types[i] = (String)_typeList.get(i);
+     		types[i] = _typeList.get(i);
    		return types;
     }
     
@@ -312,7 +312,7 @@ public class Track implements java.beans.PropertyChangeListener {
     public String[] getRoadNames(){
       	String[] roads = new String[_roadList.size()];
      	for (int i=0; i<_roadList.size(); i++)
-     		roads[i] = (String)_roadList.get(i);
+     		roads[i] = _roadList.get(i);
      	if (_roadList.size() == 0)
      		return roads;
      	jmri.util.StringUtil.sort(roads);
@@ -380,7 +380,7 @@ public class Track implements java.beans.PropertyChangeListener {
     public String[] getDropIds(){
       	String[] names = new String[_dropList.size()];
      	for (int i=0; i<_dropList.size(); i++)
-     		names[i] = (String)_dropList.get(i);
+     		names[i] = _dropList.get(i);
      	if (_dropList.size() == 0)
      		return names;
      	jmri.util.StringUtil.sort(names);
@@ -433,7 +433,7 @@ public class Track implements java.beans.PropertyChangeListener {
     public String[] getPickupIds(){
       	String[] names = new String[_pickupList.size()];
      	for (int i=0; i<_pickupList.size(); i++)
-     		names[i] = (String)_pickupList.get(i);
+     		names[i] = _pickupList.get(i);
      	if (_pickupList.size() == 0)
      		return names;
      	jmri.util.StringUtil.sort(names);

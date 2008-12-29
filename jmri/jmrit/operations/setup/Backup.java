@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class Backup extends XmlFile {
 
@@ -173,16 +173,15 @@ public class Backup extends XmlFile {
 	private String operationsDirectory = XmlFile.prefsDir() + "operations";
 		
 	
-	private String directoryName = "";
+	private String defaultDirectoryName = "";
 	public String getDirectoryName(){
-		if (directoryName.equals(""))
+		if (defaultDirectoryName.equals(""))
 			return getDate();
-		else
-			return directoryName;
+		return defaultDirectoryName;
 	}
 	
 	public void setDirectoryName(String name){
-		directoryName = name;
+		defaultDirectoryName = name;
 	}
 	
 	private String getDate() {
