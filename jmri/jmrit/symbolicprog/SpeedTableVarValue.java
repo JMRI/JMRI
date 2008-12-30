@@ -8,12 +8,16 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -59,7 +63,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -70,13 +74,15 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     int _max;
     int _range;
 
+    List<JCheckBox> stepCheckBoxes;
+    
     /**
      * Create the object with a "standard format ctor".
      */
     public SpeedTableVarValue(String name, String comment, String cvName,
                               boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
-                              Vector v, JLabel status, String stdname, int entries) {
+                              Vector<CvValue> v, JLabel status, String stdname, int entries) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
@@ -85,7 +91,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         _range = maxVal-minVal;
 
         models = new BoundedRangeModel[nValues];
-
+        
         // create the set of models
         for (int i=0; i<nValues; i++) {
             // create each model
@@ -97,7 +103,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // Note that the default values in the CVs are zero, but are the ramp
             // values here.  We leave that as work item 177, and move on to set the
             // CV states to "FromFile"
-            CvValue c = (CvValue)_cvVector.elementAt(getCvNum()+i);
+            CvValue c = _cvVector.elementAt(getCvNum()+i);
             c.setValue(_range*i/(nValues-1)+_min);
             c.addPropertyChangeListener(this);
             c.setState(CvValue.FROMFILE);
@@ -120,7 +126,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         CvValue[] retval = new CvValue[nValues];
         int i;
         for (i=0; i<nValues; i++)
-            retval[i] = ((CvValue)_cvVector.elementAt(getCvNum()+i));
+            retval[i] = _cvVector.elementAt(getCvNum()+i);
         return retval;
     }
 
@@ -150,10 +156,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         if (models[i].getValue() != value)
             models[i].setValue(value);
         // update the CV
-        ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        _cvVector.elementAt(getCvNum()+i).setValue(value);
         // if programming, that's it
         if (isReading || isWriting) return;
-        else adjust(i, value);
+        else {
+            forceMonotonic(i, value);
+            matchPoints(i);
+        }
     }
 
     /**
@@ -163,34 +172,93 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * @param i number (index) of the entry
      * @param value  new value
      */
-        void adjust(int i, int value) {
-            // check the neighbors, and force them if needed
-        if (i>0) {
+    void forceMonotonic(int modifiedStepIndex, int value) {
+        // check the neighbors, and force them if needed
+        if (modifiedStepIndex > 0) {
             // left neighbour
-            if (models[i-1].getValue() > value)  {
-                setModel(i-1, value);
+            if (models[modifiedStepIndex-1].getValue() > value)  {
+                setModel(modifiedStepIndex-1, value);
             }
         }
-        if (i<nValues-1) {
+        if (modifiedStepIndex < nValues-1) {
             // right neighbour
-            if (value > models[i+1].getValue()) {
-                setModel(i+1, value);
+            if (value > models[modifiedStepIndex+1].getValue()) {
+                setModel(modifiedStepIndex+1, value);
             }
         }
-        }
+    }
 
+    /**
+     * If there are fixed points specified, set linear 
+     * step settings to them.
+     *
+     */
+    void matchPoints(int modifiedStepIndex) {
+        // don't do the match if this step isn't checked,
+        // which is necessary to keep from an infinite 
+        // recursion
+        if (!stepCheckBoxes.get(modifiedStepIndex).isSelected()) return;
+        matchPointsLeft(modifiedStepIndex);
+        matchPointsRight(modifiedStepIndex);
+    }
+    
+    void matchPointsLeft(int modifiedStepIndex) {
+        // search for checkbox if any
+        for (int i = modifiedStepIndex-1; i >= 0 ; i--) {
+            if (stepCheckBoxes.get(i).isSelected()) {
+                // now have two ends to adjust
+                int leftval = _cvVector.elementAt(getCvNum()+i).getValue();
+                int rightval = _cvVector.elementAt(getCvNum()+modifiedStepIndex).getValue();
+                int steps = modifiedStepIndex-i;
+                log.debug("left found "+leftval+" "+rightval+" "+steps);
+                // loop to set values
+                for (int j = i+1; j < modifiedStepIndex; j++) {
+                    int newValue = leftval + (rightval-leftval)*(j-i)/steps;
+                    log.debug("left set "+j+" to "+newValue);
+                    if (_cvVector.elementAt(getCvNum()+j).getValue() != newValue)
+                        _cvVector.elementAt(getCvNum()+j).setValue(newValue);
+                }
+                return;
+            }
+        }
+        // no match, so don't adjust
+        return;
+    }
+    
+    void matchPointsRight(int modifiedStepIndex) {
+        // search for checkbox if any
+        for (int i = modifiedStepIndex+1; i < nValues ; i++) { // need at least one intervening point
+            if (stepCheckBoxes.get(i).isSelected()) {
+                // now have two ends to adjust
+                int rightval = _cvVector.elementAt(getCvNum()+i).getValue();
+                int leftval = _cvVector.elementAt(getCvNum()+modifiedStepIndex).getValue();
+                int steps = i-modifiedStepIndex;
+                log.debug("right found "+leftval+" "+rightval+" "+steps);
+                // loop to set values
+                for (int j = modifiedStepIndex+1; j < i; j++) {
+                    int newValue = leftval + (rightval-leftval)*(j-modifiedStepIndex)/steps;
+                    log.debug("right set "+j+" to "+newValue);
+                    if (_cvVector.elementAt(getCvNum()+j).getValue() != newValue)
+                        _cvVector.elementAt(getCvNum()+j).setValue(newValue);
+                }
+                return;
+            }
+        }
+        // no match, so don't adjust
+        return;
+    }
     public int getState()  {
         int i;
         for (i=0; i<nValues; i++)
-            if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == UNKNOWN ) return UNKNOWN;
+            if (_cvVector.elementAt(getCvNum()+i).getState() == UNKNOWN ) return UNKNOWN;
         for (i=0; i<nValues; i++)
-            if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == EDITED ) return EDITED;
+            if (_cvVector.elementAt(getCvNum()+i).getState() == EDITED ) return EDITED;
         for (i=0; i<nValues; i++)
-            if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == FROMFILE ) return FROMFILE;
+            if (_cvVector.elementAt(getCvNum()+i).getState() == FROMFILE ) return FROMFILE;
         for (i=0; i<nValues; i++)
-            if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == READ ) return READ;
+            if (_cvVector.elementAt(getCvNum()+i).getState() == READ ) return READ;
         for (i=0; i<nValues; i++)
-            if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == STORED ) return STORED;
+            if (_cvVector.elementAt(getCvNum()+i).getState() == STORED ) return STORED;
         log.error("getState did not decode a possible state");
         return UNKNOWN;
     }
@@ -230,6 +298,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     public Component getRep(String format)  {
+        final int GRID_Y_BUTTONS = 3;
         // put together a new panel in scroll pane
         JPanel j = new JPanel();
 
@@ -237,11 +306,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         GridBagConstraints cs = new GridBagConstraints();
         j.setLayout(g);
 
+        stepCheckBoxes = new ArrayList<JCheckBox>();
+
         for (int i=0; i<nValues; i++) {
             cs.gridy = 0;
             cs.gridx = i;
 
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum()+i);
+            CvValue cv = _cvVector.elementAt(getCvNum()+i);
             JSlider s = new VarSlider(models[i], cv, i+1);
             s.setOrientation(JSlider.VERTICAL);
             s.addChangeListener(this);
@@ -257,7 +328,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             Component v = decVal.getValue();
             ((JTextField)v).setToolTipText("Step "+(i+1)+" CV "+(getCvNum()+i));
-            ((JComponent)v).setBorder(null);
+            ((JComponent)v).setBorder(null);  // pack tighter
             
             g.setConstraints(v, cs);
 
@@ -270,55 +341,63 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             g.setConstraints(s, cs);
 
             j.add(s);
+
+            cs.gridy++;
+            JCheckBox b = new JCheckBox();
+            b.setToolTipText("Check to fix this point when adjusting; uncheck to adjust individually");
+            stepCheckBoxes.add(b);
+
+            g.setConstraints(b, cs);
+            j.add(b, cs);
         }
 
         // add control buttons
         JPanel k = new JPanel();
         JButton b;
         k.add(b = new JButton("Force Straight"));
-        k.setToolTipText("Insert straight line between min and max");
+        b.setToolTipText("Insert straight line between min and max");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doForceStraight(e);
                 }
             });
         k.add(b = new JButton("Match ends"));
-        k.setToolTipText("Insert a straight line between existing endpoints");
+        b.setToolTipText("Insert a straight line between existing endpoints");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doMatchEnds(e);
                 }
             });
         k.add(b = new JButton("Constant ratio curve"));
-        k.setToolTipText("Insert a constant ratio curve between existing endpoints");
+        b.setToolTipText("Insert a constant ratio curve between existing endpoints");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doRatioCurve(e);
                 }
             });
         k.add(b = new JButton("Log curve"));
-        k.setToolTipText("Insert a logarithmic curve between existing endpoints");
+        b.setToolTipText("Insert a logarithmic curve between existing endpoints");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLogCurve(e);
                 }
             });
         k.add(b = new JButton("Shift left"));
-        k.setToolTipText("Shift the existing curve left one slot");
+        b.setToolTipText("Shift the existing curve left one slot");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doShiftLeft(e);
                 }
             });
         k.add(b = new JButton("Shift right"));
-        k.setToolTipText("Shift the existing curve right one slot");
+        b.setToolTipText("Shift the existing curve right one slot");
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doShiftRight(e);
                 }
             });
 
-        cs.gridy=2;
+        cs.gridy = GRID_Y_BUTTONS;
         cs.gridx = 0;
         cs.gridwidth = GridBagConstraints.RELATIVE;
         g.setConstraints(k, cs);
@@ -337,24 +416,24 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set the values to a straight line from _min to _max
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
-        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(_min);
-        ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).setValue(_max);
+        _cvVector.elementAt(getCvNum()+0).setValue(_min);
+        _cvVector.elementAt(getCvNum()+nValues-1).setValue(_max);
         doMatchEnds(e);
     }
     /**
      * Set the values to a straight line from existing ends
      */
     void doMatchEnds(java.awt.event.ActionEvent e) {
-        int first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
-        int last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        int first = _cvVector.elementAt(getCvNum()+0).getValue();
+        int last = _cvVector.elementAt(getCvNum()+nValues-1).getValue();
         log.debug(" first="+first+" last="+last);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(last);
+        _cvVector.elementAt(getCvNum()+0).setValue(last);
         // and push each one down
         for (int i = 0; i<nValues; i++) {
             int value = first+i*(last-first)/(nValues-1);
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+            _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
     }
 
@@ -362,19 +441,19 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set a constant ratio curve
      */
     void doRatioCurve(java.awt.event.ActionEvent e) {
-        double first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
+        double first = _cvVector.elementAt(getCvNum()+0).getValue();
         if (first<1.) first=1.;
-        double last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        double last = _cvVector.elementAt(getCvNum()+nValues-1).getValue();
         if (last<first+1) last = first+1.;
         double step = Math.log(last/first)/(nValues-1);
         log.debug("log ratio step is "+step);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue((int)Math.round(last));
+        _cvVector.elementAt(getCvNum()+0).setValue((int)Math.round(last));
         // and push each one down
         for (int i = 0; i<nValues; i++) {
             int value = (int)(Math.floor(first*Math.exp(step*i)));
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+            _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
     }
 
@@ -382,13 +461,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set a log curve
      */
     void doLogCurve(java.awt.event.ActionEvent e) {
-        double first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
-        double last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        double first = _cvVector.elementAt(getCvNum()+0).getValue();
+        double last = _cvVector.elementAt(getCvNum()+nValues-1).getValue();
         if (last<first+1.) last = first+1.;
         double factor = 1./10.;
         // to avoid repeatedly bumping up later values, push the second one
         // all the way up now
-        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setValue((int)Math.round(last));
+        _cvVector.elementAt(getCvNum()+1).setValue((int)Math.round(last));
         // and push each one down (except the first, left as it was)
         double previous = first;
         double ratio = Math.pow(1.-factor, nValues-1.);
@@ -396,7 +475,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         for (int i = 1; i<nValues; i++) {
             previous = limit-(limit-first)*ratio/Math.pow(1.-factor, nValues-1.-i);
             int value = (int)(Math.floor(previous));
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+            _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
     }
 
@@ -405,8 +484,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
         for (int i = 0; i<nValues-1; i++) {
-            int value = ((CvValue)_cvVector.elementAt(getCvNum()+i+1)).getValue();
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+            int value = _cvVector.elementAt(getCvNum()+i+1).getValue();
+            _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
     }
 
@@ -415,8 +494,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void doShiftRight(java.awt.event.ActionEvent e) {
         for (int i = nValues-1; i>0; i--) {
-            int value = ((CvValue)_cvVector.elementAt(getCvNum()+i-1)).getValue();
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+            int value = _cvVector.elementAt(getCvNum()+i-1).getValue();
+            _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
     }
 
@@ -448,12 +527,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * @param state
      */
     public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        _cvVector.elementAt(getCvNum()).setState(state);
     }
 
     public boolean isChanged() {
         for (int i=0; i<nValues; i++) {
-            if (considerChanged((CvValue)_cvVector.elementAt(getCvNum()+i))) {
+            if (considerChanged(_cvVector.elementAt(getCvNum()+i)) ) {
                 // this one is changed, return true
                 return true;
             }
@@ -526,7 +605,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // read operation start/continue
         // check for retry if needed
         if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (((CvValue)_cvVector.elementAt(getCvNum()+_progState)).getState() != CvValue.READ) ) {
+                && (_cvVector.elementAt(getCvNum()+_progState).getState() != CvValue.READ) ) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {    
@@ -544,7 +623,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             return;
         }
         // not done, proceed to do the next
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
+        CvValue cv = _cvVector.elementAt(getCvNum()+_progState);
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
         if (!onlyChanges || considerChanged(cv) ) cv.read(_status);
@@ -555,7 +634,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // write operation start/continue
         // check for retry if needed
         if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (((CvValue)_cvVector.elementAt(getCvNum()+_progState)).getState() != CvValue.STORED) ) {
+                && (_cvVector.elementAt(getCvNum()+_progState).getState() != CvValue.STORED) ) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {    
@@ -571,7 +650,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             setBusy(false);
             return;
         }
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
+        CvValue cv = _cvVector.elementAt(getCvNum()+_progState);
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
         if (!onlyChanges || considerChanged(cv) ) cv.write(_status);
@@ -592,17 +671,17 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             else return;
         }
         else if (e.getPropertyName().equals("State")) {
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            CvValue cv = _cvVector.elementAt(getCvNum());
             if (log.isDebugEnabled()) log.debug("CV State changed to "+cv.getState());
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
             // find the CV that sent this
-            CvValue cv = (CvValue)e.getSource();
+            CvValue cv = (CvValue) e.getSource();
             int value = cv.getValue();
             // find the index of that CV
             for (int i=0; i<nValues; i++) {
-                if ((CvValue)_cvVector.elementAt(getCvNum()+i) == cv) {
+                if (_cvVector.elementAt(getCvNum()+i) == cv) {
                     // this is the one, so use this i
                     setModel(i, value);
                     break;
@@ -656,7 +735,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         if (log.isDebugEnabled()) log.debug("dispose");
         // the connection is to cvNum through cvNum+nValues (28 values typical)
         for (int i=0; i<nValues; i++) {
-            ((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
+            _cvVector.elementAt(getCvNum()+i).removePropertyChangeListener(this);
         }
 
         // do something about the VarSlider objects
