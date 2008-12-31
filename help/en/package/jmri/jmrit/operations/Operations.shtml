@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.24 2008-12-30 20:22:18 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.25 2008-12-31 21:05:31 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -84,9 +84,17 @@ length.
 <A NAME="Settings"></A>
 <H2>Settings</H2>
 
-This is where you provide the name of your railroad and the direction
-the trains travel on your railroad. Enter the railroad name in the field
-across from "Railroad Name".
+The Settings panel contains general parameters for the operations
+program. Select from the JMRI main window "Tools->Operations->Settings"
+to load the Settings panel. The Setting panel has fields and buttons to
+allow you to enter your railroad name, the directions your train's
+travel, the scale that you are using, printer and icon controls, and the
+ability to create backups and restore files for operations.
+
+<H3>Railroad Name</H3>
+
+Enter your railroad name in the field across from "Railroad Name". This
+name will show up on your manifests.
 
 <H3>Train Directions</H3>
 
