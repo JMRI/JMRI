@@ -63,7 +63,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -194,6 +194,19 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      *
      */
     void matchPoints(int modifiedStepIndex) {
+        if (stepCheckBoxes == null) {
+            // if no stepCheckBoxes, then GUI not present, and
+            // no need to use the matchPoints algorithm
+            return;
+        }
+        if (modifiedStepIndex<0)
+            log.error("matchPoints called with index too small: "+modifiedStepIndex);
+        if (modifiedStepIndex >= stepCheckBoxes.size())
+            log.error("matchPoints called with index too large: "+modifiedStepIndex
+                        +" >= "+stepCheckBoxes.size());
+        if (stepCheckBoxes.get(modifiedStepIndex) == null)
+            log.error("matchPoints found null checkbox "+modifiedStepIndex);
+            
         // don't do the match if this step isn't checked,
         // which is necessary to keep from an infinite 
         // recursion
