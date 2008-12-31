@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import jmri.InstanceManager;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -65,7 +66,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -79,9 +80,9 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	private int waiting = 0;						// to catch responses not intended for this module
 	
 	private static final String QUESTION = "  Add  ";// The three possible states for a turnout
-	private static final String CLOSED = "Closed ";
-	private static final String THROWN = "Thrown";	
-	private static final String CLOSED_NCE = "Normal ";
+	private static final String CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
+	private static final String THROWN = InstanceManager.turnoutManagerInstance().getThrownText();	
+	private static final String CLOSED_NCE = " Normal ";
 	private static final String THROWN_NCE = "Reverse";	
 	
 	private static final String DELETE = "Delete";
@@ -209,11 +210,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         macroReply.setText("unknown"); 
         macroReply.setVisible(true);
 
-        previousButton.setText("Previous");
+        previousButton.setText("  Previous  ");
         previousButton.setVisible(true);
         previousButton.setToolTipText("Search for macro decrementing");
         
-        nextButton.setText("   Next   ");
+        nextButton.setText("      Next      "); //pad out for worse case of turnout state names
         nextButton.setVisible(true);
         nextButton.setToolTipText("Search for macro incrementing");
         
@@ -353,7 +354,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
         // set frame size for display
 		pack();
-		if ( (getWidth()<400) && (getHeight()<400)) setSize(400, 400);
+		if ((getWidth()<400) && (getHeight()<400)) setSize(400, 400);
     }
  
     // Previous, Next, Get, Save, Restore & Backup buttons
