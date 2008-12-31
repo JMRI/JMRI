@@ -63,7 +63,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -319,7 +319,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         GridBagConstraints cs = new GridBagConstraints();
         j.setLayout(g);
 
-        stepCheckBoxes = new ArrayList<JCheckBox>();
+        initStepCheckBoxes();
 
         for (int i=0; i<nValues; i++) {
             cs.gridy = 0;
@@ -356,9 +356,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             j.add(s);
 
             cs.gridy++;
-            JCheckBox b = new JCheckBox();
-            b.setToolTipText("Check to fix this point when adjusting; uncheck to adjust individually");
-            stepCheckBoxes.add(b);
+            JCheckBox b = stepCheckBoxes.get(i);
 
             g.setConstraints(b, cs);
             j.add(b, cs);
@@ -425,6 +423,15 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
     }
 
+    void initStepCheckBoxes() {
+        stepCheckBoxes = new ArrayList<JCheckBox>();
+        for (int i=0; i<nValues; i++) {
+            JCheckBox b = new JCheckBox();
+            b.setToolTipText("Check to fix this point when adjusting; uncheck to adjust individually");
+            stepCheckBoxes.add(b);            
+        }
+    }
+    
     /**
      * Set the values to a straight line from _min to _max
      */
