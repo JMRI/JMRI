@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.5 2008-12-28 05:34:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.6 2008-12-31 18:28:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -179,6 +179,11 @@ which now will let you pick a programmer if more than one is present.
 <p>
 Dan Boudreau added an
 <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
+
+<P>
+Ken Cameron updated his DebounceSensor.py sample scripts to make it more reliable.
+
+<p>
 
 <!--#include virtual="/Footer" -->
 
