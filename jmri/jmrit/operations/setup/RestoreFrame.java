@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -106,8 +106,6 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 	    		}
 	    	}
 	    	boolean success = backup.backupFiles(backupName);
-	    	// now clear dirty bit
-	    	jmri.InstanceManager.shutDownManagerInstance().deregister(TrainsTableFrame.trainDirtyTask);
 	    	if(!success){
 	    		log.error("Could not backup files");
 	    		return;
@@ -119,6 +117,8 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 						"Restore successful!" ,
 						JOptionPane.INFORMATION_MESSAGE);
 				dispose();
+		    	// now clear dirty bit
+		    	jmri.InstanceManager.shutDownManagerInstance().deregister(TrainsTableFrame.trainDirtyTask);
 				Apps.handleQuit();
 			} else {
 				JOptionPane.showMessageDialog(this, "Could not restore operation files",
