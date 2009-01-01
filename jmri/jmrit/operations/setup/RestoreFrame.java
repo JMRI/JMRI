@@ -9,14 +9,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import apps.Apps;
+
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.trains.TrainsTableFrame;
 
 
 /**
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -90,14 +93,33 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == restoreButton){
 			log.debug("restore button activated");
+			// first backup the users data in case they forgot
+		   	Backup backup = new Backup();
+	    	String backupName = backup.getDirectoryName();
+	    	// make up to 10 backup files using today's date
+	    	for (int i=0; i<10; i++){
+	    		if (backup.checkDirectoryExists(backupName)){
+	    			log.debug("Operations backup directory "+backupName+" already exist");
+	    			backupName = backup.getDirectoryName()+"_"+i;
+	    		} else {
+	    			break;
+	    		}
+	    	}
+	    	boolean success = backup.backupFiles(backupName);
+	    	// now clear dirty bit
+	    	jmri.InstanceManager.shutDownManagerInstance().deregister(TrainsTableFrame.trainDirtyTask);
+	    	if(!success){
+	    		log.error("Could not backup files");
+	    		return;
+	    	}
 			String directoryName = (String)restoreComboBox.getSelectedItem();
-			boolean success = new Backup().restore(directoryName);
+			success = new Backup().restore(directoryName);
 			if (success){
 				JOptionPane.showMessageDialog(this, "You must restart JMRI to complete the restore operation",
 						"Restore successful!" ,
 						JOptionPane.INFORMATION_MESSAGE);
 				dispose();
-				
+				Apps.handleQuit();
 			} else {
 				JOptionPane.showMessageDialog(this, "Could not restore operation files",
 						"Restore failed!" ,

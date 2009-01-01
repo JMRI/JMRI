@@ -27,13 +27,13 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
-	SwingShutDownTask trainDirtyTask;
+	public static SwingShutDownTask trainDirtyTask;
 	
 	public static final String NAME = rb.getString("Name");	// Sort by choices
 	public static final String TIME = rb.getString("Time");
