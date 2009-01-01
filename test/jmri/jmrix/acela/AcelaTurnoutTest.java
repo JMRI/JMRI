@@ -109,10 +109,10 @@ public class AcelaTurnoutTest extends jmri.AbstractTurnoutTest {
         // which really messes up the addresses.
         // We also seem to need to explicitly init each node.
         if (AcelaTrafficController.instance().getNumNodes() > 0) {
-            AcelaTrafficController.instance().deleteNode(3);
-            AcelaTrafficController.instance().deleteNode(2);
-            AcelaTrafficController.instance().deleteNode(1);
-            AcelaTrafficController.instance().deleteNode(0);
+        //    AcelaTrafficController.instance().deleteNode(3);
+        //    AcelaTrafficController.instance().deleteNode(2);
+        //    AcelaTrafficController.instance().deleteNode(1);
+        //    AcelaTrafficController.instance().deleteNode(0);
             AcelaTrafficController.instance().resetStartingAddresses();
         }
         if (AcelaTrafficController.instance().getNumNodes() <= 0) {
@@ -124,6 +124,15 @@ public class AcelaTurnoutTest extends jmri.AbstractTurnoutTest {
             a2.initNode();
             a3 = new AcelaNode(3,AcelaNode.SY);
             a3.initNode();
+        } else {
+            a0 = (AcelaNode)(AcelaTrafficController.instance().getNode(0));
+            AcelaTrafficController.instance().initializeAcelaNode(a0);
+            a1 = (AcelaNode)(AcelaTrafficController.instance().getNode(1));
+            AcelaTrafficController.instance().initializeAcelaNode(a1);
+            a2 = (AcelaNode)(AcelaTrafficController.instance().getNode(2));
+            AcelaTrafficController.instance().initializeAcelaNode(a2);
+            a3 = (AcelaNode)(AcelaTrafficController.instance().getNode(3));
+            AcelaTrafficController.instance().initializeAcelaNode(a3);
         }
         
         // Must allocate a valid turnout t for abstract tests
