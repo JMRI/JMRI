@@ -5,8 +5,9 @@ package jmri.jmrix.nce;
 import javax.swing.JOptionPane;
 
 import jmri.jmrix.ConnectionStatus;
+@SuppressWarnings("unused")
 
-/* Continuously checks and confirms that the communication link to the
+/** Continuously checks and confirms that the communication link to the
  * NCE Command Station is operational by reading the revision number of
  * the EPROM. Only invokes the EPROM read when the interface experiences 
  * a timeout. 
@@ -18,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * 
  */
 
