@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.35 $ -->
+<!-- Revision $Revision: 1.36 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -50,21 +50,23 @@
   
   <path id="project.class.path">
     <pathelement location=".." />
-    <pathelement location="../lib/crimson.jar" />
-    <pathelement location="../lib/comm.jar" />
-    <pathelement location="../lib/jdom.jar" />
-    <pathelement location="../lib/log4j.jar" />
-    <pathelement location="../lib/jhall.jar" />
+    <pathelement location="../lib/MRJAdapter.jar" />
+    <pathelement location="../lib/RXTXcomm.jar" />
     <pathelement location="../lib/Serialio.jar" />
+    <pathelement location="../lib/ch.ntb.usb.jar" />
+    <pathelement location="../lib/comm-rxtx.jar" />
+    <pathelement location="../lib/comm.jar" />
+    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/javacsv.jar" />
+    <pathelement location="../lib/jdom.jar" />
+    <pathelement location="../lib/jhall.jar" />
+    <pathelement location="../lib/jinput.jar" />
     <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
-    <pathelement location="../lib/javacsv.jar" />
-    <pathelement location="../lib/MRJAdapter.jar" />
-    <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
-    <pathelement location="../lib/vecmath.jar" />
-    <pathelement location="../lib/jinput.jar" />
-    <pathelement location="../lib/ch.ntb.usb.jar" />
+    <pathelement location="../lib/log4j.jar" />
     <pathelement location="../lib/servlet.jar" />
+    <pathelement location="../lib/vecmath.jar" />
+    <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
@@ -122,6 +124,7 @@
            memorymaximumsize="256m"
            deprecation="${deprecation}"
            debug="yes" >
+       <!-- <compilerarg value="-Xlint:unchecked" /> -->
        <classpath refid="project.class.path"    />
     </javac>
   </target>
