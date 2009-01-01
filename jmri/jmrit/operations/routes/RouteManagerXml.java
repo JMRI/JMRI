@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -182,7 +182,7 @@ public class RouteManagerXml extends XmlFile {
 
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("routes") != null) {
-        	
+        	@SuppressWarnings("unchecked")
             List<Element> l = root.getChild("routes").getChildren("route");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
             for (int i=0; i<l.size(); i++) {

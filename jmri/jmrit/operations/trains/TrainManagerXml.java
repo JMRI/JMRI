@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -184,6 +184,7 @@ public class TrainManagerXml extends XmlFile {
         }
         
         if (root.getChild("trains") != null) {
+        	@SuppressWarnings("unchecked")
             List<Element> l = root.getChild("trains").getChildren("train");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" trains");
             for (int i=0; i<l.size(); i++) {

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -259,7 +259,7 @@ public class CarManagerXml extends XmlFile {
         }
          
         if (root.getChild("cars") != null) {
-        	
+        	@SuppressWarnings("unchecked")
             List<Element> l = root.getChild("cars").getChildren("car");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
             for (int i=0; i<l.size(); i++) {

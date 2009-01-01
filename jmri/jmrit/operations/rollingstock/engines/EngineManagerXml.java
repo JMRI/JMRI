@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -230,7 +230,7 @@ public class EngineManagerXml extends XmlFile {
         }
          
         if (root.getChild("engines") != null) {
-        	
+        	@SuppressWarnings("unchecked")
             List<Element> l = root.getChild("engines").getChildren("engine");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" engines");
             for (int i=0; i<l.size(); i++) {

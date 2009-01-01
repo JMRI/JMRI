@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -304,6 +304,7 @@ public class Route implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
         if (e.getChildren("location") != null) {
+        	@SuppressWarnings("unchecked")
             List<Element> l = e.getChildren("location");
             if (log.isDebugEnabled()) log.debug("route: "+getName()+" has "+l.size()+" locations");
             for (int i=0; i<l.size(); i++) {

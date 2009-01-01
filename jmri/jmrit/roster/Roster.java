@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Hashtable;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -48,7 +47,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -174,16 +173,16 @@ public class Roster extends XmlFile {
     /**
      * List of contained {@link RosterEntry} elements.
      */
-    protected List _list = new ArrayList();
+    protected List<RosterEntry> _list = new ArrayList<RosterEntry>();
 
     /**
      *	Get a List of {@link RosterEntry} objects in Roster matching some information. 
      * The list may have
      *  null contents if there are no matches.
      */
-    public List matchingList(String roadName, String roadNumber, String dccAddress,
+    public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
                              String mfg, String decoderMfgID, String decoderVersionID, String id ) {
-        List l = new ArrayList();
+        List<RosterEntry> l = new ArrayList<RosterEntry>();
         for (int i = 0; i < numEntries(); i++) {
             if ( checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id ))
                 l.add(_list.get(i));
@@ -232,7 +231,7 @@ public class Roster extends XmlFile {
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
-        java.util.Map m = new java.util.HashMap();
+        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation+"roster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
