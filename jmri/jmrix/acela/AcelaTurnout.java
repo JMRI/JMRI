@@ -3,7 +3,6 @@
 package jmri.jmrix.acela;
 
 import jmri.AbstractTurnout;
-import jmri.Sensor;
 import jmri.Turnout;
 
 /**
@@ -14,7 +13,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -168,6 +167,32 @@ public class AcelaTurnout extends AbstractTurnout {
 
     	AcelaTrafficController.instance().sendAcelaMessage(m, null);
 */
+        int newState;
+        if (closed) {
+            newState = ON;
+        } else {
+            newState = OFF;
+        }
+        
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+
+        if (mNode!=null) {
+            if (newState==ON) {
+                mNode.setOutputBit(mBit,true);
+            } else if (newState==OFF) {
+                mNode.setOutputBit(mBit,false);
+            } else {
+                log.warn("illegal state requested for Turnout: "+getSystemName());
+            }
+        }
+	
+        if (newState!=mState) {
+            int oldState = mState;
+            mState = newState;
+            
+            // notify listeners, if any
+            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+	}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnout.class.getName());
