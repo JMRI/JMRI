@@ -9,10 +9,15 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import jmri.jmrit.display.LocoIcon;
@@ -25,7 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -33,86 +38,86 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 	
 	// labels
-	javax.swing.JLabel textScale = new javax.swing.JLabel();
-	javax.swing.JLabel textCarType = new javax.swing.JLabel();
-	javax.swing.JLabel textRailroadName = new javax.swing.JLabel();
-	javax.swing.JLabel textDirection = new javax.swing.JLabel();
-	javax.swing.JLabel textMaxTrain = new javax.swing.JLabel();
-	javax.swing.JLabel textMaxEngine = new javax.swing.JLabel();
-	javax.swing.JLabel textMoveTime = new javax.swing.JLabel();
-	javax.swing.JLabel textTravelTime = new javax.swing.JLabel();
-	javax.swing.JLabel textOwner = new javax.swing.JLabel();
-	javax.swing.JLabel textPrinter = new javax.swing.JLabel();
-	javax.swing.JLabel textBuildReport = new javax.swing.JLabel();
-	javax.swing.JLabel textPanel = new javax.swing.JLabel();
-	javax.swing.JLabel textIconNorth = new javax.swing.JLabel();
-	javax.swing.JLabel textIconSouth = new javax.swing.JLabel();
-	javax.swing.JLabel textIconEast = new javax.swing.JLabel();
-	javax.swing.JLabel textIconWest = new javax.swing.JLabel();
-	javax.swing.JLabel textIconLocal = new javax.swing.JLabel();
-	javax.swing.JLabel textIconTerminate = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textScale = new JLabel();
+	JLabel textCarType = new JLabel();
+	JLabel textRailroadName = new JLabel();
+	JLabel textDirection = new JLabel();
+	JLabel textMaxTrain = new JLabel();
+	JLabel textMaxEngine = new JLabel();
+	JLabel textMoveTime = new JLabel();
+	JLabel textTravelTime = new JLabel();
+	JLabel textOwner = new JLabel();
+	JLabel textPrinter = new JLabel();
+	JLabel textBuildReport = new JLabel();
+	JLabel textPanel = new JLabel();
+	JLabel textIconNorth = new JLabel();
+	JLabel textIconSouth = new JLabel();
+	JLabel textIconEast = new JLabel();
+	JLabel textIconWest = new JLabel();
+	JLabel textIconLocal = new JLabel();
+	JLabel textIconTerminate = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
 	
-	javax.swing.JButton backupButton = new javax.swing.JButton();
-	javax.swing.JButton restoreButton = new javax.swing.JButton();
-	javax.swing.JButton saveButton = new javax.swing.JButton();
+	JButton backupButton = new JButton();
+	JButton restoreButton = new JButton();
+	JButton saveButton = new JButton();
 
 	// radio buttons
 	
-    javax.swing.JRadioButton scaleZ = new javax.swing.JRadioButton("Z");
-    javax.swing.JRadioButton scaleN = new javax.swing.JRadioButton("N");
-    javax.swing.JRadioButton scaleTT = new javax.swing.JRadioButton("TT");
-    javax.swing.JRadioButton scaleHOn3 = new javax.swing.JRadioButton("HOn3");
-    javax.swing.JRadioButton scaleOO = new javax.swing.JRadioButton("OO");
-    javax.swing.JRadioButton scaleHO = new javax.swing.JRadioButton("HO");
-    javax.swing.JRadioButton scaleSn3 = new javax.swing.JRadioButton("Sn3");
-    javax.swing.JRadioButton scaleS = new javax.swing.JRadioButton("S");
-    javax.swing.JRadioButton scaleOn3 = new javax.swing.JRadioButton("On3");
-    javax.swing.JRadioButton scaleO = new javax.swing.JRadioButton("O");
-    javax.swing.JRadioButton scaleG = new javax.swing.JRadioButton("G");
+    JRadioButton scaleZ = new JRadioButton("Z");
+    JRadioButton scaleN = new JRadioButton("N");
+    JRadioButton scaleTT = new JRadioButton("TT");
+    JRadioButton scaleHOn3 = new JRadioButton("HOn3");
+    JRadioButton scaleOO = new JRadioButton("OO");
+    JRadioButton scaleHO = new JRadioButton("HO");
+    JRadioButton scaleSn3 = new JRadioButton("Sn3");
+    JRadioButton scaleS = new JRadioButton("S");
+    JRadioButton scaleOn3 = new JRadioButton("On3");
+    JRadioButton scaleO = new JRadioButton("O");
+    JRadioButton scaleG = new JRadioButton("G");
     
-    javax.swing.JRadioButton typeDesc = new javax.swing.JRadioButton(rb.getString("Descriptive"));
-    javax.swing.JRadioButton typeAAR = new javax.swing.JRadioButton(rb.getString("AAR"));
+    JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
+    JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
 		
-    javax.swing.JRadioButton mono = new javax.swing.JRadioButton(rb.getString("Monospaced"));
-    javax.swing.JRadioButton sanSerif = new javax.swing.JRadioButton(rb.getString("SansSerif"));
+    JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
+    JRadioButton sanSerif = new JRadioButton(rb.getString("SansSerif"));
     
-    javax.swing.JRadioButton buildReportMin = new javax.swing.JRadioButton(rb.getString("Minimal"));
-    javax.swing.JRadioButton buildReportNor = new javax.swing.JRadioButton(rb.getString("Normal"));
-    javax.swing.JRadioButton buildReportMax = new javax.swing.JRadioButton(rb.getString("Detailed"));
-    javax.swing.JRadioButton buildReportVD = new javax.swing.JRadioButton(rb.getString("VeryDetailed"));
+    JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
+    JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
+    JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
+    JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
-    javax.swing.JCheckBox eastCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox northCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox appendCommentCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox iconCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox appendCheckBox = new javax.swing.JCheckBox();
+    JCheckBox eastCheckBox = new JCheckBox();
+	JCheckBox northCheckBox = new JCheckBox();
+	JCheckBox appendCommentCheckBox = new JCheckBox();
+	JCheckBox iconCheckBox = new JCheckBox();
+	JCheckBox appendCheckBox = new JCheckBox();
 	
 	// text field
-	javax.swing.JTextField ownerTextField = new javax.swing.JTextField(10);
-	javax.swing.JTextField panelTextField = new javax.swing.JTextField(35);
-	javax.swing.JTextField railroadNameTextField = new javax.swing.JTextField(35);
-	javax.swing.JTextField maxLengthTextField = new javax.swing.JTextField(10);
-	javax.swing.JTextField maxEngineSizeTextField = new javax.swing.JTextField(3);
-	javax.swing.JTextField switchTimeTextField = new javax.swing.JTextField(3);
-	javax.swing.JTextField travelTimeTextField = new javax.swing.JTextField(3);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField ownerTextField = new JTextField(10);
+	JTextField panelTextField = new JTextField(35);
+	JTextField railroadNameTextField = new JTextField(35);
+	JTextField maxLengthTextField = new JTextField(10);
+	JTextField maxEngineSizeTextField = new JTextField(3);
+	JTextField switchTimeTextField = new JTextField(3);
+	JTextField travelTimeTextField = new JTextField(3);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	JLabel space1 = new JLabel();
+	JLabel space2 = new JLabel();
+	JLabel space3 = new JLabel();
 	
 	// combo boxes
-	javax.swing.JComboBox northComboBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox southComboBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox eastComboBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox westComboBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox localComboBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox terminateComboBox = new javax.swing.JComboBox();
+	JComboBox northComboBox = new JComboBox();
+	JComboBox southComboBox = new JComboBox();
+	JComboBox eastComboBox = new JComboBox();
+	JComboBox westComboBox = new JComboBox();
+	JComboBox localComboBox = new JComboBox();
+	JComboBox terminateComboBox = new JComboBox();
 
 	public OperationsSetupFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOperationsSetup"));
