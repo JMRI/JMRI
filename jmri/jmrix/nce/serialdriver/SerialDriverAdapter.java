@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -44,9 +44,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
             // filter out line printers 
-            String name = id.getName().toUpperCase().trim().substring(0, 3);
-            // accumulate the names in a vector
-            if (!name.equals("LPT"))
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
 		  }
          return portNameVector;

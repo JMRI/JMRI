@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -45,9 +45,8 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
             // filter out line printers 
-            String name = id.getName().toUpperCase().trim().substring(0, 3);
-            // accumulate the names in a vector
-            if (!name.equals("LPT"))
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
 		  }
          return portNameVector;
