@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.60 $
+ * @version         $Revision: 1.61 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -150,6 +150,7 @@ abstract public class AbstractMRTrafficController {
     public static final int WAITREPLYINPROGMODESTATE = 30;  // xmt has done mode change, await reply
     public static final int WAITREPLYINNORMMODESTATE = 35;  // xmt has done mode change, await reply
     public static final int OKSENDMSGSTATE = 40;        // mode change reply here, send original msg
+    public static final int AUTORETRYSTATE = 45;        // received message where automatic recovery may occur with a retransmission, re-send original msg
     
     protected boolean allowUnexpectedReply;
     
@@ -289,6 +290,13 @@ abstract public class AbstractMRTrafficController {
                     checkReplyInDispatch();
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m);
+                    } else if(mCurrentState == AUTORETRYSTATE) {
+                         log.error("Message added back to queue: " + m.toString());
+                         msgQueue.addFirst(m);
+                         listenerQueue.addFirst(l);
+                         synchronized (xmtRunnable) {
+                               mCurrentState = IDLESTATE;
+                         }
                     } else {
                         resetTimeout(m);
                     }
@@ -742,16 +750,30 @@ abstract public class AbstractMRTrafficController {
             log.error("Unexpected exception in invokeAndWait:" +e);
             e.printStackTrace();
         }
-        
+       
+ 
         if (!msg.isUnsolicited()) {
             // effect on transmit:
             switch (mCurrentState) {
             case WAITMSGREPLYSTATE: {
-                // update state, and notify to continue
-                synchronized (xmtRunnable) {
-                    mCurrentState = NOTIFIEDSTATE;
-                    replyInDispatch = false;
-                    xmtRunnable.notify();
+                // check to see if the response was an error message we want 
+                // to automatically handle by re-queueing the last sent 
+                // message, otherwise go on to the next message
+                if(msg.isRetransmittableErrorMsg()){
+                  if(log.isDebugEnabled())
+                        log.debug("Automatic Recovery from Error Message");
+                   synchronized (xmtRunnable) {
+                       mCurrentState = AUTORETRYSTATE;
+                       replyInDispatch = false;
+                       xmtRunnable.notify();
+                   }  
+                } else {
+                   // update state, and notify to continue
+                   synchronized (xmtRunnable) {
+                       mCurrentState = NOTIFIEDSTATE;
+                       replyInDispatch = false;
+                       xmtRunnable.notify();
+                   }  
                 }
                 break;
             }

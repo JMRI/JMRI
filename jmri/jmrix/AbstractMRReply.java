@@ -11,7 +11,7 @@ package jmri.jmrix;
  * needed.  The length is given by the largest index written so far.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -62,6 +62,13 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public final void setUnsolicited() { unsolicited = true; }
     
     public boolean isUnsolicited() { return unsolicited; };
+
+    /*
+     * Return true if the message is an error and we can automatically 
+     * recover by retransmitting the message.  Override in system specific 
+     * classes if required.
+     */
+    public boolean isRetransmittableErrorMsg() { return false; };
 
     // display format
     public String toString() {
