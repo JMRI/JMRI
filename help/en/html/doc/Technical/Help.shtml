@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.7 2008-12-27 16:10:00 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.8 2009-01-02 03:22:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -146,7 +146,7 @@ To do this:
 <OL>
 <LI>You have to put some files in your help/en directory 
 Download 
-<A HREF="http://downloads.sourceforge.net/jmri/JHelpDevTool.2.zip?download">this .zip archive</a>
+<A HREF="http://downloads.sourceforge.net/jmri/JHelpDevTool.3.zip?download">this .zip archive</a>
 and put in in your project's help/en directory, then expand it.
 It should create a jhelpdev.jar file, and a lib directory 
 containing additional .jar files.  

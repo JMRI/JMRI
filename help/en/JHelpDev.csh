@@ -2,7 +2,7 @@
 #
 # csh script to launch JHelpDex with the current directory set
 #
-#($Revision: 1.1 $)
+#($Revision: 1.2 $)
 #
 
-java -jar -DHOMEDIR=${PWD} jhelpdev.jar 
+java -DHOMEDIR=${PWD} -classpath ".:jhelpdev.jar:lib/jhall.jar:lib/xmlenc.jar" net.sourceforge.jhelpdev.JHelpDevFrame
