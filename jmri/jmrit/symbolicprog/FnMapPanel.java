@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -54,7 +54,7 @@ public class FnMapPanel extends JPanel {
     GridBagConstraints cs = null;
     VariableTableModel _varModel;
     
-    public FnMapPanel(VariableTableModel v, List varsUsed, Element model) {
+    public FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model) {
         if (log.isDebugEnabled()) log.debug("Function map starts");
         _varModel = v;
         

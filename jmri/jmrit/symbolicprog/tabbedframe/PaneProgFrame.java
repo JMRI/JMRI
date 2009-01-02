@@ -30,14 +30,13 @@ import java.awt.Cursor;
 import java.awt.Rectangle;
 
 import java.awt.event.ItemEvent;
-import jmri.ProgDeferredServiceModePane;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.70 $
+ * @version   $Revision: 1.71 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -723,6 +722,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         JPanel body = new JPanel();
         body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(body);
+        
+        // add tab description
+        JLabel title = new JLabel(rbt.getString("UseThisTabCustomize"));
+        title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        body.add(title);
+        body.add(new JLabel(" "));	// some padding
 
         // add roster info
         _flPane = new FunctionLabelPane(r);
