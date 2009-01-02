@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -44,10 +44,13 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+            // filter out line printers 
+            String name = id.getName().toUpperCase().trim().substring(0, 3);
             // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            if (!name.equals("LPT"))
+            	portNameVector.addElement(id.getName());
 		  }
-        return portNameVector;
+         return portNameVector;
     }
 
     public String openPort(String portName, String appName)  {
