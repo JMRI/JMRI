@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -118,7 +118,11 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 						JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 		    	// now clear dirty bit
-		    	jmri.InstanceManager.shutDownManagerInstance().deregister(TrainsTableFrame.trainDirtyTask);
+				try {
+					jmri.InstanceManager.shutDownManagerInstance().deregister(TrainsTableFrame.trainDirtyTask);
+				} catch (IllegalArgumentException e){
+					
+				}
 				Apps.handleQuit();
 			} else {
 				JOptionPane.showMessageDialog(this, "Could not restore operation files",
