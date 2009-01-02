@@ -20,11 +20,11 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     // populate the GUI, invoked as part of startup
@@ -367,13 +367,15 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }

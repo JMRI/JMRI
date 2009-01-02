@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -30,18 +30,20 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         super();
     }
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -202,8 +204,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the LnPortController interface
     public DataInputStream getInputStream() {

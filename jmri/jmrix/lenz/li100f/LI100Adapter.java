@@ -26,12 +26,12 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
@@ -39,13 +39,15 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
     
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -232,8 +234,6 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
-    
-    private Thread sinkThread;
     
     // base class methods for the XNetPortController interface
     public DataInputStream getInputStream() {

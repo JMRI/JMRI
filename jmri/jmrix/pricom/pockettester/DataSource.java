@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -45,7 +45,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             existingInstance = source;
     }
     
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
@@ -277,13 +277,15 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -437,7 +439,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         
     // data members to hold contact with the listeners
-    final private Vector listeners = new Vector();
+    final private Vector<DataListener> listeners = new Vector<DataListener>();
 
     public synchronized void addListener(DataListener l) {
         // add only if not already registered

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -118,7 +118,6 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         }
         
         // find the baud rate value, configure comm options
-        int baud = numbers[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<numbers.length; i++ )
             if (rates[i].equals(currentBaudRate))
                 return numbers[i];

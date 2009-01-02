@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -100,11 +100,12 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
-        String portName;
+//        String portName;
         portBox.removeAllItems();
-        portBox.addItem("(None)");
+        if (v.size()==0)
+        	portBox.addItem("(None)");
         for (int i=0; i<v.size(); i++) {
-            if (i==0) portName = (String) v.elementAt(i);
+//            if (i==0) portName = (String) v.elementAt(i);
                 portBox.addItem(v.elementAt(i));
         }
 

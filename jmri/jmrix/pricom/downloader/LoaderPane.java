@@ -21,13 +21,13 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.12 $
+ * @version	    $Revision: 1.13 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
-    Vector      portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort  activeSerialPort = null;
 
     Thread      readerThread;
@@ -370,13 +370,15 @@ public class LoaderPane extends javax.swing.JPanel {
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }

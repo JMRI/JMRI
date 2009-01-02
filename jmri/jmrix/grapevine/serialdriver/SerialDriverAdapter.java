@@ -22,22 +22,24 @@ import javax.comm.SerialPortEventListener;
  * Provide access to ProTrak Grapevine via a serial comm port.
  * Normally controlled by the serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -191,8 +193,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         SerialTrafficController.instance().setSensorManager(s);
         jmri.jmrix.grapevine.ActiveFlag.setActive();
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SerialPortController interface
     public DataInputStream getInputStream() {

@@ -24,12 +24,12 @@ import javax.comm.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     public void configure() {
@@ -38,13 +38,15 @@ public class SerialSensorAdapter extends AbstractPortController
 
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -150,9 +152,6 @@ public class SerialSensorAdapter extends AbstractPortController
         return null; // indicates OK return
 
     }
-
-
-    private Thread sinkThread;
 
     public DataInputStream getInputStream() {
         if (!opened) {

@@ -16,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
@@ -45,8 +45,6 @@ public class NetworkDriverAdapter extends EcosPortController {
         jmri.jmrix.ecos.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the EcosPortController interface
     public DataInputStream getInputStream() {
@@ -106,9 +104,9 @@ public class NetworkDriverAdapter extends EcosPortController {
         if (this.hostName.equals("")) this.hostName = "(none)";
      }
     
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     public Vector getPortNames() {
-    	portNameVector = new Vector();
+    	portNameVector = new Vector<String>();
     	portNameVector.addElement(hostName);
         return portNameVector;
     }

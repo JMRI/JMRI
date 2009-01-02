@@ -29,11 +29,11 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
 
     public Vector getPortNames() {
         portNameVector = null;
@@ -63,7 +63,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     class InnerSerial {
         public Vector getPortNames() {
             // first, check that the comm package can be opened and ports seen
-            portNameVector = new Vector();
+            portNameVector = new Vector<String>();
             try {
                 String[] names = SerialPortLocal.getPortList();
                 // accumulate the names in a vector
@@ -111,13 +111,15 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     class InnerJavaComm  {
         public Vector getPortNames() {
             // first, check that the comm package can be opened and ports seen
-            portNameVector = new Vector();
+            portNameVector = new Vector<String>();
             Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
             // find the names of suitable ports
             while (portIDs.hasMoreElements()) {
                 CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-                // accumulate the names in a vector
-                portNameVector.addElement(id.getName());
+                // filter out line printers 
+                if (id.getPortType() != id.PORT_PARALLEL )
+                	// accumulate the names in a vector
+                	portNameVector.addElement(id.getName());
             }
             return portNameVector;
         }
@@ -246,8 +248,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the LnPortController interface
     public DataInputStream getInputStream() {

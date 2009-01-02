@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
 import jmri.jmrix.AbstractMRTrafficController;
@@ -25,12 +24,12 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via the Hornby Elite's built in USB port.
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003,2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class EliteAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
     
-    Vector portNameVector = null;
+    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
@@ -38,13 +37,15 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
     
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector();
+        portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // accumulate the names in a vector
-            portNameVector.addElement(id.getName());
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL )
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
         }
         return portNameVector;
     }
@@ -231,8 +232,6 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
 	
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
-    
-    private Thread sinkThread;
     
     // base class methods for the XNetPortController interface
     public DataInputStream getInputStream() {

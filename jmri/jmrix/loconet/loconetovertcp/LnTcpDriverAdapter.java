@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -40,8 +40,6 @@ public class LnTcpDriverAdapter extends LnPortController {
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the LnPortController interface
     public DataInputStream getInputStream() {
