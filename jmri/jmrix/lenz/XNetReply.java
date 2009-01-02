@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -469,6 +469,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                  this.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
                  this.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW ||
                  this.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
+    }
+
+    /*
+     * Return True if the message is an error message indicating 
+     * we should retransmit.
+     */
+    public boolean isRetransmittableErrorMsg(){
+          return(this.isCSBusyMessage() || this.isCommErrorMessage() );
     }
 
     // initialize logging
