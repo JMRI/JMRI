@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2008-10-26 18:22:20 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2009-01-02 03:24:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -153,7 +153,7 @@ We use version 2 of the license, along with the "classpath exception"
 allowing people to link JMRI with their own code under more relaxed conditions.
 Copies of the license are distributed with the source and executable downloads,
 and can be gotten from 
-<A HREF="COPYING">the web</a>. 
+<A HREF="../../../COPYING">the web</a>. 
 
 <P>
 This is both an "open source" and a "free" license.
@@ -168,7 +168,7 @@ and the
 <P>
 Informally, the license means that there are only a few limitations on what you
 can do with JMRI.  (Check the exact wording in 
-<A HREF="COPYING">the license</a>
+<A HREF="../../../COPYING">the license</a>
 for the details behind the following summary):
 <UL>
 <LI>You can redistribute it, for free or for a charge to cover your costs.  
