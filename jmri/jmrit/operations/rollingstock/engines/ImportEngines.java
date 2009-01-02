@@ -24,7 +24,7 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ImportEngines extends Thread {
 	
@@ -231,13 +231,7 @@ public class ImportEngines extends Thread {
 						break;
 					}
 					if (!engineTrack.equals("")){
-						sl = l.getTrackByName(engineTrack, Track.YARD);
-						if (sl == null){
-							sl = l.getTrackByName(engineTrack, Track.SIDING);
-						}
-						if (sl == null){
-							sl = l.getTrackByName(engineTrack, Track.STAGING);
-						}
+						sl = l.getTrackByName(engineTrack, null);
 						if (sl == null){
 							JOptionPane.showMessageDialog(null, "Engine ("+engineRoad+" "+engineNumber+") track location ("+engineLocation+", "+engineTrack+") does not exist",
 									rb.getString("engineLocation"),

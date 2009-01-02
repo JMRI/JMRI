@@ -24,7 +24,7 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ImportCars extends Thread {
 	
@@ -251,13 +251,7 @@ public class ImportCars extends Thread {
 						break;
 					}
 					if (!carTrack.equals("")){
-						sl = l.getTrackByName(carTrack, Track.YARD);
-						if (sl == null){
-							sl = l.getTrackByName(carTrack, Track.SIDING);
-						}
-						if (sl == null){
-							sl = l.getTrackByName(carTrack, Track.STAGING);
-						}
+						sl = l.getTrackByName(carTrack, null);
 						if (sl == null){
 							JOptionPane.showMessageDialog(null, "Car ("+carRoad+" "+carNumber+") track location ("+carLocation+", "+carTrack+") does not exist",
 									rb.getString("carLocation"),

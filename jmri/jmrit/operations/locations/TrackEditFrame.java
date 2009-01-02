@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -445,7 +445,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (!checkName())
 			return;
 		// check to see if track already exsists
-		Track check = _location.getTrackByName(trackNameTextField.getText(), _type);
+		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
 		if (check != null){
 			reportTrackExists(rb.getString("add"));
 			return;
@@ -472,7 +472,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (!checkName())
 			return;
 		// check to see if track already exsists
-		Track check = _location.getTrackByName(trackNameTextField.getText(), _type);
+		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
 		if (check != null && check != track){
 			reportTrackExists(rb.getString("save"));
 			return;

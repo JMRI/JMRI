@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -396,10 +396,13 @@ public class Location implements java.beans.PropertyChangeListener {
     	Enumeration<Track> en =_subLocationHashTable.elements();
     	for (int i = 0; i < _subLocationHashTable.size(); i++){
     		track = en.nextElement();
-    		if (track.getName().equals(name) && track.getLocType().equals(type))
+    		if (type == null){
+    			if (track.getName().equals(name))
+    				return track;
+    		} else if (track.getName().equals(name) && track.getLocType().equals(type))
     			return track;
-      	}
-        return null;
+    	}
+    	return null;
     }
     
     public Track getTrackById (String id){
