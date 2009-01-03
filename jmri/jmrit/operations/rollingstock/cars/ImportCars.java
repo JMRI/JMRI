@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * This routine will import cars into the operation database.
@@ -24,7 +26,7 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ImportCars extends Thread {
 	
@@ -34,7 +36,7 @@ public class ImportCars extends Thread {
 	
 	javax.swing.JLabel textLine = new javax.swing.JLabel();
 	javax.swing.JLabel lineNumber = new javax.swing.JLabel();
-
+	
 	// we use a thread so the status frame will work!
 	public void run() {
 		// Get file to read from
@@ -142,17 +144,17 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carRoad.length() > 12){
+				if (carRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") road name ("+carRoad+") too long!",
-							rb.getString("carAttribute"),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carType.length() > 12){
+				if (carType.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") type ("+carType+") too long!",
-							rb.getString("carAttribute"),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -170,10 +172,10 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carColor.length() > 12){
+				if (carColor.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") color ("+carColor+") too long!",
-							rb.getString("carAttribute"),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -184,10 +186,10 @@ public class ImportCars extends Thread {
 
 					if(inputLine.length > base+6){
 						carOwner = inputLine[base+6];
-						if (carOwner.length() > 12){
+						if (carOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 							JOptionPane.showMessageDialog(null, 
 									"Car ("+carRoad+" "+carNumber+") owner ("+carOwner+") too long!",
-									rb.getString("carAttribute"),
+									MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}

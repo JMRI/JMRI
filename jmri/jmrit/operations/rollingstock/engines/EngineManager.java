@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -553,8 +553,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	}
     	// now sort by track destination
     	List<String> out = new ArrayList<String>();
-    	boolean engineAdded;
-    	boolean lastEngineAdded = false;	// true if caboose or engine with FRED added to train 
+    	boolean engineAdded;	 
     	for (int i = 0; i < inTrain.size(); i++) {
     		engineAdded = false;
     		engine = getEngineById(inTrain.get(i));
@@ -569,10 +568,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			}
     		}
     		if (!engineAdded){
-    			if (lastEngineAdded)
-    				out.add(out.size()-1,inTrain.get(i));
-    			else
-    				out.add(inTrain.get(i));
+    			out.add(inTrain.get(i));
      		}
     	}
     	return out;

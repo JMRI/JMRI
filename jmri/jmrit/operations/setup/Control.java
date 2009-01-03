@@ -18,6 +18,11 @@ public class Control {
 	
 	// Train build parameters
 	public static final boolean fullTrainOnly = false;
+	
+	// Car and Engine attribute maximum string length
+	
+	public static final int MAX_LEN_STRING_ATTRIBUTE = 12; // the maximum length of any attribute string
+
 
 }
 

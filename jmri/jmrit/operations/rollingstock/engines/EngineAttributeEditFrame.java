@@ -13,6 +13,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -52,7 +53,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     	
     	getContentPane().removeAll();
      	
-        setTitle(rb.getString("TitleEngineEdit")+" "+ comboboxName);
+    	setTitle(MessageFormat.format(rb.getString("TitleEngineEditAtrribute"),new Object[]{comboboxName}));
         
         // track which combo box is being edited 
         _comboboxName = comboboxName;
@@ -103,9 +104,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
 			String addItem = addTextBox.getText();
-			if (addItem.length() > 12){
-				JOptionPane.showMessageDialog(this,rb.getString("newEngineText"),
-						rb.getString("canNotAdd") + _comboboxName,
+			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -117,9 +118,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if (ae.getSource() == replaceButton){
 			String newItem = addTextBox.getText();
-			if (newItem.length() > 12){
-				JOptionPane.showMessageDialog(this,rb.getString("newEngineText"),
-						rb.getString("canNotAdd") + _comboboxName,
+			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -205,7 +206,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 				if (engineLength > 9999){
 					log.error("engine length must be less than 10,000 feet");
 					JOptionPane.showMessageDialog(this,rb.getString("engineAttribute5"),
-							rb.getString("canNotAdd") + _comboboxName,
+							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}

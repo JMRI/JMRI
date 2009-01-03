@@ -30,7 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -392,9 +392,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 		if (ae.getSource() == saveButton){
 			String addOwner = ownerTextField.getText();
-			if (addOwner.length() > 10){
-				JOptionPane.showMessageDialog(this,rb.getString("ownerText"),
-						"Can not add owner",
+			if (addOwner.length() > 13){
+				JOptionPane.showMessageDialog(this,rb.getString("OwnerText"),
+						rb.getString("CanNotAddOwner"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -406,7 +406,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Integer.parseInt(travelTimeTextField.getText());
 			} catch (NumberFormatException e){
 				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(),
-						"Can not accept number" ,
+						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}

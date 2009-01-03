@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -24,7 +25,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -46,7 +47,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	
 	// text box
 	JTextField addTextBox = new JTextField(10);
-
+	
     public CarAttributeEditFrame() {}
     
     String _comboboxName;		// track which combo box is being edited
@@ -56,7 +57,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     	
     	getContentPane().removeAll();
      	
-        setTitle(rb.getString("TitleCarEdit")+" "+ comboboxName);
+        setTitle(MessageFormat.format(rb.getString("TitleCarEditAtrribute"),new Object[]{comboboxName}));
         
         // track which combo box is being edited 
         _comboboxName = comboboxName;
@@ -108,9 +109,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
 			String addItem = addTextBox.getText();
-			if (addItem.length() > 12){
-				JOptionPane.showMessageDialog(this,rb.getString("newCarText"),
-						rb.getString("canNotAdd") + _comboboxName,
+			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -122,9 +123,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 		if (ae.getSource() == replaceButton){
 			String newItem = addTextBox.getText();
-			if (newItem.length() > 12){
-				JOptionPane.showMessageDialog(this,rb.getString("newCarText"),
-						rb.getString("canNotAdd") + _comboboxName,
+			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -133,8 +134,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 						MessageFormat.format(rb.getString("replaceMsg"),new Object[]{oldItem, newItem}),
 						rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
-			}
-			
+			}	
 			addItemToCombobox (newItem);
 			replaceItem(oldItem, newItem);
 			deleteItemFromCombobox (oldItem);
@@ -210,7 +210,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 				if (carLength > 9999){
 					log.error("car length must be less than 10,000 feet");
 					JOptionPane.showMessageDialog(this,rb.getString("carAttribute5"),
-							rb.getString("canNotAdd") + _comboboxName,
+							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}

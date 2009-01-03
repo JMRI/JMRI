@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * This routine will import engines into the operation database.
@@ -24,7 +25,7 @@ import jmri.jmrit.operations.locations.Track;
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ImportEngines extends Thread {
 	
@@ -137,14 +138,14 @@ public class ImportEngines extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (engineRoad.length() > 12){
+				if (engineRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road name ("+engineRoad+") too long!",
 							rb.getString("engineAttribute"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (engineModel.length() > 12){
+				if (engineModel.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") type ("+engineModel+") too long!",
 							rb.getString("engineAttribute"),
@@ -165,7 +166,7 @@ public class ImportEngines extends Thread {
 
 					if(inputLine.length > base+5){
 						engineOwner = inputLine[base+5];
-						if (engineOwner.length() > 12){
+						if (engineOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 							JOptionPane.showMessageDialog(null, 
 									"Engine ("+engineRoad+" "+engineNumber+") owner ("+engineOwner+") too long!",
 									rb.getString("engineAttribute"),
