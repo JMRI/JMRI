@@ -9,8 +9,6 @@ import jmri.jmrix.oaktree.SerialTrafficController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -22,27 +20,11 @@ import javax.comm.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-        }
-        return portNameVector;
-    }
 
     public String openPort(String portName, String appName)  {
         try {
@@ -202,8 +184,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         SerialTrafficController.instance().setSensorManager(s);
         jmri.jmrix.oaktree.ActiveFlag.setActive();
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SerialPortController interface
     public DataInputStream getInputStream() {

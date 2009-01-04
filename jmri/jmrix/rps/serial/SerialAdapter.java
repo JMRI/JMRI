@@ -10,8 +10,6 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -29,27 +27,11 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-		  }
-        return portNameVector;
-    }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
@@ -253,7 +235,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
         if (activeSerialPort != null) activeSerialPort.close();
         serialStream = null;
         activeSerialPort = null;
-        portNameVector = null;
     }
 
     /**

@@ -5,7 +5,7 @@
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
  *			Normally controlled by the zimo.mx1.Mx1Frame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -23,31 +23,13 @@ import javax.comm.SerialPortEventListener;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPort;
 
-import java.util.Enumeration;
-import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
 
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
-	Vector<String> portNameVector = null;
 	SerialPort activeSerialPort = null;
-
-	public Vector getPortNames() {
-		// first, check that the comm package can be opened and ports seen
-		portNameVector = new Vector<String>();
-		Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-		// find the names of suitable ports
-		while (portIDs.hasMoreElements()) {
-		  CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-          // filter out line printers 
-          if (id.getPortType() != id.PORT_PARALLEL )
-          	// accumulate the names in a vector
-          	portNameVector.addElement(id.getName());
-		  }
-		return portNameVector;
-	}
 
 	public String openPort(String portName, String appName)  {
 		// open the port in MX-1 mode, check ability to set moderators

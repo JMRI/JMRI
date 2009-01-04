@@ -8,8 +8,6 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -22,27 +20,11 @@ import javax.comm.SerialPortEventListener;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-        }
-        return portNameVector;
-    }
 
     public String openPort(String portName, String appName)  {
         try {

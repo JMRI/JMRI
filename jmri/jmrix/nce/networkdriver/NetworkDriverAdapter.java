@@ -21,7 +21,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -49,11 +49,11 @@ public class NetworkDriverAdapter extends NcePortController {
 
         jmri.jmrix.nce.ActiveFlag.setActive();
 
-        if (getCurrentOption2Setting().equals(validOption2()[1])) {
+        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+        	NceMessage.setCommandOptions(NceMessage.OPTION_2004);
+        } else {
             // setting binary mode
             NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-        } else {
-            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         }
     }
 
@@ -115,7 +115,7 @@ public class NetworkDriverAdapter extends NcePortController {
     public void configureOption2(String value) { mOpt2 = value; }
     protected String mOpt2 = null;
     public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[0];
+        if (mOpt2 == null) return validOption2()[1];
         return mOpt2;
     }
 

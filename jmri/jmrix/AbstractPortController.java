@@ -4,7 +4,10 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
+import javax.comm.CommPortIdentifier;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +21,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -126,6 +129,22 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         log.error("no match to ("+currentBaudRate+") in currentBaudNumber");
         return -1;
     }    
+    
+    Vector<String> portNameVector = null;
+    public Vector getPortNames() {
+        // first, check that the comm package can be opened and ports seen
+        portNameVector = new Vector<String>();
+        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+        // find the names of suitable ports
+        while (portIDs.hasMoreElements()) {
+            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+            // filter out line printers 
+            if (id.getPortType() != id.PORT_PARALLEL)
+            	// accumulate the names in a vector
+            	portNameVector.addElement(id.getName());
+		  }
+         return portNameVector;
+    }
     
     /**
      * Get an array of valid values for "option 1"; used to display valid options.

@@ -10,8 +10,6 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -26,31 +24,15 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
-    
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-        }
-        return portNameVector;
-    }
     
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators

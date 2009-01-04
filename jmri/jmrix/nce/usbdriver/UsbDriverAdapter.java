@@ -30,27 +30,12 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
-public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
+public class UsbDriverAdapter extends NcePortController {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-		  }
-         return portNameVector;
-    }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators

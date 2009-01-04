@@ -18,7 +18,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -47,8 +47,6 @@ public class NetworkDriverAdapter extends EasyDccPortController {
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
-
-    private Thread sinkThread;
 
     // base class methods for the EasyDccPortController interface
     public DataInputStream getInputStream() {

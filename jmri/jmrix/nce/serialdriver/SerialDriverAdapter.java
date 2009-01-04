@@ -29,27 +29,12 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
-    Vector<String> portNameVector = null;
+    //Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-		  }
-         return portNameVector;
-    }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
@@ -131,11 +116,11 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      */
     public void configure() {
 
-        if (getCurrentOption1Setting().equals(validOption1()[1])) {
+        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+        	NceMessage.setCommandOptions(NceMessage.OPTION_2004);
+        } else {
             // setting binary mode
             NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-        } else {
-            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         }
         
         // connect to the traffic controller
@@ -210,7 +195,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public void configureOption1(String value) { mOpt1 = value; }
     protected String mOpt1 = null;
     public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
+        if (mOpt1 == null) return validOption1()[1];
         return mOpt1;
     }
 

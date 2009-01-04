@@ -9,7 +9,6 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
@@ -24,7 +23,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via the Hornby Elite's built in USB port.
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003,2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class EliteAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -34,21 +33,6 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
     
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
-    
-    public Vector getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-        }
-        return portNameVector;
-    }
     
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
