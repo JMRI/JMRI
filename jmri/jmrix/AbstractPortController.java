@@ -6,6 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.io.File;
 
 import javax.comm.CommPortIdentifier;
 import javax.swing.JOptionPane;
@@ -21,7 +24,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -132,6 +135,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     
     Vector<String> portNameVector = null;
     public Vector getPortNames() {
+    	// reloadDriver(); // Doesn't quite work
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -145,6 +149,27 @@ abstract public class AbstractPortController implements SerialPortAdapter {
 		  }
          return portNameVector;
     }
+    
+    public void reloadDriver() {
+		try // try reloading the driver
+		{
+			Field masterIdList_Field = CommPortIdentifier.class
+					.getDeclaredField("masterIdList");
+			masterIdList_Field.setAccessible(true);
+			masterIdList_Field.set(null, null);
+
+			String temp_string = System.getProperty("java.home")
+					+ File.separator + "lib" + File.separator
+					+ "javax.comm.properties";
+			Method loadDriver_Method = CommPortIdentifier.class
+					.getDeclaredMethod("loadDriver",
+							new Class[] { String.class });
+			loadDriver_Method.setAccessible(true); // unprotect it
+			loadDriver_Method.invoke(null, new Object[] { temp_string });
+		} catch (Exception e) {
+			log.error("exception when reloading driver " + e);
+		}
+	}
     
     /**
      * Get an array of valid values for "option 1"; used to display valid options.
