@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	
@@ -62,29 +62,68 @@ public class PrintEngineRosterAction  extends AbstractAction {
         // Loop through the Roster, printing as needed
         String newLine = "\n";
         String location;
-        String model;		
+        String road;
+        String model;
+        String type;
+        String length;
+        String owner;
+        String built;
+ 
         List<String> engines = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-					+ "\t" + rb.getString("Model") + "\t"
-					+ rb.getString("Length") + "\t" + rb.getString("Owner")
-					+ "\t" + rb.getString("Built") + "\t"
-					+ rb.getString("Location") + newLine;
+					+ "\t" + rb.getString("Model") + "\t    "
+					+ rb.getString("Type") + "    " + rb.getString("Length")
+					+ " " + rb.getString("Owner") + " "
+					+ rb.getString("Built") + "\t" + rb.getString("Location")
+					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<engines.size(); i++){
         		Engine engine = manager.getEngineById(engines.get(i));
         		location = "";
         		if (!engine.getLocationName().equals("")){
         			location = engine.getLocationName() + " - " + engine.getTrackName();
+           			if (location.length() > 34)
+        				location = location.substring(0, 34);
         		}
+         		
+        		road = engine.getRoad().trim();
+        		if (road.length() > 7)
+        			road = road.substring(0, 7);
+         		for (int j=road.length(); j<7; j++)
+         			road += " ";
+         		
          		model = engine.getModel();
+         		if (model.length() > 11)
+         			model = model.substring(0, 11);
          		for (int j=model.length(); j<11; j++)
          			model += " ";
          		
-				s = engine.getNumber() + "\t" + engine.getRoad() + "\t"
-						+ model + " " + engine.getLength() + "\t "
-						+ engine.getOwner() + "\t" + engine.getBuilt() + "\t"
-						+ location + newLine;
+        		type = engine.getType().trim();
+           		if (type.length() > 11)
+        			type = type.substring(0, 11);
+         		for (int j=type.length(); j<11; j++)
+         			type += " ";
+         		
+           		length = engine.getLength().trim();
+         		for (int j=length.length(); j<3; j++)
+         			length += " ";
+ 		
+         		owner = engine.getOwner().trim();
+          		if (owner.length() > 4)
+          			owner = owner.substring(0, 4);
+         		for (int j=owner.length(); j<4; j++)
+         			owner += " ";
+         		
+           		built = engine.getBuilt().trim();
+          		if (built.length() > 4)
+          			built = built.substring(0, 4);
+         		for (int j=built.length(); j<4; j++)
+         			built += " ";
+         		
+				s = engine.getNumber() + "\t" + road + " " + model + " " + type
+						+ " " + length + " " + owner + " "
+						+ built + " " + location + newLine;
         		writer.write(s, 0, s.length());
         	}
 

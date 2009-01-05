@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -361,7 +362,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -392,8 +393,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 		if (ae.getSource() == saveButton){
 			String addOwner = ownerTextField.getText();
-			if (addOwner.length() > 13){
-				JOptionPane.showMessageDialog(this,rb.getString("OwnerText"),
+			if (addOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("OwnerText"), new Object[]{Integer.toString(Control.MAX_LEN_STRING_ATTRIBUTE)}),
 						rb.getString("CanNotAddOwner"),
 						JOptionPane.ERROR_MESSAGE);
 				return;

@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -64,13 +64,18 @@ public class PrintCarRosterAction  extends AbstractAction {
         String newLine = "\n";
         String location;
         String number;
+        String road;
         String type;
+        String length;
         String weight;
         String color;
+        String owner;
+        String built;
+        
         List<String> cars = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-					+ "\t" + rb.getString("Type") + "\t"
+					+ "\t" + rb.getString("Type") + "\t "
 					+ rb.getString("Length") + " " + rb.getString("Weight") +" "
 					+ rb.getString("Color") + "    " + rb.getString("Owner") +" "
 					+ rb.getString("Built") + "\t" + rb.getString("Location")
@@ -80,30 +85,58 @@ public class PrintCarRosterAction  extends AbstractAction {
         		Car car = manager.getCarById(cars.get(i));
         		location = "";
         		if (!car.getLocationName().equals("")){
-        			location = car.getLocationName() + " - " + car.getTrackName();
+        			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
+        			if (location.length() > 29)
+        				location = location.substring(0, 29);
         		}
         		// pad out the fields
-         		number = car.getNumber();
+         		number = car.getNumber().trim();
          		for (int j=number.length(); j<7; j++)
          			number += " ";
          		
-         		type = car.getType();
+         		road = car.getRoad().trim();
+        		if (road.length() > 7)
+        			road = road.substring(0, 7);
+         		for (int j=road.length(); j<7; j++)
+         			road += " ";
+         		
+         		type = car.getType().trim();
+           		if (type.length() > 11)
+        			type = type.substring(0, 11);
          		for (int j=type.length(); j<11; j++)
          			type += " ";
+         		
+        		length = car.getLength().trim();
+         		for (int j=length.length(); j<3; j++)
+         			length += " ";
  
-        		color = car.getColor();
+        		weight = car.getWeight().trim();
+          		if (weight.length() > 4)
+          			weight = weight.substring(0, 4);
+        		for (int j=weight.length(); j<4; j++)
+        			weight += " ";
+        		
+           		color = car.getColor().trim();
+          		if (color.length() > 11)
+        			color = color.substring(0, 11);
          		for (int j=color.length(); j<11; j++)
          			color += " ";
          		
-        		weight = car.getWeight();
-        		for (int j=weight.length(); j<4; j++)
-        			weight += " ";
-           		
- 				s = number + " " + car.getRoad() + "\t"
-						+ type + " " + car.getLength() + " "
-						+ weight + " " + color + " " 
-						+ car.getOwner() + " " + car.getBuilt() + " "
-						+ location + newLine;
+          		owner = car.getOwner().trim();
+          		if (owner.length() > 4)
+          			owner = owner.substring(0, 4);
+         		for (int j=owner.length(); j<4; j++)
+         			owner += " ";
+         		
+         		built = car.getBuilt().trim();
+          		if (built.length() > 4)
+          			built = built.substring(0, 4);
+         		for (int j=built.length(); j<4; j++)
+         			built += " ";
+         		         		
+ 				s = number + " " + road + " " + type + " " + length + " "
+						+ weight + " " + color + " " + owner + " " + built
+						+ " " + location + newLine;
         		writer.write(s, 0, s.length());
         	}
 
