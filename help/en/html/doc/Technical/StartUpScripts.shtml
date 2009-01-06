@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.4 2008-10-06 18:15:17 matthewharris Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.5 2009-01-06 22:05:26 matthewharris Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -227,10 +227,15 @@ Upto and including JMRI version 2.3.2, the Windows .bat files just create a fixe
 
 <h3>Command-line details</h3>
 
-In this section, we briefly describe the launcher application command-line parameters.
+In this section, we briefly describe the launcher application command-line options and parameters.
 <dl>
+<dt>/debug (Optional - from JMRI 2.5.1)
+<dd>If this option is set on the command line, a window is opened that displays various useful information for debugging purposes.
+<dt>/noisy (Optional - from JMRI 2.5.1)
+<dd>If this option is set on the command line, the launcher does not attempt to minimise the Java Console window - as from JMRI 2.5.1, the default behaviour is to minimise the Java Console window.
 <dt>Class Parameter
-<dd>The first parameter of LaunchJMRI.exe is the name of the main class to execute.
+<dd>The first parameter of LaunchJMRI.exe, after any of the above options, is the name of the main class to execute.
+<dd>An example to launch DecoderPro would be "apps.DecoderPro.DecoderPro"
 
 <dt>Configuration File Parameter (Optional)
 <dd>
