@@ -54,32 +54,41 @@
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3><a href="../hardware/index.shtml">Supported hardware</a></h3></dt>
+		<dt><h3><a href="../hardware/index.shtml">Supported Hardware</a></h3></dt>
 		<dd> 
 		<ul>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">Atlas Commander</a>
 		    <li> <A HREF="../hardware/cmri/CMRI.shtml">C/MRI</a>
+		    <li> <A HREF="../hardware/acela/index.shtml">CTI Acela</a>
+		    <li> <A HREF="../hardware/easydcc/EasyDCC.shtml">CVP EasyDcc</a>
+		    <li> <A HREF="../hardware/misc/DccSpecialties.shtml">DCC Specialities</a>
 		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">Digitrax</a>
-		    <li> <A HREF="../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+		    <li> <A HREF="../hardware/ecos/index.shtml">ESU ECoS</a>
 		    <li> <A HREF="../hardware/loconet/Fleischmann.shtml">Fleischmann</a>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">Hornby</a>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">Lenz</a>
 		    <li> <A HREF="../hardware/tmcc/index.shtml">Lionel TMCC</a>
+		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">LocoNet</a>
+		    <li> <A HREF="../hardware/maple/index.shtml">Maple Systems</a>
+		    <li> <A HREF="../hardware/can/cbus/index.shtml">MERG CBUS</a>
+		    <li> <A HREF="../hardware/rps/index.shtml">NAC Services RPS</a>
 		    <li> <A HREF="../hardware/nce/NCE.shtml">NCE</a>
-		    <li> <A HREF="../hardware/rps/index.shtml">RPS</a>
 		    <li> <A HREF="../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
 		    <li> <A HREF="../hardware/grapevine/index.shtml">Protrak Grapevine</a>
+		    <li> <A HREF="../hardware/qsi/index.shtml">QSI Quantum Programmer</a>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">Roco</a>
 		    <li> <A HREF="../hardware/sprog/SPROG.shtml">SPROG</a>
+		    <li> <A HREF="../hardware/SRCP/index.shtml">SRCP</a>
 		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
 	        <li> <A HREF="../hardware/nce/Wangrow.shtml">Wangrow</a>
+	        <li> <A HREF="../hardware/powerline/index.shtml">X10</a>
 		    <li> <A HREF="../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">ZTC</a>
 		</ul>
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3>Supported computers</h3></dt>
+		<dt><h3>Supported Computers</h3></dt>
 		<dd> 
 		<ul>
             <LI><A href="http://jmri.sourceforge.net/install/Windows.html">Windows</a>

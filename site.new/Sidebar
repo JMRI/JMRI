@@ -25,17 +25,18 @@
 		<dd>JMRI provides powerful tools for working with your
 		layout.
 		    <UL>
-		    <LI><dfn><a href="tools/throttle/ThrottleMain.html">Throttles</a></dfn>
-		    <LI><dfn><a href="tools/ConsistTool/ConsistTool.html">Consisting</a></dfn>
-		    <LI><dfn><a href="tools/Lights.html">Lights</a></dfn>
-		    <LI><dfn><a href="tools/Routes.html">Routes</a></dfn>
-		    <LI><dfn><a href="tools/Logix.html">Logix</a></dfn>
-		    <LI><dfn><a href="tools/fastclock">Fast Clocks</a>
-		    <LI><dfn><a href="apps/Speedometer/index.html">Speedometer</a> &amp;<BR>
-		    <a href="help/en/html/tools/speedometer/SpeedMatch.shtml">Engine Speed Matching</a></dfn>
-		    <LI><dfn><a href="doc/scripts/index.html">Scripting</a></dfn>
-		    <LI><dfn><a href="hardware/PDA.html">PDA access</a></dfn>
-		    <LI><dfn><a href="apps/LocoTools">LocoNet tools</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+            <li><dfn><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">Operations</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/Lights.shtml">Lights</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/Routes.shtml">Routes</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/Logix.shtml">Logix</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/fastclock/index.shtml">Fast Clocks</a>
+		    <LI><dfn><a href="/help/en/html/tools/speedometer/index.shtml">Speedometer</a> &amp;<BR>
+		             <a href="/help/en/html/tools/speedometer/SpeedMatch.shtml">Engine Speed Matching</a></dfn>
+		    <LI><dfn><a href="/help/en/html/tools/scripting/index.shtml">Scripting</a></dfn>
+		    <LI><dfn><a href="/help/en/html/hardware/PDA.shtml">PDA access</a></dfn>
+		    <LI><dfn><a href="/help/en/html/apps/LocoTools">LocoNet tools</a></dfn>
 		    </UL>
 		</dd>
 
@@ -50,32 +51,41 @@
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3><a href="./help/en/html/hardware/index.shtml">Supported hardware</a></h3></dt>
+		<dt><h3><a href="./help/en/html/hardware/index.shtml">Supported Hardware</a></h3></dt>
 		<dd> 
 		<ul>
-		    <li> <A HREF="./help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
-		    <li> <A HREF="./help/en/html/hardware/cmri/CMRI.shtml">C/MRI</a>
-		    <li> <A HREF="./help/en/html/hardware/loconet/Digitrax.shtml">Digitrax</a>
-		    <li> <A HREF="./help/en/html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-		    <li> <A HREF="./help/en/html/hardware/loconet/Fleischmann.shtml">Fleischmann</a>
-		    <li> <A HREF="./help/en/html/hardware/XPressNet/index.shtml">Hornby</a>
-		    <li> <A HREF="./help/en/html/hardware/XPressNet/index.shtml">Lenz</a>
-		    <li> <A HREF="./help/en/html/hardware/tmcc/index.shtml">Lionel TMCC</a>
-		    <li> <A HREF="./help/en/html/hardware/nce/NCE.shtml">NCE</a>
-		    <li> <A HREF="./help/en/html/hardware/rps/index.shtml">RPS</a>
-		    <li> <A HREF="./help/en/html/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
-		    <li> <A HREF="./help/en/html/hardware/grapevine/index.shtml">Protrak Grapevine</a>
-		    <li> <A HREF="./help/en/html/hardware/XPressNet/index.shtml">Roco</a>
-		    <li> <A HREF="./help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
-		    <li> <A HREF="./help/en/html/hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
-	        <li> <A HREF="./help/en/html/hardware/nce/Wangrow.shtml">Wangrow</a>
-		    <li> <A HREF="./help/en/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
-		    <li> <A HREF="./help/en/html/hardware/XPressNet/index.shtml">ZTC</a>
+		    <li> <A HREF="/help/en/hardware/XPressNet/index.shtml">Atlas Commander</a>
+		    <li> <A HREF="/help/en/hardware/cmri/CMRI.shtml">C/MRI</a>
+		    <li> <A HREF="/help/en/hardware/acela/index.shtml">CTI Acela</a>
+		    <li> <A HREF="/help/en/hardware/easydcc/EasyDCC.shtml">CVP EasyDcc</a>
+		    <li> <A HREF="/help/en/hardware/misc/DccSpecialties.shtml">DCC Specialities</a>
+		    <li> <A HREF="/help/en/hardware/loconet/Digitrax.shtml">Digitrax</a>
+		    <li> <A HREF="/help/en/hardware/ecos/index.shtml">ESU ECoS</a>
+		    <li> <A HREF="/help/en/hardware/loconet/Fleischmann.shtml">Fleischmann</a>
+		    <li> <A HREF="/help/en/hardware/XPressNet/index.shtml">Hornby</a>
+		    <li> <A HREF="/help/en/hardware/XPressNet/index.shtml">Lenz</a>
+		    <li> <A HREF="/help/en/hardware/tmcc/index.shtml">Lionel TMCC</a>
+		    <li> <A HREF="/help/en/hardware/loconet/Digitrax.shtml">LocoNet</a>
+		    <li> <A HREF="/help/en/hardware/maple/index.shtml">Maple Systems</a>
+		    <li> <A HREF="/help/en/hardware/can/cbus/index.shtml">MERG CBUS</a>
+		    <li> <A HREF="/help/en/hardware/rps/index.shtml">NAC Services RPS</a>
+		    <li> <A HREF="/help/en/hardware/nce/NCE.shtml">NCE</a>
+		    <li> <A HREF="/help/en/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+		    <li> <A HREF="/help/en/hardware/grapevine/index.shtml">Protrak Grapevine</a>
+		    <li> <A HREF="/help/en/hardware/qsi/index.shtml">QSI Quantum Programmer</a>
+		    <li> <A HREF="/help/en/hardware/XPressNet/index.shtml">Roco</a>
+		    <li> <A HREF="/help/en/hardware/sprog/SPROG.shtml">SPROG</a>
+		    <li> <A HREF="/help/en/hardware/SRCP/index.shtml">SRCP</a>
+		    <li> <A HREF="/help/en/hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
+	        <li> <A HREF="/help/en/hardware/nce/Wangrow.shtml">Wangrow</a>
+	        <li> <A HREF="/help/en/hardware/powerline/index.shtml">X10</a>
+		    <li> <A HREF="/help/en/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
+		    <li> <A HREF="/help/en/hardware/XPressNet/index.shtml">ZTC</a>
 		</ul>
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3><a href="./install">Supported computers</a></h3></dt>
+		<dt><h3>Supported Computers</h3></dt>
 		<dd> 
 		<ul>
             <LI><A href="./install/Windows.html">Windows</a>
