@@ -11,6 +11,9 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
@@ -19,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -31,6 +34,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected String _sortBy = "";
     
 	public TrainManager() {
+		CarTypes.instance().addPropertyChangeListener(this);
+		CarRoads.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
     }
     
 	/** record the single instance **/
@@ -92,6 +98,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 	
 	public void dispose() {
+    	CarTypes.instance().removePropertyChangeListener(this);
+    	CarRoads.instance().removePropertyChangeListener(this);
+    	EngineTypes.instance().removePropertyChangeListener(this);
         _trainHashTable.clear();
     }
 	
@@ -397,15 +406,21 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         return e;
     }
     
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     */
+	/**
+	 * Check for car type and road name replacements. Also check for engine type
+	 * repleacement.
+	 * 
+	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-
+    	log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
+    	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
+    		replaceType((String)e.getOldValue(), (String)e.getNewValue());
+    	}
+    	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
+    	}
     }
-
-  
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     

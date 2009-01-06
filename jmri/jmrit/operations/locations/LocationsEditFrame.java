@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -651,8 +651,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
 	}

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 public class ConnectionStatus {
 
@@ -18,8 +18,8 @@ public class ConnectionStatus {
 	public static final String CONNECTION_DOWN = "Not Connected";
 
 	// simple database of port names and their status
-	static ArrayList portNames= new ArrayList(); 
-	static ArrayList portStatus = new ArrayList(); 
+	static ArrayList<String> portNames= new ArrayList<String>(); 
+	static ArrayList<String> portStatus = new ArrayList<String>(); 
 
 	/** record the single instance **/
 	private static ConnectionStatus _instance = null;

@@ -13,18 +13,24 @@ import javax.swing.JComboBox;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 
 
 /**
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
     
 	public LocationManager() {
+		CarTypes.instance().addPropertyChangeListener(this);
+		CarRoads.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
     }
     
 	/** record the single instance **/
@@ -46,6 +52,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
  
     public void dispose() {
+    	CarTypes.instance().removePropertyChangeListener(this);
+    	CarRoads.instance().removePropertyChangeListener(this);
+    	EngineTypes.instance().removePropertyChangeListener(this);
         _locationHashTable.clear();
     }
 
@@ -100,7 +109,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         if (id > _id)
         	_id = id;
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
-        // listen for name and state changes to forward
     }
 
     /**
@@ -113,14 +121,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         Integer oldSize = new Integer(_locationHashTable.size());
     	_locationHashTable.remove(location.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
-    }
-
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-
     }
 
     /**
@@ -272,6 +272,22 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
 	}
+	
+	/**
+	 * Check for car type and road name replacements. Also check for engine type
+	 * repleacement.
+	 * 
+	 */
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    	log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
+    	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
+		e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
+    		replaceType((String)e.getOldValue(), (String)e.getNewValue());
+    	}
+    	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
+    	}
+    }
   
     /**
      * @return Number of locations

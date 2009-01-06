@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.OperationsFrame;
 
 
@@ -25,7 +23,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -143,9 +141,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == CarsEditFrame.ROAD){
-			LocationManager.instance().replaceRoad(deleteItem, null);
-			TrainManager.instance().replaceRoad(deleteItem, null);
-			CarRoads.instance().deleteName(deleteItem);
+			// update train and locations
+			CarRoads.instance().replaceName(deleteItem, null);
 		}
 		if(_comboboxName == CarsEditFrame.TYPE){
 			CarTypes.instance().deleteName(deleteItem);
@@ -263,12 +260,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 		//	now adjust locations and trains
 		if(_comboboxName == CarsEditFrame.TYPE){
-			LocationManager.instance().replaceType(oldItem, newItem);
-			TrainManager.instance().replaceType(oldItem, newItem);
+			CarTypes.instance().replaceName(oldItem, newItem);
 		}
 		if(_comboboxName == CarsEditFrame.ROAD){
-			LocationManager.instance().replaceRoad(oldItem, newItem);
-			TrainManager.instance().replaceRoad(oldItem, newItem);
+			CarRoads.instance().replaceName(oldItem, newItem);
 		}
 	}
 	
@@ -312,9 +307,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarsAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY))
 			CarColors.instance().updateComboBox(comboBox);

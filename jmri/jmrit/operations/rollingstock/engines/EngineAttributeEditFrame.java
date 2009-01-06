@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -139,9 +139,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == EnginesEditFrame.ROAD){
-			LocationManager.instance().replaceRoad(deleteItem, null);
-			TrainManager.instance().replaceRoad(deleteItem, null);
-			CarRoads.instance().deleteName(deleteItem);
+			CarRoads.instance().replaceName(deleteItem, null);
 		}
 		if(_comboboxName == EnginesEditFrame.MODEL){
 			EngineModels.instance().deleteName(deleteItem);
@@ -259,12 +257,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		//	now adjust locations and trains
 		if(_comboboxName == EnginesEditFrame.TYPE){
-			LocationManager.instance().replaceType(oldItem, newItem);
-			TrainManager.instance().replaceType(oldItem, newItem);
+			EngineTypes.instance().replaceName(oldItem, newItem);
 		}
 		if(_comboboxName == EnginesEditFrame.ROAD){
-			LocationManager.instance().replaceRoad(oldItem, newItem);
-			TrainManager.instance().replaceRoad(oldItem, newItem);
+			CarRoads.instance().replaceName(oldItem, newItem);
 		}
 	}
 	
@@ -308,11 +304,11 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EnginesAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
 			EngineModels.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY))
 			EngineTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY))
 			EngineLengths.instance().updateComboBox(comboBox);

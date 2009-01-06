@@ -12,14 +12,15 @@ import javax.swing.JComboBox;
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class CarRoads implements java.beans.PropertyChangeListener {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	private static final String ROADS = rb.getString("carRoadNames"); 
-	public static final String CARROADS_CHANGED_PROPERTY = "CarRoads";
+	public static final String CARROADS_LENGTH_CHANGED_PROPERTY = "CarRoads Length";
+	public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name";
 	private static final String LENGTH = "Length";
 	
 
@@ -75,17 +76,25 @@ public class CarRoads implements java.beans.PropertyChangeListener {
     }
     
     public void addName(String road){
+       	if (road == null)
+    		return;
     	// insert at start of list, sort later
     	if (list.contains(road))
     		return;
     	list.add(0,road);
-    	firePropertyChange (CARROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARROADS_LENGTH_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String road){
     	list.remove(road);
-    	firePropertyChange (CARROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARROADS_LENGTH_CHANGED_PROPERTY, null, LENGTH);
      }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	deleteName(oldName);
+    	firePropertyChange (CARROADS_NAME_CHANGED_PROPERTY, oldName, newName);
+    }
     
     public boolean containsName(String road){
     	return list.contains(road);

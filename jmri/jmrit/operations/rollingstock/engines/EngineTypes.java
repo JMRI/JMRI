@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class EngineTypes implements java.beans.PropertyChangeListener {
 	
@@ -19,7 +19,8 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
 	private static final String TYPES = rb.getString("engineDefaultTypes"); 
 	
 	// for property change
-	public static final String ENGINETYPES_CHANGED_PROPERTY = "EngineTypes";
+	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypes Length";
+	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypes Name";
 	private static final String LENGTH = "Length";
     
 	public EngineTypes() {
@@ -33,8 +34,6 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("EngineTypes creating instance");
 			// create and load
 			_instance = new EngineTypes();
-			// load engines
-			EngineManagerXml.instance();
 		}
 		if (log.isDebugEnabled()) log.debug("EngineTypes returns instance "+_instance);
 		return _instance;
@@ -76,21 +75,29 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
     }
     
     public void addName(String type){
+    	if (type == null)
+    		return;
     	// insert at start of list, sort later
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (ENGINETYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String type){
     	list.remove(type);
-    	firePropertyChange (ENGINETYPES_CHANGED_PROPERTY, null, LENGTH);
-     }
+    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
+    }
     
     public boolean containsName(String type){
     	return list.contains(type);
-     }
+    }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	deleteName(oldName);
+    	firePropertyChange (ENGINETYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

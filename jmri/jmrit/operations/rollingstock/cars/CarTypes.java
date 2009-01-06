@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -22,7 +22,8 @@ public class CarTypes implements java.beans.PropertyChangeListener {
 		
 	private static final String ARRTYPES = rb.getString("carTypeARR");
 	// for property change
-	public static final String CARTYPES_CHANGED_PROPERTY = "CarTypes";
+	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length";
+	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name";
 	private static final String LENGTH = "Length";
     
 	public CarTypes() {
@@ -36,8 +37,6 @@ public class CarTypes implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("CarTypes creating instance");
 			// create and load
 			_instance = new CarTypes();
-			// load cars
-			CarManagerXml.instance();
 		}
 		if (log.isDebugEnabled()) log.debug("CarTypes returns instance "+_instance);
 		return _instance;
@@ -112,21 +111,29 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     }
     
     public void addName(String type){
+    	if (type == null)
+    		return;
     	// insert at start of list, sort later
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (CARTYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteName(String type){
     	list.remove(type);
-    	firePropertyChange (CARTYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean containsName(String type){
     	return list.contains(type);
      }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	deleteName(oldName);
+    	firePropertyChange (CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

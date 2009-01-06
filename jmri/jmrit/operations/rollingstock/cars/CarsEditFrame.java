@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -219,7 +219,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		// row 11
 		addItem(textLocation, 0, 11);
 		addItem(locationBox, 1, 11);
-		addItem(trackLocationBox, 2, 11);
+		addItemWidth(trackLocationBox, 2, 2, 11);
 
 		// Separator row 12
 		addItemWidth (textOptional, 3, 0, 12);
@@ -638,12 +638,12 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if(Control.showProperty && log.isDebugEnabled()) 
 			log.debug ("CarsEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 			roadComboBox.setSelectedItem(_car.getRoad());
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
 			CarTypes.instance().updateComboBox(typeComboBox);
 			if (_car != null)
 				typeComboBox.setSelectedItem(_car.getType());

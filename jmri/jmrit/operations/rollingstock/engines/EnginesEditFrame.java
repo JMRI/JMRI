@@ -23,7 +23,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -196,7 +196,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		// row 9
 		addItem(textLocation, 0, 9);
 		addItem(locationBox, 1, 9);
-		addItem(trackLocationBox, 2, 9);
+		addItemWidth(trackLocationBox, 2, 2, 9);
 
 		// Separator row 10
 		addItemWidth(textOptional, 3, 0, 10);
@@ -581,7 +581,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EnginesEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)
 			roadComboBox.setSelectedItem(_engine.getRoad());
@@ -591,7 +591,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			if (_engine != null)
 				modelComboBox.setSelectedItem(_engine.getModel());
 		}
-		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
 			engineTypes.updateComboBox(typeComboBox);
 			if (_engine != null)
 				typeComboBox.setSelectedItem(_engine.getType());

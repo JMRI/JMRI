@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -401,6 +401,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// get notified if car types or roads gets modified
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
 		
 	}
 	
@@ -826,6 +827,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 	
 	public void dispose() {
+		EngineTypes.instance().removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarRoads.instance().removePropertyChangeListener(this);
 		routeManager.removePropertyChangeListener(this);
@@ -840,7 +842,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
 			updateTypeCheckboxes();
 		}
 		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
@@ -852,7 +855,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateNumberCars();
 		}
-		if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			updateRoadComboBoxes();
 			updateRoadNames();
 		}
