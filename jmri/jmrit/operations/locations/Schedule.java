@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -72,7 +72,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
  
     /**
      * Adds a car type to the end of this schedule
-     * @param item
+     * @param type
      * @return ScheduleItem created for the car type added
      */
     public ScheduleItem addItem (String type){
