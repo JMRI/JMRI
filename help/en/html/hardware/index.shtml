@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.27 2008-11-29 21:10:03 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.28 2009-01-06 17:58:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -28,9 +28,22 @@
         </H2>
 
 	<p>JMRI supports a wide range of DCC "command station"-style products
-	from various model railroad automation vendors.  If there is a way to
+	from various model railroad automation vendors.  
+	We also support non-DCC layout
+	If there is a way to
 	make a computer communicate with a given piece of model railroad
 	equipment, it is possible to connect it to JMRI.
+	<p>
+	This page lists layout layout equipment that JMRI is known
+	to work with, and provides links to information on how 
+	to configure JMRI to work with each particular type.
+    <p>
+	If there is a way to
+	make a computer communicate with a given piece of model railroad
+	equipment, it is possible to connect it to JMRI. If you
+	don't see your particular system here, please ask about it
+	on the <a href="http://groups.yahoo.com/group/jmriusers">user group mailing list</a>.
+	
 	<div class="list">
 	<dl>
 	    <dt class="im">
@@ -184,6 +197,15 @@
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <A HREF="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
+	    <dt class=im><a href="http://www.nacservicesinc.com/">
+	    <IMG src="images/RPS.gif"
+	        width="64" height="41" alt="RPS image"></a></dt>
+	    <dt><a href="http://www.nacservicesinc.com/">NAC Services</a></dt>
+	    <dd>
+		<A HREF="rps/index.shtml">Configure connection</a>
+		 to an RPS position measurement system.
+		</dd>
+		
 	    <dt class="im"><a href="http://www.ncedcc.com/">
 	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
 	    <dt>NCE</dt>
@@ -194,15 +216,6 @@
 		<br>
 		Configure connection to a PowerCab via 
 		<A HREF="nce/NCE.shtml#powercab">NCE USB adapter</a>.
-		</dd>
-		
-	    <dt class=im><a href="http://www.nacservicesinc.com/">
-	    <IMG src="images/RPS.gif"
-	        width="64" height="41" alt="RPS image"></a></dt>
-	    <dt><a href="http://www.nacservicesinc.com/">NAC Services</a></dt>
-	    <dd>
-		<A HREF="rps/index.shtml">Configure connection</a>
-		 to an RPS position measurement system.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
