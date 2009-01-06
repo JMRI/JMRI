@@ -55,6 +55,7 @@
 			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
 			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
+			<LI><a href="StartUpScripts.shmtl">How the startup scripts work</a>
 			</ul>
 		</dd>
 
