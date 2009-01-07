@@ -17,6 +17,9 @@
 #
 #
 
+# give system time to stabilize after wakeup
+sleep 30
+
 # Make sure env variables are defined
 setenv normal_destination
 setenv error_destination
@@ -26,44 +29,54 @@ setenv error_destination
 # setenv error_destination jmri-builds@lists.sourceforge.net
 # setenv normal_destination jmri-builds@lists.sourceforge.net
 
+# remove leftovers from last time
 rm -f nightlybuildlog.txt
+rm -f decoders.zip
+# remove and replace Version.java so previous "ant mark" won't cause CVS conflicts
+rm -f src/jmri/Version.java
+cvs -q update -d src/jmri/Version.java
+
+# start log
 date > nightlybuildlog.txt
 
 setenv CVS_RSH ssh
 
+# Update to current CVS
 if ( { (cd ..; cvs -q update -d >>& java/nightlybuildlog.txt) } ) then
 # probably OK
-
 else
   # CVS did not terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Error in CVS checkout" ${error_destination}
+    sleep 240
   else
     echo Error in CVS checkout, see log in nightlybuildlog.txt
   endif
   exit 1
 endif
 
+# Do clean build
 if ( { ((ant init clean && ant init tests) >>& nightlybuildlog.txt) } ) then
 # Probably OK
-
 else
   # Ant did not terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Did not build successfully" ${error_destination}
+    sleep 240
   else
     echo Did not build successfully, see log in nightlybuildlog.txt
   endif
   exit 2
 endif
 
+# Run tests
 if ( { (./runtest.csh jmri.HeadLessTest >>& nightlybuildlog.txt) } ) then
 # Probably OK
-
 else
   # Tests did not run and terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Tests did not run successfully" ${error_destination}
+    sleep 240
   else
     echo Did not run successfully, see log in nightlybuildlog.txt
   endif
@@ -74,17 +87,56 @@ endif
 if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null } ) then
   # Errors found, mail the log
   if ( { (test "$error_destination") } ) then
-    cat nightlybuildlog.txt | mail -s "Errors found in log" ${error_destination}
+    cat nightlybuildlog.txt | mail -s "Errors found in test log" ${error_destination}
+    sleep 240
   else
     echo Errors found in test log, see nightlybuildlog.txt
   endif
   exit 4
 endif
 
+# Test javadoc build while at it
+if ( { (((ant javadoc) |& grep -v "Loading source files for package") >>& nightlybuildlog.txt) } ) then
+# Probably OK
+else
+  # Ant did not terminate OK
+  if ( { (test "$error_destination") } ) then
+    cat nightlybuildlog.txt | mail -s "Javadoc did not build successfully" ${error_destination}
+    sleep 240
+  else
+    echo Javadoc did not build successfully, see log in nightlyjavadoclog.txt
+  endif
+  exit 5
+endif
+# Check the log for javadoc error messages (searches cvs, build log too, but those shouldn't trip the comparison
+if ( { grep '\[javadoc\].*: warning -' nightlybuildlog.txt >/dev/null } ) then
+  # Errors found, mail the log
+  if ( { (test "$error_destination") } ) then
+    cat nightlybuildlog.txt | mail -s "Javadoc errors found" ${error_destination}
+    sleep 240
+  else
+    echo Javadoc errors found, see nightlybuildlog.txt
+  endif
+  exit 6
+endif
+
 # Success!
+
+# build and upload the jar file and decoder zip file
+echo Start jar build and upload >>& nightlybuildlog.txt
+ant mark >>& nightlybuildlog.txt
+ant jar >>& nightlybuildlog.txt
+scp ../jmri.jar jacobsen,jmri@web.sourceforge.net:htdocs/ >>& nightlybuildlog.txt
+ant zip >>& nightlybuildlog.txt
+scp decoders.zip jacobsen,jmri@web.sourceforge.net:htdocs/ >>& nightlybuildlog.txt
+echo "ls -l htdocs/decoders.zip" | sftp jacobsen,jmri@web.sourceforge.net >>& nightlybuildlog.txt
+
+# and notify of success
 if ( { (test "$normal_destination") } ) then
   cat nightlybuildlog.txt | mail -s "Build completed OK" ${normal_destination}
+  sleep 240
 else
   echo Build completed OK
 endif
+
 exit 0
