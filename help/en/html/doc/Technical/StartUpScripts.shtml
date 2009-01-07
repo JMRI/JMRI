@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.5 2009-01-06 22:05:26 matthewharris Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.6 2009-01-07 17:20:24 matthewharris Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -18,7 +18,7 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
 <H1>JMRI Startup Scripts</H1>
@@ -243,7 +243,7 @@ If there's a second argument to the launcher, it will be used as the name of the
 <br>
 If no argument is provided, the configuration file name is defaulted in the application.  For example, the DecoderPro application uses DecoderProConfig2.xml as a preferences file.  If the launcher is called by 'LaunchJMRI.exe apps.DecoderPro.DecoderPro MyJmriAppConfig2.xml', it will use a preferences file named MyJmriAppConfig2.xml. 
 <br>
-This allows you to create as many specialized configurations you'd like by creating a new .bat launcher file and adding the preferences file as a parameter.
+This allows you to create as many specialized configurations you'd like by creating a new Start Menu and/or Desktop shortcut to 'LaunchJMRI.exe' file and adding the preferences file as a parameter.
 </dl>
 
 <h3>Launcher details</h3>
