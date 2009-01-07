@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -161,6 +161,9 @@ public class LayoutEditor extends JmriJFrame {
     private JLabel yLabel = new JLabel("00");
     private int xLoc = 0;
     private int yLoc = 0;
+	private int xLocWhenPressed = 0;
+	private int yLocWhenPressed = 0;
+	private boolean delayedPopupTrigger = false;
 	private Point2D currentPoint = new Point2D.Double(100.0,100.0);
 	private Point2D dLoc = new Point2D.Double(0.0,0.0);
 	private int savedMSX = 0;
@@ -568,6 +571,9 @@ public class LayoutEditor extends JmriJFrame {
 			help3.add(new JLabel(rb.getString("Help3Mac")));
 		}
 		else if (system==jmri.util.SystemType.WINDOWS) {
+			help3.add(new JLabel(rb.getString("Help3Win")));
+		}
+		else if (system==jmri.util.SystemType.LINUX) {
 			help3.add(new JLabel(rb.getString("Help3Win")));
 		}
 		else {
@@ -2067,43 +2073,35 @@ public class LayoutEditor extends JmriJFrame {
     {
 		// initialize cursor position
 		calcLocation(event,dX,dY);
+		xLocWhenPressed = xLoc;
+		yLocWhenPressed = yLoc;
         if (editMode) {
 			boolean prevSelectionActive = selectionActive;
 			selectionActive = false;
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-			// if asking for menu, or moving a point, check if on known point
-			if ( event.isPopupTrigger() || event.isMetaDown() ) {	
+			if (event.isPopupTrigger()) {
+				if (event.isMetaDown() || event.isAltDown()) { 
+					// if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+					delayedPopupTrigger = true;
+				}
+				else {
+					// no possible conflict with moving, display the popup now
+					checkPopUp(event);
+				}
+			}
+			if (event.isMetaDown() || event.isAltDown()) {	
+				// if moving an item, identify the item for mouseDragging
 				selectedObject = null;
 				selectedPointType = NONE;
 				if (checkSelect(dLoc, false)) {
-					// match to a connection point
-					if (event.isPopupTrigger()) {
-						// show popup menu
-						switch (foundPointType) {
-							case POS_POINT:
-								((PositionablePoint)foundObject).showPopUp(event);
-								break;
-							case TURNOUT_CENTER:
-								((LayoutTurnout)foundObject).showPopUp(event);
-								break;
-							case LEVEL_XING_CENTER:
-								((LevelXing)foundObject).showPopUp(event);								
-								break;
-							case TURNTABLE_CENTER:
-								((LayoutTurntable)foundObject).showPopUp(event);								
-								break;
-						}
-					}
-					else {
-						selectedObject = foundObject;
-						selectedPointType = foundPointType;
-						selectedNeedsConnect = foundNeedsConnect;
-						startDel.setLocation(foundLocation.getX()-dLoc.getX(), foundLocation.getY()-dLoc.getY());
-					}
+					selectedObject = foundObject;
+					selectedPointType = foundPointType;
+					selectedNeedsConnect = foundNeedsConnect;
+					startDel.setLocation(foundLocation.getX()-dLoc.getX(), foundLocation.getY()-dLoc.getY());
 					foundObject = null;
 				}
-				else if (event.isMetaDown()) {
+				else {
 					selectedObject = (Object)checkMarkers(dLoc);
 					if (selectedObject!=null) {
 						selectedPointType = MARKER;
@@ -2154,11 +2152,8 @@ public class LayoutEditor extends JmriJFrame {
 						}
 					}					
 				}
-				else if (event.isPopupTrigger()) {
-					checkPopUp(event);
-				}
 			}
-			else if (event.isShiftDown() && trackBox.isSelected()) {
+			else if (event.isShiftDown() && trackBox.isSelected() && (!event.isPopupTrigger()) ) {
 				// starting a Track Segment, check for free connection point
 				selectedObject = null;
 				if (checkSelect(dLoc, true)) {
@@ -2172,8 +2167,8 @@ public class LayoutEditor extends JmriJFrame {
 					beginObject = null;
 				}
 			}
-			else if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
-									(!event.isShiftDown()) && (!event.isControlDown()) ) {
+			else if ( (!event.isShiftDown()) && (!event.isControlDown()) && (!event.isPopupTrigger()) ) {
+			// check if controlling a turnout in edit mode
 				selectedObject = null;
 				if (controlLayout) {
 					// check if mouse is on a turnout 
@@ -2201,9 +2196,10 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			if (prevSelectionActive) repaint();	
         }
+		
 		else if ( controlLayout && (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
-								(!event.isShiftDown()) && (!event.isControlDown()) ) {
-			// checked if mouse is on a turnout (using wider search range)
+						(!event.isAltDown()) &&(!event.isShiftDown()) && (!event.isControlDown()) ) {
+			// not in edit mode - check if mouse is on a turnout (using wider search range)
 			selectedObject = null;
 			for (int i = 0; i<turnoutList.size();i++) {
 				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
@@ -2219,9 +2215,9 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			}
 		}
-		else if (event.isMetaDown() && (!event.isPopupTrigger()) && 
+		else if ( (event.isMetaDown() || event.isAltDown()) &&
 							(!event.isShiftDown()) && (!event.isControlDown()) ) {
-			// check if moving a marker if there are any
+			// not in edit mode - check if moving a marker if there are any
 			selectedObject = (Object)checkMarkers(dLoc);
 			if (selectedObject!=null) {
 				selectedPointType = MARKER;
@@ -2230,11 +2226,10 @@ public class LayoutEditor extends JmriJFrame {
 				selectedNeedsConnect = false;
 			}
 		}
-		else if (event.isPopupTrigger() && (!event.isMetaDown()) &&			
-							(!event.isShiftDown()) ) {
-			// check if a marker popup menu is being requested
+		else if ( event.isPopupTrigger() && (!event.isShiftDown()) ) {
+			// not in edit mode - check if a marker popup menu is being requested
 			LocoIcon lo = checkMarkers(dLoc);
-			if (lo!=null) lo.showPopUp(event);
+			if (lo!=null) delayedPopupTrigger = true;
 		}
     }
 	
@@ -2649,12 +2644,12 @@ public class LayoutEditor extends JmriJFrame {
     protected void handleMouseReleased(MouseEvent event,int dX,int dY)
     {
 		// initialize mouse position
-		whenReleased = event.getWhen();
 		calcLocation(event, dX, dY);
         if (editMode) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-            if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
+            if ((!event.isPopupTrigger()) && (!event.isMetaDown()) && (!event.isAltDown()) 
+												&& event.isShiftDown()) {
 				currentPoint = new Point2D.Double((double)xLoc, (double)yLoc);
 				if (snapToGridOnAdd) {
 					xLoc = ((xLoc+4)/10)*10;
@@ -2721,14 +2716,15 @@ public class LayoutEditor extends JmriJFrame {
 				selectedObject = null;
                 repaint();
             }
-			else if (event.isPopupTrigger() && !isDragging) {
+			else if ( (event.isPopupTrigger() || delayedPopupTrigger)  && !isDragging) {
 				selectedObject = null;
 				selectedPointType = NONE;
+				whenReleased = event.getWhen();
 				checkPopUp(event);
 			}
 			// check if controlling turnouts
 			else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
-					controlLayout && (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
+					controlLayout && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
 						(!event.isShiftDown()) && (!event.isControlDown()) ) {
 				// controlling layout, in edit mode
 				LayoutTurnout t = (LayoutTurnout)selectedObject;
@@ -2740,9 +2736,11 @@ public class LayoutEditor extends JmriJFrame {
 				if (m!=null) {
 					m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
+					whenReleased = event.getWhen();
 				}
 				LayoutSensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
+					whenReleased = event.getWhen();
 					s.performMouseClicked(event);
 				}
 			}
@@ -2756,27 +2754,29 @@ public class LayoutEditor extends JmriJFrame {
         }
 		// check if controlling turnouts out of edit mode
 		else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
-				controlLayout && (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
-					(!event.isShiftDown()) ) {
+				controlLayout && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+					(!event.isShiftDown()) && (!delayedPopupTrigger) ) {
 			// controlling layout, not in edit mode
 			LayoutTurnout t = (LayoutTurnout)selectedObject;
 			t.toggleTurnout();
 		}
 		// check if requesting marker popup out of edit mode
-		else if (event.isPopupTrigger() && !isDragging) {
+		else if ( (event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging) ) {
 			LocoIcon lo = checkMarkers(dLoc);
 			if (lo!=null) lo.showPopUp(event);
 		}
 		// check if clicking on sensor or multisensor out of edit mode
-		if ( (!editMode) && (!isDragging) && (!awaitingIconChange) ) {
+		else if ( (!isDragging) && (!awaitingIconChange) ) {
 			MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
+				whenReleased = event.getWhen();
 			}
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
+				whenReleased = event.getWhen();
 			}
 		}		
 		if (selectedObject!=null) {
@@ -2785,6 +2785,7 @@ public class LayoutEditor extends JmriJFrame {
 			selectedObject = null;
 		}
 		isDragging = false;
+		delayedPopupTrigger = false;
     }
 	
 	private void checkPopUp(MouseEvent event) {
@@ -2876,7 +2877,7 @@ public class LayoutEditor extends JmriJFrame {
 				s.performMouseClicked(event);
 			}
 		}
-		else if (event.isPopupTrigger()) {
+		else if ( event.isPopupTrigger() ) {
 			calcLocation(event, dX, dY);
 			if (editMode) {
 				selectedObject = null;
@@ -2904,13 +2905,16 @@ public class LayoutEditor extends JmriJFrame {
     {
 		// initialize mouse position
 		calcLocation(event, dX, dY);
+		// ignore this event if still at the original point
+		if ((!isDragging) && (xLoc==xLocWhenPressed) && (yLoc==yLocWhenPressed)) return;
+		// process this mouse dragged event
         if (editMode) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 		}
 		Point2D newPos = new Point2D.Double(dLoc.getX() + startDel.getX(),
 						dLoc.getY() + startDel.getY());
-		if ((selectedObject!=null) && event.isMetaDown() && (selectedPointType==MARKER)) {
+		if ((selectedObject!=null) && (event.isMetaDown() || event.isAltDown()) && (selectedPointType==MARKER)) {
 			// marker moves regardless of editMode or positionable
 			PositionableLabel pl = (PositionableLabel)selectedObject;
 			int xint = (int)newPos.getX();
@@ -2924,7 +2928,7 @@ public class LayoutEditor extends JmriJFrame {
 			return;
 		}
 		if (editMode) {	
-			if ((selectedObject!=null) && event.isMetaDown() && positionable) {
+			if ((selectedObject!=null) && (event.isMetaDown() || event.isAltDown()) && positionable) {
 				// moving a point
 				if (snapToGridOnMove) {
 					int xx = (((int)newPos.getX()+4)/10)*10;
@@ -3023,17 +3027,6 @@ public class LayoutEditor extends JmriJFrame {
 											selectedPointType-TURNTABLE_RAY_OFFSET);
 						}
 				}
-				// if point is unconnected, check proximity of an unconnected point
-				if (editMode && selectedNeedsConnect) {
-					boolean needResetCursor = (foundObject!=null);
-					if (checkSelect(newPos, true)) {
-						// have match to free connection point, change cursor
-						setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-					}
-					else if (needResetCursor) {
-						setCursor(Cursor.getDefaultCursor());
-					}
-				}
 				repaint();
 			}			
 			else if ( (beginObject!=null) && event.isShiftDown() 
@@ -3050,7 +3043,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
 				repaint();
 			}
-			else if ( selectionActive && (!event.isShiftDown()) && (!event.isMetaDown()) ) {
+			else if ( selectionActive && (!event.isShiftDown()) && (!event.isAltDown()) && (!event.isMetaDown()) ) {
 				selectionWidth = xLoc - selectionX;
 				selectionHeight = yLoc - selectionY;
 				repaint();
