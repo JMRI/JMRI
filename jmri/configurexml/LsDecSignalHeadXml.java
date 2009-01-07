@@ -29,7 +29,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LsDecSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -86,7 +86,7 @@ public class LsDecSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * @param element Top level Element to unpack.
      */
     public void load(Element element) {
-        List l = element.getChildren();
+        List l = element.getChildren("turnout");
         Turnout green = loadTurnout(l.get(0));
         Turnout yellow = loadTurnout(l.get(1));
         Turnout red = loadTurnout(l.get(2));
