@@ -20,115 +20,64 @@ import junit.framework.TestSuite;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see jmri.jmrit.XmlFile
  */
 public class CheckProgrammerNames extends TestCase {
     
     public void testComprehensive() {
-        check(new File("xml/programmers/Comprehensive.xml"));
+        checkAgainstNames(new File("xml/programmers/Comprehensive.xml"));
     }
     
     public void testBasic() {
-        check(new File("xml/programmers/Basic.xml"));
+        checkAgainstNames(new File("xml/programmers/Basic.xml"));
     }
     
     public void testTrainShowBasic() {
-        check(new File("xml/programmers/TrainShowBasic.xml"));
+        checkAgainstNames(new File("xml/programmers/TrainShowBasic.xml"));
     }
     
     public void testSampleClub() {
-        check(new File("xml/programmers/Sample Club.xml"));
+        checkAgainstNames(new File("xml/programmers/Sample Club.xml"));
     }
     
     public void testCustom() {
-        check(new File("xml/programmers/Custom.xml"));
+        checkAgainstNames(new File("xml/programmers/Custom.xml"));
     }
     
     public void testTutorial() {
-        check(new File("xml/programmers/Tutorial.xml"));
+        checkAgainstNames(new File("xml/programmers/Tutorial.xml"));
     }
     
     public void testRegisters() {
-        check(new File("xml/programmers/Registers.xml"));
+        checkAgainstNames(new File("xml/programmers/Registers.xml"));
     }
     
 /*     public void testESU() { */
-/*         check(new File("xml/programmers/ESU.xml")); */
+/*         checkAgainstNames(new File("xml/programmers/ESU.xml")); */
 /*     } */
     
 /*     public void testZimo() { */
-/*         check(new File("xml/programmers/Zimo.xml")); */
+/*         checkAgainstNames(new File("xml/programmers/Zimo.xml")); */
 /*     } */
     
-    public void check(File file) {
-        // handle the file (later should be outside this thread?)
-        try {
-            Element root = readFile(file);
-            if (log.isDebugEnabled()) log.debug("parsing complete");
-            
-            // check to see if there's a decoder element
-            if (root.getChild("programmer")==null) {
-                Assert.fail("Does not appear to be a programmer file");
-                return;
-            }
-            List varList = addVariables(root.getChild("programmer"), new ArrayList<Element>());
-            if (log.isDebugEnabled()) log.debug("found "+varList.size()+" variables");
-            jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
-            
-            String warnings = "";
-            
-            for (int i=0; i<varList.size(); i++) {
-                Element varElement = (Element)(varList.get(i));
-                // for each variable, see if can find in names file
-                Attribute itemAttr = varElement.getAttribute("item");
-                String item = null;
-                if (itemAttr!=null) item = itemAttr.getValue();
-                if (log.isDebugEnabled()) log.debug("Variable called \""
-                                                    +((item!=null)?item:"<none>"));
-                if (!(item==null ? false : nfile.checkName(item))) {
-                    log.warn("Variable not found: item=\""
-                             +((item!=null)?item:"<none>")+"\"");
-                    warnings += "Variable not found: item=\""
-                        +((item!=null)?item:"<none>")+"\"\n";
-                }
-            }
-            
-            if (!warnings.equals("")) {
-                Assert.fail(warnings);
-            }
-                        
-        } catch (Exception ex) {
-            Assert.fail("Error parsing decoder file: "+ex);
-            return;
-        }
+    public void testComprehensiveComplete() {
+        checkComplete(new File("xml/programmers/Comprehensive.xml"));
     }
     
-    List<Element> addVariables(Element e, List<Element> l) {
-        // add all "display" elements
-        List d = e.getChildren("display");
-        l.addAll(d);
 
-        // process all sub-elements
-        d = new ArrayList<Element>();
-        d.addAll(e.getChildren("pane"));
-        d.addAll(e.getChildren("column"));
-        d.addAll(e.getChildren("row"));
-        for (Iterator<Element> i = d.iterator(); i.hasNext(); ) {
-            addVariables(i.next(), l);
-        }
 
-        return l;
+    
+    public void checkAgainstNames(File file) {
+        String result = ProgCheckAction.checkMissingNames(file);
+        if (!result.equals(""))
+            Assert.fail(result);
     }
     
-    /**
-     * Ask SAX to read and verify a file
-     */
-    Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
-        XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
-        
-        return xf.rootFromFile(file);
-        
+    public void checkComplete(File file) {
+        String result = ProgCheckAction.checkIncompleteComprehensive(file);
+        if (!result.equals(""))
+            Assert.fail(result);
     }
     
     // from here down is testing infrastructure
