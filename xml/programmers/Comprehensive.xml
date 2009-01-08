@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.23 2009-01-08 16:13:41 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.24 2009-01-08 16:20:46 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -61,6 +61,7 @@
                 <display item="Decel" tooltip="Sets the deceleration rate (delay)"/>
                 <label label=" "/>
                 <display item="DC Brake Momentum" tooltip="Governs how loco responds in DC powered track block"/>
+                <display item="Total PWM Period" tooltip="Sets the motor drive frequency"/>
                 <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency"/>
                 <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses"/>
                 <display item="Dither option" tooltip="Sets the amplitude of the starting voltage pulses"/>
