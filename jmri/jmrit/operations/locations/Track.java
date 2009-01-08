@@ -14,17 +14,20 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected String _name = "";
-	protected String _locType = "";					// yard, siding or staging
+	protected String _locType = "";					// yard, siding, interchange or staging
 	protected String _sortId = "";
 	protected String _roadOption = ALLROADS;
 	protected String _dropOption = ANY;
 	protected String _pickupOption = ANY;
+	protected String _scheduleName = "";			// Schedule name if there's one
+	protected String _scheduleItemId = "";			// the current scheduled item id
+	protected int _scheduleCount = 0;				// the number of times the item has been delievered
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
 	protected int _numberRS = 0;
 	protected int _numberCars = 0;
@@ -56,6 +59,10 @@ public class Track implements java.beans.PropertyChangeListener {
 	public static final String ANY = "Any";			// track accepts any train or route
 	public static final String TRAINS = "trains";	// track only accepts certain trains
 	public static final String ROUTES = "routes";	// track only accepts certain routes
+	
+	//	 For property change
+	public static final String TYPES_CHANGED_PROPERTY = "types";
+	private static final String LENGTH = "Length";
 	
 	public Track(String id, String name, String type) {
 		log.debug("New track " + name + " " + id);
@@ -277,11 +284,13 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("track " +getName()+ " add car type "+type);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	_typeList.remove(type);
     	log.debug("track " +getName()+ " delete car type "+type);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public boolean acceptsTypeName(String type){
@@ -489,6 +498,30 @@ public class Track implements java.beans.PropertyChangeListener {
     	_moves = moves;
     }
     
+    public String getScheduleName(){
+    	return _scheduleName;
+    }
+    
+    public void setScheduleName(String name){
+    	_scheduleName = name;
+    }
+    
+    public String getScheduleItemId(){
+    	return _scheduleItemId;
+    }
+    
+    public void setScheduleItemId(String id){
+    	_scheduleItemId = id;
+    }
+    
+    public int getScheduleCount(){
+    	return _scheduleCount;
+    }
+    
+    public void setScheduleCount(int count){
+    	_scheduleCount = count;
+    }
+    
     public void dispose(){
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
@@ -538,7 +571,9 @@ public class Track implements java.beans.PropertyChangeListener {
         	if (log.isDebugEnabled()) log.debug("track (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
- 
+        if ((a = e.getAttribute("schedule")) != null ) _scheduleName = a.getValue();
+        if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
+        if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -585,6 +620,11 @@ public class Track implements java.beans.PropertyChangeListener {
     		ids = ids + pickupIds[i]+"%%";
     	}
     	e.setAttribute("pickupIds", ids);
+    	if (!getScheduleName().equals("")){
+    		e.setAttribute("schedule", getScheduleName());
+    		e.setAttribute("itemId", getScheduleItemId());
+    		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
+    	}
     	e.setAttribute("comment", getComment());
 
     	return e;

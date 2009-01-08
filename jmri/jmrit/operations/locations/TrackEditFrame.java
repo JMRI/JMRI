@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -55,6 +55,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textType = new JLabel();
 	JLabel textRoad = new JLabel();
 	JLabel textDrops = new JLabel();
+	JLabel textSchedule = new JLabel();
 	JLabel textPickups = new JLabel();
 	JLabel textOptional = new JLabel();
 	JLabel textComment = new JLabel();
@@ -71,6 +72,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton addDropButton = new JButton();
 	JButton deletePickupButton = new JButton();
 	JButton addPickupButton = new JButton();
+	JButton editScheduleButton = new JButton(rb.getString("Edit"));
 	
 	// check boxes
 	JCheckBox checkBox;
@@ -109,6 +111,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox comboBoxDropRoutes = RouteManager.instance().getComboBox();
 	JComboBox comboBoxPickupTrains = TrainManager.instance().getComboBox();
 	JComboBox comboBoxPickupRoutes = RouteManager.instance().getComboBox();
+	JComboBox comboBoxSchedules = ScheduleManager.instance().getComboBox();
 
 	public static final String DISPOSE = "dispose" ;
 	public static final int MAX_NAME_LENGTH = 25;
@@ -119,10 +122,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public void initComponents(Location location, Track track) {
 		_location = location;
-		_location.addPropertyChangeListener(this);
 		_track = track;
+		
+		// property changes
+		_location.addPropertyChangeListener(this);
+		ScheduleManager.instance().addPropertyChangeListener(this);
+		// listen for car road name and type changes
 		CarRoads.instance().addPropertyChangeListener(this);
-
+		CarTypes.instance().addPropertyChangeListener(this);
+		
 		// load managers
 		managerXml = LocationManagerXml.instance();
 
@@ -143,6 +151,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		textType.setVisible(true);
 		textRoad.setText(rb.getString("RoadsTrack"));
 		textRoad.setVisible(true);
+		textSchedule.setText(rb.getString("DeliverySchedule"));
 		textDrops.setText(rb.getString("TrainsOrRoutesDrops"));
 		textDrops.setVisible(true);
 		textPickups.setText(rb.getString("TrainsOrRoutesPickups"));
@@ -247,6 +256,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(panelCheckBoxes);
 		getContentPane().add(panelRoadNames);
+		// Only sidings can have a schedule
+		if (_type.equals(Track.SIDING)){
+			JPanel p = new JPanel();
+			addItem(p, textSchedule, 0, 0);
+			addItem(p, comboBoxSchedules, 1, 0);
+			addItem(p, editScheduleButton, 2, 0);
+			getContentPane().add(p);
+		}
 		// Only interchange tracks can control drops and pickups
 		if (_type.equals(Track.INTERCHANGE)){
 			getContentPane().add(panelDropOptions);
@@ -266,6 +283,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addButtonAction(addDropButton);
 		addButtonAction(deletePickupButton);
 		addButtonAction(addPickupButton);
+		addButtonAction(editScheduleButton);
 		
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
@@ -280,6 +298,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// load fields and enable buttons
 		if (_track !=null){
 			trackNameTextField.setText(_track.getName());
+			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
+			comboBoxSchedules.setSelectedItem(s);
 			commentTextField.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
 			enableButtons(true);
@@ -289,7 +309,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and location for display
 		pack();
-		setSize(getWidth(), getHeight()+50); // add some room for menu
+		setSize(getWidth()+50, getHeight()+50); // add some room for menu
 		setLocation(500, 200);
 		setVisible(true);	
 	}
@@ -427,7 +447,24 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			_track.deletePickupId(id);
 			updatePickupOptions();
 		}
+		if (ae.getSource() == editScheduleButton){
+			editAddSchedule();
+		}
 	}
+	
+	   private void editAddSchedule(){
+	    	log.debug("Edit/add route");
+	    	ScheduleEditFrame sef = new ScheduleEditFrame();
+	    	Object selected =  comboBoxSchedules.getSelectedItem();
+			if (selected != null && !selected.equals("")){
+				Schedule schedule = (Schedule)selected;
+				sef.setTitle(rb.getString("TitleScheduleEdit"));
+				sef.initComponents(schedule, _location, _track);
+			} else {
+				sef.setTitle(rb.getString("TitleScheduleAdd"));
+				sef.initComponents(null, _location, _track);
+			}
+	    }
 	
 	// check to see if the route services this location
 	private boolean checkRoute (Route route){
@@ -496,6 +533,37 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		track.setTrainDirections(direction);
 		track.setName(trackNameTextField.getText());
+		
+		// save the schedule
+		Object selected =  comboBoxSchedules.getSelectedItem();	
+		if (selected == null || selected.equals("")){
+			track.setScheduleName("");
+		} else {
+			Schedule sch = (Schedule)selected;
+			// update only if the schedule has changed
+			if (sch != null){
+				List<String> l = sch.getItemsBySequenceList();	
+				//	must have at least one item in schedule
+				if(l.size()>0){
+					if (track.getScheduleName().equals("") ||
+							!track.getScheduleName().equals(sch.getName())){
+						track.setScheduleName(sch.getName());
+						track.setScheduleItemId(l.get(0));
+						track.setScheduleCount(0);
+					} else {
+					// check to see if user deleted the current item for track
+						ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
+						if (currentSi == null){
+							track.setScheduleItemId(l.get(0));
+							track.setScheduleCount(0);
+						}
+					}
+				} else {
+					// no items in schedule so disable
+					track.setScheduleName("");
+				}
+			}
+		}
 		track.setComment(commentTextField.getText());
 		// enable 
 		enableButtons(true);
@@ -607,6 +675,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		anyPickups.setEnabled(enabled);
 		trainPickup.setEnabled(enabled);
 		routePickup.setEnabled(enabled);
+		editScheduleButton.setEnabled(enabled);
 		enableCheckboxes(enabled);
 	}
 	
@@ -962,10 +1031,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		CarRoads.instance().updateComboBox(comboBoxRoads);
 	}
 	
+	private void updateScheduleComboBox(){
+		ScheduleManager.instance().updateComboBox(comboBoxSchedules);
+	}
+	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
@@ -975,11 +1049,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			updateRoadComboBox();
 			updateRoadNames();
 		}
+		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)){
+			updateScheduleComboBox();
+		}
 	}
 	
     public void dispose() {
     	_location.removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
+    	CarTypes.instance().removePropertyChangeListener(this);
+    	ScheduleManager.instance().removePropertyChangeListener(this);
         super.dispose();
     }
 

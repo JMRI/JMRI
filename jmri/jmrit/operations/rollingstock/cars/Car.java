@@ -4,7 +4,10 @@ import java.beans.PropertyChangeEvent;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.Schedule;
+import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 
@@ -12,7 +15,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -20,6 +23,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected Kernel _kernel = null;
+	
+	public static final String SCHEDULE = "Schedule";
 	
 	LocationManager locationManager = LocationManager.instance();
 	
@@ -108,7 +113,32 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			log.debug("Can't set car (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH;	
 		}
-		return OKAY;
+		// now check to see if the track has a schedule
+		return testSchedule(track);
+	}
+	
+	private String testSchedule(Track track){
+		if (track.getScheduleName().equals(""))
+			return OKAY;
+		log.debug("track "+track.getName()+" has schedule ("+track.getScheduleName()+")");
+		ScheduleManager scheduleManager = new ScheduleManager().instance();
+		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
+		if (sch == null){
+			log.warn("Could not find schedule ("+track.getScheduleName()+")");
+			return OKAY;
+		}
+		ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+		if (si == null){
+			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+")");
+			return OKAY;
+		}
+		if (getType().equals(si.getType())){
+			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
+					return OKAY;
+			else
+				return SCHEDULE +" ("+ track.getScheduleName()+") next car type ("+si.getType()+") next car road ("+si.getRoad()+")";
+		} else
+			return SCHEDULE +" ("+ track.getScheduleName()+") next car type ("+si.getType()+")";
 	}
 
 	/**

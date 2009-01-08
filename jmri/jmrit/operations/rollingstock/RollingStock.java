@@ -2,9 +2,13 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Schedule;
+import jmri.jmrit.operations.locations.ScheduleItem;
+import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -16,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -361,6 +365,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				setRouteLocation(null);
 				setRouteDestination(null);
 			}
+			
+			// now check to see if the track has a schedule
+			scheduleNext(track);
+
 			firePropertyChange(DESTINATION_CHANGED_PROPERTY, oldDestination, destination);
 			firePropertyChange(DESTINATIONTRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
@@ -405,6 +413,48 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			return LENGTH;	
 		}
 		return OKAY;
+	}
+	
+	/**
+	 * Check to see if track has schedule and if it does will schedule the next
+	 * item in the list
+	 * 
+	 * @param track
+	 */
+	private void scheduleNext(Track track){
+		if (track == null || track.getScheduleName().equals(""))
+			return;
+		log.debug("destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
+		ScheduleManager scheduleManager = new ScheduleManager().instance();
+		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
+		if (sch == null){
+			log.error("can not find schedule ("+track.getScheduleName()+")");
+			return;
+		}
+		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
+		if (currentSi == null){
+			log.error("can not find schedule item ("+track.getScheduleItemId()+")");
+			return;
+		}
+		// bump and check count
+		track.setScheduleCount(track.getScheduleCount()+1);
+		if (track.getScheduleCount() < currentSi.getCount())
+			return;
+		// go to the next item on the schedule
+		track.setScheduleCount(0);
+		List<String> l = sch.getItemsBySequenceList();
+		for (int i=0; i<l.size(); i++){
+			ScheduleItem nextSi = sch.getItemById(l.get(i));
+			if (track.getScheduleItemId().equals(nextSi.getId())){
+				if (++i < l.size()){
+					nextSi = sch.getItemById(l.get(i));
+				}else{
+					nextSi = sch.getItemById(l.get(0));
+				}
+				track.setScheduleItemId(nextSi.getId());
+				break;
+			}
+		}
 	}
 
 	public Location getDestination() {

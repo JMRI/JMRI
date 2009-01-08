@@ -12,14 +12,13 @@ import org.jdom.Element;
 /**
  * Represents a car delivery schedule for a location
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.2 $
+ * @author Daniel Boudreau Copyright (C) 2009
+ * @version             $Revision: 1.3 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected String _name = "";
-
 	protected String _comment = "";
 	
 	//	 stores ScheduleItems for this schedule
@@ -78,7 +77,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     public ScheduleItem addItem (String type){
     	_IdNumber++;
     	_sequenceNum++;
-    	String id = _id + "I"+ Integer.toString(_IdNumber);
+    	String id = _id + "c"+ Integer.toString(_IdNumber);
     	log.debug("adding new item to "+getName()+ " id: " + id);
     	ScheduleItem si = new ScheduleItem(id, type);
     	si.setSequenceId(_sequenceNum);
@@ -103,7 +102,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	if (sequence < 0 || sequence > _scheduleHashTable.size())
     		return si;
     	for (int i = 0; i < _scheduleHashTable.size()- sequence; i++)
-    		moveLocationUp(si);
+    		moveItemUp(si);
     	return si;
     }
 	
@@ -115,7 +114,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         _scheduleHashTable.put(si.getId(), si);
 
         // find last id created
-        String[] getId = si.getId().split("I");
+        String[] getId = si.getId().split("c");
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber)
         	_IdNumber = id;
@@ -131,7 +130,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	 * Delete a ScheduleItem
 	 * @param si
 	 */
-    public void deleteLocation (ScheduleItem si){
+    public void deleteItem (ScheduleItem si){
     	if (si != null){
     		si.removePropertyChangeListener(this);
     		// subtract from the items's available track length
@@ -144,17 +143,17 @@ public class Schedule implements java.beans.PropertyChangeListener {
     }
     
 	/**
-	 * Get item by name (gets last schedule item with name)
-	 * @param name
+	 * Get item by car type (gets last schedule item with this type)
+	 * @param type
 	 * @return schedule item
 	 */
-    public ScheduleItem getLocationByName(String name) {
-    	List<String> scheduleSequenceList = getLocationsBySequenceList();
+    public ScheduleItem getItemByType(String type) {
+    	List<String> scheduleSequenceList = getItemsBySequenceList();
     	ScheduleItem si;
     	
     	for (int i = scheduleSequenceList.size()-1; i >= 0; i--){
-    		si = getLocationById(scheduleSequenceList.get(i));
-    		if (si.getName().equals(name))
+    		si = getItemById(scheduleSequenceList.get(i));
+    		if (si.getType().equals(type))
     			return si;
       	}
         return null;
@@ -165,11 +164,11 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * @param id
      * @return schedule item
      */
-    public ScheduleItem getLocationById (String id){
+    public ScheduleItem getItemById (String id){
     	return _scheduleHashTable.get(id);
     }
     
-    private List<String> getLocationsByIdList() {
+    private List<String> getItemsByIdList() {
         String[] arr = new String[_scheduleHashTable.size()];
         List<String> out = new ArrayList<String>();
         Enumeration<String> en = _scheduleHashTable.keys();
@@ -187,9 +186,9 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * Get a list of ScheduleItem ids sorted by schedule order  
      * @return list of ScheduleItem ids ordered by sequence
      */
-    public List<String> getLocationsBySequenceList() {
+    public List<String> getItemsBySequenceList() {
 		// first get id list
-		List<String> sortList = getLocationsByIdList();
+		List<String> sortList = getItemsByIdList();
 		// now re-sort
 		List<String> out = new ArrayList<String>();
 		int locNum;
@@ -199,10 +198,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			si = getLocationById(sortList.get(i));
+			si = getItemById(sortList.get(i));
 			locNum = si.getSequenceId();
 			for (int j = 0; j < out.size(); j++) {
-				siout = getLocationById(out.get(j));
+				siout = getItemById(out.get(j));
 				int outLocNum = siout.getSequenceId();
 				if (locNum < outLocNum) {
 					out.add(j, sortList.get(i));
@@ -222,7 +221,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * sequenceId for the ScheduleItem
      * @param si
      */
-    public void moveLocationUp(ScheduleItem si){
+    public void moveItemUp(ScheduleItem si){
     	int sequenceId = si.getSequenceId();
     	sequenceId--;
     	if(sequenceId <= 0)
@@ -232,11 +231,11 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	sequenceId++;
     	//now find and adjust the other item taken by this one
     	boolean found = false;
-    	List<String> sortList = getLocationsByIdList();
+    	List<String> sortList = getItemsByIdList();
     	ScheduleItem siadjust;
     	while (!found){
     		for (int i = 0; i < sortList.size(); i++) {
-    			siadjust = getLocationById(sortList.get(i));
+    			siadjust = getItemById(sortList.get(i));
     			if (siadjust.getSequenceId() == searchId && siadjust != si){
     				siadjust.setSequenceId(sequenceId);
     				found = true;
@@ -255,7 +254,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * sequenceId for the ScheduleItem
      * @param si
      */
-    public void moveLocationDown(ScheduleItem si){
+    public void moveItemDown(ScheduleItem si){
     	int sequenceId = si.getSequenceId();
     	sequenceId++;
     	if(sequenceId > _sequenceNum)
@@ -265,11 +264,11 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	sequenceId--;
     	//now find and adjust the other item taken by this one
     	boolean found = false;
-    	List<String> sortList = getLocationsByIdList();
+    	List<String> sortList = getItemsByIdList();
     	ScheduleItem siadjust;
     	while (!found){
     		for (int i = 0; i < sortList.size(); i++) {
-    			siadjust = getLocationById(sortList.get(i));
+    			siadjust = getItemById(sortList.get(i));
     			if (siadjust.getSequenceId() == searchId && siadjust != si){
     				siadjust.setSequenceId(sequenceId);
     				found = true;
@@ -317,10 +316,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("comment", getComment());
-        List<String> l = getLocationsByIdList();
+        List<String> l = getItemsByIdList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);
-        	ScheduleItem si = getLocationById(id);
+        	ScheduleItem si = getItemById(id);
 	            e.addContent(si.store());
         }
  

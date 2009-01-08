@@ -1,21 +1,25 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents a car type to be scheduled for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected int _sequenceId = 0;			// used to determine order in schedule
 	protected String _type = "";			// the type of car
+	protected String _road = "";				// the car road
+	protected int _count = 1;				// the number of times this type of car must be dropped
 	protected String _comment = "";
 			
+	public static final String NUMBER_CHANGED_PROPERTY = "number";
+	public static final String TYPE_CHANGED_PROPERTY = "type";
+	public static final String ROAD_CHANGED_PROPERTY = "road";
 	public static final String DISPOSE = "dispose";
 	
 	/**
@@ -33,8 +37,24 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		return _id;
 	}
 
-	public String getName() {
+	public String getType() {
 		return _type;
+	}
+	
+	public void setType(String type){
+		String old = _type;
+		_type = type;
+		firePropertyChange (TYPE_CHANGED_PROPERTY, old, type);
+	}
+	
+	public String getRoad() {
+		return _road;
+	}
+	
+	public void setRoad(String road){
+		String old = _road;
+		_road = road;
+		firePropertyChange (ROAD_CHANGED_PROPERTY, old, road);
 	}
 	
 	public int getSequenceId(){
@@ -44,6 +64,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setSequenceId(int sequence) {
 		// property change not needed
 		_sequenceId = sequence;
+	}
+	
+	public int getCount(){
+		return _count;
+	}
+	
+	public void setCount(int count){
+		int old = _count;
+		_count = count;
+		firePropertyChange (NUMBER_CHANGED_PROPERTY, old, count);
 	}
 	
 	public void setComment(String comment) {
@@ -71,7 +101,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in Schedule Item element when reading operations");
+        if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
+        if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
     }
 
@@ -81,17 +114,19 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-    	org.jdom.Element e = new org.jdom.Element("location");
+    	org.jdom.Element e = new org.jdom.Element("item");
     	e.setAttribute("id", getId());
-    	e.setAttribute("name", getName());
+    	e.setAttribute("type", getType());
+    	e.setAttribute("road", getRoad());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
+    	e.setAttribute("count", Integer.toString(getCount()));
        	e.setAttribute("comment", getComment());
     	return e;
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
-    		log.debug("route location ("+getName()+ ") id (" +getId()+ ") sees property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+    		log.debug("ScheduleItem ("+getType()+ ") id (" +getId()+ ") sees property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 				+ e.getNewValue());
     }
 

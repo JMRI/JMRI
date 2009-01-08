@@ -13,10 +13,10 @@ import jmri.jmrit.XmlFile;
 
 
 /**
- * Load and stores locations for operations.
+ * Load and stores locations and schedules for operations.
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @author Daniel Boudreau Copyright (C) 2008 2009
+ * @version $Revision: 1.9 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -42,7 +42,6 @@ public class LocationManagerXml extends XmlFile {
 		return _instance;
 	}
 	
-
 	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
@@ -94,8 +93,29 @@ public class LocationManagerXml extends XmlFile {
 	            }
 	            loc.setComment(xmlComment);
 	        }
-	        //All Comments and Decoder Comment line feeds have been changed to processor directives
+	        
+	        // do the same for schedules
+	        
+	        ScheduleManager scheduleManager = ScheduleManager.instance();
+	        List scheduleList = scheduleManager.getSchedulesByIdList();
+	        
+	        for (int i=0; i<scheduleList.size(); i++){
+	        	String scheduleId = (String)scheduleList.get(i);
+	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
+	            String tempComment = sch.getComment();
+	            String xmlComment = new String();
 
+	            for (int k = 0; k < tempComment.length(); k++) {
+	                if (tempComment.startsWith("\n", k)) {
+	                    xmlComment = xmlComment + "<?p?>";
+	                }
+	                else {
+	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                }
+	            }
+	            sch.setComment(xmlComment);
+	        }
+	        //All Comments line feeds have been changed to processor directives
 
 	        // add top-level elements
 	        Element values;
@@ -107,6 +127,15 @@ public class LocationManagerXml extends XmlFile {
 	        	Location loc = manager.getLocationById(locationId);
  	            values.addContent(loc.store());
 	        }
+	        
+	        root.addContent(values = new Element("schedules"));
+	        // add entries
+	        for (int i=0; i<scheduleList.size(); i++) {
+	        	String scheduleId = (String)scheduleList.get(i);
+	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
+ 	            values.addContent(sch.store());
+	        }
+	               
 	        writeXML(file, doc);
 
 	        //Now that the roster has been rewritten in file form we need to
@@ -129,6 +158,24 @@ public class LocationManagerXml extends XmlFile {
 	                }
 	            }
 	            loc.setComment(tempComment);
+	        }
+	        
+	        for (int i=0; i<scheduleList.size(); i++){
+	        	String scheduleId = (String)scheduleList.get(i);
+	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
+	            String xmlComment = sch.getComment();
+	            String tempComment = new String();
+
+	            for (int k = 0; k < xmlComment.length(); k++) {
+	                if (xmlComment.startsWith("<?p?>", k)) {
+	                    tempComment = tempComment + "\n";
+	                    k = k + 4;
+	                }
+	                else {
+	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                }
+	            }
+	            sch.setComment(tempComment);
 	        }
 
 	        // done - location file now stored, so can't be dirty
@@ -174,7 +221,6 @@ public class LocationManagerXml extends XmlFile {
         
         LocationManager manager = LocationManager.instance();
 
-
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("locations") != null) {
         	
@@ -214,6 +260,50 @@ public class LocationManagerXml extends XmlFile {
         else {
             log.error("Unrecognized operations location file contents in file: "+name);
         }
+        
+        // now load schedules       
+        ScheduleManager scheduleManager = ScheduleManager.instance();
+
+        // decode type, invoke proper processing routine if a decoder file
+        if (root.getChild("schedules") != null) {
+        	
+            List l = root.getChild("schedules").getChildren("schedule");
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
+            for (int i=0; i<l.size(); i++) {
+            	scheduleManager.register(new Schedule((Element)l.get(i)));
+            }
+
+            List scheduleList = scheduleManager.getSchedulesByIdList();
+            //Scan the object to check the Comment and Decoder Comment fields for
+            //any <?p?> processor directives and change them to back \n characters
+            for (int i = 0; i < scheduleList.size(); i++) {
+                //Get a RosterEntry object for this index
+            	String scheduleId = (String)scheduleList.get(i);
+	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
+
+                //Extract the Comment field and create a new string for output
+                String tempComment = sch.getComment();
+                String xmlComment = new String();
+
+                //transfer tempComment to xmlComment one character at a time, except
+                //when <?p?> is found.  In that case, insert a \n and skip over those
+                //characters in tempComment.
+                for (int k = 0; k < tempComment.length(); k++) {
+                    if (tempComment.startsWith("<?p?>", k)) {
+                        xmlComment = xmlComment + "\n";
+                        k = k + 4;
+                    }
+                    else {
+                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                    }
+                }
+                sch.setComment(xmlComment);
+            }
+        }
+        else {
+            log.warn("Unrecognized operations location file contents in file: "+name);
+        }
+
     }
 
     private boolean dirty = false;

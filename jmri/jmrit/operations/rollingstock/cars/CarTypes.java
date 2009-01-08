@@ -8,12 +8,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -38,7 +39,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
 			// create and load
 			_instance = new CarTypes();
 		}
-		if (log.isDebugEnabled()) log.debug("CarTypes returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarTypes returns instance "+_instance);
 		return _instance;
 	}
 
