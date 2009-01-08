@@ -6,7 +6,9 @@ import java.util.List;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 
 /**
@@ -14,7 +16,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -596,7 +598,9 @@ public class Track implements java.beans.PropertyChangeListener {
     	String[] types = getTypeNames();
     	String typeNames ="";
     	for (int i=0; i<types.length; i++){
-    		typeNames = typeNames + types[i]+"%%";
+    		// remove types that have been deleted by user
+    		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
+    			typeNames = typeNames + types[i]+"%%";
     	}
     	e.setAttribute("carTypes", typeNames);
      	e.setAttribute("carRoadOperation", getRoadOption());

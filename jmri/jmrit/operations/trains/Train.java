@@ -15,8 +15,10 @@ import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -40,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.36 $
+ * @version             $Revision: 1.37 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1158,24 +1160,10 @@ public class Train implements java.beans.PropertyChangeListener {
         for (int i=0; i<locationIds.length; i++){
         	names = names + locationIds[i]+"%%";
         }
-        // build list of car types for this train
-        String[] types = getTypeNames();
-        String typeNames ="";
-        for (int i=0; i<types.length; i++){
-        	typeNames = typeNames + types[i]+"%%";
-        }
-        e.setAttribute("carTypes", typeNames);
-        e.setAttribute("skip", names);
+        e.setAttribute("skip", names);        
         if (getCurrentLocation() != null)
         	e.setAttribute("current", getCurrentLocation().getId());
-       	// build list of car roads for this train
-    	String[] roads = getRoadNames();
-    	String roadNames ="";
-    	for (int i=0; i<roads.length; i++){
-    		roadNames = roadNames + roads[i]+"%%";
-    	}
-    	e.setAttribute("carRoadOperation", getRoadOption());
-    	e.setAttribute("carRoads", roadNames);
+    	e.setAttribute("carRoadOperation", getRoadOption());	
         e.setAttribute("numberEngines", getNumberEngines());
         e.setAttribute("engineRoad", getEngineRoad());
         e.setAttribute("engineModel", getEngineModel());
@@ -1188,6 +1176,22 @@ public class Train implements java.beans.PropertyChangeListener {
         	e.setAttribute("leadEngine", getLeadEngine().getId());
         e.setAttribute("status", getStatus());
         e.setAttribute("comment", getComment());
+        // build list of car types for this train
+        String[] types = getTypeNames();
+        String typeNames ="";
+        for (int i=0; i<types.length; i++){
+       		// remove types that have been deleted by user
+    		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
+    			typeNames = typeNames + types[i]+"%%";
+        }
+        e.setAttribute("carTypes", typeNames);
+      	// build list of car roads for this train
+    	String[] roads = getRoadNames();
+    	String roadNames ="";
+    	for (int i=0; i<roads.length; i++){
+    		roadNames = roadNames + roads[i]+"%%";
+    	}
+        e.setAttribute("carRoads", roadNames);
         return e;
     }
 
