@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import java.util.List;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsLocations class
  * @author	Bob Coleman
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -143,11 +144,29 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
 
 		l.addTypeName("TestTypeName");
+		Assert.assertEquals("Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
+
+		// now add to car types
+		CarTypes ct = CarTypes.instance();
+		ct.addName("TestTypeName");
+		l.addTypeName("TestTypeName");
 		Assert.assertEquals("Accepts Type Name defined", true, l.acceptsTypeName("TestTypeName"));
 
 		l.deleteTypeName("TestTypeName");
 		Assert.assertEquals("Accepts Type Name undefined2", false, l.acceptsTypeName("TestTypeName"));
 
+		ct.addName("Baggage");
+		ct.addName("BoxCar");
+		ct.addName("Caboose");
+		ct.addName("Coal");
+		ct.addName("Engine");
+		ct.addName("Hopper");
+		ct.addName("MOW");
+		ct.addName("Passenger");
+		ct.addName("Reefer");
+		ct.addName("Stock");
+		ct.addName("Tank Oil");
+		
 		l.addTypeName("Baggage");
 		l.addTypeName("BoxCar");
 		l.addTypeName("Caboose");
@@ -159,6 +178,7 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("Reefer");
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
+		
 		Assert.assertEquals("Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
 		Assert.assertEquals("Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));

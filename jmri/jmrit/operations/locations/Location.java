@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 
 import org.jdom.Element;
@@ -17,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -304,7 +305,7 @@ public class Location implements java.beans.PropertyChangeListener {
      }
     
     public boolean acceptsTypeName(String type){
-    	if (!CarTypes.instance().containsName(type))
+    	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
     		return false;
     	return list.contains(type);
     }

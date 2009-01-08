@@ -19,6 +19,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -34,7 +35,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 /**
  * Tests for the OperationsTrains class
  * @author	Bob Coleman
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -259,6 +260,12 @@ public class OperationsTrainsTest extends TestCase {
                 LocationManager lmanager = LocationManager.instance();
                 EngineManager emanager = EngineManager.instance();
                 CarManager cmanager = CarManager.instance();
+        		CarTypes ct = CarTypes.instance();
+        		
+        		// register the car types used
+        		ct.addName("Boxcar");
+        		ct.addName("Caboose");
+        		ct.addName("Diesel");
 
                 // Set up four engines in two consists 
                 Consist con1 = new Consist("C16");
