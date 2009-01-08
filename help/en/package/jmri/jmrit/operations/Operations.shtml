@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.25 2008-12-31 21:05:31 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.26 2009-01-08 01:56:18 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -44,7 +44,7 @@ train and optionally for any location. The program can also place icons
 representing trains on a JMRI panel. The icon can be taught to move in
 the panel along with the train from location to location.
 
-<a name="demo">
+<A name="demo"></A>
 <H3>Operations Demo Files</H3>
 
 The operations program provides a set of demo files to help introduce
@@ -196,8 +196,9 @@ direction using the pull down menus.
 When you're finished with the settings panel, press the save button to
 store the setting in a file called "Operations.xml". You can find this
 file in your JMRI directory in a folder called "operations". The program
-will also create a backup file each time you press the save button. <A
-	NAME="BackupRestore"></A>
+will also create a backup file each time you press the save button. 
+
+<A	NAME="BackupRestore"></A>
 <H3>Backup and Restore</H3>
 
 The "Backup" button will store a copy of the operation files. The
@@ -291,12 +292,52 @@ You can enter an optional comment for the yard.
 Press the "Save Yard Track" to save your work. The program will create a
 file (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
-containing the last settings for all of your locations. <A
-	NAME="Sidings"></A>
+containing the last settings for all of your locations. 
+
+<A	NAME="Sidings"></A>
 <H3>Sidings</H3>
 
 To add a siding, press the "Add Siding" button. Sidings are very similar
-to <A HREF="#Yards">Yards</A> , so see above for more information.
+to <A HREF="#Yards">Yards</A> , so see above for more information.  You can if
+you wish schedule the order that cars will be delivered to a siding.  See
+Schedules below for more information.  
+
+
+<A NAME="Schedules"></A>
+<H3>Schedules</H3>
+
+If you would like to see cars delivered in a particular sequence, the
+program allows you to apply a schedule to a siding. This is an optional
+feature and shouldn't be used until you become very familiar with how
+the program generates manifests and switch lists. A schedule provides
+very fine control on the order types of cars will be delivered to a siding. You can
+also specify the road name for the type of car delivered. For example,
+if you wanted two SP boxcars to be delivered followed by a tank car, you
+can create a schedule that will do exactly that. To create a schedule
+press the "Edit" button next to "Optional car delivery Schedule" pull
+down menu on the "Edit Siding Track" panel. Pressing the "Edit" button
+should create the "Add Schedule" panel. 
+
+<P>Enter a name for your schedule
+and press the "Add Schedule" button on the bottom of the panel. Multiple
+sidings can use the same schedule as long as the sidings use the same
+car types and roads. Now add your first delivery for this siding by
+selecting a car type in the menu box found in the lower left corner of
+the panel and pressing the "Add car type" button. A new item should
+appear in your schedule containing the type of car, a pull down menu
+for road names, and a count of 1. You can if you wish specify a
+particular road for the type of car you entered, or leave if blank if
+you don't care about the road name. If you wanted more than one car type
+to be delivered consecutively, increase the count to the number that you
+wish. The maximum count is 10 and the minimum is 1. Repeat selecting the
+car types and pressing to "Add car type" until your have a delivery
+schedule you like. Press "Save Schedule" and close the schedule panel
+when you are done. 
+
+<P>Note only car types and roads that are accepted by
+this siding are available. If a car type or road isn't available, check
+the car types and roads for this siding and location.
+
 
 <H3>Local Switcher</H3>
 
@@ -311,8 +352,9 @@ town's sidings.
 
 The program when generating a switch list for a train with a single
 location (local switcher) will never move a car from a siding to a
-siding or yard to a yard, only yard to siding or siding to yard. <A
-	NAME="Interchange"></A>
+siding or yard to a yard, only yard to siding or siding to yard. 
+
+<A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
 
 If you want the program to force the exchange of cars between trains you
