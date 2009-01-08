@@ -6,6 +6,7 @@ import jmri.jmrit.XmlFile;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -20,20 +21,26 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class NameFile extends XmlFile {
 
 	// fill in abstract members
 
-	protected List nameElementList = new ArrayList();
-	public int numNames() { return nameElementList.size(); }
-
+	//protected List<Element> nameElementList = new ArrayList<Element>();
+	//public int numNames() { return nameElementList.size(); }
+    public Set<String> names() {
+        //List<String> list = new ArrayList<String>();
+        //for (int i = 0; i<nameElementList.size(); i++) 
+        //    list.add(nameElementList.get());
+        return _nameHash.keySet();
+    }
+    
 	// hold names in a Hashtable
-	protected Hashtable _nameHash = new Hashtable();
+	protected Hashtable<String, Element> _nameHash = new Hashtable<String, Element>();
 
 	public Element elementFromName(String name) {
-		return (Element)_nameHash.get(name);
+		return _nameHash.get(name);
 	}
 
 
