@@ -24,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -271,6 +271,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			fireTableDataChanged();
 		}
