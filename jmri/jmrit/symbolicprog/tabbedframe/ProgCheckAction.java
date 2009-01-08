@@ -10,12 +10,13 @@ import javax.swing.*;
 
 import java.util.*;
 import org.jdom.*;
+import java.util.regex.*;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -42,11 +43,11 @@ public class ProgCheckAction extends AbstractAction {
             File file = fci.getSelectedFile();
             if (log.isDebugEnabled()) log.debug("located file "+file+" for XML processing");
             
-            checkMissingNames(file);
+            warnMissingNames(file);
             
             // as ugly special case, do reverse check for Comprehensive programmer
             if (file.getName().toLowerCase().endsWith("comprehensive.xml"))
-                checkIncompleteComprehensive(file);
+                warnIncompleteComprehensive(file);
         }
         else log.info("XmlFileCheckAction cancelled in open dialog");
     }
@@ -54,7 +55,7 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Find all of the display elements descending from this element
      */
-    protected void expandElement(Element el, List<Element> list) {
+    static protected void expandElement(Element el, List<Element> list) {
         // get the leaves here
         list.addAll((java.util.Collection<Element>)el.getChildren("display"));
         
@@ -66,8 +67,15 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Check for names in programer that are not in names.xml
      */
-    void checkMissingNames(File file) {
-        // handle the file (later should be outside this thread?)
+    void warnMissingNames(File file) {
+        String result = checkMissingNames(file);
+        if (result.equals(""))
+            JOptionPane.showMessageDialog(_who,"OK, all variables in file are known");
+        else
+            JOptionPane.showMessageDialog(_who,result);
+    }
+    
+    static String checkMissingNames(File file) {
         try {
             Element root = readFile(file);
             if (log.isDebugEnabled()) log.debug("parsing complete");
@@ -75,7 +83,7 @@ public class ProgCheckAction extends AbstractAction {
             // check to see if there's a programmer element
             if (root.getChild("programmer")==null) {
                 log.warn("Does not appear to be a programmer file");
-                return;
+                return "Does not appear to be a programmer file";
             }
             
             // walk the entire tree of elements, saving a reference
@@ -104,20 +112,27 @@ public class ProgCheckAction extends AbstractAction {
             }
             
             if (!warnings.equals(""))
-                JOptionPane.showMessageDialog(_who,"Names missing from Comprehensive.xml\n"+warnings);
+                return "Names missing from Comprehensive.xml\n"+warnings;
             else
-                JOptionPane.showMessageDialog(_who,"No missing names found");
+                return "";
             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(_who,"Error parsing programmer file: "+ex);
-            return;
+            return "Error parsing programmer file: "+ex;
         }
     }
     
     /**
      * Check for names in names.xml that are not in file
      */
-    void checkIncompleteComprehensive(File file) {
+    void warnIncompleteComprehensive(File file) {
+        String result = checkIncompleteComprehensive(file);
+        if (result.equals(""))
+            JOptionPane.showMessageDialog(_who,"OK, Comprehensive.xml is complete");
+        else
+            JOptionPane.showMessageDialog(_who,result);
+    }
+    
+    static String checkIncompleteComprehensive(File file) {
         // handle the file (later should be outside this thread?)
         try {
             Element root = readFile(file);
@@ -126,7 +141,7 @@ public class ProgCheckAction extends AbstractAction {
             // check to see if there's a programmer element
             if (root.getChild("programmer")==null) {
                 log.warn("Does not appear to be a programmer file");
-                return;
+                return "Does not appear to be a programmer file";
             }
             
             // walk the entire tree of elements, saving a reference
@@ -140,6 +155,7 @@ public class ProgCheckAction extends AbstractAction {
             
             // for each item in names, see if found in this file
             for (String s : nfile.names()) {
+                if (functionMapName(s)) continue;
                 boolean found = false;
                 for (int i=0; i<varList.size(); i++) {
                     Element varElement = (Element)(varList.get(i));
@@ -160,22 +176,40 @@ public class ProgCheckAction extends AbstractAction {
                 }
             }
             
-            
-            if (!warnings.equals(""))
-                JOptionPane.showMessageDialog(_who,warnings);
-            else
-                JOptionPane.showMessageDialog(_who,"No mismatched names found");
-            
+            return warnings;            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(_who,"Error parsing programmer file: "+ex);
-            return;
+            return "Error parsing programmer file: "+ex;
         }
     }
     
     /**
+     * Check if the name is a function name, e.g.
+     * "F5 controls output 8" or "FL(f) controls output 14"
+     */
+    static boolean functionMapName(String name) {
+        if (numericPattern == null)  numericPattern = Pattern.compile(numericRegex);
+        if (ffPattern == null)  ffPattern = Pattern.compile(ffRegex);
+        if (frPattern == null)  frPattern = Pattern.compile(frRegex);
+        
+        Matcher matcher = numericPattern.matcher(name);
+        if (matcher.matches()) return true;
+        matcher = ffPattern.matcher(name);
+        if (matcher.matches()) return true;
+        matcher = frPattern.matcher(name);
+        if (matcher.matches()) return true;
+        return false;
+    }
+    static final String numericRegex = "^F(\\d++) controls output (\\d++)$";
+    static Pattern numericPattern;
+    static final String ffRegex = "^FL\\(f\\) controls output (\\d++)$";
+    static Pattern ffPattern;
+    static final String frRegex = "^FL\\(r\\) controls output (\\d++)$";
+    static Pattern frPattern;
+    
+    /**
      * Ask SAX to read and verify a file
      */
-    Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
+    static Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromFile(file);
