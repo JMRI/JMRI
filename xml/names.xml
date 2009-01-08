@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.12 2008-12-26 19:54:13 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.13 2009-01-08 16:13:02 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
 			version="8" lastUpdated="20081226"/>
@@ -109,20 +109,35 @@
 		<definition item="Analog Mode Function Status - F0(r)" />
 		
 		<definition item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
+		<definition item="Analog Mode Function Status - F1(f)" />
 		<definition item="Analog Mode Function Status - F1(r)" />
+		
 		<definition item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
+		<definition item="Analog Mode Function Status - F2(f)" />
 		<definition item="Analog Mode Function Status - F2(r)" />
+		
 		<definition item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
+		<definition item="Analog Mode Function Status - F3(f)" />
 		<definition item="Analog Mode Function Status - F3(r)" />
+		
 		<definition item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
+		<definition item="Analog Mode Function Status - F4(f)" />
 		<definition item="Analog Mode Function Status - F4(r)" />
+		
 		<definition item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
+		<definition item="Analog Mode Function Status - F5(f)" />
 		<definition item="Analog Mode Function Status - F5(r)" />
+		
 		<definition item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
+		<definition item="Analog Mode Function Status - F6(f)" />
 		<definition item="Analog Mode Function Status - F6(r)" />
+		
 		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
+		<definition item="Analog Mode Function Status - F7(f)" />
 		<definition item="Analog Mode Function Status - F7(r)" />
+		
 		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		<definition item="Analog Mode Function Status - F8(f)" />
 		<definition item="Analog Mode Function Status - F8(r)" />
 		
 		<definition item="Analog Mode Function Status - F9" />
