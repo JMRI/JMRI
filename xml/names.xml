@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.13 2009-01-08 16:13:02 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.14 2009-01-08 16:21:06 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
 			version="8" lastUpdated="20081226"/>
@@ -231,8 +231,8 @@
 		
 	<definitiongroup name="BEMF and Motor Control">
 
-		<definition item="Total PWM Period" CV="9" />
-		<definition item="Motor PWM Frequency" CV="9" />
+		<definition item="Total PWM Period" />
+		<definition item="Motor PWM Frequency" />
 
 		<definition item="Dither frequency" />
 		<definition item="Dither option" />
