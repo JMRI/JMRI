@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.5 2008-11-16 20:20:56 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.6 2009-01-09 18:51:17 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,9 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (engines | engineModels | engineLengths | consists)*>
+<!ELEMENT operations-config (engines | engineModels | engineTypes | engineLengths | consists)*>
 
 <!ELEMENT engineModels (#PCDATA)>
+<!ELEMENT engineTypes (#PCDATA)>
 <!ELEMENT engineLengths (#PCDATA)>
 <!ELEMENT consists (#PCDATA)>
 

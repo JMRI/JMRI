@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a location roster -->
-<!-- $Id: operations-locations.dtd,v 1.3 2008-10-17 04:38:34 dan_boudreau Exp $ -->
+<!-- $Id: operations-locations.dtd,v 1.4 2009-01-09 18:51:17 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,11 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (locations)*>
+<!ELEMENT operations-config (locations | schedules)*>
 
 <!ELEMENT locations (location)*>
 <!ELEMENT location (track)*>
 <!ELEMENT track EMPTY>
+
+<!ELEMENT schedules (schedule)*>
+<!ELEMENT schedule (item)*>
+<!ELEMENT item EMPTY>
 
 <!ATTLIST location id				CDATA #REQUIRED>          
 <!ATTLIST location name				CDATA #IMPLIED>
@@ -40,5 +44,19 @@
 <!ATTLIST track pickupIds		CDATA #IMPLIED>  
 <!ATTLIST track length			CDATA #IMPLIED> 
 <!ATTLIST track moves			CDATA #IMPLIED> 
+<!ATTLIST track schedule		CDATA #IMPLIED> 
+<!ATTLIST track itemId			CDATA #IMPLIED> 
+<!ATTLIST track itemCount		CDATA #IMPLIED> 
 <!ATTLIST track comment			CDATA #IMPLIED>
+
+<!ATTLIST schedule id			CDATA #REQUIRED>      
+<!ATTLIST schedule name			CDATA #IMPLIED>
+<!ATTLIST schedule comment		CDATA #IMPLIED>
+
+<!ATTLIST item id				CDATA #REQUIRED>          
+<!ATTLIST item type				CDATA #IMPLIED>
+<!ATTLIST item road				CDATA #IMPLIED>
+<!ATTLIST item sequenceId		CDATA #IMPLIED>
+<!ATTLIST item count			CDATA #IMPLIED>
+<!ATTLIST item comment			CDATA #IMPLIED>
 
