@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -68,7 +68,13 @@ public class OperationsXml extends XmlFile {
 	    }
 	
 	   void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-	        // find root
+	       // suppress rootFromName(name) warning message by checking to see if file exists
+	        File file = findFile(name);
+	        if (file == null) {
+	            log.debug(name + " file could not be found");
+	            return;
+	        }
+		   // find root
 	        Element root = rootFromName(name);
 	        if (root==null) {
 	            log.debug(name + " file could not be read");
