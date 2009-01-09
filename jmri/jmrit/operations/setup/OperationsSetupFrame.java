@@ -31,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -93,6 +93,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     // check boxes
     JCheckBox eastCheckBox = new JCheckBox();
 	JCheckBox northCheckBox = new JCheckBox();
+	JCheckBox mainMenuCheckBox = new JCheckBox();
 	JCheckBox appendCommentCheckBox = new JCheckBox();
 	JCheckBox iconCheckBox = new JCheckBox();
 	JCheckBox appendCheckBox = new JCheckBox();
@@ -172,6 +173,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		textOwner.setText(" "+rb.getString("Owner"));
 		textOwner.setVisible(true);
 		ownerTextField.setText(Setup.getOwnerName());
+		
+		mainMenuCheckBox.setText(rb.getString("MainMenu"));
 		
 		textPrinter.setText(rb.getString("PrinterFont"));
 		textPrinter.setVisible(true);
@@ -292,6 +295,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
+		addItemWidth (pPrinter, mainMenuCheckBox, 3, 1,7);
 		addItem (pPrinter, textPrinter, 0, 8);
 		addItemLeft (pPrinter, mono, 1, 8);
 		addItemLeft (pPrinter, sanSerif, 2, 8);
@@ -302,6 +306,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (pPrinter, buildReportVD, 4, 10);
 		addItemWidth (pPrinter, appendCommentCheckBox, 3, 1, 12);
 		pPrinter.setBorder(border);
+		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
 
@@ -427,6 +432,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 					Setup.setCarTypes(Setup.AAR);
 				}
 			}
+			// main menu enabled?
+			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// set printer font
 			if (mono.isSelected())
 				Setup.setFontName(Setup.MONOSPACED);

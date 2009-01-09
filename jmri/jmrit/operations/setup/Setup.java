@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -129,6 +129,17 @@ public class Setup {
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
+	
+	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
+	
+	public static boolean isMainMenuEnabled(){
+		OperationsXml.instance(); // load file
+		return mainMenuEnabled;
+	}
+	
+	public static void setMainMenuEnabled(boolean enabled){
+		mainMenuEnabled = enabled;
+	}
 	
 	public static String getRailroadName(){
 		return railroadName;
@@ -471,6 +482,7 @@ public class Setup {
     	values.setAttribute("name", getRailroadName());
     	
     	e.addContent(values = new Element("settings"));
+    	values.setAttribute("mainMenu", isMainMenuEnabled()?"true":"false");
     	values.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
@@ -518,6 +530,11 @@ public class Setup {
         	String name = a.getValue();
            	if (log.isDebugEnabled()) log.debug("railroadName: "+name);
            	Setup.setRailroadName(name);
+        }
+        if ((a = operations.getChild("settings").getAttribute("mainMenu"))!= null){
+        	String enabled = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("mainMenu: "+enabled);
+           	Setup.setMainMenuEnabled(enabled.equals("true"));
         }
         if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         	String dir = a.getValue();
