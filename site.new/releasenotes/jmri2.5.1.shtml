@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.8 2009-01-06 02:35:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.9 2009-01-10 22:57:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -204,6 +204,23 @@ Mac OS X version so a separate installer is no longer needed.
 <p>
 Paul Bender arranged for the Lenz support to 
 automatically retransmit turnout messages when certain errors are received.
+
+<p>
+Fixed a crash when loading panel files that contained certain types of
+SignalHeads with comments.
+
+<p>
+Matt Harris updated the Windows application launcher so that 
+the "DOS" log window is minimized (not shown full size).
+
+<p>
+Dan Boudreau added a new schedule feature for sidings.
+
+<p>
+David Duchamp changed the Layout Editor drag gesture on Linux.
+
+<p>
+Dan Boudreau made it possible to optionally add operations menu to main menu bar
 
 <!--#include virtual="/Footer" -->
 
