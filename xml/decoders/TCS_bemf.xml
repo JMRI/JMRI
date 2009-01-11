@@ -650,7 +650,7 @@
 			</variable>
 
 		<variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1"
-				item="Total PWM Period" tooltip="" > 
+				item="EMF Enable" tooltip="" > 
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>

@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.14 2009-01-08 16:21:06 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.15 2009-01-11 20:10:48 jacobsen Exp $ -->
 <names-config>
+		<version author="jake@physics.berkeley.edu" 
+			version="9" lastUpdated="20090111"/>
 		<version author="jake@physics.berkeley.edu" 
 			version="8" lastUpdated="20081226"/>
 		<version author="jake@physics.berkeley.edu" 
@@ -9,6 +11,7 @@
 
    <!-- Version 7 - changed spelling of "behavior" (Jack Shall)       -->
    <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests -->
+   <!-- Version 9 - add explicit EMF Enable to fix TCS confusion      -->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -237,6 +240,7 @@
 		<definition item="Dither frequency" />
 		<definition item="Dither option" />
 
+        <definition item="EMF Enable"/>
 		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
 		<definition item="EMF Static Config" />
 		<definition item="EMF Dynamic Config" />

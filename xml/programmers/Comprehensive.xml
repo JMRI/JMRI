@@ -12,11 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.25 2009-01-08 16:57:45 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.26 2009-01-11 20:10:48 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
     <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
+    <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
 <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
 <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
@@ -28,6 +29,7 @@
 <!-- Version 12 - added sound group 3  -->
 <!-- Version 13 - two panes for speed control -->
 <!-- Version 14 - added EMF fields to Motor pane and more sound options-->
+<!-- Version 15 - added EMF enable to fix TCS confusion -->
     <programmer decoderFilePanes="yes" showEmptyPanes="default">
         <pane name="Basic">
             <column>
@@ -67,6 +69,7 @@
                 <display item="Dither option" tooltip="Sets the amplitude of the starting voltage pulses"/>
                 <label label=" "/>
                 <display item="Load Control"/>
+                <display item="EMF Enable"/>
                 <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value"/>
                 <display item="EMF Static Config" tooltip="EMF Static Config"/>
                 <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config"/>
