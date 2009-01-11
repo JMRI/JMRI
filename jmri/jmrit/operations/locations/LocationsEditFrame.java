@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -330,12 +330,9 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addYardButton){
-// need to reinitialize each time, so for now make new
-//			if (yef == null){
-				yef = new YardEditFrame();
-				yef.initComponents(_location, null);
-				yef.setTitle(rb.getString("AddYard"));
-//			}
+			yef = new YardEditFrame();
+			yef.initComponents(_location, null);
+			yef.setTitle(rb.getString("AddYard"));
 		}
 		if (ae.getSource() == addSidingButton){
 			sef = new SidingEditFrame();

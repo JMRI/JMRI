@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -56,6 +56,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textRoad = new JLabel();
 	JLabel textDrops = new JLabel();
 	JLabel textSchedule = new JLabel();
+	JLabel textSchError = new JLabel();
 	JLabel textPickups = new JLabel();
 	JLabel textOptional = new JLabel();
 	JLabel textComment = new JLabel();
@@ -262,6 +263,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			addItem(p, textSchedule, 0, 0);
 			addItem(p, comboBoxSchedules, 1, 0);
 			addItem(p, editScheduleButton, 2, 0);
+			addItem(p, textSchError, 3, 0);
+			checkScheduleValid();
 			getContentPane().add(p);
 		}
 		// Only interchange tracks can control drops and pickups
@@ -451,20 +454,23 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			editAddSchedule();
 		}
 	}
-	
-	   private void editAddSchedule(){
-	    	log.debug("Edit/add route");
-	    	ScheduleEditFrame sef = new ScheduleEditFrame();
-	    	Object selected =  comboBoxSchedules.getSelectedItem();
-			if (selected != null && !selected.equals("")){
-				Schedule schedule = (Schedule)selected;
-				sef.setTitle(rb.getString("TitleScheduleEdit"));
-				sef.initComponents(schedule, _location, _track);
-			} else {
-				sef.setTitle(rb.getString("TitleScheduleAdd"));
-				sef.initComponents(null, _location, _track);
-			}
-	    }
+
+	ScheduleEditFrame sef = null;
+	private void editAddSchedule(){
+		log.debug("Edit/add route");
+		if (sef != null)
+			sef.dispose();
+		sef = new ScheduleEditFrame();			
+		Object selected =  comboBoxSchedules.getSelectedItem();
+		if (selected != null && !selected.equals("")){
+			Schedule schedule = (Schedule)selected;
+			sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{_track.getName()}));
+			sef.initComponents(schedule, _location, _track);
+		} else {
+			sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleAdd"), new Object[]{_track.getName()}));
+			sef.initComponents(null, _location, _track);
+		}
+	}
 	
 	// check to see if the route services this location
 	private boolean checkRoute (Route route){
@@ -538,6 +544,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		Object selected =  comboBoxSchedules.getSelectedItem();	
 		if (selected == null || selected.equals("")){
 			track.setScheduleName("");
+			textSchError.setText("");
 		} else {
 			Schedule sch = (Schedule)selected;
 			// update only if the schedule has changed
@@ -558,10 +565,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							track.setScheduleCount(0);
 						}
 					}
+					checkScheduleValid();
 				} else {
 					// no items in schedule so disable
 					track.setScheduleName("");
+					textSchError.setText(rb.getString("empty"));
 				}
+				
 			}
 		}
 		track.setComment(commentTextField.getText());
@@ -1029,10 +1039,42 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateRoadComboBox(){
 		CarRoads.instance().updateComboBox(comboBoxRoads);
+		if (_track !=null){
+			
+		}
 	}
 	
 	private void updateScheduleComboBox(){
 		ScheduleManager.instance().updateComboBox(comboBoxSchedules);
+		if (_track != null){
+			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
+			comboBoxSchedules.setSelectedItem(s);
+		}
+	}
+	
+	private void checkScheduleValid(){
+		if (_track == null)
+			return;
+		textSchError.setText("");
+		Schedule schedule = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
+		if (schedule == null)
+			return;
+		List<String> scheduleItems = schedule.getItemsBySequenceList();
+		if (scheduleItems.size() == 0){
+			textSchError.setText(rb.getString("empty"));
+			return;
+		}
+		for (int i=0; i<scheduleItems.size(); i++){
+			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			if (!_track.acceptsTypeName(si.getType())){
+				textSchError.setText(MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()}));
+				break;
+			}
+			if (!si.getRoad().equals("") && !_track.acceptsRoadName(si.getRoad())){
+				textSchError.setText(MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()}));
+				break;
+			}
+		}
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

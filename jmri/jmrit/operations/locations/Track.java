@@ -16,7 +16,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -64,6 +64,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	
 	//	 For property change
 	public static final String TYPES_CHANGED_PROPERTY = "types";
+	public static final String ROADS_CHANGED_PROPERTY = "roads";
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
 	private static final String LENGTH = "Length";
 	
@@ -343,11 +344,13 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_roadList.add(road);
     	log.debug("track " +getName()+ " add car road "+road);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteRoadName(String road){
     	_roadList.remove(road);
     	log.debug("track " +getName()+ " delete car road "+road);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
      }
     
     public boolean acceptsRoadName(String road){

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -120,7 +120,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	private String testSchedule(Track track){
 		if (track.getScheduleName().equals(""))
 			return OKAY;
-		log.debug("track "+track.getName()+" has schedule ("+track.getScheduleName()+")");
+		log.debug("track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = new ScheduleManager().instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){

@@ -24,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -58,7 +58,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
  		list = _schedule.getItemsBySequenceList();
 		// and add them back in
 		for (int i = 0; i < list.size(); i++){
-			log.debug("location ids: " + list.get(i));
+			log.debug("schedule ids: " + list.get(i));
 			_schedule.getItemById(list.get(i))
 					.addPropertyChangeListener(this);
 		}
@@ -94,7 +94,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(50);
@@ -186,7 +186,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     private String getCurrentPointer(ScheduleItem si){
     	if (_track.getScheduleItemId().equals(si.getId()))
-    		return "  -->";
+    		return "    -->";
     	else
     		return "";
     }
@@ -198,6 +198,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
     }
     
+    String notValidRoad =rb.getString("NotValid");
     private JComboBox getRoadComboBox(ScheduleItem si){
     	JComboBox cb = new JComboBox();
     	String[] roads = CarRoads.instance().getNames();
@@ -207,6 +208,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     			cb.addItem(roads[i]);
     	}
     	cb.setSelectedItem(si.getRoad());
+    	if (!cb.getSelectedItem().equals(si.getRoad())){
+    		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
+    		cb.addItem(notValidRoad);
+    		cb.setSelectedItem(notValidRoad);
+    	}
     	return cb;
     }
     
@@ -232,7 +238,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     private void setRoad(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
-    	si.setRoad((String)((JComboBox)value).getSelectedItem());
+    	String road = (String)((JComboBox)value).getSelectedItem();
+    	if (!road.equals(notValidRoad))
+    		si.setRoad(road);
     }
     
     private void moveUpScheduleItem (int row){
@@ -271,6 +279,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			fireTableDataChanged();
@@ -289,9 +298,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-        removePropertyChangeScheduleItems();
-        if (_schedule != null)
+        if (_schedule != null){
+        	removePropertyChangeScheduleItems();
         	_schedule.removePropertyChangeListener(this);
+        }
         CarTypes.instance().removePropertyChangeListener(this);
 		_location.removePropertyChangeListener(this);
 		_track.removePropertyChangeListener(this);

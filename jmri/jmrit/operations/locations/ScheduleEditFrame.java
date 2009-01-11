@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -106,11 +106,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     	schedulePane = new JScrollPane(scheduleTable);
     	schedulePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
- 		
+      	scheduleModel.initTable(scheduleTable, schedule, _location, _track);
 		if (_schedule != null){
 			scheduleNameTextField.setText(_schedule.getName());
 			commentTextField.setText(_schedule.getComment());
-	      	scheduleModel.initTable(scheduleTable, schedule, _location, _track);
 	      	enableButtons(true);
 		} else {
 			enableButtons(false);
@@ -180,15 +179,14 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 //		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
 
-		//	 get notified if car types are changed
+		//	 get notified if car types or roads are changed
 		CarTypes.instance().addPropertyChangeListener(this);
 		_location.addPropertyChangeListener(this);
 		_track.addPropertyChangeListener(this);
 		
 		// set frame size and schedule for display
 		pack();
-		if((getWidth()<900)) setSize(900, getHeight());
-		setSize(getWidth(), 600);
+		setSize(700, 600);
 		setVisible(true);
 	}
 	
