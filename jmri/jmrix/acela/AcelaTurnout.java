@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -160,18 +160,31 @@ public class AcelaTurnout extends AbstractTurnout {
 		AcelaTrafficController.instance().sendAcelaMessage(m, null);
 */
  }
+    //Acela turnouts do support inversion
+    public boolean canInvert(){return true;}
+     
+     //method which takes a turnout state as a parameter and adjusts it  as necessary
+     //to reflect the turnout invert property
+     private int adjustStateForInversion(int rawState) {
+         
+         if (getInverted() && (rawState == CLOSED || rawState == THROWN)){
+             if (rawState == CLOSED) {
+                 return THROWN;
+             }else{
+                 return CLOSED;
+             }
+         }else{
+             return rawState;
+         }
+         
+     }
     
     protected void sendMessage(boolean closed) {
-/*
-        AcelaMessage m;
-
-    	AcelaTrafficController.instance().sendAcelaMessage(m, null);
-*/
         int newState;
         if (closed) {
-            newState = ON;
+            newState = adjustStateForInversion(ON);
         } else {
-            newState = OFF;
+            newState = adjustStateForInversion(OFF);
         }
         
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
