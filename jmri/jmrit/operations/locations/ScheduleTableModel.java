@@ -17,6 +17,8 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
@@ -24,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -200,12 +202,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     String notValidRoad =rb.getString("NotValid");
     private JComboBox getRoadComboBox(ScheduleItem si){
+    	log.debug("getRoadComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = new JComboBox();
     	String[] roads = CarRoads.instance().getNames();
     	cb.addItem("");
+    	CarManager cm = CarManager.instance();
     	for (int i=0; i<roads.length; i++){
-    		if (_track.acceptsRoadName(roads[i]))
-    			cb.addItem(roads[i]);
+    		if (_track.acceptsRoadName(roads[i])){
+    			Car car = cm.getCarByTypeAndRoad(si.getType(), roads[i]);
+    			if (car != null)
+    				cb.addItem(roads[i]);
+    		}
     	}
     	cb.setSelectedItem(si.getRoad());
     	if (!cb.getSelectedItem().equals(si.getRoad())){
@@ -236,10 +243,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	si.setCount(count);
     }
     
+    // note this method looks for String "Not Valid <>"
     private void setRoad(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
     	String road = (String)((JComboBox)value).getSelectedItem();
-    	if (!road.equals(notValidRoad))
+    	// String "Not Valid <>" is 12 char in length
+    	if (road.length()<12){
+    		si.setRoad(road);
+    		return;
+    	}
+    	String test = road.substring(0, 12);
+    	if (!test.equals(rb.getString("NotValid").substring(0, 12)))
     		si.setRoad(road);
     }
     

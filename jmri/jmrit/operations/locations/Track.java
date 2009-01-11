@@ -16,7 +16,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -306,7 +306,9 @@ public class Track implements java.beans.PropertyChangeListener {
     }
     
     public void setRoadOption (String option){
+    	String old = _roadOption;
     	_roadOption = option;
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
     }
     
  	public void setTrainDirections(int direction){

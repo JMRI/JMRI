@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -81,10 +81,19 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * @param carNumber car number
      * @return requested Car object or null if none exists
      */
-    
-    public Car getCarByRoadAndNumber (String carRoad, String carNumber){
+    public Car getCarByRoadAndNumber(String carRoad, String carNumber){
     	String carId = Car.createId (carRoad, carNumber);
     	return getCarById (carId);
+    }
+    
+    public Car getCarByTypeAndRoad(String carType, String carRoad){
+    	Enumeration<String> en = _carHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Car car = getCarById(en.nextElement());
+    		if(car.getType().equals(carType) && car.getRoad().equals(carRoad))
+    			return car;
+    	}
+    	return null;
     }
  
     /**
