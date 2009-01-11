@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Umelec_ATL2064.xml,v 1.5 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!-- $Id: Umelec_ATL2064.xml,v 1.6 2009-01-11 20:04:49 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -66,7 +66,7 @@
 		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="147"><decVal/>
 			</variable>
 
-		<variable label="Total PWM Period" CV="9" default="63" comment="Range 40-63" item="Total PWM Period"><decVal/>
+		<variable label="Total PWM Period" CV="9" default="63" comment="Range 40-63"><decVal/>
 			</variable>
 
 		<variable label="Long Address" CV="17" item="Long Address"
