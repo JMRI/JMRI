@@ -16,7 +16,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 
@@ -298,6 +298,8 @@ public class Track implements java.beans.PropertyChangeListener {
     }
     
     public boolean acceptsTypeName(String type){
+       	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
+    		return false;
     	return _typeList.contains(type);
     }
     
