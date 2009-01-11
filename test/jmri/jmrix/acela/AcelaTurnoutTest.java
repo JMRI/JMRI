@@ -138,6 +138,7 @@ public class AcelaTurnoutTest extends jmri.AbstractTurnoutTest {
         // Must allocate a valid turnout t for abstract tests
 	t = new AcelaTurnout("AT11");
     }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnoutTest.class.getName());

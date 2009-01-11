@@ -174,6 +174,7 @@ public class AcelaNodeTest extends TestCase {
     Light l1, l2, l3;
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
 
@@ -210,6 +211,7 @@ public class AcelaNodeTest extends TestCase {
 
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
+            @Override
             protected void init() {
                 root = null;
                 super.init();
@@ -224,6 +226,7 @@ public class AcelaNodeTest extends TestCase {
         s1 = InstanceManager.sensorManagerInstance().newSensor("IS98", "98");
 
     }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

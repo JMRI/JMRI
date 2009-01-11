@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -106,11 +106,21 @@ public class AcelaNode extends AbstractNode {
     protected byte[] sensorConfigArray = new byte[MAXSENSORBITS]; // configuration values of the sensor circuits for this node
     protected int[] outputWired = new int[MAXOUTPUTBITS];
     protected int[] outputInit = new int[MAXOUTPUTBITS];
+    protected int[] outputType = new int[MAXOUTPUTBITS];
+    protected int[] outputLength = new int[MAXOUTPUTBITS];
+    protected boolean[] outputNeedToSend = new boolean[MAXOUTPUTBITS];
     public static final String sensorTypes = "NFSBCGDT";
     public static final String sensorPolarities = "ACTINV";
-//    public static final String sensorThresholds = "MINLOWNORHIGMAX";
     public static final String outputWireds = "NONC";
     public static final String outputInits = "OFFACT";
+    public static final String outputTypes = "ONOFFPULSEBLINK";
+    public static final int ONOFF = 0;
+    public static final int PULSE = 1;
+    public static final int BLINK = 2;
+                                                        // These can be removed in June 2010:
+    public static final String outputONOFF = "ONOFF";   // used to dump/restore config file.
+    public static final String outputLEN0 = "0";        // used to dump/restore config file.
+    public static final String outputNO = "N0";         // used to dump/restore config file.
 
     protected int startingOutputAddress = -1;           // used to aid linear address search
     protected int endingOutputAddress = -1;           // used to aid linear address search
@@ -157,6 +167,9 @@ public class AcelaNode extends AbstractNode {
             outputArray[i] = 0;
             outputInit[i] = 0;  // Off
             outputWired[i] = 0; // NO (Normally Open)
+            outputType[i] = 0; // ONOFF
+            outputLength[i] = 10; // 10 tenths of a second
+            outputNeedToSend[i] = false;
         }
 
         // initialize other operational instance variables
@@ -170,9 +183,22 @@ public class AcelaNode extends AbstractNode {
 
     public void initNode() {
         if (outputbitsPerCard >0) {
+            // check to see if we can use bulk mode
+            boolean bulk_message = true;
+            int c = 0;
+            while (c < outputbitsPerCard) {
+                if (outputType[c] != AcelaNode.ONOFF) {
+                    bulk_message = false;
+                }
+                c++;
+            }
+
             // Initialize all output circuits
             for (int i = 0; i<MAXOUTPUTBITS; i++) {
                 outputArray[i] = (byte) outputInit[i];
+                if (!bulk_message) {
+                    outputNeedToSend[i] = true;
+                }
                 //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
             }
             setMustSend();
@@ -181,7 +207,6 @@ public class AcelaNode extends AbstractNode {
             // Initialize all sensor circuits
             for (int i = 0; i<MAXSENSORBITS; i++) {
                 sensorConfigArray[i] = (byte) ((byte) (sensorThreshold[i] << 3) + (byte) (sensorType[i] << 1) + (byte) (sensorPolarity[i]));
-//                sensorConfigArray[i] = (byte) ((byte) (sensorType[i] << 1));
                 sensorNeedInit[i] = true;
             }
             hasActiveSensors = true;
@@ -270,7 +295,21 @@ public class AcelaNode extends AbstractNode {
         }
 
         // check for change, necessitating a send
-        if (oldbyte != outputArray[newbitNumber]) {
+        boolean bulk_message = true;
+        int c = 0;
+        while (c < outputbitsPerCard) {
+            if (outputType[c] != AcelaNode.ONOFF) {
+                bulk_message = false;
+            }
+            c++;
+        }
+        if (bulk_message) {
+            // check for change, necessitating a send
+            if (oldbyte != outputArray[newbitNumber]) {
+                setMustSend();
+            }
+        } else {
+            outputNeedToSend[newbitNumber] = true;
             setMustSend();
         }
     }
@@ -285,9 +324,9 @@ public class AcelaNode extends AbstractNode {
         newbitNumber = bitNumber - startingOutputAddress;
         byte testByte = outputArray[newbitNumber];
         if (testByte == 0) {
-        	return (false);
+            return (false);
         } else {
-        	return (true);
+            return (true);
         }
     }
 
@@ -340,6 +379,33 @@ public class AcelaNode extends AbstractNode {
         outputInit[circuitnum] = type;
     }
     
+    public int getOutputType(int circuitnum) {
+        return outputType[circuitnum];
+    }
+
+    public String getOutputTypeString(int circuitnum) {
+        int outputtype = outputType[circuitnum];
+        String value = outputTypes.substring(outputtype*5, outputtype*5+5);
+        return value;
+    }
+
+    public void setOutputType(int circuitnum, int type) {
+        outputType[circuitnum] = type;
+    }
+    
+    public void setOutputTypeString(int circuitnum, String stringtype) {
+        int type = outputTypes.lastIndexOf(stringtype) / 5;
+        outputType[circuitnum] = type;
+    }
+    
+    public int getOutputLength(int circuitnum) {
+        return outputLength[circuitnum];
+    }
+
+    public void setOutputLength(int circuitnum, int newlength) {
+        outputLength[circuitnum] = newlength;
+    }
+
     /**
      * Public method to set and return Sensor configuration values
      */
@@ -384,22 +450,11 @@ public class AcelaNode extends AbstractNode {
     public int getSensorThreshold(int circuitnum) {
         return sensorThreshold[circuitnum];
     }
-/*
-    public String getSensorThresholdString(int circuitnum) {
-        int sensorthreshold = sensorThreshold[circuitnum];
-        String value = sensorThresholds.substring(sensorthreshold*3, sensorthreshold*3+3);
-        return value;
-    }
-*/
+
     public void setSensorThreshold(int circuitnum, int threshold) {
         sensorThreshold[circuitnum] = threshold;
     }
-/*    
-    public void setSensorThresholdString(int circuitnum, String stringthreshold) {
-        int threshold = sensorThresholds.lastIndexOf(stringthreshold) / 3;
-        sensorThreshold[circuitnum] = threshold;
-    }
-*/    
+
     /**
      * Public method to return node type
      */
@@ -539,78 +594,220 @@ public class AcelaNode extends AbstractNode {
      * Public Method to create an Transmit packet (SerialMessage)
      */
     public AbstractMRMessage createOutPacket() {
-    	byte addr = 0x00;
+        //  Set up variables that will be used at the end to send the msg.
+        int cmdlen = 3;         // Message length == 3, 4, or 5
+//        byte cmdcode = 0x01;    // Message command: default == activate output
+        byte cmdcode = 0x03;    // Message command: default == activate output
+    	byte addrhi = 0x00;     // Used to address more than 255 nodes
+    	byte addrlo = 0x00;     // Address of node
+    	byte settinghi = 0x00;  // Used when setting 16 outputs
+    	byte settinglo = 0x00;  // Used to set output state
+        
+        // If we can, we want to send one bulk message for the entire node
+        // We can only send a bulk message if all of the output circuits have
+        // outputType of ONOFF
+        boolean bulk_message = true;
+        int c = 0;
+        while (c < outputbitsPerCard) {
+            if (outputType[c] != AcelaNode.ONOFF) {
+                bulk_message = false;
+            }
+            c++;
+        }
+
+        //  For now, we are not going to support more than 255 nodes
+        //  so we leave addrhi at 0x00.
+
+        // We need to see if there is a second output circuit for this
+        // node that we need to send.  If there is then we need to set
+        // the mustsend flag for the node because the Traffic Controller
+        // reset it before calling this routine.
+        if (!bulk_message) {
+            c = 0;
+            boolean foundfirst = false;
+            boolean foundanother = false;
+            while (c < outputbitsPerCard) {
+                if (outputNeedToSend[c] && foundfirst) {
+                    foundanother = true;
+                }
+                if (outputNeedToSend[c] && !foundfirst) {
+                    foundfirst = true;
+                }
+                c++;
+            }
+            if (foundanother) {
+                setMustSend();
+            }
+        }
+
+        //  If we are going to do a bulk command then the address will be
+        //  the starting address.  If we are not going to do a bulk command
+        //  then the address will start from the starting address.
+        
         Integer tempint = new Integer(startingOutputAddress);
-        addr = tempint.byteValue();
+        addrlo = tempint.byteValue();
 
-        if (nodeType == TB) {         
-            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
-            byte newsettings = (byte) (tempsettings);
-            AcelaMessage m = new AcelaMessage(4);
-            m.setElement(0, 0x07);
-            m.setElement(1, 0x00);
-            m.setElement(2, addr);
-            m.setElement(3, newsettings);
-            m.setBinary(true);
-            return m;
-    	}
-    	if (nodeType == D8) {         
-//            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
-//            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
-            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
-            tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
-            byte newsettings = (byte) (tempsettings);
-            AcelaMessage m = new AcelaMessage(4);
-            m.setElement(0, 0x08);
-            m.setElement(1, 0x00);
-            m.setElement(2, addr);
-            m.setElement(3, newsettings);
-            m.setBinary(true);
-            return m;
-    	}
-    	if ((nodeType == WM) || (nodeType == SY)) {
-            AcelaMessage m = new AcelaMessage(3);
-            m.setElement(0, 0x01);
-            m.setElement(1, 0x00);
-            m.setElement(2, 0x00);
-            m.setBinary(true);
-            return m;
-    	}
-    	if (nodeType == SC) {
-            AcelaMessage m = new AcelaMessage(3);
-            m.setElement(0, 0x01);
-            m.setElement(1, 0x00);
-            m.setElement(2, 0x00);
-            m.setBinary(true);
-            return m;
-    	}
-    	if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
-//            int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
-//            tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
-//            byte newsettings = (byte) (tempsettings);
-//            int tempsettings2 = outputArray[11] * 8 + outputArray[10] * 4 + outputArray[9] * 2 + outputArray[8] * 1;
-//            tempsettings2 = outputArray[15] * 128 + outputArray[14] * 64 + outputArray[13] * 32 + outputArray[12] * 16 + tempsettings2;
-//            byte newsettings2 = (byte) (tempsettings2);
-            int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
-            tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
-            byte newsettings = (byte) (tempsettings);
-            int tempsettings2 = (outputArray[11] ^ outputWired[11]) * 8 + (outputArray[10] ^ outputWired[10]) * 4 + (outputArray[9] ^ outputWired[9]) * 2 + (outputArray[8] ^ outputWired[8]) * 1;
-            tempsettings2 = (outputArray[15] ^ outputWired[15]) * 128 + (outputArray[14] ^ outputWired[14]) * 64 + (outputArray[13] ^ outputWired[13]) * 32 + (outputArray[12] ^ outputWired[12]) * 16 + tempsettings2;
-            byte newsettings2 = (byte) (tempsettings2);
-            AcelaMessage m = new AcelaMessage(5);
-            m.setElement(0, 0x09);
-            m.setElement(1, 0x00);
-            m.setElement(2, addr);
-            m.setElement(3, newsettings2);
-            m.setElement(4, newsettings);
-            m.setBinary(true);
-            return m;
+        // For each nodetype set up variables that will end up in the msg
+        if (bulk_message) {
+            if (nodeType == TB) {
+                cmdlen = 4;
+                cmdcode = 0x07;  // Set 4 outputs: bit on means output on
+                int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
+                settinglo = (byte) (tempsettings);
+            }
+            if (nodeType == D8) {         
+                cmdlen = 4;
+                cmdcode = 0x08;  // Set 8 outputs: bit on means output on
+                int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
+                tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
+                settinglo = (byte) (tempsettings);
+            }
+            if ((nodeType == WM) || (nodeType == SY)) {
+                cmdlen = 3;
+                cmdcode = 0x01;  //  This really is an error case since these
+                                 //  nodes do not have outputs
+            }
+            if (nodeType == SC) {
+                cmdlen = 3;
+                cmdcode = 0x01;  //  This really is an error case since these
+                                 //  nodes do not have outputs
+            }
+            if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
+                cmdlen = 5;
+                cmdcode = 0x09;  // Set 16 outputs: bit on means output on
+                int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
+                tempsettings = (outputArray[7] ^ outputWired[7]) * 128 + (outputArray[6] ^ outputWired[6]) * 64 + (outputArray[5] ^ outputWired[5]) * 32 + (outputArray[4] ^ outputWired[4]) * 16 + tempsettings;
+                settinglo = (byte) (tempsettings);
+                int tempsettings2 = (outputArray[11] ^ outputWired[11]) * 8 + (outputArray[10] ^ outputWired[10]) * 4 + (outputArray[9] ^ outputWired[9]) * 2 + (outputArray[8] ^ outputWired[8]) * 1;
+                tempsettings2 = (outputArray[15] ^ outputWired[15]) * 128 + (outputArray[14] ^ outputWired[14]) * 64 + (outputArray[13] ^ outputWired[13]) * 32 + (outputArray[12] ^ outputWired[12]) * 16 + tempsettings2;
+                settinghi = (byte) (tempsettings2);
+            }
+        } else {  // Not bulk message
+            // For now, we will simply send the first output circuit that
+            // we encounter.  In theory, this could starve a later output
+            // circuit on this node.  If someone complains then we should
+            // implement a more complicated algorithm.
+                
+            c = 0;
+            boolean foundsomething = false;
+            while ((c < outputbitsPerCard) && !foundsomething) {
+                if (outputNeedToSend[c]) {
+                    // Need to adjust addr to address the actual output
+                    // circuit rather than the starting output address
+                    // That it currently points to.
+                    Integer tempaddr = new Integer(c + addrlo);
+                    addrlo = tempaddr.byteValue();
+                        
+                    // Reset the needtosend flag for this output circuit
+                    outputNeedToSend[c] = false;
+                        
+                    // Reset the foundfirst flag
+                    foundsomething = true;
+                    
+                    // We are here because at least one output circuit on
+                    // this node is not set to a type of ONOFF
+                    //  -- but some of the output circuits may still be
+                    // of type ONOFF.
+                    if (outputType[c] == AcelaNode.ONOFF) {
+                        // outputArray[c] tells us to to turn the output on
+                        // or off.
+                        // outputWired[c] tells us whether the relay is 
+                        // wired backwards.
+                        // command 0x01 is activate
+                        // command 0x02 is deactivate
+                        int tempcommand = (outputArray[c] ^ outputWired[c]);
+                        if (tempcommand == 0) {
+                            tempcommand = 2;
+                        }
+                        cmdcode = (byte) (tempcommand);
+                        cmdlen = 3;
+                    }
+
+                    if (outputType[c] == AcelaNode.BLINK) {
+                        // outputArray[c] tells us to to turn the output on
+                        // or off.
+                        // outputWired[c] tells us whether the output
+                        // should start on or start off.
+                        // outputLength[c] tells us how long in tenths of
+                        // a second to blink.
+                        // output will continue to blink until turned off.
+                        // command 0x02 is deactivate
+                        // command 0x05 is blink
+                        // command 0x06 is reverse blink
+                        int tempcommand = outputArray[c];
+                        if ((tempcommand == 1) && (outputWired[c] == 1)) {
+                            tempcommand = 5;
+                        }
+                        if ((tempcommand == 1) && (outputWired[c] == 0)) {
+                            tempcommand = 6;
+                        }
+                        if (tempcommand == 0) {
+                            tempcommand = 2;
+                        }
+                        cmdcode = (byte) (tempcommand);
+                        if (cmdcode == 0x02) {
+                            cmdlen = 3;
+                        } else {
+                            cmdlen = 4;
+                            settinglo = (byte) outputLength[c];
+                        }
+                    }
+
+                    if (outputType[c] == AcelaNode.PULSE) {
+                        // outputArray[c] tells us to to turn the output on
+                        // or off.
+                        // outputWired[c] tells us whether the output
+                        // should start on or start off.
+                        // outputLength[c] tells us how long in tenths of
+                        // a second to pulse the output.
+                        // output will actually return to off state after
+                        // the pulse duratiom -- but we will never know.
+                        // Program will need to fake this out.
+                        // command 0x02 is deactivate
+                        // command 0x03 is to pulse on
+                        // command 0x04 is to pulse off
+                        int tempcommand = outputArray[c];
+                        if ((tempcommand == 1) && (outputWired[c] == 1)) {
+                            tempcommand = 4;
+                        }
+                        if ((tempcommand == 1) && (outputWired[c] == 0)) {
+                            tempcommand = 3;
+                        }
+                        if (tempcommand == 0) {
+                            tempcommand = 2;
+                        }
+                        cmdcode = (byte) (tempcommand);
+                        if (cmdcode == 0x02) {
+                            cmdlen = 3;
+                        } else {
+                            cmdlen = 4;
+                            settinglo = (byte) outputLength[c];
+                        }
+                    }
+                }
+                c++;
+            }
     	}
 
-        AcelaMessage m = new AcelaMessage(3);
-        m.setElement(0, 0x01);
-        m.setElement(1, 0x00);
-        m.setElement(2, 0x00);
+        //  Hook for debugging:
+        if ((addrlo == 0x00) && (cmdcode == 0x03)) {
+            addrhi = 0x00;
+            addrlo = 0x00;
+        }
+        AcelaMessage m = new AcelaMessage(cmdlen);
+        m.setElement(0, cmdcode);
+        m.setElement(1, addrhi);
+        m.setElement(2, addrlo);
+        if (cmdlen > 3) {
+            if (cmdlen > 4) {
+                m.setElement(3, settinghi);
+            } else {
+                m.setElement(3, settinglo);
+            }
+        }
+        if (cmdlen > 4) {
+            m.setElement(4, settinglo);
+        }
         m.setBinary(true);
         return m;
     }

@@ -65,6 +65,7 @@ public class AcelaLightManagerTest extends jmri.AbstractLightMgrTest  {
         l = new AcelaLightManager();
         jmri.InstanceManager.setLightManager(l);
     }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaLightManagerTest.class.getName());

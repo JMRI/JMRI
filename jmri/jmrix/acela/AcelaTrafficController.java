@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -264,7 +264,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
             	log.debug("send init message: "+m);
-            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
+            	m.setTimeout(1000);  // wait for init to finish (milliseconds)
+//            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
             	return m;
@@ -272,7 +273,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if (needToCreateNodesState == 1) {
             	AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
             	log.debug("send init2 message: "+m);
-            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
+            	m.setTimeout(1000);  // wait for init to finish (milliseconds)
+//            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
         	return m;
@@ -281,7 +283,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 if (needToCreateNodesState == 2) {
                     AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
                     log.debug("send poll message: "+m);
-                    m.setTimeout(8000);  // wait for init to finish (milliseconds)
+                    m.setTimeout(100);  // wait for init to finish (milliseconds)
+//                    m.setTimeout(8000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     needToInitAcelaNetwork = false;
                     needToPollNodes = false;
@@ -315,7 +318,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
                     log.debug("send Config Sesnsor message: "+m);
-                    m.setTimeout(2000);  // wait for init to finish (milliseconds)
+                    m.setTimeout(100);  // wait for init to finish (milliseconds)
+//                    m.setTimeout(2000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     node.sensorHasBeenInit[s] = true;
                     node.sensorNeedInit[s] = false;
@@ -329,8 +333,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             log.debug("request write command to send");
             getNode(curAcelaNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
-            m.setTimeout(400);  // no need to wait for output to answer
-//            m.setTimeout(200);  // no need to wait for output to answer Before adding WM
+            m.setTimeout(100);  // no need to wait for output to answer
+//            m.setTimeout(400);  // no need to wait for output to answer Before adding WM
         	mCurrentMode = NORMALMODE;
             return m;
         }
@@ -339,8 +343,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         if (acelaSensorsState) {    //  Flag to indicate whether we have an active sensor and therefore need to poll
         	AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
         	log.debug("send poll message: "+m);
-        	m.setTimeout(600);  // wait for init to finish (milliseconds)
-//        	m.setTimeout(200);  // wait for init to finish (milliseconds) Before adding WM
+        	m.setTimeout(100);  // wait for init to finish (milliseconds)
+//        	m.setTimeout(600);  // wait for init to finish (milliseconds) Before adding WM
         	mCurrentMode = NORMALMODE;
         	return m;
         } else {

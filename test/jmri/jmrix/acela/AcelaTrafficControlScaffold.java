@@ -15,6 +15,7 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 
 	// override some AcelaTrafficController methods for test purposes
 
+    @Override
 	public boolean status() {
 		return true;
 	}
@@ -23,6 +24,7 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 	 * record messages sent, provide access for making sure they are OK
 	 */
 	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+    @Override
 	public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
 		if (log.isDebugEnabled()) log.debug("sendAcelaMessage ["+m+"]");
 		// save a copy

@@ -99,6 +99,7 @@ public class AcelaTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
         l = new AcelaTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
     }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnoutManagerTest.class.getName());
