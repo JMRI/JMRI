@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.26 2009-01-08 01:56:18 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.27 2009-01-11 16:18:47 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -147,6 +147,11 @@ Builds" button on the train panel to update all of your files.
 <H3>Owner Name</H3>
 
 You can optionally enter your name in the "Owner" field.
+
+<H3>Add Operations Menu to Main Menu</H3>
+
+When selected, add the operations menu to the main menu bar. The
+operations menu will appear the next time you restart JMRI.
 
 <H3>Manifest Printer Font</H3>
 
