@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: ESU_LokSoundV3_5.xml,v 1.11 2008-11-18 21:41:59 dan_boudreau Exp $ -->
+<!-- $Id: ESU_LokSoundV3_5.xml,v 1.12 2009-01-12 01:27:02 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -35,6 +35,9 @@
 		<!-- ver6 add function button labels -->
 		<version author="Daniel Boudreau daboudreau@hotmail.com"
 			version="6" lastUpdated="20081118"/>
+		<!-- ver7 correct CV2,3,4,5,6 max values -->
+		<version author="Michael Mosher mjmx@comcast.net"
+			version="7" lastUpdated="20090102"/>
 
 <decoder>
 	<family name="ESU LokSound V3.5 Silent BEMF/Sound decoders"
@@ -86,29 +89,26 @@
 						item="Short Address" default="03">
 			<shortAddressVal/></variable>
 		
-		<variable label="Vstart" CV="2" default="3"
-			comment="A value of 255 corresponds to 100%">
-			<decVal/>
+		<variable label="Vstart" CV="2" default="3">
+			<decVal max="75"/>
 		</variable>
 		
-		<variable label="Acceleration" CV="3" default="4"
+		<variable label="Acceleration" CV="3" default="8"
 			item="Accel" >
-			<decVal max="63"/>
+			<decVal max="64"/>
 		</variable>
 		
-		<variable label="Deceleration" CV="4" default="3"
+		<variable label="Deceleration" CV="4" default="6"
 			item="Decel">
-			<decVal max="63"/>
+			<decVal max="64"/>
 		</variable>
 		
-		<variable label="Vhigh" CV="5" default="64"
-			comment="Range 0-255">
-			<decVal/>
+		<variable label="Vhigh" CV="5" default="64">
+			<decVal max="64"/>
 		</variable>
 		
-		<variable label="Vmid" CV="6" default="22"
-			comment="Range 0-255">
-			<decVal/>
+		<variable label="Vmid" CV="6" default="22">
+			<decVal max="64"/>
 		</variable>
 		<!-- CV7 and CV must be left as readonly = no otherwise will not display -->
 		<variable label="Decoder Version " CV="7" readOnly="no" 

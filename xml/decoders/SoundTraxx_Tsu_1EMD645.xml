@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_1EMD645.xml,v 1.1 2008-08-15 02:29:06 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_1EMD645.xml,v 1.2 2009-01-12 01:28:18 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,6 +18,8 @@
 <decoder-config>
 		<version author="Michael Mosher" version="1" lastUpdated="20080813"
 		    comment="start from diesel file"/>
+		<version author="Michael Mosher" version="1" lastUpdated="20080813"
+		    comment="Add TSU-AT1000 plus GE models (have same horns as 645)"/>
 
 <decoder>
 	<family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)">
@@ -49,6 +51,64 @@
 			<output name="Brake"/>
 			<output name="Coupler"/>
 		</model>
+		<model model="TSU-AT1000 EMD 645" numOuts="4" numFns="14">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="FX5"/>
+			<output name="4" label="FX6"/>
+			<output name="Dynamic" />
+			<output name="Short Horn" />
+			<output name="Fans(+)" />
+			<output name="Dim"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brake"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="FX5"/>
+			<output name="4" label="FX6"/>
+			<output name="Dynamic" />
+			<output name="Short Horn" />
+			<output name="Fans(+)" />
+			<output name="Dim"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brake"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-750 GE FDL-16" numOuts="2" numFns="14">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="Dynamic" />
+			<output name="Short Horn" />
+			<output name="Fans" />
+			<output name="Dim"/>
+			<output name="Mute"/>
+			<output name="Compressor"/>
+			<output name="Brake"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="FX5"/>
+			<output name="4" label="FX6"/>
+			<output name="Dynamic" />
+			<output name="Short Horn" />
+			<output name="Fans(+)" />
+			<output name="Dim"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brake"/>
+			<output name="Coupler"/>
+		</model>
 	</family>
 
 	<programming direct="yes" paged="yes" 
@@ -71,9 +131,11 @@
 			<decVal/></variable>
 
 		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
-						item="Decoder Version"><decVal/></variable>
+						item="Decoder Version" default="64"> 
+			<decVal/></variable>
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-						item="Manufacturer">			<decVal/></variable>
+						item="Manufacturer" default="141">
+			<decVal/></variable>
 
 		<variable label="BEMF Cutout" CV="10" item="EMF Feedback Cutout"
 			 default="0">
@@ -367,7 +429,7 @@
 				minOut="4" default="0"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(f) controls output Dynamic" CV="33" mask="XVXXXXXX" 
-				minOut="1" default="1"> <enumVal> 
+				minOut="1" default="0"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(f) controls output Short Horn" CV="33" mask="VXXXXXXX" 
 				minOut="1" default="0"> <enumVal> 
@@ -1411,5 +1473,7 @@
 
 
 
+
+ 	  	 
 
  	  	 
