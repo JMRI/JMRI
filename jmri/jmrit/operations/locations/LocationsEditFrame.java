@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -404,7 +404,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	}
 	
 	private void saveNewLocation(){
-		if (!checkName())
+		if (!checkName(rb.getString("add")))
 			return;
 		Location location = manager.newLocation(locationNameTextField.getText());
 		yardModel.initTable(yardTable, location);
@@ -421,7 +421,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	}
 	
 	private void saveLocation (){
-		if (!checkName())
+		if (!checkName(rb.getString("save")))
 			return;
 		_location.setName(locationNameTextField.getText());
 		_location.setComment(commentTextField.getText());
@@ -446,14 +446,14 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	 * 
 	 * @return true if name is less than 26 characters
 	 */
-	private boolean checkName(){
+	private boolean checkName(String s){
 		if (locationNameTextField.getText().trim().equals(""))
 			return false;
 		if (locationNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
 			JOptionPane.showMessageDialog(this,
 					MessageFormat.format(rb.getString("LocationNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
-					rb.getString("canNotAddLocation"),
+					MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

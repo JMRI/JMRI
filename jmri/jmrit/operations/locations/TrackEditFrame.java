@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -485,7 +485,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void addNewTrack(){
 		// check that track name is valid
-		if (!checkName())
+		if (!checkName(rb.getString("add")))
 			return;
 		// check to see if track already exsists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
@@ -512,7 +512,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void saveTrack (Track track){
 		// check that track name is valid
-		if (!checkName())
+		if (!checkName(rb.getString("save")))
 			return;
 		// check to see if track already exsists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
@@ -586,12 +586,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	 * 
 	 * @return true if name is less than 26 characters
 	 */
-	private boolean checkName(){
+	private boolean checkName(String s){
 		if (trackNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Track name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters");
 			JOptionPane.showMessageDialog(this,
 					MessageFormat.format(rb.getString("TrackNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
-					rb.getString("canNotAddTrack"),
+					MessageFormat.format(rb.getString("CanNotTrack"),new Object[]{s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

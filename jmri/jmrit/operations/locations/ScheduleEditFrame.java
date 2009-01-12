@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -246,7 +246,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	private void saveNewSchedule(){
-		if (!checkName())
+		if (!checkName(rb.getString("add")))
 			return;
 		Schedule schedule = manager.newSchedule(scheduleNameTextField.getText());
 		scheduleModel.initTable(scheduleTable, schedule, _location, _track);
@@ -257,7 +257,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	private void saveSchedule (){
-		if (!checkName())
+		if (!checkName(rb.getString("save")))
 			return;
 		_schedule.setName(scheduleNameTextField.getText());
 		_schedule.setComment(commentTextField.getText());
@@ -279,14 +279,14 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	 * 
 	 * @return true if name is less than 26 characters
 	 */
-	private boolean checkName(){
+	private boolean checkName(String s){
 		if (scheduleNameTextField.getText().trim().equals(""))
 			return false;
 		if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Schedule name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
 					MessageFormat.format(rb.getString("ScheduleNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
-					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{rb.getString("add")}),
+					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
