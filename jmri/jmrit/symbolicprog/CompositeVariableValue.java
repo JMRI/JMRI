@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -199,8 +199,8 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         _value.addActionListener(this);
     }
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 

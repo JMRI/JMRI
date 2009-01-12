@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -95,6 +95,18 @@ public class ComboRadioButtons extends JPanel {
     protected void setColor() {
         for (int i = 0; i<v.size(); i++) {
             ((JRadioButton)(v.elementAt(i))).setBackground(_var._value.getBackground());
+        }
+    }
+
+    /**
+     * Setting tooltip both on this panel, and all
+     * buttons inside
+     */
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
+        // include all buttons
+        for (JRadioButton b : b1) {
+            b.setToolTipText(t);
         }
     }
 

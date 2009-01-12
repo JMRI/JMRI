@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -45,8 +45,8 @@ public class ConstantValue extends VariableValue {
     // stored value
     JComboBox _value = null;
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 

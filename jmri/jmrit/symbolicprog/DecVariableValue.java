@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -46,8 +46,8 @@ public class DecVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
     }
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 

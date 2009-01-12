@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -93,8 +93,8 @@ public class SplitVariableValue extends VariableValue
     // e.g. multiply by 256, then shift by this
     int upperbitoffset;
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 
@@ -364,7 +364,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.20 $
+     * @version     $Revision: 1.21 $
      */
     public class VarTextField extends JTextField {
 

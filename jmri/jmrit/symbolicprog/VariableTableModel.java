@@ -22,7 +22,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.35 $
+ * @version   $Revision: 1.36 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -402,7 +402,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // back to general processing
         // add tooltip text if present
         if ( (a = e.getAttribute("tooltip")) != null)
-            v.setTooltipText(a.getValue());
+            v.setToolTipText(a.getValue());
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
@@ -600,7 +600,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // back to general processing
         // add tooltip text if present
         if ( (a = e.getAttribute("tooltip")) != null) {
-            iv.setTooltipText(a.getValue());
+            iv.setToolTipText(a.getValue());
         }
         // record new variable, update state, hook up listeners
         rowVector.addElement(iv);

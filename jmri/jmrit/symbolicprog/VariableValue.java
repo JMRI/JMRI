@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.31 $
+ * @version  $Revision: 1.32 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -160,7 +160,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @see #updateRepresentation
      * @param t
      */
-    public void setTooltipText(String t) {
+    public void setToolTipText(String t) {
         _tooltipText = t;
     }
     /**

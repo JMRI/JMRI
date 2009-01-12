@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.7 $
+ * @version  $Revision: 1.8 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -79,8 +79,8 @@ public class IndexedPairVariableValue extends VariableValue
     int _maxVal;
     int _minVal;
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 
@@ -494,7 +494,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.7 $
+     * @version     $Revision: 1.8 $
      */
     public class VarTextField extends JTextField {
 

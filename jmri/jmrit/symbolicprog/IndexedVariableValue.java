@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -60,8 +60,8 @@ public class IndexedVariableValue extends VariableValue
     int _maxVal;
     int _minVal;
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
+    public void setToolTipText(String t) {
+        super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
 
@@ -475,7 +475,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.12 $
+     * @version     $Revision: 1.13 $
      */
     public class VarTextField extends JTextField {
 
