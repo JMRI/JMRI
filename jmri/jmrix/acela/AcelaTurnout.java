@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -46,10 +46,10 @@ public class AcelaTurnout extends AbstractTurnout {
 // Added to get rid of errors.
     
     /** State value indicating output intensity is at or above maxIntensity */
-    public static final int ON          = 0x01;
+//    public static final int ON          = 0x01;
     
     /** State value indicating output intensity is at or below minIntensity */
-    public static final int OFF         = 0x00;
+//    public static final int OFF         = 0x00;
     
         
     /**
@@ -60,10 +60,13 @@ public class AcelaTurnout extends AbstractTurnout {
     private void initializeTurnout(String systemName) {
         // Save system name
         mSystemName = systemName;
+
         // Extract the Bit from the name
         mBit = AcelaAddress.getBitFromSystemName(systemName);
+
         // Set initial state
-        setState( OFF );
+//        setState( OFF );
+        setState( UNKNOWN );
         // Set defaults for all other instance variables
 /*
         setControlType( NO_CONTROL );
@@ -79,13 +82,14 @@ public class AcelaTurnout extends AbstractTurnout {
      *  System dependent instance variables
      */
     String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
+//    protected int mState = OFF;  // current state of this light
+    protected int mState = UNKNOWN;  // current state of this turnout
     int mBit = -1;                // global address from 0
 
     /**
      *  Return the current state of this Light
      */
-    public int getState() { return mState; }
+//  public int getState() { return mState; }
 
     /**
      *  Set the current state of this Light
@@ -94,6 +98,7 @@ public class AcelaTurnout extends AbstractTurnout {
      *         bit (tested in AcelaNode), a Transmit packet
      *         will be sent before this Node is next polled.
      */
+/*
     public void setState(int newState) {
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
 
@@ -115,18 +120,10 @@ public class AcelaTurnout extends AbstractTurnout {
             firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
 	}
     }
+*/
 
-    // Following two had to be added to extent class.
-         // Handle a request to change state by sending a turnout command
+    // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
-        // implementing classes will typically have a function/listener to get
-        // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
-        // _once_ if anything has changed state (or set the commanded state directly)
-
-        // sort out states
         if ( (s & Turnout.CLOSED) > 0) {
             // first look for the double case, which we can't handle
             if ( (s & Turnout.THROWN) > 0) {
@@ -149,6 +146,7 @@ public class AcelaTurnout extends AbstractTurnout {
      * if true, pushbutton lockout enabled
      */
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
+    // Acela turnouts do not currently support lockout
 /*
         if (log.isDebugEnabled())
 			log.debug("Send command to "
@@ -160,39 +158,43 @@ public class AcelaTurnout extends AbstractTurnout {
 		AcelaTrafficController.instance().sendAcelaMessage(m, null);
 */
  }
-    //Acela turnouts do support inversion
+    
+    // Acela turnouts do support inversion
     public boolean canInvert(){return true;}
      
-     //method which takes a turnout state as a parameter and adjusts it  as necessary
-     //to reflect the turnout invert property
-     private int adjustStateForInversion(int rawState) {
+    //method which takes a turnout state as a parameter and adjusts it  as necessary
+    //to reflect the turnout invert property
+    private int adjustStateForInversion(int rawState) {
          
-         if (getInverted() && (rawState == CLOSED || rawState == THROWN)){
-             if (rawState == CLOSED) {
-                 return THROWN;
-             }else{
-                 return CLOSED;
-             }
-         }else{
-             return rawState;
-         }
-         
-     }
+        if (getInverted() && (rawState == CLOSED || rawState == THROWN)){
+            if (rawState == CLOSED) {
+                return THROWN;
+            } else {
+                return CLOSED;
+            }
+        } else {
+            return rawState;
+        }
+    }
     
     protected void sendMessage(boolean closed) {
         int newState;
         if (closed) {
-            newState = adjustStateForInversion(ON);
+//            newState = adjustStateForInversion(ON);
+            newState = adjustStateForInversion(CLOSED);
         } else {
-            newState = adjustStateForInversion(OFF);
+//            newState = adjustStateForInversion(OFF);
+            newState = adjustStateForInversion(THROWN);
         }
         
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
 
         if (mNode!=null) {
-            if (newState==ON) {
+//            if (newState==ON) {
+            if (newState==THROWN) {
                 mNode.setOutputBit(mBit,true);
-            } else if (newState==OFF) {
+//            } else if (newState==OFF) {
+            } else if (newState==CLOSED) {
                 mNode.setOutputBit(mBit,false);
             } else {
                 log.warn("illegal state requested for Turnout: "+getSystemName());
