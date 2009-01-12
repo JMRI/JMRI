@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.11 2009-01-12 07:15:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.12 2009-01-12 17:16:19 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -45,8 +45,19 @@ back to an earlier version.
 
 It contains 
 many new features, including:
+
+
 <ul>
-<LI>
+	<LI>New DecoderPro speed table controls that allow you to quickly
+	setup your loco.
+	<LI>Updates to the CTI Acela connection.
+	<LI>This release has many improvements to the operations program.
+	There's now a demo program to introduce you to some of the capabilities
+	of the operations program. You can now quickly make a copy of a route.
+	New controls allow you to decide whether cars are picked up and/or
+	dropped off at the various locations in a route. A new feature allows
+	you to schedule the delivery order of cars to a siding. And you can now
+	optionally add the operations menu to the main menu bar.
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -161,11 +172,14 @@ things don't always go perfectly...
 <li>
 </ul>
 
-<li>
-Dan Boudreau added two new features to the operations code: 
+<p>
+Dan Boudreau added several new features to the operations code: 
 <ul>
-<li>The  ability to copy a route.  
+<li><a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
+<li>Optionally add operations menu to main menu bar
+<li>The ability to copy a route.  
 <li>The ability to control whether there are car drops and pickups at a location in a route.
+<li>A new schedule feature for sidings.
 </ul>
 
 <p>
@@ -176,10 +190,6 @@ Much internal work on handling multiple types of programmers.
 The first indication of this at the user level is in the "Single CV programmer",
 which now will let you pick a programmer if more than one is present.
 
-<p>
-Dan Boudreau added an
-<a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml#demo">operations demo</a>.
-
 <P>
 Ken Cameron updated his DebounceSensor.py sample scripts to make it more reliable.
 
@@ -188,9 +198,6 @@ Simon Ginsburg updated some of the German translation.
 
 <p>
 Fixed a problem when importing a decoder definition for the first time.
-
-<p>
-Dan Boudreau made many small updates to the operations code.
 
 <p>
 Updated the port-selection in the preferences to only show serial ports.
@@ -214,16 +221,10 @@ Matt Harris updated the Windows application launcher so that
 the "DOS" log window is minimized (not shown full size).
 
 <p>
-Dan Boudreau added a new schedule feature for sidings.
-
-<p>
 David Duchamp changed the Layout Editor drag gesture on Linux.
 
 <p>
 Michael Mosher updated the ESU LokSound 3.5 definitions.
-
-<p>
-Dan Boudreau made it possible to optionally add operations menu to main menu bar
 
 <p>
 Robert Coleman updated the CTI Acela connection to have
