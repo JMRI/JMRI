@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.9 2009-01-10 22:57:33 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.10 2009-01-12 01:32:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -220,7 +220,33 @@ Dan Boudreau added a new schedule feature for sidings.
 David Duchamp changed the Layout Editor drag gesture on Linux.
 
 <p>
+Michael Mosher updated the ESU LokSound 3.5 definitions.
+
+<p>
 Dan Boudreau made it possible to optionally add operations menu to main menu bar
+
+<p>
+Robert Coleman updated the CTI Acela connection to have
+blink and pulse support, activate the "invert" option in the Turnout table, adjusted the timeout settings to shorter waits, and
+updated format of the configuration file.
+
+<p>
+Fixed a problem in the TCS BEMF decoder definition that prevented showing the "BEMF Enable" option.
+
+<p>
+Fixed a bug that was preventing the tooltips on DecoderPro radiobuttons from showing on some platforms.
+
+<p>
+Nigel Cliffe 
+added more details to the "uncoupling" features within CT DCX series
+decoders, mostly to the panel which displays the options for uncoupling
+movement controls. 
+He also extended the version number range to 66 (he recently bought a DCX74 with v66
+software). CT's use of version numbering remains a problem with JMRI, the
+version numbers in different types of DCC chips will overlap.
+
+<p>
+Michael Mosher updated the SoundTraxx Tsunami definition for the EMD 645 decoder.
 
 <!--#include virtual="/Footer" -->
 
