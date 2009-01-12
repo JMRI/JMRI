@@ -382,6 +382,8 @@
 
 <mapID target="html.doc.Technical.Names" url="html/doc/Technical/Names.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_demo" url="package/jmri/jmrit/operations/Operations.shtml#demo"/>
+
 <mapID target="Acknowledgements_U" url="Acknowledgements.shtml#U"/>
 
 <mapID target="package.apps.PanelPro.PanelPro" url="package/apps/PanelPro/PanelPro.shtml"/>
@@ -399,6 +401,8 @@
 <mapID target="DecoderProManual.Basic_Programming_Select Decoder" url="DecoderProManual/Basic_Programming.shtml#Select Decoder"/>
 
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_Schedules" url="package/jmri/jmrit/operations/Operations.shtml#Schedules"/>
 
 <mapID target="package.jmri.jmrit.consisttool.ConsistToolFrame" url="package/jmri/jmrit/consisttool/ConsistToolFrame.shtml"/>
 
