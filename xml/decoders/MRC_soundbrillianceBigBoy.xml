@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: MRC_soundbrillianceBigBoy.xml,v 1.1 2008-05-07 05:16:37 billchown Exp $ -->
+<!-- $Id: MRC_soundbrillianceBigBoy.xml,v 1.2 2009-01-12 05:54:40 billchown Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,9 +24,13 @@
 				<version author="Bill Chown"
 			version="2" lastUpdated="20080430" />
 <!-- works for both Athearn N scale loco types, small errors corrected -->
+				<version author="Bill Chown"
+			version="3" lastUpdated="20090109" />
+<!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
 
 <decoder>
 	<family name="Brilliance Sound Decoders" mfg="MRC"
+			comment="MRC Brilliance Sound Decoders"
 			lowVersionID="31" highVersionID="31">
 		<model model="Athearn Big Boy or Challenger"
 		            maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -127,7 +131,7 @@
 		</variable>
 
 		<variable label="Speed Steps" CV="29" mask="XXXXXXVX" 
-				tooltip="CV29, '2' bit. Sets the Speed Step for motor, also affects some light settings"
+				tooltip="CV29, '2' bit. Sets the Speed Step for motor, also may affect some light settings"
 				item="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
@@ -154,7 +158,7 @@
 		</variable>
 			
         <variable label="Master Volume Control" CV="49" default="2" item="Sound Setting 1" 
-				tooltip="CV49, O=Off, 1=Low, 2=Mid(default), 3=High">
+				tooltip="CV49, O=Off, 1=Low, 2=Mid(default), 3=High"
 				comment="Range 0-3">
 			<decVal max="3"/>            
 		</variable>
