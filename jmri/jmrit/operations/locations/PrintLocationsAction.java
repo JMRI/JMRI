@@ -23,13 +23,14 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	String newLine = "\n";
 	LocationManager manager = LocationManager.instance();
+	public static final int MAX_NAME_LENGTH = 25;
 
     public PrintLocationsAction(String actionName, Frame frame, boolean preview, Component pWho) {
         super(actionName);
@@ -166,6 +167,8 @@ public class PrintLocationsAction  extends AbstractAction {
         		}
         		writer.write(newLine, 0, newLine.length());
         	}
+        	
+        	// summary
         	s = MessageFormat.format(rb.getString("TotalLengthMsg"),
 					new Object[] { Integer.toString(totalLength),
 							Integer.toString(usedLength),
@@ -184,6 +187,42 @@ public class PrintLocationsAction  extends AbstractAction {
     					new Object[] { Integer.toString(numberRS-(numberCars+numberEngines)) })
     					+ newLine;
         		writer.write(s, 0, s.length());
+        	}
+        	
+         	// print schedules
+        	writer.write(newLine, 0, newLine.length());
+        	s = rb.getString("Schedules") + "\t\t  " +rb.getString("Location") +"\t"+ rb.getString("SidingName") + newLine;
+        	writer.write(s, 0, s.length());
+        	ScheduleManager sm = ScheduleManager.instance();
+        	List<String> schedules = sm.getSchedulesByNameList();
+        	for (int i=0; i<schedules.size(); i++){
+        		Schedule schedule = sm.getScheduleById(schedules.get(i));
+        		for (int j=0; j<locations.size(); j++){
+        			Location location = manager.getLocationById((String)locations.get(j));
+        			List sidings = location.getTracksByNameList(Track.SIDING);
+        			for (int k=0; k<sidings.size(); k++){
+        				Track siding = location.getTrackById((String)sidings.get(k));
+        				if (siding.getScheduleName().equals(schedule.getName())){
+        					String name = schedule.getName();
+        					// pad out schedule name
+        					for (int n=name.length(); n<MAX_NAME_LENGTH; n++){
+        						name = name +" ";
+        					}
+        					s = name +" "+ location.getName()+ " - " + siding.getName();
+        					String status = siding.checkScheduleValid();
+        					if (!status.equals("")){
+        						for (int m=s.length(); m<63; m++){
+            						s = s + " ";
+        						}
+        						if (s.length()>63)
+        							s = s.substring(0, 63);
+        						s = s + "\t" + status;
+        					}
+        					s = s + newLine;
+        					writer.write(s, 0, s.length());
+        				}
+        			}
+        		}
         	}
         	
         	// and force completion of the printing

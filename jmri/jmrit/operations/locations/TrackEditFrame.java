@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -264,7 +264,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			addItem(p, comboBoxSchedules, 1, 0);
 			addItem(p, editScheduleButton, 2, 0);
 			addItem(p, textSchError, 3, 0);
-			checkScheduleValid();
 			getContentPane().add(p);
 		}
 		// Only interchange tracks can control drops and pickups
@@ -303,6 +302,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			trackNameTextField.setText(_track.getName());
 			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
 			comboBoxSchedules.setSelectedItem(s);
+			textSchError.setText(_track.checkScheduleValid());
 			commentTextField.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
 			enableButtons(true);
@@ -565,7 +565,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							track.setScheduleCount(0);
 						}
 					}
-					checkScheduleValid();
+					textSchError.setText(track.checkScheduleValid());
 				} else {
 					// no items in schedule so disable
 					track.setScheduleName("");
@@ -1052,30 +1052,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 	
-	private void checkScheduleValid(){
-		if (_track == null)
-			return;
-		textSchError.setText("");
-		Schedule schedule = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
-		if (schedule == null)
-			return;
-		List<String> scheduleItems = schedule.getItemsBySequenceList();
-		if (scheduleItems.size() == 0){
-			textSchError.setText(rb.getString("empty"));
-			return;
-		}
-		for (int i=0; i<scheduleItems.size(); i++){
-			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
-			if (!_track.acceptsTypeName(si.getType())){
-				textSchError.setText(MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()}));
-				break;
-			}
-			if (!si.getRoad().equals("") && !_track.acceptsRoadName(si.getRoad())){
-				textSchError.setText(MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()}));
-				break;
-			}
-		}
-	}
+
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 

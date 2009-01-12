@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -66,6 +66,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// combo boxes
 	JComboBox typeBox = new JComboBox();
 
+	public static final int MAX_NAME_LENGTH = 25;
 	public static final String NAME = rb.getString("Name");
 	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
@@ -281,10 +282,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	private boolean checkName(){
 		if (scheduleNameTextField.getText().trim().equals(""))
 			return false;
-		if (scheduleNameTextField.getText().length() > 25){
+		if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Schedule name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
-					rb.getString("ScheduleNameLess"), rb.getString("CanNotAddSchedule"),
+					MessageFormat.format(rb.getString("ScheduleNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
+					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{rb.getString("add")}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

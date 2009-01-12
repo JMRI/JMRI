@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.locations;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -16,9 +18,11 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class Track implements java.beans.PropertyChangeListener {
+	
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
 	protected String _id = "";
 	protected String _name = "";
@@ -533,6 +537,30 @@ public class Track implements java.beans.PropertyChangeListener {
     public void setScheduleCount(int count){
     	_scheduleCount = count;
     }
+    
+	public String checkScheduleValid(){
+		String status = "";
+		Schedule schedule = ScheduleManager.instance().getScheduleByName(getScheduleName());
+		if (schedule == null)
+			return status;
+		List<String> scheduleItems = schedule.getItemsBySequenceList();
+		if (scheduleItems.size() == 0){
+			status = rb.getString("empty");
+			return status;
+		}
+		for (int i=0; i<scheduleItems.size(); i++){
+			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			if (!acceptsTypeName(si.getType())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
+				break;
+			}
+			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
+				break;
+			}
+		}
+		return status;
+	}
     
     public void dispose(){
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
