@@ -35,7 +35,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.26 $
+ * @version   $Revision: 1.27 $
  */
 
 
@@ -95,6 +95,7 @@ public class Engine implements ReadingListener {
     }
     
     public int getMaxReceiverNumber() {
+        if (receivers == null) return 0;
         return receivers.length-1;
     }
     
