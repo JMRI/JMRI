@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id: CT_Elektronik_DCX_new2.xml,v 1.7 2009-01-11 20:04:49 jacobsen Exp $ -->
+<!-- $Id: CT_Elektronik_DCX_new2.xml,v 1.8 2009-01-12 01:19:18 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,10 +17,11 @@
 
 <decoder-config showEmptyPanes="no">
 		<version author="ncliffe@btinternet.com"
+			version="1.4" lastUpdated="2008/12/09"/>
+		<version author="ncliffe@btinternet.com"
 			version="1.3" lastUpdated="2008/12/02"/>
-
  		<version author="peter.brandenburg@t-online.de"  
-			version="1" lastUpdated="2006/11/20"/> 
+ 			version="1" lastUpdated="2006/11/20"/> 
 
 		<!-- version 1 - added CV's for new generation of decoders - Peter -->
 
@@ -31,11 +32,14 @@
 		<!-- version 1.3 - changed family definition to be from V27 to v56 -->
 		<!--        information on CT website implies V27 to 56 reflect current versions -->
 		<!--            Nigel Cliffe 2008/12/01; -->
+		<!-- version 1.4  altered prompts and drop-downs for -->
+		<!-- automatic un-coupling tools and extended versions to v66  -->
+		<!--            Nigel Cliffe 2008/12/09; -->
 
 
 <decoder>
 	<family name="DCX Series (v.27 and higher)" mfg="CT Elektronik"
-		lowVersionID="27" highVersionID="56"
+		lowVersionID="27" highVersionID="66"
 		comment="DCX74, DCX75, with variants">
 
 		<model model="DCX74D" numOuts="2" numFns="10"
@@ -111,7 +115,7 @@
 			<decVal/>
 		</variable>
 	
-		<variable label="Total PWM Period" CV="9" default="150"
+		<variable label="Total PWM Period" CV="9" default="150" item="Total PWM Period"
 				tooltip="13-63=30-150Hz, 141-191=16kHz"
 				comment="Range 13-63/141-191">
 			<decVal/>
@@ -859,20 +863,63 @@
 			<decVal/>
 		</variable>
 		
-		<variable label="F-Button Used For Autouncoupling" CV="151" default="3"
+		<variable label="F-Button Used For Auto-Uncoupling" CV="151" default="2"
 			tooltip="CV151, Functions 1 to 12 possible">
-			<decVal max="12"/>
+			
+			<enumVal>
+				<enumChoice choice="None" />
+				<enumChoice choice="F1" />
+				<enumChoice choice="F2" />
+				<enumChoice choice="F3" />
+				<enumChoice choice="F4" />
+				<enumChoice choice="F5" />
+				<enumChoice choice="F6" />
+				<enumChoice choice="F7" />
+				<enumChoice choice="F8" />
+				<enumChoice choice="F9" />
+				<enumChoice choice="F10" />
+				<enumChoice choice="F11" />
+				<enumChoice choice="F12" />
+			</enumVal>
 		</variable>
+
+
 		
 		<variable label="Engine FWD, Uncoupling BWD" CV="152" default="4"
-			tooltip="CV152, Engine FWD, Uncoupling BWD, F1 green wire">
+			tooltip="CV152, Engine FWD, Uncoupling BWD, bitwise output wire">
 			<decVal/>
+		</variable>
+
+		<variable label="Loco travel FWD, rear coupler" CV="152" tooltip = "CV152 select output wire for uncoupler action" >
+			<enumVal>
+			<enumChoice choice="None" />
+			<enumChoice choice="1 White" value="2" />
+			<enumChoice choice="2 Yellow" value="4" />
+			<enumChoice choice="3 Green"  value="8" />
+			<enumChoice choice="4 Purple"  value="16" />
+			</enumVal>
+
 		</variable>
 		
 		<variable label="Engine BWD, Uncoupling FWD" CV="153" default="8"
-			tooltip="CV153, Engine BWD, Uncoupling FWD, F2 violet wire">
+			tooltip="CV153, Engine BWD, Uncoupling FWD, bitwise output wire">
 			<decVal/>
 		</variable>
+
+
+		<variable label="Loco travel BWD, front coupler" CV="153" tooltip = "CV153 select output wire for uncoupler action" >
+			<enumVal>
+			<enumChoice choice="None" />
+			<enumChoice choice="1 White" value="2" />
+			<enumChoice choice="2 Yellow" value="4" />
+			<enumChoice choice="3 Green"  value="8" />
+			<enumChoice choice="4 Purple"  value="16" />
+
+			</enumVal>
+
+		</variable>
+
+
 		
 <!-- Tran Light Effects  -->
 		
@@ -935,13 +982,15 @@
 	</variables>
 </decoder>
 
-	<pane name="Yard mode F3 and Auto Uncoupling">
+	<pane name="Yard mode and Auto Uncoupling">
 		<column>
-		  	<label label="Yard Mode F3 / F4"/>
+		  	<label label="Yard Mode"/>
 		  	<separator/>
-			<display item="Switching 1" label="Shunting CV3 and 4 disabled" tooltip="CV 116, Bit 0"/>
+			<display item="Switching 1" label="Shunting CV3 and CV4 disabled" tooltip="CV 116, Bit 0"/>
 			<display item="Switching 2" label="Shunting max.half speed forw+rev" tooltip="CV 116, Bit 1"/>
 			<display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode" tooltip="CV 116, Bit 2"/>
+			<label label="  " />
+
 			<label label="Function button for Yard Mode"/>
 			<display item="F3 controls shunt speed" format="checkbox" label="F3 engages shunt speed" />
 			<display item="F4 controls shunt speed" format="checkbox" label="F4 engages shunt speed" />
@@ -955,18 +1004,47 @@
 	
 
 		</column>
+
 		<column>
-			<label label="Automatic Uncoupling"/>
+			<label label="Automatic Uncoupling Loco Movement"/>
 			<separator/>
+			<label label="Note works on function key-off,"/>
+			<label label="non-locking key on throttle suggested" />
+			<label label="  " />
 			<display item="Speed Step Coupling Release"/>
 			<display item="Speed Step Uncoupled"/>
-			<display item="Time Driving Backwards"/>
-			<display item="Time Driving Forwards"/>
-			<display item="F-Button Used For Autouncoupling"/>
-			<display item="Engine FWD, Uncoupling BWD"/>
-			<display item="Engine BWD, Uncoupling FWD"/>
+			<display item="Time Driving Backwards" label="Time Backup Release"/>
+			<display item="Time Driving Forwards"  label="Time Driving Away"/>
+			<display item="F-Button Used For Auto-Uncoupling" label="Fn Key to start movement" />
+			<label label="  " />
+			<label label="Uncoupler outputs with movement"/>
+			<display item="Loco travel FWD, rear coupler" label="Loco forward, rear coupler" />
+			<display item="Loco travel BWD, front coupler" label="Loco reversing, front coupler" />
+			<label label="  " />
+			
 		</column>
+
+		<column>
+			<label label="Uncoupler Assignment"/>
+			<separator/>
+			<display item="Uncoupler Holding Current" tooltip="CV 55 reduced current or off if 0"/>
+			<display item="Uncoupler Pulse Time" tooltip="CV 56 in 1/20 sec"/>
+			<separator/>
+			<display item="Output Uncoupler FL(f)" tooltip="CV 58, Bit 0"/>
+			<display item="Output Uncoupler FL(r)" tooltip="CV 58, Bit 1"/>
+			<display item="Output Uncoupler F 1" tooltip="CV 58, Bit 2"/>
+			<display item="Output Uncoupler F 2" tooltip="CV 58, Bit 3"/>
+			<display item="Output Uncoupler F 3" tooltip="CV 58, Bit 4"/>
+			<display item="Output Uncoupler F 4" tooltip="CV 58, Bit 5"/>
+			<display item="Output Uncoupler F 5" tooltip="CV 58, Bit 6"/>
+			<display item="Output Uncoupler F 6" tooltip="CV 58, Bit 7"/>	
+		</column>
+
+
+
 	</pane>
+
+
 
 	
 	<pane name="Lock and Shortcircuit Threshholds">
@@ -990,7 +1068,7 @@
 	</pane>
 	
 
-	<pane name="Output Dimming, Effects and Uncoupler">
+	<pane name="Output Dimming and Light Effects">
 		<column>
 			<label label="Output Dimming"/>
 			<separator/>
