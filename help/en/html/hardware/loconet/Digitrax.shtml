@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.7 2008-12-28 05:12:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.8 2009-01-13 19:51:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <title>JMRI Hardware Guide: Digitrax DCC </title>
@@ -32,7 +32,7 @@
 </ul>
 </div>
 
-<h2 id="LocoNet">LocoNet Connections</h2>
+<h2><a name="LocoNet">LocoNet Connections</h2>
 
 <p>JMRI, including DecoderPro and PanelPro, works with your Digitrax command
 station to program decoders. To do this, it communicates with the command
@@ -74,7 +74,7 @@ JMRI if you are using MacOS X or on most Windows Vista machines. </p>
 serial port; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
 do this. </p>
 
-<h2 id="Programmer">PR2 and PR3 Programmers</h2>
+<h2><a name="Programmer">PR2 and PR3 Programmers</h2>
 JMRI can also use a <a title="Digitrax programmer" href="PR2.shtml">Digitrax PR2</a> or <a
 title="Digitrax Programmer/USB interface" href="PR3.shtml">PR3</a> to program and test decoders. The PR2 is a stand-alone
 unit which does not connect to the rest of the layout, the command station, nor
@@ -83,7 +83,7 @@ the <a href="PR2.shtml">PR2 setup page</a>. The PR3 can either serve as an
 interface (see above) or as a stand alone programmer. There is more information
 on the <a href="PR3.shtml">PR3 setup page</a>. 
 
-<h2 id="Setup">Setup</h2>
+<h2><a name="Setup">Setup</h2>
 
 <p>To connect your computer to a Digitrax DCC system, you need a  <a
 title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
@@ -156,7 +156,7 @@ signals, etc. To turn it off, you can use the "Configure Command Station" tool
 in the LocoNet menu to set Option Switch 31 to "T" (thrown), or set it directly
 in the command station using a Digitrax throttle. </p>
 
-<h2 id="Using">Using JMRI with LocoNet</h2>
+<h2><a name="Using">Using JMRI with LocoNet</h2>
 There are a number of pages that discuss how to use JMRI with LocoNet: 
 <ul>
   <li>For information on LocoNet-specific JMRI tools, please see the <a
@@ -170,12 +170,12 @@ There are a number of pages that discuss how to use JMRI with LocoNet:
 and <a href="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> JMRI applications
 work very well with LocoNet. </p>
 
-<h2 id="Network">Network Connections</h2>
+<h2><a name="Network">Network Connections</h2>
 There are several methods available to connect multiple computers to a single
 LocoNet. These communicate via standard TCP/IP protocols, and can even work
 remotely. <a href="LocoNetworking.shtml">For more information ...</a> 
 
-<h2 id="Limitation">Limitations</h2>
+<h2><a name="Limitation">Limitations</h2>
 
 <p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
 program decoders via a PR1 programmer. You have to use one of the command
@@ -214,7 +214,7 @@ devices, but does not provide the Rail-Synch signals that some LocoNet devices
 (particularly the BDL-16, -162 and -168) require. A LocoBuffer should be
 connected to the LocoNet-T connection. </p>
 
-<h2 id="Debugging">Debugging</h2>
+<h2><a name="Debugging">Debugging</h2>
 
 <p><a href="http://www.digitrax.com/pdfdocs.htm">Digitrax Manuals</a></p>
 <!--#include virtual="/Footer" -->
