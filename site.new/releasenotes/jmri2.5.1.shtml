@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.12 2009-01-12 17:16:19 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.13 2009-01-13 05:05:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -169,7 +169,6 @@ things don't always go perfectly...
 <li>Removed obsolete methods from Routes, deprecated since JMRI 1.7.6
 <li>Removed varoius Ugly Hacks associated with the JSpinner class not being
     available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over Tcp.
-<li>
 </ul>
 
 <p>
