@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.13 2009-01-13 05:05:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.14 2009-01-13 07:02:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -252,6 +252,9 @@ Michael Mosher updated the SoundTraxx Tsunami definition for the EMD 645 decoder
 Bill Chown and others added a decoder definition for the MRC Brilliance 1819 G scale decoder
 and updated the Sound Brilliance definition.  
 He also updated the TCS BEMF decoders definition to complete BEMF and Decoder Lock support.
+
+<p>
+Bob Coleman fixed a bug in the CTI Acela support that sometimes resulted in reversed turnout operation.
 
 <!--#include virtual="/Footer" -->
 
