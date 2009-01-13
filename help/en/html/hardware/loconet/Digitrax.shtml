@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.8 2009-01-13 19:51:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.9 2009-01-13 22:52:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <title>JMRI Hardware Guide: Digitrax DCC </title>
@@ -191,23 +191,6 @@ MS-100 does not work on your Vista machine you should get a LocoBuffer-USB or
 PR3 instead.<br>
 </p>
 
-<p><b>Serial ports on older Macintoshes and the MS100</b> - A standard
-Macintosh RS422 serial port will not work directly with an MS100. Since it
-doesn't have two output status lines (DTR and RTS), it can't provide the
-correct power to the MS100. A LocoBuffer or LocoBuffer-II will work fine with a
-standard Macintosh RS422 serial port.<br>
-</p>
-
-<p><b>Apple USB connections</b> - DecoderPro is tested with both a MS100 and a
-LocoBuffer on a USB Macintosh using a Keyspan PDA Adapter to provide the serial
-port; for information please see <a
-href="http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.shtml">http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.shtml</a>.
-Note that we've had a report that certain models of the PDA adapter don't work
-at 57,600 baud with the LocoBuffer, so please try 19,200 baud if you're having
-trouble. See our page on <a href="hardware/USBtoSerial.shtml">USB adapters</a>
-for more information.<br>
-</p>
-
 <p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet connections,
 called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more
 devices, but does not provide the Rail-Synch signals that some LocoNet devices
@@ -216,7 +199,7 @@ connected to the LocoNet-T connection. </p>
 
 <h2><a name="Debugging">Debugging</h2>
 
-<p><a href="http://www.digitrax.com/pdfdocs.htm">Digitrax Manuals</a></p>
+<p><a href="http://www.digitrax.com/manuals.php">Digitrax Manuals</a></p>
 <!--#include virtual="/Footer" -->
 </div>
 </div>
