@@ -3,10 +3,10 @@
 <!DOCTYPE operations-config SYSTEM "operations-config.dtd">
 
 <operations-config>
-  <!--Written by JMRI version 2.4DB2 on Sun Dec 28 12:05:18 EST 2008 $Id: Operations.xml,v 1.2 2008-12-28 17:24:18 dan_boudreau Exp $-->
+  <!--Written by JMRI version 2.5.1 on Wed Jan 14 10:39:59 EST 2009 $Id: Operations.xml,v 1.3 2009-01-14 16:18:21 dan_boudreau Exp $-->
   <operations>
     <railRoad name="JMRI Operations Demo Railroad" />
-    <settings trainDirection="3" trainLength="900" maxEngines="3" scale="6" carTypes="Descriptive" switchTime="3" travelTime="4" addCarComment="false" />
+    <settings mainMenu="true" trainDirection="3" trainLength="900" maxEngines="3" scale="6" carTypes="Descriptive" switchTime="3" travelTime="4" addCarComment="false" />
     <panel name="Operations Demo Panel" trainIconXY="true" trainIconAppend="true" />
     <fontName name="SansSerif" />
     <buildReport level="7" />
