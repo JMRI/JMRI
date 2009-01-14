@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.34 $ -->
+<!-- Revision $Revision: 1.35 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -93,6 +93,9 @@
     <delete file="Windows/JMRI/lib/libjinput-osx.jnilib" />
     <delete file="Windows/JMRI/lib/libusbJava.jnilib" />
     <delete file="Windows/JMRI/lib/libusbJava.so" />
+    <delete file="Windows/JMRI/lib/comm-rxtx.jar" />
+    <delete file="Windows/JMRI/lib/librxtxSerial.jnilib" />
+    <delete file="Windows/JMRI/lib/RXTXcomm.jar" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
