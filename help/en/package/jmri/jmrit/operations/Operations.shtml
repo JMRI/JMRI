@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.27 2009-01-11 16:18:47 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.28 2009-01-14 16:26:32 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -52,7 +52,7 @@ you to the some of the features and capabilities of this program. To
 load the demo files, first open the Operations Settings panel
 "Tools->Operations->Settings", and in the upper left corner of the
 Setting panel is the Tools menu, select "Load Demo Files". The program
-will create a backup of your current configuration if you have one, and
+will create a <A HREF="#BackupRestore">backup</A> of your current configuration if you have one, and
 then load the demo files. Restart JMRI to complete the demo load
 process.
 
