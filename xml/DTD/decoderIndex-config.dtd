@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Revision: 1.21 $ -->
+<!-- $Revision: 1.22 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -23,6 +23,7 @@
 <!ELEMENT mfgList (manufacturer*) >
 <!ATTLIST mfgList nmraListDate	CDATA #REQUIRED>  <!-- date on the NMRA list used for last update   -->
 <!ATTLIST mfgList updated		CDATA #REQUIRED>  <!-- date the file last updated   -->
+<!ATTLIST mfgList lastadd		CDATA #IMPLIED>   <!-- last ID number added   -->
 
 <!ELEMENT manufacturer EMPTY >
 <!ATTLIST manufacturer mfg		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
