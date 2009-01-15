@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.4 on Sun Jan 11 23:25:18 PST 2009 $Id: decoderIndex.xml,v 1.135 2009-01-12 07:32:39 jacobsen Exp $-->
-  <decoderIndex version="157">
-    <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
+  <!--Written by JMRI version 2.4 on Sun Jan 11 23:25:18 PST 2009 $Id: decoderIndex.xml,v 1.136 2009-01-15 04:06:37 jacobsen Exp $-->
+  <decoderIndex version="158">
+    <mfgList nmraListDate="2009-01-15" updated="2009-01-15" lastadd="51">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -27,6 +27,7 @@
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="DCCdevices" mfgID="39" />
+      <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digirails" mfgID="42" />
       <manufacturer mfg="Digitrax" mfgID="129" />
@@ -41,6 +42,7 @@
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Hornby" mfgID="48" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
+      <manufacturer mfg="Joka Electronic" mfgID="49" />
       <manufacturer mfg="JMRI" mfgID="18" />
       <manufacturer mfg="KAM Industries" mfgID="22" />
       <manufacturer mfg="KATO Precision Models" mfgID="40" />
@@ -57,6 +59,7 @@
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
+      <manufacturer mfg="N&amp;Q Electronics" mfgID="50" />
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
@@ -88,7 +91,7 @@
       <manufacturer mfg="Train Control Systems" mfgID="153" />
       <manufacturer mfg="Train Technology" mfgID="2" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
-      <manufacturer mfg="Uhlenbrock" mfgID="85" />
+      <manufacturer mfg="Uhlenbrock Elektronik" mfgID="85" />
       <manufacturer mfg="Umelec Ing Buero" mfgID="147" />
       <manufacturer mfg="Viessmann Modellspielwaren GmbH" mfgID="109" />
       <manufacturer mfg="W.S. Ataras Engineering" mfgID="119" />
