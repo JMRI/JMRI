@@ -29,6 +29,7 @@ import javax.swing.*;
 
 import java.awt.event.WindowEvent;
 
+import java.util.Enumeration;
 import net.roydesign.mac.MRJAdapter;
 
 /**
@@ -37,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.75 $
+ * @version     $Revision: 1.76 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -721,6 +722,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     static public String startupInfo(String program) {
     	log.info(ignore);
+        Enumeration e = org.apache.log4j.Category.getRoot().getAllAppenders();
+        while ( e.hasMoreElements() ) {
+            org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
+            if ( a instanceof org.apache.log4j.RollingFileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.RollingFileAppender)a).getFile());
+            }
+            else if ( a instanceof org.apache.log4j.FileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.FileAppender)a).getFile());
+            }
+        }
         return (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>")
                 +" at "+(new java.util.Date()));
