@@ -22,6 +22,14 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.4.0
+; - modified free memory calculation to correctly work on x64 based systems
+; -------------------------------------------------------------------------
+; - Version 0.1.3.0
+; - added path options for Jython and messages.log to locate these in the
+; - user's profile folder, rather than the JMRI program directory when run
+; - on Windows 2000 or later.
+; -------------------------------------------------------------------------
 ; - Version 0.1.2.0
 ; - modified to minimise java console by default
 ; - added '/noisy' command-line option to display the java console
@@ -41,7 +49,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR   "Matt Harris"     ; Author name
 !define APP      "LaunchJMRI"      ; Application name
-!define VER      "0.1.2.0"         ; Launcher version
+!define VER      "0.1.4.0"         ; Launcher version
 !define PNAME    "${APP}"          ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON     "decpro5.ico"     ; Launcher icon
@@ -137,7 +145,18 @@ Section "Main"
   DetailPrint "JavaPath: $JAVAPATH"
 
   ; -- Get the memory status
+  ; -- First determine if we're running on x64
+  DetailPrint "Testing for x64..."
+  System::Call kernel32::GetCurrentProcess()i.s
+  System::Call kernel32::IsWow64Process(is,*i.s)
+  Pop $0
+  DetailPrint "Result: $0"
+  StrCmp $0 "0" Notx64
+  Call GetSystemMemoryStatus64
+  Goto CalcFreeMem
+  Notx64:
   Call GetSystemMemoryStatus
+  CalcFreeMem:
   System::Int64Op $4 / 1048576
   Pop $4
   StrCpy $CALCMAXMEM $4
@@ -164,6 +183,18 @@ Section "Main"
   ; -- memory start and max limits
   StrCpy $OPTIONS "$OPTIONS -Xms10m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
+  ; -- set paths for Jython and message log
+  ; -- Creates the necessary directory if not existing
+  ; -- User Profile is only valid for Win2K and later
+  ; -- so skip on earlier versions
+  StrCmp $PROFILE "" OptionsDone
+    IfFileExists "$PROFILE\JMRI\systemfiles\*.*" SetPaths
+      CreateDirectory "$PROFILE\JMRI\systemfiles"
+    SetPaths:
+    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$PROFILE\JMRI\systemfiles"'
+    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$PROFILE\JMRI\systemfiles\\"'
+    ; -- jmri.log.path needs a double trailing backslash to ensure a valid command-line
+  OptionsDone:
   DetailPrint "Options: $OPTIONS"
 
   ; -- Build the ClassPath
@@ -231,6 +262,7 @@ Section "Main"
   winfound:
     ; -- We've found the window, so minimise it
     DetailPrint "Found console window - minimising..."
+    Sleep 10
     ShowWindow $1 ${SW_MINIMIZE}
   winloopexit:
 
@@ -325,6 +357,45 @@ Function GetSystemMemoryStatus
   ; -- Move returned info into NSIS variables
   System::Call /NOUNLOAD "*$1(i.r2, i.r3, i.r4, i.r5, i.r6, i.r7, i.r8, i.r9, i.r10)" ; -- comment out for > 2Gb
   ;System::Call /NOUNLOAD "*$1(i.r2, i.r3, l.r4, l.r5, l.r6, l.r7, l.r8, l.r9, l.r10)" ; -- uncomment for > 2Gb
+  ; -- Free allocated memory
+  System::Free $1
+FunctionEnd
+
+Function GetSystemMemoryStatus64
+; -------------------------------------------------------------------------
+; - Get system memory status
+; - input: none
+; - output: $2 - Structure size (bytes)
+; -         $3 - Memory load (%)
+; -         $4 - Total physical memory (bytes)
+; -         $5 - Free physical memory (bytes)
+; -         $6 - Total page file (bytes)
+; -         $7 - Free page file (bytes)
+; -         $8 - Total virtual (bytes)
+; -         $9 - Free virtual (bytes)
+; -------------------------------------------------------------------------
+; - Notes:
+; - If more than 2Gb, this will return 2Gb
+; - GlobalMemoryStatutsEx should be used for
+; - > 2Gb but this is not supported until Win2K
+; -
+; - To convert to MBytes, use:
+; -  System::Int64Op $VAR / 1048576
+; -  Pop $VAR
+; -------------------------------------------------------------------------
+
+  ; -- Allocate memory
+  ;System::Alloc /NOUNLOAD 32 ; -- comment out for > 2Gb
+  System::Alloc /NOUNLOAD 64 ; -- uncomment for > 2Gb
+  Pop $1
+  ; -- Initialise
+  System::Call /NOUNLOAD "*$1(i64)"
+  ; -- Make system call
+  ;System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatus(i r1)" ; -- comment out for > 2Gb
+  System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatusEx(i r1)"  ; -- uncomment for > 2Gb
+  ; -- Move returned info into NSIS variables
+  ;System::Call /NOUNLOAD "*$1(i.r2, i.r3, i.r4, i.r5, i.r6, i.r7, i.r8, i.r9, i.r10)" ; -- comment out for > 2Gb
+  System::Call /NOUNLOAD "*$1(i.r2, i.r3, l.r4, l.r5, l.r6, l.r7, l.r8, l.r9, l.r10)" ; -- uncomment for > 2Gb
   ; -- Free allocated memory
   System::Free $1
 FunctionEnd
