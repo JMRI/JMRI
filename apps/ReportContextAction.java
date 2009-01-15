@@ -15,7 +15,7 @@ import jmri.util.JmriInsets;
  * @author	Bob Jacobsen    Copyright (C) 2007
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -74,6 +74,8 @@ public class ReportContextAction extends AbstractAction {
         addProperty("user.name");
         addProperty("user.home");
         addProperty("user.dir");
+        addProperty("jmri.log.path");
+        addProperty("python.home");
 
         addScreenSize();
         
