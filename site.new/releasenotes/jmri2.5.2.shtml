@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.1 2009-01-14 07:04:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.2 2009-01-15 03:50:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -108,6 +108,11 @@ will not be effected by this change.
 <h3>Changes since test version 2.5.1:</h3>
 
 Fixed some links within help pages.
+
+<p>
+Xavier Chazelle provided a new decoder definition for the Uhlenbrock 73400 mini decoder.
+
+
 
 <!--#include virtual="/Footer" -->
 
