@@ -11,7 +11,8 @@
 # Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
 
 # The root category is set to log priority INFO and above
-# to the console (A1) , and also to rolling files (T).
+# to the console (A1). We define, but don't activeate, output
+# to rolling log files (T).
 
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
@@ -50,7 +51,9 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 log4j.appender.A1.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 
-# R is set to output to a log file
+# R is set to output to a single log file. This is defined
+# for systems that can't (or don't want to) have rolling files,
+# but is not active by default
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=${jmri.log.path}example.log
 log4j.appender.R.Append=false
