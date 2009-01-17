@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -136,7 +136,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	firePropertyChange (CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
     }
     
-    public JComboBox getComboBox (){
+    public JComboBox getComboBox(){
     	JComboBox box = new JComboBox();
 		String[] types = getNames();
 		for (int i = 0; i < types.length; i++)
@@ -153,10 +153,10 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     
     /**
      * Gets the appropriate car loads for the car's type
-     * @param car
+     * @param type
      * @return JComboBox with car loads
      */
-    public JComboBox getSelectLoadComboBox (String type){
+    public JComboBox getSelectLoadComboBox(String type){
     	JComboBox box = new JComboBox();
     	box.addItem("");
 		box.addItem(Car.GENERIC_EMPTY);
@@ -166,10 +166,10 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     
     /**
      * Gets the appropriate car loads for the car's type
-     * @param car
+     * @param type
      * @return JComboBox with car loads
      */
-    public JComboBox getLoadComboBox (String type){
+    public JComboBox getLoadComboBox(String type){
     	JComboBox box = new JComboBox();
 		box.addItem(Car.GENERIC_EMPTY);
 		box.addItem(Car.GENERIC_LOAD);
