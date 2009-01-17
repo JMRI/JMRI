@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	JLabel textWeightTons = new JLabel();
 	JLabel textLocation = new JLabel();
 	JLabel textOptional = new JLabel();
+	JLabel textLoad = new JLabel();
 	JLabel textKernel = new JLabel();
 	JLabel textOwner = new JLabel();
 	JLabel textComment = new JLabel();
@@ -61,12 +62,12 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	JButton editColorButton = new JButton();
 	JButton editLengthButton = new JButton();
 	JButton fillWeightButton = new JButton();
+	JButton editLoadButton = new JButton();
 	JButton editKernelButton = new JButton();
 	JButton editOwnerButton = new JButton();
 
 	JButton saveButton = new JButton();
 	JButton deleteButton = new JButton();
-	JButton copyButton = new JButton();
 	JButton addButton = new JButton();
 
 	// check boxes
@@ -95,8 +96,10 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	JComboBox ownerComboBox = CarOwners.instance().getComboBox();
 	JComboBox locationBox = locationManager.getComboBox();
 	JComboBox trackLocationBox = new JComboBox();
+	JComboBox loadComboBox = CarTypes.instance().getLoadComboBox(null);
 	JComboBox kernelComboBox = manager.getKernelComboBox(); 
-
+	
+ 
 	public static final String ROAD = rb.getString("Road");
 	public static final String TYPE = rb.getString("Type");
 	public static final String COLOR = rb.getString("Color");
@@ -141,6 +144,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		textLocation.setVisible(true);
 		textOptional.setText(rb.getString("Optional"));
 		textOptional.setVisible(true);
+		textLoad.setText(rb.getString("Load"));
+		textLoad.setVisible(true);
 		textKernel.setText(rb.getString("Kernel"));
 		textKernel.setVisible(true);
 		textOwner.setText(rb.getString("Owner"));
@@ -163,6 +168,9 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		fillWeightButton.setText(rb.getString("Calculate"));
 		fillWeightButton.setToolTipText(rb.getString("calculateCarWeight"));
 		fillWeightButton.setVisible(true);
+		editLoadButton.setText(rb.getString("Edit"));
+		editLoadButton.setVisible(true);
+		editLoadButton.setEnabled(false); // disable for now
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
 		builtTextField.setToolTipText(rb.getString("buildDateTip"));
@@ -174,8 +182,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addButton.setVisible(true);
 		saveButton.setText(rb.getString("Save"));
 		saveButton.setVisible(true);
-		copyButton.setText(rb.getString("Copy"));
-		copyButton.setVisible(true);
 
 		getContentPane().setLayout(new GridBagLayout());
 
@@ -225,30 +231,35 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addItemWidth (textOptional, 3, 0, 12);
 		
 		// row 13
-		addItem(textKernel, 0, 13);
-		addItem(kernelComboBox, 1, 13);
-		addItem(editKernelButton, 2, 13);
-
-		// row 14
-		addItem(textBuilt, 0, 14);
-		addItem(builtTextField, 1, 14);
+		addItem(textLoad, 0, 13);
+		addItem(loadComboBox, 1, 13);
+		addItem(editLoadButton, 2, 13);
 		
 		// row 15
-		addItem(textOwner, 0, 15);
-		addItem(ownerComboBox, 1, 15);
-		addItem(editOwnerButton, 2, 15);
+		addItem(textKernel, 0, 15);
+		addItem(kernelComboBox, 1, 15);
+		addItem(editKernelButton, 2, 5);
 
-		// row 16
-		addItem(textComment, 0, 16);
-		addItemWidth(commentTextField, 3, 1, 16);
+		// row 17
+		addItem(textBuilt, 0, 17);
+		addItem(builtTextField, 1, 17);
+		
+		// row 19
+		addItem(textOwner, 0, 19);
+		addItem(ownerComboBox, 1, 19);
+		addItem(editOwnerButton, 2, 19);
 
-		// row 20
-		addItem(space1, 0, 20);
 		// row 21
-		addItem(deleteButton, 0, 21);
-		addItem(addButton, 1, 21);
-//		addItem(copyButton, 2, 21);
-		addItem(saveButton, 3, 21);
+		addItem(textComment, 0, 21);
+		addItemWidth(commentTextField, 3, 1, 21);
+
+		// row 23
+		addItem(space1, 0, 23);
+		
+		// row 25
+		addItem(deleteButton, 0, 25);
+		addItem(addButton, 1, 25);
+		addItem(saveButton, 3, 25);
 
 		// setup buttons
 		addEditButtonAction(editRoadButton);
@@ -261,7 +272,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 		addButtonAction(deleteButton);
 		addButtonAction(addButton);
-		addButtonAction(copyButton);
 		addButtonAction(saveButton);
 		addButtonAction(fillWeightButton);
 
@@ -272,7 +282,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		// setup checkbox
 		addCheckBoxAction(cabooseCheckBox);
 		addCheckBoxAction(fredCheckBox);
-
+		
 		// build menu
 //		JMenuBar menuBar = new JMenuBar();
 //		JMenu toolMenu = new JMenu("Tools");
@@ -368,6 +378,10 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				CarOwners.instance().addName(car.getOwner());
 			}
 		}
+		
+		car.addPropertyChangeListener(this);
+		loadComboBox.setSelectedItem(car.getLoad());
+		
 		kernelComboBox.setSelectedItem(car.getKernelName());
 				
 		ownerComboBox.setSelectedItem(car.getOwner());
@@ -416,12 +430,13 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 							|| !_car.getNumber().equals(roadNumberTextField.getText())) {
 						// transfer car attributes since road name and number have changed
-						Car oldcar = _car;
+						Car oldCar = _car;
 						Car newCar = addCar();
 						// set the car's destination and train
-						newCar.setDestination(oldcar.getDestination(), oldcar.getDestinationTrack());
-						newCar.setTrain(oldcar.getTrain());
-						manager.deregister(oldcar);
+						newCar.setDestination(oldCar.getDestination(), oldCar.getDestinationTrack());
+						newCar.setTrain(oldCar.getTrain());
+						oldCar.removePropertyChangeListener(this);
+						manager.deregister(oldCar);
 						managerXml.writeOperationsCarFile();
 						return;
 					}
@@ -534,6 +549,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					|| !_car.getNumber().equals(roadNumberTextField.getText())) {
 				_car = manager.newCar(roadComboBox.getSelectedItem().toString(),
 						roadNumberTextField.getText());
+				_car.addPropertyChangeListener(this);
 			}
 			if (typeComboBox.getSelectedItem() != null)
 				_car.setType(typeComboBox.getSelectedItem().toString());
@@ -549,6 +565,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			_car.setBuilt(builtTextField.getText());
 			if (ownerComboBox.getSelectedItem() != null)
 				_car.setOwner(ownerComboBox.getSelectedItem().toString());
+			if (loadComboBox.getSelectedItem() != null)
+				_car.setLoad(loadComboBox.getSelectedItem().toString());
 			if (kernelComboBox.getSelectedItem() != null){
 				if (kernelComboBox.getSelectedItem().equals(""))
 					_car.setKernel(null);
@@ -633,6 +651,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		CarOwners.instance().removePropertyChangeListener(this);
 		locationManager.removePropertyChangeListener(this);
 		manager.removePropertyChangeListener(this);
+		if (_car != null)
+			_car.removePropertyChangeListener(this);
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -672,6 +692,10 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			LocationManager.instance().updateComboBox(locationBox);
 			if (_car != null)
 				locationBox.setSelectedItem(_car.getLocation());
+		}
+		if (e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)){
+			if (_car != null)
+				loadComboBox.setSelectedItem(_car.getLoad());
 		}
 		if (e.getPropertyName().equals(DISPOSE)){
 			editActive = false;

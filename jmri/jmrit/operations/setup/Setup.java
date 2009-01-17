@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -128,6 +128,7 @@ public class Setup {
 	
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
+	private static boolean showCarLoad = false;			//when true, show car load in manifests 
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
@@ -203,6 +204,14 @@ public class Setup {
 	
 	public static boolean isAppendCarCommentEnabled(){
 		return appendCarComment;
+	}
+	
+	public static void  setShowCarLoadEnabled(boolean enable){
+		showCarLoad = enable;
+	}
+	
+	public static boolean isShowCarLoadEnabled(){
+		return showCarLoad;
 	}
 	
 	public static void  setTrainIconCordEnabled(boolean enable){
@@ -490,6 +499,7 @@ public class Setup {
     	values.setAttribute("carTypes", getCarTypes());
     	values.setAttribute("switchTime", Integer.toString(getSwitchTime()));
     	values.setAttribute("travelTime", Integer.toString(getTravelTime()));
+    	values.setAttribute("showCarLoad", isShowCarLoadEnabled()?"true":"false");
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
@@ -560,6 +570,11 @@ public class Setup {
         	String types = a.getValue();
            	if (log.isDebugEnabled()) log.debug("CarTypes: "+types);
            	Setup.setCarTypes(types);
+        }
+        if ((a = operations.getChild("settings").getAttribute("showCarLoad"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("showCarLoad: "+enable);
+           	Setup.setShowCarLoadEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
         	String enable = a.getValue();

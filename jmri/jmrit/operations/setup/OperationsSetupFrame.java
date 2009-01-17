@@ -31,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JLabel textOwner = new JLabel();
 	JLabel textPrinter = new JLabel();
 	JLabel textBuildReport = new JLabel();
+	JLabel textManifest = new JLabel();
 	JLabel textPanel = new JLabel();
 	JLabel textIconNorth = new JLabel();
 	JLabel textIconSouth = new JLabel();
@@ -94,6 +95,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     JCheckBox eastCheckBox = new JCheckBox();
 	JCheckBox northCheckBox = new JCheckBox();
 	JCheckBox mainMenuCheckBox = new JCheckBox();
+	JCheckBox showLoadCheckBox = new JCheckBox();
 	JCheckBox appendCommentCheckBox = new JCheckBox();
 	JCheckBox iconCheckBox = new JCheckBox();
 	JCheckBox appendCheckBox = new JCheckBox();
@@ -178,6 +180,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		textPrinter.setText(rb.getString("PrinterFont"));
 		textPrinter.setVisible(true);
+		textManifest.setText(rb.getString("Manifest"));
+		textManifest.setVisible(true);
+		showLoadCheckBox.setText(rb.getString("CarLoad"));
+		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
 		appendCommentCheckBox.setText(rb.getString("CarComment"));
 		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 		textBuildReport.setText(rb.getString("BuildReport"));
@@ -283,9 +289,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		Border border = BorderFactory.createEtchedBorder();
 		
+		// Option panel
+		JPanel options = new JPanel();
+		options.setLayout(new GridBagLayout());
+		options.setBorder(border);
+		addItem (options, mainMenuCheckBox, 1,7);
+		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
+			
 		// Printer panel
 		JPanel pPrinter = new JPanel();
 		pPrinter.setLayout(new GridBagLayout());
+		pPrinter.setBorder(border);
 		ButtonGroup printerGroup = new ButtonGroup();
 		printerGroup.add(mono);
 		printerGroup.add(sanSerif);
@@ -295,7 +309,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
-		addItemWidth (pPrinter, mainMenuCheckBox, 3, 1,7);
 		addItem (pPrinter, textPrinter, 0, 8);
 		addItemLeft (pPrinter, mono, 1, 8);
 		addItemLeft (pPrinter, sanSerif, 2, 8);
@@ -304,9 +317,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (pPrinter, buildReportNor, 2, 10);
 		addItemLeft (pPrinter, buildReportMax, 3, 10);
 		addItemLeft (pPrinter, buildReportVD, 4, 10);
-		addItemWidth (pPrinter, appendCommentCheckBox, 3, 1, 12);
-		pPrinter.setBorder(border);
-		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
+		addItem (pPrinter, textManifest, 0, 12);
+		addItemLeft (pPrinter, showLoadCheckBox, 1, 12);
+		addItemWidth (pPrinter, appendCommentCheckBox, 2, 2, 12);
+		
+		
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
 
@@ -354,6 +369,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem(pControl, saveButton, 3, 9);
 		
 		getContentPane().add(panel);
+		getContentPane().add(options);
 		getContentPane().add(pPrinter);
 		getContentPane().add(pIcon);
 		getContentPane().add(pControl);
@@ -439,6 +455,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setFontName(Setup.MONOSPACED);
 			else
 				Setup.setFontName(Setup.SANSERIF);
+			// show car load
+			Setup.setShowCarLoadEnabled(showLoadCheckBox.isSelected());
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
 			// build report level

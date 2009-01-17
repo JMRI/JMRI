@@ -15,7 +15,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -23,8 +23,13 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected Kernel _kernel = null;
+	protected String _load = GENERIC_EMPTY;
 	
 	public static final String SCHEDULE = "Schedule";
+	public static final String GENERIC_EMPTY = "E";
+	public static final String GENERIC_LOAD = "L";
+	
+	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	
 	LocationManager locationManager = LocationManager.instance();
 	
@@ -52,18 +57,29 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		boolean old = _fred;
 		_fred = fred;
 		if (!old == fred)
-			firePropertyChange("car hazardous", old?"true":"false", fred?"true":"false");
+			firePropertyChange("car fred", old?"true":"false", fred?"true":"false");
 	}
 	
 	public boolean hasFred(){
 		return _fred;
 	}
 	
+	public void setLoad(String load){
+		String old = _load;
+		_load = load;
+		if (!old.equals(load))
+			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+	}
+	
+	public String getLoad(){
+		return _load;
+	}
+	
 	public void setCaboose(boolean caboose){
 		boolean old = _caboose;
 		_caboose = caboose;
 		if (!old == caboose)
-			firePropertyChange("car hazardous", old?"true":"false", caboose?"true":"false");
+			firePropertyChange("car caboose", old?"true":"false", caboose?"true":"false");
 	}
 	
 	public boolean isCaboose(){
@@ -132,13 +148,50 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+")");
 			return OKAY;
 		}
-		if (getType().equals(si.getType())){
+		if (getType().equals(si.getType())) {
 			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
+				if (si.getLoad().equals("") || getLoad().equals(si.getLoad()))
 					return OKAY;
+				else
+					return SCHEDULE + " (" + track.getScheduleName()
+							+ ") request car type (" + si.getType()
+							+ ") road (" + si.getRoad() + ") load ("
+							+ si.getLoad() + ")";
 			else
-				return SCHEDULE +" ("+ track.getScheduleName()+") next car type ("+si.getType()+") next car road ("+si.getRoad()+")";
+				return SCHEDULE + " (" + track.getScheduleName()
+						+ ") request car type (" + si.getType()
+						+ ") road (" + si.getRoad() + ")";
 		} else
-			return SCHEDULE +" ("+ track.getScheduleName()+") next car type ("+si.getType()+")";
+			return SCHEDULE + " (" + track.getScheduleName()
+					+ ") request car type (" + si.getType() + ")";
+	}
+	
+	/**
+	 * Sets the car's destination on the layout
+	 * @param destination 
+	 * @param track (yard, siding, staging, or interchange track)
+	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
+	 * acceptable, or "length" if the rolling stock length didn't fit.
+	 */
+	public String setDestination(Location destination, Track track) {
+		String destinationName = getDestinationName();
+		String status = super.setDestination(destination, track);
+		// return if status not Okay or 
+		if (!status.equals(OKAY) || destinationName.equals(""))
+			return status;
+		// update load only when car reaches destination
+		if(destination != null && track != null)
+			return status;
+		// update load when car reaches a siding
+		if(!getTrack().getLocType().equals(Track.SIDING))
+			return status;
+		// TODO load car based on schedule
+		if (getLoad().equals(GENERIC_EMPTY))
+			setLoad(GENERIC_LOAD);
+		else
+			setLoad(GENERIC_EMPTY);
+		return status;
+			
 	}
 
 	/**
@@ -161,6 +214,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			if ((a = e.getAttribute("leadKernel")) != null){
 				_kernel.setLeadCar(this);
 			}
+		}
+		if ((a = e.getAttribute("load")) != null){
+			_load = a.getValue();
 		}
 	}
 	
@@ -185,6 +241,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			e.setAttribute("kernel", getKernelName());
 			if (getKernel().isLeadCar(this))
 				e.setAttribute("leadKernel", "true");
+		}
+		if (!getLoad().equals("")){
+			e.setAttribute("load", getLoad());
 		}
 		return e;
 	}

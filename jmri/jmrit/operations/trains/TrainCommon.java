@@ -52,10 +52,11 @@ public class TrainCommon {
 	protected void  pickupCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
+		String carLoad = (Setup.isShowCarLoadEnabled() ? " "+car.getLoad() : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + LENGTHABV + " " + car.getColor()
+				+ car.getLength() + LENGTHABV + carLoad + " " + car.getColor() 
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
 				+ (car.hasFred() ? " ("+rb.getString("fred")+")" : "") + " " + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
@@ -64,10 +65,11 @@ public class TrainCommon {
 	protected void dropCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
+		String carLoad = (Setup.isShowCarLoadEnabled() ? " "+car.getLoad() : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
-				+ car.getLength() + LENGTHABV + " " + car.getColor()
+				+ car.getLength() + LENGTHABV + carLoad + " " + car.getColor()
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + car.getDestinationTrackName()
 				+ carComment);

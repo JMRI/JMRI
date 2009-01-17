@@ -6,20 +6,22 @@ import jmri.jmrit.operations.setup.Control;
  * Represents a car type to be scheduled for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected int _sequenceId = 0;			// used to determine order in schedule
 	protected String _type = "";			// the type of car
-	protected String _road = "";				// the car road
+	protected String _road = "";			// the car road
+	protected String _load ="";				// the car load requested
 	protected int _count = 1;				// the number of times this type of car must be dropped
 	protected String _comment = "";
 			
 	public static final String NUMBER_CHANGED_PROPERTY = "number";
 	public static final String TYPE_CHANGED_PROPERTY = "type";
 	public static final String ROAD_CHANGED_PROPERTY = "road";
+	public static final String LOAD_CHANGED_PROPERTY = "load";
 	public static final String DISPOSE = "dispose";
 	
 	/**
@@ -49,6 +51,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	
 	public String getRoad() {
 		return _road;
+	}
+	
+	public void setLoad(String load){
+		String old = _load;
+		_load = load;
+		firePropertyChange (LOAD_CHANGED_PROPERTY, old, load);
+	}
+	
+	public String getLoad() {
+		return _load;
 	}
 	
 	public void setRoad(String road){
@@ -103,6 +115,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         else log.warn("no id attribute in Schedule Item element when reading operations");
         if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
         if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
+        if ((a = e.getAttribute("load")) != null )  _load = a.getValue();
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
@@ -118,6 +131,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	e.setAttribute("id", getId());
     	e.setAttribute("type", getType());
     	e.setAttribute("road", getRoad());
+    	e.setAttribute("load", getLoad());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
     	e.setAttribute("count", Integer.toString(getCount()));
        	e.setAttribute("comment", getComment());
