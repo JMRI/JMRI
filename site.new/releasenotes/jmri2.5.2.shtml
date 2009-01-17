@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.2 2009-01-15 03:50:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.3 2009-01-17 06:55:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -112,7 +112,23 @@ Fixed some links within help pages.
 <p>
 Xavier Chazelle provided a new decoder definition for the Uhlenbrock 73400 mini decoder.
 
+<p>
+New NMRA manufacturer numbers:
+<ul>
+    <li>49 - Joka Electronic
+    <li>50 - N&amp;Q Electronics
+    <li>51 - DCC Supplies, Ltd
+</ul>
 
+<p>
+Matt Harris improved the Windows startup scripts to 
+put the messages.log log file and the Jython cache files
+in the JMRI preferences directory. 
+This lets JMRI run cleanly on Windows 7.
+
+<p>
+Nigel Cliffe and Mark Waters provided new definitions for the
+Zimo MX620 decoder.
 
 <!--#include virtual="/Footer" -->
 

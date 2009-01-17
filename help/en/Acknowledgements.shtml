@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.62 2008-12-20 04:09:13 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.63 2009-01-17 06:55:37 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -114,6 +114,7 @@
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions
+	    and provided new Zimo MX620 definitions.
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
@@ -344,6 +345,7 @@
     <LI>Marshall Wales investigated how to display the throttle ID in the LocoNet Slot Monitor
     <LI>Jack Walton, who created the Lenz LE080 decoder definition
 	<LI>Mark Waters, who provided numerous Zimo decoder definitions
+	    and new Zimo MX620 definitions.
     <LI>Howard Watkins, who helped test the CBUS support
 	<LI>Jim Wells, who created our logos
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
