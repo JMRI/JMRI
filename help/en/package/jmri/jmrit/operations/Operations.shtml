@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.28 2009-01-14 16:26:32 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.29 2009-01-17 15:45:56 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -176,6 +176,11 @@ available cars and engines, and a bit how the program finds destinations
 for the cars and engines. The "Very Detailed" setting produces the most
 pages, and will show why cars are not picked up or dropped. Be sure and
 press "Save" after changing the build report selection.
+
+<H3>Show Car Load</H3>
+
+You can optionally show whether the car is empty or loaded. When a car
+is delivered to a siding the load state will change.
 
 <H3>Append Car Comment to Manifest</H3>
 
@@ -357,7 +362,7 @@ town's sidings.
 
 The program when generating a switch list for a train with a single
 location (local switcher) will never move a car from a siding to a
-siding or yard to a yard, only yard to siding or siding to yard. 
+siding or yard to a yard, only yard to siding or siding to yard.
 
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
@@ -509,7 +514,7 @@ consume 44 feet of track.
 
 <P>The program supports the ability to add a subtype or commodity to
 your car types. Adding a "-subtype" to your car type will create a new
-type of car. The "- subtype" is not printed on the manifest or switch
+type of car. The "-subtype" is not printed on the manifest or switch
 lists. For example you might have coal cars with loads and coal cars
 that are empty. If you enter the car type as HopCoal-C for your cars
 with coal, and HopCoal-E for the empties, the program can use this
@@ -530,6 +535,11 @@ materials can than be applied to this car!
 
 Now set the car's location on the layout. If the car is off the layout,
 set the location to none (blank space).
+
+<H3>Load</H3>
+
+You can optionally set the load state of the car. Select E for empty or
+L for loaded.
 
 <H3>Kernel, or Group of Cars</H3>
 

@@ -52,7 +52,7 @@ public class TrainCommon {
 	protected void  pickupCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
-		String carLoad = (Setup.isShowCarLoadEnabled() ? " "+car.getLoad() : "");
+		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose()  ? " "+car.getLoad() : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
@@ -65,7 +65,7 @@ public class TrainCommon {
 	protected void dropCar(PrintWriter file, Car car){
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
-		String carLoad = (Setup.isShowCarLoadEnabled() ? " "+car.getLoad() : "");
+		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose() ? " "+car.getLoad() : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0] + " "
