@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.8 2009-01-09 18:55:33 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.9 2009-01-17 15:00:11 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -31,7 +31,8 @@
 <!ATTLIST settings trainLength		CDATA #IMPLIED>       
 <!ATTLIST settings maxEngines		CDATA #IMPLIED> 
 <!ATTLIST settings switchTime		CDATA #IMPLIED> 
-<!ATTLIST settings travelTime		CDATA #IMPLIED> 
+<!ATTLIST settings travelTime		CDATA #IMPLIED>
+<!ATTLIST settings showCarLoad		(true | false ) "false">  
 <!ATTLIST settings addCarComment	(true | false ) "false">  
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
