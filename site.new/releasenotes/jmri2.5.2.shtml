@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.3 2009-01-17 06:55:09 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.4 2009-01-19 18:37:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -129,6 +129,14 @@ This lets JMRI run cleanly on Windows 7.
 <p>
 Nigel Cliffe and Mark Waters provided new definitions for the
 Zimo MX620 decoder.
+
+<p>
+Dan Boudreau updated the operations tools so that you can specify car loads.
+
+<p>
+Matt Harris fixed a problem launching JMRI on a Windows 64-bit machine with
+more than 2GB of memory installed.
+
 
 <!--#include virtual="/Footer" -->
 
