@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -96,7 +96,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	JComboBox ownerComboBox = CarOwners.instance().getComboBox();
 	JComboBox locationBox = locationManager.getComboBox();
 	JComboBox trackLocationBox = new JComboBox();
-	JComboBox loadComboBox = CarTypes.instance().getLoadComboBox(null);
+	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
 	JComboBox kernelComboBox = manager.getKernelComboBox(); 
 	
  
@@ -170,7 +170,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		fillWeightButton.setVisible(true);
 		editLoadButton.setText(rb.getString("Edit"));
 		editLoadButton.setVisible(true);
-		editLoadButton.setEnabled(false); // disable for now
+		//editLoadButton.setEnabled(false); // disable for now
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
 		builtTextField.setToolTipText(rb.getString("buildDateTip"));
@@ -274,6 +274,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addButtonAction(addButton);
 		addButtonAction(saveButton);
 		addButtonAction(fillWeightButton);
+		addButtonAction(editLoadButton);
 
 		// setup combobox
 		addComboBoxAction(lengthComboBox);
@@ -292,6 +293,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
+		CarLoads.instance().addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarLengths.instance().addPropertyChangeListener(this);
 		CarColors.instance().addPropertyChangeListener(this);
@@ -380,6 +382,8 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 		
 		car.addPropertyChangeListener(this);
+		
+		CarLoads.instance().updateComboBox(car.getType(), loadComboBox);
 		loadComboBox.setSelectedItem(car.getLoad());
 		
 		kernelComboBox.setSelectedItem(car.getKernelName());
@@ -418,7 +422,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 	}
 
-	// Save, Delete, Add, Clear, Calculate buttons
+	// Save, Delete, Add, Clear, Calculate, Edit Load buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
 			// log.debug("car save button actived");
@@ -480,7 +484,16 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		if (ae.getSource() == fillWeightButton){
 			calculateWeight ();
 		}
+		if (ae.getSource() == editLoadButton){
+			if (lef != null)
+				lef.dispose();
+			lef = new CarLoadEditFrame();
+			lef.setLocationRelativeTo(this);
+			lef.initComponents(_car.getType());
+		}
 	}
+	
+	CarLoadEditFrame lef = null;
 	
 	private boolean checkCar(Car c){
 		String roadNum = roadNumberTextField.getText();
@@ -645,6 +658,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 	private void removePropertyChangeListeners(){
 		CarRoads.instance().removePropertyChangeListener(this);
+		CarLoads.instance().removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarLengths.instance().removePropertyChangeListener(this);
 		CarColors.instance().removePropertyChangeListener(this);
@@ -696,6 +710,12 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		if (e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)){
 			if (_car != null)
 				loadComboBox.setSelectedItem(_car.getLoad());
+		}
+		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
+			if (_car != null){
+				CarLoads.instance().updateComboBox(_car.getType(), loadComboBox);
+				loadComboBox.setSelectedItem(_car.getLoad());
+			}
 		}
 		if (e.getPropertyName().equals(DISPOSE)){
 			editActive = false;

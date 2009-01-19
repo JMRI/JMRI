@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -252,9 +252,25 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	public void replaceLoad(String type, String oldLoad, String newLoad){
+		List schs = getSchedulesByIdList();
+		for (int i=0; i<schs.size(); i++){
+			Schedule sch = getScheduleById((String)schs.get(i));
+			List items = sch.getItemsBySequenceList();
+			for(int j=0; j<items.size(); j++ ){
+				ScheduleItem si = sch.getItemById((String)items.get(j));
+				if (si.getType().equals(type) && si.getLoad().equals(oldLoad)){
+					si.setLoad(newLoad);
+				}
+				if (si.getType().equals(type) && si.getShip().equals(oldLoad)){
+					si.setShip(newLoad);
+				}
+			}
+		}
+	}
+	
 	/**
-	 * Check for car type and road name replacements. Also check for engine type
-	 * repleacement.
+	 * Check for car type, road, and load name replacements. 
 	 * 
 	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {

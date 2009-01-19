@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -36,7 +36,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int ROADCOLUMN   = 1;
     private static final int TYPECOLUMN = 2;
     private static final int LENGTHCOLUMN = 3;
-    private static final int COLORCOLUMN = 4;
+    private static final int COLORCOLUMN = 4;	// also the Load column
+    //private static final int LOADCOLUMN = 4;
     private static final int KERNELCOLUMN  = 5;
     private static final int LOCATIONCOLUMN  = 6;
     private static final int DESTINATIONCOLUMN = 7;
@@ -46,6 +47,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int EDITCOLUMN = 11;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
+    
+    private boolean showColor = true;
 
     public CarsTableModel() {
         super();
@@ -61,13 +64,21 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBYTRAIN = 6;
     public final int SORTBYMOVES = 7;
     public final int SORTBYKERNEL = 8;
+    public final int SORTBYLOAD = 9;
+    public final int SORTBYCOLOR = 10;
     
     private int _sort = SORTBYNUMBER;
     
     public void setSort (int sort){
+    	if (sort == SORTBYCOLOR)
+    		showColor = true;
+    	if (sort == SORTBYLOAD)
+    		showColor = false;
     	_sort = sort;
         updateList();
-        fireTableDataChanged();
+        //fireTableDataChanged();
+        fireTableStructureChanged();
+        initTable(_table);
     }
     /**
      * Search for car by road number
@@ -115,14 +126,21 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getCarsByMovesList();
 		else if (_sort == SORTBYKERNEL)
 			list = manager.getCarsByKernelList();
+		else if (_sort == SORTBYLOAD)
+			list = manager.getCarsByLoadList();
+		else if (_sort == SORTBYCOLOR)
+			list = manager.getCarsByColorList();
 		else
 			list = manager.getCarsByNumberList();
 		return list;
     }
 
 	List<String> sysList = null;
+	
+	JTable _table;
     
 	void initTable(JTable table) {
+		_table = table;
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -156,7 +174,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         switch (col) {
         case NUMCOLUMN: return rb.getString("Number");
         case ROADCOLUMN: return rb.getString("Road");
-        case COLORCOLUMN: return rb.getString("Color");
+        case COLORCOLUMN: {
+        	if (showColor)
+        		return rb.getString("Color");
+        	else
+        		return rb.getString("Load");
+        }
         case TYPECOLUMN: return rb.getString("Type");
         case LENGTHCOLUMN: return rb.getString("Len");
         case KERNELCOLUMN: return rb.getString("Kernel");
@@ -212,7 +235,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         switch (col) {
         case NUMCOLUMN: return c.getNumber();
         case ROADCOLUMN: return c.getRoad();
-        case COLORCOLUMN: return c.getColor();
+        case COLORCOLUMN: {
+          	if (showColor)
+        		return c.getColor();
+        	else
+        	   	return c.getLoad();
+        }
         case LENGTHCOLUMN: return c.getLength();
         case TYPECOLUMN: {
         	if (c.isCaboose())

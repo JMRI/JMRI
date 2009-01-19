@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -55,8 +55,8 @@ public class CarTypes implements java.beans.PropertyChangeListener {
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
-
-    List<String> list = new ArrayList<String>();
+    
+    protected List<String> list = new ArrayList<String>();
     
     public String[] getNames(){
      	if (list.size() == 0){
@@ -76,8 +76,9 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++){
- 			if (!list.contains(types[i]) && !types[i].equals("Engine"))	// old code used Engine as car type remove
+ 			if (!list.contains(types[i]) && !types[i].equals("Engine")){	// old code used Engine as car type remove
  				list.add(types[i]);
+ 			}
  		}
     }
     
@@ -150,36 +151,7 @@ public class CarTypes implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < types.length; i++)
 			box.addItem(types[i]);
     }
-    
-    /**
-     * Gets the appropriate car loads for the car's type
-     * @param type
-     * @return JComboBox with car loads
-     */
-    public JComboBox getSelectLoadComboBox(String type){
-    	JComboBox box = new JComboBox();
-    	box.addItem("");
-		box.addItem(Car.GENERIC_EMPTY);
-		box.addItem(Car.GENERIC_LOAD);
-    	return box;
-    }
-    
-    /**
-     * Gets the appropriate car loads for the car's type
-     * @param type
-     * @return JComboBox with car loads
-     */
-    public JComboBox getLoadComboBox(String type){
-    	JComboBox box = new JComboBox();
-		box.addItem(Car.GENERIC_EMPTY);
-		box.addItem(Car.GENERIC_LOAD);
-    	return box;
-    }
-    
-    public void updateLoadComboBox(String type, JComboBox box) {
-    	box.removeAllItems();
-    }
-        
+ 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);

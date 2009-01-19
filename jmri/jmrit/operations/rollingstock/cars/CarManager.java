@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -339,6 +339,40 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
     
     /**
+     * Sort by car color names
+     * @return list of car ids ordered by car color
+     */
+    public List<String> getCarsByColorList() {
+    	// first get by type list
+    	List<String> sortByType = getCarsByTypeList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String carColor = "";
+    	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortByType.size(); i++){
+    		carAdded = false;
+    		c = getCarById (sortByType.get(i));
+    		carColor = c.getColor();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById (out.get(j));
+    			String outCarColor = c.getColor();
+    			if (carColor.compareToIgnoreCase(outCarColor)<0){
+    				out.add(j, sortByType.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortByType.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
+    /**
      * Sort by car kernel names
      * @return list of car ids ordered by car kernel
      */
@@ -466,6 +500,43 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			if(c.getTrain() != null)
     				outCarTrainName = c.getTrain().getName();
     			if (carTrainName.compareToIgnoreCase(outCarTrainName)<0){
+    				out.add(j, sortByLocation.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortByLocation.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
+    /**
+     * Sort by car loads
+     * @return list of car ids ordered by car loads
+     */
+    public List<String> getCarsByLoadList() {
+    	// first get by location list
+    	List<String> sortByLocation = getCarsByLocationList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+     	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortByLocation.size(); i++){
+    		carAdded = false;
+    		c = getCarById (sortByLocation.get(i));
+    		String carLoadName = "";
+    		if(c.getLoad() != null)
+    			carLoadName = c.getLoad();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById (out.get(j));
+    			String outCarLoadName = "";
+    			if(c.getLoad() != null)
+    				outCarLoadName = c.getLoad();
+    			if (carLoadName.compareToIgnoreCase(outCarLoadName)<0){
     				out.add(j, sortByLocation.get(i));
     				carAdded = true;
     				break;

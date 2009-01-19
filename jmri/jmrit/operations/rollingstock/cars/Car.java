@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -15,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 
@@ -23,11 +24,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected Kernel _kernel = null;
-	protected String _load = GENERIC_EMPTY;
+	protected String _load = CarLoads.GENERIC_EMPTY;
+	protected String _nextLoad = "";
 	
 	public static final String SCHEDULE = "Schedule";
-	public static final String GENERIC_EMPTY = "E";
-	public static final String GENERIC_LOAD = "L";
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	
@@ -73,6 +73,17 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public String getLoad(){
 		return _load;
+	}
+	
+	public void setNextLoad(String load){
+		String old = _nextLoad;
+		_nextLoad = load;
+		if (!old.equals(load))
+			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+	}
+	
+	public String getNextLoad(){
+		return _nextLoad;
 	}
 	
 	public void setCaboose(boolean caboose){
@@ -134,8 +145,16 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	private String testSchedule(Track track){
-		if (track.getScheduleName().equals(""))
-			return OKAY;
+		if (track.getScheduleName().equals("")){
+			// does car have a scheduled load?
+			if (getLoad().equals(CarLoads.GENERIC_EMPTY) || getLoad().equals(CarLoads.GENERIC_EMPTY))
+				return OKAY;
+			// can't place a car with a schduled load at a siding
+			else if (!track.getLocType().equals(Track.SIDING))
+				return OKAY;
+			else
+				return "Car has a SCHEDULE load ("+getLoad()+")";
+		}
 		log.debug("track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = new ScheduleManager().instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
@@ -176,22 +195,76 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	public String setDestination(Location destination, Track track) {
 		String destinationName = getDestinationName();
 		String status = super.setDestination(destination, track);
-		// return if status not Okay or 
-		if (!status.equals(OKAY) || destinationName.equals(""))
+		// return if not Okay 
+		if (!status.equals(OKAY))
 			return status;
+		// now check to see if the track has a schedule
+		scheduleNext(track);
 		// update load only when car reaches destination
-		if(destination != null && track != null)
+		if (destinationName.equals("") || (destination != null && track != null))
 			return status;
-		// update load when car reaches a siding
+		// only update load when car reaches a siding
 		if(!getTrack().getLocType().equals(Track.SIDING))
 			return status;
-		// TODO load car based on schedule
-		if (getLoad().equals(GENERIC_EMPTY))
-			setLoad(GENERIC_LOAD);
+		if (!getNextLoad().equals("")){
+			setLoad(getNextLoad());
+			setNextLoad("");
+			return status;
+		}
+		// car doesn't have a schedule load, flip load status
+		if (getLoad().equals(CarLoads.GENERIC_EMPTY))
+			setLoad(CarLoads.GENERIC_LOAD);
 		else
-			setLoad(GENERIC_EMPTY);
+			setLoad(CarLoads.GENERIC_EMPTY);
 		return status;
 			
+	}
+	
+
+	
+	/**
+	 * Check to see if track has schedule and if it does will schedule the next
+	 * item in the list
+	 * 
+	 * @param track
+	 */
+	private void scheduleNext(Track track){
+		if (track == null || track.getScheduleName().equals(""))
+			return;
+		log.debug("destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
+		ScheduleManager scheduleManager = ScheduleManager.instance();
+		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
+		if (sch == null){
+			log.error("can not find schedule ("+track.getScheduleName()+")");
+			return;
+		}
+		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
+		if (currentSi == null){
+			log.error("can not find schedule item ("+track.getScheduleItemId()+")");
+			return;
+		}
+		// get the car's next load
+		setNextLoad(currentSi.getShip());
+		log.debug("Car ("+getId()+") next load ("+getNextLoad()+")");
+		// bump and check count
+		track.setScheduleCount(track.getScheduleCount()+1);
+		if (track.getScheduleCount() < currentSi.getCount())
+			return;
+		// go to the next item on the schedule
+		track.setScheduleCount(0);
+		List<String> l = sch.getItemsBySequenceList();
+		for (int i=0; i<l.size(); i++){
+			ScheduleItem nextSi = sch.getItemById(l.get(i));
+			if (track.getScheduleItemId().equals(nextSi.getId())){
+				if (++i < l.size()){
+					nextSi = sch.getItemById(l.get(i));
+				}else{
+					nextSi = sch.getItemById(l.get(0));
+				}
+				track.setScheduleItemId(nextSi.getId());
+				break;
+			}
+		}
 	}
 
 	/**
@@ -218,10 +291,11 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if ((a = e.getAttribute("load")) != null){
 			_load = a.getValue();
 		}
+		if ((a = e.getAttribute("nextLoad")) != null){
+			_nextLoad = a.getValue();
+		}
 	}
 	
-	boolean verboseStore = false;
-
 	/**
 	 * Create an XML element to represent this Entry. This member has to remain
 	 * synchronized with the detailed DTD in operations-cars.dtd.
@@ -244,6 +318,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		if (!getLoad().equals("")){
 			e.setAttribute("load", getLoad());
+		}
+		if (!getNextLoad().equals("")){
+			e.setAttribute("nextLoad", getNextLoad());
 		}
 		return e;
 	}

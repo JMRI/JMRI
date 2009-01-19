@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -52,6 +52,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
     JRadioButton sortByRoad = new JRadioButton(rb.getString("Road"));
     JRadioButton sortByType = new JRadioButton(rb.getString("Type"));
+    JRadioButton sortByColor = new JRadioButton(rb.getString("Color"));
+    JRadioButton sortByLoad = new JRadioButton(rb.getString("Load"));
     JRadioButton sortByKernel = new JRadioButton(rb.getString("Kernel"));
     JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
     JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
@@ -94,6 +96,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     	sortByNumber.setSelected(true);
     	controlPanel.add(sortByRoad);
     	controlPanel.add(sortByType);
+    	controlPanel.add(sortByColor);
+    	controlPanel.add(sortByLoad);
     	controlPanel.add(sortByKernel);
     	controlPanel.add(sortByLocation);
     	controlPanel.add(sortByDestination);
@@ -123,6 +127,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		addRadioButtonAction (sortByNumber);
 		addRadioButtonAction (sortByRoad);
 		addRadioButtonAction (sortByType);
+		addRadioButtonAction (sortByColor);
+		addRadioButtonAction (sortByLoad);
 		addRadioButtonAction (sortByKernel);
 		addRadioButtonAction (sortByLocation);
 		addRadioButtonAction (sortByDestination);
@@ -132,6 +138,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		group.add(sortByNumber);
 		group.add(sortByRoad);
 		group.add(sortByType);
+		group.add(sortByColor);
+		group.add(sortByLoad);
 		group.add(sortByKernel);
 		group.add(sortByLocation);
 		group.add(sortByDestination);
@@ -161,6 +169,12 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		}
 		if (ae.getSource() == sortByType){
 			carsModel.setSort(carsModel.SORTBYTYPE);
+		}
+		if (ae.getSource() == sortByColor){
+			carsModel.setSort(carsModel.SORTBYCOLOR);
+		}
+		if (ae.getSource() == sortByLoad){
+			carsModel.setSort(carsModel.SORTBYLOAD);
 		}
 		if (ae.getSource() == sortByKernel){
 			carsModel.setSort(carsModel.SORTBYKERNEL);
