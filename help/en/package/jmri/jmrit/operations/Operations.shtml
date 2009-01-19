@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.29 2009-01-17 15:45:56 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.30 2009-01-19 04:43:13 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -310,39 +310,41 @@ containing the last settings for all of your locations.
 To add a siding, press the "Add Siding" button. Sidings are very similar
 to <A HREF="#Yards">Yards</A> , so see above for more information.  You can if
 you wish schedule the order that cars will be delivered to a siding.  See
-Schedules below for more information.  
-
+<A HREF="#Schedules">Schedules</A> below for more information.  
 
 <A NAME="Schedules"></A>
 <H3>Schedules</H3>
 
-If you would like to see cars delivered in a particular sequence, the
-program allows you to apply a schedule to a siding. This is an optional
-feature and shouldn't be used until you become very familiar with how
-the program generates manifests and switch lists. A schedule provides
-very fine control on the order types of cars will be delivered to a siding. You can
-also specify the road name for the type of car delivered. For example,
-if you wanted two SP boxcars to be delivered followed by a tank car, you
-can create a schedule that will do exactly that. To create a schedule
-press the "Edit" button next to "Optional car delivery Schedule" pull
-down menu on the "Edit Siding Track" panel. Pressing the "Edit" button
-should create the "Add Schedule" panel. 
+If you would like to see cars delivered in a particular sequence, or
+with a specific load for delivery or shipping, the program allows you to
+apply a schedule to a siding. This is an optional feature and shouldn't
+be used until you become very familiar with how the program generates
+manifests and switch lists. A schedule provides very fine control on the
+order types of cars will be delivered to a siding. You can also specify
+the road name for the type of car delivered. For example, if you wanted
+two SP boxcars to be delivered followed by a tank car, you can create a
+schedule that will do exactly that. To create a schedule press the
+"Edit" button next to "Optional car delivery Schedule" pull down menu on
+the "Edit Siding Track" panel. Pressing the "Edit" button should create
+the "Add Schedule" panel.
 
-<P>Enter a name for your schedule
-and press the "Add Schedule" button on the bottom of the panel. Multiple
-sidings can use the same schedule as long as the sidings use the same
-car types and roads. Now add your first delivery for this siding by
-selecting a car type in the menu box found in the lower left corner of
-the panel and pressing the "Add car type" button. A new item should
-appear in your schedule containing the type of car, a pull down menu
-for road names, and a count of 1. You can if you wish specify a
-particular road for the type of car you entered, or leave if blank if
-you don't care about the road name. If you wanted more than one car type
-to be delivered consecutively, increase the count to the number that you
-wish. The maximum count is 10 and the minimum is 1. Repeat selecting the
-car types and pressing to "Add car type" until your have a delivery
-schedule you like. Press "Save Schedule" and close the schedule panel
-when you are done. 
+<P>Enter a name for your schedule and press the "Add Schedule"
+button on the bottom of the panel. Multiple sidings can use the same
+schedule as long as the sidings use the same car types and roads. Now
+add your first delivery for this siding by selecting a car type in the
+menu box found in the lower left corner of the panel and pressing the
+"Add car type" button. A new item should appear in your schedule
+containing the type of car, a pull down menu for road names, and a count
+of 1. You can if you wish specify a particular road for the type of car
+you entered, or leave it blank if you don't care about the road name.  You
+can also specify the car load received and shipped.
+
+<P> If
+you wanted more than one car type to be delivered consecutively,
+increase the count to the number that you wish. The maximum count is 10
+and the minimum is 1. Repeat selecting the car types and pressing to
+"Add car type" until your have a delivery schedule you like. Press "Save
+Schedule" and close the schedule panel when you are done.
 
 <P>Note only car types and roads that are accepted by
 this siding are available. If a car type or road isn't available, check
@@ -536,10 +538,14 @@ materials can than be applied to this car!
 Now set the car's location on the layout. If the car is off the layout,
 set the location to none (blank space).
 
-<H3>Load</H3>
+<H3>Car Load</H3>
 
 You can optionally set the load state of the car. Select E for empty or
-L for loaded.
+L for loaded. You can also create your own car loads, but there are
+restrictions. Only sidings with <A HREF="#Schedules">Schedules</A> can
+load or unload cars with loads that you've created. It is also
+recommended that you use the format L(commodity) to describe your loads.
+For example a load of screws could be entered as L(Screws).
 
 <H3>Kernel, or Group of Cars</H3>
 
@@ -557,12 +563,13 @@ this car.
 Press "Save" to store the car's settings. The program will create a file
 (OperationsCarRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your cars
-is also created each time the "Save" button is pressed. <A
-	NAME="EditCarAttributes"></A>
+is also created each time the "Save" button is pressed. 
+
+<A	NAME="EditCarAttributes"></A>
 <H3>Edit Car Attributes</H3>
 
 To the right of each of the car attributes (Road, Type, Length, Color,
-Kernel, Owner) is an "Edit" button. Use this to add, delete, or replace
+Kernel, Load, Owner) is an "Edit" button. Use this to add, delete, or replace
 the available attributes for a car.
 
 <H3>Add Button</H3>
