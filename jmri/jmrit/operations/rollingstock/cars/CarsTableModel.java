@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -70,16 +70,25 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private int _sort = SORTBYNUMBER;
     
     public void setSort (int sort){
-    	if (sort == SORTBYCOLOR)
-    		showColor = true;
-    	if (sort == SORTBYLOAD)
-    		showColor = false;
     	_sort = sort;
-        updateList();
-        //fireTableDataChanged();
-        fireTableStructureChanged();
-        initTable(_table);
+    	updateList();
+    	if (sort == SORTBYCOLOR && !showColor){
+    		showColor = true;
+    		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else if (sort == SORTBYLOAD && showColor){
+    		showColor = false;
+    		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else
+    		fireTableDataChanged();
     }
+    
+    String _roadNumber = "";
+    int _index = 0;
+    
     /**
      * Search for car by road number
      * @param roadNumber
@@ -87,16 +96,29 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
      */
     public int findCarByRoadNumber (String roadNumber){
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				Car c = manager.getCarById(sysList.get(i));
-				if (c != null){
-					if (c.getNumber().equals(roadNumber)){
-//						log.debug("found road number match "+roadNumber);
-						return i;
-					}
+			if (!roadNumber.equals(_roadNumber))
+				return getIndex(0, roadNumber);
+			int index = getIndex(_index, roadNumber);
+			if (index > 0)
+				return index;
+			return getIndex(0, roadNumber);
+		}
+		return -1;
+    }
+    
+    private int getIndex (int start, String roadNumber){
+		for (int index = start; index < sysList.size(); index++) {
+			Car c = manager.getCarById(sysList.get(index));
+			if (c != null){
+				String[] number = c.getNumber().split("-");
+				if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
+					_roadNumber = roadNumber;
+					_index = index + 1;
+					return index;
 				}
 			}
 		}
+		_roadNumber ="";
 		return -1;
     }
     
@@ -312,23 +334,23 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
     
-   public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
-        char b = e.getActionCommand().charAt(0);
-        int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-        if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
+    public void actionPerformed(ActionEvent e) {
+    	if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
+    	char b = e.getActionCommand().charAt(0);
+    	int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
+    	if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
     }
 
-   public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose CarTableModel");
-        manager.removePropertyChangeListener(this);
-        removePropertyChangeCars();
-        if (csf != null)
-        	csf.dispose();
-        if (cef != null)
-        	cef.dispose();
-     }
-    
+    public void dispose() {
+    	if (log.isDebugEnabled()) log.debug("dispose CarTableModel");
+    	manager.removePropertyChangeListener(this);
+    	removePropertyChangeCars();
+    	if (csf != null)
+    		csf.dispose();
+    	if (cef != null)
+    		cef.dispose();
+    }
+
     private void removePropertyChangeCars() {
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
