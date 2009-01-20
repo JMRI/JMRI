@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -68,6 +68,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         updateList();
         fireTableDataChanged();
     }
+    
+    String _roadNumber = "";
+    int _index = 0;
+    
     /**
      * Search for engine by road number
      * @param roadNumber
@@ -75,18 +79,32 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      */
     public int findEngineByRoadNumber (String roadNumber){
 		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				Engine c = manager.getEngineById(sysList.get(i));
-				if (c != null){
-					if (c.getNumber().equals(roadNumber)){
-//						log.debug("found road number match "+roadNumber);
-						return i;
-					}
-				}
-			}
+			if (!roadNumber.equals(_roadNumber))
+				return getIndex(0, roadNumber);
+			int index = getIndex(_index, roadNumber);
+			if (index > 0)
+				return index;
+			return getIndex(0, roadNumber);
 		}
 		return -1;
     }
+    
+    private int getIndex (int start, String roadNumber){
+		for (int index = start; index < sysList.size(); index++) {
+			Engine e = manager.getEngineById(sysList.get(index));
+			if (e != null){
+				String[] number = e.getNumber().split("-");
+				if (e.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
+					_roadNumber = roadNumber;
+					_index = index + 1;
+					return index;
+				}
+			}
+		}
+		_roadNumber ="";
+		return -1;
+    }
+    
     
     synchronized void updateList() {
 		// first, remove listeners from the individual objects
