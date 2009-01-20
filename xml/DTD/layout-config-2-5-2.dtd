@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-2.dtd,v 1.1 2009-01-12 08:00:40 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-5-2.dtd,v 1.2 2009-01-20 12:20:44 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.5.2 development.  Do not modify it       -->
 <!-- after version 2.5.2 is released.  For more information,                -->
@@ -20,7 +20,7 @@
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 			preferences | turnouts | sensors | lights | blocks | signals | routes |
-			securityelements | aspectgenerator | 
+			securityelements | aspectgenerator | sections |
 			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | signalelements | reporters |
 			memories | memorys | timebase |
@@ -171,13 +171,18 @@
   <!ATTLIST timebase startsettime	CDATA #IMPLIED>
   <!ATTLIST timebase startclockoption	CDATA #IMPLIED>
 
-<!ELEMENT signalheads (signalhead*)>
+<!ELEMENT signalheads (signalhead | dccsignalhead)*>
   <!ATTLIST signalheads class		CDATA #REQUIRED>
 
   <!ELEMENT signalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
+
+  <!ELEMENT dccsignalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
+  	<!ATTLIST dccsignalhead class	CDATA #REQUIRED>
+    <!ATTLIST dccsignalhead systemName	CDATA #REQUIRED>  
+    <!ATTLIST dccsignalhead userName	CDATA #IMPLIED>
 
 <!ELEMENT routes (route*)>
   <!ATTLIST routes class		CDATA #REQUIRED>
@@ -582,6 +587,7 @@
   <!ATTLIST LayoutEditor xoverlong		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor xoverhwid		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor xovershort		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor sliders		(yes|no) "yes" >
   <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
