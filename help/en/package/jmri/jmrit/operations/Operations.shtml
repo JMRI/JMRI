@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.30 2009-01-19 04:43:13 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.31 2009-01-20 04:03:11 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -180,7 +180,13 @@ press "Save" after changing the build report selection.
 <H3>Show Car Load</H3>
 
 You can optionally show whether the car is empty or loaded. When a car
-is delivered to a siding the load state will change.
+is delivered to a siding the load state will change. You can also create
+your own loads but there are restrictions. Cars with "loads" other than
+empty or loaded can only be serviced by sidings with a 
+<A	HREF="#Schedules">Schedule</A>. It is strongly recommended that you not
+create your own loads until you become very familiar with how the
+program works. For many operators, showing whether the car is empty or
+loaded adds just enough realism to their operations.
 
 <H3>Append Car Comment to Manifest</H3>
 
@@ -322,11 +328,11 @@ be used until you become very familiar with how the program generates
 manifests and switch lists. A schedule provides very fine control on the
 order types of cars will be delivered to a siding. You can also specify
 the road name for the type of car delivered. For example, if you wanted
-two SP boxcars to be delivered followed by a tank car, you can create a
-schedule that will do exactly that. To create a schedule press the
-"Edit" button next to "Optional car delivery Schedule" pull down menu on
-the "Edit Siding Track" panel. Pressing the "Edit" button should create
-the "Add Schedule" panel.
+two SP boxcars to be delivered followed by a tank car loaded with "Oil",
+you can create a schedule that will do exactly that. To create a
+schedule press the "Edit" button next to "Optional car delivery
+Schedule" pull down menu on the "Edit Siding Track" panel. Pressing the
+"Edit" button should create the "Add Schedule" panel.
 
 <P>Enter a name for your schedule and press the "Add Schedule"
 button on the bottom of the panel. Multiple sidings can use the same
@@ -346,10 +352,18 @@ and the minimum is 1. Repeat selecting the car types and pressing to
 "Add car type" until your have a delivery schedule you like. Press "Save
 Schedule" and close the schedule panel when you are done.
 
-<P>Note only car types and roads that are accepted by
-this siding are available. If a car type or road isn't available, check
-the car types and roads for this siding and location.
+<P>Note only car types and roads that are accepted by this siding
+are available. If a car type or road isn't available, check the car
+types and roads for this siding and location.
 
+<P>If you want a specific <A HREF="#CarLoad">load</A> for your cars,
+you can create them using the <A HREF="#EditCarAttributes">Edit Car
+Attributes</A> for car "Load". Each new load is associated with the car
+type. For example you can have "Screws" for a boxcar, and "Oil" for a
+tank car. The program will only deliver cars with a "Schedule" load to a
+siding that has a Schedule that also requests that particular load.
+However, cars with a Schedule load can still be placed at yards,
+staging, and interchanges.
 
 <H3>Local Switcher</H3>
 
@@ -538,14 +552,15 @@ materials can than be applied to this car!
 Now set the car's location on the layout. If the car is off the layout,
 set the location to none (blank space).
 
+<A	NAME="CarLoad"></A>
 <H3>Car Load</H3>
 
 You can optionally set the load state of the car. Select E for empty or
 L for loaded. You can also create your own car loads, but there are
 restrictions. Only sidings with <A HREF="#Schedules">Schedules</A> can
-load or unload cars with loads that you've created. It is also
-recommended that you use the format L(commodity) to describe your loads.
-For example a load of screws could be entered as L(Screws).
+load or unload cars with loads that you've created. It is also suggested
+that you use a format similar to L(commodity) to describe your loads.
+For example a load of tools could be entered as L(Tools).
 
 <H3>Kernel, or Group of Cars</H3>
 
