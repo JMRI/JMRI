@@ -23,11 +23,13 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
 	final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+	
+	CarLoads carLoads = CarLoads.instance();
 	
 	// labels
 	JLabel textLoad = new JLabel();
@@ -103,73 +105,117 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	// add or delete button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addButton){
-			String addItem = addTextBox.getText();
-			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+			String addLoad = addTextBox.getText();
+			if (addLoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{rb.getString("Load")}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			addItemToCombobox (addItem);
+			addLoadToCombobox (_type, addLoad);
 		}
 		if (ae.getSource() == deleteButton){
-			String deleteItem = (String)comboBox.getSelectedItem();
-			deleteItemFromCombobox (deleteItem);
+			String deleteLoad = (String)comboBox.getSelectedItem();
+			if (deleteLoad.equals(carLoads.getDefaultEmptyName()) || deleteLoad.equals(carLoads.getDefaultLoadName())){
+				JOptionPane.showMessageDialog(this, rb.getString("carLoadDefault"),
+						MessageFormat.format(rb.getString("canNotDelete"),new Object[]{rb.getString("Load")}),
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			deleteLoadFromCombobox (_type, deleteLoad);
 		}
 		if (ae.getSource() == replaceButton){
-			String newItem = addTextBox.getText();
-			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+			String newLoad = addTextBox.getText();
+			if (newLoad.equals(""))
+				return;
+			if (newLoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{rb.getString("Load")}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			String oldItem = (String) comboBox.getSelectedItem();
-			if (JOptionPane.showConfirmDialog(this,
-						MessageFormat.format(rb.getString("replaceMsg"),new Object[]{oldItem, newItem}),
+			String oldLoad = (String) comboBox.getSelectedItem();
+
+			if (oldLoad.equals(carLoads.getDefaultEmptyName())){
+				if (JOptionPane.showConfirmDialog(this,
+						MessageFormat.format(rb.getString("replaceDefaultEmpty"),new Object[]{oldLoad, newLoad}),
 						rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					return;
+				}
+				// don't allow the default names for load and empty to be the same
+				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName()))
+					return;
+				carLoads.setDefaultEmptyName(newLoad);
+				replaceAllLoads(oldLoad, newLoad);
 				return;
-			}	
-			addItemToCombobox (newItem);
-			replaceItem(oldItem, newItem);
-			deleteItemFromCombobox (oldItem);
+			}
+			if (oldLoad.equals(carLoads.getDefaultLoadName())){
+				if (JOptionPane.showConfirmDialog(this,
+						MessageFormat.format(rb.getString("replaceDefaultLoad"),new Object[]{oldLoad, newLoad}),
+						rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					return;
+				}
+				// don't allow the default names for load and empty to be the same
+				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName()))
+					return;
+				carLoads.setDefaultLoadName(newLoad);
+				replaceAllLoads(oldLoad, newLoad);
+				return;
+			}
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(rb.getString("replaceMsg"),new Object[]{oldLoad, newLoad}),
+					rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+				return;
+			}
+			addLoadToCombobox (_type, newLoad);
+			replaceLoad(_type, oldLoad, newLoad);
+			deleteLoadFromCombobox (_type, oldLoad);
+		}
+	}
+	
+	private void replaceAllLoads (String oldLoad, String newLoad){
+		String[] typeNames = CarTypes.instance().getNames();
+		for (int i=0; i<typeNames.length; i++){
+			addLoadToCombobox (typeNames[i], newLoad);
+			replaceLoad(typeNames[i], oldLoad, newLoad);
+			deleteLoadFromCombobox (typeNames[i], oldLoad);
 		}
 	}
 
-	private void deleteItemFromCombobox (String name){
-		CarLoads.instance().deleteName(_type, name);
+	private void deleteLoadFromCombobox (String type, String name){
+		carLoads.deleteName(type, name);
 	}
 	
-	private void addItemToCombobox (String name){
-		CarLoads.instance().addName(_type, name);
+	private void addLoadToCombobox (String type, String name){
+		carLoads.addName(type, name);
 	}
 	
-	private void replaceItem(String oldItem, String newItem) {
+	private void replaceLoad(String type, String oldLoad, String newLoad) {
 		CarManager manager = CarManager.instance();
 		List<String> cars = manager.getCarsByNumberList();
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = manager.getCarById(cars.get(i));
-			if (car.getType().equals(_type) && car.getLoad().equals(oldItem))
-				car.setLoad(newItem);
+			if (car.getType().equals(type) && car.getLoad().equals(oldLoad))
+				car.setLoad(newLoad);
 		}
 		//	now adjust schedules
-		ScheduleManager.instance().replaceLoad(_type, oldItem, newItem);
+		ScheduleManager.instance().replaceLoad(type, oldLoad, newLoad);
 	}
 	
 	private void loadCombobox(){ 
-		comboBox = CarLoads.instance().getComboBox(_type);
-		CarLoads.instance().addPropertyChangeListener(this);
+		comboBox = carLoads.getComboBox(_type);
+		carLoads.addPropertyChangeListener(this);
 	}
 
     public void dispose() {
-    	CarLoads.instance().removePropertyChangeListener(this);
+    	carLoads.removePropertyChangeListener(this);
         super.dispose();
     }
     
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarsLoadEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY))
-			CarLoads.instance().updateComboBox(_type, comboBox);
+			carLoads.updateComboBox(_type, comboBox);
 	}
 	
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(

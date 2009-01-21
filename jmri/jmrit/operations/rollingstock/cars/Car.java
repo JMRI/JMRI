@@ -16,22 +16,23 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
-
+	
+	CarLoads carLoads = CarLoads.instance();
+	LocationManager locationManager = LocationManager.instance();
+	
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected Kernel _kernel = null;
-	protected String _load = CarLoads.GENERIC_EMPTY;
+	protected String _load = carLoads.getDefaultEmptyName();
 	protected String _nextLoad = "";
 	
 	public static final String SCHEDULE = "Schedule";
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
-	
-	LocationManager locationManager = LocationManager.instance();
 	
 	public Car(){
 		
@@ -147,8 +148,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	private String testSchedule(Track track){
 		if (track.getScheduleName().equals("")){
 			// does car have a scheduled load?
-			if (getLoad().equals(CarLoads.GENERIC_EMPTY) || getLoad().equals(CarLoads.GENERIC_EMPTY))
-				return OKAY;
+			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
+				return OKAY; //no
 			// can't place a car with a schduled load at a siding
 			else if (!track.getLocType().equals(Track.SIDING))
 				return OKAY;
@@ -212,10 +213,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			return status;
 		}
 		// car doesn't have a schedule load, flip load status
-		if (getLoad().equals(CarLoads.GENERIC_EMPTY))
-			setLoad(CarLoads.GENERIC_LOAD);
+		if (getLoad().equals(carLoads.getDefaultEmptyName()))
+			setLoad(carLoads.getDefaultLoadName());
 		else
-			setLoad(CarLoads.GENERIC_EMPTY);
+			setLoad(carLoads.getDefaultEmptyName());
 		return status;
 			
 	}

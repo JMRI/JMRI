@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -170,7 +170,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		fillWeightButton.setVisible(true);
 		editLoadButton.setText(rb.getString("Edit"));
 		editLoadButton.setVisible(true);
-		//editLoadButton.setEnabled(false); // disable for now
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
 		builtTextField.setToolTipText(rb.getString("buildDateTip"));
@@ -277,6 +276,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		addButtonAction(editLoadButton);
 
 		// setup combobox
+		addComboBoxAction(typeComboBox);
 		addComboBoxAction(lengthComboBox);
 		addComboBoxAction(locationBox);
 		
@@ -395,6 +395,10 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 	// combo boxes
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource()== typeComboBox && typeComboBox.getSelectedItem() != null){
+			log.debug("Type comboBox sees change, update car loads");
+			CarLoads.instance().updateComboBox((String)typeComboBox.getSelectedItem(), loadComboBox);
+		}
 		if (ae.getSource()== locationBox){
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")){
@@ -489,7 +493,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				lef.dispose();
 			lef = new CarLoadEditFrame();
 			lef.setLocationRelativeTo(this);
-			lef.initComponents(_car.getType());
+			lef.initComponents((String)typeComboBox.getSelectedItem());
 		}
 	}
 	
@@ -591,8 +595,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 					_car.setLocation(null, null);
 				} else {
 					if (trackLocationBox.getSelectedItem() == null
-							|| trackLocationBox.getSelectedItem()
-							.equals("")) {
+							|| trackLocationBox.getSelectedItem().equals("")) {
 						JOptionPane.showMessageDialog(this,
 								rb.getString("carFullySelect"), rb.getString("carCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
