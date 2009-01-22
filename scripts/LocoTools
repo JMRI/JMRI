@@ -2,11 +2,6 @@
 #
 # Script to start a JMRI 2.5.1 application
 #
-# If you want to be able to move this anywhere and run it,
-# set the JMRI_HOME environment variable to the absolute pathname
-# to the JMRI install directory, e.g. 
-# JMRI_HOME=/usr/opt/jmri
-#
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
@@ -26,7 +21,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.23 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.24 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.LocoTools.LocoTools

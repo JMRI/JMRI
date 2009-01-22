@@ -2,11 +2,6 @@
 #
 # Script to start a JMRI 2.5.1 application
 #
-# If you want to be able to move this anywhere and run it,
-# set the JMRI_HOME environment variable to the absolute pathname
-# to the JMRI install directory, e.g. 
-# JMRI_HOME=/usr/opt/jmri
-#
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
@@ -23,6 +18,14 @@
 # If you are getting X11 warnings about meta keys, uncomment the next line
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
+# Known/used environment variables:
+#    JMRI_HOME: JMRI install directory, default is script location
+#    JMRI_OPTIONS: Extra options added at front of java command
+#    HOME: User home directory, used to locate JMRI preferences directory
+#    DEBUG:  If not empty, print debugging info to stdout
+#    python.home:  If not present, defined in preferences directory
+#    jmri.log.path:  If not present, defined in preferences directory
+#
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
@@ -32,7 +35,7 @@
 CLASSNAME=apps.InstallTest.InstallTest
 
 # set DEBUG to anything to see debugging output
-# DEBUG=yes
+DEBUG=yes
 
 # if JMRI_HOME is defined, go there, else
 # change directory to where the script is located
@@ -63,6 +66,32 @@ else
     CONFIGFILE=${APPNAME}Config2.xml;
 fi
 if test ${DEBUG}; then echo CONFIGFILE: ${CONFIGFILE}; fi
+
+# locate preferences directory and define variable, plus
+# variables pointing to directories below that
+if test ${HOME}; then
+    PREFSDIR=${HOME}/.jmri
+    if test ${DEBUG}; then echo PREFSDIR: ${PREFSDIR}; fi
+    # ensure exists
+    if [[ ! [ -a ${PREFSDIR}] ]]; then mkdir ${PREFSDIR}; fi
+    if [[ ! [ -a ${PREFSDIR}/systemfiles] ]]; then mkdir ${PREFSDIR}/systemfiles; fi
+        
+    # if not defined already, define python.home
+    if test ${python.home}; then
+        python.home=${PREFSDIR}/systemfiles
+    fi
+    if test ${DEBUG}; then echo python.home: ${python.home}; fi
+    
+    # if not defined already, define jmri.log.path
+    if test ${jmri.log.path}; then
+        jmri.log.path=${PREFSDIR}/systemfiles/
+    fi
+    if test ${DEBUG}; then echo jmri.log.path: ${jmri.log.path}; fi
+
+# if HOME not defined
+else
+    if test ${DEBUG}; then echo HOME not defined, variables not set; fi 
+fi
 
 # create the option string
 #
