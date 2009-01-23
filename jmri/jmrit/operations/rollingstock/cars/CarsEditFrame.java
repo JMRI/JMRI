@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -380,15 +380,24 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 				CarOwners.instance().addName(car.getOwner());
 			}
 		}
+		ownerComboBox.setSelectedItem(car.getOwner());
 		
+		if (!CarLoads.instance().containsName(car.getType(), car.getLoad())){
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(rb.getString("loadNameNotExist"),new Object[]{car.getLoad()}),
+					rb.getString("addLoad"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				CarLoads.instance().addName(car.getType(), car.getLoad());
+			}
+		}
+		// listen for changes in car load
 		car.addPropertyChangeListener(this);
-		
 		CarLoads.instance().updateComboBox(car.getType(), loadComboBox);
 		loadComboBox.setSelectedItem(car.getLoad());
 		
 		kernelComboBox.setSelectedItem(car.getKernelName());
 				
-		ownerComboBox.setSelectedItem(car.getOwner());
+		
 
 		commentTextField.setText(car.getComment());
 	}
@@ -716,7 +725,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
 			if (_car != null){
-				CarLoads.instance().updateComboBox(_car.getType(), loadComboBox);
+				CarLoads.instance().updateComboBox((String)typeComboBox.getSelectedItem(), loadComboBox);
 				loadComboBox.setSelectedItem(_car.getLoad());
 			}
 		}

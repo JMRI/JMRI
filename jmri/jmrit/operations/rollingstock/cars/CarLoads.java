@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CarLoads implements java.beans.PropertyChangeListener {
 	
@@ -124,6 +124,17 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     	}
     	loads.remove(name);
     	firePropertyChange (LOAD_CHANGED_PROPERTY, null, LENGTH);
+    }
+    
+    public boolean containsName(String type, String name){
+       	List<String> loads = list.get(type);
+    	if (loads == null){
+    		log.debug("car type ("+type+") does not exist");
+    		return false;
+    	}
+    	if (loads.contains(name))
+    		return true;
+    	return false;
     }
     
     public void updateComboBox(String type, JComboBox box) {
