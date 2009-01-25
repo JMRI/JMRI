@@ -17,13 +17,17 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class BlockBossLogicTest extends TestCase {
 
 	synchronized void releaseThread() {
 		try {
+		    int priority = Thread.currentThread().getPriority(); 
+		    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+		    Thread.yield();
 		    Thread.sleep(100);
+		    Thread.currentThread().setPriority(priority);
 			// super.wait(100);
 		}
 		catch (InterruptedException e) {
