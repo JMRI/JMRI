@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.31 2009-01-20 04:03:11 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.32 2009-01-25 18:11:03 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -330,8 +330,8 @@ order types of cars will be delivered to a siding. You can also specify
 the road name for the type of car delivered. For example, if you wanted
 two SP boxcars to be delivered followed by a tank car loaded with "Oil",
 you can create a schedule that will do exactly that. To create a
-schedule press the "Edit" button next to "Optional car delivery
-Schedule" pull down menu on the "Edit Siding Track" panel. Pressing the
+schedule press the "Edit" button next to "Optional Schedule" pull down 
+menu on the "Edit Siding Track" panel. Pressing the
 "Edit" button should create the "Add Schedule" panel.
 
 <P>Enter a name for your schedule and press the "Add Schedule"
@@ -364,6 +364,9 @@ tank car. The program will only deliver cars with a "Schedule" load to a
 siding that has a Schedule that also requests that particular load.
 However, cars with a Schedule load can still be placed at yards,
 staging, and interchanges.
+
+<P>You can also access your Schedules from the Locations Tools menu.
+
 
 <H3>Local Switcher</H3>
 
