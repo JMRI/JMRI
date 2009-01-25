@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -302,7 +302,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			trackNameTextField.setText(_track.getName());
 			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
 			comboBoxSchedules.setSelectedItem(s);
-			textSchError.setText(_track.checkScheduleValid());
+			textSchError.setText(_track.checkScheduleValid(_location));
 			commentTextField.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
 			enableButtons(true);
@@ -487,7 +487,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// check that track name is valid
 		if (!checkName(rb.getString("add")))
 			return;
-		// check to see if track already exsists
+		// check to see if track already exists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
 		if (check != null){
 			reportTrackExists(rb.getString("add"));
@@ -514,7 +514,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// check that track name is valid
 		if (!checkName(rb.getString("save")))
 			return;
-		// check to see if track already exsists
+		// check to see if track already exists
 		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
 		if (check != null && check != track){
 			reportTrackExists(rb.getString("save"));
@@ -565,7 +565,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							track.setScheduleCount(0);
 						}
 					}
-					textSchError.setText(track.checkScheduleValid());
+					textSchError.setText(track.checkScheduleValid(_location));
 				} else {
 					// no items in schedule so disable
 					track.setScheduleName("");

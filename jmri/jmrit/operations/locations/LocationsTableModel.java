@@ -20,9 +20,9 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
-public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
+public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
    
@@ -168,13 +168,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         default:
             break;
         }
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
-        char b = e.getActionCommand().charAt(0);
-        int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-        if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
     }
     
     LocationsEditFrame lef = null;

@@ -1,4 +1,4 @@
-// LocationsTableFrame.java
+// SchedulesTableFrame.java
 
 package jmri.jmrit.operations.locations;
  
@@ -10,6 +10,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -21,19 +22,19 @@ import javax.swing.JScrollPane;
 
 
 /**
- * Frame for adding and editing the location roster for operations.
+ * Frame for adding and editing the Schedule roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @author Daniel Boudreau Copyright (C) 2009
+ * @version             $Revision: 1.1 $
  */
-public class LocationsTableFrame extends OperationsFrame {
+public class SchedulesTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
-	LocationsTableModel locationsModel = new LocationsTableModel();
-	javax.swing.JTable locationsTable = new javax.swing.JTable(locationsModel);
-	JScrollPane locationsPane;
+	SchedulesTableModel schedulesModel = new SchedulesTableModel();
+	javax.swing.JTable schedulesTable = new javax.swing.JTable(schedulesModel);
+	JScrollPane schedulesPane;
 	
 	// labels
 	javax.swing.JLabel textSort = new javax.swing.JLabel();
@@ -46,18 +47,18 @@ public class LocationsTableFrame extends OperationsFrame {
 	// major buttons
 	javax.swing.JButton addButton = new javax.swing.JButton();
 
-    public LocationsTableFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("TitleLocationsTable"));
+    public SchedulesTableFrame() {
+        super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("TitleSchedulesTable"));
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
-    	locationsPane = new JScrollPane(locationsTable);
-    	locationsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       	locationsModel.initTable(locationsTable);
-     	getContentPane().add(locationsPane);
+    	schedulesPane = new JScrollPane(schedulesTable);
+    	schedulesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	schedulesPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+       	schedulesModel.initTable(schedulesTable);
+     	getContentPane().add(schedulesPane);
      	
      	// Set up the control panel
     	JPanel controlPanel = new JPanel();
@@ -73,7 +74,8 @@ public class LocationsTableFrame extends OperationsFrame {
 
 		addButton.setText(rb.getString("Add"));
 		addButton.setVisible(true);
-		controlPanel.add (addButton);
+		// TODO allow user to add schedule to a siding
+		//controlPanel.add (addButton);
 		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 	   	getContentPane().add(controlPanel);
 	   	
@@ -84,18 +86,17 @@ public class LocationsTableFrame extends OperationsFrame {
 		addRadioButtonAction (sortById);
     	
 		//	build menu
-		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
-		Frame newFrame = new Frame();
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), newFrame, false, this));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), newFrame, true, this));
-		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
-		menuBar.add(toolMenu);
-		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
+		//JMenuBar menuBar = new JMenuBar();
+		//JMenu toolMenu = new JMenu("Tools");
+		//Frame newFrame = new Frame();
+		//toolMenu.add(new PrintSchedulesAction(rb.getString("MenuItemPrint"), newFrame, false, this));
+		//toolMenu.add(new PrintSchedulesAction(rb.getString("MenuItemPreview"), newFrame, true, this));
+		//menuBar.add(toolMenu);
+		//setJMenuBar(menuBar);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
     	
     	pack();
-    	if ((getWidth()<660)) setSize(660, getHeight());
+    	if ((getWidth()<750)) setSize(750, getHeight());
     	
      	// now load the cars and engines
     	CarManagerXml.instance();
@@ -107,31 +108,31 @@ public class LocationsTableFrame extends OperationsFrame {
 		if (ae.getSource() == sortByName){
 			sortByName.setSelected(true);
 			sortById.setSelected(false);
-			locationsModel.setSort(locationsModel.SORTBYNAME);
+			schedulesModel.setSort(schedulesModel.SORTBYNAME);
 		}
 		if (ae.getSource() == sortById){
 			sortByName.setSelected(false);
 			sortById.setSelected(true);
-			locationsModel.setSort(locationsModel.SORTBYID);
+			schedulesModel.setSort(schedulesModel.SORTBYID);
 		}
 	}
     
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("location button actived");
+//		log.debug("add schedule button activated");
 		if (ae.getSource() == addButton){
-			LocationsEditFrame f = new LocationsEditFrame();
-			f.initComponents(null);
-			f.setTitle("Add Location");
+			ScheduleEditFrame f = new ScheduleEditFrame();
+			f.setTitle(MessageFormat.format(rb.getString("TitleScheduleAdd"), new Object[]{"Track Name"}));
+			f.initComponents(null, null, null);
 			f.setVisible(true);
 		}
 	}
 
     public void dispose() {
-    	locationsModel.dispose();
+    	schedulesModel.dispose();
         super.dispose();
     }
     
 	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(LocationsTableFrame.class.getName());
+	.getInstance(SchedulesTableFrame.class.getName());
 }

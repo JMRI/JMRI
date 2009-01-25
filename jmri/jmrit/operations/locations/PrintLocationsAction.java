@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -209,7 +209,7 @@ public class PrintLocationsAction  extends AbstractAction {
         						name = name +" ";
         					}
         					s = name +" "+ location.getName()+ " - " + siding.getName();
-        					String status = siding.checkScheduleValid();
+        					String status = siding.checkScheduleValid(location);
         					if (!status.equals("")){
         						for (int m=s.length(); m<63; m++){
             						s = s + " ";

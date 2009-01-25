@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -326,21 +326,21 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
     
     private void moveUpScheduleItem (int row){
-    	log.debug("move location up");
+    	log.debug("move schedule up");
 		String id = list.get(row);
 		ScheduleItem si = _schedule.getItemById(id);
     	_schedule.moveItemUp(si);
     }
     
     private void moveDownScheduleItem (int row){
-    	log.debug("move location down");
+    	log.debug("move schedule down");
 		String id = list.get(row);
 		ScheduleItem si = _schedule.getItemById(id);
     	_schedule.moveItemDown(si);
     }
 
     private void deleteScheduleItem (int row){
-    	log.debug("Delete location");
+    	log.debug("Delete schedule");
 		String id = list.get(row);
 		ScheduleItem si = _schedule.getItemById(id);
     	_schedule.deleteItem(si);

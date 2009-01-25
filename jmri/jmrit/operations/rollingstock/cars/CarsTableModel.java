@@ -23,9 +23,9 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
-public class CarsTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
+public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
    
@@ -332,13 +332,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         default:
             break;
         }
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-    	if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
-    	char b = e.getActionCommand().charAt(0);
-    	int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-    	if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
     }
 
     public void dispose() {

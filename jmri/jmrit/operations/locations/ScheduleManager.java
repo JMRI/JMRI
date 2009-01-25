@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -42,7 +42,6 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
- 
     public void dispose() {
     	CarTypes.instance().removePropertyChangeListener(this);
         _scheduleHashTable.clear();
@@ -51,9 +50,13 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     protected Hashtable<String, Schedule> _scheduleHashTable = new Hashtable<String, Schedule>();   // stores known Schedule instances by id
 
     /**
+     * @return Number of schedules
+     */
+    public int numEntries() { return _scheduleHashTable.size(); }
+    
+    /**
      * @return requested Schedule object or null if none exists
      */
-     
     public Schedule getScheduleByName(String name) {
     	Schedule s;
     	Enumeration en =_scheduleHashTable.elements();
@@ -148,7 +151,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	}
     
     /**
-	 * Sort by schedule number, number can alpha numeric
+	 * Sort by schedule number
 	 * 
 	 * @return list of schedule ids ordered by number
 	 */
@@ -203,6 +206,10 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
         return out;
     }
     
+    /**
+     * Gets a JComboBox loaded with schedules.
+     * @return JComboBox with a list of schedules.
+     */
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	box.addItem("");
@@ -214,6 +221,10 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     	return box;
     }
     
+    /**
+     * Update a JComboBox with the latest schedules.
+     * @param box the JComboBox needing an update.
+     */
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
@@ -224,6 +235,11 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		}
     }
     
+    /**
+     * Replaces car type in all schedules.
+     * @param oldType car type to be replaced.
+     * @param newType replacement car type.
+     */
     public void replaceType(String oldType, String newType){
 		List schs = getSchedulesByIdList();
 		for (int i=0; i<schs.size(); i++){
@@ -238,6 +254,11 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		}
     }
     
+    /**
+     * Replaces car roads in all schedules.
+     * @param oldRoad car road to be replaced.
+     * @param newRoad replacement car road.
+     */
 	public void replaceRoad(String oldRoad, String newRoad){
 		List schs = getSchedulesByIdList();
 		for (int i=0; i<schs.size(); i++){
@@ -252,6 +273,12 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Replaces car loads in all schedules with specific car type.
+	 * @param type car type.
+	 * @param oldLoad car load to be replaced.
+	 * @param newLoad replacement car load.
+	 */
 	public void replaceLoad(String type, String oldLoad, String newLoad){
 		List schs = getSchedulesByIdList();
 		for (int i=0; i<schs.size(); i++){
@@ -270,7 +297,31 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Check for car type, road, and load name replacements. 
+	 * Gets a JComboBox with a list of sidings that use this schedule.
+	 * @param schedule The schedule for this JComboBox. 
+	 * @return JComboBox with a list of sidings using schedule.
+	 */
+	public JComboBox getSidingsByScheduleComboBox(Schedule schedule){
+		JComboBox box = new JComboBox();
+    	// search all sidings for that use schedule
+    	LocationManager manager = LocationManager.instance();
+    	List locations = manager.getLocationsByNameList();
+    	for (int j=0; j<locations.size(); j++){
+			Location location = manager.getLocationById((String)locations.get(j));
+			List sidings = location.getTracksByNameList(Track.SIDING);
+			for (int k=0; k<sidings.size(); k++){
+				Track siding = location.getTrackById((String)sidings.get(k));
+				if (siding.getScheduleName().equals(schedule.getName())){
+					LocationTrackPair ltp = new LocationTrackPair(location, siding);
+					box.addItem(ltp);
+				}
+			}
+    	}
+    	return box;
+	}
+	
+	/**
+	 * Check for car type and road name changes. 
 	 * 
 	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -282,11 +333,6 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
     	}
     }
-  
-    /**
-     * @return Number of schedules
-     */
-    public int numEntries() { return _scheduleHashTable.size(); }
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     
