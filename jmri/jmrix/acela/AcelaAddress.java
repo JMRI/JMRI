@@ -14,9 +14,9 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008
+ * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
 
@@ -41,7 +41,9 @@ public class AcelaAddress {
     public static int getNodeAddressFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ( (systemName.charAt(0) != 'A') || ( (systemName.charAt(1) != 'L') &&
-                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
+                 && (systemName.charAt(1) != 'H')
+                ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
             return (-1);
@@ -106,7 +108,9 @@ public class AcelaAddress {
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ( (systemName.charAt(0) != 'A') || ( (systemName.charAt(1) != 'L') &&
-                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
+                 && (systemName.charAt(1) != 'H')
+                ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
             return (-1);
@@ -135,7 +139,9 @@ public class AcelaAddress {
     public static boolean validSystemNameFormat(String systemName,char type) {
         // validate the system Name leader characters
         if ( (systemName.charAt(0) != 'A') || ( (systemName.charAt(1) != 'L') &&
-                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') 
+                 && (systemName.charAt(1) != 'H')
+                ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
             return (false);

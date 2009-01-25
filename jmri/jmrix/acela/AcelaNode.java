@@ -1,5 +1,4 @@
 // AcelaNode.java
-
 package jmri.jmrix.acela;
 
 import jmri.JmriException;
@@ -24,9 +23,9 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008
+ * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
 public class AcelaNode extends AbstractNode {
@@ -36,13 +35,12 @@ public class AcelaNode extends AbstractNode {
      */
     static final int MAXSENSORBITS = 16;  // Used to initialize arrays
     static final int MAXOUTPUTBITS = 16;  // Used to initialize arrays
-
     private static int MAXNODE = 1024;
     private static int MAXDELAY = 65535;
 
     // class constants
     public static final byte AC = 0x00;	// Acela Interface module (no inputs, no outputs)
-                                        // Does not really return a code of 0x00
+    // Does not really return a code of 0x00
     public static final byte TB = 0x01;	// TrainBrain (4 output bits and 4 input bits)
     public static final byte D8 = 0x02;	// Dash-8 (8 output bits)
     public static final byte WM = 0x03;	// Watchman (8 input bits)
@@ -53,34 +51,31 @@ public class AcelaNode extends AbstractNode {
     public static final byte SY = 0x08;	// Sentry (no output bits. 16 input bits)
     public static final byte UN = 0x09;	// Unidentified module -- should be FF
     public static final String moduleTypes = "ACTBD8WMSMSCSWYMSYUN";
-
     public static final String[] nodeNames = new String[]{"0", "1", "2", "3", "4",
-                                                          "5", "6", "7", "8", "9",
-                                                        "10", "11", "12", "13", "14",
-                                                        "15", "16", "17", "18", "19"
-                                        };
-
+        "5", "6", "7", "8", "9",
+        "10", "11", "12", "13", "14",
+        "15", "16", "17", "18", "19"
+    };
     public static final String[] moduleNames = new String[]{"Acela",
-                                        "TrainBrain",
-                                        "Dash-8",
-                                        "Watchman",
-                                        "SignalMan",
-                                        "SmartCab",
-                                        "SwitchMan",
-                                        "YardMaster",
-                                        "Sentry"
-                                        };
-
+        "TrainBrain",
+        "Dash-8",
+        "Watchman",
+        "SignalMan",
+        "SmartCab",
+        "SwitchMan",
+        "YardMaster",
+        "Sentry"
+    };
     public static final String[] moduleTips = new String[]{"Acela",
-                                        "TrainBrain has 4 output circuits and 4 input circuits",
-                                        "Dash-8 has 8 output circuits and no input circuits",
-                                        "Watchman has no output circuits and 8 input circuits",
-                                        "SignalMan has 16 output circuits and no input circuits",
-                                        "SmartCab has 1 output circuit and no input circuits",
-                                        "SwitchMan has 16 output circuits and no input circuits",
-                                        "YardMaster has 16 output circuits and no input circuits",
-                                        "Sentry has no output circuits and 16 input circuits"
-                                        };
+        "TrainBrain has 4 output circuits and 4 input circuits",
+        "Dash-8 has 8 output circuits and no input circuits",
+        "Watchman has no output circuits and 8 input circuits",
+        "SignalMan has 16 output circuits and no input circuits",
+        "SmartCab has 1 output circuit and no input circuits",
+        "SwitchMan has 16 output circuits and no input circuits",
+        "YardMaster has 16 output circuits and no input circuits",
+        "Sentry has no output circuits and 16 input circuits"
+    };
 
     // node definition instance variables (must persist between runs)
     protected int nodeType = UN;                        // See above
@@ -90,9 +85,10 @@ public class AcelaNode extends AbstractNode {
 
     // operational instance variables  (should not be preserved between runs)
     protected boolean needInit = false;          // 'true' if this module needs to be initialized
-                                                 //    used for sensors
+    //    used for sensors
     protected byte[] outputArray = new byte[MAXOUTPUTBITS]; // current values of the output bits for this node
-    														  // BOB C: THis really could be a boolean array
+    protected int[] outputSpecial = new int[MAXOUTPUTBITS]; // does the output circuit require special handling
+    protected int[] outputSignalHeadType = new int[MAXOUTPUTBITS]; // type of SignalHead
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = -1;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORBITS];
@@ -117,11 +113,16 @@ public class AcelaNode extends AbstractNode {
     public static final int ONOFF = 0;
     public static final int PULSE = 1;
     public static final int BLINK = 2;
-                                                        // These can be removed in June 2010:
+    public static final String outputSignalHeadTypes = "UKNOWNDOUBLETRIPLEBPOLARWIGWAG";
+    public static final int UKNOWN = 0;
+    public static final int DOUBLE = 1;
+    public static final int TRIPLE = 2;
+    public static final int BPOLAR = 3;
+    public static final int WIGWAG = 4;
+    // These can be removed in June 2010:
     public static final String outputONOFF = "ONOFF";   // used to dump/restore config file.
     public static final String outputLEN0 = "0";        // used to dump/restore config file.
     public static final String outputNO = "N0";         // used to dump/restore config file.
-
     protected int startingOutputAddress = -1;           // used to aid linear address search
     protected int endingOutputAddress = -1;           // used to aid linear address search
     protected int startingSensorAddress = -1;           // used to aid linear address search
@@ -133,7 +134,7 @@ public class AcelaNode extends AbstractNode {
      *    setNodeAddress, and actual node type using 'setNodeType'
      */
     public AcelaNode() {
-        this (0, UN);
+        this(0, UN);
     }
 
     /**
@@ -143,14 +144,14 @@ public class AcelaNode extends AbstractNode {
      */
     public AcelaNode(int address, int type) {
         // set address and type and check validity
-        setNodeAddress (address);
-        setNodeType (type);
+        setNodeAddress(address);
+        setNodeType(type);
 
         // set default values for other instance variables
         transmissionDelay = 0;
 
         // clear the Sensor arrays
-        for (int i = 0; i<MAXSENSORBITS; i++) {
+        for (int i = 0; i < MAXSENSORBITS; i++) {
             sensorArray[i] = null;
             sensorNeedInit[i] = false;
             sensorHasBeenInit[i] = false;
@@ -163,8 +164,10 @@ public class AcelaNode extends AbstractNode {
         }
 
         // clear all output bits
-        for (int i = 0; i<MAXOUTPUTBITS; i++) {
+        for (int i = 0; i < MAXOUTPUTBITS; i++) {
             outputArray[i] = 0;
+            outputSpecial[i] = 0;
+            outputSignalHeadType[i] = 0;
             outputInit[i] = 0;  // Off
             outputWired[i] = 0; // NO (Normally Open)
             outputType[i] = 0; // ONOFF
@@ -182,36 +185,37 @@ public class AcelaNode extends AbstractNode {
     }
 
     public void initNode() {
-        if (outputbitsPerCard >0) {
+        if (outputbitsPerCard > 0) {
             // check to see if we can use bulk mode
             boolean bulk_message = true;
             int c = 0;
             while (c < outputbitsPerCard) {
-                if (outputType[c] != AcelaNode.ONOFF) {
+                if ((outputType[c] != AcelaNode.ONOFF)
+                        || (outputSpecial[c] != 0)) {
                     bulk_message = false;
                 }
                 c++;
             }
 
             // Initialize all output circuits
-            for (int i = 0; i<MAXOUTPUTBITS; i++) {
+            for (int i = 0; i < MAXOUTPUTBITS; i++) {
                 outputArray[i] = (byte) outputInit[i];
                 if (!bulk_message) {
                     outputNeedToSend[i] = true;
                 }
-                //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
+            //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
             }
             setMustSend();
         }
-        if (sensorbitsPerCard >0) {
+        if (sensorbitsPerCard > 0) {
             // Initialize all sensor circuits
-            for (int i = 0; i<MAXSENSORBITS; i++) {
+            for (int i = 0; i < MAXSENSORBITS; i++) {
                 sensorConfigArray[i] = (byte) ((byte) (sensorThreshold[i] << 3) + (byte) (sensorType[i] << 1) + (byte) (sensorPolarity[i]));
                 sensorNeedInit[i] = true;
             }
             hasActiveSensors = true;
         }
-    }	
+    }
 
     /**
      * Public method setting starting output addresss
@@ -219,7 +223,7 @@ public class AcelaNode extends AbstractNode {
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
-    }	
+    }
 
     /**
      * Public method getting starting output addresss
@@ -227,7 +231,7 @@ public class AcelaNode extends AbstractNode {
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
-    }	
+    }
 
     /**
      * Public method setting ending output addresss
@@ -235,7 +239,7 @@ public class AcelaNode extends AbstractNode {
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
-    }	
+    }
 
     /**
      * Public method getting ending output addresss
@@ -243,7 +247,7 @@ public class AcelaNode extends AbstractNode {
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
-    }	
+    }
 
     /**
      * Public method setting starting sensor addresss
@@ -251,7 +255,7 @@ public class AcelaNode extends AbstractNode {
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
-    }	
+    }
 
     /**
      * Public method getting starting sensor addresss
@@ -259,7 +263,7 @@ public class AcelaNode extends AbstractNode {
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
-    }	
+    }
 
     /**
      * Public method setting ending sensor addresss
@@ -267,7 +271,7 @@ public class AcelaNode extends AbstractNode {
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
-    }	
+    }
 
     /**
      * Public method getting ending sensor addresss
@@ -275,30 +279,31 @@ public class AcelaNode extends AbstractNode {
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
-    }	
+    }
 
     /**
      * Public method setting an output bit.
      *    Note:  state = 'true' for 0, 'false' for 1
      */
     public void setOutputBit(int bitNumber, boolean state) {
-	// Save old state
+        // Save old state
         byte oldbyte = 0;
-       	int newbitNumber = 0;
+        int newbitNumber = 0;
         newbitNumber = bitNumber - startingOutputAddress;
         oldbyte = outputArray[newbitNumber];
-            	
+
         if (state) {
-        	outputArray[newbitNumber] = 1;
+            outputArray[newbitNumber] = 1;
         } else {
-        	outputArray[newbitNumber] = 0;
+            outputArray[newbitNumber] = 0;
         }
 
         // check for change, necessitating a send
         boolean bulk_message = true;
         int c = 0;
         while (c < outputbitsPerCard) {
-            if (outputType[c] != AcelaNode.ONOFF) {
+                if ((outputType[c] != AcelaNode.ONOFF)
+                        || (outputSpecial[c] != 0)) {
                 bulk_message = false;
             }
             c++;
@@ -313,14 +318,14 @@ public class AcelaNode extends AbstractNode {
             setMustSend();
         }
     }
-    	
+
     /**
      * Public method get the current state of an output bit.
      *    Note:  returns 'true' for 0, 'false' for 1
      *           bits are numbered from 0 for Acela
      */
     public boolean getOutputBit(int bitNumber) {
-       	int newbitNumber = 0;
+        int newbitNumber = 0;
         newbitNumber = bitNumber - startingOutputAddress;
         byte testByte = outputArray[newbitNumber];
         if (testByte == 0) {
@@ -334,8 +339,8 @@ public class AcelaNode extends AbstractNode {
      * Public method to return state of Sensors.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    public boolean sensorsActive() { 
-    	return hasActiveSensors;
+    public boolean sensorsActive() {
+        return hasActiveSensors;
     }
 
     /**
@@ -347,63 +352,96 @@ public class AcelaNode extends AbstractNode {
 
     public String getOutputWiredString(int circuitnum) {
         int sensortype = outputWired[circuitnum];
-        String value = outputWireds.substring(sensortype*2, sensortype*2+2);
+        String value = outputWireds.substring(sensortype * 2, sensortype * 2 + 2);
         return value;
     }
 
     public void setOutputWired(int circuitnum, int type) {
         outputWired[circuitnum] = type;
     }
-    
+
     public void setOutputWiredString(int circuitnum, String stringtype) {
         int type = outputWireds.lastIndexOf(stringtype) / 2;
         outputWired[circuitnum] = type;
     }
-    
+
     public int getOutputInit(int circuitnum) {
         return outputInit[circuitnum];
     }
 
     public String getOutputInitString(int circuitnum) {
         int sensortype = outputInit[circuitnum];
-        String value = outputInits.substring(sensortype*3, sensortype*3+3);
+        String value = outputInits.substring(sensortype * 3, sensortype * 3 + 3);
         return value;
     }
 
     public void setOutputInit(int circuitnum, int type) {
         outputInit[circuitnum] = type;
     }
-    
+
     public void setOutputInitString(int circuitnum, String stringtype) {
         int type = outputInits.lastIndexOf(stringtype) / 3;
         outputInit[circuitnum] = type;
     }
-    
+
     public int getOutputType(int circuitnum) {
         return outputType[circuitnum];
     }
 
     public String getOutputTypeString(int circuitnum) {
         int outputtype = outputType[circuitnum];
-        String value = outputTypes.substring(outputtype*5, outputtype*5+5);
+        String value = outputTypes.substring(outputtype * 5, outputtype * 5 + 5);
         return value;
     }
 
     public void setOutputType(int circuitnum, int type) {
         outputType[circuitnum] = type;
     }
-    
+
     public void setOutputTypeString(int circuitnum, String stringtype) {
         int type = outputTypes.lastIndexOf(stringtype) / 5;
         outputType[circuitnum] = type;
     }
-    
+
     public int getOutputLength(int circuitnum) {
         return outputLength[circuitnum];
     }
 
     public void setOutputLength(int circuitnum, int newlength) {
         outputLength[circuitnum] = newlength;
+    }
+
+    public int getOutputSpecial(int circuitnum) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        return outputSpecial[newbitNumber];
+    }
+
+    public void setOutputSpecial(int circuitnum, int type) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        outputSpecial[newbitNumber] = type;
+    }
+
+    public int getOutputSignalHeadType(int circuitnum) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        return outputSignalHeadType[newbitNumber];
+    }
+
+    public String getOutputSignalHeadTypeString(int circuitnum) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        int outputsignalheadtype = outputSignalHeadType[newbitNumber];
+        String value = outputSignalHeadTypes.substring(outputsignalheadtype * 6, outputsignalheadtype * 6 + 6);
+        return value;
+    }
+
+    public void setOutputSignalHeadType(int circuitnum, int type) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        outputSignalHeadType[newbitNumber] = type;
+    }
+
+    public void setOutputSignalHeadTypeString(int circuitnum, String stringtype) {
+        int newbitNumber = circuitnum - startingOutputAddress;
+        int type = outputSignalHeadTypes.lastIndexOf(stringtype) / 6;
+        outputSignalHeadType[newbitNumber] = type;
     }
 
     /**
@@ -415,38 +453,38 @@ public class AcelaNode extends AbstractNode {
 
     public String getSensorTypeString(int circuitnum) {
         int sensortype = sensorType[circuitnum];
-        String value = sensorTypes.substring(sensortype*2, sensortype*2+2);
+        String value = sensorTypes.substring(sensortype * 2, sensortype * 2 + 2);
         return value;
     }
 
     public void setSensorType(int circuitnum, int type) {
         sensorType[circuitnum] = type;
     }
-    
+
     public void setSensorTypeString(int circuitnum, String stringtype) {
         int type = sensorTypes.lastIndexOf(stringtype) / 2;
         sensorType[circuitnum] = type;
     }
-    
+
     public int getSensorPolarity(int circuitnum) {
         return sensorPolarity[circuitnum];
     }
 
     public String getSensorPolarityString(int circuitnum) {
         int sensorpolarity = sensorPolarity[circuitnum];
-        String value = sensorPolarities.substring(sensorpolarity*3, sensorpolarity*3+3);
+        String value = sensorPolarities.substring(sensorpolarity * 3, sensorpolarity * 3 + 3);
         return value;
     }
 
     public void setSensorPolarity(int circuitnum, int polarity) {
         sensorPolarity[circuitnum] = polarity;
     }
-    
+
     public void setSensorPolarityString(int circuitnum, String stringpolarity) {
         int polarity = sensorPolarities.lastIndexOf(stringpolarity) / 3;
         sensorPolarity[circuitnum] = polarity;
     }
-    
+
     public int getSensorThreshold(int circuitnum) {
         return sensorThreshold[circuitnum];
     }
@@ -463,7 +501,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     public String getNodeTypeString() {
-        String value = moduleTypes.substring(nodeType*2, nodeType*2+2);
+        String value = moduleTypes.substring(nodeType * 2, nodeType * 2 + 2);
         return value;
     }
 
@@ -472,67 +510,67 @@ public class AcelaNode extends AbstractNode {
      */
     public void setNodeTypeString(String stringtype) {
         int type = moduleTypes.lastIndexOf(stringtype) / 2;
-        setNodeType (type);
+        setNodeType(type);
     }
-    
+
     public void setNodeType(int type) {
         nodeType = type;
         // set default values for other instance variables
         switch (type) {
             case AC: {
-        	outputbitsPerCard = 0;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 0;
+                sensorbitsPerCard = 0;
                 break;
             }
             case TB: {
-        	outputbitsPerCard = 4;
-        	sensorbitsPerCard = 4;
+                outputbitsPerCard = 4;
+                sensorbitsPerCard = 4;
                 break;
             }
-            case D8: {         
-        	outputbitsPerCard = 8;
-        	sensorbitsPerCard = 0;
+            case D8: {
+                outputbitsPerCard = 8;
+                sensorbitsPerCard = 0;
                 break;
             }
             case WM: {
-        	outputbitsPerCard = 0;
-        	sensorbitsPerCard = 8;
+                outputbitsPerCard = 0;
+                sensorbitsPerCard = 8;
                 break;
             }
             case SM: {
-        	outputbitsPerCard = 16;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 16;
+                sensorbitsPerCard = 0;
                 break;
             }
             case SC: {
-        	outputbitsPerCard = 1;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 1;
+                sensorbitsPerCard = 0;
                 break;
             }
             case SW: {
-        	outputbitsPerCard = 16;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 16;
+                sensorbitsPerCard = 0;
                 break;
             }
             case YM: {
-        	outputbitsPerCard = 16;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 16;
+                sensorbitsPerCard = 0;
                 break;
             }
             case SY: {
-        	outputbitsPerCard = 0;
-        	sensorbitsPerCard = 16;
+                outputbitsPerCard = 0;
+                sensorbitsPerCard = 16;
                 break;
             }
             case UN: {
-        	outputbitsPerCard = 0;
-        	sensorbitsPerCard = 0;
+                outputbitsPerCard = 0;
+                sensorbitsPerCard = 0;
                 break;
             }
             default: {
-        	outputbitsPerCard = 0;
-        	sensorbitsPerCard = 0;
-        	log.error("Bad node type - "+Integer.toString(type) );
+                outputbitsPerCard = 0;
+                sensorbitsPerCard = 0;
+                log.error("Bad node type - " + Integer.toString(type));
             }
         }
     }
@@ -543,16 +581,16 @@ public class AcelaNode extends AbstractNode {
     public int getNumOutputBitsPerCard() {
         return (outputbitsPerCard);
     }
+
     public int getNumSensorBitsPerCard() {
         return (sensorbitsPerCard);
     }
-
 
     /**
      * Public method to set the node address.
      */
     public boolean checkNodeAddress(int address) {
-        return ( (address >= 0) && (address < MAXNODE) );
+        return ((address >= 0) && (address < MAXNODE));
     }
 
     /**
@@ -576,11 +614,15 @@ public class AcelaNode extends AbstractNode {
      *          is out of range, it is restricted to the allowable range
      */
     public void setTransmissionDelay(int delay) {
-        if ( (delay < 0) || (delay > MAXDELAY) ) {
-            log.warn("transmission delay out of 0-65535 range: "+
-                                            Integer.toString(delay));
-            if (delay < 0) delay = 0;
-            if (delay > MAXDELAY) delay = MAXDELAY;
+        if ((delay < 0) || (delay > MAXDELAY)) {
+            log.warn("transmission delay out of 0-65535 range: " +
+                    Integer.toString(delay));
+            if (delay < 0) {
+                delay = 0;
+            }
+            if (delay > MAXDELAY) {
+                delay = MAXDELAY;
+            }
         }
         transmissionDelay = delay;
     }
@@ -588,8 +630,10 @@ public class AcelaNode extends AbstractNode {
     /**
      * Create an initialization packet if needed
      */
-    public AbstractMRMessage createInitPacket() { return null; }
-    
+    public AbstractMRMessage createInitPacket() {
+        return null;
+    }
+
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
@@ -598,18 +642,18 @@ public class AcelaNode extends AbstractNode {
         int cmdlen = 3;         // Message length == 3, 4, or 5
 //        byte cmdcode = 0x01;    // Message command: default == activate output
         byte cmdcode = 0x03;    // Message command: default == activate output
-    	byte addrhi = 0x00;     // Used to address more than 255 nodes
-    	byte addrlo = 0x00;     // Address of node
-    	byte settinghi = 0x00;  // Used when setting 16 outputs
-    	byte settinglo = 0x00;  // Used to set output state
-        
+        byte addrhi = 0x00;     // Used to address more than 255 nodes
+        byte addrlo = 0x00;     // Address of node
+        byte settinghi = 0x00;  // Used when setting 16 outputs
+        byte settinglo = 0x00;  // Used to set output state
+
         // If we can, we want to send one bulk message for the entire node
         // We can only send a bulk message if all of the output circuits have
         // outputType of ONOFF
         boolean bulk_message = true;
         int c = 0;
         while (c < outputbitsPerCard) {
-            if (outputType[c] != AcelaNode.ONOFF) {
+            if ((outputType[c] != AcelaNode.ONOFF) || (outputSpecial[c] != 0)) {
                 bulk_message = false;
             }
             c++;
@@ -643,7 +687,7 @@ public class AcelaNode extends AbstractNode {
         //  If we are going to do a bulk command then the address will be
         //  the starting address.  If we are not going to do a bulk command
         //  then the address will start from the starting address.
-        
+
         Integer tempint = new Integer(startingOutputAddress);
         addrlo = tempint.byteValue();
 
@@ -655,7 +699,7 @@ public class AcelaNode extends AbstractNode {
                 int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
                 settinglo = (byte) (tempsettings);
             }
-            if (nodeType == D8) {         
+            if (nodeType == D8) {
                 cmdlen = 4;
                 cmdcode = 0x08;  // Set 8 outputs: bit on means output on
                 int tempsettings = (outputArray[3] ^ outputWired[3]) * 8 + (outputArray[2] ^ outputWired[2]) * 4 + (outputArray[1] ^ outputWired[1]) * 2 + (outputArray[0] ^ outputWired[0]) * 1;
@@ -665,12 +709,12 @@ public class AcelaNode extends AbstractNode {
             if ((nodeType == WM) || (nodeType == SY)) {
                 cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
-                                 //  nodes do not have outputs
+            //  nodes do not have outputs
             }
             if (nodeType == SC) {
                 cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
-                                 //  nodes do not have outputs
+            //  nodes do not have outputs
             }
             if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
                 cmdlen = 5;
@@ -687,7 +731,7 @@ public class AcelaNode extends AbstractNode {
             // we encounter.  In theory, this could starve a later output
             // circuit on this node.  If someone complains then we should
             // implement a more complicated algorithm.
-                
+
             c = 0;
             boolean foundsomething = false;
             while ((c < outputbitsPerCard) && !foundsomething) {
@@ -697,17 +741,18 @@ public class AcelaNode extends AbstractNode {
                     // That it currently points to.
                     Integer tempaddr = new Integer(c + addrlo);
                     addrlo = tempaddr.byteValue();
-                        
+
                     // Reset the needtosend flag for this output circuit
                     outputNeedToSend[c] = false;
-                        
+
                     // Reset the foundfirst flag
                     foundsomething = true;
-                    
+
                     // We are here because at least one output circuit on
                     // this node is not set to a type of ONOFF
                     //  -- but some of the output circuits may still be
                     // of type ONOFF.
+                    if (outputSpecial[c] == 0) {
                     if (outputType[c] == AcelaNode.ONOFF) {
                         // outputArray[c] tells us to to turn the output on
                         // or off.
@@ -784,16 +829,87 @@ public class AcelaNode extends AbstractNode {
                             settinglo = (byte) outputLength[c];
                         }
                     }
+                    } else {
+                        switch (outputSignalHeadType[c]) {
+                            case DOUBLE: {
+                                switch (outputSpecial[c]) {
+                                    case 1: cmdcode = 0x0c; settinglo = 0x01; break; // Red
+                                    case 2: cmdcode = 0x0c; settinglo = 0x02; break; // Flashing red
+                                    case 3: cmdcode = 0x0c; settinglo = 0x08; break; // Yellow
+                                    case 4: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Yellow
+                                    case 5: cmdcode = 0x0c; settinglo = 0x04; break; // Green
+                                    case 6: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Green
+                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
+                                    default: cmdcode = 0x0c; settinglo = 0x03; break; // Flashing red
+                                }
+                                break;
+                            }
+                            case TRIPLE: {
+                                switch (outputSpecial[c]) {
+                                    case 1: cmdcode = 0x0d; settinglo = 0x01; break; // Red
+                                    case 2: cmdcode = 0x0d; settinglo = 0x02; break; // Flashing red
+                                    case 3: cmdcode = 0x0d; settinglo = 0x04; break; // Yellow
+                                    case 4: cmdcode = 0x0d; settinglo = 0x08; break; // Flashing Yellow
+                                    case 5: cmdcode = 0x0d; settinglo = 0x10; break; // Green
+                                    case 6: cmdcode = 0x0d; settinglo = 0x20; break; // Flashing Green
+                                    case 7: cmdcode = 0x0d; settinglo = 0x00; break; // Dark
+                                    default: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
+                                }
+                                break;
+                            }
+                            case BPOLAR: {
+                                switch (outputSpecial[c]) {
+                                    case 1: cmdcode = 0x0c; settinglo = 0x01; break; // Red
+                                    case 2: cmdcode = 0x0c; settinglo = 0x02; break; // Flashing red
+                                    case 3: cmdcode = 0x0c; settinglo = 0x10; break; // Yellow
+                                    case 4: cmdcode = 0x0c; settinglo = 0x20; break; // Flashing Yellow
+                                    case 5: cmdcode = 0x0c; settinglo = 0x04; break; // Green
+                                    case 6: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Green
+                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
+                                    default: cmdcode = 0x0c; settinglo = 0x03; break; // Flashing red
+                                }
+                                break;
+                            }
+                            case WIGWAG: {
+                                switch (outputSpecial[c]) {
+                                    case 1: cmdcode = 0x0c; settinglo = 0x0B; break; // Red
+                                    case 2: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing red
+                                    case 3: cmdcode = 0x0c; settinglo = 0x0B; break; // Yellow
+                                    case 4: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing Yellow
+                                    case 5: cmdcode = 0x0c; settinglo = 0x0B; break; // Green
+                                    case 6: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing Green
+                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
+                                    default: cmdcode = 0x0c; settinglo = 0x0F; break; // Flashing red
+                                }
+                                break;
+                            }
+                            default: {
+                                switch (outputSpecial[c]) {
+                                    case 1: cmdcode = 0x0d; settinglo = 0x01; break; // Red
+                                    case 2: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
+                                    case 3: cmdcode = 0x0d; settinglo = 0x04; break; // Yellow
+                                    case 4: cmdcode = 0x0d; settinglo = 0x08; break; // Flashing Yellow
+                                    case 5: cmdcode = 0x0d; settinglo = 0x10; break; // Green
+                                    case 6: cmdcode = 0x0d; settinglo = 0x30; break; // Flashing Green
+                                    case 7: cmdcode = 0x0d; settinglo = 0x00; break; // Dark
+                                    default: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
+                                }
+                            }
+                        }
+                        cmdlen = 4;
+                    }
                 }
                 c++;
             }
-    	}
+        }
 
         //  Hook for debugging:
+/*        
         if ((addrlo == 0x00) && (cmdcode == 0x03)) {
             addrhi = 0x00;
             addrlo = 0x00;
         }
+ */ 
         AcelaMessage m = new AcelaMessage(cmdlen);
         m.setElement(0, cmdcode);
         m.setElement(1, addrhi);
@@ -811,13 +927,14 @@ public class AcelaNode extends AbstractNode {
         m.setBinary(true);
         return m;
     }
-
     boolean warned = false;
 
     void warn(String s) {
-    	if (warned) return;
-    	warned = true;
-    	log.warn(s);
+        if (warned) {
+            return;
+        }
+        warned = true;
+        log.warn(s);
     }
 
     /**
@@ -826,7 +943,7 @@ public class AcelaNode extends AbstractNode {
      */
     public void markChanges(AcelaReply l) {
         int numSensorstoProcess = sensorbitsPerCard;
-  
+
         // We are going to get back 8 bits per byte from the poll.
         // We have three types of sensor modules:
         // TB with 4 sensor inputs, WM with 8 sensor inputs, SY with 16 sensor inputs
@@ -845,7 +962,7 @@ public class AcelaNode extends AbstractNode {
                 numBytes = 2;   //  8 bits, but straddling two bytes
             }
         }
-        
+
         if (nodeType == SY) {
             if (firstBitAt == 0) {
                 numBytes = 2;  // 16 bits, aligned in two bytes
@@ -858,10 +975,12 @@ public class AcelaNode extends AbstractNode {
         int rawvalue = l.getElement(firstByteNum);
 
         int usingByteNum = 0;
-        
+
         try {
-            for (int i=0; i<sensorbitsPerCard; i++) {
-                if (sensorArray[i] == null) continue; // skip ones that don't exist
+            for (int i = 0; i < sensorbitsPerCard; i++) {
+                if (sensorArray[i] == null) {
+                    continue;
+                } // skip ones that don't exist
 
                 //  Maybe unnecessary, but trying to minimize reads to getElement 
                 int relvalue = rawvalue;
@@ -872,8 +991,8 @@ public class AcelaNode extends AbstractNode {
                 //  If necessary, shift by four before we start  
                 if (usingByteNum == 0) {
                     if (firstBitAt == 4) {
-                        for (int j=0; j < firstBitAt; j++) {
-                        	relvalue = relvalue >> 1;
+                        for (int j = 0; j < firstBitAt; j++) {
+                            relvalue = relvalue >> 1;
                         }
                     }
                 }
@@ -909,61 +1028,61 @@ public class AcelaNode extends AbstractNode {
                         tempi = i - 8;  // tempi needs to shift down by 8
                     }
                 }
-                
+
                 //  Finally we can isolate the bit from the poll
-                for (int j=0; j < tempi; j ++) {
-                	relvalue = relvalue >> 1;
+                for (int j = 0; j < tempi; j++) {
+                    relvalue = relvalue >> 1;
                 }
 
                 // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
                 byte oldstate = 0x00;
                 if (sensorLastSetting[i] == Sensor.ACTIVE) {
-                	oldstate = 0x01;
+                    oldstate = 0x01;
                 } else {
-                	if (sensorLastSetting[i] == Sensor.INACTIVE) {
-                		oldstate = 0x00;
-                	} else {
-                		nooldstate = true;
-                	}
+                    if (sensorLastSetting[i] == Sensor.INACTIVE) {
+                        oldstate = 0x00;
+                    } else {
+                        nooldstate = true;
+                    }
                 }
-                int newerstate = relvalue &0x01;
+                int newerstate = relvalue & 0x01;
                 byte newstate = (byte) (newerstate);
-                
+
                 if ((nooldstate) || (oldstate != newstate)) {
-                	if (newstate == 0x00) {
-                		sensorLastSetting[i] = Sensor.INACTIVE;
-                		sensorArray[i].setKnownState(sensorLastSetting[i]);
-                	} else {
-                		sensorLastSetting[i] = Sensor.ACTIVE;
-                		sensorArray[i].setKnownState(sensorLastSetting[i]);
-                	}
+                    if (newstate == 0x00) {
+                        sensorLastSetting[i] = Sensor.INACTIVE;
+                        sensorArray[i].setKnownState(sensorLastSetting[i]);
+                    } else {
+                        sensorLastSetting[i] = Sensor.ACTIVE;
+                        sensorArray[i].setKnownState(sensorLastSetting[i]);
+                    }
                 }
             }
-        } catch (JmriException e) { log.error("exception in markChanges: "+e); }
+        } catch (JmriException e) {
+            log.error("exception in markChanges: " + e);
+        }
     }
-
 
     /**
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
      * @param s - Sensor object
      * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this node
      */
-
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal
-        if ( (rawaddr<0) || (rawaddr>=MAXNODE) ) {
-            log.error("Unexpected sensor ordinal in registerSensor: "+Integer.toString(rawaddr));
+        if ((rawaddr < 0) || (rawaddr >= MAXNODE)) {
+            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(rawaddr));
             return;
         }
 
         int addr = -1;
         addr = rawaddr - startingSensorAddress;
 
-       	hasActiveSensors = true;
+        hasActiveSensors = true;
         AcelaTrafficController.instance().setAcelaSensorsState(true);
         if (startingSensorAddress < 0) {
-            log.info("Trying to register sensor too early: AS"+ rawaddr );
+            log.info("Trying to register sensor too early: AS" + rawaddr);
         } else {
 
             if (sensorArray[addr] == null) {
@@ -971,15 +1090,12 @@ public class AcelaNode extends AbstractNode {
                 if (!sensorHasBeenInit[addr]) {
                     sensorNeedInit[addr] = true;
                 }
-            }
-            else {
+            } else {
                 // multiple registration of the same sensor
-                log.warn("Multiple registration of same sensor: CS"+ rawaddr );
+                log.warn("Multiple registration of same sensor: CS" + rawaddr);
             }
         }
     }
-
-
     int timeout = 0;
 
     /**
@@ -988,15 +1104,18 @@ public class AcelaNode extends AbstractNode {
      */
     public boolean handleTimeout(AbstractMRMessage m) {
         timeout++;
-        if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+nodeAddress+": consecutive timeouts: "+timeout);
+        if (log.isDebugEnabled()) {
+            log.warn("Timeout to poll for UA=" + nodeAddress + ": consecutive timeouts: " + timeout);
+        }
         return false;   // tells caller to NOT force init
     }
 
     public void resetTimeout(AbstractMRMessage m) {
-        if (timeout>0) log.debug("Reset "+timeout+" timeout count");
+        if (timeout > 0) {
+            log.debug("Reset " + timeout + " timeout count");
+        }
         timeout = 0;
     }
-    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaNode.class.getName());
 }
 
