@@ -22,6 +22,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.5.0
+; - modified delay in window minimising routine to help with problems seen
+; - on slower machines (change from 10ms to 60ms delay)
+; - fixed problem in minimising loop (was infinite)
+; - added window class to look for under Win98
+; -------------------------------------------------------------------------
 ; - Version 0.1.4.0
 ; - modified free memory calculation to correctly work on x64 based systems
 ; -------------------------------------------------------------------------
@@ -49,7 +55,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR   "Matt Harris"     ; Author name
 !define APP      "LaunchJMRI"      ; Application name
-!define VER      "0.1.4.0"         ; Launcher version
+!define VER      "0.1.5.0"         ; Launcher version
 !define PNAME    "${APP}"          ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON     "decpro5.ico"     ; Launcher icon
@@ -246,23 +252,29 @@ Section "Main"
   DetailPrint "Search for console window to minimise..."
   StrCpy $4 0
   winloop:
-    ; -- Sleep for 10 ms to ensure process doesn't run away with resources
-    Sleep 10
+    ; -- Sleep for 60 ms to ensure process doesn't run away with resources
+    Sleep 60
     ; -- Increment loop counter
     IntOp $4 $4 + 1
     ; -- If the console window for this new process still hasn't opened
-    ;    after 6000 iterations (~1 minute) exit anyway.
-    IntCmp $4 6000 winloopexit
-    ; -- Find top-most ConsoleWindowClass window
+    ;    after 1000 iterations (~1 minute) exit anyway.
+    IntCmp $4 1000 winloopexit
+    ; -- Find top-most ConsoleWindowClass window (for Win2000 and later)
     FindWindow $1 "ConsoleWindowClass"
     ; -- Find the process that owns this window
-    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r4'
+    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
+    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
+    StrCmp $3 $7 winfound
+    ; -- Find top-most tty window (for Win98)
+    FindWindow $1 "tty"
+    ; -- Find the process that owns this window
+    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
     ; -- If it is owned by the process we launched earlier, end loop - if not, loop
     StrCmp $3 $7 winfound winloop
   winfound:
     ; -- We've found the window, so minimise it
     DetailPrint "Found console window - minimising..."
-    Sleep 10
+    Sleep 60
     ShowWindow $1 ${SW_MINIMIZE}
   winloopexit:
 
