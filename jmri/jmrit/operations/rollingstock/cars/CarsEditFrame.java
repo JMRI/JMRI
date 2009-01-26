@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -237,7 +237,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		// row 15
 		addItem(textKernel, 0, 15);
 		addItem(kernelComboBox, 1, 15);
-		addItem(editKernelButton, 2, 5);
+		addItem(editKernelButton, 2, 15);
 
 		// row 17
 		addItem(textBuilt, 0, 17);
