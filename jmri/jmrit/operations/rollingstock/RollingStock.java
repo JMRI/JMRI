@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -382,28 +382,28 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		// first determine if rolling stock can be move to the new destination
 		if (destination != null && !destination.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at destination ("+ destination.getName() + ") wrong type");
-			return TYPE;
+			return TYPE + " ("+getType()+")";
 		}
 		if (track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at track destination ("+ destination.getName() + ", " +track.getName() + ") wrong type");
-			return TYPE;
+			return TYPE+ " ("+getType()+")";
 		}
 		if (track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + getId() + ") road (" +getRoad()+ ") at track location ("+ destination.getName() + ", " + track.getName() + ") wrong road");
-			return ROAD;
+			return ROAD+ " ("+getRoad()+")";
 		}
 		// now determine if there's enough space for the rolling stock
 		int length = 0;
 		try {
 			length = Integer.parseInt(getLength())+ COUPLER;
 		} catch (Exception e){
-			return LENGTH;
+			return LENGTH+ " ("+getLength()+")";
 		}
 		
 		if (track != null &&
 				track.getUsedLength() + track.getReserved()+ length > track.getLength()){
 			log.debug("Can't set (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH;	
+			return LENGTH+ " ("+getLength()+")";	
 		}
 		return OKAY;
 	}

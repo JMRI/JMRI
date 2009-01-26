@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -139,7 +139,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (getKernel() != null && track != null &&
 				track.getUsedLength() + track.getReserved()+ getKernel().getLength() > track.getLength()){
 			log.debug("Can't set car (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH;	
+			return LENGTH+ " ("+getKernel().getLength()+")";	
 		}
 		// now check to see if the track has a schedule
 		return testSchedule(track);
