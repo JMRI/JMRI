@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -646,7 +646,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             int headnumber;
             int aspecttype;
 
-            if (inputsysname.isEmpty()) {
+            if (inputsysname.length() == 0) {
                 log.warn("must supply a signalhead number (i.e. AH23)");
                 return;
             }
@@ -658,7 +658,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 headnumber = Integer.parseInt(inputsysname);
 
             if (checkBeforeCreating("AH"+headnumber)) {
-                if (inputusername.isEmpty()) {
+                if (inputusername.length() == 0) {
                     s = new jmri.jmrix.acela.AcelaSignalHead("AH"+headnumber);
                 } else {
                     s = new jmri.jmrix.acela.AcelaSignalHead("AH"+headnumber, inputusername);
