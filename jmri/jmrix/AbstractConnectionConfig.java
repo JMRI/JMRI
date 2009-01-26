@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -80,6 +80,9 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         else return "(none)";
     }
 
+    static java.util.ResourceBundle rb = 
+        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+    
     public void loadDetails(JPanel details) {
     	
         setInstance();
@@ -100,12 +103,9 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
-//        String portName;
+
         portBox.removeAllItems();
-        if (v.size()==0)
-        	portBox.addItem("(None)");
         for (int i=0; i<v.size(); i++) {
-//            if (i==0) portName = (String) v.elementAt(i);
                 portBox.addItem(v.elementAt(i));
         }
 
@@ -153,7 +153,16 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         details.setLayout(new GridLayout(rows,2));
         details.add(new JLabel("Serial port: "));
         details.add(portBox);
-        portBox.setSelectedItem(adapter.getCurrentPortName());
+        
+        String currentName = adapter.getCurrentPortName();
+        if (currentName != null 
+                && currentName.equals(rb.getString("NoSerialPortSelected"))) {
+            portBox.setSelectedItem(adapter.getCurrentPortName());
+        } else {
+            portBox.insertItemAt(rb.getString("NoSerialPortSelected"),0);
+            portBox.setSelectedIndex(0);
+        }
+          
         details.add(new JLabel("Baud rate:"));
         details.add(baudBox);
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
