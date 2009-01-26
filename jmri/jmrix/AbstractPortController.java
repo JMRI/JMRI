@@ -8,7 +8,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.io.File;
 
 import javax.comm.CommPortIdentifier;
 import javax.swing.JOptionPane;
@@ -24,7 +23,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -136,7 +135,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     
     Vector<String> portNameVector = null;
     public Vector getPortNames() {
-    	// reloadDriver(); // Doesn't quite work
+    	reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -144,7 +143,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL)
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL)
             	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
 		  }
@@ -154,19 +153,23 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     public void reloadDriver() {
 		try // try reloading the driver
 		{
-			Field masterIdList_Field = CommPortIdentifier.class
+			// first, reset the current list of ports
+            Field masterIdList_Field = CommPortIdentifier.class
 					.getDeclaredField("masterIdList");
 			masterIdList_Field.setAccessible(true);
 			masterIdList_Field.set(null, null);
 
-			String temp_string = System.getProperty("java.home")
-					+ File.separator + "lib" + File.separator
-					+ "javax.comm.properties";
-			Method loadDriver_Method = CommPortIdentifier.class
+            // next, allow access to the field storing properties file path
+            Field propfilename_Field = CommPortIdentifier.class
+                    .getDeclaredField("propfilename");
+            propfilename_Field.setAccessible(true);
+
+			// finally, reinitialise the list of ports
+            Method loadDriver_Method = CommPortIdentifier.class
 					.getDeclaredMethod("loadDriver",
 							new Class[] { String.class });
-			loadDriver_Method.setAccessible(true); // unprotect it
-			loadDriver_Method.invoke(null, new Object[] { temp_string });
+			loadDriver_Method.setAccessible(true);
+			loadDriver_Method.invoke(null, propfilename_Field.get(null));
 		} catch (Exception e) {
 			log.error("exception when reloading driver " + e);
 		}
