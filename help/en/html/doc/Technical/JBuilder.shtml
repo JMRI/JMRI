@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.4 2009-01-23 05:18:09 dan_boudreau Exp $ -->
+<!-- $Id: JBuilder.shtml,v 1.5 2009-01-26 16:01:26 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -74,7 +74,9 @@ the Main class.
 <P>Now under the "(x) = Arguments" tab, enter the Program arguments:
 %1%2%2%4%4%6%7%8%9.
 <P>And enter the following VM arguments:
-<P>-Xmx200m <Br>
+<P>
+-Xms10m<Br>
+-Xmx200m <Br>
 -noverify <Br>
 -Dsun.java2d.d3d=false <Br>
 -Djava.security.policy=security.policy <Br>
