@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.5 2009-01-23 07:48:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.6 2009-01-26 00:58:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -140,6 +140,16 @@ more than 2GB of memory installed.
 <p>
 Ken Cameron fixed a problem saving the powerline CP290 configuration.
 
+<p>
+The Linux startup scripts should now have executable permission set automatically.
+
+<p>
+Bob Coleman added Acela Signalhead support.  
+Double and Triple will now work, 
+but they send individual on and off commands rather 
+than more optimal Acela signal commands down to the hardware.
+So, added an Acela Aspect option that will do things efficiently 
+for Acela and also correctly supports BiPolar and Wigwags.
 
 <!--#include virtual="/Footer" -->
 
