@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -52,12 +52,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteManager routeManager;
 
 	Train _train = null;
-	List<JCheckBox> typeCheckBoxes = new ArrayList<JCheckBox>();
+	List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
+	List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
-	JPanel typePanelCheckBoxes = new JPanel();
+	JPanel typeCarPanelCheckBoxes = new JPanel();
+	JPanel typeEnginePanelCheckBoxes = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	JPanel locationPanelCheckBoxes = new JPanel();
-	JScrollPane typesPane;
+	JScrollPane typeCarPane;
+	JScrollPane typeEnginePane;
 	JScrollPane locationsPane;
 
 	// labels
@@ -65,7 +68,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JLabel textDescription = new javax.swing.JLabel();
 	javax.swing.JLabel textDepartTime = new javax.swing.JLabel();
 	javax.swing.JLabel textRoute = new javax.swing.JLabel();
-	javax.swing.JLabel textType = new javax.swing.JLabel();
+	javax.swing.JLabel textCarType = new javax.swing.JLabel();
+	javax.swing.JLabel textEngineType = new javax.swing.JLabel();
 	javax.swing.JLabel textModel = new javax.swing.JLabel();
 	javax.swing.JLabel textRoad = new javax.swing.JLabel();
 	javax.swing.JLabel textRoad2 = new javax.swing.JLabel();
@@ -130,8 +134,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
     	locationsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-       	typesPane = new JScrollPane(typePanelCheckBoxes);
-    	typesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+       	typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
+    	typeCarPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+       	typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
+    	typeEnginePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
 	}
 
 	public void initComponents(Train train) {
@@ -167,8 +174,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		textCars.setVisible(true);
 		textComment.setText(rb.getString("Comment"));
 		textComment.setVisible(true);
-		textType.setText(rb.getString("TypesTrain"));
-		textType.setVisible(true);
+		textCarType.setText(rb.getString("TypesCar"));
+		textCarType.setVisible(true);
+		textEngineType.setText(rb.getString("TypesEngine"));
+		textEngineType.setVisible(true);
 		resetButton.setText(rb.getString("ClearCars"));
 		resetButton.setVisible(true);
 		addRoadButton.setText(rb.getString("AddRoad"));
@@ -248,7 +257,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// BUG! routeBox needs its own panel when resizing frame!
 	   	JPanel p2 = new JPanel();
     	p2.setLayout(new GridBagLayout());
-//		addItem(p2, space4, 0, 4);
 		addItem(p2, textRoute, 0, 5);
 		addItem(p2, routeBox, 1, 5);
 		addItem(p2, editButton, 2, 5);
@@ -257,14 +265,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 5
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
 
-		// row 7
-	   	typePanelCheckBoxes.setLayout(new GridBagLayout());
+		// row 6
+	   	typeCarPanelCheckBoxes.setLayout(new GridBagLayout());
 		
-		// row 8
+		// row 7
 		panelRoadNames.setLayout(new GridBagLayout());
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
+		
+		// row 8
+		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
 		
 		// row 9
 		JPanel trainReq = new JPanel();
@@ -303,18 +314,18 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
      	trainReq.setBorder(border);
 
 		// row 11
-    	JPanel p3 = new JPanel();
-    	p3.setLayout(new GridBagLayout());
-    	addItem (p3, textCars, 0, 1);
-    	addItem (p3, resetButton, 1, 1);
-		p3.setBorder(border);
+    	//JPanel p3 = new JPanel();
+    	//p3.setLayout(new GridBagLayout());
+    	//addItem (p3, textCars, 0, 1);
+    	
+		//p3.setBorder(border);
 		
     	JPanel p4 = new JPanel();
     	p4.setLayout(new GridBagLayout());
 		
 		// row 12
 		int y = 12;
-		addItem (p4, space1, 0, ++y);
+		//addItem (p4, space1, 0, ++y);
     	
 		// row 13
 		addItem(p4, textComment, 0, ++y);
@@ -324,17 +335,19 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(p4, space2, 0, ++y);
 		// row 15
 		addItem(p4, deleteTrainButton, 0, ++y);
-		addItem(p4, addTrainButton, 1, y);
+		addItem (p4, resetButton, 1, y);
+		addItem(p4, addTrainButton, 2, y);
 		addItem(p4, saveTrainButton, 3, y);
 		
 		getContentPane().add(p1);
 		getContentPane().add(pdt);
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
-		getContentPane().add(typesPane);
+		getContentPane().add(typeCarPane);
 		getContentPane().add(panelRoadNames);
+		getContentPane().add(typeEnginePane);
 		getContentPane().add(trainReq);
-		getContentPane().add(p3);
+		//getContentPane().add(p3);
        	getContentPane().add(p4);
 		
 		// setup buttons
@@ -385,7 +398,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// load route location checkboxes
 		updateLocationCheckboxes();
-		updateTypeCheckboxes();
+		updateCarTypeCheckboxes();
+		updateEngineTypeCheckboxes();
 		updateRoadNames();
 		updateNumberCars();
 		
@@ -425,6 +439,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			Train train = manager.getTrainByName(trainNameTextField.getText());
 			if (train == null)
 				return;
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(rb.getString("deleteMsg"),new Object[]{train.getName()}),
+					rb.getString("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+				return;
+			}	
 			selectCheckboxes(false);
 			routeBox.setSelectedItem("");
 			manager.deregister(train);
@@ -608,6 +627,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void enableButtons(boolean enabled){
+		editButton.setEnabled(enabled);
 		routeBox.setEnabled(enabled);
 		clearButton.setEnabled(enabled);
 		resetButton.setEnabled(enabled);
@@ -626,8 +646,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void selectCheckboxes(boolean enable){
-		for (int i=0; i < typeCheckBoxes.size(); i++){
-			JCheckBox checkBox = typeCheckBoxes.get(i);
+		for (int i=0; i < typeCarCheckBoxes.size(); i++){
+			JCheckBox checkBox = typeCarCheckBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_train != null){
 				if (enable)
@@ -658,8 +678,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void enableCheckboxes(boolean enable){
-		for (int i=0; i < typeCheckBoxes.size(); i++){
-			JCheckBox checkBox = typeCheckBoxes.get(i);
+		for (int i=0; i < typeCarCheckBoxes.size(); i++){
+			JCheckBox checkBox = typeCarCheckBoxes.get(i);
+			checkBox.setEnabled(enable);
+		}
+		for (int i=0; i < typeEngineCheckBoxes.size(); i++){
+			JCheckBox checkBox = typeEngineCheckBoxes.get(i);
 			checkBox.setEnabled(enable);
 		}
 	}
@@ -700,32 +724,59 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 	
-	private void updateTypeCheckboxes(){
-		typeCheckBoxes.clear();
-		typePanelCheckBoxes.removeAll();
-		x = 0;
-		y = 0;		// vertical position in panel
-		addItemWidth(typePanelCheckBoxes, textType, 3, 1, y++);
-		loadTypes(CarTypes.instance().getNames());
-		loadTypes(EngineTypes.instance().getNames());
+	private void updateCarTypeCheckboxes(){
+		typeCarCheckBoxes.clear();
+		typeCarPanelCheckBoxes.removeAll();
+		addItemWidth(typeCarPanelCheckBoxes, textCarType, 3, 1, 0);
+		loadCarTypes(CarTypes.instance().getNames());
 		enableCheckboxes(_train != null);
-		addItem (typePanelCheckBoxes, clearButton, 1, ++y);
-		addItem (typePanelCheckBoxes, setButton, 4, y);
 		Border border = BorderFactory.createEtchedBorder();
-		typePanelCheckBoxes.setBorder(border);
-		typePanelCheckBoxes.revalidate();
+		typeCarPanelCheckBoxes.setBorder(border);
+		typeCarPanelCheckBoxes.revalidate();
 		repaint();
 	}
 	
-	int x = 0;
-	int y = 0;	// vertical position in panel
-	private void loadTypes(String[] types){
+	private void loadCarTypes(String[] types){
+		int x = 0;
+		int y = 1;	// vertical position in panel
 		for (int i =0; i<types.length; i++){
 			JCheckBox checkBox = new javax.swing.JCheckBox();
-			typeCheckBoxes.add(checkBox);
+			typeCarCheckBoxes.add(checkBox);
 			checkBox.setText(types[i]);
 			addTypeCheckBoxAction(checkBox);
-			addItemLeft(typePanelCheckBoxes, checkBox, x++, y);
+			addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
+			if(_train != null && _train.acceptsTypeName(types[i]))
+				checkBox.setSelected(true);
+			if (x > 5){
+				y++;
+				x = 0;
+			}
+		}
+		addItem (typeCarPanelCheckBoxes, clearButton, 1, ++y);
+		addItem (typeCarPanelCheckBoxes, setButton, 4, y);
+	}
+	
+	private void updateEngineTypeCheckboxes(){
+		typeEngineCheckBoxes.clear();
+		typeEnginePanelCheckBoxes.removeAll();
+		addItemWidth(typeEnginePanelCheckBoxes, textEngineType, 3, 1, 0);
+		loadEngineTypes(EngineTypes.instance().getNames());
+		enableCheckboxes(_train != null);
+		Border border = BorderFactory.createEtchedBorder();
+		typeEnginePanelCheckBoxes.setBorder(border);
+		typeEnginePanelCheckBoxes.revalidate();
+		repaint();
+	}
+	
+	private void loadEngineTypes(String[] types){
+		int x = 0;
+		int y = 1;
+		for (int i =0; i<types.length; i++){
+			JCheckBox checkBox = new javax.swing.JCheckBox();
+			typeEngineCheckBoxes.add(checkBox);
+			checkBox.setText(types[i]);
+			addTypeCheckBoxAction(checkBox);
+			addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
 			if (x > 5){
@@ -842,9 +893,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
-			updateTypeCheckboxes();
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+			updateCarTypeCheckboxes();
+		}
+		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
+			updateEngineTypeCheckboxes();
 		}
 		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();

@@ -23,7 +23,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -143,8 +143,12 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 					return;
 				}
 				// don't allow the default names for load and empty to be the same
-				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName()))
+				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName())){
+					JOptionPane.showMessageDialog(this, rb.getString("carDefault"),
+							MessageFormat.format(rb.getString("canNotReplace"),new Object[]{rb.getString("Load")}),
+							JOptionPane.ERROR_MESSAGE);
 					return;
+				}
 				carLoads.setDefaultEmptyName(newLoad);
 				replaceAllLoads(oldLoad, newLoad);
 				return;
@@ -156,8 +160,12 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 					return;
 				}
 				// don't allow the default names for load and empty to be the same
-				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName()))
+				if (newLoad.equals(carLoads.getDefaultEmptyName()) || newLoad.equals(carLoads.getDefaultLoadName())){
+					JOptionPane.showMessageDialog(this, rb.getString("carDefault"),
+							MessageFormat.format(rb.getString("canNotReplace"),new Object[]{rb.getString("Load")}),
+							JOptionPane.ERROR_MESSAGE);
 					return;
+				}
 				carLoads.setDefaultLoadName(newLoad);
 				replaceAllLoads(oldLoad, newLoad);
 				return;
@@ -173,6 +181,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
+	// replace the default empty and load for all car types
 	private void replaceAllLoads (String oldLoad, String newLoad){
 		String[] typeNames = CarTypes.instance().getNames();
 		for (int i=0; i<typeNames.length; i++){
