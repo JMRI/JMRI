@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.4 2009-01-27 03:58:58 plocher Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.5 2009-01-27 04:03:08 plocher Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -39,7 +39,8 @@
     <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) 
     makes a great platform for working with JMRI, but because the repository is 
     not set up as an Eclipse project there are a few wrinkles in getting it 
-    work. (The description below is accurate for version Eclipse 3.2.2 for MacOS X. 
+    work. (The description below is accurate for versions 
+    <strong>Eclipse 3.2.2 thru 3.4.1 for MacOS X</strong>. 
     Eclipse is <i>supposed</i> to be identical across platforms, but this hasn't 
     been checked on anything else). </p>
     <p>Eclipse is a complex environment to work with. If you're already familiar 
