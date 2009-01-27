@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -157,13 +157,8 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         details.add(portBox);
         
         String portName = adapter.getCurrentPortName();
-        if (portName != null) {
-        	if (!portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound")))
+        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
         		portBox.setSelectedItem(portName);
-        	else{
-                portBox.insertItemAt(rb.getString("noneSelected"),0);
-                portBox.setSelectedIndex(0);
-        	}
         } else {
             portBox.insertItemAt(rb.getString("noneSelected"),0);
             portBox.setSelectedIndex(0);
