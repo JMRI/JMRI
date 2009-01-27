@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -108,6 +108,8 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         for (int i=0; i<v.size(); i++) {
                 portBox.addItem(v.elementAt(i));
         }
+        if (v.size()==0)
+        	portBox.addItem(rb.getString("noPortsFound"));
 
         String[] baudList = adapter.validBaudRates();
         baudBox.removeAllItems();
@@ -154,12 +156,16 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         details.add(new JLabel("Serial port: "));
         details.add(portBox);
         
-        String currentName = adapter.getCurrentPortName();
-        if (currentName != null 
-                && currentName.equals(rb.getString("NoSerialPortSelected"))) {
-            portBox.setSelectedItem(adapter.getCurrentPortName());
+        String portName = adapter.getCurrentPortName();
+        if (portName != null) {
+        	if (!portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound")))
+        		portBox.setSelectedItem(portName);
+        	else{
+                portBox.insertItemAt(rb.getString("noneSelected"),0);
+                portBox.setSelectedIndex(0);
+        	}
         } else {
-            portBox.insertItemAt(rb.getString("NoSerialPortSelected"),0);
+            portBox.insertItemAt(rb.getString("noneSelected"),0);
             portBox.setSelectedIndex(0);
         }
           

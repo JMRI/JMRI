@@ -11,13 +11,16 @@ import org.jdom.Attribute;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
     public AbstractConnectionConfigXml() {
     }
 
+    static java.util.ResourceBundle rb = 
+        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+    
     protected SerialPortAdapter adapter;
     abstract protected void getInstance();
     abstract protected void register();
@@ -37,19 +40,19 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
         if (adapter.getCurrentPortName()!=null)
             e.setAttribute("port", adapter.getCurrentPortName());
-        else e.setAttribute("port", "(None selected)");
+        else e.setAttribute("port", rb.getString("noneSelected"));
 
         if (adapter.getCurrentBaudRate()!=null)
             e.setAttribute("speed", adapter.getCurrentBaudRate());
-        else e.setAttribute("speed", "(None selected)");
+        else e.setAttribute("speed", rb.getString("noneSelected"));
 
         if (adapter.getCurrentOption1Setting()!=null)
             e.setAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.setAttribute("option1", "(None selected)");
+        else e.setAttribute("option1", rb.getString("noneSelected"));
 
         if (adapter.getCurrentOption2Setting()!=null)
             e.setAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.setAttribute("option2", "(None selected)");
+        else e.setAttribute("option2", rb.getString("noneSelected"));
 
         e.setAttribute("class", this.getClass().getName());
 

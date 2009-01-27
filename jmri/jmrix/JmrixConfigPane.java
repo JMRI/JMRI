@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.47 $
+ * @version	$Revision: 1.48 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -48,6 +48,12 @@ public class JmrixConfigPane extends JPanel {
         return (new JmrixConfigPane((ConnectionConfig)c));
     }
 
+    static java.util.ResourceBundle rb = 
+        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+    
+    public static final String NONE_SELECTED = rb.getString("noneSelected");
+    public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
+    
     public String[] availableProtocolClasses() {
         return  new String[] {
 
@@ -118,7 +124,7 @@ public class JmrixConfigPane extends JPanel {
         classList = new ConnectionConfig[classNameList.length+1];
 
         // get the list of ConnectionConfig items into a selection box
-        modeBox.addItem("(none selected)");
+        modeBox.addItem(NONE_SELECTED);
         int n=1;
         for (int i=0; i<classNameList.length; i++) {
             String className = classNameList[i];
@@ -183,6 +189,8 @@ public class JmrixConfigPane extends JPanel {
         if (current!=0) return classList[current];
         return null;
     }
+    
+    
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmrixConfigPane.class.getName());

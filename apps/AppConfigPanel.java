@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -340,6 +341,16 @@ public class AppConfigPanel extends JPanel {
     	}
     	return true;
     }
+    
+    /**
+     * Checks to see if user selected a valid serial port
+     * @return true if okay
+     */
+    private boolean checkPortName(){
+    	if (getPort1().equals(JmrixConfigPane.NONE_SELECTED) || getPort1().equals(JmrixConfigPane.NO_PORTS_FOUND))
+    		return false;
+    	return true;
+    }
 
     /**
      * Handle the Save button:  Backup the file, write a new one, prompt for
@@ -347,6 +358,14 @@ public class AppConfigPanel extends JPanel {
      * box prompting the user to end the program.
      */
     public void savePressed() {
+    	if(!checkPortName()){
+    		if (JOptionPane.showConfirmDialog(null,
+    				MessageFormat.format(rb.getString("MessageSerialPortWarning"),new Object[]{getPort1()}),
+                    rb.getString("MessageSerialPortNotValid"),
+                    JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
+    			return;
+    	}
+    	
     	boolean dups = checkDups(); // true if OK, which is a little confusing
     	if (!dups) {
     		dups = JOptionPane.showConfirmDialog(null,

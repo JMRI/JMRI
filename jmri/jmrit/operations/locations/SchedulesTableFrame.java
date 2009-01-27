@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.locations;
  
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -19,14 +17,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-
-
 /**
  * Frame for adding and editing the Schedule roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -98,9 +94,6 @@ public class SchedulesTableFrame extends OperationsFrame {
     	pack();
     	if ((getWidth()<750)) setSize(750, getHeight());
     	
-     	// now load the cars and engines
-    	CarManagerXml.instance();
-    	EngineManagerXml.instance();
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

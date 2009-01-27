@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.61 $
+ * @version         $Revision: 1.62 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -577,7 +577,6 @@ abstract public class AbstractMRTrafficController {
     /**
      * Get the port name for this connection
      */
-    private String portName = "<unknown>";
     public String getPortName(){
         return controller.getCurrentPortName();
     }
