@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2009-01-02 03:24:58 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2009-01-27 05:20:09 millerdl Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -191,6 +191,13 @@ their content.
 If you have any questions about this, please 
 <A HREF="mailto:jmri@pacbell.net">contact us</a>
 directly.
+
+<h2>Developer Code Swarm</h2>
+<p>We have created a <a href="/community/codeswarm.shtml">Code Swarm of JMRI 
+development</a> from its inception to January 2009.  A Code Swarm is a fascinating
+and dynamic visual representation of change as developers come and go and make 
+changes to the files that make up a project.  More information is available on
+the <a href="/community/codeswarm.shtml">Code Swarm</a> page.
 
 <!--#include virtual="/Footer" -->
 
