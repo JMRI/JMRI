@@ -18,7 +18,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -27,49 +27,60 @@ public class Track implements java.beans.PropertyChangeListener {
 	protected String _id = "";
 	protected String _name = "";
 	protected String _locType = "";					// yard, siding, interchange or staging
-	protected String _sortId = "";
-	protected String _roadOption = ALLROADS;
-	protected String _dropOption = ANY;
-	protected String _pickupOption = ANY;
-	protected String _scheduleName = "";			// Schedule name if there's one
-	protected String _scheduleItemId = "";			// the current scheduled item id
-	protected int _scheduleCount = 0;				// the number of times the item has been delievered
+	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
-	protected int _numberRS = 0;
-	protected int _numberCars = 0;
-	protected int _numberEngines = 0;
-	protected int _pickupRS = 0;
-	protected int _dropRS = 0;
-	protected int _length = 0;				//length of tracks at this location
-	protected int _reserved = 0;			//length of track reserved by trains
-	protected int _usedLength = 0;			//length of track filled by cars and engines 
-	protected int _moves = 0;
+	protected int _numberRS = 0;					// number of cars and engines
+	protected int _numberCars = 0;					// number of cars
+	protected int _numberEngines = 0;				// number of engines
+	protected int _pickupRS = 0;					// number of pickups by trains
+	protected int _dropRS = 0;						// number of drops by trains
+	protected int _length = 0;						//length of tracks at this location
+	protected int _reserved = 0;					//length of track reserved by trains
+	protected int _usedLength = 0;					//length of track filled by cars and engines 
+	protected int _moves = 0;						//count of the pickups and drops since creation
 	protected String _comment = "";
 	
-	public static final String STAGING = "Staging";			// the four types of tracks
+	// schedule options
+	protected String _scheduleName = "";			// Schedule name if there's one
+	protected String _scheduleItemId = "";			// the current scheduled item id
+	protected int _scheduleCount = 0;				// the number of times the item has been delivered
+	
+	// drop options
+	protected String _dropOption = ANY;				// controls which route or train can drop
+	protected String _pickupOption = ANY;			// controls which route or train can pickup
+	public static final String ANY = "Any";			// track accepts any train or route
+	public static final String TRAINS = "trains";	// track only accepts certain trains
+	public static final String ROUTES = "routes";	// track only accepts certain routes
+
+	// load options
+	protected int _loadOptions = 0;
+	private static final int SWAP_GENERIC_LOADS = 1;
+	private static final int EMPTY_SCHEDULE_LOADS = 2;
+	private static final int GENERATE_SCHEDULE_LOADS = 4;
+	
+	// the four types of tracks
+	public static final String STAGING = "Staging";			
 	public static final String INTERCHANGE = "Interchange";
 	public static final String YARD = "Yard";
 	public static final String SIDING = "Siding";
 	
-	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
-	
-	public static final int EAST = 1;		// train direction serviced by this location
+	// train directions serviced by this track
+	public static final int EAST = 1;		
 	public static final int WEST = 2;
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
+	// how roads are serviced by this track
 	public static final String ALLROADS = "All";			// track accepts all roads
 	public static final String INCLUDEROADS = "Include";	// track accepts only certain roads
 	public static final String EXCLUDEROADS = "Exclude";	// track does not accept certain roads
-	
-	public static final String ANY = "Any";			// track accepts any train or route
-	public static final String TRAINS = "trains";	// track only accepts certain trains
-	public static final String ROUTES = "routes";	// track only accepts certain routes
 	
 	//	 For property change
 	public static final String TYPES_CHANGED_PROPERTY = "types";
 	public static final String ROADS_CHANGED_PROPERTY = "roads";
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
+	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
+	
 	private static final String LENGTH = "Length";
 	
 	public Track(String id, String name, String type) {
@@ -317,6 +328,10 @@ public class Track implements java.beans.PropertyChangeListener {
     	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
     }
     
+    /**
+     * Sets the train directions that can service this track
+     * @param direction EAST, WEST, NORTH, SOUTH
+     */
  	public void setTrainDirections(int direction){
 		int old = _trainDir;
 		_trainDir = direction;
@@ -401,32 +416,28 @@ public class Track implements java.beans.PropertyChangeListener {
     List<String> _dropList = new ArrayList<String>();
     
     public String[] getDropIds(){
-      	String[] names = new String[_dropList.size()];
+      	String[] ids = new String[_dropList.size()];
      	for (int i=0; i<_dropList.size(); i++)
-     		names[i] = _dropList.get(i);
-     	if (_dropList.size() == 0)
-     		return names;
-     	jmri.util.StringUtil.sort(names);
-   		return names;
+     		ids[i] = _dropList.get(i);
+   		return ids;
     }
     
-    private void setDropIds(String[] names){
-    	if (names.length == 0) return;
-    	jmri.util.StringUtil.sort(names);
- 		for (int i=0; i<names.length; i++)
- 			_dropList.add(names[i]);
+    private void setDropIds(String[] ids){
+    	if (ids.length == 0) return;
+ 		for (int i=0; i<ids.length; i++)
+ 			_dropList.add(ids[i]);
     }
     
-    public void addDropId(String name){
-     	if (_dropList.contains(name))
+    public void addDropId(String id){
+     	if (_dropList.contains(id))
     		return;
-    	_dropList.add(name);
-    	log.debug("track " +getName()+ " add drop "+name);
+    	_dropList.add(id);
+    	log.debug("track " +getName()+ " add drop "+id);
     }
     
-    public void deleteDropId(String name){
-    	_dropList.remove(name);
-    	log.debug("track " +getName()+ " delete drop "+name);
+    public void deleteDropId(String id){
+    	_dropList.remove(id);
+    	log.debug("track " +getName()+ " delete drop "+id);
      }
     
     public boolean acceptsDropTrain(Train train){
@@ -447,39 +458,35 @@ public class Track implements java.beans.PropertyChangeListener {
       	return containsDropId(route.getId());
     }
     
-    public boolean containsDropId(String name){
-      		return _dropList.contains(name);
+    public boolean containsDropId(String id){
+      		return _dropList.contains(id);
     }  
     
     List<String> _pickupList = new ArrayList<String>();
     
     public String[] getPickupIds(){
-      	String[] names = new String[_pickupList.size()];
+      	String[] ids = new String[_pickupList.size()];
      	for (int i=0; i<_pickupList.size(); i++)
-     		names[i] = _pickupList.get(i);
-     	if (_pickupList.size() == 0)
-     		return names;
-     	jmri.util.StringUtil.sort(names);
-   		return names;
+     		ids[i] = _pickupList.get(i);
+   		return ids;
     }
     
-    private void setPickupIds(String[] names){
-    	if (names.length == 0) return;
-    	jmri.util.StringUtil.sort(names);
- 		for (int i=0; i<names.length; i++)
- 			_pickupList.add(names[i]);
+    private void setPickupIds(String[] ids){
+    	if (ids.length == 0) return;
+ 		for (int i=0; i<ids.length; i++)
+ 			_pickupList.add(ids[i]);
     }
     
-    public void addPickupId(String name){
-     	if (_pickupList.contains(name))
+    public void addPickupId(String id){
+     	if (_pickupList.contains(id))
     		return;
-    	_pickupList.add(name);
-    	log.debug("track " +getName()+ " add pickup "+name);
+    	_pickupList.add(id);
+    	log.debug("track " +getName()+ " add pickup "+id);
     }
     
-    public void deletePickupId(String name){
-    	_pickupList.remove(name);
-    	log.debug("track " +getName()+ " delete pickup "+name);
+    public void deletePickupId(String id){
+    	_pickupList.remove(id);
+    	log.debug("track " +getName()+ " delete pickup "+id);
      }
     
     public boolean acceptsPickupTrain(Train train){
@@ -500,8 +507,8 @@ public class Track implements java.beans.PropertyChangeListener {
       	return containsPickupId(route.getId());
     }
     
-    public boolean containsPickupId(String name){
-      		return _pickupList.contains(name);
+    public boolean containsPickupId(String id){
+    	return _pickupList.contains(id);
     }  
     
     public int getMoves(){
@@ -516,8 +523,8 @@ public class Track implements java.beans.PropertyChangeListener {
     	return _scheduleName;
     }
     
-    public void setScheduleName(String name){
-    	_scheduleName = name;
+    public void setScheduleName(String id){
+    	_scheduleName = id;
     }
     
     public String getScheduleItemId(){
@@ -565,13 +572,61 @@ public class Track implements java.beans.PropertyChangeListener {
 		}
 		return status;
 	}
+	
+	/**
+	 * Enable changing the car generic load state when car arrives at the
+	 * location.
+	 * 
+	 * @param enable
+	 *            when true, swap generic car load state
+	 */
+	public void enableLoadSwaps(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | SWAP_GENERIC_LOADS;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-SWAP_GENERIC_LOADS;
+	}
+	
+	public boolean isLoadSwapEnabled(){
+		return (0 < (_loadOptions & SWAP_GENERIC_LOADS));
+	}
+	
+	/**
+	 * When enabled, remove Scheduled car loads.
+	 * @param enable when true, remove Scheduled loads from cars
+	 */
+	public void enableRemoveLoads(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | EMPTY_SCHEDULE_LOADS;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-EMPTY_SCHEDULE_LOADS;
+	}
+	
+	public boolean isRemoveLoadsEnabled(){
+		return (0 < (_loadOptions & EMPTY_SCHEDULE_LOADS));
+	}
+	
+	/**
+	 * When enabled, add Scheduled car loads if there's a demand.
+	 * @param enable when true, add Scheduled loads from cars
+	 */
+	public void enableAddLoads(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-GENERATE_SCHEDULE_LOADS;
+	}
+	
+	public boolean isAddLoadsEnabled(){
+		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS));
+	}
     
     public void dispose(){
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
     
 	
-	   /**
+    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in operations-config.xml
      *
@@ -618,6 +673,7 @@ public class Track implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("schedule")) != null ) _scheduleName = a.getValue();
         if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -671,6 +727,8 @@ public class Track implements java.beans.PropertyChangeListener {
     		e.setAttribute("itemId", getScheduleItemId());
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
     	}
+    	if (_loadOptions != 0)
+    		e.setAttribute("loadOptions", Integer.toString(_loadOptions));
     	e.setAttribute("comment", getComment());
 
     	return e;

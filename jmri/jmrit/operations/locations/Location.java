@@ -18,13 +18,12 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected String _name = "";
-	protected String _sortId = "";
 	protected int _IdNumber = 0;
 	protected int _numberRS = 0;
 	protected int _pickupRS = 0;
