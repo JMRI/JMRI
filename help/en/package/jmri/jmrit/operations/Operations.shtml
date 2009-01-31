@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.32 2009-01-25 18:11:03 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.33 2009-01-31 16:51:18 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -365,7 +365,12 @@ siding that has a Schedule that also requests that particular load.
 However, cars with a Schedule load can still be placed at yards,
 staging, and interchanges.
 
+<P>You can optionally use your staging tracks to empty cars with a
+"Schedule" load, and you can also optionally create "Schedule" loads
+using staging tracks.
+
 <P>You can also access your Schedules from the Locations Tools menu.
+
 
 
 <H3>Local Switcher</H3>
@@ -440,6 +445,21 @@ location B staging. Doing this causes the program to "move" the train
 and its cars from A to B which is really the same physical track. Later
 you can build a train that departs location B, and the manifest will
 show that the train originated from B and not A. 
+
+<H3>Staging and Car loads</H3>
+
+Staging tracks can optionally swap the default car loads from empty to loaded, and loaded to empty.
+Select the "Swap default Loads and Empties" if you want your cars loads to change
+when arriving at the staging track.  If you're using "Scheduled" loads, you can optionally remove the load
+when the cars arrive at the staging track.  Select the "Empty cars with Scheduled loads" box
+if you want to change your cars with "Schedule" load to the default load empty.
+
+<P>You can also generate "Schedule" loads on demand. Select the
+"Generate scheduled loads if necessary" to create schedule loads for
+your sidings that are requesting a schedule loads. The program will
+create a schedule load for an empty car that is the correct type for the
+siding that is demanding a load. For a load to be created, the siding
+must be directly serviced by the route that departs the staging track. 
 
 <A NAME="Cars"></A>
 <H2>Cars</H2>
