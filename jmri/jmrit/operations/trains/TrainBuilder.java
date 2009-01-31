@@ -14,8 +14,12 @@ import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Schedule;
+import jmri.jmrit.operations.locations.ScheduleItem;
+import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -28,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.32 $
+ * @version             $Revision: 1.33 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -68,8 +72,8 @@ public class TrainBuilder extends TrainCommon{
 	 * 2. Select only engines and cars the that train can service
 	 * 3. Optional, train must depart with the required number of moves (cars)
 	 * 4. Add caboose or car with FRED to train if required
-	 * 5. All cars and engines must leave stagging tracks
-	 * 6. If a train is assigned to stagging, all cars and engines must go there  
+	 * 5. All cars and engines must leave staging tracks
+	 * 6. If a train is assigned to staging, all cars and engines must go there  
 	 * 7. Service locations based on train direction, location car types and roads
 	 * 8. Ignore train/track direction when servicing the last location in a route
 	 * 9. Ignore track direction when train is a local (serves one location)
@@ -212,7 +216,7 @@ public class TrainBuilder extends TrainCommon{
 
 		// get list of cars for this route
 		carList = carManager.getCarsAvailableTrainList(train);
-		// TODO: DAB this needs to be controled by each train
+		// TODO: DAB this needs to be controlled by each train
 		if (requested > carList.size() && Control.fullTrainOnly){
 			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorNumReq"),new Object[]{Integer.toString(requested),
 				train.getName(), Integer.toString(carList.size())}));
@@ -373,7 +377,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
-		// now go through the car list and find a caboose or fred if required
+		// now go through the car list and find a caboose or FRED if required
 		// try and find a caboose that matches the engine's road
 		if(requiresCaboose && train.getCabooseRoad().equals("") && train.getLeadEngine() != null){
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
@@ -459,7 +463,7 @@ public class TrainBuilder extends TrainCommon{
 							}
 						}
 					}
-				} // caboose or FRED not at departure locaton so remove from list
+				} // caboose or FRED not at departure location so remove from list
 				if(!foundCaboose || !foundFred) {
 					addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+ ") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 					carList.remove(carList.get(carIndex));		// remove this car from the list
@@ -540,6 +544,7 @@ public class TrainBuilder extends TrainCommon{
 								RouteLocation rldSave = null;			// holds the best route location destination for the car
 								Track trackSave = null;					// holds the best track at destination for the car
 								Location destinationSave = null;		// holds the best destination for the car
+								boolean done = false;					// when true car destination found
 						
 								// more than one location in this route?
 								if (routeList.size()>1)
@@ -568,16 +573,38 @@ public class TrainBuilder extends TrainCommon{
 											}
 											// is there a track assigned for staging cars?
 											if (rld.getStagingTrack() == null){
-												List<String> sls = testDestination.getTracksByMovesList(null);
-												for (int s = 0; s < sls.size(); s++){
-													Track testTrack = testDestination.getTrackById(sls.get(s));
+												// no staging track assigned, start search
+												List<String> tracks = testDestination.getTracksByMovesList(null);
+												for (int s = 0; s < tracks.size(); s++){
+													Track testTrack = testDestination.getTrackById(tracks.get(s));
 													// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 													// need to find a track that is isn't the same as the car's current
 													String status = c.testDestination(testDestination, testTrack);
+													// is the testTrack a siding with a Schedule?
+													if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
+															&& status.contains(Car.LOAD) 
+															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
+														log.debug("Siding ("+testTrack.getName()+") has "+status);
+														// is car departing a staging track that can generate schedule loads?
+														if (c.getTrack().isAddLoadsEnabled() && c.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
+															Schedule sch = ScheduleManager.instance().getScheduleByName(testTrack.getScheduleName());
+															ScheduleItem si = sch.getItemById(testTrack.getScheduleItemId());
+															addLine(fileOut, FIVE, "Adding schedule load ("+si.getLoad()+") to car "+c.getId());
+															c.setLoad(si.getLoad());
+															status = c.OKAY;
+															trackTemp = testTrack;
+															destinationTemp = testDestination;
+															rldSave = rld;
+															destinationSave = destinationTemp;
+															trackSave = trackTemp;
+															done = true;
+															break;
+														}
+													}		
 													if (testTrack != c.getTrack() 
 															&& status.equals(c.OKAY) 
 															&& checkDropTrainDirection(fileOut, c, rld, testDestination, testTrack)){
-														// staging track with zero cars?
+														// staging track with zero cars?  TODO (fix testTrack.getDropRS()>0, covers case when caboose or FRED to staging without engines)
 														if (testTrack.getLocType().equals(testTrack.STAGING) && (testTrack.getNumberRS() == 0 || testTrack.getDropRS()>0)){
 															rld.setStagingTrack(testTrack);	// Use this location for all cars
 															trackTemp = testTrack;
@@ -664,6 +691,8 @@ public class TrainBuilder extends TrainCommon{
 											} else {
 												addLine(fileOut, FIVE, "Could not find a valid destination for car ("+c.getId()+") at location (" + rld.getName()+")");
 											}
+											if (done) // scheduled load has been placed into car
+												break;
 										} else {
 											addLine(fileOut, FIVE, "No available moves for destination ("+rld.getName()+")");
 										}
@@ -679,7 +708,7 @@ public class TrainBuilder extends TrainCommon{
 										break;
 									}
 								} 
-								// car leaving staging without a destinaton?
+								// car leaving staging without a destination?
 								if (c.getTrack().getLocType().equals(Track.STAGING) && (!carAdded  || destinationSave == null)){
 									buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarDest"),
 											new Object[]{c.getId(), c.getLocationName()}));
@@ -693,7 +722,7 @@ public class TrainBuilder extends TrainCommon{
 								}
 							}
 						}
-						// car not at location or has fred or caboose
+						// car not at location or has FRED or caboose
 					}
 					// could not find enough cars
 					reqNumOfMoves = 0;
@@ -879,7 +908,7 @@ public class TrainBuilder extends TrainCommon{
 			rl.setTrainLength(engineLength);		// load the engine(s) length
 		}
 		// terminating into staging?
-		if (terminateTrack != null && terminateTrack.getLocType().equals(terminateTrack.STAGING)){
+		if (terminateTrack != null && terminateTrack.getLocType().equals(Track.STAGING)){
 			train.getTrainTerminatesRouteLocation().setStagingTrack(terminateTrack);
 		}
 		return true;

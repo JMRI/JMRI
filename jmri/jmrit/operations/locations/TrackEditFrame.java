@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -88,8 +88,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
 
 	// optional panel for sidings, staging, and interchanges
-	JPanel panelOptional = new JPanel();
-	JPanel panelOptional2 = new JPanel();
+	JPanel panelOpt1 = new JPanel();
+	JPanel panelOpt2 = new JPanel();
 
 	Border border = BorderFactory.createEtchedBorder();
 
@@ -166,16 +166,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(panelCheckBoxes);
 		getContentPane().add(panelRoadNames);
-		// Only sidings can have a schedule
-		if (_type.equals(Track.SIDING)){
-			getContentPane().add(panelOptional);
-		}
-		// Only interchange tracks can control drops and pickups
-		if (_type.equals(Track.INTERCHANGE)){
-			getContentPane().add(panelOptional);
-			getContentPane().add(panelOptional2);
-		}
-		// Only staging tracks can control Schedule load changes
+		
+		// add optional panels
+		getContentPane().add(panelOpt1);
+		getContentPane().add(panelOpt2);
 		
        	getContentPane().add(panelComment);
        	getContentPane().add(panelButtons);
@@ -216,6 +210,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == saveTrackButton){
 			log.debug("track save button actived");
 			if (_track != null){
+				if (!checkUserInputs(_track))
+					return;
 				saveTrack(_track);
 			} else {
 				addNewTrack();
@@ -288,18 +284,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	protected void saveTrack (Track track){
-		// check that track name is valid
-		if (!checkName(rb.getString("save")))
-			return;
-		// check to see if track already exists
-		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
-		if (check != null && check != track){
-			reportTrackExists(rb.getString("save"));
-			return;
-		}
-		// check track length
-		if (!checkLength(track))
-			return;
 		// save train directions serviced by this location
 		int direction = 0;
 		if (northCheckBox.isSelected()){
@@ -324,7 +308,23 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		managerXml.writeOperationsLocationFile();
 	}
 
-
+	private boolean checkUserInputs(Track track){
+		// check that track name is valid
+		if (!checkName(rb.getString("save")))
+			return false;
+		// check to see if track already exists
+		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
+		if (check != null && check != track){
+			reportTrackExists(rb.getString("save"));
+			return false;
+		}
+		// check track length
+		if (!checkLength(track))
+			return false;
+		return true;
+	}
+	
+	
 	/**
 	 * 
 	 * @return true if name is less than 26 characters

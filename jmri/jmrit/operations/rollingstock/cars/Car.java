@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -29,8 +29,6 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected String _nextLoad = "";
-	
-	public static final String SCHEDULE = "Schedule";
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	
@@ -150,13 +148,13 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
 				return OKAY; //no
-			// can't place a car with a schduled load at a siding
+			// can't place a car with a scheduled load at a siding
 			else if (!track.getLocType().equals(Track.SIDING))
 				return OKAY;
 			else
-				return "Car has a SCHEDULE load ("+getLoad()+")";
+				return "Car has a " +SCHEDULE+ " " +LOAD+ " ("+getLoad()+")";
 		}
-		log.debug("track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
+		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = new ScheduleManager().instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){
@@ -174,16 +172,16 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 					return OKAY;
 				else
 					return SCHEDULE + " (" + track.getScheduleName()
-							+ ") request car type (" + si.getType()
-							+ ") road (" + si.getRoad() + ") load ("
+							+ ") request car "+TYPE+" (" + si.getType()
+							+ ") "+ROAD+" (" + si.getRoad() + ") "+LOAD+" ("
 							+ si.getLoad() + ")";
 			else
 				return SCHEDULE + " (" + track.getScheduleName()
-						+ ") request car type (" + si.getType()
-						+ ") road (" + si.getRoad() + ")";
+						+ ") request car "+TYPE+" (" + si.getType()
+						+ ") "+ROAD+" (" + si.getRoad() + ")";
 		} else
 			return SCHEDULE + " (" + track.getScheduleName()
-					+ ") request car type (" + si.getType() + ")";
+					+ ") request car "+TYPE+" (" + si.getType() + ")";
 	}
 	
 	/**
@@ -191,7 +189,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 * @param destination 
 	 * @param track (yard, siding, staging, or interchange track)
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
-	 * acceptable, or "length" if the rolling stock length didn't fit.
+	 * acceptable, or "length" if the rolling stock length didn't fit, or 
+	 * Schedule if the destination will not accept the car because the siding
+	 * has a schedule and the car doesn't meet the schedule requirements.
+	 * Also changes the car load status when the car reaches its destination.
 	 */
 	public String setDestination(Location destination, Track track) {
 		String destinationName = getDestinationName();
@@ -204,28 +205,47 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		// update load only when car reaches destination
 		if (destinationName.equals("") || (destination != null && track != null))
 			return status;
-		// only update load when car reaches a siding
-		if(!getTrack().getLocType().equals(Track.SIDING))
-			return status;
-		if (!getNextLoad().equals("")){
-			setLoad(getNextLoad());
-			setNextLoad("");
-			return status;
+		// update load when car reaches a siding
+		if (getTrack().getLocType().equals(Track.SIDING)){
+			if (!getNextLoad().equals("")){
+				setLoad(getNextLoad());
+				setNextLoad("");
+				return status;
+			}
+			// car doesn't have a schedule load, flip load status
+			if (getLoad().equals(carLoads.getDefaultEmptyName()))
+				setLoad(carLoads.getDefaultLoadName());
+			else
+				setLoad(carLoads.getDefaultEmptyName());
 		}
-		// car doesn't have a schedule load, flip load status
-		if (getLoad().equals(carLoads.getDefaultEmptyName()))
-			setLoad(carLoads.getDefaultLoadName());
-		else
-			setLoad(carLoads.getDefaultEmptyName());
+		// update load optionally when car reaches staging
+		if (getTrack().getLocType().equals(Track.STAGING)){
+			if (getTrack().isLoadSwapEnabled()){
+				if (getLoad().equals(carLoads.getDefaultEmptyName())){
+					setLoad(carLoads.getDefaultLoadName());
+					return status;
+				}
+				if (getLoad().equals(carLoads.getDefaultLoadName())){
+					setLoad(carLoads.getDefaultEmptyName());
+					return status;
+				}
+			}
+			// empty car if it has a schedule load
+			if (getTrack().isRemoveLoadsEnabled()){
+				if (!getLoad().equals(carLoads.getDefaultEmptyName()) ||
+						!getLoad().equals(carLoads.getDefaultLoadName())){
+					setLoad(carLoads.getDefaultEmptyName());
+				}
+			}
+		}
 		return status;
-			
 	}
 	
 
 	
 	/**
 	 * Check to see if track has schedule and if it does will schedule the next
-	 * item in the list
+	 * item in the list.  Load the car with the next schedule load if one exists.
 	 * 
 	 * @param track
 	 */

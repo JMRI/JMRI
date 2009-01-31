@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import jmri.jmrit.operations.setup.Control;
 
@@ -18,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -31,6 +32,8 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	JButton editScheduleButton = new JButton(rb.getString("Edit"));
 	JComboBox comboBoxSchedules = ScheduleManager.instance().getComboBox();
 	
+	JPanel panelSchedule = panelOpt1;
+	
 	public SidingEditFrame() {
 		super();
 	}
@@ -40,13 +43,13 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		
 		// setup the optional panel with schedule stuff
 		// guarantee space for textSchError messages
-		panelOptional.setLayout(new GridBagLayout());
-		panelOptional.setPreferredSize(new Dimension(500, 40));
-		addItem(panelOptional, textSchedule, 0, 0);
-		addItem(panelOptional, comboBoxSchedules, 1, 0);
-		addItem(panelOptional, editScheduleButton, 2, 0);
-		addItem(panelOptional, textSchError, 3, 0);
-		panelOptional.setBorder(border);
+		panelSchedule.setLayout(new GridBagLayout());
+		panelSchedule.setPreferredSize(new Dimension(500, 40));
+		addItem(panelSchedule, textSchedule, 0, 0);
+		addItem(panelSchedule, comboBoxSchedules, 1, 0);
+		addItem(panelSchedule, editScheduleButton, 2, 0);
+		addItem(panelSchedule, textSchError, 3, 0);
+		panelSchedule.setBorder(border);
 
 		super.initComponents(location, track);
 		

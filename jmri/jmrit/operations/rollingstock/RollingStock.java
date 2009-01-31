@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -48,6 +48,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String LENGTH = rb.getString("length");
 	public static final String TYPE = rb.getString("type");
 	public static final String ROAD = rb.getString("road");
+	public static final String SCHEDULE = rb.getString("schedule");
+	public static final String LOAD = rb.getString("load");
 	
 	public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location";  		// property change descriptions
 	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location";
