@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -879,9 +879,9 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if (ev == -1) return;
         m.setPri(CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         if (onButton.isSelected()) {
-            m.setElement(0, CbusConstants.CBUS_OP_EV_ON);
+            m.setElement(0, CbusConstants.CBUS_ACON);
         } else {
-            m.setElement(0, CbusConstants.CBUS_OP_EV_OFF);
+            m.setElement(0, CbusConstants.CBUS_ACOF);
         }
         m.setElement(1, nn>>8);
         m.setElement(2, nn&0xff);
@@ -956,36 +956,45 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         int op = msg.getElement(0);
         int node = msg.getElement(1)*256 + msg.getElement(2);
         int event = msg.getElement(3)*256 + msg.getElement(4);
+        String onOff = new String("OFF");
         switch (op) {
-            case CbusConstants.CBUS_OP_EV_ON: {
+            // On/Off events
+            case CbusConstants.CBUS_ACON:
                 // ON event
-                str = str+"Event ON NN:"+node+" Ev:"+event;
-                break;
-            }
-            
-            case CbusConstants.CBUS_OP_EV_OFF: {
+                onOff = "ON";
+            case CbusConstants.CBUS_ACOF:
                 // OFF event
-                str = str+"Event OFF NN:"+node+" Ev:"+event;
+                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
                 break;
-            }
-            case CbusConstants.CBUS_OP_EV_ON_DATA: {
+            
+            // On/Off short events
+            case CbusConstants.CBUS_ASON:
                 // ON event
-                str = str+"Event ON NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
-                break;
-            }
-            
-            case CbusConstants.CBUS_OP_EV_OFF_DATA: {
+                onOff = "ON";
+            case CbusConstants.CBUS_ASOF:
                 // OFF event
-                str = str+"Event OFF NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
+                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
                 break;
-            }
+            
+            // Request Event
+            case CbusConstants.CBUS_AREQ:
+                str = str+"Event Request NN:"+node+" Ev:"+event;
+                break;
+                
+            // On/Off event with data
+            case CbusConstants.CBUS_ACON1:
+                // ON event
+                onOff = "ON";
+            case CbusConstants.CBUS_ACOF1:
+                // OFF event
+                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
+                break;
             
             default: {
                 str = str+"Unrecognised: "+msg.toString();
                 break;
             }
         }
-//        return (str+"\n");
         return (str);
     }
     

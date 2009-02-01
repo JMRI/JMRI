@@ -8,17 +8,22 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public final class CbusConstants {
     
     /**
      * CBUS Opcodes
      */
-    public static final int CBUS_OP_EV_ON = 0x90;
-    public static final int CBUS_OP_EV_OFF = 0x91;
-    public static final int CBUS_OP_EV_ON_DATA = 0xB0;
-    public static final int CBUS_OP_EV_OFF_DATA = 0xB1;
+    public static final int CBUS_ACON = 0x90;
+    public static final int CBUS_ACOF = 0x91;
+    public static final int CBUS_AREQ = 0x92;
+    
+    public static final int CBUS_ASON = 0x98;
+    public static final int CBUS_ASOF = 0x99;
+    
+    public static final int CBUS_ACON1 = 0xB0;
+    public static final int CBUS_ACOF1 = 0xB1;
 
     /**
      * Event types
