@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CbusAddress {
 
@@ -70,11 +70,11 @@ public class CbusAddress {
                 
                  // add command
                 if (aString.substring(0,1).equals("+"))
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                    aFrame[0] = CbusConstants.CBUS_ACON;
                 else if (aString.substring(0,1).equals("-"))
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_OFF;
+                    aFrame[0] = CbusConstants.CBUS_ACOF;
                 else // default
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                    aFrame[0] = CbusConstants.CBUS_ACON;
             } else if (hCode.group(3)!=null) {
                 // hit on hex form
                 String l = hCode.group(3);
@@ -99,13 +99,13 @@ public class CbusAddress {
                 
                  // add command
                 if (hCode.group(6)==null)
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                    aFrame[0] = CbusConstants.CBUS_ACON;
                 else if (hCode.group(6).equals("+"))
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                    aFrame[0] = CbusConstants.CBUS_ACON;
                 else if (hCode.group(6).equals("-"))
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_OFF;
+                    aFrame[0] = CbusConstants.CBUS_ACOF;
                 else // default
-                    aFrame[0] = CbusConstants.CBUS_OP_EV_ON;
+                    aFrame[0] = CbusConstants.CBUS_ACON;
             }
         } else {
             // no match, leave match false and aFrame null
@@ -129,7 +129,7 @@ public class CbusAddress {
         return new CanMessage(aFrame);
     }
         
-    boolean check() {
+    public boolean check() {
         return hCode.reset(aString).matches();
     }
     
