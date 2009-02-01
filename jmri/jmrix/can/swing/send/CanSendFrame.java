@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanInterface;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusAddress;
 
 // This makes it a bit CBUS specific
 // May need refactoring one day
@@ -27,7 +28,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -211,8 +212,7 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
     /**
      * Create a well-formed message from a String
-     * String is expected to be space seperated hex bytes or compact event
-     * notation, e.g.:
+     * String is expected to be space seperated hex bytes or CbusAddress, e.g.:
      *      12 34 56
      *      +n4e1
      * @param s
@@ -220,36 +220,12 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
      */
     CanMessage createPacket(String s) {
         CanMessage m;
-        boolean eventNotation = false;
-        if ((s.startsWith("+") || s.startsWith("-"))
-                && (s.toLowerCase().charAt(1)=='n')
-                && (s.toLowerCase().indexOf('e') >= 3)) {
-            eventNotation = true;
-        }
-        if (eventNotation) {
-            int element = 0;
-            int node = 0;
-            int event = 0;
-            int idx = 2;
-            m = new CanMessage();
-            if (s.startsWith("+")) {
-                m.setElement(element++, CbusConstants.CBUS_OP_EV_ON);
-            } else {
-                m.setElement(element++, CbusConstants.CBUS_OP_EV_OFF);
-            }
-            try {
-                node = Integer.parseInt(s.toLowerCase().substring(2, s.indexOf('e')));
-                event = Integer.parseInt(s.toLowerCase().substring(s.indexOf('e')+1));
-            } catch (NumberFormatException ex) {
-                ex.printStackTrace();
-            }
-            m.setElement(element++, (node>>16)&0xFF);
-            m.setElement(element++, node&0xFF);
-            m.setElement(element++, (event>>16)&0xFF);
-            m.setElement(element++, event&0xFF);
-            m.setNumDataElements(5);
+        // Try to convert using CbusAddress class
+        CbusAddress a = new CbusAddress(s);
+        if (a.check()) {
+            m = a.makeMessage();
         } else {
-            // gather bytes in result
+            // Try to get hex bytes
             byte b[] = StringUtil.bytesFromHexString(s);
             if (b.length == 0) return null;  // no such thing as a zero-length message
             m = new CanMessage(b.length);
