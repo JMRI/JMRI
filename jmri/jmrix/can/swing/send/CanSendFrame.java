@@ -9,6 +9,10 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+// This makes it a bit CBUS specific
+// May need refactoring one day
+import jmri.jmrix.can.cbus.CbusConstants;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -19,12 +23,11 @@ import javax.swing.*;
  * <P>
  * When  sending a sequence of operations:
  * <UL>
- * <LI>Send the next message
- * <LI>Wait until you hear the echo, then start a timer
+ * <LI>Send the next message and start a timer
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -121,7 +124,6 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
     // control sequence operation
     int mNextSequenceElement = 0;
-    CanMessage mNextEcho = null;
     javax.swing.Timer timer = null;
 
     /**
@@ -142,6 +144,13 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
     }
 
     /**
+     * Internal routine to handle a timeout and send next item
+     */
+    synchronized protected void timeout() {
+        sendNextItem();
+    }
+    
+    /**
      * Run button pressed down, start the sequence operation
      * @param e
      */
@@ -159,25 +168,6 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
         // start the operation
         mNextSequenceElement = 0;
         sendNextItem();
-    }
-
-    /**
-     * Don't pay attention to messages
-     */
-    public void message(CanMessage m) {
-    }
-
-    /**
-     * Process the incoming reply to look for the needed echo
-     * @param m
-     */
-    public void reply(CanReply m) {
-        // are we running?
-        if (!mRunButton.isSelected()) return;
-        // yes, is this what we're looking for
-        if (! (mNextEcho.equals(m))) return;
-        // yes, we got it, do the next
-        startSequenceDelay();
     }
 
     /**
@@ -210,9 +200,8 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
             // make the packet
             CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
             // send it
-            mNextEcho = m;
-            log.debug("sendNextItem: "+m);
             tc.sendCanMessage(m, this);
+            startSequenceDelay();
         } else {
             // ask for the next one
             mNextSequenceElement++;
@@ -222,15 +211,51 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
     /**
      * Create a well-formed message from a String
+     * String is expected to be space seperated hex bytes or compact event
+     * notation, e.g.:
+     *      12 34 56
+     *      +n4e1
      * @param s
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {
-        // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
-        if (b.length == 0) return null;  // no such thing as a zero-length message
-        CanMessage m = new CanMessage(b.length);
-        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        CanMessage m;
+        boolean eventNotation = false;
+        if ((s.startsWith("+") || s.startsWith("-"))
+                && (s.toLowerCase().charAt(1)=='n')
+                && (s.toLowerCase().indexOf('e') >= 3)) {
+            eventNotation = true;
+        }
+        if (eventNotation) {
+            int element = 0;
+            int node = 0;
+            int event = 0;
+            int idx = 2;
+            m = new CanMessage();
+            if (s.startsWith("+")) {
+                m.setElement(element++, CbusConstants.CBUS_OP_EV_ON);
+            } else {
+                m.setElement(element++, CbusConstants.CBUS_OP_EV_OFF);
+            }
+            try {
+                node = Integer.parseInt(s.toLowerCase().substring(2, s.indexOf('e')));
+                event = Integer.parseInt(s.toLowerCase().substring(s.indexOf('e')+1));
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            m.setElement(element++, (node>>16)&0xFF);
+            m.setElement(element++, node&0xFF);
+            m.setElement(element++, (event>>16)&0xFF);
+            m.setElement(element++, event&0xFF);
+            m.setNumDataElements(5);
+        } else {
+            // gather bytes in result
+            byte b[] = StringUtil.bytesFromHexString(s);
+            if (b.length == 0) return null;  // no such thing as a zero-length message
+            m = new CanMessage(b.length);
+            // Use &oxff to ensure signed bytes are stored as unsigned ints
+            for (int i=0; i<b.length; i++) m.setElement(i, b[i]&0xff);
+        }
         return m;
     }
 
@@ -240,6 +265,18 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
         tc.addCanListener(this);
     }
 
+    /**
+     * Don't pay attention to messages
+     */
+    public void message(CanMessage m) {
+    }
+
+    /**
+     * Don't pay attention to replies
+     */
+    public void reply(CanReply m) {
+    }
+    
 
     /**
      * When the window closes, 
