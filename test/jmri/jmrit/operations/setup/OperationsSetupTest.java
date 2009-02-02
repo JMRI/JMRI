@@ -26,7 +26,7 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -83,312 +83,318 @@ public class OperationsSetupTest extends TestCase {
 	}
 	
 	// test menu attributes
+    @SuppressWarnings("static-access")
 	public void testMenuAttributes() {
 		Setup s = new Setup();
-		Setup.setMainMenuEnabled(true);
-		Assert.assertTrue(Setup.isMainMenuEnabled());
-		Setup.setMainMenuEnabled(false);
-		Assert.assertFalse(Setup.isMainMenuEnabled());
+		s.setMainMenuEnabled(true);
+		Assert.assertTrue(s.isMainMenuEnabled());
+		s.setMainMenuEnabled(false);
+		Assert.assertFalse(s.isMainMenuEnabled());
 	}
 	
 	
 	// test scale attributes
+    @SuppressWarnings("static-access")
 	public void testScaleAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
-		Setup.setRailroadName("Test Railroad Name");
-		Assert.assertEquals("Railroad Name", "Test Railroad Name", Setup.getRailroadName());
-		Setup.setOwnerName("Test Owner Name");
-		Assert.assertEquals("Owner Name", "Test Owner Name", Setup.getOwnerName());
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
-		Setup.setScale(Setup.Z_SCALE);
-		Assert.assertEquals("Z Scale", 1, Setup.getScale());
-		Assert.assertEquals("Z Scale Ratio", 220, Setup.getScaleRatio());
-		Assert.assertEquals("Z Scale Ton Ratio", 130, Setup.getScaleTonRatio());
-		Assert.assertEquals("Z Initial Weight", 364, Setup.getInitalWeight());
-		Assert.assertEquals("Z Added Weight", 100, Setup.getAddWeight());
+		s.setScale(Setup.Z_SCALE);
+		Assert.assertEquals("Z Scale", 1, s.getScale());
+		Assert.assertEquals("Z Scale Ratio", 220, s.getScaleRatio());
+		Assert.assertEquals("Z Scale Ton Ratio", 130, s.getScaleTonRatio());
+		Assert.assertEquals("Z Initial Weight", 364, s.getInitalWeight());
+		Assert.assertEquals("Z Added Weight", 100, s.getAddWeight());
 
-		Setup.setScale(Setup.N_SCALE);
-		Assert.assertEquals("N Scale", 2, Setup.getScale());
-		Assert.assertEquals("N Scale Ratio", 160, Setup.getScaleRatio());
-		Assert.assertEquals("N Scale Ton Ratio", 80, Setup.getScaleTonRatio());
-		Assert.assertEquals("N Initial Weight", 500, Setup.getInitalWeight());
-		Assert.assertEquals("N Added Weight", 150, Setup.getAddWeight());
+		s.setScale(Setup.N_SCALE);
+		Assert.assertEquals("N Scale", 2, s.getScale());
+		Assert.assertEquals("N Scale Ratio", 160, s.getScaleRatio());
+		Assert.assertEquals("N Scale Ton Ratio", 80, s.getScaleTonRatio());
+		Assert.assertEquals("N Initial Weight", 500, s.getInitalWeight());
+		Assert.assertEquals("N Added Weight", 150, s.getAddWeight());
 
-		Setup.setScale(Setup.TT_SCALE);
-		Assert.assertEquals("TT Scale", 3, Setup.getScale());
-		Assert.assertEquals("TT Scale Ratio", 120, Setup.getScaleRatio());
-		Assert.assertEquals("TT Scale Ton Ratio", 36, Setup.getScaleTonRatio());
-		Assert.assertEquals("TT Initial Weight", 750, Setup.getInitalWeight());
-		Assert.assertEquals("TT Added Weight", 375, Setup.getAddWeight());
+		s.setScale(Setup.TT_SCALE);
+		Assert.assertEquals("TT Scale", 3, s.getScale());
+		Assert.assertEquals("TT Scale Ratio", 120, s.getScaleRatio());
+		Assert.assertEquals("TT Scale Ton Ratio", 36, s.getScaleTonRatio());
+		Assert.assertEquals("TT Initial Weight", 750, s.getInitalWeight());
+		Assert.assertEquals("TT Added Weight", 375, s.getAddWeight());
 
-		Setup.setScale(Setup.HOn3_SCALE);
-		Assert.assertEquals("HOn3 Scale", 4, Setup.getScale());
-		Assert.assertEquals("HOn3 Scale Ratio", 87, Setup.getScaleRatio());
-		Assert.assertEquals("HOn3 Scale Ton Ratio", 20, Setup.getScaleTonRatio());
-		Assert.assertEquals("HOn3 Initial Weight", 750, Setup.getInitalWeight());
-		Assert.assertEquals("HOn3 Added Weight", 375, Setup.getAddWeight());
+		s.setScale(Setup.HOn3_SCALE);
+		Assert.assertEquals("HOn3 Scale", 4, s.getScale());
+		Assert.assertEquals("HOn3 Scale Ratio", 87, s.getScaleRatio());
+		Assert.assertEquals("HOn3 Scale Ton Ratio", 20, s.getScaleTonRatio());
+		Assert.assertEquals("HOn3 Initial Weight", 750, s.getInitalWeight());
+		Assert.assertEquals("HOn3 Added Weight", 375, s.getAddWeight());
 
-		Setup.setScale(Setup.OO_SCALE);
-		Assert.assertEquals("OO Scale", 5, Setup.getScale());
-		Assert.assertEquals("OO Scale Ratio", 76, Setup.getScaleRatio());
-		Assert.assertEquals("OO Scale Ton Ratio", 20, Setup.getScaleTonRatio());
-		Assert.assertEquals("OO Initial Weight", 750, Setup.getInitalWeight());
-		Assert.assertEquals("OO Added Weight", 500, Setup.getAddWeight());
+		s.setScale(Setup.OO_SCALE);
+		Assert.assertEquals("OO Scale", 5, s.getScale());
+		Assert.assertEquals("OO Scale Ratio", 76, s.getScaleRatio());
+		Assert.assertEquals("OO Scale Ton Ratio", 20, s.getScaleTonRatio());
+		Assert.assertEquals("OO Initial Weight", 750, s.getInitalWeight());
+		Assert.assertEquals("OO Added Weight", 500, s.getAddWeight());
 
-		Setup.setScale(Setup.HO_SCALE);
-		Assert.assertEquals("HO Scale", 6, Setup.getScale());
-		Assert.assertEquals("HO Scale Ratio", 87, Setup.getScaleRatio());
-		Assert.assertEquals("HO Scale Ton Ratio", 20, Setup.getScaleTonRatio());
-		Assert.assertEquals("HO Initial Weight", 1000, Setup.getInitalWeight());
-		Assert.assertEquals("HO Added Weight", 500, Setup.getAddWeight());
+		s.setScale(Setup.HO_SCALE);
+		Assert.assertEquals("HO Scale", 6, s.getScale());
+		Assert.assertEquals("HO Scale Ratio", 87, s.getScaleRatio());
+		Assert.assertEquals("HO Scale Ton Ratio", 20, s.getScaleTonRatio());
+		Assert.assertEquals("HO Initial Weight", 1000, s.getInitalWeight());
+		Assert.assertEquals("HO Added Weight", 500, s.getAddWeight());
 
-		Setup.setScale(Setup.Sn3_SCALE);
-		Assert.assertEquals("Sn3 Scale", 7, Setup.getScale());
-		Assert.assertEquals("Sn3 Scale Ratio", 64, Setup.getScaleRatio());
-		Assert.assertEquals("Sn3 Scale Ton Ratio", 16, Setup.getScaleTonRatio());
-		Assert.assertEquals("Sn3 Initial Weight", 1000, Setup.getInitalWeight());
-		Assert.assertEquals("Sn3 Added Weight", 500, Setup.getAddWeight());
+		s.setScale(Setup.Sn3_SCALE);
+		Assert.assertEquals("Sn3 Scale", 7, s.getScale());
+		Assert.assertEquals("Sn3 Scale Ratio", 64, s.getScaleRatio());
+		Assert.assertEquals("Sn3 Scale Ton Ratio", 16, s.getScaleTonRatio());
+		Assert.assertEquals("Sn3 Initial Weight", 1000, s.getInitalWeight());
+		Assert.assertEquals("Sn3 Added Weight", 500, s.getAddWeight());
 
-		Setup.setScale(Setup.S_SCALE);
-		Assert.assertEquals("S Scale", 8, Setup.getScale());
-		Assert.assertEquals("S Scale Ratio", 64, Setup.getScaleRatio());
-		Assert.assertEquals("S Scale Ton Ratio", 14, Setup.getScaleTonRatio());
-		Assert.assertEquals("S Initial Weight", 2000, Setup.getInitalWeight());
-		Assert.assertEquals("S Added Weight", 500, Setup.getAddWeight());
+		s.setScale(Setup.S_SCALE);
+		Assert.assertEquals("S Scale", 8, s.getScale());
+		Assert.assertEquals("S Scale Ratio", 64, s.getScaleRatio());
+		Assert.assertEquals("S Scale Ton Ratio", 14, s.getScaleTonRatio());
+		Assert.assertEquals("S Initial Weight", 2000, s.getInitalWeight());
+		Assert.assertEquals("S Added Weight", 500, s.getAddWeight());
 
-		Setup.setScale(Setup.On3_SCALE);
-		Assert.assertEquals("On3 Scale", 9, Setup.getScale());
-		Assert.assertEquals("On3 Scale Ratio", 48, Setup.getScaleRatio());
-		Assert.assertEquals("On3 Scale Ton Ratio", 8, Setup.getScaleTonRatio());
-		Assert.assertEquals("On3 Initial Weight", 1500, Setup.getInitalWeight());
-		Assert.assertEquals("On3 Added Weight", 750, Setup.getAddWeight());
+		s.setScale(Setup.On3_SCALE);
+		Assert.assertEquals("On3 Scale", 9, s.getScale());
+		Assert.assertEquals("On3 Scale Ratio", 48, s.getScaleRatio());
+		Assert.assertEquals("On3 Scale Ton Ratio", 8, s.getScaleTonRatio());
+		Assert.assertEquals("On3 Initial Weight", 1500, s.getInitalWeight());
+		Assert.assertEquals("On3 Added Weight", 750, s.getAddWeight());
 
-		Setup.setScale(Setup.O_SCALE);
-		Assert.assertEquals("O Scale", 10, Setup.getScale());
-		Assert.assertEquals("O Scale Ratio", 48, Setup.getScaleRatio());
-		Assert.assertEquals("O Scale Ton Ratio", 5, Setup.getScaleTonRatio());
-		Assert.assertEquals("O Initial Weight", 5000, Setup.getInitalWeight());
-		Assert.assertEquals("O Added Weight", 1000, Setup.getAddWeight());
+		s.setScale(Setup.O_SCALE);
+		Assert.assertEquals("O Scale", 10, s.getScale());
+		Assert.assertEquals("O Scale Ratio", 48, s.getScaleRatio());
+		Assert.assertEquals("O Scale Ton Ratio", 5, s.getScaleTonRatio());
+		Assert.assertEquals("O Initial Weight", 5000, s.getInitalWeight());
+		Assert.assertEquals("O Added Weight", 1000, s.getAddWeight());
 
-		Setup.setScale(Setup.G_SCALE);
-		Assert.assertEquals("G Scale", 11, Setup.getScale());
-		Assert.assertEquals("G Scale Ratio", 32, Setup.getScaleRatio());
-		Assert.assertEquals("G Scale Ton Ratio", 2, Setup.getScaleTonRatio());
-		Assert.assertEquals("G Initial Weight", 10000, Setup.getInitalWeight());
-		Assert.assertEquals("G Added Weight", 2000, Setup.getAddWeight());
+		s.setScale(Setup.G_SCALE);
+		Assert.assertEquals("G Scale", 11, s.getScale());
+		Assert.assertEquals("G Scale Ratio", 32, s.getScaleRatio());
+		Assert.assertEquals("G Scale Ton Ratio", 2, s.getScaleTonRatio());
+		Assert.assertEquals("G Initial Weight", 10000, s.getInitalWeight());
+		Assert.assertEquals("G Added Weight", 2000, s.getAddWeight());
 	}
 
         // test train attributes
+    @SuppressWarnings("static-access")
 	public void testTrainAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
-		Setup.setRailroadName("Test Railroad Name");
-		Assert.assertEquals("Railroad Name", "Test Railroad Name", Setup.getRailroadName());
-		Setup.setOwnerName("Test Owner Name");
-		Assert.assertEquals("Owner Name", "Test Owner Name", Setup.getOwnerName());
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
-		Setup.setTrainDirection(Setup.EAST);
-		Assert.assertEquals("Direction East", 1, Setup.getTrainDirection());
-		Setup.setTrainDirection(Setup.WEST);
-		Assert.assertEquals("Direction West", 2, Setup.getTrainDirection());
-		Setup.setTrainDirection(Setup.NORTH);
-		Assert.assertEquals("Direction North", 4, Setup.getTrainDirection());
-		Setup.setTrainDirection(Setup.SOUTH);
-		Assert.assertEquals("Direction South", 8, Setup.getTrainDirection());
+		s.setTrainDirection(Setup.EAST);
+		Assert.assertEquals("Direction East", 1, s.getTrainDirection());
+		s.setTrainDirection(Setup.WEST);
+		Assert.assertEquals("Direction West", 2, s.getTrainDirection());
+		s.setTrainDirection(Setup.NORTH);
+		Assert.assertEquals("Direction North", 4, s.getTrainDirection());
+		s.setTrainDirection(Setup.SOUTH);
+		Assert.assertEquals("Direction South", 8, s.getTrainDirection());
 
-		Setup.setTrainLength(520);
-		Assert.assertEquals("Train Length", 520, Setup.getTrainLength());
+		s.setTrainLength(520);
+		Assert.assertEquals("Train Length", 520, s.getTrainLength());
 
-		Setup.setEngineSize(120);
-		Assert.assertEquals("Engine Size", 120, Setup.getEngineSize());
+		s.setEngineSize(120);
+		Assert.assertEquals("Engine Size", 120, s.getEngineSize());
 
-		Setup.setCarMoves(12);
-		Assert.assertEquals("Car Moves", 12, Setup.getCarMoves());
+		s.setCarMoves(12);
+		Assert.assertEquals("Car Moves", 12, s.getCarMoves());
 
-		Setup.setCarTypes("Test Car Types");
-		Assert.assertEquals("Car Types", "Test Car Types", Setup.getCarTypes());
+		s.setCarTypes("Test Car Types");
+		Assert.assertEquals("Car Types", "Test Car Types", s.getCarTypes());
 
-                Setup.setAppendCarCommentEnabled(true);
-		Assert.assertTrue(Setup.isAppendCarCommentEnabled());
-		Setup.setAppendCarCommentEnabled(false);
-		Assert.assertFalse(Setup.isAppendCarCommentEnabled());
+                s.setAppendCarCommentEnabled(true);
+		Assert.assertTrue(s.isAppendCarCommentEnabled());
+		s.setAppendCarCommentEnabled(false);
+		Assert.assertFalse(s.isAppendCarCommentEnabled());
 
-                Setup.setShowCarLoadEnabled(true);
-		Assert.assertTrue(Setup.isShowCarLoadEnabled());
-		Setup.setShowCarLoadEnabled(false);
-		Assert.assertFalse(Setup.isShowCarLoadEnabled());
+                s.setShowCarLoadEnabled(true);
+		Assert.assertTrue(s.isShowCarLoadEnabled());
+		s.setShowCarLoadEnabled(false);
+		Assert.assertFalse(s.isShowCarLoadEnabled());
 
-		Setup.setBuildReportLevel("Test Build Report Level");
-		Assert.assertEquals("Build Report Level", "Test Build Report Level", Setup.getBuildReportLevel());
+		s.setBuildReportLevel("Test Build Report Level");
+		Assert.assertEquals("Build Report Level", "Test Build Report Level", s.getBuildReportLevel());
 
-		Setup.setSwitchTime(4);
-		Assert.assertEquals("Switch Time", 4, Setup.getSwitchTime());
+		s.setSwitchTime(4);
+		Assert.assertEquals("Switch Time", 4, s.getSwitchTime());
 
-		Setup.setTravelTime(8);
-		Assert.assertEquals("Travel Time", 8, Setup.getTravelTime());
+		s.setTravelTime(8);
+		Assert.assertEquals("Travel Time", 8, s.getTravelTime());
 	}
 	
 	// test panel attributes
+    @SuppressWarnings("static-access")
 	public void testPanelAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
-		Setup.setRailroadName("Test Railroad Name");
-		Assert.assertEquals("Railroad Name", "Test Railroad Name", Setup.getRailroadName());
-		Setup.setOwnerName("Test Owner Name");
-		Assert.assertEquals("Owner Name", "Test Owner Name", Setup.getOwnerName());
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
-		Setup.setPanelName("Test Panel Name");
-		Assert.assertEquals("Panel Name", "Test Panel Name", Setup.getPanelName());
+		s.setPanelName("Test Panel Name");
+		Assert.assertEquals("Panel Name", "Test Panel Name", s.getPanelName());
 
-		Setup.setFontName("Test Font Name");
-		Assert.assertEquals("Font Name", "Test Font Name", Setup.getFontName());
+		s.setFontName("Test Font Name");
+		Assert.assertEquals("Font Name", "Test Font Name", s.getFontName());
 
-		Setup.setTrainIconCordEnabled(true);
-		Assert.assertEquals("Train Icon Cord Enabled True", true, Setup.isTrainIconCordEnabled());
+		s.setTrainIconCordEnabled(true);
+		Assert.assertEquals("Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
 
-		Setup.setTrainIconCordEnabled(false);
-		Assert.assertEquals("Train Icon Cord Enabled False", false, Setup.isTrainIconCordEnabled());
+		s.setTrainIconCordEnabled(false);
+		Assert.assertEquals("Train Icon Cord Enabled False", false, s.isTrainIconCordEnabled());
 
-		Setup.setTrainIconAppendEnabled(true);
-		Assert.assertEquals("Train Icon Append Enabled True", true, Setup.isTrainIconAppendEnabled());
+		s.setTrainIconAppendEnabled(true);
+		Assert.assertEquals("Train Icon Append Enabled True", true, s.isTrainIconAppendEnabled());
 
-		Setup.setTrainIconAppendEnabled(false);
-		Assert.assertEquals("Train Icon Append Enabled False", false, Setup.isTrainIconAppendEnabled());
+		s.setTrainIconAppendEnabled(false);
+		Assert.assertEquals("Train Icon Append Enabled False", false, s.isTrainIconAppendEnabled());
 
-		Setup.setTrainIconColorNorth("Red");
-		Assert.assertEquals("Train Icon Color North", "Red", Setup.getTrainIconColorNorth());
+		s.setTrainIconColorNorth("Red");
+		Assert.assertEquals("Train Icon Color North", "Red", s.getTrainIconColorNorth());
 
-		Setup.setTrainIconColorSouth("Blue");
-		Assert.assertEquals("Train Icon Color South", "Blue", Setup.getTrainIconColorSouth());
+		s.setTrainIconColorSouth("Blue");
+		Assert.assertEquals("Train Icon Color South", "Blue", s.getTrainIconColorSouth());
 
-		Setup.setTrainIconColorEast("Green");
-		Assert.assertEquals("Train Icon Color East", "Green", Setup.getTrainIconColorEast());
+		s.setTrainIconColorEast("Green");
+		Assert.assertEquals("Train Icon Color East", "Green", s.getTrainIconColorEast());
 
-		Setup.setTrainIconColorWest("Brown");
-		Assert.assertEquals("Train Icon Color West", "Brown", Setup.getTrainIconColorWest());
+		s.setTrainIconColorWest("Brown");
+		Assert.assertEquals("Train Icon Color West", "Brown", s.getTrainIconColorWest());
 
-		Setup.setTrainIconColorLocal("White");
-		Assert.assertEquals("Train Icon Color Local", "White", Setup.getTrainIconColorLocal());
+		s.setTrainIconColorLocal("White");
+		Assert.assertEquals("Train Icon Color Local", "White", s.getTrainIconColorLocal());
 
-		Setup.setTrainIconColorTerminate("Black");
-		Assert.assertEquals("Train Icon Color Terminate", "Black", Setup.getTrainIconColorTerminate());
+		s.setTrainIconColorTerminate("Black");
+		Assert.assertEquals("Train Icon Color Terminate", "Black", s.getTrainIconColorTerminate());
 	}
 
 	// test xml file creation
+    @SuppressWarnings("static-access")
 	public void testXMLFileCreate() throws Exception {
 		Setup s;
 		s = createTestSetup();
 
-		Assert.assertEquals("Create Railroad Name", "File Test Railroad Name", Setup.getRailroadName());
-		Assert.assertEquals("Create Railroad Owner", "File Test Railroad Owner", Setup.getOwnerName());
-		Assert.assertEquals("Create Panel Name", "File Test Panel Name", Setup.getPanelName());
-		Assert.assertEquals("Create Font Name", "File Test Font Name", Setup.getFontName());
+		Assert.assertEquals("Create Railroad Name", "File Test Railroad Name", s.getRailroadName());
+		Assert.assertEquals("Create Railroad Owner", "File Test Railroad Owner", s.getOwnerName());
+		Assert.assertEquals("Create Panel Name", "File Test Panel Name", s.getPanelName());
+		Assert.assertEquals("Create Font Name", "File Test Font Name", s.getFontName());
 
-		Assert.assertEquals("Create Direction East", 1+2+4+8, Setup.getTrainDirection());
-		Assert.assertEquals("Create Train Length", 1111, Setup.getTrainLength());
-		Assert.assertEquals("Create Engine Size", 111, Setup.getEngineSize());
-		Assert.assertEquals("Create Scale", 11, Setup.getScale());
+		Assert.assertEquals("Create Direction East", 1+2+4+8, s.getTrainDirection());
+		Assert.assertEquals("Create Train Length", 1111, s.getTrainLength());
+		Assert.assertEquals("Create Engine Size", 111, s.getEngineSize());
+		Assert.assertEquals("Create Scale", 11, s.getScale());
 
-		Assert.assertEquals("Create Train Icon Cord Enabled True", true, Setup.isTrainIconCordEnabled());
-		Assert.assertEquals("Create Train Icon Append Enabled True", true, Setup.isTrainIconAppendEnabled());
-		Assert.assertEquals("Create Train Icon Color North", "Blue", Setup.getTrainIconColorNorth());
-		Assert.assertEquals("Create Train Icon Color South", "Red", Setup.getTrainIconColorSouth());
-		Assert.assertEquals("Create Train Icon Color East", "Brown", Setup.getTrainIconColorEast());
-		Assert.assertEquals("Create Train Icon Color West", "Green", Setup.getTrainIconColorWest());
-		Assert.assertEquals("Create Train Icon Color Local", "Black", Setup.getTrainIconColorLocal());
-		Assert.assertEquals("Create Train Icon Color Terminate", "White", Setup.getTrainIconColorTerminate());
+		Assert.assertEquals("Create Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
+		Assert.assertEquals("Create Train Icon Append Enabled True", true, s.isTrainIconAppendEnabled());
+		Assert.assertEquals("Create Train Icon Color North", "Blue", s.getTrainIconColorNorth());
+		Assert.assertEquals("Create Train Icon Color South", "Red", s.getTrainIconColorSouth());
+		Assert.assertEquals("Create Train Icon Color East", "Brown", s.getTrainIconColorEast());
+		Assert.assertEquals("Create Train Icon Color West", "Green", s.getTrainIconColorWest());
+		Assert.assertEquals("Create Train Icon Color Local", "Black", s.getTrainIconColorLocal());
+		Assert.assertEquals("Create Train Icon Color Terminate", "White", s.getTrainIconColorTerminate());
 	}
 
 	// test xml file read
+    @SuppressWarnings("static-access")
 	public void testXMLFileRead() throws Exception {
 		Setup s = new Setup();
 
-		Setup.setRailroadName("Before Read Test Railroad Name");
-		Setup.setOwnerName("Before Read Test Railroad Owner");
-		Setup.setPanelName("Before Read Test Panel Name");
-		Setup.setFontName("Before Read Test Font Name");
+		s.setRailroadName("Before Read Test Railroad Name");
+		s.setOwnerName("Before Read Test Railroad Owner");
+		s.setPanelName("Before Read Test Panel Name");
+		s.setFontName("Before Read Test Font Name");
 
-                Setup.setMainMenuEnabled(false);
+                s.setMainMenuEnabled(false);
 
-		Setup.setTrainDirection(Setup.EAST);
-		Setup.setTrainLength(2222);
-		Setup.setEngineSize(222);
-		Setup.setScale(Setup.N_SCALE);
+		s.setTrainDirection(Setup.EAST);
+		s.setTrainLength(2222);
+		s.setEngineSize(222);
+		s.setScale(Setup.N_SCALE);
 
-                Setup.setCarTypes("Before Read Test Car Types");
-		Setup.setSwitchTime(22);
-		Setup.setTravelTime(222);
-		Setup.setShowCarLoadEnabled(false);
-		Setup.setAppendCarCommentEnabled(false);
-		Setup.setBuildReportLevel("22");
+                s.setCarTypes("Before Read Test Car Types");
+		s.setSwitchTime(22);
+		s.setTravelTime(222);
+		s.setShowCarLoadEnabled(false);
+		s.setAppendCarCommentEnabled(false);
+		s.setBuildReportLevel("22");
 
-		Setup.setTrainIconCordEnabled(false);
-		Setup.setTrainIconAppendEnabled(false);
-		Setup.setTrainIconColorNorth("Red");
-		Setup.setTrainIconColorSouth("Blue");
-		Setup.setTrainIconColorEast("Green");
-		Setup.setTrainIconColorWest("Brown");
-		Setup.setTrainIconColorLocal("White");
-		Setup.setTrainIconColorTerminate("Black");
+		s.setTrainIconCordEnabled(false);
+		s.setTrainIconAppendEnabled(false);
+		s.setTrainIconColorNorth("Red");
+		s.setTrainIconColorSouth("Blue");
+		s.setTrainIconColorEast("Green");
+		s.setTrainIconColorWest("Brown");
+		s.setTrainIconColorLocal("White");
+		s.setTrainIconColorTerminate("Black");
 
-		Assert.assertEquals("Before Read Railroad Name", "Before Read Test Railroad Name", Setup.getRailroadName());
-		Assert.assertEquals("Before Read Railroad Owner", "Before Read Test Railroad Owner", Setup.getOwnerName());
-		Assert.assertEquals("Before Read Panel Name", "Before Read Test Panel Name", Setup.getPanelName());
-		Assert.assertEquals("Before Read Font Name", "Before Read Test Font Name", Setup.getFontName());
+		Assert.assertEquals("Before Read Railroad Name", "Before Read Test Railroad Name", s.getRailroadName());
+		Assert.assertEquals("Before Read Railroad Owner", "Before Read Test Railroad Owner", s.getOwnerName());
+		Assert.assertEquals("Before Read Panel Name", "Before Read Test Panel Name", s.getPanelName());
+		Assert.assertEquals("Before Read Font Name", "Before Read Test Font Name", s.getFontName());
 
-                Assert.assertEquals("Before Read Main Menu Enabled", false, Setup.isMainMenuEnabled());
+                Assert.assertEquals("Before Read Main Menu Enabled", false, s.isMainMenuEnabled());
 
-		Assert.assertEquals("Before Read Direction East", 1, Setup.getTrainDirection());
-		Assert.assertEquals("Before Read Train Length", 2222, Setup.getTrainLength());
-		Assert.assertEquals("Before Read Engine Size", 222, Setup.getEngineSize());
-		Assert.assertEquals("Before Read Scale", 2, Setup.getScale());
+		Assert.assertEquals("Before Read Direction East", 1, s.getTrainDirection());
+		Assert.assertEquals("Before Read Train Length", 2222, s.getTrainLength());
+		Assert.assertEquals("Before Read Engine Size", 222, s.getEngineSize());
+		Assert.assertEquals("Before Read Scale", 2, s.getScale());
 
-                Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", Setup.getCarTypes());
-		Assert.assertEquals("Before Read Switch Time", 22, Setup.getSwitchTime());
-		Assert.assertEquals("Before Read Travel Time", 222, Setup.getTravelTime());
-                Assert.assertEquals("Before Read Show Car Load Enabled", false, Setup.isShowCarLoadEnabled());
-                Assert.assertEquals("Before Read Append Car Comment Enabled", false, Setup.isAppendCarCommentEnabled());
-                Assert.assertEquals("Before Read Build Report Level", "22", Setup.getBuildReportLevel());
+                Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", s.getCarTypes());
+		Assert.assertEquals("Before Read Switch Time", 22, s.getSwitchTime());
+		Assert.assertEquals("Before Read Travel Time", 222, s.getTravelTime());
+                Assert.assertEquals("Before Read Show Car Load Enabled", false, s.isShowCarLoadEnabled());
+                Assert.assertEquals("Before Read Append Car Comment Enabled", false, s.isAppendCarCommentEnabled());
+                Assert.assertEquals("Before Read Build Report Level", "22", s.getBuildReportLevel());
 
-		Assert.assertEquals("Before Read Train Icon Cord Enabled True", false, Setup.isTrainIconCordEnabled());
-		Assert.assertEquals("Before Read Train Icon Append Enabled True", false, Setup.isTrainIconAppendEnabled());
-		Assert.assertEquals("Before Read Train Icon Color North", "Red", Setup.getTrainIconColorNorth());
-		Assert.assertEquals("Before Read Train Icon Color South", "Blue", Setup.getTrainIconColorSouth());
-		Assert.assertEquals("Before Read Train Icon Color East", "Green", Setup.getTrainIconColorEast());
-		Assert.assertEquals("Before Read Train Icon Color West", "Brown", Setup.getTrainIconColorWest());
-		Assert.assertEquals("Before Read Train Icon Color Local", "White", Setup.getTrainIconColorLocal());
-		Assert.assertEquals("Before Read Train Icon Color Terminate", "Black", Setup.getTrainIconColorTerminate());
+		Assert.assertEquals("Before Read Train Icon Cord Enabled True", false, s.isTrainIconCordEnabled());
+		Assert.assertEquals("Before Read Train Icon Append Enabled True", false, s.isTrainIconAppendEnabled());
+		Assert.assertEquals("Before Read Train Icon Color North", "Red", s.getTrainIconColorNorth());
+		Assert.assertEquals("Before Read Train Icon Color South", "Blue", s.getTrainIconColorSouth());
+		Assert.assertEquals("Before Read Train Icon Color East", "Green", s.getTrainIconColorEast());
+		Assert.assertEquals("Before Read Train Icon Color West", "Brown", s.getTrainIconColorWest());
+		Assert.assertEquals("Before Read Train Icon Color Local", "White", s.getTrainIconColorLocal());
+		Assert.assertEquals("Before Read Train Icon Color Terminate", "Black", s.getTrainIconColorTerminate());
 
 		readTestSetup();
 
-		Assert.assertEquals("After Read Railroad Name", "File Test Railroad Name", Setup.getRailroadName());
-		Assert.assertEquals("After Read Railroad Owner", "File Test Railroad Owner", Setup.getOwnerName());
-		Assert.assertEquals("After Read Panel Name", "File Test Panel Name", Setup.getPanelName());
-		Assert.assertEquals("After Read Font Name", "File Test Font Name", Setup.getFontName());
+		Assert.assertEquals("After Read Railroad Name", "File Test Railroad Name", s.getRailroadName());
+		Assert.assertEquals("After Read Railroad Owner", "File Test Railroad Owner", s.getOwnerName());
+		Assert.assertEquals("After Read Panel Name", "File Test Panel Name", s.getPanelName());
+		Assert.assertEquals("After Read Font Name", "File Test Font Name", s.getFontName());
 
-                Assert.assertEquals("After Read Main Menu Enabled", true, Setup.isMainMenuEnabled());
+                Assert.assertEquals("After Read Main Menu Enabled", true, s.isMainMenuEnabled());
 
-		Assert.assertEquals("After Read Direction East", 1+2+4+8, Setup.getTrainDirection());
-		Assert.assertEquals("After Read Train Length", 1111, Setup.getTrainLength());
-		Assert.assertEquals("After Read Engine Size", 111, Setup.getEngineSize());
-		Assert.assertEquals("After Read Scale", 11, Setup.getScale());
+		Assert.assertEquals("After Read Direction East", 1+2+4+8, s.getTrainDirection());
+		Assert.assertEquals("After Read Train Length", 1111, s.getTrainLength());
+		Assert.assertEquals("After Read Engine Size", 111, s.getEngineSize());
+		Assert.assertEquals("After Read Scale", 11, s.getScale());
 
-                Assert.assertEquals("After Read Test Car Types", "File Test Car Types", Setup.getCarTypes());
-		Assert.assertEquals("After Read Switch Time", 11, Setup.getSwitchTime());
-		Assert.assertEquals("After Read Travel Time", 111, Setup.getTravelTime());
-                Assert.assertEquals("After Read Show Car Load Enabled", true, Setup.isShowCarLoadEnabled());
-                Assert.assertEquals("After Read Append Car Comment Enabled", true, Setup.isAppendCarCommentEnabled());
-                Assert.assertEquals("After Read Build Report Level", "11", Setup.getBuildReportLevel());
+                Assert.assertEquals("After Read Test Car Types", "File Test Car Types", s.getCarTypes());
+		Assert.assertEquals("After Read Switch Time", 11, s.getSwitchTime());
+		Assert.assertEquals("After Read Travel Time", 111, s.getTravelTime());
+                Assert.assertEquals("After Read Show Car Load Enabled", true, s.isShowCarLoadEnabled());
+                Assert.assertEquals("After Read Append Car Comment Enabled", true, s.isAppendCarCommentEnabled());
+                Assert.assertEquals("After Read Build Report Level", "11", s.getBuildReportLevel());
 
-		Assert.assertEquals("After Read Train Icon Cord Enabled True", true, Setup.isTrainIconCordEnabled());
-		Assert.assertEquals("After Read Train Icon Append Enabled True", true, Setup.isTrainIconAppendEnabled());
-		Assert.assertEquals("After Read Train Icon Color North", "Blue", Setup.getTrainIconColorNorth());
-		Assert.assertEquals("After Read Train Icon Color South", "Red", Setup.getTrainIconColorSouth());
-		Assert.assertEquals("After Read Train Icon Color East", "Brown", Setup.getTrainIconColorEast());
-		Assert.assertEquals("After Read Train Icon Color West", "Green", Setup.getTrainIconColorWest());
-		Assert.assertEquals("After Read Train Icon Color Local", "Black", Setup.getTrainIconColorLocal());
-		Assert.assertEquals("After Read Train Icon Color Terminate", "White", Setup.getTrainIconColorTerminate());
+		Assert.assertEquals("After Read Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
+		Assert.assertEquals("After Read Train Icon Append Enabled True", true, s.isTrainIconAppendEnabled());
+		Assert.assertEquals("After Read Train Icon Color North", "Blue", s.getTrainIconColorNorth());
+		Assert.assertEquals("After Read Train Icon Color South", "Red", s.getTrainIconColorSouth());
+		Assert.assertEquals("After Read Train Icon Color East", "Brown", s.getTrainIconColorEast());
+		Assert.assertEquals("After Read Train Icon Color West", "Green", s.getTrainIconColorWest());
+		Assert.assertEquals("After Read Train Icon Color Local", "Black", s.getTrainIconColorLocal());
+		Assert.assertEquals("After Read Train Icon Color Terminate", "White", s.getTrainIconColorTerminate());
 	}
 
 
@@ -396,6 +402,7 @@ public class OperationsSetupTest extends TestCase {
 
 	// TODO: Add test to read xml file
 
+    @SuppressWarnings("static-access")
 	public static Setup createTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
@@ -415,32 +422,32 @@ public class OperationsSetupTest extends TestCase {
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
-		Setup.setRailroadName("File Test Railroad Name");
-		Setup.setOwnerName("File Test Railroad Owner");
-		Setup.setPanelName("File Test Panel Name");
-		Setup.setFontName("File Test Font Name");
+		s.setRailroadName("File Test Railroad Name");
+		s.setOwnerName("File Test Railroad Owner");
+		s.setPanelName("File Test Panel Name");
+		s.setFontName("File Test Font Name");
                 
-                Setup.setMainMenuEnabled(true);
+                s.setMainMenuEnabled(true);
                 
-		Setup.setTrainDirection(Setup.EAST+Setup.WEST+Setup.NORTH+Setup.SOUTH);
-		Setup.setTrainLength(1111);
-		Setup.setEngineSize(111);
-		Setup.setScale(Setup.G_SCALE);
-		Setup.setCarTypes("File Test Car Types");
-		Setup.setSwitchTime(11);
-		Setup.setTravelTime(111);
-		Setup.setShowCarLoadEnabled(true);
-		Setup.setAppendCarCommentEnabled(true);
-		Setup.setBuildReportLevel("11");
+		s.setTrainDirection(Setup.EAST+Setup.WEST+Setup.NORTH+Setup.SOUTH);
+		s.setTrainLength(1111);
+		s.setEngineSize(111);
+		s.setScale(Setup.G_SCALE);
+		s.setCarTypes("File Test Car Types");
+		s.setSwitchTime(11);
+		s.setTravelTime(111);
+		s.setShowCarLoadEnabled(true);
+		s.setAppendCarCommentEnabled(true);
+		s.setBuildReportLevel("11");
                         
-		Setup.setTrainIconCordEnabled(true);
-		Setup.setTrainIconAppendEnabled(true);
-		Setup.setTrainIconColorNorth("Blue");
-		Setup.setTrainIconColorSouth("Red");
-		Setup.setTrainIconColorEast("Brown");
-		Setup.setTrainIconColorWest("Green");
-		Setup.setTrainIconColorLocal("Black");
-		Setup.setTrainIconColorTerminate("White");
+		s.setTrainIconCordEnabled(true);
+		s.setTrainIconAppendEnabled(true);
+		s.setTrainIconColorNorth("Blue");
+		s.setTrainIconColorSouth("Red");
+		s.setTrainIconColorEast("Brown");
+		s.setTrainIconColorWest("Green");
+		s.setTrainIconColorLocal("Black");
+		s.setTrainIconColorTerminate("White");
 
 		// write it
 		ox.writeFile(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
@@ -451,6 +458,7 @@ public class OperationsSetupTest extends TestCase {
 		return s;
 	}
 
+    @SuppressWarnings("static-access")
 	public void readTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
@@ -462,7 +470,7 @@ public class OperationsSetupTest extends TestCase {
 		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		OperationsXml.setOperationsFileName("OperationsTest.xml");
+		ox.setOperationsFileName("OperationsTest.xml");
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
@@ -471,7 +479,7 @@ public class OperationsSetupTest extends TestCase {
 		ox.readFile(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
 
 		// Set filename back to Operations
-		OperationsXml.setOperationsFileName("Operations.xml");
+		ox.setOperationsFileName("Operations.xml");
 	}
 
 	// from here down is testing infrastructure
