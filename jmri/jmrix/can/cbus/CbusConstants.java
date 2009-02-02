@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public final class CbusConstants {
     
@@ -37,6 +37,11 @@ public final class CbusConstants {
      */
     public static final int DEFAULT_DYNAMIC_PRIORITY = 2;
     public static final int DEFAULT_MINOR_PRIORITY = 3;
+    
+    /**
+     * Event Table
+     */
+    public static final int MAX_TABLE_EVENTS = 5000;
 }
 
 /* @(#)CbusConstants.java */
