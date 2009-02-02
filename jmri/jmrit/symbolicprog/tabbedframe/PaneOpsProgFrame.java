@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
                  implements java.beans.PropertyChangeListener  {
@@ -47,6 +47,10 @@ public class PaneOpsProgFrame extends PaneProgFrame
 
         if (log.isDebugEnabled()) log.debug("PaneOpsProgFrame \""+name
                                             +"\" constructed");
+    }
+
+    void addHelp() {
+        addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame", true);
     }
 
     /**

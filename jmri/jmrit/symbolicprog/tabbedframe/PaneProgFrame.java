@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.71 $
+ * @version   $Revision: 1.72 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -276,8 +276,15 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // and put that pane into the JFrame
         getContentPane().add(pane);
+
+        // add help
+        addHelp();
     }
 
+    void addHelp() {
+        addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame", true);
+    }
+    
     public Dimension getPreferredSize() {
         Dimension screen = getMaximumSize();
         int width = Math.min(super.getPreferredSize().width, screen.width);
