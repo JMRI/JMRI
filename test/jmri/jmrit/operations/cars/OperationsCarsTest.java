@@ -24,7 +24,7 @@ import jmri.Turnout;
 /**
  * Tests for the OperationsCars class
  * @author	Bob Coleman
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -313,11 +313,13 @@ public class OperationsCarsTest extends TestCase {
     * creates a set of turnouts, sensors and signals
     * as common background for testing
     */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
+            @Override
             protected void init() {
                 root = null;
                 super.init();
@@ -364,5 +366,6 @@ public class OperationsCarsTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

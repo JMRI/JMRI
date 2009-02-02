@@ -15,15 +15,13 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.LocationManager;
 
 import java.util.List;
 
 /**
  * Tests for the OperationsRoutes class
  * @author	Bob Coleman
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -44,10 +42,10 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
 
-		Assert.assertEquals("Route Constant EAST", 1, r1.EAST);
-		Assert.assertEquals("Route Constant WEST", 2, r1.WEST);
-		Assert.assertEquals("Route Constant NORTH", 4, r1.NORTH);
-		Assert.assertEquals("Route Constant SOUTH", 8, r1.SOUTH);
+		Assert.assertEquals("Route Constant EAST", 1, Route.EAST);
+		Assert.assertEquals("Route Constant WEST", 2, Route.WEST);
+		Assert.assertEquals("Route Constant NORTH", 4, Route.NORTH);
+		Assert.assertEquals("Route Constant SOUTH", 8, Route.SOUTH);
 	}
 
 	// test attributes
@@ -87,10 +85,10 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
 
-		Assert.assertEquals("Route Constant EAST", 1, rl1.EAST);
-		Assert.assertEquals("Route Constant WEST", 2, rl1.WEST);
-		Assert.assertEquals("Route Constant NORTH", 4, rl1.NORTH);
-		Assert.assertEquals("Route Constant SOUTH", 8, rl1.SOUTH);
+		Assert.assertEquals("Route Constant EAST", 1, RouteLocation.EAST);
+		Assert.assertEquals("Route Constant WEST", 2, RouteLocation.WEST);
+		Assert.assertEquals("Route Constant NORTH", 4, RouteLocation.NORTH);
+		Assert.assertEquals("Route Constant SOUTH", 8, RouteLocation.SOUTH);
 	}
 
 	// test route location attributes
@@ -125,16 +123,16 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Location Icon X", 12, rl1.getTrainIconX());
 		Assert.assertEquals("Route Location Icon Y", 8, rl1.getTrainIconY());
 
-		rl1.setTrainDirection(rl1.EAST);
+		rl1.setTrainDirection(RouteLocation.EAST);
 		Assert.assertEquals("Route Location Train Direction East", 1, rl1.getTrainDirection());
 
-		rl1.setTrainDirection(rl1.WEST);
+		rl1.setTrainDirection(RouteLocation.WEST);
 		Assert.assertEquals("Route Location Train Direction West", 2, rl1.getTrainDirection());
 
-		rl1.setTrainDirection(rl1.NORTH);
+		rl1.setTrainDirection(RouteLocation.NORTH);
 		Assert.assertEquals("Route Location Train Direction North", 4, rl1.getTrainDirection());
 
-		rl1.setTrainDirection(rl1.SOUTH);
+		rl1.setTrainDirection(RouteLocation.SOUTH);
 		Assert.assertEquals("Route Location Train Direction South", 8, rl1.getTrainDirection());
 	}
 
@@ -285,11 +283,13 @@ public class OperationsRoutesTest extends TestCase {
     * creates a set of turnouts, sensors and signals
     * as common background for testing
     */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
+            @Override
             protected void init() {
                 root = null;
                 super.init();
@@ -336,5 +336,6 @@ public class OperationsRoutesTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

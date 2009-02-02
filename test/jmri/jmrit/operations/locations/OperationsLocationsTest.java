@@ -3,14 +3,9 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import java.util.List;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -25,13 +20,26 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 /**
- * Tests for the OperationsLocations class
- * @author	Bob Coleman
- * @version $Revision: 1.6 $
+ * Tests for the Operations Locations class
+ * Last manually cross-checked on 20090131
+ * 
+ * Still to do:
+ *   ScheduleItem: XML read/write
+ *   Schedule: Register, List, XML read/write
+ *   Track: AcceptsDropTrain, AcceptsDropRoute
+ *   Track: AcceptsPickupTrain, AcceptsPickupRoute
+ *   Track: CheckScheduleValid
+ *   Track: XML read/write
+ *   Location: Track support  <-- I am here
+ *   Location: XML read/write
+ *  
+ * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @version $Revision: 1.7 $
  */
 public class OperationsLocationsTest extends TestCase {
 
-	// test creation
+        // test Location Class (part one)
+        // test Location creation
 	public void testCreate() {
 		Location l = new Location("Test id", "Test Name");
 		Assert.assertEquals("Location id", "Test id", l.getId());
@@ -42,33 +50,499 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Comment", "Test Location Comment", l.getComment());
 	}
 
-	// test public constants
-	public void testConstants() {
+	// test Location public constants
+	public void testLocationConstants() {
 		Location l = new Location("Test id", "Test Name");
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Location Constant NORMAL", 1, l.NORMAL);
-		Assert.assertEquals("Location Constant STAGING", 2, l.STAGING);
+		Assert.assertEquals("Location Constant NORMAL", 1, Location.NORMAL);
+		Assert.assertEquals("Location Constant STAGING", 2, Location.STAGING);
 
-		Assert.assertEquals("Location Constant EAST", 1, l.EAST);
-		Assert.assertEquals("Location Constant WEST", 2, l.WEST);
-		Assert.assertEquals("Location Constant NORTH", 4, l.NORTH);
-		Assert.assertEquals("Location Constant SOUTH", 8, l.SOUTH);
+		Assert.assertEquals("Location Constant EAST", 1, Location.EAST);
+		Assert.assertEquals("Location Constant WEST", 2, Location.WEST);
+		Assert.assertEquals("Location Constant NORTH", 4, Location.NORTH);
+		Assert.assertEquals("Location Constant SOUTH", 8, Location.SOUTH);
 
+		Assert.assertEquals("Location Constant YARDLISTLENGTH_CHANGED_PROPERTY", "yardListLength", Location.YARDLISTLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant SIDINGLISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.SIDINGLISTLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant INTERCHANGELISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.INTERCHANGELISTLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant STAGINGLISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.STAGINGLISTLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant TYPES_CHANGED_PROPERTY", "types", Location.TYPES_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant TRAINDIRECTION_CHANGED_PROPERTY", "trainDirection", Location.TRAINDIRECTION_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant LENGTH_CHANGED_PROPERTY", "length", Location.LENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant USEDLENGTH_CHANGED_PROPERTY", "usedLength", Location.USEDLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant NAME_CHANGED_PROPERTY", "name", Location.NAME_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant SWITCHLIST_CHANGED_PROPERTY", "switchList", Location.SWITCHLIST_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant DISPOSE_CHANGED_PROPERTY", "dispose", Location.DISPOSE_CHANGED_PROPERTY);
+	}
+        
+        // test ScheduleItem class
+        // test ScheduleItem public constants
+	public void testScheduleItemConstants() {
+		Assert.assertEquals("Location ScheduleItem Constant NUMBER_CHANGED_PROPERTY", "number", ScheduleItem.NUMBER_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "type", ScheduleItem.TYPE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "road", ScheduleItem.ROAD_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "load", ScheduleItem.LOAD_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant DISPOSE", "dispose", ScheduleItem.DISPOSE);
+        }
+
+	// test ScheduleItem attributes
+	public void testScheduleItemAttributes() {
+		ScheduleItem ltsi = new ScheduleItem("Test id", "Test Type");
+		Assert.assertEquals("Location ScheduleItem id", "Test id", ltsi.getId());
+		Assert.assertEquals("Location ScheduleItem Type", "Test Type", ltsi.getType());
+
+                ltsi.setType("New Test Type");
+		Assert.assertEquals("Location ScheduleItem set Type", "New Test Type", ltsi.getType());
+
+                ltsi.setComment("New Test Comment");
+		Assert.assertEquals("Location ScheduleItem set Comment", "New Test Comment", ltsi.getComment());
+
+                ltsi.setRoad("New Test Road");
+		Assert.assertEquals("Location ScheduleItem set Road", "New Test Road", ltsi.getRoad());
+
+                ltsi.setLoad("New Test Load");
+		Assert.assertEquals("Location ScheduleItem set Load", "New Test Load", ltsi.getLoad());
+
+                ltsi.setShip("New Test Ship");
+		Assert.assertEquals("Location ScheduleItem set Ship", "New Test Ship", ltsi.getShip());
+
+                ltsi.setSequenceId(22);
+		Assert.assertEquals("Location ScheduleItem set SequenceId", 22, ltsi.getSequenceId());
+
+                ltsi.setCount(222);
+		Assert.assertEquals("Location ScheduleItem set Count", 222, ltsi.getCount());
+        }
+        
+        // test Schedule class
+        // test schedule public constants
+	public void testScheduleConstants() {
+		Assert.assertEquals("Location Schedule Constant LISTCHANGE_CHANGED_PROPERTY", "listChange", Schedule.LISTCHANGE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Schedule Constant DISPOSE", "dispose", Schedule.DISPOSE);
+        }
+
+	// test schedule attributes
+	public void testScheduleAttributes() {
+		Schedule lts = new Schedule("Test id", "Test Name");
+		Assert.assertEquals("Location Schedule id", "Test id", lts.getId());
+		Assert.assertEquals("Location Schedule Name", "Test Name", lts.getName());
+
+                lts.setName("New Test Name");
+		Assert.assertEquals("Location Schedule set Name", "New Test Name", lts.getName());
+		Assert.assertEquals("Location Schedule toString", "New Test Name", lts.toString());
+
+                lts.setComment("New Test Comment");
+		Assert.assertEquals("Location Schedule set Comment", "New Test Comment", lts.getComment());
+        }
+        
+	// test schedule scheduleitem
+	public void testScheduleScheduleItems() {
+		Schedule lts = new Schedule("Test id", "Test Name");
+		Assert.assertEquals("Location Schedule ScheduleItem id", "Test id", lts.getId());
+		Assert.assertEquals("Location Schedule ScheduleItem Name", "Test Name", lts.getName());
+
+		ScheduleItem ltsi1, ltsi2, ltsi3, ltsi4;
+
+                ltsi1 = lts.addItem("New Test Type");
+		Assert.assertEquals("Location Schedule ScheduleItem Check Type", "New Test Type", ltsi1.getType());
+
+                String testid = ltsi1.getId();
+                ltsi2 = lts.getItemByType("New Test Type");
+		Assert.assertEquals("Location Schedule ScheduleItem Check Ids", testid, ltsi2.getId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 0", 1, ltsi2.getSequenceId());
+
+                ltsi3 = lts.addItem("New Second Test Type");
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 1", 1, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 2", 2, ltsi3.getSequenceId());
+                
+                lts.moveItemUp(ltsi3);
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 3", 2, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 4", 1, ltsi3.getSequenceId());
+
+                ltsi4 = lts.addItem("New Third Test Type", 2);
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 5", 3, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 6", 1, ltsi3.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 7", 2, ltsi4.getSequenceId());
+
+                lts.moveItemDown(ltsi3);
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 3, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 2, ltsi3.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 10", 1, ltsi4.getSequenceId());
+
+                lts.deleteItem(ltsi3);
+                /* This should be 2 not 3 */
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 3, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 1, ltsi4.getSequenceId());
+        }
+
+        // test Track class
+	// test Track public constants
+	public void testTrackConstants() {
+		Assert.assertEquals("Location Track Constant ANY", "Any", Track.ANY);
+		Assert.assertEquals("Location Track Constant TRAINS", "trains", Track.TRAINS);
+		Assert.assertEquals("Location Track Constant ROUTES", "routes", Track.ROUTES);
+
+		Assert.assertEquals("Location Track Constant STAGING", "Staging", Track.STAGING);
+		Assert.assertEquals("Location Track Constant INTERCHANGE", "Interchange", Track.INTERCHANGE);
+		Assert.assertEquals("Location track Constant YARD", "Yard", Track.YARD);
+		Assert.assertEquals("Location Track Constant SIDING", "Siding", Track.SIDING);
+
+		Assert.assertEquals("Location Track Constant EAST", 1, Track.EAST);
+		Assert.assertEquals("Location Track Constant WEST", 2, Track.WEST);
+		Assert.assertEquals("Location track Constant NORTH", 4, Track.NORTH);
+		Assert.assertEquals("Location Track Constant SOUTH", 8, Track.SOUTH);
+
+		Assert.assertEquals("Location Track Constant ALLROADS", "All", Track.ALLROADS);
+		Assert.assertEquals("Location Track Constant INCLUDEROADS", "Include", Track.INCLUDEROADS);
+		Assert.assertEquals("Location track Constant EXCLUDEROADS", "Exclude", Track.EXCLUDEROADS);
+
+		Assert.assertEquals("Location Track Constant TYPES_CHANGED_PROPERTY", "types", Track.TYPES_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Track Constant ROADS_CHANGED_PROPERTY", "roads", Track.ROADS_CHANGED_PROPERTY);
+		Assert.assertEquals("Location track Constant SCHEDULE_CHANGED_PROPERTY", "schedule change", Track.SCHEDULE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location track Constant DISPOSE_CHANGED_PROPERTY", "dispose", Track.DISPOSE_CHANGED_PROPERTY);
+        }
+
+	// test Track attributes
+	public void testTrackAttributes() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
+
+                t.setName("New Test Name");
+		Assert.assertEquals("Location Track set Name", "New Test Name", t.getName());
+
+                t.setComment("New Test Comment");
+		Assert.assertEquals("Location Track set Comment", "New Test Comment", t.getComment());
+
+                t.setMoves(40);
+		Assert.assertEquals("Location Track Moves", 40, t.getMoves());
+
+                t.setLength(400);
+		Assert.assertEquals("Location Track Length", 400, t.getLength());
+
+		t.setReserved(200);
+		Assert.assertEquals("Location Track Reserved", 200, t.getReserved());
+
+		t.setUsedLength(100);
+		Assert.assertEquals("Location Track Used Length", 100, t.getUsedLength());
+
+		t.setTrainDirections(Track.NORTH);
+		Assert.assertEquals("Location Track Direction North", Track.NORTH, t.getTrainDirections());
+
+		t.setTrainDirections(Track.SOUTH);
+		Assert.assertEquals("Location Track Direction South", Track.SOUTH, t.getTrainDirections());
+
+		t.setTrainDirections(Track.EAST);
+		Assert.assertEquals("Location Track Direction East", Track.EAST, t.getTrainDirections());
+
+		t.setTrainDirections(Track.WEST);
+		Assert.assertEquals("Location Track Direction West", Track.WEST, t.getTrainDirections());
+
+		t.setTrainDirections(Track.NORTH+Track.SOUTH);
+		Assert.assertEquals("Location Track Direction North+South", Track.NORTH+Track.SOUTH, t.getTrainDirections());
+
+		t.setTrainDirections(Track.EAST+Track.WEST);
+		Assert.assertEquals("Location Track Direction East+West", Track.EAST+Track.WEST, t.getTrainDirections());
+
+		t.setTrainDirections(Track.NORTH+Track.SOUTH+Track.EAST+Track.WEST);
+		Assert.assertEquals("Location Track Direction North+South+East+West", Track.NORTH+Track.SOUTH+Track.EAST+Track.WEST, t.getTrainDirections());
+
+                t.setRoadOption("New Test Road Option");
+		Assert.assertEquals("Location Track set Road Option", "New Test Road Option", t.getRoadOption());
+
+                t.setDropOption("New Test Drop Option");
+		Assert.assertEquals("Location Track set Drop Option", "New Test Drop Option", t.getDropOption());
+
+                t.setPickupOption("New Test Pickup Option");
+		Assert.assertEquals("Location Track set Pickup Option", "New Test Pickup Option", t.getPickupOption());
+        }
+
+	// test Track car support
+	public void testTrackCarSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+		Assert.assertEquals("Location Track Car Start Used Length", 0, t.getUsedLength());
+		Assert.assertEquals("Location Track Car Start Number of Rolling Stock", 0, t.getNumberRS());
+		Assert.assertEquals("Location Track Car Start Number of Cars", 0, t.getNumberCars());
+		Assert.assertEquals("Location Track Car Start Number of Engines", 0, t.getNumberEngines());
+
+		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		c1.setLength("40");
+		t.addRS(c1);
+
+		Assert.assertEquals("Location Track Car First Number of Rolling Stock", 1, t.getNumberRS());
+		Assert.assertEquals("Location Track Car First Number of Cars", 1, t.getNumberCars());
+		Assert.assertEquals("Location Track Car First Number of Engines", 0, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car First Used Length", 40+4, t.getUsedLength()); // Drawbar length is 4
+
+		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		c2.setLength("33");
+		t.addRS(c2);
+
+		Assert.assertEquals("Location Track Car 2nd Number of Rolling Stock", 2, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 2nd Number of Cars", 2, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 2nd Number of Engines", 0, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 2nd Used Length", 40+4+33+4, t.getUsedLength()); // Drawbar length is 4
+
+		jmri.jmrit.operations.rollingstock.engines.Engine e1 = new jmri.jmrit.operations.rollingstock.engines.Engine("TESTROAD", "TESTNUMBERE1");
+		e1.setLength("80");
+		t.addRS(e1);
+
+		Assert.assertEquals("Location Track Car 3rd Number of Rolling Stock", 3, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 3rd Number of Cars", 2, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 3rd Number of Engines", 1, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 3rd Used Length", 40+4+33+4+80+4, t.getUsedLength()); // Drawbar length is 4
+
+		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
+		c3.setLength("50");
+		t.addRS(c3);
+
+		Assert.assertEquals("Location Track Car 4th Number of Rolling Stock", 4, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 4th Number of Cars", 3, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 4th Number of Engines", 1, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 4th Used Length", 40+4+33+4+80+4+50+4, t.getUsedLength()); // Drawbar length is 4
+
+		jmri.jmrit.operations.rollingstock.engines.Engine e2 = new jmri.jmrit.operations.rollingstock.engines.Engine("TESTROAD", "TESTNUMBERE2");
+		e2.setLength("80");
+		t.addRS(e2);
+
+		Assert.assertEquals("Location Track Car 5th Number of Rolling Stock", 5, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 5th Number of Cars", 3, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 5th Number of Engines", 2, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 5th Used Length", 40+4+33+4+80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+
+		t.deleteRS(c2);
+
+		Assert.assertEquals("Location Track Car 6th Number of Rolling Stock", 4, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 6th Number of Cars", 2, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 6th Number of Engines", 2, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 6th Used Length", 40+4+80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+
+		t.deleteRS(c1);
+
+		Assert.assertEquals("Location Track Car 7th Number of Rolling Stock", 3, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 7th Number of Cars", 1, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 7th Number of Engines", 2, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 7th Used Length", 80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+
+		t.deleteRS(e2);
+
+		Assert.assertEquals("Location Track Car 8th Number of Rolling Stock", 2, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 8th Number of Cars", 1, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 8th Number of Engines", 1, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 8th Used Length", 80+4+50+4, t.getUsedLength()); // Drawbar length is 4
+
+		t.deleteRS(e1);
+
+		Assert.assertEquals("Location Track Car 9th Number of Rolling Stock", 1, t.getNumberRS());
+		Assert.assertEquals("Location Track Car 9th Number of Cars", 1, t.getNumberCars());
+		Assert.assertEquals("Location Track Car 9th Number of Engines", 0, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car 9th Used Length", 50+4, t.getUsedLength()); // Drawbar length is 4
+
+                t.deleteRS(c3);
+
+		Assert.assertEquals("Location Track Car Last Number of Rolling Stock", 0, t.getNumberRS());
+		Assert.assertEquals("Location Track Car Last Number of Cars", 0, t.getNumberCars());
+		Assert.assertEquals("Location Track Car Last Number of Engines", 0, t.getNumberEngines());
+		Assert.assertEquals("Location Track Car Last Used Length", 0, t.getUsedLength()); // Drawbar length is 4
 	}
 
-	// test length attributes
+	// test Track pickup support
+	public void testTrackPickUpSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+		Assert.assertEquals("Location Track Pick Ups Start", 0, t.getPickupRS());
+
+		t.addPickupRS();
+		Assert.assertEquals("Location Track Pick Ups 1st", 1, t.getPickupRS());
+
+		t.addPickupRS();
+		Assert.assertEquals("Location Track Pick Ups 2nd", 2, t.getPickupRS());
+
+		t.deletePickupRS();
+		Assert.assertEquals("Location Track Pick Ups 3rd", 1, t.getPickupRS());
+
+		t.deletePickupRS();
+		Assert.assertEquals("Location Track Pick Ups 4th", 0, t.getPickupRS());
+	}
+
+	// test Track drop support
+	public void testTrackDropSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+		Assert.assertEquals("Location Track Drops Start", 0, t.getDropRS());
+		Assert.assertEquals("Location Track Drops Start Reserved", 0, t.getReserved());
+
+		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		c1.setLength("40");
+		t.addDropRS(c1);
+		Assert.assertEquals("Location Track Drops 1st", 1, t.getDropRS());
+		Assert.assertEquals("Location Track Drops 1st Reserved", 40+4, t.getReserved());
+
+		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		c2.setLength("50");
+		t.addDropRS(c2);
+		Assert.assertEquals("Location Track Drops 2nd", 2, t.getDropRS());
+		Assert.assertEquals("Location Track Drops 2nd Reserved", 40+4+50+4, t.getReserved());
+
+		t.deleteDropRS(c2);
+		Assert.assertEquals("Location Track Drops 3rd", 1, t.getDropRS());
+		Assert.assertEquals("Location Track Drops 3rd Reserved", 40+4, t.getReserved());
+
+		t.deleteDropRS(c1);
+		Assert.assertEquals("Location Track Drops 4th", 0, t.getDropRS());
+       		Assert.assertEquals("Location Track Drops 4th Reserved", 0, t.getReserved());
+	}
+
+	// test Track typename support
+	public void testTrackTypeNameSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+                /* Test Type Name */
+		Assert.assertEquals("Location Track Accepts Type Name undefined", false, t.acceptsTypeName("TestTypeName"));
+
+		t.addTypeName("TestTypeName");
+		Assert.assertEquals("Location Track Accepts Type Name defined", false, t.acceptsTypeName("TestTypeName"));
+
+		// now add to car types
+		CarTypes ct = CarTypes.instance();
+		ct.addName("TestTypeName");
+		t.addTypeName("TestTypeName");
+		Assert.assertEquals("Location Track Accepts Type Name defined after ct", true, t.acceptsTypeName("TestTypeName"));
+
+		t.deleteTypeName("TestTypeName");
+		Assert.assertEquals("Location Track Accepts Type Name deleted", false, t.acceptsTypeName("TestTypeName"));
+
+                /* Needed so later tests will behave correctly */
+                ct.deleteName("TestTypeName");
+
+		ct.addName("Baggager");
+		
+		t.addTypeName("Baggager");
+		
+		Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.acceptsTypeName("Baggager"));
+
+                /* Test Road Name */
+                t.setRoadOption(Track.INCLUDEROADS);
+		Assert.assertEquals("Location Track set Road Option INCLUDEROADS", "Include", t.getRoadOption());
+
+                Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.acceptsRoadName("TestRoadName"));
+
+		t.addRoadName("TestRoadName");
+		Assert.assertEquals("Location Track Accepts Road Name defined", true, t.acceptsRoadName("TestRoadName"));
+
+		t.addRoadName("TestOtherRoadName");
+		Assert.assertEquals("Location Track Accepts Road Name other defined", true, t.acceptsRoadName("TestRoadName"));
+
+                t.deleteRoadName("TestRoadName");
+		Assert.assertEquals("Location Track Accepts Road Name deleted", false, t.acceptsRoadName("TestRoadName"));
+
+                t.setRoadOption(Track.ALLROADS);
+		Assert.assertEquals("Location Track set Road Option AllROADS", "All", t.getRoadOption());
+		Assert.assertEquals("Location Track Accepts All Road Names", true, t.acceptsRoadName("TestRoadName"));
+
+                t.setRoadOption(Track.EXCLUDEROADS);
+		Assert.assertEquals("Location Track set Road Option EXCLUDEROADS", "Exclude", t.getRoadOption());
+		Assert.assertEquals("Location Track Excludes Road Names", true, t.acceptsRoadName("TestRoadName"));
+
+                t.addRoadName("TestRoadName");
+		Assert.assertEquals("Location Track Excludes Road Names 2", false, t.acceptsRoadName("TestRoadName"));
+
+                /* Test Drop IDs */
+                Assert.assertEquals("Location Track Accepts Drop ID undefined", false, t.containsDropId("TestDropId"));
+
+		t.addDropId("TestDropId");
+                Assert.assertEquals("Location Track Accepts Drop ID defined", true, t.containsDropId("TestDropId"));
+
+		t.addDropId("TestOtherDropId");
+                Assert.assertEquals("Location Track Accepts Drop ID other defined", true, t.containsDropId("TestDropId"));
+
+                t.deleteDropId("TestDropId");
+                Assert.assertEquals("Location Track Accepts Drop ID deleted", false, t.containsDropId("TestDropId"));
+
+                /* Test Pickup IDs */
+                Assert.assertEquals("Location Track Accepts Pickup ID undefined", false, t.containsPickupId("TestPickupId"));
+
+		t.addPickupId("TestPickupId");
+                Assert.assertEquals("Location Track Accepts Pickup ID defined", true, t.containsPickupId("TestPickupId"));
+
+		t.addPickupId("TestOtherPickupId");
+                Assert.assertEquals("Location Track Accepts Pickup ID other defined", true, t.containsPickupId("TestPickupId"));
+
+                t.deletePickupId("TestPickupId");
+                Assert.assertEquals("Location Track Accepts Pickup ID deleted", false, t.containsPickupId("TestPickupId"));
+	}
+
+	// test Track schedule support
+	public void testTrackScheduleSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+                t.setScheduleName("Test Schedule Name");
+		Assert.assertEquals("Location Track set Schedule Name", "Test Schedule Name", t.getScheduleName());
+                t.setScheduleItemId("Test Schedule Item Id");
+		Assert.assertEquals("Location Track set Schedule Item Id", "Test Schedule Item Id", t.getScheduleItemId());
+                t.setScheduleCount(2);
+		Assert.assertEquals("Location Track set Schedule Count", 2, t.getScheduleCount());
+	}
+
+	// test Track load support
+	public void testTrackLoadSupport() {
+		Track t = new Track("Test id", "Test Name", "Test Type");
+		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+
+                /* Test Load Swapable */
+                Assert.assertEquals("Location Track Load Swapable default", false, t.isLoadSwapEnabled());
+                t.enableLoadSwaps(true);
+                Assert.assertEquals("Location Track Load Swapable true", true, t.isLoadSwapEnabled());
+                t.enableLoadSwaps(false);
+                Assert.assertEquals("Location Track Load Swapable false", false, t.isLoadSwapEnabled());
+
+                /* Test Remove Loads */
+                Assert.assertEquals("Location Track Remove Loads default", false, t.isRemoveLoadsEnabled());
+                t.enableRemoveLoads(true);
+                Assert.assertEquals("Location Track Remove Loads true", true, t.isRemoveLoadsEnabled());
+                t.enableRemoveLoads(false);
+                Assert.assertEquals("Location Track Remove Loads false", false, t.isRemoveLoadsEnabled());
+
+                /* Test Add Loads */
+                Assert.assertEquals("Location Track Add Loads default", false, t.isAddLoadsEnabled());
+                t.enableAddLoads(true);
+                Assert.assertEquals("Location Track Add Loads true", true, t.isAddLoadsEnabled());
+                t.enableAddLoads(false);
+                Assert.assertEquals("Location Track Add Loads false", false, t.isAddLoadsEnabled());
+     	}
+
+        // test Locations class (part two)
+        // test length attributes
 	public void testLengthAttributes() {
 		Location l = new Location("Test id", "Test Name");
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
 		l.setLength(400);
-		Assert.assertEquals("Length", 400, l.getLength());
+		Assert.assertEquals("Location Length", 400, l.getLength());
 
 		l.setUsedLength(200);
-		Assert.assertEquals("Used Length", 200, l.getUsedLength());
+		Assert.assertEquals("Location Used Length", 200, l.getUsedLength());
 	}
 
 	// test operation attributes
@@ -77,11 +551,11 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		l.setLocationOps(l.STAGING);
-		Assert.assertEquals("Location Ops Staging", l.STAGING, l.getLocationOps());
+		l.setLocationOps(Location.STAGING);
+		Assert.assertEquals("Location Ops Staging", Location.STAGING, l.getLocationOps());
 
-		l.setLocationOps(l.NORMAL);
-		Assert.assertEquals("Location Ops Normal", l.NORMAL, l.getLocationOps());
+		l.setLocationOps(Location.NORMAL);
+		Assert.assertEquals("Location Ops Normal", Location.NORMAL, l.getLocationOps());
 	}
 
 	// test direction attributes
@@ -90,26 +564,26 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		l.setTrainDirections(l.NORTH);
-		Assert.assertEquals("Location Direction North", l.NORTH, l.getTrainDirections());
+		l.setTrainDirections(Location.NORTH);
+		Assert.assertEquals("Location Direction North", Location.NORTH, l.getTrainDirections());
 
-		l.setTrainDirections(l.SOUTH);
-		Assert.assertEquals("Location Direction South", l.SOUTH, l.getTrainDirections());
+		l.setTrainDirections(Location.SOUTH);
+		Assert.assertEquals("Location Direction South", Location.SOUTH, l.getTrainDirections());
 
-		l.setTrainDirections(l.EAST);
-		Assert.assertEquals("Location Direction East", l.EAST, l.getTrainDirections());
+		l.setTrainDirections(Location.EAST);
+		Assert.assertEquals("Location Direction East", Location.EAST, l.getTrainDirections());
 
-		l.setTrainDirections(l.WEST);
-		Assert.assertEquals("Location Direction West", l.WEST, l.getTrainDirections());
+		l.setTrainDirections(Location.WEST);
+		Assert.assertEquals("Location Direction West", Location.WEST, l.getTrainDirections());
 
-		l.setTrainDirections(l.NORTH+l.SOUTH);
-		Assert.assertEquals("Location Direction North+South", l.NORTH+l.SOUTH, l.getTrainDirections());
+		l.setTrainDirections(Location.NORTH+Location.SOUTH);
+		Assert.assertEquals("Location Direction North+South", Location.NORTH+Location.SOUTH, l.getTrainDirections());
 
-		l.setTrainDirections(l.EAST+l.WEST);
-		Assert.assertEquals("Location Direction East+West", l.EAST+l.WEST, l.getTrainDirections());
+		l.setTrainDirections(Location.EAST+Location.WEST);
+		Assert.assertEquals("Location Direction East+West", Location.EAST+Location.WEST, l.getTrainDirections());
 
-		l.setTrainDirections(l.NORTH+l.SOUTH+l.EAST+l.WEST);
-		Assert.assertEquals("Location Direction North+South+East+West", l.NORTH+l.SOUTH+l.EAST+l.WEST, l.getTrainDirections());
+		l.setTrainDirections(Location.NORTH+Location.SOUTH+Location.EAST+Location.WEST);
+		Assert.assertEquals("Location Direction North+South+East+West", Location.NORTH+Location.SOUTH+Location.EAST+Location.WEST, l.getTrainDirections());
 	}
 
 	// test car attributes
@@ -129,10 +603,10 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
 		l.setSwitchList(true);
-		Assert.assertEquals("Switch List True", true, l.getSwitchList());
+		Assert.assertEquals("Location Switch List True", true, l.getSwitchList());
 
 		l.setSwitchList(false);
-		Assert.assertEquals("Switch List True", false, l.getSwitchList());
+		Assert.assertEquals("Location Switch List True", false, l.getSwitchList());
 	}
 
 	// test typename support
@@ -141,19 +615,19 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
 
 		l.addTypeName("TestTypeName");
-		Assert.assertEquals("Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
 
 		// now add to car types
 		CarTypes ct = CarTypes.instance();
 		ct.addName("TestTypeName");
 		l.addTypeName("TestTypeName");
-		Assert.assertEquals("Accepts Type Name defined", true, l.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Accepts Type Name defined", true, l.acceptsTypeName("TestTypeName"));
 
 		l.deleteTypeName("TestTypeName");
-		Assert.assertEquals("Accepts Type Name undefined2", false, l.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Accepts Type Name undefined2", false, l.acceptsTypeName("TestTypeName"));
 
 		ct.addName("Baggage");
 		ct.addName("BoxCar");
@@ -179,12 +653,12 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
 		
-		Assert.assertEquals("Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
-		Assert.assertEquals("Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
-		Assert.assertEquals("Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
-		Assert.assertEquals("Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Location Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
+		Assert.assertEquals("Location Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
+		Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
+		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
 	}
 
 	// test pickup support
@@ -193,19 +667,19 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Pick Ups Start Condition", 0 , l.getPickupRS());
+		Assert.assertEquals("Location Pick Ups Start Condition", 0 , l.getPickupRS());
 
 		l.addPickupRS();
-		Assert.assertEquals("Pick Up 1", 1, l.getPickupRS());
+		Assert.assertEquals("Location Pick Up 1", 1, l.getPickupRS());
 
 		l.addPickupRS();
-		Assert.assertEquals("Pick Up second", 2, l.getPickupRS());
+		Assert.assertEquals("Location Pick Up second", 2, l.getPickupRS());
 
 		l.deletePickupRS();
-		Assert.assertEquals("Delete Pick Up", 1, l.getPickupRS());
+		Assert.assertEquals("Location Delete Pick Up", 1, l.getPickupRS());
 
 		l.deletePickupRS();
-		Assert.assertEquals("Delete Pick Up second", 0, l.getPickupRS());
+		Assert.assertEquals("Location Delete Pick Up second", 0, l.getPickupRS());
 	}
 
 	// test drop support
@@ -214,19 +688,19 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Drop Start Condition", 0 , l.getPickupRS());
+		Assert.assertEquals("Location Drop Start Condition", 0 , l.getPickupRS());
 
 		l.addDropRS();
-		Assert.assertEquals("Drop 1", 1, l.getDropRS());
+		Assert.assertEquals("Location Drop 1", 1, l.getDropRS());
 
 		l.addDropRS();
-		Assert.assertEquals("Drop second", 2, l.getDropRS());
+		Assert.assertEquals("Location Drop second", 2, l.getDropRS());
 
 		l.deleteDropRS();
-		Assert.assertEquals("Delete Drop", 1, l.getDropRS());
+		Assert.assertEquals("Location Delete Drop", 1, l.getDropRS());
 
 		l.deleteDropRS();
-		Assert.assertEquals("Delete Drop second", 0, l.getDropRS());
+		Assert.assertEquals("Location Delete Drop second", 0, l.getDropRS());
 	}
 
 	// test car support
@@ -235,44 +709,44 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Used Length", 0, l.getUsedLength());
-		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
+		Assert.assertEquals("Location Used Length", 0, l.getUsedLength());
+		Assert.assertEquals("Location Number of Cars", 0, l.getNumberRS());
 
 		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 1, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 2, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
 		l.addRS(c3);
 
-		Assert.assertEquals("Number of Cars", 3, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 40+4+33+4+50+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 3, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 40+4+33+4+50+4, l.getUsedLength()); // Drawbar length is 4
 
 		l.deleteRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 40+4+50+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 2, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 40+4+50+4, l.getUsedLength()); // Drawbar length is 4
 
 		l.deleteRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 50+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 1, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 50+4, l.getUsedLength()); // Drawbar length is 4
 
 		l.deleteRS(c3);
 
-		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 0, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 0, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 0, l.getUsedLength()); // Drawbar length is 4
 	}
 
 	// test car duplicates support
@@ -281,27 +755,27 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		Assert.assertEquals("Used Length", 0, l.getUsedLength());
-		Assert.assertEquals("Number of Cars", 0, l.getNumberRS());
+		Assert.assertEquals("Location Used Length", 0, l.getUsedLength());
+		Assert.assertEquals("Location Number of Cars", 0, l.getNumberRS());
 
 		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 1, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 1, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addRS(c2);
 
-		Assert.assertEquals("Number of Cars", 2, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 2, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
 		l.addRS(c1);
 
-		Assert.assertEquals("Number of Cars", 3, l.getNumberRS());
-		Assert.assertEquals("Used Length one car", 40+4+33+4+40+4, l.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Number of Cars", 3, l.getNumberRS());
+		Assert.assertEquals("Location Used Length one car", 40+4+33+4+40+4, l.getUsedLength()); // Drawbar length is 4
 
 	}
 
@@ -465,6 +939,7 @@ public class OperationsLocationsTest extends TestCase {
     * creates a set of turnouts, sensors and signals
     * as common background for testing
     */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         new LocationManagerXml(){ {_instance = this; setOperationsFileName("temp"+File.separator+"OperationsTestLocationRoster.xml");}};
@@ -483,6 +958,7 @@ public class OperationsLocationsTest extends TestCase {
 */
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
+            @Override
             protected void init() {
                 root = null;
                 super.init();
@@ -529,6 +1005,7 @@ public class OperationsLocationsTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() { 
         apps.tests.Log4JFixture.tearDown();
     }
