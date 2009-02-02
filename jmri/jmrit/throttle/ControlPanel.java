@@ -52,7 +52,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.63 $
+ * @version    $Revision: 1.64 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -206,6 +206,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if(isEnabled) configureAvailableSpeedStepModes();
         stopButton.setEnabled(isEnabled);
         idleButton.setEnabled(isEnabled);
+        speedControllerEnable = isEnabled;
         switch(_displaySlider) {
         case STEPDISPLAY: {
             if(speedSpinner!=null)
@@ -319,6 +320,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
     }
     
+    private boolean speedControllerEnable = false;
     /**
      *  Set the Speed Control selection method
      *
@@ -333,14 +335,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 sliderPanel.setVisible(false);
                 speedSlider.setEnabled(false);
                 spinnerPanel.setVisible(true);
-                speedSpinner.setEnabled(true);
+                speedSpinner.setEnabled(speedControllerEnable);
                 break;
             }
             // if speedSpinner == null, fall through to default case
         }
         default: {
             sliderPanel.setVisible(true);
-            speedSlider.setEnabled(true);
+            speedSlider.setEnabled(speedControllerEnable);
             spinnerPanel.setVisible(false);
             if (speedSpinner!=null) speedSpinner.setEnabled(false);
         }
@@ -753,7 +755,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.63 $
+     * @version    $Revision: 1.64 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
