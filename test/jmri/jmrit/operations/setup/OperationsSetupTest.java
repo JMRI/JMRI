@@ -26,25 +26,27 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsSetupTest extends TestCase {
 
 	// test creation
+    @SuppressWarnings("static-access")
 	public void testCreate() {
 		Setup s = new Setup();
-		Setup.setRailroadName("Test Railroad Name");
-		Assert.assertEquals("Railroad Name", "Test Railroad Name", Setup.getRailroadName());
-		Setup.setOwnerName("Test Owner Name");
-		Assert.assertEquals("Owner Name", "Test Owner Name", Setup.getOwnerName());
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 	}
 
 	// test public constants
+    @SuppressWarnings("static-access")
 	public void testConstants() {
 		Setup s = new Setup();
 
-		Setup.setRailroadName("Test Railroad Name");
-		Assert.assertEquals("Railroad Name", "Test Railroad Name", Setup.getRailroadName());
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
 
                 Assert.assertEquals("Operations Setup Constant Z_SCALE", 1, Setup.Z_SCALE);
 		Assert.assertEquals("Operations Setup Constant N_SCALE", 2, Setup.N_SCALE);
@@ -414,7 +416,7 @@ public class OperationsSetupTest extends TestCase {
 		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		OperationsXml.setOperationsFileName("OperationsTest.xml");
+		ox.setOperationsFileName("OperationsTest.xml");
 
 		// remove existing Operations file if its there
 		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
@@ -453,7 +455,7 @@ public class OperationsSetupTest extends TestCase {
 		ox.writeFile(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
 
 		// Set filename back to Operations
-		OperationsXml.setOperationsFileName("Operations.xml");
+		ox.setOperationsFileName("Operations.xml");
 
 		return s;
 	}
