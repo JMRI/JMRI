@@ -27,16 +27,34 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
-import jmri.jmrit.XmlFile;
 import java.util.List;
-import java.io.File;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.routes.RouteManager;
 
 /**
- * Tests for the OperationsTrains class
- * @author	Bob Coleman
- * @version $Revision: 1.10 $
+ * Tests for the Operations Trains class
+ * Last manually cross-checked on 20090131
+ * 
+ * Still to do:
+ *  Train: DepartureTime, ArrivalTime
+ *  Train: numberCarsWorked
+ *  Train: isTraininRoute
+ *  Train: getBuild, setBuild, buildIfSelected
+ *  Train: printBuildReport, printManifest, printReport
+ *  Train: getPrint, setPrint, printIfSelected
+ *  Train: setTrainIconCoordinates
+ *  Train: terminateIfSelected
+ *  Train: load/move/get/create Train Icon
+ *  Train: get/set Lead Engine
+ *  Train: setIconColor
+ *  Train: reset
+ *  Train: xml read/write
+ *  Train: Most build scenarios.
+ * 
+ *  TrainBuilder: Everything.
+ *  TrainSwitchLists: Everything.
+ *  
+ * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @version $Revision: 1.11 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -51,85 +69,109 @@ public class OperationsTrainsTest extends TestCase {
 	}
 	
 
-	// test creation
+	// test Train creation
 	public void testCreate() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 	}
 
-	// test public constants
+	// test Train public constants
 	public void testConstants() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		Assert.assertEquals("Train Constant NONE", 0, t1.NONE);
-		Assert.assertEquals("Train Constant CABOOSE", 1, t1.CABOOSE);
-		Assert.assertEquals("Train Constant FRED", 2, t1.FRED);
+		Assert.assertEquals("Train Constant NONE", 0, Train.NONE);
+		Assert.assertEquals("Train Constant CABOOSE", 1, Train.CABOOSE);
+		Assert.assertEquals("Train Constant FRED", 2, Train.FRED);
 
-		Assert.assertEquals("Train Constant ALLROADS", "All", t1.ALLROADS);
-		Assert.assertEquals("Train Constant INCLUDEROADS", "Include", t1.INCLUDEROADS);
-		Assert.assertEquals("Train Constant EXCLUDEROADS", "Exclude", t1.EXCLUDEROADS);
+		Assert.assertEquals("Train Constant ALLROADS", "All", Train.ALLROADS);
+		Assert.assertEquals("Train Constant INCLUDEROADS", "Include", Train.INCLUDEROADS);
+		Assert.assertEquals("Train Constant EXCLUDEROADS", "Exclude", Train.EXCLUDEROADS);
+                
+		Assert.assertEquals("Train Constant DISPOSE_CHANGED_PROPERTY", "dispose", Train.DISPOSE_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant STOPS_CHANGED_PROPERTY", "stops", Train.STOPS_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant TYPES_CHANGED_PROPERTY", "Types", Train.TYPES_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant ROADS_CHANGED_PROPERTY", "Road", Train.ROADS_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant LENGTH_CHANGED_PROPERTY", "length", Train.LENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant ENGINELOCATION_CHANGED_PROPERTY", "EngineLocation", Train.ENGINELOCATION_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant NUMBERCARS_CHANGED_PROPERTY", "numberCarsMoves", Train.NUMBERCARS_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant STATUS_CHANGED_PROPERTY", "status", Train.STATUS_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant DEPARTURETIME_CHANGED_PROPERTY", "departureTime", Train.DEPARTURETIME_CHANGED_PROPERTY);
 
 //  Comment out test that relies upon a typo in the properties until that gets fixed
 //		Assert.assertEquals("Train Constant AUTO", "Auto", t1.AUTO);
 	}
 
-	// test attributes
+	// test TrainIcon attributes
+	public void testTrainIconAttributes() {
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
+		Assert.assertEquals("Train toString", "TESTTRAINNAME", train1.toString());
+
+                TrainIcon trainicon1 = new TrainIcon();
+                trainicon1.setTrain(train1);
+		Assert.assertEquals("TrainIcon set train", "TESTTRAINNAME", trainicon1.getTrain().getName());
+ 	}
+
+	// test Train attributes
 	public void testAttributes() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
+		Assert.assertEquals("Train toString", "TESTTRAINNAME", train1.toString());
 
-		t1.setName("TESTNEWNAME");
-		Assert.assertEquals("Train New Name", "TESTNEWNAME", t1.getName());
-		t1.setComment("TESTCOMMENT");
-		Assert.assertEquals("Train Comment", "TESTCOMMENT", t1.getComment());
-		t1.setDescription("TESTDESCRIPTION");
-		Assert.assertEquals("Train Description", "TESTDESCRIPTION", t1.getDescription());
-		t1.setCabooseRoad("TESTCABOOSEROAD");
-		Assert.assertEquals("Train Caboose Road", "TESTCABOOSEROAD", t1.getCabooseRoad());
-		t1.setEngineModel("TESTENGINEMODEL");
-		Assert.assertEquals("Train Engine Model", "TESTENGINEMODEL", t1.getEngineModel());
-		t1.setEngineRoad("TESTENGINEROAD");
-		Assert.assertEquals("Train Engine Road", "TESTENGINEROAD", t1.getEngineRoad());
-		t1.setBuilt(true);
-		Assert.assertTrue("Train Built true", t1.getBuilt());
-		t1.setBuilt(false);
-		Assert.assertFalse("Train Built false", t1.getBuilt());
-		t1.setNumberEngines("13");
-		Assert.assertEquals("Train Number Engines", "13", t1.getNumberEngines());
-		t1.setRoadOption("INCLUDEROADS");
-		Assert.assertEquals("Train Road Option INCLUDEROADS", "INCLUDEROADS", t1.getRoadOption());
-		t1.setRoadOption("EXCLUDEROADS");
-		Assert.assertEquals("Train Road Option EXCLUDEROADS", "EXCLUDEROADS", t1.getRoadOption());
-		t1.setRoadOption("ALLROADS");
-		Assert.assertEquals("Train Road Option ALLROADS", "ALLROADS", t1.getRoadOption());
-		t1.setStatus("TESTSTATUS");
-		Assert.assertEquals("Train Status", "TESTSTATUS", t1.getStatus());
-		t1.setRequirements(t1.CABOOSE);
-		Assert.assertEquals("Train Requirements CABOOSE", 1, t1.getRequirements());
-		t1.setRequirements(t1.FRED);
-		Assert.assertEquals("Train Requirements FRED", 2, t1.getRequirements());
-		t1.setRequirements(t1.NONE);
-		Assert.assertEquals("Train Requirements NONE", 0, t1.getRequirements());
+		train1.setName("TESTNEWNAME");
+		Assert.assertEquals("Train New Name", "TESTNEWNAME", train1.getName());
+		train1.setComment("TESTCOMMENT");
+		Assert.assertEquals("Train Comment", "TESTCOMMENT", train1.getComment());
+		train1.setDescription("TESTDESCRIPTION");
+		Assert.assertEquals("Train Description", "TESTDESCRIPTION", train1.getDescription());
+		train1.setCabooseRoad("TESTCABOOSEROAD");
+		Assert.assertEquals("Train Caboose Road", "TESTCABOOSEROAD", train1.getCabooseRoad());
+		train1.setEngineModel("TESTENGINEMODEL");
+		Assert.assertEquals("Train Engine Model", "TESTENGINEMODEL", train1.getEngineModel());
+		train1.setEngineRoad("TESTENGINEROAD");
+		Assert.assertEquals("Train Engine Road", "TESTENGINEROAD", train1.getEngineRoad());
+		train1.setBuilt(true);
+		Assert.assertTrue("Train Built true", train1.getBuilt());
+		train1.setBuilt(false);
+		Assert.assertFalse("Train Built false", train1.getBuilt());
+		train1.setNumberEngines("13");
+		Assert.assertEquals("Train Number Engines", "13", train1.getNumberEngines());
+		train1.setRoadOption("INCLUDEROADS");
+		Assert.assertEquals("Train Road Option INCLUDEROADS", "INCLUDEROADS", train1.getRoadOption());
+		train1.setRoadOption("EXCLUDEROADS");
+		Assert.assertEquals("Train Road Option EXCLUDEROADS", "EXCLUDEROADS", train1.getRoadOption());
+		train1.setRoadOption("ALLROADS");
+		Assert.assertEquals("Train Road Option ALLROADS", "ALLROADS", train1.getRoadOption());
+		train1.setStatus("TESTSTATUS");
+		Assert.assertEquals("Train Status", "TESTSTATUS", train1.getStatus());
+		train1.setRequirements(Train.CABOOSE);
+		Assert.assertEquals("Train Requirements CABOOSE", 1, train1.getRequirements());
+		train1.setRequirements(Train.FRED);
+		Assert.assertEquals("Train Requirements FRED", 2, train1.getRequirements());
+		train1.setRequirements(Train.NONE);
+		Assert.assertEquals("Train Requirements NONE", 0, train1.getRequirements());
 	}
 
-	// test train route
+	// test Train route
 	public void testRoute() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
-		t1.setRoute(r1);
-		Assert.assertEquals("Train Route Name", "TESTROUTENAME", t1.getTrainRouteName());
+		train1.setRoute(r1);
+		Assert.assertEquals("Train Route Name", "TESTROUTENAME", train1.getTrainRouteName());
 
 		Route rnew = new Route("TESTROUTEID2", "TESTNEWROUTENAME");
 		RouteLocation rladd;
@@ -144,115 +186,98 @@ public class OperationsTrainsTest extends TestCase {
 		Location l5 = new Location("TESTLOCATIONID5", "TESTNEWROUTETERMNAME");
 		rladd = rnew.addLocation(l5);
 
-		t1.setRoute(rnew);
-		Assert.assertEquals("Train New Route Name", "TESTNEWROUTENAME", t1.getTrainRouteName());
+		train1.setRoute(rnew);
+		Assert.assertEquals("Train New Route Name", "TESTNEWROUTENAME", train1.getTrainRouteName());
 
-		Assert.assertEquals("Train New Route Departure Name", "TESTNEWROUTEDEPTNAME", t1.getTrainDepartsName());
-		Assert.assertEquals("Train New Route Terminates Name", "TESTNEWROUTETERMNAME", t1.getTrainTerminatesName());
+		Assert.assertEquals("Train New Route Departure Name", "TESTNEWROUTEDEPTNAME", train1.getTrainDepartsName());
+		Assert.assertEquals("Train New Route Terminates Name", "TESTNEWROUTETERMNAME", train1.getTrainTerminatesName());
 
 		RouteLocation rl1test;
 		rl1test= rnew.getLocationByName("TESTNEWROUTECURRNAME");
-		t1.setCurrentLocation(rl1test);
-		Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", t1.getCurrentLocationName());
-		rl1test= t1.getCurrentLocation();
+		train1.setCurrentLocation(rl1test);
+		Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", train1.getCurrentLocationName());
+		rl1test= train1.getCurrentLocation();
 		Assert.assertEquals("Train New Route Current Name by Route Location", "TESTNEWROUTECURRNAME", rl1test.getName());
 	}
 
-	// test train skip locations support
+	// test Train skip locations support
 	public void testSkipLocations() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
-/*
-		Route rnew = new Route("TESTROUTEID2", "TESTNEWROUTENAME");
-		t1.setRoute(rnew);
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		RouteLocation rladd;
-		Location l1 = new Location("TESTLOCATIONID1", "TESTNEWROUTEDEPTNAME");
-		rladd = rnew.addLocation(l1);
-		Location l2 = new Location("TESTLOCATIONID2", "TESTLOCATIONNAME2");
-		rladd = rnew.addLocation(l2);
-		Location l3 = new Location("TESTLOCATIONID3", "TESTNEWROUTECURRNAME");
-		rladd = rnew.addLocation(l3);
-		Location l4 = new Location("TESTLOCATIONID4", "TESTLOCATIONNAME4");
-		rladd = rnew.addLocation(l4);
-		Location l5 = new Location("TESTLOCATIONID5", "TESTNEWROUTETERMNAME");
-		rladd = rnew.addLocation(l5);
-*/
-		t1.addTrainSkipsLocation("TESTLOCATIONID2");
-		Assert.assertTrue("Location 2 to be skipped", t1.skipsLocation("TESTLOCATIONID2"));
+                train1.addTrainSkipsLocation("TESTLOCATIONID2");
+		Assert.assertTrue("Location 2 to be skipped", train1.skipsLocation("TESTLOCATIONID2"));
 
-		t1.addTrainSkipsLocation("TESTLOCATIONID4");
-		Assert.assertTrue("Location 4 to be skipped", t1.skipsLocation("TESTLOCATIONID4"));
+		train1.addTrainSkipsLocation("TESTLOCATIONID4");
+		Assert.assertTrue("Location 4 to be skipped", train1.skipsLocation("TESTLOCATIONID4"));
 
-		t1.deleteTrainSkipsLocation("TESTLOCATIONID2");
-		Assert.assertFalse("Location 2 not to be skipped", t1.skipsLocation("TESTLOCATIONID2"));
-		Assert.assertTrue("Location 4 still to be skipped", t1.skipsLocation("TESTLOCATIONID4"));
+		train1.deleteTrainSkipsLocation("TESTLOCATIONID2");
+		Assert.assertFalse("Location 2 not to be skipped", train1.skipsLocation("TESTLOCATIONID2"));
+		Assert.assertTrue("Location 4 still to be skipped", train1.skipsLocation("TESTLOCATIONID4"));
 
-		t1.deleteTrainSkipsLocation("TESTLOCATIONID4");
-		Assert.assertFalse("Location 2 still not to be skipped", t1.skipsLocation("TESTLOCATIONID2"));
-		Assert.assertFalse("Location 4 not to be skipped", t1.skipsLocation("TESTLOCATIONID4"));
+		train1.deleteTrainSkipsLocation("TESTLOCATIONID4");
+		Assert.assertFalse("Location 2 still not to be skipped", train1.skipsLocation("TESTLOCATIONID2"));
+		Assert.assertFalse("Location 4 not to be skipped", train1.skipsLocation("TESTLOCATIONID4"));
 	}
 
-	// test train accepts types support
+	// test Train accepts types support
 	public void testAcceptsTypes() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		t1.addTypeName("Caboose");
-		Assert.assertTrue("Train accepts type name Caboose", t1.acceptsTypeName("Caboose"));
-		Assert.assertFalse("Train does not accept type name Hopper", t1.acceptsTypeName("Hopper"));
+		train1.addTypeName("Caboose");
+		Assert.assertTrue("Train accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+		Assert.assertFalse("Train does not accept type name Hopper", train1.acceptsTypeName("Hopper"));
 
-		t1.addTypeName("Hopper");
-		Assert.assertTrue("Train still accepts type name Caboose", t1.acceptsTypeName("Caboose"));
-		Assert.assertTrue("Train accepts type name Hopper", t1.acceptsTypeName("Hopper"));
+		train1.addTypeName("Hopper");
+		Assert.assertTrue("Train still accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+		Assert.assertTrue("Train accepts type name Hopper", train1.acceptsTypeName("Hopper"));
 
-		t1.deleteTypeName("Caboose");
-		Assert.assertFalse("Train no longer accepts type name Caboose", t1.acceptsTypeName("Caboose"));
-		Assert.assertTrue("Train still accepts type name Hopper", t1.acceptsTypeName("Hopper"));
+		train1.deleteTypeName("Caboose");
+		Assert.assertFalse("Train no longer accepts type name Caboose", train1.acceptsTypeName("Caboose"));
+		Assert.assertTrue("Train still accepts type name Hopper", train1.acceptsTypeName("Hopper"));
 	}
 
 	// test train accepts road names support
 	public void testAcceptsRoadNames() {
-		Train t1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-		Assert.assertEquals("Train Id", "TESTTRAINID", t1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", t1.getName());
+		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
+		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		t1.setRoadOption("ALLROADS");
-		Assert.assertTrue("Train accepts (ALLROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertTrue("Train accepts (ALLROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.setRoadOption("ALLROADS");
+		Assert.assertTrue("Train accepts (ALLROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("Train accepts (ALLROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.setRoadOption("Include");
-		t1.addRoadName("CP");
-		Assert.assertTrue("Train accepts (INCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertFalse("Train does not accept (INCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.setRoadOption("Include");
+		train1.addRoadName("CP");
+		Assert.assertTrue("Train accepts (INCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertFalse("Train does not accept (INCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.addRoadName("VIA");
-		Assert.assertTrue("Train still accepts (INCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertTrue("Train accepts (INCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.addRoadName("VIA");
+		Assert.assertTrue("Train still accepts (INCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("Train accepts (INCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.deleteRoadName("CP");
-		Assert.assertFalse("Train no longer accepts (INCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertTrue("Train still accepts (INCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.deleteRoadName("CP");
+		Assert.assertFalse("Train no longer accepts (INCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("Train still accepts (INCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.setRoadOption("Exclude");
-		Assert.assertTrue("Train does accept (EXCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertFalse("Train does not accept (EXCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.setRoadOption("Exclude");
+		Assert.assertTrue("Train does accept (EXCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertFalse("Train does not accept (EXCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.addRoadName("CP");
-		Assert.assertFalse("Train does not accept (EXCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertFalse("Train still does not accept (EXCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.addRoadName("CP");
+		Assert.assertFalse("Train does not accept (EXCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertFalse("Train still does not accept (EXCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 
-		t1.deleteRoadName("VIA");
-		Assert.assertFalse("Train still does not accepts (EXCLUDEROADS) Road name CP", t1.acceptsRoadName("CP"));
-		Assert.assertTrue("Train now accepts (EXCLUDEROADS) Road name VIA", t1.acceptsRoadName("VIA"));
+		train1.deleteRoadName("VIA");
+		Assert.assertFalse("Train still does not accepts (EXCLUDEROADS) Road name CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("Train now accepts (EXCLUDEROADS) Road name VIA", train1.acceptsRoadName("VIA"));
 	}
-
-
 
 	// test train staging to staging
 	public void testStagingtoStaging() {
