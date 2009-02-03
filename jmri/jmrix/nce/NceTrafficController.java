@@ -8,22 +8,20 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-//import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
 
 /**
- * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
- * side sends/receives message objects.
+ * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
+ * sends/receives message objects.
  * <P>
- * The connection to
- * a NcePortController is via a pair of *Streams, which then carry sequences
- * of characters for transmission.     Note that this processing is
+ * The connection to a NcePortController is via a pair of *Streams, which then
+ * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the
- * necessary state in each message.
- *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * This handles the state transitions, based on the necessary state in each
+ * message.
+ * 
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @version $Revision: 1.28 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -194,9 +192,9 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         // first try boolean
         if (replyBinary) {
 			// Attempt to detect and correctly forward AIU broadcast from pre
-			// 2006 EPROMS. We'll check for three byte unsolicated message
+			// 2006 EPROMS. We'll check for three byte unsolicited message
 			// starting with "A" 0x61. The second byte contains the AIU number +
-			// 0x30. The third byte constains the sensors, 0x41 < s < 0x6F
+			// 0x30. The third byte contains the sensors, 0x41 < s < 0x6F
 			// This code is problematic, it is data sensitive.
 			// We can also incorrectly forward an AIU broadcast to a routine
 			// that is waiting for a reply
@@ -213,7 +211,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 					return true;
 			}
 			if (msg.getNumDataElements() >= replyLen) {
-				// reset reply length so we can detect an unsolicated AIU message 
+				// reset reply length so we can detect an unsolicited AIU message 
 				replyLen = 0;
 				return true;
 			} else
