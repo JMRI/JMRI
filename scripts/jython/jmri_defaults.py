@@ -11,7 +11,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 
 #define shortcuts to some managers
 import jmri
@@ -32,8 +32,8 @@ import jmri.Turnout.CLOSED         as CLOSED
 import jmri.Turnout.THROWN         as THROWN
 import jmri.Turnout.CABLOCKOUT         as CABLOCKOUT
 import jmri.Turnout.PUSHBUTTONLOCKOUT  as PUSHBUTTONLOCKOUT
-import jmri.Turnout.UNLOCKED       as PUSHBUTTONLOCKOUT
-import jmri.Turnout.LOCKED         as PUSHBUTTONLOCKOUT
+import jmri.Turnout.UNLOCKED       as UNLOCKED
+import jmri.Turnout.LOCKED         as LOCKED
 
 import jmri.Sensor.ACTIVE          as ACTIVE
 import jmri.Sensor.INACTIVE        as INACTIVE
