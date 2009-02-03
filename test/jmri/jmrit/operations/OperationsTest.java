@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations package
  * @author		Bob Coleman
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsTest extends TestCase {
 
@@ -30,6 +30,8 @@ public class OperationsTest extends TestCase {
 		TestSuite suite = new TestSuite("jmri.jmrit.operations.OperationsTest"); // no tests in class itself
 		suite.addTest(jmri.jmrit.operations.setup.OperationsSetupTest.suite());
                 suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite());
+
+                suite.addTest(jmri.jmrit.operations.rollingstock.OperationsRollingStockTest.suite());
 
                 suite.addTest(jmri.jmrit.operations.cars.OperationsCarsTest.suite());
 
