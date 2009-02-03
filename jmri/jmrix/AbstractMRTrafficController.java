@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.62 $
+ * @version         $Revision: 1.63 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -98,7 +98,7 @@ abstract public class AbstractMRTrafficController {
     }
     
     /**
-     * Implement this to foward a specific message type to a protocol-specific
+     * Implement this to forward a specific message type to a protocol-specific
      * listener interface. This puts the casting into the concrete class.
      */
     abstract protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m);
@@ -461,6 +461,7 @@ abstract public class AbstractMRTrafficController {
         return len+cr;
     }
 
+    protected boolean xmtException = false;
     /**
      * Actually transmits the next message to the port
      */
@@ -519,6 +520,9 @@ abstract public class AbstractMRTrafficController {
                 connectionWarn();
             }
         } catch (Exception e) {
+        	// TODO Currently there's no port recovery if an exception occurs
+        	// must restart JMRI to clear xmtException.
+        	xmtException = true;
             portWarn(e);
         }
      }
@@ -599,8 +603,8 @@ abstract public class AbstractMRTrafficController {
      * May throw an Exception.
      */
     public boolean portReadyToSend(AbstractPortController p) throws Exception {
-    if(p!=null) return true;
-    else return false;
+    	if(p!=null && !xmtException) return true;
+    	else return false;
     }
 
     // data members to hold the streams
