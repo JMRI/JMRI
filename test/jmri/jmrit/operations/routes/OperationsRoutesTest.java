@@ -19,13 +19,22 @@ import jmri.jmrit.operations.locations.Location;
 import java.util.List;
 
 /**
- * Tests for the OperationsRoutes class
- * @author	Bob Coleman
- * @version $Revision: 1.4 $
+ * Tests for the Operations Route class
+ * Last manually cross-checked on 20090131
+ * 
+ * Still to do:
+ *   Route: Route Location <-- Need to verify
+ *   Route: XML read/write
+ *   RouteLocation: get/set Staging Track
+ *   RouteLocation: location <--Need to verify
+ *   RouteLocation: XML read/write
+ * 
+ * @author	Bob Coleman     Copyright (C) 2008, 2009
+ * @version $Revision: 1.5 $
  */
 public class OperationsRoutesTest extends TestCase {
 
-	// test creation
+	// test Route creation
 	public void testCreate() {
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 		r1.setComment("TESTCOMMENT");
@@ -35,7 +44,7 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Comment", "TESTCOMMENT", r1.getComment());
 	}
 
-	// test public constants
+	// test Route public constants
 	public void testConstants() {
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -46,14 +55,18 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Constant WEST", 2, Route.WEST);
 		Assert.assertEquals("Route Constant NORTH", 4, Route.NORTH);
 		Assert.assertEquals("Route Constant SOUTH", 8, Route.SOUTH);
+
+		Assert.assertEquals("Route Constant LISTCHANGE_CHANGED_PROPERTY", "listChange", Route.LISTCHANGE_CHANGED_PROPERTY);
+		Assert.assertEquals("Route Constant DISPOSE", "dispose", Route.DISPOSE);
 	}
 
-	// test attributes
+	// test Route attributes
 	public void testAttributes() {
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
+		Assert.assertEquals("Route toString", "TESTROUTENAME", r1.toString());
 
 		r1.setName("TESTNEWNAME");
 		Assert.assertEquals("Route New Name", "TESTNEWNAME", r1.getName());
@@ -74,7 +87,7 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Location Name", "TESTLOCATIONNAME1", rl1.getName());
 	}
 
-	// test public route location constants
+	// test public RouteLocation constants
 	public void testRouteLocationConstants() {
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -85,13 +98,23 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
 
-		Assert.assertEquals("Route Constant EAST", 1, RouteLocation.EAST);
-		Assert.assertEquals("Route Constant WEST", 2, RouteLocation.WEST);
-		Assert.assertEquals("Route Constant NORTH", 4, RouteLocation.NORTH);
-		Assert.assertEquals("Route Constant SOUTH", 8, RouteLocation.SOUTH);
-	}
+		Assert.assertEquals("RouteLocation Constant EAST", 1, RouteLocation.EAST);
+		Assert.assertEquals("RouteLocation Constant WEST", 2, RouteLocation.WEST);
+		Assert.assertEquals("RouteLocation Constant NORTH", 4, RouteLocation.NORTH);
+		Assert.assertEquals("RouteLocation Constant SOUTH", 8, RouteLocation.SOUTH);
 
-	// test route location attributes
+		Assert.assertEquals("RouteLocation Constant EAST_DIR", "East", RouteLocation.EAST_DIR);
+		Assert.assertEquals("RouteLocation Constant WEST_DIR", "West", RouteLocation.WEST_DIR);
+		Assert.assertEquals("RouteLocation Constant NORTH_DIR", "North", RouteLocation.NORTH_DIR);
+		Assert.assertEquals("RouteLocation Constant SOUTH_DIR", "South", RouteLocation.SOUTH_DIR);
+
+		Assert.assertEquals("RouteLocation Constant DROP_CHANGED_PROPERTY", "dropChange", RouteLocation.DROP_CHANGED_PROPERTY);
+		Assert.assertEquals("RouteLocation Constant PICKUP_CHANGED_PROPERTY", "pickupChange", RouteLocation.PICKUP_CHANGED_PROPERTY);
+		Assert.assertEquals("RouteLocation Constant MAXMOVES_CHANGED_PROPERTY", "maxMovesChange", RouteLocation.MAXMOVES_CHANGED_PROPERTY);
+		Assert.assertEquals("RouteLocation Constant DISPOSE", "dispose", RouteLocation.DISPOSE);
+	}
+	
+	// test RouteLocation attributes
 	public void testRouteLocationAttributes() {
 		Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -105,35 +128,58 @@ public class OperationsRoutesTest extends TestCase {
 		rl1.setComment("TESTROUTELOCATIONCOMMENT");
 		rl1.setMaxTrainLength(320);
 		rl1.setTrainLength(220);
+		rl1.setTrainWeight(240);
 		rl1.setMaxCarMoves(32);
 		rl1.setCarMoves(10);
+		rl1.setGrade(2.0);
 		rl1.setTrainIconX(12);
 		rl1.setTrainIconY(8);
 
-		Assert.assertEquals("Route Location Id", "TESTROUTELOCATIONID", rl1.getId());
-		Assert.assertEquals("Route Location Name", "TESTLOCATIONNAME1", rl1.getName());
+		Assert.assertEquals("RouteLocation Id", "TESTROUTELOCATIONID", rl1.getId());
+		Assert.assertEquals("RouteLocation Name", "TESTLOCATIONNAME1", rl1.getName());
+		Assert.assertEquals("RouteLocation toString", "TESTLOCATIONNAME1", rl1.toString());
 
-		Assert.assertEquals("Route Location Comment", "TESTROUTELOCATIONCOMMENT", rl1.getComment());
-		Assert.assertEquals("Route Location Sequence", 4, rl1.getSequenceId());
+		Assert.assertEquals("RouteLocation Comment", "TESTROUTELOCATIONCOMMENT", rl1.getComment());
+		Assert.assertEquals("RouteLocation Sequence", 4, rl1.getSequenceId());
 
-		Assert.assertEquals("Route Location Max Train Length", 320, rl1.getMaxTrainLength());
-		Assert.assertEquals("Route Location Train Length", 220, rl1.getTrainLength());
-		Assert.assertEquals("Route Location Max Car Moves", 32, rl1.getMaxCarMoves());
-		Assert.assertEquals("Route Location Car Moves", 10, rl1.getCarMoves());
-		Assert.assertEquals("Route Location Icon X", 12, rl1.getTrainIconX());
-		Assert.assertEquals("Route Location Icon Y", 8, rl1.getTrainIconY());
+		Assert.assertEquals("RouteLocation Max Train Length", 320, rl1.getMaxTrainLength());
+		Assert.assertEquals("RouteLocation Train Length", 220, rl1.getTrainLength());
+		Assert.assertEquals("RouteLocation Train Weight", 240, rl1.getTrainWeight());
+		Assert.assertEquals("RouteLocation Max Car Moves", 32, rl1.getMaxCarMoves());
+		Assert.assertEquals("RouteLocation Car Moves", 10, rl1.getCarMoves());
+		Assert.assertEquals("RouteLocation Grade", 2.0, rl1.getGrade());
+		Assert.assertEquals("RouteLocation Icon X", 12, rl1.getTrainIconX());
+		Assert.assertEquals("RouteLocation Icon Y", 8, rl1.getTrainIconY());
 
 		rl1.setTrainDirection(RouteLocation.EAST);
-		Assert.assertEquals("Route Location Train Direction East", 1, rl1.getTrainDirection());
+		Assert.assertEquals("RouteLocation Train Direction East", 1, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(RouteLocation.WEST);
-		Assert.assertEquals("Route Location Train Direction West", 2, rl1.getTrainDirection());
+		Assert.assertEquals("RouteLocation Train Direction West", 2, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(RouteLocation.NORTH);
-		Assert.assertEquals("Route Location Train Direction North", 4, rl1.getTrainDirection());
+		Assert.assertEquals("RouteLocation Train Direction North", 4, rl1.getTrainDirection());
 
 		rl1.setTrainDirection(RouteLocation.SOUTH);
-		Assert.assertEquals("Route Location Train Direction South", 8, rl1.getTrainDirection());
+		Assert.assertEquals("RouteLocation Train Direction South", 8, rl1.getTrainDirection());
+
+//                rl1.setCanDrop(true);
+		Assert.assertEquals("RouteLocation Train can drop initial", true, rl1.canDrop());
+
+                rl1.setCanDrop(false);
+		Assert.assertEquals("RouteLocation Train can drop false", false, rl1.canDrop());
+
+                rl1.setCanDrop(true);
+		Assert.assertEquals("RouteLocation Train can drop true", true, rl1.canDrop());
+
+//                rl1.setCanPickup(true);
+		Assert.assertEquals("RouteLocation Train can Pickup initial", true, rl1.canPickup());
+
+                rl1.setCanPickup(false);
+		Assert.assertEquals("RouteLocation Train can Pickup false", false, rl1.canPickup());
+
+                rl1.setCanPickup(true);
+		Assert.assertEquals("RouteLocation Train can Pickup true", true, rl1.canPickup());
 	}
 
 	// test route location management
