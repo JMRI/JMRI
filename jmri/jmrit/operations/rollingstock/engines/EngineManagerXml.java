@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -274,7 +274,13 @@ public class EngineManagerXml extends XmlFile {
     boolean isDirty() {return dirty;}
 
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
+    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
+
+    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
+    public static String getOperationsDirectoryName(){
+    	return OperationsDirectoryName;
+    }
+    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

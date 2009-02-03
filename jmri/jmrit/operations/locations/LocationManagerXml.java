@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -311,7 +311,13 @@ public class LocationManagerXml extends XmlFile {
     boolean isDirty() {return dirty;}
 
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
+    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
+
+    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
+    public static String getOperationsDirectoryName(){
+    	return OperationsDirectoryName;
+    }
+    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -91,10 +91,10 @@ public class OperationsXml extends XmlFile {
 	/**
      * Store the all of the operation objects in the default place, including making a backup if needed
      */
-    public static void writeOperationsFile() {
-    	OperationsXml.instance().makeBackupFile(defaultOperationsFilename());
+    public void writeOperationsFile() {
+    	makeBackupFile(defaultOperationsFilename());
         try {
-        	 if(!OperationsXml.instance().checkFile(defaultOperationsFilename()))
+        	 if(!checkFile(defaultOperationsFilename()))
              {
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
@@ -105,14 +105,20 @@ public class OperationsXml extends XmlFile {
                  }
                  file.createNewFile();
              }
-        	OperationsXml.instance().writeFile(defaultOperationsFilename());
+        	writeFile(defaultOperationsFilename());
         } catch (Exception e) {
             log.error("Exception while writing the new operations file, may not be complete: "+e);
         }
     }
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
+    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
 
+    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
+    public static String getOperationsDirectoryName(){
+    	return OperationsDirectoryName;
+    }
+    private static String OperationsDirectoryName = "operations";
+    
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){
     	return OperationsFileName;

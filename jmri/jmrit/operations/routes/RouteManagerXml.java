@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -226,7 +226,13 @@ public class RouteManagerXml extends XmlFile {
     public static boolean isDirty() {return dirty;}
 
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+"operations"+File.separator+OperationsFileName;}
+    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
+
+    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
+    public static String getOperationsDirectoryName(){
+    	return OperationsDirectoryName;
+    }
+    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){
