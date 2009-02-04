@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.6 2009-01-26 00:58:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.7 2009-02-04 22:49:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -150,6 +150,27 @@ but they send individual on and off commands rather
 than more optimal Acela signal commands down to the hardware.
 So, added an Acela Aspect option that will do things efficiently 
 for Acela and also correctly supports BiPolar and Wigwags.
+
+<p>
+Dan Boudreau updated the operations tools 
+to allow the user to modify default load names for empty and loaded.
+He also added the Schedule Table to Locations Tools.
+
+<p>
+Matt Harris made the startup scripts more reliable on Windows 98.
+
+<p>
+John Plocher updated the instructions for using Eclipse to build JMRI.
+
+<p>
+Dan Boucreau added optional car load features to operations staging.
+
+<p>
+Andrew Crosland improved the CBUS and CAN utility tools.
+
+<p>
+Bob Coleman did a lot of important work on improving the JUnit build tests for the operations feature.
+
 
 <!--#include virtual="/Footer" -->
 
