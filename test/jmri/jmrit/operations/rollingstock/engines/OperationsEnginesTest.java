@@ -1,6 +1,6 @@
 // OperationsEnginesTest.java
 
-package jmri.jmrit.operations.engines;
+package jmri.jmrit.operations.rollingstock.engines;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -8,10 +8,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
@@ -19,9 +15,15 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 /**
- * Tests for the OperationsEngines class
- * @author	Bob Coleman
- * @version $Revision: 1.4 $
+ * Tests for the Operations RollingStock Engine class
+ * Last manually cross-checked on 20090131
+ * 
+ * Still to do:
+ *   Engine: Type, HP, Destination
+ *   Engine: Verify everything else 
+ * 
+ * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @version $Revision: 1.1 $
  */
 public class OperationsEnginesTest extends TestCase {
 
