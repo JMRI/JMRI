@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -138,8 +138,22 @@ public class Schedule implements java.beans.PropertyChangeListener {
     		si.dispose();
     		Integer old = new Integer(_scheduleHashTable.size());
     		_scheduleHashTable.remove(id);
+    		resequenceIds();
            	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_scheduleHashTable.size()));
      	}
+    }
+    
+    /**
+     * Reorder the item sequence numbers for this schedule
+     */
+    private void resequenceIds(){
+    	List<String> l = getItemsBySequenceList();
+    	int i;
+    	for (i=0; i<l.size(); i++){
+    		ScheduleItem si = getItemById(l.get(i));
+    		si.setSequenceId(i+1);	// start sequence numbers at 1
+    	}
+    	_sequenceNum = i;
     }
     
 	/**
@@ -316,7 +330,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("comment", getComment());
-        List<String> l = getItemsByIdList();
+        List<String> l = getItemsBySequenceList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);
         	ScheduleItem si = getItemById(id);

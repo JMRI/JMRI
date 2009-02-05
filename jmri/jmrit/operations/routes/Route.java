@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -145,8 +145,22 @@ public class Route implements java.beans.PropertyChangeListener {
     		rl.dispose();
     		Integer old = new Integer(_routeHashTable.size());
     		_routeHashTable.remove(id);
+    		resequenceIds();
            	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
      	}
+    }
+    
+    /**
+     * Reorder the location sequence numbers for this route
+     */
+    private void resequenceIds(){
+    	List<String> l = getLocationsBySequenceList();
+    	int i;
+    	for (i=0; i<l.size(); i++){
+    		RouteLocation rl = getLocationById(l.get(i));
+    		rl.setSequenceId(i+1);	// start sequence numbers at 1
+    	}
+    	_sequenceNum = i;
     }
     
 	/**
@@ -323,7 +337,7 @@ public class Route implements java.beans.PropertyChangeListener {
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("comment", getComment());
-        List<String> l = getLocationsByIdList();
+        List<String> l = getLocationsBySequenceList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);
         	RouteLocation rl = getLocationById(id);

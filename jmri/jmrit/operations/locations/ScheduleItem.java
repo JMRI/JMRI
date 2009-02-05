@@ -6,7 +6,7 @@ import jmri.jmrit.operations.setup.Control;
  * Represents a car type to be scheduled for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -124,12 +124,12 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in Schedule Item element when reading operations");
+        if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
         if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
         if ((a = e.getAttribute("load")) != null )  _load = a.getValue();
         if ((a = e.getAttribute("ship")) != null )  _ship = a.getValue();
-        if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
     }
 
@@ -141,12 +141,12 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public org.jdom.Element store() {
     	org.jdom.Element e = new org.jdom.Element("item");
     	e.setAttribute("id", getId());
+    	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
+    	e.setAttribute("count", Integer.toString(getCount()));
     	e.setAttribute("type", getType());
     	e.setAttribute("road", getRoad());
     	e.setAttribute("load", getLoad());
-    	e.setAttribute("ship", getShip());
-    	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
-    	e.setAttribute("count", Integer.toString(getCount()));
+    	e.setAttribute("ship", getShip());  	
        	e.setAttribute("comment", getComment());
     	return e;
     }
