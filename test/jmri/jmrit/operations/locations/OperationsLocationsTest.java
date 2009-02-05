@@ -34,7 +34,7 @@ import jmri.Turnout;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -171,8 +171,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 10", 1, ltsi4.getSequenceId());
 
                 lts.deleteItem(ltsi3);
-                /* This should be 2 not 3 */
-		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 3, ltsi1.getSequenceId());
+		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 2, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 1, ltsi4.getSequenceId());
         }
 
@@ -650,6 +649,7 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("MOW");
 		l.addTypeName("Passenger");
 		l.addTypeName("Reefer");
+
 
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
