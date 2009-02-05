@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.io.File;
+import java.util.List;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,6 +15,7 @@ import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
+import jmri.jmrit.XmlFile;
 
 /**
  * Tests for the Operations RollingStock Engine class
@@ -28,7 +31,7 @@ import jmri.Turnout;
  *   Import: Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -180,9 +183,12 @@ public class OperationsEnginesTest extends TestCase {
 	}
 
         // test EngineModels Defaults
-	public void testEngineModelsDefaults() {
+	public void testEngineModelsDefaults() throws Exception {
 //		EngineModels em1 = new EngineModels();
 
+                // Need to force a re-read of the xml file.
+                EngineManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+EngineManagerXml.getOperationsDirectoryName()+File.separator+EngineManagerXml.getOperationsFileName());
+/*
                 EngineModels.instance().addName("E8");
                 Assert.assertEquals("EngineModels Default Model E8", true, EngineModels.instance().containsName("E8"));
                 Assert.assertEquals("EngineModels Default Horse E8", "2250", EngineModels.instance().getModelHorsepower("E8"));
@@ -344,6 +350,7 @@ public class OperationsEnginesTest extends TestCase {
                 Assert.assertEquals("EngineModels Default Horse U28B", "2800", EngineModels.instance().getModelHorsepower("U28B"));
                 Assert.assertEquals("EngineModels Default Length U28B", "60", EngineModels.instance().getModelLength("U28B"));
                 Assert.assertEquals("EngineModels Default Type U28B", "Diesel", EngineModels.instance().getModelType("U28B"));
+ * */
 	}
 
         // test Engine length
@@ -509,6 +516,112 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLeadEngine(e3));
 	}
 
+
+	// test location Xml create support
+	public void testXMLCreate() throws Exception {
+
+                EngineManager manager = EngineManager.instance();
+                List tempengineList = manager.getEnginesByIdList();
+
+                Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
+                manager.newEngine("CP", "Test Number 1");
+                manager.newEngine("CP", "Test Number 2");
+                manager.newEngine("CP", "Test Number 3");
+
+                tempengineList = manager.getEnginesByIdList();
+                Assert.assertEquals("New Number of Engines", 3, tempengineList.size());
+/*
+                Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById("1").getName());
+                Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById("2").getName());
+                Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById("3").getName());
+
+                Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
+                Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
+                Assert.assertEquals("New Location by Name 3", "Test Location 3", manager.getLocationByName("Test Location 3").getName());
+
+                manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
+		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 1").addTypeName("Coal");
+		manager.getLocationByName("Test Location 1").addTypeName("Engine");
+		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 2").setSwitchList(true);
+		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 2").addTypeName("Coal");
+		manager.getLocationByName("Test Location 2").addTypeName("Engine");
+		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 3").addTypeName("Coal");
+		manager.getLocationByName("Test Location 3").addTypeName("Engine");
+		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+*/
+/*                
+                locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
+                    }
+                }
+
+*/
+/*                
+                locationList = manager.getLocationsByNameList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+                    }
+                }
+*/
+                
+
+                EngineManagerXml.instance().writeOperationsEngineFile();
+/*
+                manager.newLocation("Test Location 4");
+                manager.newLocation("Test Location 5");
+                manager.newLocation("Test Location 6");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
+                
+                LocationManagerXml.instance().writeOperationsLocationFile();
+*/
+        }
+
 	// TODO: Add test for import
 
 	// TODO: Add test to create xml file
@@ -531,7 +644,44 @@ public class OperationsEnginesTest extends TestCase {
     */
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        
+
+        // Repoint ManagerXML to JUnitTest subdirectory
+        new EngineManagerXml(){ {_instance = this;
+            String tempstring;
+            tempstring = getOperationsDirectoryName();
+            if (!tempstring.contains(File.separator+"JUnitTest"))
+                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+            setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+
+            EngineManager manager = EngineManager.instance();
+
+            List tempconsistList = manager.getConsistNameList();
+            for (int i = 0; i < tempconsistList.size(); i++) {
+                String consistId = (String)tempconsistList.get(i);
+                manager.deleteConsist(consistId);
+            }
+
+            EngineModels.instance().dispose();
+            EngineLengths.instance().dispose();
+            manager.dispose();
+
+        }};
+
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+EngineManagerXml.getOperationsDirectoryName());
+
+        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations");
+        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"testing");
+        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+
+/*
+	// remove existing Operations file if its there
+        File fr = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+	fr.delete();
+	File fb = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml.bak");
+	fb.delete();
+*/
+
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
             protected void init() {

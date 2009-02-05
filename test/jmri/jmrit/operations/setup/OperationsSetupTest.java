@@ -26,7 +26,7 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -413,14 +413,14 @@ public class OperationsSetupTest extends TestCase {
 		OperationsXml ox = new OperationsXml();
 
 		// store files in "temp"
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+//		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+//		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		ox.setOperationsFileName("OperationsTest.xml");
+		ox.setOperationsFileName(OperationsXml.getOperationsFileName());
 
 		// remove existing Operations file if its there
-		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
+		File f = new File(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
 		f.delete();
 
 		// create a Operations file with known contents
@@ -453,7 +453,7 @@ public class OperationsSetupTest extends TestCase {
 		s.setTrainIconColorTerminate("White");
 
 		// write it
-		ox.writeFile(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
+		ox.writeFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
 
 		// Set filename back to Operations
 		ox.setOperationsFileName("Operations.xml");
@@ -469,20 +469,20 @@ public class OperationsSetupTest extends TestCase {
 		OperationsXml ox = new OperationsXml();
 
 		// store files in "temp"
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+//		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+//		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		ox.setOperationsFileName("OperationsTest.xml");
+		ox.setOperationsFileName(OperationsXml.getOperationsFileName());
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
 
 		// read it
-		ox.readFile(XmlFile.prefsDir()+"temp"+File.separator+"OperationsTest.xml");
+		ox.readFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
 
 		// Set filename back to Operations
-		ox.setOperationsFileName("Operations.xml");
+//		ox.setOperationsFileName("Operations.xml");
 	}
 
 	// from here down is testing infrastructure
@@ -502,6 +502,15 @@ public class OperationsSetupTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+
+        // Repoint ManagerXML to JUnitTest subdirectory
+        new OperationsXml(){ {_instance = this;
+        String tempstring;
+        tempstring = getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest"))
+            setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+        setOperationsFileName("OperationsJUnitTest.xml");}};
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
 
         // create a new instance manager
         InstanceManager i = new InstanceManager(){

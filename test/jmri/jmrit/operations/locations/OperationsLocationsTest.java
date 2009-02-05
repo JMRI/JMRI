@@ -34,7 +34,7 @@ import jmri.Turnout;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -650,6 +650,7 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("MOW");
 		l.addTypeName("Passenger");
 		l.addTypeName("Reefer");
+
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
 		
@@ -881,7 +882,7 @@ public class OperationsLocationsTest extends TestCase {
                 Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
                 //  Revert the main xml file back to the backup file.
-                LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+                LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
 
                 //  Need to dispose of the LocationManager's list and hash table
                 manager.dispose();	
@@ -896,7 +897,7 @@ public class OperationsLocationsTest extends TestCase {
                 Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
                 // Need to force a re-read of the xml file.
-                LocationManagerXml.instance().readFile(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
+                LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
 
                 locationList = manager.getLocationsByNameList();
                 Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
@@ -942,20 +943,16 @@ public class OperationsLocationsTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        new LocationManagerXml(){ {_instance = this; setOperationsFileName("temp"+File.separator+"OperationsTestLocationRoster.xml");}};
-	// store files in "temp"
-	XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations");
-	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"temp");
-	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
-	// remove existing Operations file if its there
-/*
-        File fr = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
-	fr.delete();
-	File fb = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml.bak");
-	fb.delete();
-*/
+        // Repoint ManagerXML to JUnitTest subdirectory
+        new LocationManagerXml(){ {_instance = this;
+        String tempstring;
+        tempstring = getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest"))
+            setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+        setOperationsFileName("OperationsJUnitTestLocationRoster.xml");}};
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
+
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
             @Override
