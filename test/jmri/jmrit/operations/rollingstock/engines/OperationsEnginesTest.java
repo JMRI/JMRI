@@ -31,7 +31,7 @@ import jmri.jmrit.XmlFile;
  *   Import: Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -184,11 +184,7 @@ public class OperationsEnginesTest extends TestCase {
 
         // test EngineModels Defaults
 	public void testEngineModelsDefaults() throws Exception {
-//		EngineModels em1 = new EngineModels();
 
-                // Need to force a re-read of the xml file.
-                EngineManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+EngineManagerXml.getOperationsDirectoryName()+File.separator+EngineManagerXml.getOperationsFileName());
-/*
                 EngineModels.instance().addName("E8");
                 Assert.assertEquals("EngineModels Default Model E8", true, EngineModels.instance().containsName("E8"));
                 Assert.assertEquals("EngineModels Default Horse E8", "2250", EngineModels.instance().getModelHorsepower("E8"));
@@ -350,7 +346,6 @@ public class OperationsEnginesTest extends TestCase {
                 Assert.assertEquals("EngineModels Default Horse U28B", "2800", EngineModels.instance().getModelHorsepower("U28B"));
                 Assert.assertEquals("EngineModels Default Length U28B", "60", EngineModels.instance().getModelLength("U28B"));
                 Assert.assertEquals("EngineModels Default Type U28B", "Diesel", EngineModels.instance().getModelType("U28B"));
- * */
 	}
 
         // test Engine length

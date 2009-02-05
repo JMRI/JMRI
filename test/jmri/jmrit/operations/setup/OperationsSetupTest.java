@@ -26,7 +26,7 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -505,11 +505,13 @@ public class OperationsSetupTest extends TestCase {
 
         // Repoint ManagerXML to JUnitTest subdirectory
         new OperationsXml(){ {_instance = this;
-        String tempstring;
-        tempstring = getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest"))
-            setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-        setOperationsFileName("OperationsJUnitTest.xml");}};
+            String tempstring;
+            tempstring = getOperationsDirectoryName();
+            if (!tempstring.contains(File.separator+"JUnitTest"))
+                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+            setOperationsFileName("OperationsJUnitTest.xml");
+        }};
+        
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
 
         // create a new instance manager

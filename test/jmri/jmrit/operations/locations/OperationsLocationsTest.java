@@ -18,6 +18,10 @@ import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
+import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 
 /**
  * Tests for the Operations Locations class
@@ -34,7 +38,7 @@ import jmri.Turnout;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -946,11 +950,33 @@ public class OperationsLocationsTest extends TestCase {
 
         // Repoint ManagerXML to JUnitTest subdirectory
         new LocationManagerXml(){ {_instance = this;
-        String tempstring;
-        tempstring = getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest"))
-            setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-        setOperationsFileName("OperationsJUnitTestLocationRoster.xml");}};
+            String tempstring;
+            tempstring = getOperationsDirectoryName();
+            if (!tempstring.contains(File.separator+"JUnitTest"))
+                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+            setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        }};
+        
+        new EngineManagerXml(){ {_instance = this;
+            String tempstring;
+            tempstring = getOperationsDirectoryName();
+            if (!tempstring.contains(File.separator+"JUnitTest"))
+                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
+            setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+
+            EngineManager manager = EngineManager.instance();
+
+            List tempconsistList = manager.getConsistNameList();
+            for (int i = 0; i < tempconsistList.size(); i++) {
+                String consistId = (String)tempconsistList.get(i);
+                manager.deleteConsist(consistId);
+            }
+
+            EngineModels.instance().dispose();
+            EngineLengths.instance().dispose();
+            manager.dispose();
+        }};
+
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
 
         // create a new instance manager
