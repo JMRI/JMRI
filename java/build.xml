@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.37 $ -->
+<!-- Revision $Revision: 1.38 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -366,8 +366,8 @@
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br><a html="http://jmri.sf.net/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by: 
-                       <A href="http://sourceforge.net"> 
-                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge_Logo"> </A>
+                       <a href="http://sourceforge.net/projects/jmri">
+                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
                 ]]></bottom>
       <link href="http://java.sun.com/j2se/1.4.1/docs/api/" />
     </javadoc>
