@@ -1,6 +1,6 @@
 // OperationsCarsTest.java
 
-package jmri.jmrit.operations.cars;
+package jmri.jmrit.operations.rollingstock.cars;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -8,13 +8,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
@@ -22,9 +15,14 @@ import jmri.SignalHead;
 import jmri.Turnout;
 
 /**
- * Tests for the OperationsCars class
- * @author	Bob Coleman
- * @version $Revision: 1.4 $
+ * Tests for the Operations RollingStock Cars class
+ * Last manually cross-checked on 20090131
+ * 
+ * Still to do:
+ *   Everything  
+ * 
+ * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @version $Revision: 1.1 $
  */
 public class OperationsCarsTest extends TestCase {
 
