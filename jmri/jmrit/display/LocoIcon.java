@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -13,7 +11,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -23,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -65,7 +62,7 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
 				popup.add(new AbstractAction("Throttle") {
 					public void actionPerformed(ActionEvent e) {
 						tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-						tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+						tf.notifyRosterEntryChosen(entry);
 						tf.setVisible(true);
 					}
 				});
