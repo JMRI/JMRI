@@ -26,7 +26,7 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -504,46 +504,13 @@ public class OperationsSetupTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
 
         // Repoint ManagerXML to JUnitTest subdirectory
-        new OperationsXml(){ {_instance = this;
-            String tempstring;
-            tempstring = getOperationsDirectoryName();
-            if (!tempstring.contains(File.separator+"JUnitTest"))
-                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-            setOperationsFileName("OperationsJUnitTest.xml");
-        }};
         
+        String tempstring = OperationsXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");	   	
+        }
+        OperationsXml.setOperationsFileName("OperationsJUnitTest.xml");  
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
-
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-        
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-
-        h1 = new jmri.VirtualSignalHead("IH1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
     }
 
 	public OperationsSetupTest(String s) {
