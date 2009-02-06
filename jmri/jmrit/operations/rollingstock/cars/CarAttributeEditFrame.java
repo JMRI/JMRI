@@ -23,7 +23,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -107,6 +107,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
 			String addItem = addTextBox.getText();
+			if (addItem.equals(""))
+				return;
 			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
@@ -121,6 +123,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 		if (ae.getSource() == replaceButton){
 			String newItem = addTextBox.getText();
+			if (newItem.equals(""))
+				return;
 			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),

@@ -23,7 +23,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -106,6 +106,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addButton){
 			String addLoad = addTextBox.getText();
+			if (addLoad.equals(""))
+				return;
 			if (addLoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{rb.getString("Load")}),

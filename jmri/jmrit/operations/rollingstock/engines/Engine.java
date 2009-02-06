@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class Engine extends RollingStock {
 	
@@ -45,6 +45,8 @@ public class Engine extends RollingStock {
 	 * @param type Engine type: Steam, Diesel, Traction, etc.
 	 */
 	public void setType (String type){
+		if(getModel().equals(""))
+			return;
 		String old = getType();
 		engineModels.setModelType(getModel(), type);
 		if (!old.equals(type))
@@ -63,6 +65,8 @@ public class Engine extends RollingStock {
 	 * @param hp engine horsepower
 	 */
 	public void setHp (String hp){
+		if(getModel().equals(""))
+			return;
 		String old = getHp();
 		engineModels.setModelHorsepower(getModel(), hp);
 		if (!old.equals(hp))
@@ -81,6 +85,8 @@ public class Engine extends RollingStock {
 	 * @param length engine length
 	 */
 	public void setLength(String length){
+		if(getModel().equals(""))
+			return;
 		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
 		if (!old.equals(length))

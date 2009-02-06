@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -102,6 +102,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
 			String addItem = addTextBox.getText();
+			if (addItem.equals(""))
+					return;
 			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
@@ -116,6 +118,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if (ae.getSource() == replaceButton){
 			String newItem = addTextBox.getText();
+			if (newItem.equals(""))
+				return;
 			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
