@@ -29,9 +29,11 @@ import jmri.jmrit.XmlFile;
  *   EngineLengths: Everything
  *   Consist: Everything
  *   Import: Everything  
+ *   EngineManager: Engine register/deregister
+ *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -520,21 +522,44 @@ public class OperationsEnginesTest extends TestCase {
 
                 Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
                 manager.newEngine("CP", "Test Number 1");
-                manager.newEngine("CP", "Test Number 2");
+                manager.newEngine("ACL", "Test Number 2");
                 manager.newEngine("CP", "Test Number 3");
 
                 tempengineList = manager.getEnginesByIdList();
+
                 Assert.assertEquals("New Number of Engines", 3, tempengineList.size());
+                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
+                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
+                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getEngineById("CPTest Number 3").getNumber());
+
+                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getEngineByRoadAndNumber("CP", "Test Number 1").getNumber());
+                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getEngineByRoadAndNumber("ACL", "Test Number 2").getNumber());
+                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getEngineByRoadAndNumber("CP", "Test Number 3").getNumber());
+
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setColor("Black");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setHp("23");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLength("50");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setMoves(5);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setTrain(train);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeight("87");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
+                
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                
 /*
-                Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById("1").getName());
-                Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById("2").getName());
-                Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById("3").getName());
-
-                Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
-                Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
-                Assert.assertEquals("New Location by Name 3", "Test Location 3", manager.getLocationByName("Test Location 3").getName());
-
-                manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
 		manager.getLocationByName("Test Location 1").setSwitchList(true);
 		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
@@ -607,14 +632,15 @@ public class OperationsEnginesTest extends TestCase {
                 
 
                 EngineManagerXml.instance().writeOperationsEngineFile();
-/*
-                manager.newLocation("Test Location 4");
-                manager.newLocation("Test Location 5");
-                manager.newLocation("Test Location 6");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
+
+                // Add some more engines and write file again
+                // so we can test the backup facility
+                manager.newEngine("CP", "Test Number 4");
+                manager.newEngine("CP", "Test Number 5");
+                manager.newEngine("CP", "Test Number 6");
+                manager.getEngineByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
                 
-                LocationManagerXml.instance().writeOperationsLocationFile();
-*/
+                EngineManagerXml.instance().writeOperationsEngineFile();
         }
 
 	// TODO: Add test for import

@@ -38,7 +38,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -293,13 +293,13 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car 2nd Used Length", 40+4+33+4, t.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.engines.Engine e1 = new jmri.jmrit.operations.rollingstock.engines.Engine("TESTROAD", "TESTNUMBERE1");
-		e1.setLength("80");
+		e1.setModel("E8");  // Default length == 70
 		t.addRS(e1);
 
 		Assert.assertEquals("Location Track Car 3rd Number of Rolling Stock", 3, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 3rd Number of Cars", 2, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 3rd Number of Engines", 1, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 3rd Used Length", 40+4+33+4+80+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 3rd Used Length", 40+4+33+4+70+4, t.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
@@ -308,37 +308,37 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car 4th Number of Rolling Stock", 4, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 4th Number of Cars", 3, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 4th Number of Engines", 1, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 4th Used Length", 40+4+33+4+80+4+50+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 4th Used Length", 40+4+33+4+70+4+50+4, t.getUsedLength()); // Drawbar length is 4
 
 		jmri.jmrit.operations.rollingstock.engines.Engine e2 = new jmri.jmrit.operations.rollingstock.engines.Engine("TESTROAD", "TESTNUMBERE2");
-		e2.setLength("80");
+		e2.setModel("E8");  // Default length == 70
 		t.addRS(e2);
 
 		Assert.assertEquals("Location Track Car 5th Number of Rolling Stock", 5, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 5th Number of Cars", 3, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 5th Number of Engines", 2, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 5th Used Length", 40+4+33+4+80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 5th Used Length", 40+4+33+4+70+4+50+4+70+4, t.getUsedLength()); // Drawbar length is 4
 
 		t.deleteRS(c2);
 
 		Assert.assertEquals("Location Track Car 6th Number of Rolling Stock", 4, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 6th Number of Cars", 2, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 6th Number of Engines", 2, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 6th Used Length", 40+4+80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 6th Used Length", 40+4+70+4+50+4+70+4, t.getUsedLength()); // Drawbar length is 4
 
 		t.deleteRS(c1);
 
 		Assert.assertEquals("Location Track Car 7th Number of Rolling Stock", 3, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 7th Number of Cars", 1, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 7th Number of Engines", 2, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 7th Used Length", 80+4+50+4+80+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 7th Used Length", 70+4+50+4+70+4, t.getUsedLength()); // Drawbar length is 4
 
 		t.deleteRS(e2);
 
 		Assert.assertEquals("Location Track Car 8th Number of Rolling Stock", 2, t.getNumberRS());
 		Assert.assertEquals("Location Track Car 8th Number of Cars", 1, t.getNumberCars());
 		Assert.assertEquals("Location Track Car 8th Number of Engines", 1, t.getNumberEngines());
-		Assert.assertEquals("Location Track Car 8th Used Length", 80+4+50+4, t.getUsedLength()); // Drawbar length is 4
+		Assert.assertEquals("Location Track Car 8th Used Length", 70+4+50+4, t.getUsedLength()); // Drawbar length is 4
 
 		t.deleteRS(e1);
 

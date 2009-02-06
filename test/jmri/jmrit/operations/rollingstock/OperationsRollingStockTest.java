@@ -25,7 +25,10 @@ import junit.framework.TestSuite;
  *   RollingStock: Location Length change (set)
  *   RollingStock: Destination
  *   RollingStock: Train, Route
- *   RollingStock: XML read/write
+ * 
+ * Note:
+ *   RollingStock: XML read/write is tested in OperationsEnginesTest 
+ *                                         and OperationsCarsTest
  * 
  * @author	Bob Coleman Copyright (C) 2009
  * 
@@ -185,50 +188,9 @@ public class OperationsRollingStockTest extends TestCase {
 
     // Ensure minimal setup for log4J
 
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    SignalHead h1, h2, h3, h4;
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-        
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-
-        h1 = new jmri.VirtualSignalHead("IH1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
     }
 
 	public OperationsRollingStockTest(String s) {
