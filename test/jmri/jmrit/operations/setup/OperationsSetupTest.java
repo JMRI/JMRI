@@ -3,6 +3,11 @@
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 import java.io.File;
 
@@ -10,13 +15,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.InternalSensorManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
 
 /**
  * Tests for the Operations Setup class
@@ -26,7 +24,7 @@ import jmri.Turnout;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -417,7 +415,7 @@ public class OperationsSetupTest extends TestCase {
 //		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		ox.setOperationsFileName(OperationsXml.getOperationsFileName());
+		//ox.setOperationsFileName(OperationsXml.getOperationsFileName());
 
 		// remove existing Operations file if its there
 		File f = new File(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
@@ -488,10 +486,6 @@ public class OperationsSetupTest extends TestCase {
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    SignalHead h1, h2, h3, h4;
     
     /**
     * Test-by test initialization.
@@ -503,14 +497,55 @@ public class OperationsSetupTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
-        // Repoint ManagerXML to JUnitTest subdirectory
-        
+        // Repoint OperationsXml to JUnitTest subdirectory
         String tempstring = OperationsXml.getOperationsDirectoryName();
         if (!tempstring.contains(File.separator+"JUnitTest")){
-        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");	   	
+        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
         }
-        OperationsXml.setOperationsFileName("OperationsJUnitTest.xml");  
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
+        // this test expects the file name to be reloaded
+        OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+    	
+        // The OperationsSetup test doesn't touch routes but we'll protect
+        // Repoint RouteManagerXml to JUnitTest subdirectory
+        tempstring = RouteManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        }
+        
+        // This test doesn't touch cars but we'll protect
+        // Repoint CarManagerXml to JUnitTest subdirectory
+        tempstring = CarManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        }
+        
+        // This test doesn't touch engines but we'll protect
+        // Repoint EngineManagerXml to JUnitTest subdirectory
+        tempstring = EngineManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        }
+        
+        // This test doesn't touch locations but we'll protect
+        // Repoint LocationManagerXml to JUnitTest subdirectory
+        tempstring = LocationManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        }
+        
+        // This test doesn't touch trains but we'll protect
+        // Repoint TrainManagerXml to JUnitTest subdirectory
+        tempstring = TrainManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        }
+        
+    	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+RouteManagerXml.getOperationsDirectoryName());
     }
 
 	public OperationsSetupTest(String s) {

@@ -12,16 +12,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.InternalSensorManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
-import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
  * Tests for the Operations Locations class
@@ -38,7 +34,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -786,23 +782,24 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test location Xml create support
 	public void testXMLCreate() {
+		LocationManager manager = LocationManager.instance();
+		manager.dispose();
+		List locationList = manager.getLocationsByIdList();
+		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+		manager.newLocation("Test Location 2");
+		manager.newLocation("Test Location 1");
+		manager.newLocation("Test Location 3");
 
-                LocationManager manager = LocationManager.instance();
-                List locationList = manager.getLocationsByIdList();
-                Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
-                manager.newLocation("Test Location 2");
-                manager.newLocation("Test Location 1");
-                manager.newLocation("Test Location 3");
+		locationList = manager.getLocationsByIdList();
+		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById((String)locationList.get(0)).getName());
+		Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById((String)locationList.get(1)).getName());
+		Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById((String)locationList.get(2)).getName());
 
-                Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById("1").getName());
-                Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById("2").getName());
-                Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById("3").getName());
+		Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
+		Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
+		Assert.assertEquals("New Location by Name 3", "Test Location 3", manager.getLocationByName("Test Location 3").getName());
 
-                Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
-                Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
-                Assert.assertEquals("New Location by Name 3", "Test Location 3", manager.getLocationByName("Test Location 3").getName());
-
-                manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
+		manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
 		manager.getLocationByName("Test Location 1").setSwitchList(true);
 		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
@@ -812,7 +809,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 1").addTypeName("Coal");
 		manager.getLocationByName("Test Location 1").addTypeName("Engine");
 		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
 		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
 		manager.getLocationByName("Test Location 2").setSwitchList(true);
 		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
@@ -822,7 +819,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 2").addTypeName("Coal");
 		manager.getLocationByName("Test Location 2").addTypeName("Engine");
 		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
 		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
 		manager.getLocationByName("Test Location 3").setSwitchList(true);
 		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
@@ -833,51 +830,51 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 3").addTypeName("Engine");
 		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
 
-                locationList = manager.getLocationsByIdList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+		locationList = manager.getLocationsByIdList();
+		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
-                    }
-                }
+		for (int i = 0; i < locationList.size(); i++) {
+			String locationId = (String)locationList.get(i);
+			Location loc = manager.getLocationById(locationId);
+			String locname = loc.getName();
+			if (i == 0) {
+				Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
+			}
+			if (i == 1) {
+				Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
+			}
+			if (i == 2) {
+				Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
+			}
+		}
 
-                locationList = manager.getLocationsByNameList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+		locationList = manager.getLocationsByNameList();
+		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
-                    }
-                }
+		for (int i = 0; i < locationList.size(); i++) {
+			String locationId = (String)locationList.get(i);
+			Location loc = manager.getLocationById(locationId);
+			String locname = loc.getName();
+			if (i == 0) {
+				Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+			}
+			if (i == 1) {
+				Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+			}
+			if (i == 2) {
+				Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+			}
+		}
 
-                LocationManagerXml.instance().writeOperationsLocationFile();
+		LocationManagerXml.instance().writeOperationsLocationFile();
 
-                manager.newLocation("Test Location 4");
-                manager.newLocation("Test Location 5");
-                manager.newLocation("Test Location 6");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
-                
-                LocationManagerXml.instance().writeOperationsLocationFile();
-        }
+		manager.newLocation("Test Location 4");
+		manager.newLocation("Test Location 5");
+		manager.newLocation("Test Location 6");
+		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
+
+		LocationManagerXml.instance().writeOperationsLocationFile();
+	}
 
 	// test location Xml read support preparation
 	public void testXMLReadPrep() {
@@ -933,10 +930,6 @@ public class OperationsLocationsTest extends TestCase {
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    SignalHead h1, h2, h3, h4;
     
     /**
     * Test-by test initialization.
@@ -947,68 +940,53 @@ public class OperationsLocationsTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-
-        // Repoint ManagerXML to JUnitTest subdirectory
-        new LocationManagerXml(){ {_instance = this;
-            String tempstring;
-            tempstring = getOperationsDirectoryName();
-            if (!tempstring.contains(File.separator+"JUnitTest"))
-                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-            setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        }};
         
-        new EngineManagerXml(){ {_instance = this;
-            String tempstring;
-            tempstring = getOperationsDirectoryName();
-            if (!tempstring.contains(File.separator+"JUnitTest"))
-                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-            setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-
-            EngineManager manager = EngineManager.instance();
-
-            List tempconsistList = manager.getConsistNameList();
-            for (int i = 0; i < tempconsistList.size(); i++) {
-                String consistId = (String)tempconsistList.get(i);
-                manager.deleteConsist(consistId);
-            }
-
-            EngineModels.instance().dispose();
-            EngineLengths.instance().dispose();
-            manager.dispose();
-        }};
-
+        // This test doesn't touch setup but we'll protect
+        // Repoint OperationsXml to JUnitTest subdirectory
+        String tempstring = OperationsXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+        }
+        
+        // This test doesn't touch routes but we'll protect
+        // Repoint RouteManagerXml to JUnitTest subdirectory
+        tempstring = RouteManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        }
+        
+        // Repoint EngineManagerXml to JUnitTest subdirectory
+        tempstring = EngineManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        }
+        
+        // This test doesn't touch cars but we'll protect
+        // Repoint CarManagerXml to JUnitTest subdirectory
+        tempstring = CarManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        }
+        
+        // Repoint LocationManagerXml to JUnitTest subdirectory
+        tempstring = LocationManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        }
+        
+        // Repoint TrainManagerXml to JUnitTest subdirectory
+        tempstring = TrainManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        }
+    	
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
-
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-        
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-
-        h1 = new jmri.VirtualSignalHead("IH1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
     }
 
 	public OperationsLocationsTest(String s) {

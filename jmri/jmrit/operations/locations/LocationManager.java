@@ -22,7 +22,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
@@ -162,7 +162,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return list of location ids ordered by number
 	 */
-    public List getLocationsByIdList() {
+    public List<String> getLocationsByIdList() {
     	// first get id list
     	List<String> sortList = getList();
     	// now re-sort
