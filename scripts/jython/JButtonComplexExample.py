@@ -21,13 +21,16 @@
 # displayed by clicking the icon for it on the Taskbar.
 #      comments added by wsthompson@earthlink.net 20061101
 #
+# Added comment explaining how to change field size.
+#                     by wsthompson@earthlink.net 20090202
+#
 #
 #
 # Author: Bob Jacobsen, copyright 2004, 2006
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 
 import java
 import javax.swing
@@ -40,8 +43,10 @@ f.contentPane.setLayout(javax.swing.BoxLayout(f.contentPane, javax.swing.BoxLayo
 addressChanged = False    # True means the field has changed
 commandChanged = False
 
-# create the first text field
-address = javax.swing.JTextField(5)    # sized to show 5 characters, initially empty
+# Create the first text field
+# Sized to show 5 characters, initially empty
+# To make the field a different size, change the (5) to the desired size
+address = javax.swing.JTextField(5)    
 
 # put the text field on a line preceded by a label
 temppanel1 = javax.swing.JPanel()
