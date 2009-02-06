@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -79,7 +79,7 @@ public class LayoutEditor extends JmriJFrame {
 	final public static  int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
 	final public static  int TURNOUT_B = 3;  // continuing route for RH or LH turnouts
 	final public static  int TURNOUT_C = 4;  // diverging route for RH or LH turnouts
-	final public static  int TURNOUT_D = 5;  // double-crossover only
+	final public static  int TURNOUT_D = 5;  // double-crossover or single crossover only
 	final public static  int LEVEL_XING_A = 6;  
 	final public static  int LEVEL_XING_B = 7;
 	final public static  int LEVEL_XING_C = 8;
@@ -112,6 +112,7 @@ public class LayoutEditor extends JmriJFrame {
 	public ArrayList multiSensors = new ArrayList(); // multi-sensor images
 	
 	public LayoutEditorAuxTools auxTools = null;
+	private ConnectivityUtil conTools = null;
         
     private ButtonGroup itemGroup = null;
     private JTextField blockIDField = new JTextField(8);
@@ -4167,6 +4168,14 @@ public class LayoutEditor extends JmriJFrame {
     void setNextLocation(JComponent obj) {
         obj.setLocation(xLoc,yLoc);
     }
+	
+	public ConnectivityUtil getConnectivityUtil() {
+		if (conTools == null) {
+			conTools = new ConnectivityUtil(thisPanel);
+		}
+		if (conTools==null) log.error("Unable to establish link to Connectivity Tools for Layout Editor panel "+layoutName);
+		return conTools;
+	}
 	
 	/**
 	 * Called by JmriJFrame when window is closing.  

@@ -58,7 +58,7 @@ import java.util.ResourceBundle;
  * The train source should be specified in the Dispatcher Options window prior to creating an 
  *       ActiveTrain.
  * <P>
- * A ActiveTrains is referenced via a list in DispatcherFrame, which serves as 
+ * A ActiveTrains are referenced via a list in DispatcherFrame, which serves as 
  *	a manager for ActiveTrain objects.
  * <P>
  * ActiveTrains are transient, and are not saved to disk.
@@ -78,7 +78,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ActiveTrain {
 

@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -215,7 +215,9 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setTrainsFromUser(trainsFromUser.isSelected());
 		dispatcher.setHasOccupancyDetection(detectionCheckBox.isSelected());
 		dispatcher.setAutoAllocate(autoAllocateCheckBox.isSelected());
+		autoDispatchItem.setSelected(autoAllocateCheckBox.isSelected());
 		dispatcher.setAutoTurnouts(autoTurnoutsCheckBox.isSelected());
+		autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
 		if (autoTurnoutsCheckBox.isSelected() && ( (layoutEditorList.size()==0) ||
 								(!useConnectivityCheckBox.isSelected()) ) ) {
 			JOptionPane.showMessageDialog(optionsFrame,(Object)rb.getString(

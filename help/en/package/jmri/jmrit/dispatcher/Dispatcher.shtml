@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Dispatcher.shtml,v 1.3 2008-11-01 17:32:59 jacobsen Exp $ -->
+<!-- $Id: Dispatcher.shtml,v 1.4 2009-02-05 23:54:11 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -100,13 +100,15 @@ the dispatcher to easily allocate Sections, create new Active Trains, terminate
 Active Trains, and display a table of all <b>Allocated Sections</b>. Allocated 
 Sections are released using buttons in the Allocated Sections table. The 
 <b><a href="#window">Dispatcher Window</a></b> is discussed in detail below.</p>
-<p><b>Note: The current version of JMRI does not have automated dispatching, 
-automatic running of trains, or automatic setting of turnouts.</b> Those optional 
-features will be added in future releases.</p>
+<p><b>Note: The current version of JMRI does not have automated dispatching or 
+automatic running of trains.</b> Those optional features will be added in 
+future releases.</p>
 <p>Many of the terms in this introduction to Dispatcher may be new to users. 
 Some were created specifically for use with Dispatcher. Please briefly review 
 the <b>Glossary of Terms</b> which follows, and come back to it as needed when 
-reading the remainder of this documentation.</p>
+reading the remainder of this documentation. Note that "<i>Dispatcher</i>" refers 
+to the Dispatcher software, and "<i>the dispatcher</i>" refers to the person 
+running the Dispatcher software.</p>
 
 <a name="glossary"><H2>Glossary of Terms</H2>
 
@@ -128,7 +130,7 @@ help file, along with instructions on how to create a Section.</p>
 <p><b>Transit</b> - A group of two or more connected <b>Sections</b> that describes
 a route around the layout for a train traveling in a given direction. Transits 
 are required for Dispatcher, and at least one must be defined before Dispatcher 
-can be opened. A detailed description of Transits, how they are created and 
+can be opened. A detailed description of Transits, how they are created, and 
 how they are used is contained in the 
 <b><a href="../beantable/TransitTable.shtml">Transit Table</a></b> help file.</p>
 <p><b>Train</b> - An engine (or consist) usually attached to a group of cars, 
@@ -147,12 +149,14 @@ details. Active Trains are created and terminated from the Dispatcher window.</p
 the exclusive use of an <b>Active Train</b>. Allocation Requests that are not 
 immediately acted upon are gathered in a queue that is displayed in the Dispatcher 
 window. Action on an Allocation Request can be delayed for a number of reasons, 
-for example, if the requested Section is allocated to a different Active Train.</p>
+for example, if the requested Section is not FREE, but is allocated to a Active 
+Train.</p>
 <p><b>Allocated Section</b> - A <b>Section</b> that is currently assigned to an 
 <b>Active Train</b>. When a Section is allocated, if there are alternate Sections 
 following the Allocated Section, the dispatcher must choose the next Section from the 
 alternate Sections contained in the Transit. A window listing all Allocated Sections 
-may be displayed by clicking a button in the Dispatcher window.</p>
+may be displayed by clicking a button in the Dispatcher window. This Allocated 
+Section window is where Sections are released manually by the dispatcher.</p>
 <p><b>Alternate Section</b> - An <i>alternate</i>  <b>Section</b> connecting two 
 Sections in a <b>Transit</b>. In user-specified areas of a Transit, <i>alternate</i> 
 Sections may be designated. For example, to move between the "2nd" and "4th" 
@@ -398,6 +402,14 @@ If an ALLOCATED Section needs to be reallocated to a different Active Train, it
 must first be <b>released</b>. (See the 
 <b><a href="AllocatedSections.shtml">Allocated Sections</a></b> window help file 
 for instruction on <i>releasing</i> Allocated Sections.)</p>
+<p> If "<i>Use connectivity ...</i>" is checked in the <b>Options</b> window, Dispatcher 
+will check that turnouts are set correctly before actually allocating a Section. 
+If turnouts are not set correctly, Dispatcher will attempt to set the turnouts if 
+<b>Auto Set Turnouts</b> is checked in the <b>Options</b> menu (or checked in the 
+<b>Options</b> window). If turnouts are not set correctly, the dispatcher is 
+warned and given the option of overriding the turnout check and proceeding with  
+allocation of the Section. For more information see 
+<b><a href="Options.shtml">Dispatcher Options</a></b>.</p>
 </li>
 <li><p><b>Cancel Button</b> - Click this button to delete the Allocation 
 Request without allocating the requested Section.

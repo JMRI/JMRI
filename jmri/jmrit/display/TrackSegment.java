@@ -15,19 +15,23 @@ import javax.swing.*;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
- *     layout.  A node may be a PositionableTurnout, a LevelXing or a PositionablePoint.
+ *     layout.  A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
  * <P>
- * PositionablePoints have only one possible connection point.  Positionable Turnouts
- *		have 3 or 4 (double crossover) connection points, designated A, B, C, and D.
+ * PositionablePoints have 1 or 2 connection points. LayoutTurnouts
+ *		have 3 or 4 (crossovers) connection points, designated A, B, C, and D.
  *		LevelXing's have 4 connection points, designated A, B, C, and D.
  * <P>
- * TrackSegments carry Block information, as do Positionable Turnouts.
+ * TrackSegments carry the connectivity information between the three types of nodes. Track Segments 
+ *		serve as the lines in a graph which shows layout connectivity. For the connectivity graph 
+ *		to be valid, all connections between nodes must be via TrackSegments.
+ * <P>
+ * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings.
  * <P>
  * TrackSegments may be drawn as dashed lines or solid lines.  In addition TrackSegments
  *		may be hidden when the panel is not in EditMode. 
  *
- * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @author Dave Duchamp Copyright (c) 2004-2009
+ * @version $Revision: 1.8 $
  */
 
 public class TrackSegment 

@@ -2,7 +2,6 @@
 
 package jmri;
 
-import jmri.Transit;
 import jmri.Block;
 import jmri.Sensor;
 import jmri.Timebase;
@@ -85,7 +84,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -462,6 +461,16 @@ public class Section extends AbstractNamedBean
 			return (Block)mBlockEntries.get(seqNumber);
 		return null;
 	}
+	/** 
+	 * Get the sequence number of a Block
+	 * Returns -1 if Block is not in the Section
+	 */
+	public int getBlockSequenceNumber(Block b) {
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			if (b==(Block)mBlockEntries.get(i)) return i;
+		}
+		return -1;
+	}
 	/**
 	 * Remove all Blocks, Block Listeners,  and Entry Points
 	 */
@@ -584,7 +593,99 @@ public class Section extends AbstractNamedBean
 			list.add(mReverseEntryPoints.get(j));
 		}
 		return list;
-	}	
+	}
+	public boolean isForwardEntryPoint(EntryPoint ep) {
+		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+			if ( (Object)ep == mForwardEntryPoints.get(i) ) return true;
+		}
+		return false;
+	}
+	public boolean isReverseEntryPoint(EntryPoint ep) {
+		for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+			if ( (Object)ep == mReverseEntryPoints.get(i) ) return true;
+		}
+		return false;
+	}
+	/** 
+	 * Returns the EntryPoint for entry from specified Section for travel in specified direction
+	 *   Returns 'null' if not found.
+	 */
+	public EntryPoint getEntryPointFromSection(Section s, int dir) {
+		EntryPoint ep = null;
+		if (dir == FORWARD) {
+			for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+				ep = (EntryPoint)mForwardEntryPoints.get(i); 
+				if (s.containsBlock(ep.getFromBlock())) return ep;
+			}
+		}
+		else if (dir == REVERSE) {
+			for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+				ep = (EntryPoint)mReverseEntryPoints.get(i); 
+				if (s.containsBlock(ep.getFromBlock())) return ep;
+			}
+		}
+		return ep;
+	}
+	/** 
+	 * Returns the EntryPoint for exit to specified Section for travel in specified direction
+	 *   Returns 'null' if not found.
+	 */
+	public EntryPoint getExitPointToSection(Section s, int dir) {
+		EntryPoint ep = null;
+		if (dir == REVERSE) {
+			for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+				ep = (EntryPoint)mForwardEntryPoints.get(i); 
+				if (s.containsBlock(ep.getFromBlock())) return ep;
+			}
+		}
+		else if (dir == FORWARD) {
+			for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+				ep = (EntryPoint)mReverseEntryPoints.get(i); 
+				if (s.containsBlock(ep.getFromBlock())) return ep;
+			}
+		}
+		return ep;
+	}
+	/** 
+	 * Returns the EntryPoint for entry from specified Block for travel in specified direction
+	 *   Returns 'null' if not found.
+	 */
+	public EntryPoint getEntryPointFromBlock(Block b, int dir) {
+		EntryPoint ep = null;
+		if (dir == FORWARD) {
+			for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+				ep = (EntryPoint)mForwardEntryPoints.get(i); 
+				if (b == ep.getFromBlock()) return ep;
+			}
+		}
+		else if (dir == REVERSE) {
+			for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+				ep = (EntryPoint)mReverseEntryPoints.get(i); 
+				if (b == ep.getFromBlock()) return ep;
+			}
+		}
+		return ep;
+	}
+	/** 
+	 * Returns the EntryPoint for exit to specified Block for travel in specified direction
+	 *   Returns 'null' if not found.
+	 */
+	public EntryPoint getExitPointToBlock(Block b, int dir) {
+		EntryPoint ep = null;
+		if (dir == REVERSE) {
+			for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+				ep = (EntryPoint)mForwardEntryPoints.get(i); 
+				if (b == ep.getFromBlock()) return ep;
+			}
+		}
+		else if (dir == FORWARD) {
+			for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+				ep = (EntryPoint)mReverseEntryPoints.get(i); 
+				if (b == ep.getFromBlock()) return ep;
+			}
+		}
+		return ep;
+	}
 	
 	/**
 	 * Validate and initialize the Section. 
@@ -595,7 +696,8 @@ public class Section extends AbstractNamedBean
 // add code
 		return true;
 	}
-		    
+		
+						
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Section.class.getName());
 	
 }

@@ -47,7 +47,7 @@ import jmri.Path;
  *		panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutConnectivity {
 	
@@ -77,6 +77,7 @@ public class LayoutConnectivity {
 	int typeConnect2 = 0;
 	LayoutTurnout xover = null;
 	int xoverBoundaryType = NONE;
+	PositionablePoint anchor = null;
 	
 	/**
 	 * Accessor routines
@@ -107,12 +108,13 @@ public class LayoutConnectivity {
 		direction = Path.NONE;
 		return (false);
 	}	
-	public void setConnections (TrackSegment t, Object o, int type) {
+	public void setConnections (TrackSegment t, Object o, int type, PositionablePoint p) {
 		track1 = t;
 		if (t==null) log.error("null track1 when setting up LayoutConnectivity");
 		connect2 = o;
 		if (o==null) log.error("null connect object when setting up LayoutConnectivity");
 		typeConnect2 = type;
+		anchor = p;
 	}
 	public void setXoverBoundary (LayoutTurnout t, int type) {
 		xover = t;
@@ -124,6 +126,7 @@ public class LayoutConnectivity {
 	public int getConnectedType() {return typeConnect2;}
 	public LayoutTurnout getXover() {return xover;}
 	public int getXoverBoundaryType() {return xoverBoundaryType;}
+	public PositionablePoint getAnchor() {return anchor;}
 	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutConnectivity.class.getName());
 

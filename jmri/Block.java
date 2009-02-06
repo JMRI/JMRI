@@ -64,7 +64,7 @@ import java.util.List;
  *</ul>
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -157,8 +157,8 @@ public class Block extends jmri.AbstractNamedBean {
     public int getDirection() { return _direction; }
     
     // internal data members
-    private int _current; // state
-    private Sensor _sensor;
+    private int _current = UNOCCUPIED; // state
+    private Sensor _sensor = null;
 	private java.beans.PropertyChangeListener _sensorListener = null;
     private Object _value;
     private int _direction;

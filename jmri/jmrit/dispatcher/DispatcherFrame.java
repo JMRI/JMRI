@@ -46,14 +46,14 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
     public DispatcherFrame () {
 		_instance = this;
-		openDispatcherWindow();
 		initializeOptions();
+		openDispatcherWindow();
 		autoTurnouts = new AutoTurnouts(this);
 		if (autoTurnouts==null)
 			log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
@@ -877,11 +877,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			ar = requestAllocation(at, s, Section.FORWARD, -99, true, extraFrame);
 		}
 		// if allocation request is OK, allocate the Section
-		if (ar==null) return;
-		AllocatedSection as = allocateSection(ar, null);	
-		extraFrame.setVisible(false);
-		extraFrame.dispose();   // prevent listing in the Window menu.
-		extraFrame = null;
+		if (ar!=null) {
+			AllocatedSection as = allocateSection(ar, null);
+		}
+		if (extraFrame!=null) {	
+			extraFrame.setVisible(false);
+			extraFrame.dispose();   // prevent listing in the Window menu.
+			extraFrame = null;
+		}
 	}
 	
 	// terminate an Active Train from the button in the Dispatcher window
@@ -1282,6 +1285,38 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 					}
 				}
 			}
+			// check/set turnouts if requested or if autorun
+			// Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If 
+			//			turnouts are not set correctly, allocation will not proceed without dispatcher override.
+			//		 If in addition Auto setting of turnouts is requested, the turnouts are set automatically
+			//			if not in the correct position.
+			// Note: Turnout checking and/or setting is not performed when allocating an extra section.
+			if ( (_UseConnectivity) && (ar.getSectionSeqNumber()!=-99) ) {
+				boolean turnoutsOK = true;  
+				if (_AutoTurnouts) {
+					// automatically set the turnouts for this section before allocation
+					turnoutsOK = autoTurnouts.setTurnoutsInSection(s,ar.getSectionSeqNumber(),nextSection,
+												at,_LE);
+				}
+				else {
+					// check that turnouts are correctly set before allowing allocation to proceed
+					turnoutsOK = autoTurnouts.checkTurnoutsInSection(s,ar.getSectionSeqNumber(),nextSection,
+												at,_LE);
+		
+				}
+				if (!turnoutsOK) {
+					if (_AutoAllocate) return null;
+					else {
+						// give the manual dispatcher a chance to override turnouts not OK
+						int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
+								rb.getString("Question2"),rb.getString("WarningTitle"),
+								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+								new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo")},rb.getString("ButtonNo"));
+						if (selectedValue == 1) return null;   // return without allocating if "No" response
+					}
+				}
+			}
+			 
 			// allocate the section
 			as = new AllocatedSection(s,at,ar.getSectionSeqNumber(),nextSection);
 			if (as!=null) {
@@ -1301,7 +1336,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				if (allocatedSectionTableModel!=null) {
 					allocatedSectionTableModel.fireTableDataChanged();
 				}
-				if (_AutoTurnouts) autoTurnouts.setTurnouts(as,this);
 			}
 			if (extraFrame!=null) cancelExtraRequested(null);
 		}

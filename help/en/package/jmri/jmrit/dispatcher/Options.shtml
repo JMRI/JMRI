@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Options.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: Options.shtml,v 1.4 2009-02-05 23:54:11 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -51,7 +51,11 @@ below:</p>
 Layout Editor panel (if there's more than one panel), if you have a Layout Editor 
 panel that fully describes your layout, including blocks and turnouts, and would 
 like Dispatcher to make use of this connectivity. Uncheck this item if no 
-Layout Editor panel with full connectivity is available.</p>
+Layout Editor panel with full connectivity is available. If this item is checked, 
+Dispatcher will automatically check if turnouts are set correctly when allocating 
+a Section, and will inform the dispatcher if the turnouts are not set correctly. 
+This item must be checked if Dispatcher is to set turnouts when a Section is 
+allocated (see below).</p>
 </li>
 <li><p>Select one of the three options for Dispatcher to select trains from 
 when creating Active Trains. The three possibilities are:</p></li>
@@ -73,16 +77,21 @@ detection.</p>
 <li><p>Check <b>Automatically allocate Sections to Active Trains</b> to activate 
 automated dispatching. Uncheck to deactivate automated dispatching features. 
 This item is equivalent to the <b>Auto Allocate</b> item in Dispatcher's 
-<b>Options</b> menu.
+<b>Options</b> menu. Currently automatic functions are limited, but more will be 
+added in the future.</p>
 </li>
 <li><p>Check <b>Automatically set turnouts when a Section is allocated</b> to 
 activate automatic setting of turnouts. Uncheck to deactivate automatic 
 setting of turnouts. This item is equivalent to <b>Auto Set Turnouts</b> in 
-Dispatcher's <b>Options</b> menu.
+Dispatcher's <b>Options</b> menu. This item requires that "<i>Use connectivity 
+from Layout Editor panel</i>" be checked (see above). Turnouts will not be set 
+unless the Section to be allocated is free and unoccupied. If turnouts cannot be 
+set, the dispatcher will be warned. When setting turnouts, Dispatcher only issues 
+commands to set turnouts; it does not wait for turnouts to actually change.</p>
 </li>
 <li><p>Check <b>Use short Active Train names</b> to use the train name as the 
 Active Train name in tables and selection boxes where Active Trains are 
-referenced. Uncheck to use the full Active Train name in those locations.
+referenced. Uncheck to use the full Active Train name in those locations.</p>
 </li>
 <li><p>Check <b>Place train name in starting Block</b> to request that 
 Dispatcher set the "value" of the starting Block to the train name when 
@@ -91,9 +100,9 @@ value to the train name. This feature is designed to facilitate Train
 Tracking in Layout Editor panels.</p>
 </li>
 </ul>
-<p><b>Note: Automated dispatching and automatic setting of turnouts are not 
-implemented in the initial version of Dispatcher.</b> These functions will 
-be available in a later version of Dispatcher.</p>
+<p><b>Note: Automated dispatching is not fully implemented in this version of 
+Dispatcher.</b> Some limited function is available, but more will 
+be available in later versions of Dispatcher.</p>
 <H2>Using the Options Menu
 </H2
 <p>The <b>Options</b> menu is used to access, edit, and save Dispatcher options. 

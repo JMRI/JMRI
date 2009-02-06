@@ -6,6 +6,8 @@ import jmri.Section;
 import jmri.TransitSection;
 import jmri.Block;
 import jmri.Timebase;
+//import jmri.jmrit.display.LayoutEditor;
+//import jmri.jmrit.dispatcher.ActiveTrain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ import java.util.List;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -337,7 +339,7 @@ public class Transit extends AbstractNamedBean
 		}
 		return list;
 	}
-					
+											
 	    
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Transit.class.getName());
 	

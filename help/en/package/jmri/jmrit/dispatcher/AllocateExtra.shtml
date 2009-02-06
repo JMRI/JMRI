@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AllocateExtra.shtml,v 1.3 2008-11-01 17:32:59 jacobsen Exp $ -->
+<!-- $Id: AllocateExtra.shtml,v 1.4 2009-02-05 23:54:11 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -41,6 +41,9 @@ extra Sections will show in the <b><a href="AllocatedSections.shtml">Allocated
 Sections</a></b> window.  The <b>Release</b> button in the Allocated 
 Sections window should be used to release the extra Sections when they are no 
 longer required.</p>
+
+<p>Note: Turnout checking and turnout setting are turned off during Allocate Extra.  
+Turnouts should be set as needed by the dispatcher or by the engineer.</p>
 
 <H2>Using the Allocate Extra Window
 </H2>
