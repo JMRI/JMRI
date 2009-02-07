@@ -1,10 +1,10 @@
-# Try to send and receive some bytes to a parallel port
+# Try to send and receive some bytes via a serial port
 #
 # Author: Bob Jacobsen, copyright 2009
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 
 #
@@ -69,8 +69,8 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
         
 # end of class definition
 
-# create one of these
-a = SerialPortTest("/dev/cu.USA19H1d1P1.1")
+# create one of these; provide the name of the serial port
+a = SerialPortTest("COM1")
 
 # set the thread name, so easy to cancel if needed
 a.setName("SerialPortTest sample script")
