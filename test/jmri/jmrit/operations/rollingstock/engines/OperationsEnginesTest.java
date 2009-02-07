@@ -3,19 +3,19 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.InternalSensorManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
  * Tests for the Operations RollingStock Engine class
@@ -33,7 +33,7 @@ import jmri.jmrit.XmlFile;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -350,100 +350,59 @@ public class OperationsEnginesTest extends TestCase {
                 Assert.assertEquals("EngineModels Default Type U28B", "Diesel", EngineModels.instance().getModelType("U28B"));
 	}
 
-        // test Engine length
-	public void testEngineLengths() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		EngineLengths el1 = new EngineLengths();
-//		EngineLengths el1;
-//		el1 = EngineLengths.instance();
-
-//		Assert.assertTrue("Engine Length Predefined 70", el1.containsName("70"));
-//		Assert.assertTrue("Engine Length Predefined 80", el1.containsName("80"));
-//		Assert.assertTrue("Engine Length Predefined 90", el1.containsName("90"));
-
-		el1.addName("1");
-		Assert.assertTrue("Engine Length Add 1", el1.containsName("1"));
-		Assert.assertFalse("Engine Length Never Added 13", el1.containsName("13"));
-		el1.addName("2");
-		Assert.assertTrue("Engine Length Still Has 1", el1.containsName("1"));
-		Assert.assertTrue("Engine Length Add s2", el1.containsName("2"));
-		el1.deleteName("2");
-		Assert.assertFalse("Engine Length Delete 2", el1.containsName("2"));
-		el1.deleteName("1");
-		Assert.assertFalse("Engine Length Delete 1", el1.containsName("1"));
-	}
-
-	public void testEngineModels() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		EngineModels em1 = new EngineModels();
-//		EngineModels em1;
-//		em1 = EngineModels.instance();
-
-//		Assert.assertTrue("Engine Models Predefined GP35", em1.containsName("GP35"));
-//		Assert.assertTrue("Engine Models Predefined SW1200", em1.containsName("SW1200"));
-//		Assert.assertTrue("Engine Models Predefined TRAINMASTER", em1.containsName("TRAINMASTER"));
-//		Assert.assertTrue("Engine Models Predefined E8", em1.containsName("E8"));
-
-		em1.addName("Model New1");
-		Assert.assertTrue("Engine Model Add New1", em1.containsName("Model New1"));
-		Assert.assertFalse("Engine Model Never Added New2", em1.containsName("Model New2"));
-		em1.addName("Model New3");
-		Assert.assertTrue("Engine Model Still Has New1", em1.containsName("Model New1"));
-		Assert.assertTrue("Engine Model Add New3", em1.containsName("Model New3"));
-		em1.deleteName("Model New3");
-		Assert.assertFalse("Engine Model Delete New3", em1.containsName("Model New3"));
-		em1.deleteName("Model New1");
-		Assert.assertFalse("Engine Model Delete New1", em1.containsName("Model New1"));
-	}
-
 	public void testConsist() {
 		Consist c1 = new Consist("TESTCONSIST");
 		Assert.assertEquals("Consist Name", "TESTCONSIST", c1.getName());
 
 		Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
-//		e1.setLength("56");
-		e1.setModel("GP35");
-		e1.setWeight("5000");
+		e1.setModel("GP35");  //  e1.setLength("56");
 		Engine e2 = new Engine("TESTROAD", "TESTNUMBER2");
-//		e2.setLength("59");
-		e2.setModel("GP40");
-		e2.setWeight("6000");
+		e2.setModel("GP40");  //  e2.setLength("59");
 		Engine e3 = new Engine("TESTROAD", "TESTNUMBER3");
-//		e3.setLength("45");
-		e3.setModel("SW1500");
-		e3.setWeight("7000");
+		e3.setModel("SW1500");  //  e3.setLength("45");
+		Engine e4 = new Engine("TESTROAD", "TESTNUMBER4");
+		e4.setModel("SW1500");  //  e3.setLength("45");
 
 		Assert.assertEquals("Consist Initial Length", 0, c1.getLength());
-//		Assert.assertEquals("Consist Initial Weight", 0.0, c1.getWeight(), 0.0);
+		Assert.assertFalse("Consist Lead Engine 0", c1.isLeadEngine(e1));
 
 		c1.addEngine(e1);
 		Assert.assertEquals("Consist Engine 1 Length", 56+4, c1.getLength());
-//		Assert.assertEquals("Consist Engine 1 Weight", 5000.0, c1.getWeight(), 0.0);
+		Assert.assertTrue("Consist Lead Engine 1", c1.isLeadEngine(e1));
 
 		c1.addEngine(e2);
 		Assert.assertEquals("Consist Engine 2 Length", 56+4+59+4, c1.getLength());
-//		Assert.assertEquals("Consist Engine 2 Weight", 11000.0, c1.getWeight(), 0.0);
+		Assert.assertTrue("Consist Lead Engine 1 after 2", c1.isLeadEngine(e1));
 
+                c1.setLeadEngine(e2);
+		Assert.assertFalse("Consist Lead Engine 1 after 2c", c1.isLeadEngine(e1));
+		Assert.assertTrue("Consist Lead Engine 2 after 2c", c1.isLeadEngine(e2));
+                
 		c1.addEngine(e3);
 		Assert.assertEquals("Consist Engine 3 Length", 56+4+59+4+45+4, c1.getLength());
-//		Assert.assertEquals("Consist Engine 3 Weight", 18000.0, c1.getWeight(), 0.0);
+		Assert.assertTrue("Consist Lead Engine 2 after 3", c1.isLeadEngine(e2));
+		Assert.assertFalse("Consist Lead Engine 1 after 3", c1.isLeadEngine(e1));
+		Assert.assertFalse("Consist Lead Engine 3 after 3", c1.isLeadEngine(e3));
 
-		c1.setLeadEngine(e2);
-		Assert.assertTrue("Consist Lead Engine 1", c1.isLeadEngine(e2));
-		Assert.assertFalse("Consist Lead Engine 2", c1.isLeadEngine(e1));
-		Assert.assertFalse("Consist Lead Engine 3", c1.isLeadEngine(e3));
+                // This should have caused an error:
+                c1.setLeadEngine(e4);
+		Assert.assertFalse("Consist Lead Engine 2 after 4c", c1.isLeadEngine(e2));
+		Assert.assertTrue("Consist Lead Engine 4 after 4c", c1.isLeadEngine(e4));
+              	List<Engine> tempengines = new ArrayList<Engine>();
+                tempengines = c1.getEngines();
+		Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));
+		Assert.assertFalse("Consist Engine 4 after 4c", tempengines.contains(e4));
+                
+
 
 		c1.deleteEngine(e2);
-		Assert.assertEquals("Kernel Engine Delete 2 Length", 56+4+45+4, c1.getLength());
-//		Assert.assertEquals("Kernel Engine Delete 2 Weight", 12000.0, c1.getWeight(), 0.0);
+		Assert.assertEquals("Consist Engine Delete 2 Length", 56+4+45+4, c1.getLength());
 
 		c1.deleteEngine(e1);
-		Assert.assertEquals("Kernel Engine Delete 1 Length", 45+4, c1.getLength());
-//		Assert.assertEquals("Kernel Engine Delete 1 Weight", 7000.0, c1.getWeight(), 0.0);
+		Assert.assertEquals("Consist Engine Delete 1 Length", 45+4, c1.getLength());
 
 		c1.deleteEngine(e3);
-		Assert.assertEquals("Kernel Engine Delete 3 Length", 0, c1.getLength());
-//		Assert.assertEquals("Kernel Engine Delete 3 Weight", 0.0, c1.getWeight(), 0.0);
+		Assert.assertEquals("Consist Engine Delete 3 Length", 0, c1.getLength());
 
 	}
 
@@ -455,17 +414,13 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("Consist Name new", "TESTCONSISTNEW", cnew.getName());
 
 		Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
-//		e1.setLength("56");
-		e1.setModel("GP35");
-		e1.setWeight("5000");
+		e1.setModel("GP35");  //  e1.setLength("56");
 		Engine e2 = new Engine("TESTROAD", "TESTNUMBER2");
-//		e2.setLength("59");
-		e2.setModel("GP40");
-		e2.setWeight("6000");
+		e2.setModel("GP40");  //  e2.setLength("59");
 		Engine e3 = new Engine("TESTROAD", "TESTNUMBER3");
-//		e3.setLength("45");
-		e3.setModel("SW1500");
-		e3.setWeight("7000");
+		e3.setModel("SW1500");  //  e3.setLength("45");
+		Engine e4 = new Engine("TESTROAD", "TESTNUMBER4");
+		e4.setModel("SW1500");  //  e3.setLength("45");
 
 		//  All three engines start out in the old consist with engine 1 as the lead engine.
 		e1.setConsist(cold);
@@ -649,89 +604,70 @@ public class OperationsEnginesTest extends TestCase {
 
 	// TODO: Add test to read xml file
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    SignalHead h1, h2, h3, h4;
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-
-        // Repoint ManagerXML to JUnitTest subdirectory
-        new EngineManagerXml(){ {_instance = this;
-            String tempstring;
-            tempstring = getOperationsDirectoryName();
-            if (!tempstring.contains(File.separator+"JUnitTest"))
-                setOperationsDirectoryName(getOperationsDirectoryName()+File.separator+"JUnitTest");
-            setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-
-            EngineManager manager = EngineManager.instance();
-
-            List tempconsistList = manager.getConsistNameList();
-            for (int i = 0; i < tempconsistList.size(); i++) {
-                String consistId = (String)tempconsistList.get(i);
-                manager.deleteConsist(consistId);
-            }
-
-            EngineModels.instance().dispose();
-            EngineLengths.instance().dispose();
-            manager.dispose();
-
-        }};
-
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+EngineManagerXml.getOperationsDirectoryName());
-
-        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations");
-        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"operations"+File.separator+"testing");
-        //	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-
-/*
-	// remove existing Operations file if its there
-        File fr = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml");
-	fr.delete();
-	File fb = new File(XmlFile.prefsDir()+"operations"+File.separator+"temp"+File.separator+"OperationsTestLocationRoster.xml.bak");
-	fb.delete();
-*/
-
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
         
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
+        // This test doesn't touch setup but we'll protect
+        // Repoint OperationsXml to JUnitTest subdirectory
+        String tempstring = OperationsXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+        }
+        
+        // This test doesn't touch routes but we'll protect
+        // Repoint RouteManagerXml to JUnitTest subdirectory
+        tempstring = RouteManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        }
+        
+        // Repoint EngineManagerXml to JUnitTest subdirectory
+        tempstring = EngineManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        }
+        
+        // This test doesn't touch cars but we'll protect
+        // Repoint CarManagerXml to JUnitTest subdirectory
+        tempstring = CarManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        }
+        
+        // Repoint LocationManagerXml to JUnitTest subdirectory
+        tempstring = LocationManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        }
+        
+        // Repoint TrainManagerXml to JUnitTest subdirectory
+        tempstring = TrainManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        }
+    	
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
 
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-
-        h1 = new jmri.VirtualSignalHead("IH1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
+        // Need to clear out EngineMaster global variables
+        EngineManager manager = EngineManager.instance();
+        List tempconsistList = manager.getConsistNameList();
+        for (int i = 0; i < tempconsistList.size(); i++) {
+            String consistId = (String)tempconsistList.get(i);
+            manager.deleteConsist(consistId);
+        }
+        EngineModels.instance().dispose();
+        EngineLengths.instance().dispose();
+        manager.dispose();
     }
 
 	public OperationsEnginesTest(String s) {
@@ -751,5 +687,6 @@ public class OperationsEnginesTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

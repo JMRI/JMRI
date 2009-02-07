@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
 
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -34,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -649,8 +648,6 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("MOW");
 		l.addTypeName("Passenger");
 		l.addTypeName("Reefer");
-
-
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
 		

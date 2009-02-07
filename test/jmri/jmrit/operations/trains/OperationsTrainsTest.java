@@ -2,17 +2,12 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.io.File;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.InternalSensorManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +23,13 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
 import java.util.List;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 /**
  * Tests for the Operations Trains class
@@ -54,7 +55,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -494,18 +495,18 @@ public class OperationsTrainsTest extends TestCase {
                 // Place Engines on Staging tracks
                 Assert.assertEquals("Location 1s1 Init Used Length", 0, l1s1.getUsedLength());
                 Assert.assertEquals("Location 1 Init Used Length", 0, l1s1.getUsedLength());
-                Assert.assertEquals("Place e1", e1.OKAY, e1.setLocation(l1, l1s1));
+                Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e1 Used Length", 63, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e1 Used Length", 63, l1.getUsedLength());
-                Assert.assertEquals("Place e2", e2.OKAY, e2.setLocation(l1, l1s1));
+                Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e2 Used Length", 126, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e2 Used Length", 126, l1.getUsedLength());
 
                 Assert.assertEquals("Location 1s2 Init Used Length", 0, l1s2.getUsedLength());
-                Assert.assertEquals("Place e3", e3.OKAY, e3.setLocation(l1, l1s2));
+                Assert.assertEquals("Place e3", Engine.OKAY, e3.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e3 Used Length", 70, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e3 Used Length", 196, l1.getUsedLength());
-                Assert.assertEquals("Place e4", e4.OKAY, e4.setLocation(l1, l1s2));
+                Assert.assertEquals("Place e4", Engine.OKAY, e4.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e4 Used Length", 140, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e4 Used Length", 266, l1.getUsedLength());
 
@@ -513,26 +514,26 @@ public class OperationsTrainsTest extends TestCase {
                 Assert.assertTrue("l1 Accepts Boxcar", l1.acceptsTypeName("Boxcar"));
                 Assert.assertTrue("l1s1 Accepts Boxcar", l1s1.acceptsTypeName("Boxcar"));
 
-                Assert.assertEquals("Place c3", c3.OKAY, c3.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c3 Used Length", 170, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c3 Used Length", 310, l1.getUsedLength());
-                Assert.assertEquals("Place c4", c4.OKAY, c4.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c4 Used Length", 214, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c4 Used Length", 354, l1.getUsedLength());
 
-                Assert.assertEquals("Place c5", c5.OKAY, c5.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c5 Used Length", 184, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c5 Used Length", 398, l1.getUsedLength());
-                Assert.assertEquals("Place c6", c6.OKAY, c6.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c6 Used Length", 228, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c6 Used Length", 442, l1.getUsedLength());
 
                 // Place Cabooses on Staging tracks
-                Assert.assertEquals("Place c1", c1.OKAY, c1.setLocation(l1, l1s1));
+                Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c1 Used Length", 250, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c1 Used Length", 478, l1.getUsedLength());
 
-                Assert.assertEquals("Place c2", c2.OKAY, c2.setLocation(l1, l1s2));
+                Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c2 Used Length", 264, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c2 Used Length", 514, l1.getUsedLength());
 
@@ -543,21 +544,21 @@ public class OperationsTrainsTest extends TestCase {
                 
 		RouteLocation rl1 = new RouteLocation("1r1", l1);
                 rl1.setSequenceId(1);
-                rl1.setTrainDirection(rl1.SOUTH);
+                rl1.setTrainDirection(RouteLocation.SOUTH);
                 rl1.setMaxCarMoves(5);
                 rl1.setMaxTrainLength(1000);
                 Assert.assertEquals("Route Location 1 Id", "1r1", rl1.getId());
 		Assert.assertEquals("Route Location 1 Name", "North End", rl1.getName());
 		RouteLocation rl2 = new RouteLocation("1r2", l2);
                 rl2.setSequenceId(2);
-                rl2.setTrainDirection(rl1.SOUTH);
+                rl2.setTrainDirection(RouteLocation.SOUTH);
                 rl2.setMaxCarMoves(5);
                 rl2.setMaxTrainLength(1000);
 		Assert.assertEquals("Route Location 2 Id", "1r2", rl2.getId());
 		Assert.assertEquals("Route Location 2 Name", "North Industries", rl2.getName());
 		RouteLocation rl3 = new RouteLocation("1r3", l3);
                 rl3.setSequenceId(3);
-                rl3.setTrainDirection(rl1.SOUTH);
+                rl3.setTrainDirection(RouteLocation.SOUTH);
                 rl3.setMaxCarMoves(5);
                 rl3.setMaxTrainLength(1000);
 		Assert.assertEquals("Route Location 3 Id", "1r3", rl3.getId());
@@ -627,48 +628,55 @@ public class OperationsTrainsTest extends TestCase {
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    SignalHead h1, h2, h3, h4;
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
+        // This test doesn't touch setup but we'll protect
+        // Repoint OperationsXml to JUnitTest subdirectory
+        String tempstring = OperationsXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+        }
         
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-
-        h1 = new jmri.VirtualSignalHead("IH1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
+        // This test doesn't touch routes but we'll protect
+        // Repoint RouteManagerXml to JUnitTest subdirectory
+        tempstring = RouteManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        }
+        
+        // Repoint EngineManagerXml to JUnitTest subdirectory
+        tempstring = EngineManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        }
+        
+        // This test doesn't touch cars but we'll protect
+        // Repoint CarManagerXml to JUnitTest subdirectory
+        tempstring = CarManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        }
+        
+        // Repoint LocationManagerXml to JUnitTest subdirectory
+        tempstring = LocationManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        }
+        
+        // Repoint TrainManagerXml to JUnitTest subdirectory
+        tempstring = TrainManagerXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator+"JUnitTest")){
+        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        }
+    	
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
     }
 
 	public OperationsTrainsTest(String s) {
@@ -688,5 +696,6 @@ public class OperationsTrainsTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }
