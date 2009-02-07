@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -486,6 +486,138 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route name list is empty", true, listByName.isEmpty());
 	}
 
+	// test location Xml create support
+	public void testXMLCreate() throws Exception {
+
+                RouteManager manager = RouteManager.instance();
+                List temprouteList = manager.getRoutesByIdList();
+
+                Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
+                manager.newRoute("Test Number 1");
+                manager.newRoute("Test Number 2");
+                manager.newRoute("Test Number 3");
+
+                temprouteList = manager.getRoutesByIdList();
+
+                Assert.assertEquals("New Number of Cars", 3, temprouteList.size());
+/*                
+                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
+                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
+                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getEngineById("CPTest Number 3").getNumber());
+
+                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getEngineByRoadAndNumber("CP", "Test Number 1").getNumber());
+                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getEngineByRoadAndNumber("ACL", "Test Number 2").getNumber());
+                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getEngineByRoadAndNumber("CP", "Test Number 3").getNumber());
+
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setColor("Black");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setHp("23");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLength("50");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setMoves(5);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setTrain(train);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeight("87");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
+                
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+*/                
+/*
+		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 1").addTypeName("Coal");
+		manager.getLocationByName("Test Location 1").addTypeName("Engine");
+		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 2").setSwitchList(true);
+		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 2").addTypeName("Coal");
+		manager.getLocationByName("Test Location 2").addTypeName("Engine");
+		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 3").addTypeName("Coal");
+		manager.getLocationByName("Test Location 3").addTypeName("Engine");
+		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+*/
+/*                
+                locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
+                    }
+                }
+
+*/
+/*                
+                locationList = manager.getLocationsByNameList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+                    }
+                }
+*/
+                
+
+                RouteManagerXml.writeOperationsRouteFile();
+//              RouteManagerXml.instance().writeOperationsRouteFile();
+
+                // Add some more engines and write file again
+                // so we can test the backup facility
+                manager.newRoute("Test Number 4");
+                manager.newRoute("Test Number 5");
+                manager.newRoute("Test Number 6");
+//                manager.getRouteByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
+                
+                RouteManagerXml.writeOperationsRouteFile();
+//              RouteManagerXml.instance().writeOperationsRouteFile();
+        }
+
 	// TODO: Add tests for Route location track location
 
 	// TODO: Add test to create xml file
@@ -495,13 +627,6 @@ public class OperationsRoutesTest extends TestCase {
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
@@ -554,6 +679,10 @@ public class OperationsRoutesTest extends TestCase {
         }
  
     	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+RouteManagerXml.getOperationsDirectoryName());
+
+        // Need to clear out RouteManager global variables
+        RouteManager manager = RouteManager.instance();
+        manager.dispose();
     }
 
 	public OperationsRoutesTest(String s) {

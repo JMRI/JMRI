@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
+import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
@@ -23,7 +24,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -274,6 +275,136 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLeadCar(c3));
 	}
 
+	// test location Xml create support
+	public void testXMLCreate() throws Exception {
+
+                CarManager manager = CarManager.instance();
+                List tempcarList = manager.getCarsByIdList();
+
+                Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
+                manager.newCar("CP", "Test Number 1");
+                manager.newCar("ACL", "Test Number 2");
+                manager.newCar("CP", "Test Number 3");
+
+                tempcarList = manager.getCarsByIdList();
+
+                Assert.assertEquals("New Number of Cars", 3, tempcarList.size());
+/*                
+                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
+                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
+                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getEngineById("CPTest Number 3").getNumber());
+
+                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getEngineByRoadAndNumber("CP", "Test Number 1").getNumber());
+                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getEngineByRoadAndNumber("ACL", "Test Number 2").getNumber());
+                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getEngineByRoadAndNumber("CP", "Test Number 3").getNumber());
+
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setColor("Black");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setHp("23");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLength("50");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setMoves(5);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
+//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setTrain(train);
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeight("87");
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
+                
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
+                
+                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+*/                
+/*
+		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 1").addTypeName("Coal");
+		manager.getLocationByName("Test Location 1").addTypeName("Engine");
+		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 2").setSwitchList(true);
+		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 2").addTypeName("Coal");
+		manager.getLocationByName("Test Location 2").addTypeName("Engine");
+		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
+                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
+		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
+		manager.getLocationByName("Test Location 3").addTypeName("Coal");
+		manager.getLocationByName("Test Location 3").addTypeName("Engine");
+		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+*/
+/*                
+                locationList = manager.getLocationsByIdList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
+                    }
+                }
+
+*/
+/*                
+                locationList = manager.getLocationsByNameList();
+                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+
+                for (int i = 0; i < locationList.size(); i++) {
+                    String locationId = (String)locationList.get(i);
+                    Location loc = manager.getLocationById(locationId);
+                    String locname = loc.getName();
+                    if (i == 0) {
+                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
+                    }
+                    if (i == 1) {
+                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
+                    }
+                    if (i == 2) {
+                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
+                    }
+                }
+*/
+                
+
+                CarManagerXml.instance().writeOperationsCarFile();
+
+                // Add some more engines and write file again
+                // so we can test the backup facility
+                manager.newCar("CP", "Test Number 4");
+                manager.newCar("CP", "Test Number 5");
+                manager.newCar("CP", "Test Number 6");
+                manager.getCarByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
+                
+                CarManagerXml.instance().writeOperationsCarFile();
+        }
+
 	// TODO: Add tests for location
 
 	// TODO: Add tests for track location
@@ -351,6 +482,22 @@ public class OperationsCarsTest extends TestCase {
         }
     	
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
+
+        // Need to clear out CarManager global variables
+        CarManager manager = CarManager.instance();
+        
+        List tempkernelList = manager.getKernelNameList();
+        for (int i = 0; i < tempkernelList.size(); i++) {
+            String kernelId = (String)tempkernelList.get(i);
+            manager.deleteKernel(kernelId);
+        }
+ 
+        CarColors.instance().dispose();
+        CarLengths.instance().dispose();
+        CarLoads.instance().dispose();
+        CarRoads.instance().dispose();
+        CarTypes.instance().dispose();
+        manager.dispose();
     }
 
 	public OperationsCarsTest(String s) {

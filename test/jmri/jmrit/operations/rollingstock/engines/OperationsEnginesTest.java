@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -658,7 +658,7 @@ public class OperationsEnginesTest extends TestCase {
     	
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
 
-        // Need to clear out EngineMaster global variables
+        // Need to clear out EngineManager global variables
         EngineManager manager = EngineManager.instance();
         List tempconsistList = manager.getConsistNameList();
         for (int i = 0; i < tempconsistList.size(); i++) {
