@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -499,7 +499,7 @@ public class OperationsRoutesTest extends TestCase {
 
                 temprouteList = manager.getRoutesByIdList();
 
-                Assert.assertEquals("New Number of Cars", 3, temprouteList.size());
+                Assert.assertEquals("New Number of Routes", 3, temprouteList.size());
 /*                
                 Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
                 Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
