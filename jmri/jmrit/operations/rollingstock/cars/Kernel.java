@@ -7,7 +7,7 @@ import java.util.*;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Kernel {
 	
@@ -107,8 +107,19 @@ public class Kernel {
 		return false;
 	}
 	
+	/**
+	 * Sets the lead car for this kernel. Car must be part of the kernel. The
+	 * groups of cars that make up this kernel will have the attributes of the
+	 * lead car. However, the length attribute is the sum of all cars lengths
+	 * plus the coupler lengths.
+	 * 
+	 * @param car
+	 *            lead car for this kernel.
+	 */
 	public void setLeadCar(Car car){
-		_leadCar = car;
+		if (_cars.contains(car)){
+			_leadCar = car;
+		}
 	}
 	
 	public void dispose(){

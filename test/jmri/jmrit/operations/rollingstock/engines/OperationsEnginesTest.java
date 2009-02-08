@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -384,10 +384,10 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertFalse("Consist Lead Engine 1 after 3", c1.isLeadEngine(e1));
 		Assert.assertFalse("Consist Lead Engine 3 after 3", c1.isLeadEngine(e3));
 
-                // This should have caused an error:
+                // Can't set lead engine if not part of consist
                 c1.setLeadEngine(e4);
-		Assert.assertFalse("Consist Lead Engine 2 after 4c", c1.isLeadEngine(e2));
-		Assert.assertTrue("Consist Lead Engine 4 after 4c", c1.isLeadEngine(e4));
+		Assert.assertTrue("Consist Lead Engine 2 after 4c", c1.isLeadEngine(e2));
+		Assert.assertFalse("Consist Lead Engine 4 after 4c", c1.isLeadEngine(e4));
               	List<Engine> tempengines = new ArrayList<Engine>();
                 tempengines = c1.getEngines();
 		Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));

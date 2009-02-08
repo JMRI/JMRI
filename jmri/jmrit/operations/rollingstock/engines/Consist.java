@@ -7,7 +7,7 @@ import java.util.*;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Consist {
 	
@@ -82,14 +82,29 @@ public class Consist {
 		return false;
 	}
 	
+	/**
+	 * Sets the lead engine for this consist. Engine must be already assigned to
+	 * this consist.
+	 * 
+	 * @see addEngine(Engine engine)
+	 * 
+	 * @param engine
+	 *            lead engine for this consist
+	 */
 	public void setLeadEngine(Engine engine){
-		_leadEngine = engine;
+		if (_engines.contains(engine)){
+			_leadEngine = engine;
+		}
 	}
 	
 	public int getConsistNumber(){
 		return _consistNumber;
 	}
 	
+	/**
+	 * 
+	 * @param number DCC address for this consist
+	 */
 	public void setConsistNumber(int number){
 		_consistNumber = number;
 	}
