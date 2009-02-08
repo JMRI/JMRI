@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.7 2009-02-04 22:49:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.8 2009-02-08 05:30:36 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -169,7 +169,16 @@ Dan Boucreau added optional car load features to operations staging.
 Andrew Crosland improved the CBUS and CAN utility tools.
 
 <p>
+David Duchamp added automatic setting of turnouts to Dispatcher
+
+<p>
 Bob Coleman did a lot of important work on improving the JUnit build tests for the operations feature.
+
+<p>
+Walter Thompson did a lot of work to improve sample scripts.
+
+<p>
+Jack Shall updated the "Lenz 54" decoder definition.
 
 
 <!--#include virtual="/Footer" -->
