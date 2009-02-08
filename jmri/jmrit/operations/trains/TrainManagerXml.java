@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -168,70 +168,77 @@ public class TrainManagerXml extends XmlFile {
      * clear any existing entries.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-        // find root
-        Element root = rootFromName(name);
-        if (root==null) {
-            log.debug(name + " file could not be read");
-            return;
-        }
-        if (log.isDebugEnabled()) XmlFile.dumpElement(root);
-        
-        TrainManager manager = TrainManager.instance();
+    	
+    	TrainManager manager = TrainManager.instance();
+    	
+    	// suppress rootFromName(name) warning message by checking to see if file exists
+    	if (findFile(name) == null) {
+    		log.debug(name + " file could not be found");
+    		manager.setTrainsLoaded();	// set flag, could be the first time
+    		return;
+    	}
+    	// find root
+    	Element root = rootFromName(name);
+    	if (root==null) {
+    		log.debug(name + " file could not be read");
+    		return;
+    	}
+    	if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
-        if (root.getChild("options") != null) {
-        	Element e = root.getChild("options").getChild("trainOptions");
-        	manager.options(e);
-        }
-        
-        if (root.getChild("trains") != null) {
-        	@SuppressWarnings("unchecked")
-            List<Element> l = root.getChild("trains").getChildren("train");
-            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" trains");
-            for (int i=0; i<l.size(); i++) {
-                manager.register(new Train(l.get(i)));
-            }
-            
-            manager.setTrainsLoaded();	// set flag
+    	if (root.getChild("options") != null) {
+    		Element e = root.getChild("options").getChild("trainOptions");
+    		manager.options(e);
+    	}
 
-            List<String> trainList = manager.getTrainsByIdList();
-            
-            // load train icon if needed
-            for (int i = 0; i < trainList.size(); i++) {
-                //Get a RosterEntry object for this index
-            	Train train = manager.getTrainById(trainList.get(i));
-            	train.loadTrainIcon();
-            }
-                
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            for (int i = 0; i < trainList.size(); i++) {
-                //Get a RosterEntry object for this index
-            	Train train = manager.getTrainById(trainList.get(i));
+    	if (root.getChild("trains") != null) {
+    		@SuppressWarnings("unchecked")
+    		List<Element> l = root.getChild("trains").getChildren("train");
+    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" trains");
+    		for (int i=0; i<l.size(); i++) {
+    			manager.register(new Train(l.get(i)));
+    		}
 
-                //Extract the Comment field and create a new string for output
-                String tempComment = train.getComment();
-                String xmlComment = new String();
+    		manager.setTrainsLoaded();	// set flag
 
-                //transfer tempComment to xmlComment one character at a time, except
-                //when <?p?> is found.  In that case, insert a \n and skip over those
-                //characters in tempComment.
-                for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        xmlComment = xmlComment + "\n";
-                        k = k + 4;
-                    }
-                    else {
-                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
-                    }
-                }
-                train.setComment(xmlComment);
-            }
-        }
-        else {
-            log.error("Unrecognized operations train file contents in file: "+name);
-        }
+    		List<String> trainList = manager.getTrainsByIdList();
+
+    		// load train icon if needed
+    		for (int i = 0; i < trainList.size(); i++) {
+    			//Get a RosterEntry object for this index
+    			Train train = manager.getTrainById(trainList.get(i));
+    			train.loadTrainIcon();
+    		}
+
+    		//Scan the object to check the Comment and Decoder Comment fields for
+    		//any <?p?> processor directives and change them to back \n characters
+    		for (int i = 0; i < trainList.size(); i++) {
+    			//Get a RosterEntry object for this index
+    			Train train = manager.getTrainById(trainList.get(i));
+
+    			//Extract the Comment field and create a new string for output
+    			String tempComment = train.getComment();
+    			String xmlComment = new String();
+
+    			//transfer tempComment to xmlComment one character at a time, except
+    			//when <?p?> is found.  In that case, insert a \n and skip over those
+    			//characters in tempComment.
+    			for (int k = 0; k < tempComment.length(); k++) {
+    				if (tempComment.startsWith("<?p?>", k)) {
+    					xmlComment = xmlComment + "\n";
+    					k = k + 4;
+    				}
+    				else {
+    					xmlComment = xmlComment + tempComment.substring(k, k + 1);
+    				}
+    			}
+    			train.setComment(xmlComment);
+    		}
+    	}
+    	else {
+    		log.error("Unrecognized operations train file contents in file: "+name);
+    	}
     }
-    
+
 	/**
      * Store the train's build status
      */

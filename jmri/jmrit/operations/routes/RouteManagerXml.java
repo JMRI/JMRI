@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -169,7 +169,12 @@ public class RouteManagerXml extends XmlFile {
      * clear any existing entries.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-        // find root
+    	// suppress rootFromName(name) warning message by checking to see if file exists
+    	if (findFile(name) == null) {
+    		log.debug(name + " file could not be found");
+    		return;
+    	}
+    	// find root
         Element root = rootFromName(name);
         if (root==null) {
             log.debug(name + " file could not be read");

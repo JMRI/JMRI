@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -25,7 +25,7 @@ public class LocationManagerXml extends XmlFile {
 	}
 	
 	/** record the single instance **/
-	static protected LocationManagerXml _instance = null;
+	private static LocationManagerXml _instance = null;
 
 	public static synchronized LocationManagerXml instance() {
 		if (_instance == null) {
@@ -211,98 +211,103 @@ public class LocationManagerXml extends XmlFile {
      * clear any existing entries.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-        // find root
-        Element root = rootFromName(name);
-        if (root==null) {
-            log.debug(name + " file could not be read");
-            return;
-        }
-        if (log.isDebugEnabled()) XmlFile.dumpElement(root);
-        
-        LocationManager manager = LocationManager.instance();
+    	// suppress rootFromName(name) warning message by checking to see if file exists
+    	if (findFile(name) == null) {
+    		log.debug(name + " file could not be found");
+    		return;
+    	}
+    	// find root
+    	Element root = rootFromName(name);
+    	if (root==null) {
+    		log.debug(name + " file could not be read");
+    		return;
+    	}
+    	if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
-        // decode type, invoke proper processing routine if a decoder file
-        if (root.getChild("locations") != null) {
-        	
-            List l = root.getChild("locations").getChildren("location");
-            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
-            for (int i=0; i<l.size(); i++) {
-                manager.register(new Location((Element)l.get(i)));
-            }
+    	LocationManager manager = LocationManager.instance();
 
-            List locationList = manager.getLocationsByIdList();
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            for (int i = 0; i < locationList.size(); i++) {
-                //Get a RosterEntry object for this index
-            	String locationId = (String)locationList.get(i);
-	        	Location loc = manager.getLocationById(locationId);
+    	// decode type, invoke proper processing routine if a decoder file
+    	if (root.getChild("locations") != null) {
 
-                //Extract the Comment field and create a new string for output
-                String tempComment = loc.getComment();
-                String xmlComment = new String();
+    		List l = root.getChild("locations").getChildren("location");
+    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
+    		for (int i=0; i<l.size(); i++) {
+    			manager.register(new Location((Element)l.get(i)));
+    		}
 
-                //transfer tempComment to xmlComment one character at a time, except
-                //when <?p?> is found.  In that case, insert a \n and skip over those
-                //characters in tempComment.
-                for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        xmlComment = xmlComment + "\n";
-                        k = k + 4;
-                    }
-                    else {
-                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
-                    }
-                }
-                loc.setComment(xmlComment);
-            }
-        }
-        else {
-            log.error("Unrecognized operations location file contents in file: "+name);
-        }
-        
-        // now load schedules       
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+    		List locationList = manager.getLocationsByIdList();
+    		//Scan the object to check the Comment and Decoder Comment fields for
+    		//any <?p?> processor directives and change them to back \n characters
+    		for (int i = 0; i < locationList.size(); i++) {
+    			//Get a RosterEntry object for this index
+    			String locationId = (String)locationList.get(i);
+    			Location loc = manager.getLocationById(locationId);
 
-        // decode type, invoke proper processing routine if a decoder file
-        if (root.getChild("schedules") != null) {
-        	
-            List l = root.getChild("schedules").getChildren("schedule");
-            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
-            for (int i=0; i<l.size(); i++) {
-            	scheduleManager.register(new Schedule((Element)l.get(i)));
-            }
+    			//Extract the Comment field and create a new string for output
+    			String tempComment = loc.getComment();
+    			String xmlComment = new String();
 
-            List scheduleList = scheduleManager.getSchedulesByIdList();
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            for (int i = 0; i < scheduleList.size(); i++) {
-                //Get a RosterEntry object for this index
-            	String scheduleId = (String)scheduleList.get(i);
-	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
+    			//transfer tempComment to xmlComment one character at a time, except
+    			//when <?p?> is found.  In that case, insert a \n and skip over those
+    			//characters in tempComment.
+    			for (int k = 0; k < tempComment.length(); k++) {
+    				if (tempComment.startsWith("<?p?>", k)) {
+    					xmlComment = xmlComment + "\n";
+    					k = k + 4;
+    				}
+    				else {
+    					xmlComment = xmlComment + tempComment.substring(k, k + 1);
+    				}
+    			}
+    			loc.setComment(xmlComment);
+    		}
+    	}
+    	else {
+    		log.error("Unrecognized operations location file contents in file: "+name);
+    	}
 
-                //Extract the Comment field and create a new string for output
-                String tempComment = sch.getComment();
-                String xmlComment = new String();
+    	// now load schedules       
+    	ScheduleManager scheduleManager = ScheduleManager.instance();
 
-                //transfer tempComment to xmlComment one character at a time, except
-                //when <?p?> is found.  In that case, insert a \n and skip over those
-                //characters in tempComment.
-                for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        xmlComment = xmlComment + "\n";
-                        k = k + 4;
-                    }
-                    else {
-                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
-                    }
-                }
-                sch.setComment(xmlComment);
-            }
-        }
-        else {
-            log.warn("Unrecognized operations location file contents in file: "+name);
-        }
+    	// decode type, invoke proper processing routine if a decoder file
+    	if (root.getChild("schedules") != null) {
+
+    		List l = root.getChild("schedules").getChildren("schedule");
+    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
+    		for (int i=0; i<l.size(); i++) {
+    			scheduleManager.register(new Schedule((Element)l.get(i)));
+    		}
+
+    		List scheduleList = scheduleManager.getSchedulesByIdList();
+    		//Scan the object to check the Comment and Decoder Comment fields for
+    		//any <?p?> processor directives and change them to back \n characters
+    		for (int i = 0; i < scheduleList.size(); i++) {
+    			//Get a RosterEntry object for this index
+    			String scheduleId = (String)scheduleList.get(i);
+    			Schedule sch = scheduleManager.getScheduleById(scheduleId);
+
+    			//Extract the Comment field and create a new string for output
+    			String tempComment = sch.getComment();
+    			String xmlComment = new String();
+
+    			//transfer tempComment to xmlComment one character at a time, except
+    			//when <?p?> is found.  In that case, insert a \n and skip over those
+    			//characters in tempComment.
+    			for (int k = 0; k < tempComment.length(); k++) {
+    				if (tempComment.startsWith("<?p?>", k)) {
+    					xmlComment = xmlComment + "\n";
+    					k = k + 4;
+    				}
+    				else {
+    					xmlComment = xmlComment + tempComment.substring(k, k + 1);
+    				}
+    			}
+    			sch.setComment(xmlComment);
+    		}
+    	}
+    	else {
+    		log.warn("Unrecognized operations location file contents in file: "+name);
+    	}
 
     }
 
@@ -310,7 +315,7 @@ public class LocationManagerXml extends XmlFile {
     void setDirty(boolean b) {dirty = b;}
     boolean isDirty() {return dirty;}
 
-    
+
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
 
     public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }

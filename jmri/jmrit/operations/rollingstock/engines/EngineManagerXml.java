@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -187,7 +187,12 @@ public class EngineManagerXml extends XmlFile {
      * clear any existing entries.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-        // find root
+    	// suppress rootFromName(name) warning message by checking to see if file exists
+    	if (findFile(name) == null) {
+    		log.debug(name + " file could not be found");
+    		return;
+    	}
+    	// find root
         Element root = rootFromName(name);
         if (root==null) {
             log.debug(name + " file could not be read");

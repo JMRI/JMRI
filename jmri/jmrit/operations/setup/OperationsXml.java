@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -21,7 +21,7 @@ public class OperationsXml extends XmlFile {
 	}
 	
 	/** record the single instance **/
-	static protected OperationsXml _instance = null;
+	private static OperationsXml _instance = null;
 
 	public static synchronized OperationsXml instance() {
 		if (_instance == null) {
@@ -67,64 +67,63 @@ public class OperationsXml extends XmlFile {
 	        setDirty(false);
 	    }
 	
-	   void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-	       // suppress rootFromName(name) warning message by checking to see if file exists
-	        File file = findFile(name);
-	        if (file == null) {
-	            log.debug(name + " file could not be found");
-	            return;
-	        }
-		   // find root
-	        Element root = rootFromName(name);
-	        if (root==null) {
-	            log.debug(name + " file could not be read");
-	            return;
-	        }
-	        Setup.load(root);
-	    }
+	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+		// suppress rootFromName(name) warning message by checking to see if file exists
+		if (findFile(name) == null) {
+			log.debug(name + " file could not be found");
+			return;
+		}
+		// find root
+		Element root = rootFromName(name);
+		if (root==null) {
+			log.debug(name + " file could not be read");
+			return;
+		}
+		Setup.load(root);
+	}
 
-	    private boolean dirty = false;
-	    void setDirty(boolean b) {dirty = b;}
-	    boolean isDirty() {return dirty;}
+	private boolean dirty = false;
+	void setDirty(boolean b) {dirty = b;}
+	boolean isDirty() {return dirty;}
 
-	
+
 	/**
-     * Store the all of the operation objects in the default place, including making a backup if needed
-     */
-    public void writeOperationsFile() {
-    	makeBackupFile(defaultOperationsFilename());
-        try {
-        	 if(!checkFile(defaultOperationsFilename()))
-             {
-                 //The file does not exist, create it before writing
-                 java.io.File file=new java.io.File(defaultOperationsFilename());
-                 java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
-             }
-        	writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new operations file, may not be complete: "+e);
-        }
-    }
-    
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
+	 * Store the all of the operation objects in the default place, including making a backup if needed
+	 */
+	public void writeOperationsFile() {
+		makeBackupFile(defaultOperationsFilename());
+		try {
+			if(!checkFile(defaultOperationsFilename()))
+			{
+				//The file does not exist, create it before writing
+				java.io.File file=new java.io.File(defaultOperationsFilename());
+				java.io.File parentDir=file.getParentFile();
+				if(!parentDir.exists())
+				{
+					parentDir.mkdir();
+				}
+				file.createNewFile();
+			}
+			writeFile(defaultOperationsFilename());
+		} catch (Exception e) {
+			log.error("Exception while writing the new operations file, may not be complete: "+e);
+		}
+	}
 
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
-    }
-    private static String OperationsDirectoryName = "operations";
-    
-    public static void setOperationsFileName(String name) { OperationsFileName = name; }
-    public static String getOperationsFileName(){
-    	return OperationsFileName;
-    }
-    private static String OperationsFileName = "Operations.xml";
+	public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OperationsXml.class.getName());
+	public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
+	public static String getOperationsDirectoryName(){
+		return OperationsDirectoryName;
+	}
+	protected static String OperationsDirectoryName = "operations";
+
+	public static void setOperationsFileName(String name) { OperationsFileName = name; }
+	public static String getOperationsFileName(){
+		return OperationsFileName;
+	}
+	private static String OperationsFileName = "Operations.xml";
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OperationsXml.class.getName());
 
 }
