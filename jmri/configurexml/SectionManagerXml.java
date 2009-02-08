@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -87,6 +87,18 @@ public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 					ep = (EntryPoint)epList.get(i);
 					if (ep!=null) {
 						epElem = new Element ("entrypoint");
+						
+						// add some protection against a reading problem
+						if (ep.getFromBlock() == null) {
+						    log.error("Unexpected null getFromBlock while storing ep "+i+", skipped");
+						    break;
+					    }
+					    
+						if (ep.getFromBlock().getSystemName() == null) {
+						    log.error("Unexpected null FromBlock systemName while storing ep "+i+", skipped");
+						    break;
+					    }
+
 						epElem.setAttribute("fromblock",ep.getFromBlock().getSystemName());
 						epElem.setAttribute("toblock",ep.getBlock().getSystemName());
 						epElem.setAttribute("direction",Integer.toString(ep.getDirection()));
