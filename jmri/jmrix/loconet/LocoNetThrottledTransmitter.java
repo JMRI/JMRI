@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * accuracy that's needed here.
  * 
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
@@ -80,8 +80,8 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     
     // minimum time in msec between messages
     // calculation is needed time to send on DCC:
-    // nBitsInPacket*packetRepeat/bitRate*safetyFactor
-    long minInterval = (18+3*10)*3/16000*2;
+    // msec*nBitsInPacket*packetRepeat/bitRate*safetyFactor
+    long minInterval = 1000*(18+3*10)*3/16000*2;
     
     long lastSendTimeMSec = 0;
      

@@ -37,32 +37,36 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager() {
-        _instance = this;
-        if (LnTrafficController.instance() != null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+    public LnTurnoutManager(LocoNetInterface controller) {
+        //_instance = this;
+        this.controller = controller;
+        
+        if (controller != null)
+            controller.addLocoNetListener(~0, this);
         else
             log.error("No layout connection, turnout manager can't function");
     }
 
+    LocoNetInterface controller;
+    
     public char systemLetter() { return 'L'; }
 
     public void dispose() {
-        if (LnTrafficController.instance() != null)
-            LnTrafficController.instance().removeLocoNetListener(~0, this);
+        if (controller != null)
+            controller.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new LnTurnout(addr);
+        t = new LnTurnout(addr, controller);
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
@@ -105,7 +109,7 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             // might have to resend, check 2nd byte
             if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0) {
                 // received LONG_ACK reject msg, resend
-                LnTrafficController.instance().sendLocoNetMessage(lastSWREQ);
+                controller.sendLocoNetMessage(lastSWREQ);
             }
             
             // clear so can't resend recursively (we'll see
@@ -135,11 +139,15 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
-    static public LnTurnoutManager instance() {
-        if (_instance == null) _instance = new LnTurnoutManager();
-        return _instance;
-    }
-    static LnTurnoutManager _instance = null;
+    //static public LnTurnoutManager instance() {
+    //    if (_instance == null) {
+    //        log.error("forcing default instance");
+    //        _instance = new LnTurnoutManager(null);
+    //    }
+    //    return _instance;
+    //}
+    
+    //static LnTurnoutManager _instance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutManager.class.getName());
 }

@@ -36,18 +36,22 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
-    public LnTurnout(int number) {  // a human-readable turnout number must be specified!
+    public LnTurnout(int number, LocoNetInterface controller) {
+        // a human-readable turnout number must be specified!
         super("LT"+number);  // can't use prefix here, as still in construction
         log.debug("new turnout "+number);
+
+        this.controller = controller;
+        
          _number = number;
          // At construction, register for messages
-         if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+         if (this.controller!=null)
+            this.controller.addLocoNetListener(~0, this);
         else
             log.warn("No LocoNet connection, turnout won't update");
         // update feedback modes
@@ -76,6 +80,8 @@ import jmri.AbstractTurnout;
         _validFeedbackModes = modeValues;
      }
 
+     LocoNetInterface controller;
+     
      static String[] modeNames = null;
      static int[] modeValues = null;
      
@@ -130,7 +136,8 @@ import jmri.AbstractTurnout;
          // store and send
          l.setElement(1,loadr);
          l.setElement(2,hiadr);
-         LnTrafficController.instance().sendLocoNetMessage(l);
+
+         this.controller.sendLocoNetMessage(l);
     }
     
     /**
@@ -254,7 +261,7 @@ import jmri.AbstractTurnout;
      }
 
      public void dispose() {
-         LnTrafficController.instance().removeLocoNetListener(~0, this);
+         this.controller.removeLocoNetListener(~0, this);
          super.dispose();
      }
 

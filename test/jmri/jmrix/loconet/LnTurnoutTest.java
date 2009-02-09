@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -20,7 +20,7 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 	    catch (InterruptedException e) {}
 	    
         // create object under test
-		t = new LnTurnout(21);
+		t = new LnTurnout(21, lnis);
 	}
 
 	public int numListeners() {
