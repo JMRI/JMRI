@@ -7,7 +7,7 @@ import java.util.*;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class Consist {
 	
@@ -86,7 +86,7 @@ public class Consist {
 	 * Sets the lead engine for this consist. Engine must be already assigned to
 	 * this consist.
 	 * 
-	 * @see addEngine(Engine engine)
+	 * @see #addEngine(Engine engine)
 	 * 
 	 * @param engine
 	 *            lead engine for this consist
