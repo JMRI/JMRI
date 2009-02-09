@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SectionTable.shtml,v 1.3 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: SectionTable.shtml,v 1.4 2009-02-09 21:48:57 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -93,7 +93,7 @@ sensors may be displayed on a panel to indicate to the dispatcher when a train
 has reached the end of its allocation. For automatic running, these sensors may 
 be used to stop a train before it reaches the end of its allocated Section, and 
 before it overruns a red signal, if signals are present.</>
-<H2> Using the Sensor Table to Display and Create Sensors
+<H2> Using the Section Table to Display and Create Sections
 </H2>
 <P>All the Sections that JMRI knows about can be referenced
 using the <b>Section Table</b> tool under <b>Tables</b> in the Tools menu of most 
