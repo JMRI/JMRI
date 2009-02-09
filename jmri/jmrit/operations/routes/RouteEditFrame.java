@@ -10,6 +10,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.*;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -262,6 +263,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			return;
 		_route.setName(routeNameTextField.getText());
 		_route.setComment(commentTextField.getText());
+		
+		if(routeTable.isEditing()){
+			log.debug("route table edit true");
+			routeTable.editingStopped(new ChangeEvent(this));
+		}
 
 		// save route file
 		managerXml.writeOperationsRouteFile();

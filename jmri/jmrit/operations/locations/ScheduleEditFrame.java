@@ -8,6 +8,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -261,6 +262,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			return;
 		_schedule.setName(scheduleNameTextField.getText());
 		_schedule.setComment(commentTextField.getText());
+		
+		if(scheduleTable.isEditing()){
+			log.debug("schedule table edit true");
+			scheduleTable.editingStopped(new ChangeEvent(this));
+		}
 
 		// save schedule file
 		managerXml.writeOperationsLocationFile();
