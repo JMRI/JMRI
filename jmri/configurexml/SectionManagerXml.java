@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -86,20 +86,25 @@ public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 				for (int i = 0; i<epList.size(); i++) {
 					ep = (EntryPoint)epList.get(i);
 					if (ep!=null) {
-						epElem = new Element ("entrypoint");
-						
+						epElem = new Element ("entrypoint");						
 						// add some protection against a reading problem
 						if (ep.getFromBlock() == null) {
-						    log.error("Unexpected null getFromBlock while storing ep "+i+", skipped");
+						    log.error("Unexpected null getFromBlock while storing ep "+i+" in Section "+sname+", skipped");
 						    break;
-					    }
-					    
+					    }					    
 						if (ep.getFromBlock().getSystemName() == null) {
-						    log.error("Unexpected null FromBlock systemName while storing ep "+i+", skipped");
+						    log.error("Unexpected null in FromBlock systemName while storing ep "+i+" in Section "+sname+", skipped");
 						    break;
 					    }
-
 						epElem.setAttribute("fromblock",ep.getFromBlock().getSystemName());
+						if (ep.getBlock() == null) {
+						    log.error("Unexpected null getBlock while storing ep "+i+" in Section "+sname+", skipped");
+						    break;
+					    }					    
+						if (ep.getBlock().getSystemName() == null) {
+						    log.error("Unexpected null in Block systemName while storing ep "+i+" in Section "+sname+", skipped");
+						    break;
+					    }							
 						epElem.setAttribute("toblock",ep.getBlock().getSystemName());
 						epElem.setAttribute("direction",Integer.toString(ep.getDirection()));
 						epElem.setAttribute("fixed",""+(ep.isFixed()?"yes":"no"));
