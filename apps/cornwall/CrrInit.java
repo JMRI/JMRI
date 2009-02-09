@@ -13,7 +13,7 @@ import java.util.List;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -45,7 +45,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
         SensorManager sm = InstanceManager.sensorManagerInstance();
         List l = sm.getSystemNameList();
 
-        TurnoutManager tm = LnTurnoutManager.instance();
+        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List tos = tm.getSystemNameList();
         for (int i = 0; i<tos.size(); i++) {
             String name = ((String)tos.get(i));

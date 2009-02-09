@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.23 $
+ * @version                     $Revision: 1.24 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -151,7 +151,7 @@ public class HexFileFrame extends JmriJFrame {
 
         // do the common manager config
         jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false, "<unknown>");   // full featured by default
-        jmri.jmrix.loconet.LnPortController.configureManagers();
+        jmri.jmrix.loconet.LnPortController.configureManagers(packets);
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.InstanceManager.setProgrammerManager(

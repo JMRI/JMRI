@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -106,7 +106,7 @@ public class LnMessageClient extends LnTrafficRouter {
 
         // do the common manager config
         jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
-        jmri.jmrix.loconet.LnPortController.configureManagers();
+        jmri.jmrix.loconet.LnPortController.configureManagers(this);
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.

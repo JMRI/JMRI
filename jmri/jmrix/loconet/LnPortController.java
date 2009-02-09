@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -99,10 +99,13 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
      * from classes that don't inherit, including hexfile.HexFileFrame
      * and locormi.LnMessageClient
      */
-    static public void configureManagers() {
+    static public void configureManagers(LnTrafficController controller) {
+    
+        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(controller);
+        
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(tm));
 
         jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
 
