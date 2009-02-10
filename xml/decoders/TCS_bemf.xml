@@ -20,15 +20,123 @@
 		<!-- Version 1 - made from TCS_X -->
 		
 	<version author="Bill Chown" version="2" lastUpdated="20090111" />
-<!-- corrected BEMF capabilities, added CN and CN-GP models, comments and tooltips expanded -->
-
+		<!-- corrected BEMF capabilities, added CN and CN-GP models, comments and tooltips expanded -->
+		
+	<version author="Tom Starbuck" version="3" lastUpdated="20090114" />
+		<!-- Added ASD4, AMD4, K3D3, and EUN651 models. Removed M1P-15, M1P-MH, and M1P-UK. -->
+		<!-- Regrouped decoders into groups based on scale -->
+		
 <decoder>
 	<family name="TCS X w/BEMF" mfg="Train Control Systems" 
 		comment="TCS BEMF decoder range"
 		lowVersionID="41"  highVersionID="46">
-	
+
+		<!-- HO Decoders -->
+		<!-- T-Series Decoders -->
+		<model model="T1"  numOuts="2" numFns="8" 
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" comment="An HO scale 2 function decoder with a 9 pin socket.">
+			<size length="0.956" width="0.655" height="0.207" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="T4X"  numOuts="4" numFns="14" 
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" comment="An HO scale 4 function decoder with a 9 pin socket.">
+			<size length="0.956" width="0.655" height="0.207" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="T6X"  numOuts="6" numFns="14" 
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" comment="An HO scale 6 function decoder with a 9 pin socket.">
+			<size length="0.956" width="0.655" height="0.207" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+			<output name="5" label="Brown"  connection="wire" maxcurrent="100 mA" />
+			<output name="6" label="Pink"   connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- M-Series Decoders -->
+		<model model="M1"  numOuts="2" numFns="8" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="Micro hardwire HO scale 2 function decoder.">
+			<size length="0.567" width="0.359" height="0.135" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="M3"   numOuts="3" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="Micro hardwire HO scale 3 function decoder.">
+			<size length="0.567" width="0.359" height="0.135" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="M4"   numOuts="4" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="Micro hardwire HO scale 4 function decoder.">
+			<size length="0.567" width="0.359" height="0.135" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- MC-Series Decoders -->
+		<model model="MC2"  numOuts="2" numFns="8" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="An HO scale 2 function decoder with a 7 pin JST socket.">
+			<size length="0.729" width="0.417" height="0.189" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="MC4"  numOuts="4" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="An HO scale 4 function decoder with a 7 pin JST socket.">
+			<size length="0.729" width="0.417" height="0.189" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="MC6"  numOuts="6" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO" comment="An HO scale 6 function decoder with a 7 pin JST socket.">
+			<size length="0.729" width="0.417" height="0.189" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+			<output name="5" label="Brown"  connection="wire" maxcurrent="100 mA" />
+			<output name="6" label="Pink"   connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- A-Series Decoders -->
 		<model model="A4X"  numOuts="4" numFns="14"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="HO Drop-In 4 function decoder for Atlas, Athearn, Kato, Bachmann, etc.">
 			<size length="2.860" width="0.680" height="0.145" units="inches" />
 			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
@@ -39,7 +147,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="A6X"  numOuts="6" numFns="14" 
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="HO Drop-In 6 function decoder with on board 1.5 volt regulated power supply for Atlas, Athearn, Kato, Bachmann, etc.">
 			<size length="2.860" width="0.680" height="0.145" units="inches" />
 			<output name="1" label="White"  connection="solder" maxcurrent="200 mA" />
 			<output name="2" label="Yellow" connection="solder" maxcurrent="200 mA" />
@@ -51,18 +159,63 @@
 			<output name="Ditch" />
 			<output name="Motor" />
 			</model>
+			
+		<!-- DP-Series Decoders -->
+		<model model="DP2X" numOuts="2" numFns="8" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="An HO scale 2 function decoder with a built in 8 pin NMRA plug.">
+			<size length=".460" width=".690" height=".140" units="inches" />
+			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="DP2X-UK" numOuts="2" numFns="8" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="An HO scale 2 function decoder with a built in 8 pin NMRA plug which is oriented vertically to fit in British outline locomotives.">
+			<size length=".460" width=".690" height=".140" units="inches" />
+			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		
+		<!-- N Scale Decoders -->		
+		<!-- Atlas Drop-In Decoders -->
 		<model model="AMD1"  numOuts="2" numFns="8" 
-     		maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in"  
-			comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
-			<size length="3.03" width="0.355" height="0.135" units="inches" />
-			<output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
-			<output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+     		maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment=" Drop-In 2 function Atlas medium board decoder.">  
+			<size length="2.83" width=".351" height="0.13" units="inches" />
+			<output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
 			<output name="Dim" />
 			<output name="Motor" />
 			</model>
+		<model model="ASD4"  numOuts="4" numFns="14"
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="N Drop-In" comment="Drop-In 4 function Atlas short board decoder.">
+			<size length="2.73" width=".349" height="0.13" units="inches" />
+			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="AMD4"  numOuts="4" numFns="14"
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="N Drop-In" comment="Drop-In 4 function Atlas medium board decoder.">
+			<size length="2.83" width=".351" height="0.13" units="inches" />
+			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- CN-Series Decoders -->
 		<model model="CN"  numOuts="2" numFns="14"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-			comment="Fits  Classic N locos with split lighting board, 2 functions">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions">
 			<size length="0.834" width="0.361" height="0.101" units="inches" />
 			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
@@ -71,8 +224,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="CN-GP"  numOuts="4" numFns="14"
-    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP"
-			comment="Fits  GP-style N locos with split lighting board, 4 functions">
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions">
 			<size length="0.73" width="0.36" height="0.15" units="inches" />
 			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
@@ -83,157 +235,60 @@
 			<output name="Motor" />
 			</model>
 			
-		<model model="DP2X" numOuts="2" numFns="8" 
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
-			<size length="0845" width="0.680" height="0.165" units="inches" />
-			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M1"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.57" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M1P-15"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="HO">
-			<size length="0.57" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M1P-MH"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="HO">
-			<size length="0.57" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M1P-UK"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="HO">
-			<size length="0.57" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M3"   numOuts="3" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.570" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="M4"   numOuts="4" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.570" width="0.355" height="0.132" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="MC2"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.71" width="0.41" height="0.19" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="MC4"  numOuts="4" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.71" width="0.41" height="0.19" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="MC6"  numOuts="6" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
-			<size length="0.71" width="0.41" height="0.19" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-			<output name="5" label="Brown"  connection="wire" maxcurrent="100 mA" />
-			<output name="6" label="Pink"   connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="MP-15N"   numOuts="4" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
-			comment="Fits Atlas N Scale: MP-15">
-			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+		<!-- Atlas MP-15 Decoder -->
+		<model model="MP15N"   numOuts="4" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15">
+			<output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
 			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
 			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
 			<output name="Dim" />
 			<output name="Ditch" />
 			<output name="Motor" />
 			</model>
-		<model model="T1"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous"
-    		formFactor="HO">
-			<size length="0.956" width="0.665" height="0.207" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="T4X"  numOuts="4" numFns="14" 
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
-			<size length="1.010" width="0.665" height="0.250" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
-		<model model="T6X"  numOuts="6" numFns="14" 
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
-			<size length="1.00" width="0.680" height="0.250" units="inches" />
-			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-			<output name="5" label="Brown"  connection="wire" maxcurrent="100 mA" />
-			<output name="6" label="Pink"   connection="wire" maxcurrent="100 mA" />
-			<output name="Dim" />
-			<output name="Ditch" />
-			<output name="Motor" />
-			</model>
+			
+		<!-- Atlas VO-1000 Decoder -->
 		<model model="VO-1000N"   numOuts="4" numFns="14" 
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
-			comment="Fits Atlas N Scale: VO-1000">
-			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000">
+			<output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
 			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
 			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- Kato Drop-In Decoders -->
+		<model model="K3D3"   numOuts="3" numFns="14" 
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Drop-In decoder for N-Scale Kato NW2.">
+			<size length="2.860" width="0.680" height="0.145" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- ENU651 Decoder -->
+		<model model="ENU651"  numOuts="2" numFns="14"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="6-Pin NEMA type European Outline decoder for N-Scale Locomotives">
+			<size length="0.567" width="0.359" height="0.135" units="inches" />
+			<output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+			
+		<!-- Z Scale Decoders -->
+		<!-- Z2 Decoder -->
+		<model model="Z2"  numOuts="2" numFns="14"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Hard wired decoder for Z-Scale, N-Scale, and Light Duty HO-Scale.">
+			<size length="0.51" width="0.26" height="0.11" units="inches" />
+			<output name="1" label="White"  connection="solder" maxcurrent="60 mA" />
+			<output name="2" label="Yellow" connection="solder" maxcurrent="60 mA" />
 			<output name="Dim" />
 			<output name="Ditch" />
 			<output name="Motor" />
@@ -1028,7 +1083,7 @@
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
-		<label label="TCS_bemf.xml for TCS 'X' with BEMF, v41-46. 11jan2009" />
+		<label label="TCS_bemf.xml for TCS 'X' with BEMF, v41-46. 14jan2009" />
 
 	</column>
 </pane>
