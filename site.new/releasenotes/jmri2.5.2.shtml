@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.8 2009-02-08 05:30:36 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.9 2009-02-10 06:05:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -180,6 +180,15 @@ Walter Thompson did a lot of work to improve sample scripts.
 <p>
 Jack Shall updated the "Lenz 54" decoder definition.
 
+<p>
+Tom Starbuck updated and organized the model numbers in the TCS BEMF decoder definitions.
+
+<p>
+A bunch more baud rates were added for CAN connections.
+
+<p>
+Paul Bender updated the XPressNet support to properly handle non-standard operations by the Hornby Elite. 
+He also added a configuriation tool for the Lenz LI-USB.
 
 <!--#include virtual="/Footer" -->
 
