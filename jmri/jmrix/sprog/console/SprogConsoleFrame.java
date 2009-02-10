@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * Frame for Sprog Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -455,6 +455,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             }
             if ((modeWord & SprogConstants.ZTC_BIT) != 0) {
                 ztcCheckBox.setSelected(true);
+            }
+            if ((modeWord & SprogConstants.BLUE_BIT) != 0) {
+                blueCheckBox.setSelected(true);
             }
         } else if (state == CURRENTSENT) {
             // Get new mode word - assume 128 steps
