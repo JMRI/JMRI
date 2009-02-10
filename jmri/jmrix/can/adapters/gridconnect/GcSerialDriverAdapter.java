@@ -21,7 +21,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -174,8 +174,8 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         return validSpeedValues;
     }
     
-    protected String [] validSpeeds = new String[]{"115,200"};
-    protected int [] validSpeedValues = new int[]{115200};
+    protected String [] validSpeeds = new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
+    protected int [] validSpeedValues = new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     
     /**
      * Option 1 is binary vs ASCII command set.
