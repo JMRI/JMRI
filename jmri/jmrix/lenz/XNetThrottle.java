@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2007
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.19 $
+ * @version    $Revision: 2.20 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -547,6 +547,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // and function status from the command station
     synchronized protected void sendStatusInformationRequest()
     {
+        if(requestState==THROTTLESTATSENT){
+           if(log.isDebugEnabled()){
+              log.debug("Status Information Requested when request outstanding, Timeout?");
+           }
+           requestState=THROTTLEIDLE;
+        }
         /* Send the request for status */
         XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(this.address);
         msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
@@ -625,21 +631,23 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
-			//Set the Is available flag to "False"
-                        log.info("Loco " +getDccAddress() + " In use by another device");
-                        setIsAvailable(false);
-                        // popup a message box that will trigger a status request
-                        //int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
-                        //if(select==JOptionPane.YES_OPTION)
-                        //{
-                        // Send a request for status
-  		        //sendStatusInformationRequest();
-			//return;
-                        //} else {
-                        // Remove the throttle
-                        // TODO
-		      //}
-		   }
+                        if(isAvailable){
+			   //Set the Is available flag to "False"
+                           log.info("Loco " +getDccAddress() + " In use by another device");
+                           setIsAvailable(false);
+                           // popup a message box that will trigger a status request
+                           //int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
+                           //if(select==JOptionPane.YES_OPTION)
+                           //{
+                           // Send a request for status
+  		           //sendStatusInformationRequest();
+			   //return;
+                           //} else {
+                           // Remove the throttle
+                           // TODO
+		           //}
+                        }
+		     }
 	       }
            }
 	} else if ((requestState&THROTTLESPEEDSENT)==THROTTLESPEEDSENT ||
