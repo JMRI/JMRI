@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.5 2008-03-09 19:43:21 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.6 2009-02-10 01:52:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -32,6 +32,10 @@
 	    <H1>JMRI: Web Site</H1>
 
 This page discusses technical aspects of the JMRI web site.
+<p>
+If you just want to know how to make a small change to a web or
+help page, please see the separate
+<a href="webupdate/UpdatingDocs.shtml">page of instructions</a>.
 
 <h2>Structure of Information</h2>
 
