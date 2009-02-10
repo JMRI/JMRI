@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.9 2008-03-09 20:27:27 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.10 2009-02-10 01:42:11 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -211,7 +211,7 @@ what DecoderPro is doing, for example, the specific CV being read.
 <p>
 Again, the <b>Read sheet</b> and <b>Read all</b> functions are dependant on your command station. If your system does not have the capability to read CVs, then these buttons will not be available.
 
-<a NAME="Enter/Edit data"></a>
+<a NAME="Enter_Edit_data"></a>
 <p>If you wish to change the address of the locomotive, simply click in the text box and type in the new address. To turn on or off 4 digit addressing, click on the check box. To enable/disable analog (regular DC) operation, select the appropriate entry from the pulldown menu.
 <a NAME="Write Data"></a>
 When you are finished, click on "<b>Write sheet</b>" to send the new values to the decoder. It's that easy!

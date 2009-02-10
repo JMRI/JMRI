@@ -87,7 +87,7 @@
 
     <tocitem text="Reading Data " target="DecoderProManual.Basic_Programming_Read Data"/>
 
-    <tocitem text="Entering and Editing Data " target="DecoderProManual.Basic_Programming_Enter/Edit data"/>
+    <tocitem text="Entering and Editing Data " target="DecoderProManual.Basic_Programming_Enter_Edit_data"/>
 
     <tocitem text="Writing to Decoder " target="DecoderProManual.Basic_Programming_Write Data"/>
 

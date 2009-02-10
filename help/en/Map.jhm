@@ -134,6 +134,8 @@
 
 <mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"/>
 
+<mapID target="DecoderProManual.Basic_Programming_Enter_Edit_data" url="DecoderProManual/Basic_Programming.shtml#Enter_Edit_data"/>
+
 <mapID target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame" url="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_MouseControl" url="html/tools/throttle/ThrottleChapter2.shtml#MouseControl"/>
