@@ -17,7 +17,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
@@ -59,10 +59,6 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
                                                          XNetInterface.THROTTLE, this);
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor called for address " + address ); }
-        // because the elite is not sending out a broadcast message when 
-        // another throttle takes over, we need to send a status request 
-        // periodically to find out if we are still in control.
-        startStatusTimer();
     }
     
     /**
@@ -107,68 +103,64 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
           return;
     }
  
-
-   // Status Information processing routines
-   // Used for return values from Status requests.
-
-   // Get SpeedStep and availability information
-   protected void parseSpeedandAvailability(int b1)
-   {
-       /* the first data bite indicates the speed step mode, and
-          if the locomotive is being controlled by another throttle */
-
-          if((b1 & 0x08)==0x08 && this.isAvailable)
-          {
-              log.info("Loco " +getDccAddress() + " In use by another device");               setIsAvailable(false);
-          } else if ((b1&0x08)==0x00 && !this.isAvailable) {
-              if(log.isDebugEnabled()) { log.debug("Loco Is Available"); }
-              setIsAvailable(true);
-          }                                              
-          // The Hornby Elite ALWAYS sends 14 speed steps in its responses,
-          // so ignore the Speed Step portion of this byte (i.e. use the 
-          // speed step mode set by the user in the throttle front end).
+    // Handle incoming messages for This throttle
+    public void message(XNetReply l) {
+        // First, we want to see if this throttle is waiting for a message
+        //or not.
+        if (log.isDebugEnabled()) { log.debug("Throttle - recieved message "); }
+        if (requestState==THROTTLEIDLE) {
+            if (log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLEIDLE"); }
+            // We haven't sent anything, but we might be told someone else
+            // has taken over this address
+            if (l.getElement(0)==0xE5) {
+                if (log.isDebugEnabled()) { log.debug("Throttle - message is LOCO_INFO_RESPONSE "); }
+                if(l.getElement(1)==0xF8) {
+                   /* This is a Hornby Elite specific response
+                    * which occurs when the Elite throttle changes 
+                    * speed.  If this is for this throttle,
+                    * we need to handle it.
+                    * The address is in bytes 3 and 4*/
+                   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
+                      //Set the Is available flag to "False"                    
+                      log.info("Loco " +getDccAddress() + " In use by another device");
+                      setIsAvailable(false);
+                      // Set the speed step mode and availabliity
+                      // from byte 5
+                      parseSpeedandAvailability(l.getElement(4));
+                      // Parse the speed step and direction from
+                      // byte 6.
+                      parseSpeedandDirection(l.getElement(5));
+                   } 
+                 } else if(l.getElement(1)==0xF9) {
+                   /* This is a Hornby Elite specific response
+                    * which occurs when the Elite throttle changes 
+                    * functions.  If this is for this throttle,
+                    * we need to handle it.
+                    * The address is in bytes 3 and 4*/
+                   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
+                      // Set the Is available flag to "False"
+                      log.info("Loco " +getDccAddress() + " In use by another device");
+                      setIsAvailable(false);
+                      // Parse the function status from bytes 5 and 6.
+                      parseFunctionInformation(l.getElement(4),
+                                               l.getElement(5));
+                   }   
+                 }
+              }    
+         }
+         // We didn't find any Elite specific messages, so send the
+         // message on to the standard XPressNet throttle message handler 
+         super.message(l);
     }
 
     /*
-     * Set up the status timer, and start it.
+     * Since the Elite send status messages when the throttle changes,
+     * override the startStatusTimer/stopStatustimer method to do nothing. 
      */
     protected void startStatusTimer() {
-        if(statTimer==null) {
-            statTimer = new javax.swing.Timer(statTimeoutValue,new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        /* If the timer times out, just send a status
-                           request message */
-                        sendStatusInformationRequest();
-                    }
-                });
-        }
-        statTimer.stop();
-        statTimer.setInitialDelay(statTimeoutValue);
-        statTimer.setRepeats(true);
-        statTimer.start();
     }
 
-    /*
-     * Stop the Status Timer
-     * NOTE: This overrides the default behavior, because we don't 
-     * want to stop the status timer with the Elite.
-     */
-    protected void stopStatusTimer() 
-    {
-	//no-op
-    }
-
-   /**
-    * Dispose when finished with this object.  After this, further usage of
-    * this Throttle object will result in a JmriException.
-    *
-    * This is quite problematic, because a using object doesn't know when
-    * it's the last user.
-    */
-    public void dispose()
-    {
-       if(statTimer!=null) statTimer.stop();
-       super.dispose();
+    protected void stopStatusTimer() {
     }
 
     // register for notification

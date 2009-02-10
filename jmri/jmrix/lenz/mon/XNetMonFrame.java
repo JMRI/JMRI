@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2007
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.22 $
+ * @version         $Revision: 2.23 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -253,13 +253,33 @@ import jmri.jmrix.lenz.XNetConstants;
 	             int element4 = l.getElement(4);
 	             text += parseFunctionStatus(element3,element4);
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
-		     text = new String("Locomotive Information Response: Locomotive in Multiple Unit ");
-		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
-                     // message byte 4, contains F0,F1,F2,F3,F4
-	             int element3 = l.getElement(3);
-                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+                     if(l.getElement(1)==0xF8) {
+                     // This message is a Hornby addition to the protocol
+                     // indicating the speed and direction of a locomoitve
+                     // controlled by the elite's built in throttles
+		     text = new String("Elite Speed/Direction Information: Locomotive ");
+	             text += calcLocoAddress(l.getElement(2),l.getElement(3));
+		     text += parseSpeedandDirection(l.getElement(4),l.getElement(5)) + " ";
+                     } else if(l.getElement(1)==0xF9) {
+                     // This message is a Hornby addition to the protocol
+                     // indicating the function on/off status of a locomoitve
+                     // controlled by the elite's built in throttles
+		     text = new String("Elite Function Information: Locomotive ");
+	             text += calcLocoAddress(l.getElement(2),l.getElement(3));
+                     // message byte 5, contains F0,F1,F2,F3,F4
 	             int element4 = l.getElement(4);
-	             text += parseFunctionStatus(element3,element4);
+                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	             int element5 = l.getElement(5);
+	             text += parseFunctionStatus(element4,element5);
+                     } else {
+		        text = new String("Locomotive Information Response: Locomotive in Multiple Unit ");
+		        text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+                        // message byte 4, contains F0,F1,F2,F3,F4
+	                int element3 = l.getElement(3);
+                        // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	                int element4 = l.getElement(4);
+	                text += parseFunctionStatus(element3,element4);
+                     }
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
 		     text = new String("Locomotive Information Response: Multi Unit Base Address");
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
@@ -269,10 +289,10 @@ import jmri.jmrix.lenz.XNetConstants;
                      // message byte 4, contains F0,F1,F2,F3,F4
 	             int element3 = l.getElement(3);
                      // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
-	             int element4 = l.getElement(4);
+                     int element4 = l.getElement(4);
 	             text += parseFunctionStatus(element3,element4);
 		     text += " Second Locomotive in Double Header is: ";
-		     text += calcLocoAddress(l.getElement(5),l.getElement(6));
+	             text += calcLocoAddress(l.getElement(5),l.getElement(6));
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
 		    text = new String("Locomotive Information Response: ");
                     switch(l.getElement(1)) {
