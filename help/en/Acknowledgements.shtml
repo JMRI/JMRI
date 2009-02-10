@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.67 2009-02-08 19:53:38 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.68 2009-02-10 05:34:59 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -326,6 +326,7 @@
 	who provide site hosting, download servers and computing resources
 	for JMRI development
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
+	<li>Tom Starbuck, who updated and organized the model numbers in the TCS BEMF decoder definitions.
 	<LI>Dima Stepanchuk, who provided a fix for the Packet Analyzer
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
