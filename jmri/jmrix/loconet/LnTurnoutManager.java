@@ -37,36 +37,38 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.20 $
+ * @version         $Revision: 1.21 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface controller) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller) {
         //_instance = this;
-        this.controller = controller;
+        this.fastcontroller = fastcontroller;
+        this.throttledcontroller = throttledcontroller;
         
-        if (controller != null)
-            controller.addLocoNetListener(~0, this);
+        if (fastcontroller != null)
+            fastcontroller.addLocoNetListener(~0, this);
         else
             log.error("No layout connection, turnout manager can't function");
     }
 
-    LocoNetInterface controller;
+    LocoNetInterface fastcontroller;
+    LocoNetInterface throttledcontroller;
     
     public char systemLetter() { return 'L'; }
 
     public void dispose() {
-        if (controller != null)
-            controller.removeLocoNetListener(~0, this);
+        if (fastcontroller != null)
+            fastcontroller.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new LnTurnout(addr, controller);
+        t = new LnTurnout(addr, throttledcontroller);
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
@@ -109,7 +111,7 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             // might have to resend, check 2nd byte
             if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0) {
                 // received LONG_ACK reject msg, resend
-                controller.sendLocoNetMessage(lastSWREQ);
+                fastcontroller.sendLocoNetMessage(lastSWREQ);
             }
             
             // clear so can't resend recursively (we'll see

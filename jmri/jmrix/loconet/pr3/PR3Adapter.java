@@ -15,7 +15,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -131,7 +131,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(tm));
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm));
 
         jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
 
