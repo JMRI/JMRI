@@ -30,7 +30,7 @@ import javax.swing.*;
  *
  * @author	Andrew Crosland          (C) 2009
  *
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CbusEventTableFrame extends jmri.util.JmriJFrame {
     
@@ -67,7 +67,7 @@ public class CbusEventTableFrame extends jmri.util.JmriJFrame {
             }
         };
         
-        eventTable.setAutoCreateRowSorter(false);
+// breaks build        eventTable.setAutoCreateRowSorter(false);
         eventScroll = new JScrollPane(eventTable);
         
         // Allow selection of a single interval of columns
