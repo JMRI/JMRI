@@ -24,6 +24,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -32,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.33 $
+ * @version             $Revision: 1.34 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -197,6 +198,12 @@ public class TrainBuilder extends TrainCommon{
 				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
 						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
 						Integer.toString(departStageTrack.getNumberCars())}));
+				// is the staging track direction correct for this train?
+				if ((departStageTrack.getTrainDirections() & train.getRoute().getLocationById(routeList.get(0)).getTrainDirection()) == 0){
+					addLine(fileOut, THREE, "Staging track ("+departStageTrack.getName()+") does not service this train's direction");
+					departStageTrack = null;
+					continue;
+				}
 				if (departStageTrack.getNumberRS()>0 && getEngines(fileOut)){
 					break;
 				} 
@@ -260,6 +267,7 @@ public class TrainBuilder extends TrainCommon{
     		typeNames = typeNames + types[i]+" ";
     	}
     	addLine(fileOut, FIVE, "Train ("+train.getName()+") services rolling stock types: "+typeNames);
+    	// remove cars that don't have a valid track, interchange, road, or type for this train
     	for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getCarById(carList.get(carIndex));
     		// remove cars that don't have a valid track
@@ -344,7 +352,7 @@ public class TrainBuilder extends TrainCommon{
 				return;
 			}
 		}
-		// now go through the car list and remove any that don't belong
+		// now go through the car list and remove non-lead cars in kernels, destinations that aren't part of this route
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car c = carManager.getCarById(carList.get(carIndex));
 			addLine(fileOut, FIVE, "Car (" +c.getId()+ ") at location (" +c.getLocationName()+ ", " +c.getTrackName()+ ") with " + c.getMoves()+ " moves");
@@ -378,11 +386,12 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// now go through the car list and find a caboose or FRED if required
-		// try and find a caboose that matches the engine's road
+		// first pass, try and find a caboose that matches the engine's road
 		if(requiresCaboose && train.getCabooseRoad().equals("") && train.getLeadEngine() != null){
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car car = carManager.getCarById(carList.get(carIndex));
-				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())){
+				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())
+						&& checkPickUpTrainDirection(fileOut, car, train.getRoute().getLocationById(routeList.get(0)))){
 					if (car.getDestination() == null || car.getDestination() == terminateLocation){
 						addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.getId()}));
 						// remove all other cabooses from list
@@ -402,6 +411,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
+		// second pass looking for caboose or car with FRED and if not needed remove
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car c = carManager.getCarById(carList.get(carIndex));
 			// find a caboose or card with FRED for this train if needed
@@ -424,8 +434,10 @@ public class TrainBuilder extends TrainCommon{
 				carIndex--;
 				continue;
 			}
+			// now find destinations for cabooses or cars with FRED
 			if (c.isCaboose() && !foundCaboose || c.hasFred() && !foundFred){	
-				if(c.getLocationName().equals(train.getTrainDepartsName())){
+				if(c.getLocationName().equals(train.getTrainDepartsName()) 
+						&& checkPickUpTrainDirection(fileOut, c, train.getRoute().getLocationById(routeList.get(0)))){
 					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStageTrack != null){
 						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStageTrack != null){
 							// find a track to place car
@@ -435,11 +447,10 @@ public class TrainBuilder extends TrainCommon{
 									Track destTrack = terminateLocation.getTrackById(sls.get(s));
 									String status = c.testDestination(terminateLocation, destTrack);
 									if (status.equals(c.OKAY)){
-										//TODO check to see if the caboose or car with FRED would exceed train length
-										addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
-										if (c.isCaboose())
+										boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
+										if (carAdded && c.isCaboose())
 											foundCaboose = true;
-										if (c.hasFred())
+										if (carAdded && c.hasFred())
 											foundFred = true;
 										break;
 									} 
@@ -451,11 +462,10 @@ public class TrainBuilder extends TrainCommon{
 								// terminate into staging
 								String status = c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
 								if (status.equals(c.OKAY)){
-									//TODO check to see if the caboose or car with FRED would exceed train length
-									addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
-									if (c.isCaboose())
+									boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
+									if (carAdded && c.isCaboose())
 										foundCaboose = true;
-									if (c.hasFred())
+									if (carAdded && c.hasFred())
 										foundFred = true;
 								} else {
 									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +train.getTrainTerminatesRouteLocation().getStagingTrack().getName()+") because of "+status);
@@ -800,6 +810,12 @@ public class TrainBuilder extends TrainCommon{
 				indexEng--;
 				continue;
 			}
+			// remove engines on tracks that don't service the train's direction
+			if (!checkPickUpTrainDirection(fileOut, engine, train.getRoute().getLocationById(routeList.get(0)))){
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
 			// remove engines that have been assigned destinations
 			if (engine.getDestination() != null && !engine.getDestination().equals(terminateLocation)){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getId()+") it has an assigned destination ("+engine.getDestination().getName()+")");
@@ -1031,16 +1047,16 @@ public class TrainBuilder extends TrainCommon{
 		return false;
 	}
 
-	private boolean checkPickUpTrainDirection (PrintWriter file, Car car, RouteLocation rl){
+	private boolean checkPickUpTrainDirection (PrintWriter file, RollingStock rs, RouteLocation rl){
 		if (routeList.size() == 1) // ignore local train direction
 			return true;
-		if ((rl.getTrainDirection() & car.getLocation().getTrainDirections() & car.getTrack().getTrainDirections()) >0)
+		if ((rl.getTrainDirection() & rs.getLocation().getTrainDirections() & rs.getTrack().getTrainDirections()) >0)
 			return true;
 
-		addLine(file, FIVE, "Can not pick up car ("+car.getId()+") using "
+		addLine(file, FIVE, "Can not pick up rolling stock ("+rs.getId()+") using "
 				+rl.getTrainDirectionString()+"bound train, location");
-		addLine(file, FIVE, " ("+car.getLocation().getName()
-				+", "+car.getTrack().getName()+") does not service this direction");
+		addLine(file, FIVE, " ("+rs.getLocation().getName()
+				+", "+rs.getTrack().getName()+") does not service this direction");
 		return false;
 	}
 	
