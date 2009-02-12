@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_X.xml,v 1.6+ 2006/07/28 SG -->
+<!-- $Id: TCS_bemf.xml,v 1.9 2009-02-12 05:40:12 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -25,6 +25,11 @@
 	<version author="Tom Starbuck" version="3" lastUpdated="20090114" />
 		<!-- Added ASD4, AMD4, K3D3, and EUN651 models. Removed M1P-15, M1P-MH, and M1P-UK. -->
 		<!-- Regrouped decoders into groups based on scale -->
+
+	<version author="Marc Fournier" version="4" lastUpdated="20090211" />
+		<!-- Corrected errors in Momentum selection for rates 2 and 3, CV125 thru CV130. -->
+        <!-- Added Tooltips to CV125 thru CV130. -->
+        <!-- Corrected small error in CV3/CV4 Tooltip. -->
 		
 <decoder>
 	<family name="TCS X w/BEMF" mfg="Train Control Systems" 
@@ -315,7 +320,7 @@
 			<decVal max="255"/>
 			</variable>
 		<variable label="Decel Base Rate" CV="4" item="Decel"
-				tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV3"
+				tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV4"
 				comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
@@ -756,7 +761,7 @@
 			</variable>
 
 		<variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1"
-				item="EMF Enable" tooltip="Turn off/on(default) BEMF, CV61 least bit" > 
+				item="EMF Enable" tooltip="Turn off/on(default) BEMF, CV61 least bit, enabling BEMF disables Dither" > 
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
@@ -921,28 +926,51 @@
 		<variable label="F5 controls output Ditch"    CV="124" mask="XVXXXXXX" minOut="1" default="1"> 	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
 		<variable label="F6 controls output Ditch"    CV="124" mask="VXXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
 		
-		<variable label="Accel 2 Starting Point" CV="125" default="0" >
+         <variable label="Decel 2 Ending Point" CV="125" default="0" 
+                tooltip="Sets the Decel 2 End point, range 0(default)-255, CV125" 
+                comment="Range 0-255">
+       			<decVal max="255"/>
+			</variable>
+			
+		<variable label="Decel 2 Rate" CV="126" default="0" 
+		        tooltip="Sets the Decel 2 rate, range 0(default)-255, CV126" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Accel 2 Rate" CV="126" default="0" >
+			
+		<variable label="Decel 3 Ending Point" CV="127" default="0" 
+		        tooltip="Sets the Decel 3 end point, range 0(default)-255, CV127" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Accel 3 Starting Point" CV="127" default="0" >
+			
+		<variable label="Decel 3 Rate" CV="128" default="0" 
+		        tooltip="Sets the Decel 3 rate, range 0(default)-255, CV128" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Accel 3 Rate" CV="128" default="0" >
+			
+		<variable label="Accel 2 Starting Point" CV="129" default="0" 
+		        tooltip="Sets the Accel 2 start point, range 0(default)-255, CV129" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Decel 2 Ending Point" CV="129" default="0" >
+			
+		<variable label="Accel 2 Rate" CV="130" default="0" 
+		        tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Decel 2 Rate" CV="130" default="0" >
+			
+		<variable label="Accel 3 Starting Point" CV="131" default="0" 
+		        tooltip="Sets the Accel 3 start point, range 0(default)-255, CV131" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
-		<variable label="Decel 3 Ending Point" CV="131" default="0" >
-			<decVal max="255"/>
-			</variable>
-		<variable label="Decel 3 Rate" CV="132" default="0" >
+			
+		<variable label="Accel 3 Rate" CV="132" default="0" 
+		        tooltip="Sets the Accel 3 rate, range 0(default)-255, CV132" 
+		        comment="Range 0-255">
 			<decVal max="255"/>
 			</variable>
 			
