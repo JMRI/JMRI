@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+ <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_X.xml,v 1.6+ 2006/07/28 SG -->
+<!-- $Id: TCS_bemf.xml,v 1.11 2009-02-12 05:47:57 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,11 +17,13 @@
     <version author="Michael Mosher" version="1" lastUpdated="20070730"/>
     <version author="Bill Chown" version="2" lastUpdated="20090111"/>
     <version author="Marc Fournier" version="3" lastUpdated="20090125"/>
+    <version author="Jim Betz" version="3" lastUpdated="20090211"/>
 <!-- V1: - Created from TCS_X -->
 <!-- V2: - Corrected BEMF capabilities, added CN and CN-GP models, comments and tooltips expanded -->
 <!-- V3: - Corrected momentum rate 2/3 CV errors, Additional decoders, Additional tooltips, Corrected CV3/CV4 error -->
+<!-- V4: - updated version number from 46 to 47 -->
     <decoder>
-        <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="46">
+        <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="47">
             <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
                 <size length="2.860" width="0.680" height="0.145" units="inches"/>
                 <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
