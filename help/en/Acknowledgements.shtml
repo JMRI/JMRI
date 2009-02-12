@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.68 2009-02-10 05:34:59 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.69 2009-02-12 05:50:28 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -57,6 +57,7 @@
 	made important contributions to the base code, added Lenz XPA support,
 	wrote the Lenz feedback code, wrote the Lenz consisting support,
 	and in general has made more contributions than can be counted.
+	<li>Jim Betz provided a version number for TCS decoders
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
@@ -164,6 +165,7 @@
     <LI>Don Fiehmann provided MRC decoders for testing
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
+	<li>Marc Fournier, who improved the TCS decoder definition
 	<LI>Paul Fraker, who wrote the documentation for the Throttles
 	    and provided an MRC decoder definition
 	<li>Joe Fugate and the other people of 
