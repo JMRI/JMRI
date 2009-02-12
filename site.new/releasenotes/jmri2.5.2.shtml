@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.9 2009-02-10 06:05:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.10 2009-02-12 05:57:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -189,6 +189,13 @@ A bunch more baud rates were added for CAN connections.
 <p>
 Paul Bender updated the XPressNet support to properly handle non-standard operations by the Hornby Elite. 
 He also added a configuriation tool for the Lenz LI-USB.
+
+<p>
+Andrew Crosland improved the CBUS support and added a new "Event Table" tool.
+
+<p>
+Marc Fournier improved the TCS BEMF decoder definition.
+
 
 <!--#include virtual="/Footer" -->
 
