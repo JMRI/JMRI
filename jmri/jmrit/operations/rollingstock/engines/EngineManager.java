@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -77,7 +77,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     }
  
     /**
-     * Finds an exsisting engine or creates a new engine if needed
+     * Finds an existing engine or creates a new engine if needed
      * requires engine's road and number
      * @param engineRoad
      * @param engineNumber
@@ -481,7 +481,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
-	 * @return Ordered list of engines not assigned to a train
+	 * @return Ordered list of engine ids not assigned to a train
 	 */
     public List<String> getEnginesAvailableTrainList(Train train) {
     	Route route = train.getRoute();
@@ -573,6 +573,37 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	}
     	return out;
     }
+    
+    /**
+     * Get a list of engine road names.
+     * @return List of engine road names.
+     */
+    public List<String> getEngineRoadNames(String model){
+    	List<String> names = new ArrayList<String>();
+       	Enumeration<String> en = _engineHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Engine engine = getEngineById(en.nextElement());
+    		if ((engine.getModel().equals(model) || model.equals(""))
+    				&& !names.contains(engine.getRoad())){
+    			names.add(engine.getRoad());
+    		}
+    	}
+    	return sortList(names);
+    }
+    
+    private List<String> sortList(List<String> list){
+    	List<String> out = new ArrayList<String>();
+    	for (int i=0; i<list.size(); i++){
+    		int j;
+    		for (j=0; j<out.size(); j++) {
+    		if (list.get(i).compareToIgnoreCase(out.get(j))<0)
+    			break;
+    		}
+    		out.add(j, list.get(i));
+    	}
+    	return out;
+    }
+
 
     /**
      * The PropertyChangeListener interface in this class is

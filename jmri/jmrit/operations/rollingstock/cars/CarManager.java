@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -86,6 +86,13 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	return getCarById (carId);
     }
     
+    /**
+     * Get a car by type and road. Used to test that a car with a specific
+     * type and road exists. 
+     * @param carType car type.
+     * @param carRoad car road.
+     * @return the first car found with the specified type and road.
+     */
     public Car getCarByTypeAndRoad(String carType, String carRoad){
     	Enumeration<String> en = _carHashTable.keys();
     	while (en.hasMoreElements()) { 
@@ -97,7 +104,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     }
  
     /**
-     * Finds an exsisting Car or creates a new Car if needed
+     * Finds an existing Car or creates a new Car if needed
      * requires car's road and number
      * @param carRoad car road
      * @param carNumber car number
@@ -672,7 +679,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	 * Get a list of Cars assigned to a train 
 	 * 
 	 * @param train
-	 * @return List of Cars assigned to the train
+	 * @return List of car ids assigned to the train
 	 */
     public List<String> getCarsByTrainList(Train train) {
     	// get cars available list
@@ -687,6 +694,51 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			inTrain.add(byId.get(i));
     	}
     	return inTrain;
+    }
+    
+    /**
+     * Get a list of car road names where the car was flagged as a caboose.
+     * @return List of caboose road names.
+     */
+    public List<String> getCabooseRoadNames(){
+    	List<String> names = new ArrayList<String>();
+       	Enumeration<String> en = _carHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Car car = getCarById(en.nextElement());
+    		if (car.isCaboose() && !names.contains(car.getRoad())){
+    			names.add(car.getRoad());
+    		}
+    	}
+    	return sortList(names);
+    }
+    
+    /**
+     * Get a list of car road names where the car was flagged with FRED.
+     * @return List of road names of cars with FREDs.
+     */
+    public List<String> getFredRoadNames(){
+    	List<String> names = new ArrayList<String>();
+       	Enumeration<String> en = _carHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Car car = getCarById(en.nextElement());
+    		if (car.hasFred() && !names.contains(car.getRoad())){
+    			names.add(car.getRoad());
+    		}
+    	}
+    	return sortList(names);
+    }
+    
+    private List<String> sortList(List<String> list){
+    	List<String> out = new ArrayList<String>();
+    	for (int i=0; i<list.size(); i++){
+    		int j;
+    		for (j=0; j<out.size(); j++) {
+    		if (list.get(i).compareToIgnoreCase(out.get(j))<0)
+    			break;
+    		}
+    		out.add(j, list.get(i));
+    	}
+    	return out;
     }
 
 

@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import java.awt.event.*;
 import java.beans.*;
 
 import javax.swing.*;
@@ -22,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -182,6 +182,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     public void setValueAt(Object value, int row, int col) {
+    	if (value == null){
+    		log.debug("Warning schedule table row "+row+" still in edit");
+    		return;
+    	}
         switch (col) {
         case ROADCOLUMN: setRoad(value, row);
         	break;

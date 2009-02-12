@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -196,6 +196,10 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     }
 
     public void setValueAt(Object value, int row, int col) {
+    	if (value == null){
+    		log.debug("Warning route table row "+row+" still in edit");
+    		return;
+    	}
         switch (col) {
         case UPCOLUMN: moveUpRouteLocation(row);
         	break;

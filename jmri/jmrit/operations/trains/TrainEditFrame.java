@@ -25,8 +25,10 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -39,7 +41,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -121,7 +123,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	javax.swing.JComboBox hourBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox minuteBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
-	javax.swing.JComboBox roadCabooseBox = CarRoads.instance().getComboBox();
+	javax.swing.JComboBox roadCabooseBox = new javax.swing.JComboBox();
 	javax.swing.JComboBox roadBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox roadEngineBox = CarRoads.instance().getComboBox();
 	javax.swing.JComboBox modelEngineBox = EngineModels.instance().getComboBox();
@@ -303,8 +305,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	addItem (trainReq, fredRadioButton, 3, 2);
     	addItem (trainReq, cabooseRadioButton, 4, 2);
      	addItem (trainReq, textRoad3, 5, 2);
-    	roadCabooseBox.insertItemAt("",0);
-    	roadCabooseBox.setSelectedIndex(0);
     	roadCabooseBox.setToolTipText(rb.getString("RoadCabooseTip"));
     	addItem (trainReq, roadCabooseBox, 6, 2);
     	group.add(noneRadioButton);
@@ -364,7 +364,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
- 		
+		addRadioButtonAction(noneRadioButton);
+		addRadioButtonAction(cabooseRadioButton);
+		addRadioButtonAction(fredRadioButton);
+		
 		if (_train != null){
 			trainNameTextField.setText(_train.getName());
 			trainDescriptionTextField.setText(_train.getDescription());
@@ -372,9 +375,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
 			routeBox.setSelectedItem(_train.getRoute());
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
-			roadEngineBox.setSelectedItem(_train.getEngineRoad());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
-			roadCabooseBox.setSelectedItem(_train.getCabooseRoad());
 			commentTextField.setText(_train.getComment());
 			cabooseRadioButton.setSelected((_train.getRequirements()&_train.CABOOSE)>0);
 			fredRadioButton.setSelected((_train.getRequirements()&_train.FRED)>0);
@@ -388,6 +389,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			enableButtons(false);
 		}
+		
+		modelEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
+		roadEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
 
 		// build menu
 //		JMenuBar menuBar = new JMenuBar();
@@ -402,13 +406,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		updateEngineTypeCheckboxes();
 		updateRoadNames();
 		updateNumberCars();
+		updateCabooseRoadComboBox();
+		updateEngineRoadComboBox();
 		
 		// set frame size and train for display
 		frameIsVisible = true;
 		packFrame();
 		
 		// setup combobox
+		addComboBoxAction(numEnginesBox);
 		addComboBoxAction(routeBox);
+		addComboBoxAction(modelEngineBox);
 		
 		//	 get notified if combo box gets modified
 		routeManager.addPropertyChangeListener(this);
@@ -416,7 +424,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
-		
 	}
 	
 	// Save, Delete, Add 
@@ -492,14 +499,23 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (_train != null){
-			if (ae.getSource() == roadNameAll)
-				_train.setRoadOption(_train.ALLROADS);
-			if (ae.getSource() == roadNameInclude)
-				_train.setRoadOption(_train.INCLUDEROADS);
-			if (ae.getSource() == roadNameExclude)
-				_train.setRoadOption(_train.EXCLUDEROADS);
-
-			updateRoadNames();
+			if (ae.getSource() == roadNameAll){
+				_train.setRoadOption(Train.ALLROADS);
+				updateRoadNames();
+			}
+			if (ae.getSource() == roadNameInclude){
+				_train.setRoadOption(Train.INCLUDEROADS);
+				updateRoadNames();
+			}
+			if (ae.getSource() == roadNameExclude){
+				_train.setRoadOption(Train.EXCLUDEROADS);
+				updateRoadNames();
+			}
+			if (ae.getSource() == noneRadioButton 
+					|| ae.getSource() == cabooseRadioButton 
+					|| ae.getSource() == fredRadioButton){
+				updateCabooseRoadComboBox();
+			}
 		}
 	}
 	
@@ -520,9 +536,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		if(_train != null){
 			// set radio button
-			roadNameAll.setSelected(_train.getRoadOption().equals(_train.ALLROADS));
-			roadNameInclude.setSelected(_train.getRoadOption().equals(_train.INCLUDEROADS));
-			roadNameExclude.setSelected(_train.getRoadOption().equals(_train.EXCLUDEROADS));
+			roadNameAll.setSelected(_train.getRoadOption().equals(Train.ALLROADS));
+			roadNameInclude.setSelected(_train.getRoadOption().equals(Train.INCLUDEROADS));
+			roadNameExclude.setSelected(_train.getRoadOption().equals(Train.EXCLUDEROADS));
 			
 			if (!roadNameAll.isSelected()){
 		    	p = new JPanel();
@@ -557,7 +573,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		//repaint();
 	}
 	
-	
 	private void saveNewTrain(){
 		if (!checkName())
 			return;
@@ -586,11 +601,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train.setEngineRoad((String)roadEngineBox.getSelectedItem());
 		_train.setEngineModel((String)modelEngineBox.getSelectedItem());
 		if (cabooseRadioButton.isSelected())
-			_train.setRequirements(_train.CABOOSE);
+			_train.setRequirements(Train.CABOOSE);
 		if (fredRadioButton.isSelected())
-			_train.setRequirements(_train.FRED);
+			_train.setRequirements(Train.FRED);
 		if (noneRadioButton.isSelected())
-			_train.setRequirements(_train.NONE);
+			_train.setRequirements(Train.NONE);
 		_train.setCabooseRoad((String)roadCabooseBox.getSelectedItem());
 		_train.setName(trainNameTextField.getText());
 		_train.setDescription(trainDescriptionTextField.getText());
@@ -639,6 +654,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		deleteRoadButton.setEnabled(enabled);
 		saveTrainButton.setEnabled(enabled);
 		deleteTrainButton.setEnabled(enabled);
+		numEnginesBox.setEnabled(enabled);
 		enableCheckboxes(enabled);
 
 		// the inverse!
@@ -661,20 +677,29 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (_train == null)
 			return;
-		if (routeBox.isEnabled()){
-			Route route = _train.getRoute();
-			if (route != null)
-				route.removePropertyChangeListener(this);
-			Object selected =  routeBox.getSelectedItem();
-			if (selected != null && !selected.equals("")){
-				 route = (Route)selected;
-				_train.setRoute(route);
-				route.addPropertyChangeListener(this);
-			}else{
-				_train.setRoute(null);
-			}
+		if (ae.getSource() == numEnginesBox){
+			modelEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
+			roadEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
 		}
-		updateLocationCheckboxes();
+		if (ae.getSource() == modelEngineBox){
+			updateEngineRoadComboBox();
+		}
+		if (ae.getSource() == routeBox){
+			if (routeBox.isEnabled()){
+				Route route = _train.getRoute();
+				if (route != null)
+					route.removePropertyChangeListener(this);
+				Object selected =  routeBox.getSelectedItem();
+				if (selected != null && !selected.equals("")){
+					route = (Route)selected;
+					_train.setRoute(route);
+					route.addPropertyChangeListener(this);
+				}else{
+					_train.setRoute(null);
+				}
+			}
+			updateLocationCheckboxes();
+		}
 	}
 	
 	private void enableCheckboxes(boolean enable){
@@ -788,15 +813,41 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	// there are three road combo boxes to update
 	private void updateRoadComboBoxes(){
-		CarRoads.instance().updateComboBox(roadCabooseBox);
-		roadCabooseBox.insertItemAt("",0);
-    	roadCabooseBox.setSelectedIndex(0);
+		updateCabooseRoadComboBox();
+		updateEngineRoadComboBox();
 		CarRoads.instance().updateComboBox(roadBox);
-		CarRoads.instance().updateComboBox(roadEngineBox);
-		roadEngineBox.insertItemAt("",0);
-		roadEngineBox.setSelectedIndex(0);
+	}
+	
+	// update caboose road box based on radio selection
+	private void updateCabooseRoadComboBox(){
+		roadCabooseBox.removeAllItems();
+		roadCabooseBox.addItem("");
+		if (noneRadioButton.isSelected()){
+			roadCabooseBox.setEnabled(false);
+			return;
+		}
+		roadCabooseBox.setEnabled(true);
+		List<String> roads;
+		if (cabooseRadioButton.isSelected())
+			roads = CarManager.instance().getCabooseRoadNames();
+		else
+			roads = CarManager.instance().getFredRoadNames();
+		for (int i=0; i<roads.size(); i++){
+	   		roadCabooseBox.addItem(roads.get(i));
+		}
 		if (_train != null){
 			roadCabooseBox.setSelectedItem(_train.getCabooseRoad());
+		}
+	}
+	
+	private void updateEngineRoadComboBox(){
+		roadEngineBox.removeAllItems();
+		roadEngineBox.addItem("");
+		List<String> roads = EngineManager.instance().getEngineRoadNames((String)modelEngineBox.getSelectedItem());
+		for (int i=0; i<roads.size(); i++){
+	   		roadEngineBox.addItem(roads.get(i));
+		}
+		if (_train != null){
 			roadEngineBox.setSelectedItem(_train.getEngineRoad());
 		}
 	}
@@ -808,7 +859,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		});
 	}
-	
 	
 	public void typeCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
