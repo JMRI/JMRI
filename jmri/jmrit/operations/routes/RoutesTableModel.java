@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -119,15 +119,15 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public String getName(int row) {  // name is text number
-        return "";
-    }
-
-    public String getValString(int row) {
-        return "";
-    }
-
     public Object getValueAt(int row, int col) {
+    	// Funky code to put the ref frame in focus after the edit table buttons is used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the edit frame
+    	// in focus.
+    	if (focusRef){
+    		focusRef = false;
+    		ref.requestFocus();
+    	}
     	String locId = sysList.get(row);
     	Route l = manager.getRouteById(locId);
         switch (col) {
@@ -147,16 +147,17 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             break;
         }
     }
-    RouteEditFrame lef = null;
+    boolean focusRef = false;
+    RouteEditFrame ref = null;
     private void editRoute (int row){
     	log.debug("Edit route");
-    	if (lef != null)
-    		lef.dispose();
-   		lef = new RouteEditFrame();
-    	lef.setTitle(rb.getString("TitleRouteEdit"));
+    	if (ref != null)
+    		ref.dispose();
+   		ref = new RouteEditFrame();
+    	ref.setTitle(rb.getString("TitleRouteEdit"));
     	Route route = manager.getRouteById(sysList.get(row));
-    	lef.initComponents(route);
-    	
+    	ref.initComponents(route);
+    	focusRef = true;
     }
 
     public void propertyChange(PropertyChangeEvent e) {
@@ -187,8 +188,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-        if (lef != null)
-        	lef.dispose();
+        if (ref != null)
+        	ref.dispose();
         manager.removePropertyChangeListener(this);
         removePropertyChangeRoutes();
     }

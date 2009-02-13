@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -42,7 +42,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 
-	
 	// labels
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textLength = new JLabel(rb.getString("Length"));
@@ -144,7 +143,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		roadGroup.add(roadNameExclude);
 		updateRoadNames();
 		
- 		
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
 		int y = 0;
@@ -186,7 +184,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
-
 		
 		// load fields and enable buttons
 		if (_track !=null){

@@ -14,11 +14,15 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -41,7 +45,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -66,68 +70,69 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane locationsPane;
 
 	// labels
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textDescription = new javax.swing.JLabel();
-	javax.swing.JLabel textDepartTime = new javax.swing.JLabel();
-	javax.swing.JLabel textRoute = new javax.swing.JLabel();
-	javax.swing.JLabel textCarType = new javax.swing.JLabel();
-	javax.swing.JLabel textEngineType = new javax.swing.JLabel();
-	javax.swing.JLabel textModel = new javax.swing.JLabel();
-	javax.swing.JLabel textRoad = new javax.swing.JLabel();
-	javax.swing.JLabel textRoad2 = new javax.swing.JLabel();
-	javax.swing.JLabel textRoad3 = new javax.swing.JLabel();
-	javax.swing.JLabel textEngine = new javax.swing.JLabel();
-	javax.swing.JLabel textStops = new javax.swing.JLabel();
-	javax.swing.JLabel textTrainRequires = new javax.swing.JLabel();
-	javax.swing.JLabel textCars = new javax.swing.JLabel();
-	javax.swing.JLabel textComment = new javax.swing.JLabel();
+	JLabel textName = new JLabel();
+	JLabel textDescription = new JLabel();
+	JLabel textDepartTime = new JLabel();
+	JLabel textRoute = new JLabel();
+	JLabel textCarType = new JLabel();
+	JLabel textEngineType = new JLabel();
+	JLabel textModel = new JLabel();
+	JLabel textRoad = new JLabel();
+	JLabel textRoad2 = new JLabel();
+	JLabel textRoad3 = new JLabel();
+	JLabel textEngine = new JLabel();
+	JLabel textStops = new JLabel();
+	JLabel textTrainRequires = new JLabel();
+	JLabel textCars = new JLabel();
+	JLabel textComment = new JLabel();
 
 	// major buttons
-	javax.swing.JButton editButton = new javax.swing.JButton();
-	javax.swing.JButton clearButton = new javax.swing.JButton();
-	javax.swing.JButton setButton = new javax.swing.JButton();
-	javax.swing.JButton deleteRoadButton = new javax.swing.JButton();
-	javax.swing.JButton addRoadButton = new javax.swing.JButton();
-	javax.swing.JButton resetButton = new javax.swing.JButton();
-	javax.swing.JButton saveTrainButton = new javax.swing.JButton();
-	javax.swing.JButton deleteTrainButton = new javax.swing.JButton();
-	javax.swing.JButton addTrainButton = new javax.swing.JButton();
+	JButton editButton = new JButton();
+	JButton clearButton = new JButton();
+	JButton setButton = new JButton();
+	JButton addRoadButton = new JButton();
+	JButton deleteRoadButton = new JButton();
+	JButton JLabel = new JButton();
+	JButton resetButton = new JButton();
+	JButton saveTrainButton = new JButton();
+	JButton deleteTrainButton = new JButton();
+	JButton addTrainButton = new JButton();
 
 	// check boxes
 
 	// radio buttons
-    javax.swing.JRadioButton noneRadioButton = new javax.swing.JRadioButton(rb.getString("None"));
-    javax.swing.JRadioButton cabooseRadioButton = new javax.swing.JRadioButton(rb.getString("Caboose"));
-    javax.swing.JRadioButton fredRadioButton = new javax.swing.JRadioButton(rb.getString("FRED"));
+    JRadioButton noneRadioButton = new JRadioButton(rb.getString("None"));
+    JRadioButton cabooseRadioButton = new JRadioButton(rb.getString("Caboose"));
+    JRadioButton fredRadioButton = new JRadioButton(rb.getString("FRED"));
     ButtonGroup group = new ButtonGroup();
     
-    javax.swing.JRadioButton roadNameAll = new javax.swing.JRadioButton("Accept all");
-    javax.swing.JRadioButton roadNameInclude = new javax.swing.JRadioButton("Accept only");
-    javax.swing.JRadioButton roadNameExclude = new javax.swing.JRadioButton("Exclude");
+    JRadioButton roadNameAll = new JRadioButton("Accept all");
+    JRadioButton roadNameInclude = new JRadioButton("Accept only");
+    JRadioButton roadNameExclude = new JRadioButton("Exclude");
     ButtonGroup roadGroup = new ButtonGroup();
 	
 	// text field
-	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(18);
-	javax.swing.JTextField trainDescriptionTextField = new javax.swing.JTextField(30);
-	javax.swing.JTextField commentTextField = new javax.swing.JTextField(35);
+	JTextField trainNameTextField = new JTextField(18);
+	JTextField trainDescriptionTextField = new JTextField(30);
+	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	javax.swing.JLabel space0 = new javax.swing.JLabel();
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
-	javax.swing.JLabel space4 = new javax.swing.JLabel();
-	javax.swing.JLabel space5 = new javax.swing.JLabel();
+	JLabel space0 = new JLabel("     ");
+	JLabel space1 = new JLabel("     ");
+	JLabel space2 = new JLabel("     ");
+	JLabel space3 = new JLabel("     ");
+	JLabel space4 = new JLabel("     ");
+	JLabel space5 = new JLabel("     ");
 	
 	// combo boxes
-	javax.swing.JComboBox hourBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox minuteBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
-	javax.swing.JComboBox roadCabooseBox = new javax.swing.JComboBox();
-	javax.swing.JComboBox roadBox = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox roadEngineBox = CarRoads.instance().getComboBox();
-	javax.swing.JComboBox modelEngineBox = EngineModels.instance().getComboBox();
-	javax.swing.JComboBox numEnginesBox = new javax.swing.JComboBox();
+	JComboBox hourBox = new JComboBox();
+	JComboBox minuteBox = new JComboBox();
+	JComboBox routeBox = RouteManager.instance().getComboBox();
+	JComboBox roadCabooseBox = new JComboBox();
+	JComboBox roadBox = CarRoads.instance().getComboBox();
+	JComboBox roadEngineBox = CarRoads.instance().getComboBox();
+	JComboBox modelEngineBox = EngineModels.instance().getComboBox();
+	JComboBox numEnginesBox = new JComboBox();
 
 	public static final String DISPOSE = "dispose" ;
 
@@ -140,7 +145,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	typeCarPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
     	typeEnginePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
 	}
 
 	public void initComponents(Train train) {
@@ -192,18 +196,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		clearButton.setVisible(true);
 		setButton.setText(rb.getString("Select"));
 		setButton.setVisible(true);
-		space0.setText("     ");
-		space0.setVisible(true);
-		space1.setText("     ");
-		space1.setVisible(true);
-		space2.setText("     ");
-		space2.setVisible(true);
-		space3.setText("     ");
-		space3.setVisible(true);
-		space4.setText("     ");
-		space4.setVisible(true);
-		space5.setText("     ");
-		space5.setVisible(true);
 
 		deleteTrainButton.setText(rb.getString("DeleteTrain"));
 		deleteTrainButton.setVisible(true);
@@ -217,6 +209,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	    //      Set up the panels
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
+    	p1.setPreferredSize(new Dimension(550, 50)); // this sets the minimum panel width
 				
 		// Layout the panel by rows
 		// row 1
@@ -224,10 +217,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItemWidth(p1, trainNameTextField, 3, 1, 1);
 
 		// row 2
-//		addItem(p1, space0, 0, 2);
 		addItem(p1, textDescription, 0, 3);
 		addItemWidth(p1, trainDescriptionTextField, 3, 1, 3);
-//		addItem(p1, space5, 0, 6);
 		Border border = BorderFactory.createEtchedBorder();
 		p1.setBorder(border);
 		
@@ -242,7 +233,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				hourBox.addItem(Integer.toString(i));
 		}
 		hourBox.setMinimumSize(new Dimension(100,25));
-		
 		
 		for (int i=0; i<60; i+=5){
 			if (i<10)
@@ -410,7 +400,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		updateEngineRoadComboBox();
 		
 		// set frame size and train for display
-		frameIsVisible = true;
 		packFrame();
 		
 		// setup combobox
@@ -552,7 +541,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		    	String[]carRoads = _train.getRoadNames();
 		    	int x = 0;
 		    	for (int i =0; i<carRoads.length; i++){
-		    		JLabel road = new javax.swing.JLabel();
+		    		JLabel road = new JLabel();
 		    		road.setText(carRoads[i]);
 		    		addItem(panelRoadNames, road, x++, y);
 		    		if (x > 5){
@@ -568,9 +557,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Border border = BorderFactory.createEtchedBorder();
 		panelRoadNames.setBorder(border);
 		panelRoadNames.revalidate();
-
 		packFrame();
-		//repaint();
 	}
 	
 	private void saveNewTrain(){
@@ -917,14 +904,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
     }
     
-    private boolean frameIsVisible = false;
     private void packFrame(){
  		pack();
 		if (getHeight() < 700)
 			setSize(getWidth(), getHeight()+ 50);
-		if (getWidth() < 550)
-			setSize(550, getHeight());
-		setVisible(frameIsVisible);
+		setVisible(true);
     }
 	
 	public void dispose() {

@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -22,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -104,7 +102,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		_roadNumber ="";
 		return -1;
     }
-    
     
     synchronized void updateList() {
 		// first, remove listeners from the individual objects
@@ -215,15 +212,19 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    public String getName(int row) {  // name is text number
-        return "";
-    }
-
-    public String getValString(int row) {
-        return "";
-    }
-
     public Object getValueAt(int row, int col) {
+    	// Funky code to put the esf and eef frames in focus after set and edit table buttons are used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the set and edit frames
+    	// in focus.
+    	if (focusEsf){
+    		focusEsf = false;
+    		esf.requestFocus();
+    	}
+    	if (focusEef){
+    		focusEef = false;
+    		eef.requestFocus();
+    	}
     	String engineId = sysList.get(row);
     	Engine engine = manager.getEngineById(engineId);
         switch (col) {
@@ -259,6 +260,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    boolean focusEef = false;
+    boolean focusEsf = false;
     EnginesEditFrame eef = null;
     EnginesSetFrame esf = null;
     
@@ -277,6 +280,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	    	esf.setTitle(rb.getString("TitleEngineSet"));
 	    	esf.setVisible(true);
 	    	esf.setExtendedState(java.awt.Frame.NORMAL);
+	    	focusEsf = true;
         	break;
         case EDITCOLUMN:
         	log.debug("Edit engine");
@@ -289,6 +293,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	    	eef.setTitle(rb.getString("TitleEngineEdit"));
 	    	eef.setVisible(true);
 	    	eef.setExtendedState(java.awt.Frame.NORMAL);
+	    	focusEef = true;
         	break;
         default:
             break;

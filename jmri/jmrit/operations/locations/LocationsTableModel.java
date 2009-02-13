@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import java.awt.event.*;
 import java.beans.*;
 
 import javax.swing.*;
@@ -20,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -137,15 +136,15 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public String getName(int row) {  // name is text number
-        return "";
-    }
-
-    public String getValString(int row) {
-        return "";
-    }
-
     public Object getValueAt(int row, int col) {
+    	// Funky code to put the lef frame in focus after the edit table buttons is used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the edit frame
+    	// in focus.
+    	if (focusLef){
+    		focusLef = false;
+    		lef.requestFocus();
+    	}
     	String locId = (String)sysList.get(row);
     	Location l = manager.getLocationById(locId);
         switch (col) {
@@ -170,6 +169,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
     
+    boolean focusLef = false;
     LocationsEditFrame lef = null;
     private void editLocation (int row){
     	log.debug("Edit location");
@@ -179,6 +179,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	Location loc = manager.getLocationById((String)sysList.get(row));
      	lef.setTitle(rb.getString("TitleLocationEdit"));
     	lef.initComponents(loc);
+    	focusLef = true;
    }
 
     public void propertyChange(PropertyChangeEvent e) {

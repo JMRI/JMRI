@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -131,7 +131,9 @@ public class RouteCopyFrame extends OperationsFrame {
 	LocationManager locationManager = LocationManager.instance();
 	private void copyRouteLocation(Route oldRoute, Route newRoute, String id, String nextId, boolean invert){
 		RouteLocation oldRl = oldRoute.getLocationById(id);
-		RouteLocation oldNextRl = oldRoute.getLocationById(nextId);
+		RouteLocation oldNextRl = null;
+		if (nextId != null)
+			oldNextRl = oldRoute.getLocationById(nextId);
 		Location l = locationManager.getLocationByName(oldRl.getName());
 		RouteLocation newRl = newRoute.addLocation(l);
 		// now copy the route location objects we want

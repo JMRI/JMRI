@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -176,6 +176,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public Object getValueAt(int row, int col) {
+    	// Funky code to put the tef frame in focus after the edit table buttons is used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the edit frame
+    	// in focus.
+    	if (focusTef){
+    		focusTef = false;
+    		tef.requestFocus();
+    	}
     	Train train = manager.getTrainById(sysList.get(row));
         switch (col) {
         case IDCOLUMN: {
@@ -223,15 +231,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             break;
         }
     }
-    TrainEditFrame lef = null;
+    
+    boolean focusTef = false;
+    TrainEditFrame tef = null;
     private void editTrain (int row){
-    	if (lef != null)
-    		lef.dispose();
-    	lef = new TrainEditFrame();
+    	if (tef != null)
+    		tef.dispose();
+    	tef = new TrainEditFrame();
     	Train train = manager.getTrainById(sysList.get(row));
        	log.debug("Edit train ("+train.getName()+")");
-     	lef.setTitle(rb.getString("TitleTrainEdit"));
-    	lef.initComponents(train);
+     	tef.setTitle(rb.getString("TitleTrainEdit"));
+    	tef.initComponents(train);
+    	focusTef = true;
     }
     
     private void buildTrain (int row){
@@ -281,8 +292,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-    	if (lef != null)
-    		lef.dispose();
+    	if (tef != null)
+    		tef.dispose();
         manager.removePropertyChangeListener(this);
         removePropertyChangeTrains();
     }

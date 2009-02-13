@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -23,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -243,15 +241,19 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    public String getName(int row) {  // name is text number
-        return "";
-    }
-
-    public String getValString(int row) {
-        return "";
-    }
-
     public Object getValueAt(int row, int col) {
+    	// Funky code to put the csf and cef frames in focus after set and edit table buttons are used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the set and edit frames
+    	// in focus.
+    	if (focusCsf){
+    		focusCsf = false;
+    		csf.requestFocus();
+    	}
+    	if (focusCef){
+    		focusCef = false;
+    		cef.requestFocus();
+    	}
     	String carId = sysList.get(row);
     	Car c = manager.getCarById(carId);
         switch (col) {
@@ -299,7 +301,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         default: return "unknown "+col;
         }
     }
-
+    
+    boolean focusCef = false;
+    boolean focusCsf = false;
     CarsEditFrame cef = null;
     CarsSetFrame csf = null;
     
@@ -317,6 +321,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	    	csf.setTitle(rb.getString("TitleCarSet"));
 	    	csf.setVisible(true);
 	    	csf.setExtendedState(csf.NORMAL);
+	    	focusCsf = true;
         	break;
         case EDITCOLUMN:
         	log.debug("Edit car");
@@ -328,6 +333,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	    	cef.setTitle(rb.getString("TitleCarEdit"));
 	    	cef.setVisible(true);
 	    	cef.setExtendedState(cef.NORMAL);
+	    	focusCef = true;
         	break;
         default:
             break;
