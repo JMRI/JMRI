@@ -1,63 +1,69 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TD_SIC24.xml,v 1.6 2009-02-13 18:55:01 ken_c Exp $ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
+<!-- Copyright (C) JMRI 2005, 2006 All rights reserved -->
+<!-- $Id: TD_SIC24AD.xml,v 1.1 2009-02-13 18:55:01 ken_c Exp $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
 <decoder-config>
 		<version author="td@teamdigital1.com" 
-					version="1.2" lastUpdated="20070709"/>
+					version="1.0" lastUpdated="20081014"/>
 					
-		<!-- Version 1 inital release 12/13/05-->
-		<!-- Version 1.1 release 2/23/06 - correct logic cell 3 -->
-		<!-- Version 1.2 release 6/9/07 - added option 5 and input toggle, requires version 17 or later of SIC24-->
+		<!-- Version 1 inital release 10/14/08-->
 		
 <decoder>
-	<family name="SIC24" mfg="Team Digital" type="stationary"
-				comment="SIC24 is not stationary decoder, but it can be programmed in the usual way">
-			<model model= "SIC24" lowVersionID="12"/>
+	<family name="SIC24AD" mfg="Team Digital" type="stationary"
+				comment="The SIC24AD can be programmed in the usual way">
+			<model model= "SIC24AD" lowVersionID="10"/>
 		</family>
 
 	<programming direct="no" paged="yes" 
 	                     register="no" ops="yes"></programming>
 
 	<variables>
-		<variable label="Output Addresses" CV="1" mask="VVVVVVVV" default="101"
+		<variable label="Ops Mode Address" CV="1" mask="XVVVVVVV" item="Short Address" default="1"
+			tooltip="Range 1-99">
+			<shortAddressVal/>
+			<!-- <splitVal highCV="2" upperMask="XXXXXXXX"/> -->
+			</variable>	
+						
+		<variable label="Base Address" CV="3" mask="VVVVVVVV" default="101"
 			tooltip="Range 1-2040">
-			<splitVal highCV="9" upperMask="XXXXVVVV"/> </variable>
-			
-		<variable label="through"  CV="1" mask="VVVVVVVV" default="124" >
-			<splitVal highCV="9" factor="1" offset="23" /> </variable>
-		
- 		<variable label="Option 1" CV="2" mask="XXXXXXXV" item="Op1"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="Option 2" CV="2" mask="XXXXXXVX" item="Op2"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="Option 3" CV="2" mask="XXXXXVXX" item="Op3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 		<variable label="Option 4" CV="2" mask="XXXXVXXX" item="Op4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="Option 5" CV="2" mask="XXXVXXXX" item="Op5"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<splitVal highCV="4" upperMask="XXXXVVVV"/> </variable>
  
- 		<variable label="CV2" CV="2" mask="VVVVVVVV">
- 			<decVal/> </variable>		
- 		<variable label="Version ID" CV="3" item="Decoder Version">
-				<decVal/> </variable>
-		<variable label="Manufacturer ID" CV="4" item="Manufacturer" default="25">
-				<decVal/> </variable>
+ 		<variable label="Switch Address" CV="5" mask="VVVVVVVV" default="1"
+			tooltip="Range 1-2040">
+			<splitVal highCV="6" upperMask="XXXXVVVV"/> </variable>
+			
+		<variable label="Version ID" CV="7" item="Decoder Version"> <decVal/> </variable>
+		<variable label="Manufacturer ID" CV="8" item="Manufacturer" default="25"> <decVal/> </variable>
 
  
- 		<variable label="Ops Mode Address" CV="5" mask="VVVVVVVV" item="Short Address" 
-			tooltip="Range 1-16000">
-			<splitVal highCV="6" upperMask="XXVVVVVV"/>
-			</variable>
-			
-		<variable label="Short Address" CV="1"> <decVal/> </variable>
- 
- 		<variable label="SE8C address factor" CV="7" mask="XXXVVVVV"> <decVal/> </variable>
+ 		<variable label="Logic Cell Msg" CV="9" mask="XXXXXXVX" > <enumVal> 
+			<enumChoice choice="Yes"/> <enumChoice choice="No"/> </enumVal> </variable>		
+		 <variable label="DCC gateway" CV="9" mask="XXXXXVXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		 <variable label="Sw Throw Msg" CV="9" mask="XXXXVXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		 <variable label="Sw Close Msg" CV="9" mask="XXXVXXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+		 <variable label="Interrogate input" CV="9" mask="XVXXXXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+		 <variable label="Common Cathode LEDs" CV="9" mask="VXXXXXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
 
 		<variable label="Primary Address 1" CV="10" mask="VVVVVVVV">
 			<splitVal highCV="11" max="7" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="11" mask="XVXXXXXX" item="Tog P1" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="11" mask="VXXXXXXX" item="Inv P1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 1" CV="11" mask="XXVVXXXX">
@@ -65,7 +71,6 @@
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/>
-				<enumChoice choice="Reserved (0x4X)"/>
 				</enumVal> </variable>
 		<variable label="Primary Transition 1" CV="12" mask="XXXXXXVV">
 			<enumVal>
@@ -75,7 +80,8 @@
 				<enumChoice choice="Send on Both Edges"/>
 				</enumVal> </variable>
 		<variable label="Secondary Address 1" CV="13" mask="VVVVVVVV">
-			<splitVal highCV="14" upperMask="XXXXVVVV"/></variable>
+			<splitVal highCV="14" upperMask="XXXXVVVV"/>
+			</variable>	
 		<variable label="Invert" CV="14" mask="VXXXXXXX" item="Inv S1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Secondary Type 1" CV="14" mask="XXVVXXXX">
@@ -83,7 +89,6 @@
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/>
-				<enumChoice choice="Reserved (0x4X)"/>
 				</enumVal> </variable>
 		<variable label="Secondary Transition 1" CV="12" mask="XXXXVVXX">
 			<enumVal>
@@ -94,9 +99,8 @@
 				</enumVal> </variable>
 		
 		<variable label="Primary Address 2" CV="15" mask="VVVVVVVV">
-			<splitVal highCV="16" upperMask="XXXXVVVV"/></variable>
-		<variable label="Toggle" CV="16" mask="XVXXXXXX" item="Tog P2" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+			<splitVal highCV="16" upperMask="XXXXVVVV"/>
+			</variable>
 		<variable label="Invert" CV="16" mask="VXXXXXXX" item="Inv P2" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 2" CV="16" mask="XXVVXXXX">
@@ -138,9 +142,8 @@
 			</variable>
 		
 		<variable label="Primary Address 3" CV="20" mask="VVVVVVVV">
-			<splitVal highCV="21" upperMask="XXXXVVVV"/></variable>
-		<variable label="Toggle" CV="21" mask="XVXXXXXX" item="Tog P3" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<splitVal highCV="21" upperMask="XXXXVVVV"/>
+			</variable>
 		<variable label="Invert" CV="21" mask="VXXXXXXX" item="Inv P3" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 3" CV="21" mask="XXVVXXXX">
@@ -173,8 +176,6 @@
 
 		<variable label="Primary Address 4" CV="25" mask="VVVVVVVV">
 			<splitVal highCV="26" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="26" mask="XVXXXXXX" item="Tog P4" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="26" mask="VXXXXXXX" item="Inv P4" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 4" CV="26" mask="XXVVXXXX">
@@ -214,8 +215,6 @@
 			
 		<variable label="Primary Address 5" CV="30" mask="VVVVVVVV">
 			<splitVal highCV="31" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="31" mask="XVXXXXXX" item="Tog P5" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="31" mask="VXXXXXXX" item="Inv P5" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 5" CV="31" mask="XXVVXXXX">
@@ -255,8 +254,6 @@
 			
 		<variable label="Primary Address 6" CV="35" mask="VVVVVVVV">
 			<splitVal highCV="36" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="36" mask="XVXXXXXX" item="Tog P6" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="36" mask="VXXXXXXX" item="Inv P6" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 6" CV="36" mask="XXVVXXXX">
@@ -296,8 +293,6 @@
 			
 		<variable label="Primary Address 7" CV="40" mask="VVVVVVVV">
 			<splitVal highCV="41" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="41" mask="XVXXXXXX" item="Tog P7" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="41" mask="VXXXXXXX" item="Inv P7" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 7" CV="41" mask="XXVVXXXX">
@@ -337,8 +332,6 @@
 			
 		<variable label="Primary Address 8" CV="45" mask="VVVVVVVV">
 			<splitVal highCV="46" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Toggle" CV="46" mask="XVXXXXXX" item="Tog P8" > <enumVal>
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Invert" CV="46" mask="VXXXXXXX" item="Inv P8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Primary Type 8" CV="46" mask="XXVVXXXX">
@@ -1609,43 +1602,45 @@
 		<column>
 			<label label="------  Output Addresses  ------ "/>
 			<label label=" "/>
-			<row>	
-			<column> <display item="Output Addresses"/> </column>
-			<column> <display item="through"/> </column>
-				</row>
+
+			<display item="Base Address"/>
+			<label label=" "/>
+			<display item="Switch Address"/>
+			<label label="Address for optional switch throw/close  messages"/>
 			<label label=" "/>
 			<label label=" "/>
 			<label label="------  Configuration  ------ "/>
 			<label label=" "/>
-			<display item="Op1" tooltip="Required for ops mode" format="checkbox" />
-			<label label="Enables ops mode"/>
-			<display item="Op2" tooltip="This option inhibits option 3" format="checkbox" />
-			<label label="Disables sending of output state messages"/>
-			<display item="Op3" tooltip="Enables SE8C signal message control" format="checkbox" />
-			<label label="Enables SE8C signal message control"/>
-			<display item="Op4" tooltip="This does not effect output control of the logic cells" format="checkbox" />
-			<label label="Enables use of common cathode LEDs with Smart programmming"/>
-			<display item="Op5" tooltip="Send input status in rsponse to Digitrax interrogation request" format="checkbox" />
-			<label label="Enables interrogation"/>
+			<display item="Logic Cell Msg" tooltip="Required for Sw Throw/Close Messages "  />
+			<label label="Sending output state messages"/>
+			<label label=" "/>
+			<display item="Sw Throw Msg" tooltip="Use for special logic"  />
+			<label label="Send switch throw messags on logic cell true"/>
+			<label label=" "/>
+			<display item="Sw Close Msg" tooltip="Use for special logic"  />
+			<label label="Send switch close message on logic cell false"/>
+			<label label=" "/>
+			<display item="Interrogate input" />
+			<label label="Send primary input state at Digitrax interrogation request"/>
+			<label label="- Only sensor type inputs"/>
+			<label label=" "/>
+			<display item="Common Cathode LEDs" tooltip="This does not effect output control of the logic cells" />
+			<label label="Use common cathode LEDs on all outputs"/>
 			<label label=" "/>
 			<label label=" "/>
-			<label label="------  Special Functions  ------ "/>
+			<label label="------  Special Options  ------ "/>
 			<label label=" "/>
-			<display item="SE8C address factor" tooltip="Range 0-23" />
-			<label label=" "/>
-			<dccaddress />
-			<label label="DO NOT enter a value in the Active DCC Address field "/>
+			<display item="Ops Mode" tooltip="Required for ops mode (on the main programming)" />
 			<label label=" "/>
 			<display item="Ops Mode Address" tooltip="Sets the Ops Mode address" />
-			<label label="Use ONLY the Ops Mode Address field for the DCC address"/>
+			<label label="This is the same as a Loco address"/>
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
 			<label label="------  Notes:  ------ "/>
 			<label label="The Custom Programmer format is recommended"/>
-			<label label="SIC24 software version 13 or later required for DecoderPro"/>
-			<label label="SIC24 software version 17 or later required for Option 5 and input toggle"/>
+
 	
 		</column>
 </pane>
@@ -1667,11 +1662,7 @@
 		<label label=" "/>
 		<label label="------  Input 1  ------ "/>
 		<label label=" "/>
-		<row>
-		<column><display item="Primary Address 1" tooltip="Determines the input addess" /> </column>
-		<column><display item="Tog P1" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-		<column> <label label="       "/> </column>
-			</row>
+		<display item="Primary Address 1" tooltip="Determines the input addess" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 1"  tooltip="Configures the input for specfic use" /> </column>
@@ -1688,11 +1679,7 @@
  		<label label=" "/>
  		<label label="------  Input 2  ------ "/>
  		<label label=" "/>
- 		<row>
- 		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 2" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P2" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 2" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 2"  tooltip="Configures the input for specfic use" /> </column>
@@ -1701,7 +1688,7 @@
 		<display item="Primary Transition 2" tooltip="Configures the input for specfic use" />
 		<display item="Secondary Address 2" tooltip="Configures the input for specfic use" />
 		<row>
-		<column> <label label="       "/> </column>
+		<column> <label label="         "/> </column>
 		<column> <display item="Secondary Type 2" tooltip="Configures the input for specfic use" /> </column>
 		<column> <display item="Inv S2" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
@@ -1709,11 +1696,7 @@
 		<label label=" "/>
 		<label label="------  Input 3  ------ "/>
 		<label label=" "/>
-		<row>
-		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 3" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P3" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 3" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 3"  tooltip="Configures the input for specfic use" /> </column>
@@ -1730,11 +1713,7 @@
 		<label label=" "/>
 		<label label="------  Input 4  ------ "/>
 		<label label=" "/>
-		<row>
-		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 4" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P4" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 4" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 4"  tooltip="Configures the input for specfic use" /> </column>
@@ -1754,11 +1733,7 @@
 		<label label=" "/>
 		<label label="------  Input 5  ------ "/>
 		<label label=" "/>
-		<row>
-		<column><display item="Primary Address 5" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P5" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-		<column> <label label="       "/> </column>
-			</row>
+		<display item="Primary Address 5" tooltip="Determines the input addess" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 5"  tooltip="Configures the input for specfic use" /> </column>
@@ -1775,11 +1750,7 @@
  		<label label=" "/>
  		<label label="------  Input 6  ------ "/>
  		<label label=" "/>
-		<row>
-		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 6" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P6" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 6" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 6"  tooltip="Configures the input for specfic use" /> </column>
@@ -1796,11 +1767,7 @@
 		<label label=" "/>
 		<label label="------  Input 7  ------ "/>
 		<label label=" "/>
-		<row>
-		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 7" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P7" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 7" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 7"  tooltip="Configures the input for specfic use" /> </column>
@@ -1817,11 +1784,7 @@
 		<label label=" "/>
 		<label label="------  Input 8  ------ "/>
 		<label label=" "/>
-		<row>
-		<column> <label label="        "/> </column>
-		<column><display item="Primary Address 8" tooltip="Configures the input for specfic use" /> </column>
-		<column><display item="Tog P8" format="checkbox"  tooltip="Each transition alternately sends a close/throw" /> </column>
-			</row>
+		<display item="Primary Address 8" tooltip="Configures the input for specfic use" />
 		<row>
 		<column> <label label="             "/> </column>
 		<column> <display item="Primary Type 8"  tooltip="Configures the input for specfic use" /> </column>
