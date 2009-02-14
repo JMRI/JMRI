@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: CreateDecoder.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ -->
+<!-- $Id: CreateDecoder.shtml,v 1.4 2009-02-14 23:02:59 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -54,12 +54,24 @@ you can search for that file to locate it.
 for further details
 about how to find that directory and it's contents) </p>
 
-<dt class=left> Edit the new file </dt>
+<p>If you're modifying a decoder definition, it's best to start with the most
+recent version, which can always be found here 
+on the JMRI web site at
+<a href="http://jmri.org/xml/decoders/">http://jmri.org/xml/decoders/</a>.
+That way, it won't be hard to merge your changes with ones that might
+have come before.
+Please don't do any more reformatting than you have to. If you change
+the tech stuff in the top 5 or 10 lines, or
+reformat the contents, it gets very hard to tell what's changed and
+what has not.
+
+<dt class=left>Edit the new file </dt>
 <dd>
-<p>Open the new file with your favorite editor.</p>
+<p>Open the new file with your favorite text editor.</p>
+
 </dd>
 
-<dt class=left> File contents: XML Header </dt>
+<dt class=left>File contents: XML Header </dt>
 <dd>
 <p>You'll see something like this at the top of the file (the examples are from the <a
 HREF="../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
@@ -67,7 +79,7 @@ HREF="../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.4 2009-02-14 23:02:59 jacobsen Exp $ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 
