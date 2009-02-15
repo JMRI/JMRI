@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.16 2009-02-15 00:07:16 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.17 2009-02-15 06:23:36 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -109,8 +109,11 @@
 		<definition item="FMZ(Fleischmann)" />
 
 		<!-- Function outputs in analog -->
+		<definition item="Analog Mode Function Status - FL"/>
 		<definition item="Analog Mode Function Status - FL(f)"/>
 		<definition item="Analog Mode Function Status - FL(r)"/>
+
+		<definition item="Analog Mode Function Status - F0" />
 		<definition item="Analog Mode Function Status - F0(f)" />
 		<definition item="Analog Mode Function Status - F0(r)" />
 		
