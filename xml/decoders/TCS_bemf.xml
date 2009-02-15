@@ -1,8 +1,8 @@
- <?xml version="1.0"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.11 2009-02-12 05:47:57 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.12 2009-02-15 17:06:19 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -1413,3 +1413,5 @@
         </column>
     </pane>
 </decoder-config>
+
+ 	  	 
