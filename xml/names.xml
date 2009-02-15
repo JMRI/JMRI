@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.15 2009-01-11 20:10:48 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.16 2009-02-15 00:07:16 jacobsen Exp $ -->
 <names-config>
+		<version author="Jack Shall jack745@bellsouth.net" 
+			version="10" lastUpdated="20090115"/>
 		<version author="jake@physics.berkeley.edu" 
 			version="9" lastUpdated="20090111"/>
 		<version author="jake@physics.berkeley.edu" 
@@ -12,6 +14,7 @@
    <!-- Version 7 - changed spelling of "behavior" (Jack Shall)       -->
    <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests -->
    <!-- Version 9 - add explicit EMF Enable to fix TCS confusion      -->
+   <!-- Version 10 - added four additional lighting options      -->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -272,6 +275,7 @@
 		<definition item="Function F0F effect generated"/>
 		<definition item="Function F0F behavior"/>
 		<definition item="Function F0F options"/>
+		<definition item="Function F0F option 1"/>
 		<definition item="Function F0F option 2"/>
 		<definition item="Function F0F option 3"/>
 		<definition item="Function F0F option 4"/>
@@ -279,6 +283,7 @@
 		<definition item="Function F0R effect generated"/>
 		<definition item="Function F0R behavior"/>
 		<definition item="Function F0R options"/>
+		<definition item="Function F0R option 1"/>
 		<definition item="Function F0R option 2"/>
 		<definition item="Function F0R option 3"/>
 		<definition item="Function F0R option 4"/>
@@ -286,6 +291,7 @@
 		<definition item="Function 1 effect generated"/>
 		<definition item="Function 1 behavior"/>
 		<definition item="Function 1 options"/>
+		<definition item="Function 1 option 1"/>
 		<definition item="Function 1 option 2"/>
 		<definition item="Function 1 option 3"/>
 		<definition item="Function 1 option 4"/>
@@ -293,6 +299,7 @@
 		<definition item="Function 2 effect generated"/>
 		<definition item="Function 2 behavior"/>
 		<definition item="Function 2 options"/>
+		<definition item="Function 2 option 1"/>
 		<definition item="Function 2 option 2"/>
 		<definition item="Function 2 option 3"/>
 		<definition item="Function 2 option 4"/>
@@ -712,3 +719,5 @@
 	</definitiongroup>
 
 </names-config>
+
+ 	  	 
