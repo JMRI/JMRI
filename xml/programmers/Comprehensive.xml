@@ -12,12 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.26 2009-01-11 20:10:48 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.27 2009-02-15 00:15:12 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
     <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
     <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
+    <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
 <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
 <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
@@ -30,6 +31,9 @@
 <!-- Version 13 - two panes for speed control -->
 <!-- Version 14 - added EMF fields to Motor pane and more sound options-->
 <!-- Version 15 - added EMF enable to fix TCS confusion -->
+<!-- Version 16 - added four more lighting options to Lights pane, -->
+<!--              very minor format change in Motor pane, -->
+<!--              Fixed tool tips for "Analog Mode Function Status" items -->
     <programmer decoderFilePanes="yes" showEmptyPanes="default">
         <pane name="Basic">
             <column>
@@ -63,6 +67,7 @@
                 <display item="Decel" tooltip="Sets the deceleration rate (delay)"/>
                 <label label=" "/>
                 <display item="DC Brake Momentum" tooltip="Governs how loco responds in DC powered track block"/>
+                <label label=" "/>
                 <display item="Total PWM Period" tooltip="Sets the motor drive frequency"/>
                 <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency"/>
                 <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses"/>
@@ -83,7 +88,7 @@
                     <column>
                         <label label=" "/>
                         <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
-                        <label label="     To turn off, use Speed Table pane"/>
+                        <label label="           To turn off, use Speed Table pane"/>
                         <label label=" "/>
                     </column>
                 </row>
@@ -164,6 +169,7 @@
         </pane>
         <pane name="Lights">
             <column>
+                <label label=" "/>
                 <display item="Directional Headlights"/>
                 <display item="Global lighting option 1"/>
                 <display item="Global lighting option 2"/>
@@ -174,6 +180,7 @@
                 <display item="Function F0F effect generated"/>
                 <display item="Function F0F behavior"/>
                 <display item="Function F0F options"/>
+                <display item="Function F0F option 1"/>
                 <display item="Function F0F option 2"/>
                 <display item="Function F0F option 3"/>
                 <display item="Function F0F option 4"/>
@@ -181,6 +188,7 @@
                 <display item="Function F0R effect generated"/>
                 <display item="Function F0R behavior"/>
                 <display item="Function F0R options"/>
+                <display item="Function F0R option 1"/>
                 <display item="Function F0R option 2"/>
                 <display item="Function F0R option 3"/>
                 <display item="Function F0R option 4"/>
@@ -188,6 +196,7 @@
                 <display item="Function 1 effect generated"/>
                 <display item="Function 1 behavior"/>
                 <display item="Function 1 options"/>
+                <display item="Function 1 option 1"/>
                 <display item="Function 1 option 2"/>
                 <display item="Function 1 option 3"/>
                 <display item="Function 1 option 4"/>
@@ -195,6 +204,7 @@
                 <display item="Function 2 effect generated"/>
                 <display item="Function 2 behavior"/>
                 <display item="Function 2 options"/>
+                <display item="Function 2 option 1"/>
                 <display item="Function 2 option 2"/>
                 <display item="Function 2 option 3"/>
                 <display item="Function 2 option 4"/>
@@ -224,6 +234,7 @@
                 <display item="Function 8 options"/>
             </column>
             <column>
+                <label label=" "/>
                 <display item="Output 1 effect generated"/>
                 <display item="Output 1 behavior"/>
                 <display item="Output 1 options"/>
@@ -263,44 +274,44 @@
                 <display item="Analog Vstart" tooltip="CV 60"/>
             </column>
             <column>
-                <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - FL(r)" format="checkbox" tooltip="Sets the status of function FL(r) when the unit is operating in analog power mode"/>
                 
-                <display item="Analog Mode Function Status - F0(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F0" format="checkbox" tooltip="Sets the status of function F0 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F0(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F0(r)" format="checkbox" tooltip="Sets the status of function F0(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F1" format="checkbox" tooltip="Sets the status of function F1 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F1(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F1(f)" format="checkbox" tooltip="Sets the status of function F1(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F1(r)" format="checkbox" tooltip="Sets the status of function F1(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F2" format="checkbox" tooltip="Sets the status of function F2 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F2(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F2(f)" format="checkbox" tooltip="Sets the status of function F2(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F2(r)" format="checkbox" tooltip="Sets the status of function F2(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F3" format="checkbox" tooltip="Sets the status of function F3 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F3(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F3(f)" format="checkbox" tooltip="Sets the status of function F3(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F3(r)" format="checkbox" tooltip="Sets the status of function F3(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F4" format="checkbox" tooltip="Sets the status of function F4 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F4(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F4(f)" format="checkbox" tooltip="Sets the status of function F4(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F4(r)" format="checkbox" tooltip="Sets the status of function F4(r)) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F5" format="checkbox" tooltip="Sets the status of function F5 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F5(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F5(f)" format="checkbox" tooltip="Sets the status of function F5(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F5(r)" format="checkbox" tooltip="Sets the status of function F5(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F6" format="checkbox" tooltip="Sets the status of function F6 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F6(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F6(f)" format="checkbox" tooltip="Sets the status of function F6(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F6(r)" format="checkbox" tooltip="Sets the status of function F6(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F7" format="checkbox" tooltip="Sets the status of function F7 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F7(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F7(f)" format="checkbox" tooltip="Sets the status of function F7(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F7(r)" format="checkbox" tooltip="Sets the status of function F7(r) when the unit is operating in analog power mode"/>
                 
                 <display item="Analog Mode Function Status - F8" format="checkbox" tooltip="Sets the status of function F8 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F8(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F8(f)" format="checkbox" tooltip="Sets the status of function F8(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F8(r)" format="checkbox" tooltip="Sets the status of function F8(r) when the unit is operating in analog power mode"/>
             </column>
             <column>
@@ -313,35 +324,35 @@
                 <display item="Analog Mode Function Status - F10(r)" format="checkbox" tooltip="Sets the status of function F10(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F11" format="checkbox" tooltip="Sets the status of function F11 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F11(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F11(f)" format="checkbox" tooltip="Sets the status of function F11(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F11(r)" format="checkbox" tooltip="Sets the status of function F11(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F12" format="checkbox" tooltip="Sets the status of function F12 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F12(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F12(f)" format="checkbox" tooltip="Sets the status of function F12(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F12(r)" format="checkbox" tooltip="Sets the status of function F12(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F13" format="checkbox" tooltip="Sets the status of function F13 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F13(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F13(f)" format="checkbox" tooltip="Sets the status of function F13(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F13(r)" format="checkbox" tooltip="Sets the status of function F13(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F14" format="checkbox" tooltip="Sets the status of function F14 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F14(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F14(f)" format="checkbox" tooltip="Sets the status of function F14(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F14(r)" format="checkbox" tooltip="Sets the status of function F14(r)) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F15" format="checkbox" tooltip="Sets the status of function F15 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F15(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F15(f)" format="checkbox" tooltip="Sets the status of function F15(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F15(r)" format="checkbox" tooltip="Sets the status of function F15(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F16" format="checkbox" tooltip="Sets the status of function F16 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F16(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F16(f)" format="checkbox" tooltip="Sets the status of function F16(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F16(r)" format="checkbox" tooltip="Sets the status of function F16(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F17" format="checkbox" tooltip="Sets the status of function F17 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F17(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F17(f)" format="checkbox" tooltip="Sets the status of function F17(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F17(r)" format="checkbox" tooltip="Sets the status of function F17(r) when the unit is operating in analog power mode"/>
 
                 <display item="Analog Mode Function Status - F18" format="checkbox" tooltip="Sets the status of function F18 when the unit is operating in analog power mode"/>
-                <display item="Analog Mode Function Status - F18(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode"/>
+                <display item="Analog Mode Function Status - F18(f)" format="checkbox" tooltip="Sets the status of function F18(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F18(r)" format="checkbox" tooltip="Sets the status of function F18(r) when the unit is operating in analog power mode"/>
             </column>
             <column>
@@ -736,3 +747,5 @@
         </pane>
     </programmer>
 </programmer-config>
+
+ 	  	 
