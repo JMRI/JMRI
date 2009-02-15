@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.69 2009-02-12 05:50:28 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.70 2009-02-15 17:10:14 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -82,7 +82,7 @@
     updated the NCE-USB support, fixed a lot of details in the NCE support,
     and improved the support for NCE consists. He worked on
     improving the way we read and write our panel files.
-    He created the <a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">operations</a>
+    He created the <a href="package/jmri/jmrit/operations/Operations.shtml">operations</a>
     section of the code.
 	<LI>Dave Boydston of Serialio.com, who helped with the Windows
 	connection to an MS100.  Check out their great Java serial library!
