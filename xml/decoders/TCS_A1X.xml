@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: TCS_A1X.xml,v 1.6 2007-09-21 05:49:34 jacobsen Exp $  -->
+<!-- $Id: TCS_A1X.xml,v 1.7 2009-02-17 00:12:00 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
