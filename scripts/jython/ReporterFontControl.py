@@ -10,6 +10,11 @@
 # Author: Dennis Miller
 # Parts of this script are based on the ControlPanel.py 
 # script written by Bob Jacobsen
+#
+# Part of the JMRI distribution
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 
 # set the desired colour and size in the two lines below.

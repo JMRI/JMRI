@@ -5,6 +5,11 @@
 # This is particularly useful for a C/MRI system, where
 # the turnouts need to be set to a particular state quickly
 #
+#
+# Part of the JMRI distribution
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 def initTurnout(turnout):
     to = turnouts.provideTurnout(turnout)

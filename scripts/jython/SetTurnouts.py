@@ -4,6 +4,11 @@
 #
 # By putting the turnout commands in a separate class, they'll
 # run independently after the "start" operation
+#
+# Part of the JMRI distribution
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 class setStartup(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):
