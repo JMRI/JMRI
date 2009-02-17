@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -70,6 +70,17 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
+    }
+    
+    // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    protected void notifyProgListenerEnd(int value, int status) {
+    	if (log.isDebugEnabled()) log.debug("NceOpsModeProgrammer adds 200mSec delay to response");
+		try{
+			wait(200);
+		}catch (InterruptedException e){
+			log.debug("unexpected exception "+e);
+		}
+    	super.notifyProgListenerEnd(value, status);
     }
 
     public void setMode(int mode) {
