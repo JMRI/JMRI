@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 
 import javax.comm.CommPortIdentifier;
 import javax.swing.JOptionPane;
+import jmri.util.SystemType;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -23,7 +24,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -151,28 +152,33 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     }
     
     public void reloadDriver() {
-		try // try reloading the driver
-		{
-			// first, reset the current list of ports
-            Field masterIdList_Field = CommPortIdentifier.class
-					.getDeclaredField("masterIdList");
-			masterIdList_Field.setAccessible(true);
-			masterIdList_Field.set(null, null);
+        // For now, just run this under Windows
+        // until such time as differences between
+        // RXTX and Sun can be fully reconciled.
+        if (SystemType.getType() == SystemType.WINDOWS) {
+            try // try reloading the driver
+            {
+                // first, reset the current list of ports
+                Field masterIdList_Field = CommPortIdentifier.class
+                        .getDeclaredField("masterIdList");
+                masterIdList_Field.setAccessible(true);
+                masterIdList_Field.set(null, null);
 
-            // next, allow access to the field storing properties file path
-            Field propfilename_Field = CommPortIdentifier.class
-                    .getDeclaredField("propfilename");
-            propfilename_Field.setAccessible(true);
+                // next, allow access to the field storing properties file path
+                Field propfilename_Field = CommPortIdentifier.class
+                        .getDeclaredField("propfilename");
+                propfilename_Field.setAccessible(true);
 
-			// finally, reinitialise the list of ports
-            Method loadDriver_Method = CommPortIdentifier.class
-					.getDeclaredMethod("loadDriver",
-							new Class[] { String.class });
-			loadDriver_Method.setAccessible(true);
-			loadDriver_Method.invoke(null, propfilename_Field.get(null));
-		} catch (Exception e) {
-			log.error("exception when reloading driver " + e);
-		}
+                // finally, reinitialise the list of ports
+                Method loadDriver_Method = CommPortIdentifier.class
+                        .getDeclaredMethod("loadDriver",
+                                new Class[] { String.class });
+                loadDriver_Method.setAccessible(true);
+                loadDriver_Method.invoke(null, propfilename_Field.get(null));
+            } catch (Exception e) {
+                log.error("exception when reloading driver " + e);
+            }
+        }
 	}
     
     /**
