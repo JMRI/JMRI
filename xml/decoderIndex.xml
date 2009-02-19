@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.4 on Sun Jan 11 23:25:18 PST 2009 $Id: decoderIndex.xml,v 1.136 2009-01-15 04:06:37 jacobsen Exp $-->
+  <!--Written by JMRI version 2.4 on Sun Jan 11 23:25:18 PST 2009 $Id: decoderIndex.xml,v 1.137 2009-02-19 02:20:42 jacobsen Exp $-->
   <decoderIndex version="158">
-    <mfgList nmraListDate="2009-01-15" updated="2009-01-15" lastadd="51">
+    <mfgList nmraListDate="2009-01-15" updated="2009-02-18" lastadd="52">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -47,6 +47,7 @@
       <manufacturer mfg="KAM Industries" mfgID="22" />
       <manufacturer mfg="KATO Precision Models" mfgID="40" />
       <manufacturer mfg="Kreischer Datatechnik" mfgID="21" />
+      <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
