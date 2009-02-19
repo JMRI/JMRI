@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -212,19 +212,25 @@ public class DecoderFile extends XmlFile {
         }
         int row = 0;
         List iVarList = decoderElement.getChild("variables").getChildren("ivariable");
+        log.debug("iVarList has "+iVarList.size()+" entries, now row = "+row);
         for (int i=0; i<iVarList.size(); i++) {
             Element e = (Element)(iVarList.get(i));
             try {
+                if (log.isDebugEnabled()) log.debug("process iVar "+e.getAttribute("CVname"));
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
+                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() ) {
+                    log.debug("skip due to num functions");
                     continue;
+                }
                 // if its associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
+                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() ) {
+                    log.debug("skip due to num outputs");
                     continue;
+                }
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
@@ -233,9 +239,12 @@ public class DecoderFile extends XmlFile {
             if (variableModel.setIndxRow(row, e, _productID) == row) {
                 // if this one existed, we will not update the row count.
                 row++;
+            } else {
+                if (log.isDebugEnabled()) log.debug("skipping entry for "+e.getAttribute("CVname"));
             }
         }
-
+        log.debug("iVarList done, now row = "+row);
+        
         variableModel.configDone();
     }
 
