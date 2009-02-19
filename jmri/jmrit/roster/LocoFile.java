@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -119,6 +119,7 @@ class LocoFile extends XmlFile {
                     
                 if (cvObject == null) {
                     log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
+                    log.debug("attempt to add "+i+" "+name+" "+piCv+" "+piVal+" "+siCv+" "+siVal+" "+iCv);
                     iCvModel.addIndxCV(i, name, piCv, piVal, siCv, siVal, iCv, false, false, false);
                     cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
                 }
