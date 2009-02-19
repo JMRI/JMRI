@@ -22,7 +22,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.36 $
+ * @version   $Revision: 1.37 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -432,6 +432,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttributeValue("include") != null) {
             String include = e.getAttributeValue("include");
             if (isIncluded(include, productID) == false) {
+                if (log.isDebugEnabled()) log.debug("include not match, return row - 1 ="+(row-1));
                 return row - 1;
             }
         }
@@ -505,6 +506,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int _newRow = _indxCvModel.addIndxCV(row, cvName, _piCv, piVal, _siCv, siVal, cv, readOnly, infoOnly, writeOnly);
         if( _newRow != row) {
             row = _newRow;
+            if (log.isDebugEnabled()) log.debug("new row is "+_newRow+", row was "+row);
         }
 
         // have to handle various value types, see "snippet"
