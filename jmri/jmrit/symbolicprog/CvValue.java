@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -41,6 +41,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     public CvValue(int num, String cvName, int piCv, int piVal, int siCv, int siVal, int iCv, Programmer pProgrammer) {
         _num   = num;
         _cvName  = cvName;
+        if (cvName == null) log.error("cvName == null in ctor num: "+num);
         _piCv  = piCv;
         _piVal = piVal;
         _siCv  = siCv;
