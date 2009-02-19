@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of yards used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class YardTableModel extends TrackTableModel {
 
@@ -29,24 +29,17 @@ public class YardTableModel extends TrackTableModel {
 		return super.getColumnName(col);
 	}
 
-	YardEditFrame yef = null;
-
 	protected void editTrack (int row){
 		log.debug("Edit yard");
-		if (yef != null){
-			yef.dispose();
+		if (tef != null){
+			tef.dispose();
 		}
-		yef = new YardEditFrame();
+		tef = new YardEditFrame();
 		String yardId = (String)tracksList.get(row);
 		Track yard = _location.getTrackById(yardId);
-		yef.initComponents(_location, yard);
-		yef.setTitle(rb.getString("EditYard"));
-	}
-
-	public void dispose() {
-		super.dispose();
-		if (yef != null)
-			yef.dispose();
+		tef.initComponents(_location, yard);
+		tef.setTitle(rb.getString("EditYard"));
+		focusEditFrame = true;
 	}
  
     // this table listens for changes to a location and it's yards

@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -135,6 +135,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public Object getValueAt(int row, int col) {
+       	// Funky code to put the sef frame in focus after the edit table buttons is used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the edit frame
+    	// in focus.
+    	if (focusSef){
+    		focusSef = false;
+    		sef.requestFocus();
+    	}
     	String id = (String)sysList.get(row);
     	Schedule s = manager.getScheduleById(id);
         switch (col) {
@@ -171,18 +179,20 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    ScheduleEditFrame lef = null;
+    boolean focusSef = false;
+    ScheduleEditFrame sef = null;
     private void editSchedule (int row){
     	log.debug("Edit schedule");
-    	if (lef != null)
-    		lef.dispose();
+    	if (sef != null)
+    		sef.dispose();
     	LocationTrackPair ltp = getLocationTrackPair(row);
     	if (ltp == null)
     		return;
-       	lef = new ScheduleEditFrame();
-    	lef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
+       	sef = new ScheduleEditFrame();
+    	sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
     	Schedule s = manager.getScheduleById((String)sysList.get(row));
-    	lef.initComponents(s, ltp.getLocation(), ltp.getTrack());
+    	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
+    	focusSef = true;
     }
 
     protected Hashtable<String, String> comboSelect = new Hashtable<String, String>();
@@ -231,8 +241,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-       	if (lef != null)
-    		lef.dispose();
+       	if (sef != null)
+    		sef.dispose();
         manager.removePropertyChangeListener(this);
         removePropertyChangeSchedules();
     }

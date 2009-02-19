@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of interchanges used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class InterchangeTableModel extends TrackTableModel {
 
@@ -29,24 +29,17 @@ public class InterchangeTableModel extends TrackTableModel {
 		return super.getColumnName(col);
 	}
 
-	InterchangeEditFrame ief = null;
-
 	protected void editTrack (int row){
 		log.debug("Edit interchange");
-		if (ief != null){
-			ief.dispose();
+		if (tef != null){
+			tef.dispose();
 		}
-		ief = new InterchangeEditFrame();
+		tef = new InterchangeEditFrame();
 		String interchangeId = (String)tracksList.get(row);
 		Track interchange = _location.getTrackById(interchangeId);
-		ief.initComponents(_location, interchange);
-		ief.setTitle(rb.getString("EditInterchange"));
-	}
-
-	public void dispose() {
-		super.dispose();
-		if (ief != null)
-			ief.dispose();
+		tef.initComponents(_location, interchange);
+		tef.setTitle(rb.getString("EditInterchange"));
+		focusEditFrame = true;
 	}
 
     // this table listens for changes to a location and it's interchanges

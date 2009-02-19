@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -148,6 +148,14 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     }
 
     public Object getValueAt(int row, int col) {
+       	// Funky code to put the edit frame in focus after the edit table buttons is used.
+    	// The button editor for the table does a repaint of the button cells after the setValueAt code
+    	// is called which then returns the focus back onto the table.  We need the edit frame
+    	// in focus.
+    	if (focusEditFrame){
+    		focusEditFrame = false;
+    		tef.requestFocus();
+    	}
     	String tracksId = (String)tracksList.get(row);
     	Track track = _location.getTrackById(tracksId);
         switch (col) {
@@ -174,6 +182,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         }
     }
 
+    boolean focusEditFrame = false;
     TrackEditFrame tef = null;
     
     protected void editTrack (int row){
@@ -186,6 +195,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     	Track tracks = _location.getTrackById(tracksId);
     	tef.initComponents(_location, tracks);
     	tef.setTitle(rb.getString("EditTrack"));
+    	focusEditFrame = true;
     }
 
     // this table listens for changes to a location and it's tracks

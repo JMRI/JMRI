@@ -7,13 +7,13 @@ import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
+//import java.awt.Frame;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+//import javax.swing.JMenu;
+//import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -92,7 +92,7 @@ public class SchedulesTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
     	
     	pack();
-    	if ((getWidth()<750)) setSize(750, getHeight());
+    	if ((getWidth()<800)) setSize(800, getHeight());
     	
     }
     

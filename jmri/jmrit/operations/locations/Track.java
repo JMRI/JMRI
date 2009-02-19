@@ -9,6 +9,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -18,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -545,6 +546,11 @@ public class Track implements java.beans.PropertyChangeListener {
     	_scheduleCount = count;
     }
     
+    /**
+     * Check to see if schedule is valid for the track at this location.
+     * @param location The location of this track.
+     * @return "" if schedule okay, otherwise an error message.
+     */
 	public String checkScheduleValid(Location location){
 		String status = "";
 		Schedule schedule = ScheduleManager.instance().getScheduleByName(getScheduleName());
@@ -567,6 +573,16 @@ public class Track implements java.beans.PropertyChangeListener {
 			}
 			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
+				break;
+			}
+			// check loads
+			List loads = CarLoads.instance().getNames(si.getType());
+			if (!si.getLoad().equals("") && !loads.contains(si.getLoad())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
+				break;
+			}
+			if (!si.getShip().equals("") && !loads.contains(si.getShip())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getShip()});
 				break;
 			}
 		}
