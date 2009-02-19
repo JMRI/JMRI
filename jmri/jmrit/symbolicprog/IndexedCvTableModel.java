@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -65,10 +65,17 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
      * that matches a particular name
      */
     public CvValue getMatchingIndexedCV(String name) {
-        for (int i = 0; i<_indxCvAllVector.size(); i++) {
+        for (int i = 0; i<_numRows; i++) {
             CvValue cv = (CvValue)_indxCvAllVector.get(i);
-            if (cv.cvName().equals(name))
+            
+            if (cv == null) {
+                // no longer should run off end
+                log.error("cv == null in getMatchingIndexedCV");
+                break;
+            }            
+            if (cv.cvName().equals(name)) {
                 return cv;
+            }
         }
         return null;
     }
@@ -430,7 +437,11 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                          int iCv,
                          boolean readOnly, boolean infoOnly, boolean writeOnly) {
         int existingRow = getCvByName(cvName);
-        if (existingRow == -1 && _indxCvAllVector.elementAt(row) == null) {
+        if (existingRow == -1) {
+            // we'll be adding a new entry or replacing an existing one; where?
+            row = _numRows++;
+            
+            // create new entry
             CvValue indxCv = new CvValue(row, cvName, piCv, piVal, siCv, siVal, iCv, mProgrammer);
             indxCv.setReadOnly(readOnly);
             indxCv.setInfoOnly(infoOnly);
@@ -481,9 +492,11 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                     bc.addActionListener(this);
                 }
            }
-            _numRows++;
+           if (log.isDebugEnabled()) log.debug("addIndxCV adds row at "+row);
             fireTableDataChanged();
         } else { // this one already exists
+           if (log.isDebugEnabled()) 
+                log.debug("addIndxCV finds existing row of "+existingRow+" with numRows "+_numRows);
             row = existingRow;
         }
         // make sure readonly set true if required
