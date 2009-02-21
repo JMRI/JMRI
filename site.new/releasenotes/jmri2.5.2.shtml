@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.12 2009-02-19 17:12:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.13 2009-02-21 15:19:16 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,8 +130,12 @@ This lets JMRI run cleanly on Windows 7.
 Nigel Cliffe and Mark Waters provided new definitions for the
 Zimo MX620 decoder.
 
-<p>
-Dan Boudreau updated the operations tools so that you can specify car loads.
+<p>Dan Boudreau made several enhancements to the operations program. You
+can now specify car loads, and define the name of the load received or
+shipped for a siding by using the schedule feature. Schedules can now be
+accessed from the Locations menu under Tools. You can now also modify
+the default load names for empty and loaded.  Edit frames now appear on top
+when launched from tables. 
 
 <p>
 Matt Harris fixed a problem launching JMRI on a Windows 64-bit machine with
@@ -152,18 +156,10 @@ So, added an Acela Aspect option that will do things efficiently
 for Acela and also correctly supports BiPolar and Wigwags.
 
 <p>
-Dan Boudreau updated the operations tools 
-to allow the user to modify default load names for empty and loaded.
-He also added the Schedule Table to Locations Tools.
-
-<p>
 Matt Harris made the startup scripts more reliable on Windows 98.
 
 <p>
 John Plocher updated the instructions for using Eclipse to build JMRI.
-
-<p>
-Dan Boucreau added optional car load features to operations staging.
 
 <p>
 Andrew Crosland improved the CBUS and CAN utility tools.
