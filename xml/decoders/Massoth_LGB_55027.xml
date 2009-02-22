@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_LGB_55027.xml,v 1.5 2008-02-03 18:40:48 jacobsen Exp $ -->
+<!-- $Id: Massoth_LGB_55027.xml,v 1.6 2009-02-22 22:22:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.2" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20080127" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -82,12 +84,15 @@
               Implemented "factReset"
               Added default values
               Corrected CV 60 max value
+
+        1.1 - 18 Feb 2009
+              Added highVersionID, high version is higher than current version at time of writing
 -->
 
 
 <decoder>
 	<family name="LGB" mfg="Massoth Elektronik, GmbH">
-		<model model="LGB MTS III 55027 loco decoders" lowVersionID="10"
+		<model model="LGB MTS III 55027 loco decoders" lowVersionID="10" highVersionID="19"
 			maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A"
 			numOuts="8" numFns="18"
 			formFactor="G" connector="other" >
@@ -1049,3 +1054,5 @@
 	</pane>
 
 </decoder-config>
+
+ 	  	 
