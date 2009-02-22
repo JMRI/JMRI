@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_eMOTION_XL.xml,v 1.5 2008-02-03 18:48:50 jacobsen Exp $ -->
+<!-- $Id: Massoth_eMOTION_Motor.xml,v 1.1 2009-02-22 22:42:02 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.2" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20080127" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -40,19 +42,22 @@
       55020:           10
       55021:           192
       55022:           16
-      Small onboard:  65, 73, 81, 82, 83
-      Large onboard:  129, 134, 145
+      Small onboard:   65, 73, 81, 82, 83
+      Large onboard:   129, 134, 145
       55027:           193
       eMOTION L:       201 (according to 1.0 manual)
-      eMOTION XL:      193 (according to 1.2 manual), 200
+      eMOTION LS:      202 (according to 2.2 manual)
+      eMOTION XL:      193 (according to 2.0 manual), 200
+      eMOTION XXL:     ???
       eMOTION XLS:     202 (according to 1.3 manual), 203
       eMOTION 8FL:     204 (according to 1.2 manual)
       LED Light:       204
 
-      This definition was based on the Massoth eMOTION XL documenst Nr. 8150001,
-      first unnumbered version (8 pages) and Version 1.2 (44 pages), and
-      eMOTION L Version 1.0 German version, which are available from the Downloads
-      page of the Massoth German website, www.massoth.de.
+      This definition was based on the Massoth eMOTION XL documents Nr. 8150001,
+      first unnumbered version (8 pages) and Version 1.2 (44 pages),
+      eMOTION L Version 1.0 English version, and eMOTION XXL Version 2.0 English
+      version, which are available from the Download Center on the Massoth website,
+      www.massoth.com.
 
       This definition is directed towards the Version 1.2 specification.  The changes
       from 1.0/1.1 to 1.2 that I am aware of are:
@@ -71,7 +76,7 @@
       documentation.
 
       Default values are from the 1.2 version of the XL document.  Note that a few of
-      the default values differ between the L and the XL in the manual.
+      the default values differ between the L, XL, and the XXL in the manuals.
 
       Any and all feedback on this file would be appreciated.
 
@@ -88,39 +93,82 @@
               Added eMOTION L
               Added default values
               Corrected CV 60 max value
+
+        1.2 - 18 Feb 2009
+              ***
+              Changed name of XML file to include all motor decoders
+              Please delete all instances of Massoth_eMOTION_XL.xml from your XML directories
+              ***
+              Added eMOTION XXL
+              Added eMOTION M (based solely on information in 2009 catalog and on website)
+              CV 120 Special Functions F6 is now "pulse generator" for all models
+                 (L and XXL manuals incorrect, per email from Klaus Stork 21 Jan 09)
+              Added features from firmware version 1.5
+                CV 19 Consist address
+              Added family lowVersionID & highVersionID, high version is higher than current version at time of writing
+        
 -->
 
 
 <decoder>
 	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
-		<model model="eMOTION L" lowVersionID="10"
+		<model model="eMOTION M" lowVersionID="1" highVersionID="29"
+			maxInputVolts="24 V" maxMotorCurrent="1.2 A" maxTotalCurrent="1.8 A"
+			numOuts="8" numFns="18"
+			formFactor="G" connector="other" >
+			<size length="30" width="15" height="6" units="mm" />
+			<output name="1" label="Front light" maxcurrent="500 mA" connection="solder" />
+	   	 	<output name="2" label="Rear light " maxcurrent="500 mA" connection="solder" />
+	   	 	<output name="3" label="F1 " maxcurrent="600 mA" connection="solder" />
+	   	 	<output name="4" label="F2 " maxcurrent="600 mA" connection="solder" />
+	   	 	<output name="5" label="F3 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
+		</model>
+		<model model="eMOTION L" lowVersionID="1" highVersionID="19"
 			maxInputVolts="24 V" maxMotorCurrent="1.8 A" maxTotalCurrent="2.8 A"
 			numOuts="8" numFns="18"
 			formFactor="G" connector="other" >
 			<size length="55" width="25" height="14" units="mm" />
-			<output name="1" label="Front light" maxcurrent="0.5 A" connection="other" />
-	   	 	<output name="2" label="Rear light " maxcurrent="0.5 A" connection="other" />
-	   	 	<output name="3" label="F1 " maxcurrent="0.5 A" connection="other" />
-	   	 	<output name="4" label="F2 " maxcurrent="0.5 A" connection="solder" />
-	   	 	<output name="5" label="F3 " maxcurrent="0.5 A" connection="solder" />
-	   	 	<output name="6" label="F4 " maxcurrent="0.5 A" connection="solder" />
-	   	 	<output name="7" label="F5 " maxcurrent="0.5 A" connection="solder" />
-	   	 	<output name="8" label="F6 " maxcurrent="0.5 A" connection="solder" />
+			<output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
+	   	 	<output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="3" label="F1 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="4" label="F2 " maxcurrent="500 mA" connection="solder" />
+	   	 	<output name="5" label="F3 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
 		</model>
-		<model model="eMOTION XL" lowVersionID="10"
+		<model model="eMOTION XL" lowVersionID="1" highVersionID="19"
 			maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A"
 			numOuts="9" numFns="18"
 			formFactor="G" connector="other" >
 			<size length="50" width="32" height="12" units="mm" />
-			<output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
-	   	 	<output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
-	   	 	<output name="3" label="Interior light " maxcurrent="0.3 A" connection="other" />
-	   	 	<output name="4" label="F1 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="5" label="F2 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="6" label="F3 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="7" label="F4 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="8" label="F5 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="9" label="F6 " maxcurrent="0.6 A" connection="other" />
+			<output name="1" label="Front light" maxcurrent="300 mA" connection="other" />
+	   	 	<output name="2" label="Rear light " maxcurrent="300 mA" connection="other" />
+	   	 	<output name="3" label="Interior light " maxcurrent="300 mA" connection="other" />
+	   	 	<output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="6" label="F3 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="7" label="F4 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="8" label="F5 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="9" label="F6 " maxcurrent="600 mA" connection="other" />
+		</model>
+		<model model="eMOTION XXL" lowVersionID="20" highVersionID="29"
+			maxInputVolts="24 V" maxMotorCurrent="6 A" maxTotalCurrent="7 A"
+			numOuts="9" numFns="18"
+			formFactor="G" connector="other" >
+			<size length="65" width="33" height="16" units="mm" />
+			<output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
+	   	 	<output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="3" label="Interior light " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="4" label="F1 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="5" label="F2 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="6" label="F3 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="7" label="F4 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="8" label="F5 " maxcurrent="500 mA" connection="other" />
+	   	 	<output name="9" label="F6 " maxcurrent="500 mA" connection="other" />
 		</model>
 	</family>
 
@@ -257,7 +305,7 @@
 			tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29" >
 			<enumVal>
 				<enumChoice choice="14"/>
-				<enumChoice choice="28"/>
+				<enumChoice choice="28/128"/>
 			</enumVal>
 		</variable>
 
@@ -285,6 +333,19 @@
 			<enumVal>
 				<enumChoice choice="Short Address (CV1)"/>
 				<enumChoice choice="Long Address (CV17+18)"/>
+			</enumVal>
+		</variable>
+
+		<variable label = "Consist Address" CV = "19" mask = "XVVVVVVV" default="0"
+                          tooltip="Sets the multiple unit (consist) address, 0 = not in consist. CV19">
+			<decVal min="0" max="127"/>
+		</variable>
+
+		<variable label = "Consist Direction" CV = "19" mask = "VXXXXXXX" default="0"
+                          tooltip="Sets the relative direction of the loco when consist is told to move forward. CV19">
+			<enumVal>
+				<enumChoice choice = "Normal"></enumChoice>
+				<enumChoice choice = "Reversed"></enumChoice>
 			</enumVal>
 		</variable>
 
@@ -882,42 +943,9 @@
 			</enumVal>
 		</variable>
 
-		<variable label="F6: Special Function: Time Base for Sound Pulse Generator -- eMOTION XL Only" CV="120" mask="XXXXVVVV" default="0"
+		<variable label="F6: Special Function: Time Base for Sound Pulse Generator" CV="120" mask="XXXXVVVV" default="0"
 			tooltip="0=Steady On (Standard Operation), 1..15=Time Base for Sound Pulse Generator Time Base (1=slow pulse, 15=fast pulse CV120">
 			<decVal min="0" max="15"/>
-		</variable>
-
-		<variable label="F6: Special Function: Blink/flop time or light effects -- eMOTION L Only" CV="120" mask="XXXVVVVV" default="0"
-			tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value CV120">
-			<enumVal>
-				<enumChoice choice="Steady On (Standard Operation)" value="0"/>
-				<enumChoice choice="0.25 sec" value="1"/>
-				<enumChoice choice="0.50 sec" value="2"/>
-				<enumChoice choice="0.75 sec" value="3"/>
-				<enumChoice choice="1.00 sec" value="4"/>
-				<enumChoice choice="1.25 sec" value="5"/>
-				<enumChoice choice="1.50 sec" value="6"/>
-				<enumChoice choice="1.75 sec" value="7"/>
-				<enumChoice choice="2.00 sec" value="8"/>
-				<enumChoice choice="2.25 sec" value="9"/>
-				<enumChoice choice="2.50 sec" value="10"/>
-				<enumChoice choice="2.75 sec" value="11"/>
-				<enumChoice choice="3.00 sec" value="12"/>
-				<enumChoice choice="3.25 sec" value="13"/>
-				<enumChoice choice="3.50 sec" value="14"/>
-				<enumChoice choice="3.75 sec" value="15"/>
-				<enumChoice choice="Alternate Blinking with F5" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="F6: Special Function: Select Special Function -- eMOTION L Only" CV="120" mask="VVXXXXXX" default="0"
-			tooltip="Which special function, if any, for F4. For Monoflop, output is switched off automatically after timeout. CV120">
-			<enumVal>
-				<enumChoice choice="Symmetric Blinking" value="0"/>
-				<enumChoice choice="Short Term Function (Monoflop)" value="1"/>
-				<enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2"/>
-				<enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3"/>
-			</enumVal>
 		</variable>
 
 		<variable label="F3: Special Function Servo" CV="121" mask="XXXXXXXV" default="0"
@@ -1064,7 +1092,7 @@
 			<display item="F2: Special Function: Blink/flop time or light effects"/>
 			<display item="F2: Special Function: Select Special Function"/>
 			<label label=" "/>
-			<display label="F3: Special Function Servo -- eMOTION L Only" item="F3: Special Function Servo"/>
+			<display label="F3: Special Function Servo -- eMOTION L and XXL Only" item="F3: Special Function Servo"/>
 			<display item="F3: Command Allocation - Direction"/>
 			<display item="F3: Command Allocation - Function Keys"/>
 			<display item="F3: Special Function: Blinking/Monoflop time base"/>
@@ -1085,15 +1113,13 @@
 			<label label=" "/>
 			<display item="F6: Command Allocation - Direction"/>
 			<display item="F6: Command Allocation - Function Keys"/>
-			<display item="F6: Special Function: Blink/flop time or light effects -- eMOTION L Only"/>
-			<display item="F6: Special Function: Select Special Function -- eMOTION L Only"/>
-			<display item="F6: Special Function: Time Base for Sound Pulse Generator -- eMOTION XL Only"/>
+			<display item="F6: Special Function: Time Base for Sound Pulse Generator"/>
 		</column>
 	</pane>
 
 	<pane name="Servo">
 		<column>
-			<label label="eMOTION L Only "/>
+			<label label="eMOTION L and XXL Only "/>
 			<label label=" "/>
 			<display item="F3: Special Function Servo"/>
 			<label label=" "/>
@@ -1122,6 +1148,18 @@
 		<column>
 			<row>
 				<column>
+					<label label="Consist (from V1.5)"/>
+					<separator />
+					<label label=" "/>
+					<display item="Consist Address"/>
+					<display item="Consist Direction"/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+				</column>
+			</row>
+			<row>
+				<column>
 					<display item="Switching Speed: Command Allocation - Function Keys"/>
 					<display item="Engage/Disengage Acceleration/Deceleration Value: Command Allocation - Function Keys"/>
 					<label label=" "/>
@@ -1148,3 +1186,5 @@
 	</pane>
 
 </decoder-config>
+
+ 	  	 
