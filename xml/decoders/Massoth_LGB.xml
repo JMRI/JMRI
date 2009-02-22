@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_LGB.xml,v 1.6 2008-12-26 19:53:40 jacobsen Exp $ -->
+<!-- $Id: Massoth_LGB.xml,v 1.7 2009-02-22 22:20:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.3" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.2" lastUpdated="20080127" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -94,12 +96,14 @@
               Added individual models so attributes could be added to them
               Removed high version
               Implemented "factReset"
+        1.3 - 18 Feb 2009
+              Added highVersionID, high version is higher than current version at time of writing
 -->
 
 
 <decoder>
 	<family name="LGB" mfg="Massoth Elektronik, GmbH">
-		<model model="LGB MTS I 55020 loco decoders" lowVersionID="10"
+		<model model="LGB MTS I 55020 loco decoders" lowVersionID="10" highVersionID="29"
 			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A"
 			numOuts="3" numFns="10"
 			formFactor="G" connector="other" >
@@ -112,7 +116,7 @@
 <!-- 55020 currents are for the later Massoth versions,
            the earlier Lenz versions were 1.5 motor, 0.15 per function, and 1.5 total
 -->
-		<model model="LGB MTS II 55021 loco decoders" lowVersionID="10"
+		<model model="LGB MTS II 55021 loco decoders" lowVersionID="10" highVersionID="29"
 			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A"
 			numOuts="3" numFns="10"
 			formFactor="G" connector="other" >
@@ -121,7 +125,7 @@
 	   	 	<output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
 	   	 	<output name="3" label="F1 " maxcurrent="0.3 A" connection="other" />
 		</model>
-		<model model="LGB MTS II 55022 small loco decoders" lowVersionID="10"
+		<model model="LGB MTS II 55022 small loco decoders" lowVersionID="10" highVersionID="29"
 			maxInputVolts="24 V" maxMotorCurrent="0.8 A" maxTotalCurrent="1 A"
 			numOuts="3" numFns="10"
 			formFactor="G" connector="other" >
@@ -130,7 +134,7 @@
 	   	 	<output name="2" label="Rear light " maxcurrent="0.05 A" connection="solder" />
 	   	 	<output name="3" label="F1 " maxcurrent="0.05 A" connection="solder" />
 		</model>
-		<model model="LGB MTS II onboard loco decoders" lowVersionID="10"
+		<model model="LGB MTS II onboard loco decoders" lowVersionID="20" highVersionID="39"
 			maxInputVolts="24 V"
 			numOuts="4" numFns="10"
 			formFactor="G" connector="other" >
@@ -508,7 +512,7 @@
 		<!-- Do not attempt to read CV 105 on an LGB decoder -->
 
 		<variable label="ID for Decoder Type" CV="106" readOnly="yes" 
-			item="Product Number"
+			item="Product number"
 			tooltip="ID for Decoder Type (read only) CV106">
 			<decVal/>
 		</variable>
@@ -541,7 +545,7 @@
 			<label label=" "/>
 			<display item="Manufacturer" />
 			<display item="Decoder Version" />
-			<display item="Product Number" />
+			<display item="Product number" />
 		</column>
 	</pane>
 
@@ -648,3 +652,5 @@
 	</pane>
 
 </decoder-config>
+
+ 	  	 
