@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Main_Menu.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<html lang="en">
+<head>
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
+<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
+<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
+<meta name="Revised_By" content="Dale Tripp">
+<meta name="Revised_By" content="Bruce Shanks">
+<meta name="keywords" content="JMRI manual">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+
+
+<h1>DecoderPro&reg; Main Window</h1>
+<h1>Menu Overview</h1>
+
+<div align=right>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>Most of the DecoderPro functions can be accessed via the menu bar on the DecoderPro window</p>
+<p align="center"><img src="images/Main_05_MenuBar.png" alt="menu bar" width="423" height="146" border="4"></p>
+<h4><a href="Main_File.shtml">File</a></h4>
+<ul>
+  <li>Print Decoder Definitions...</li>
+  <li>Print Preview Decoder Definitions...</li>
+  <li>Quit</li>
+</ul>
+<h4><a href="Main_Edit.shtml">Edit</a></h4>
+<ul>
+  <li>Cut</li>
+  <li>Copy</li>
+  <li>Paste</li>
+  <li>Preferences...</li>
+</ul>
+<h4><a href="Main_Tool.shtml">Tools</a></h4>
+<ul>
+  <li>Programmers
+    
+    <ul>
+      <li>Single CV Programmer</li>
+      <li>Service Mode Programmer</li>
+      <li>Ops-Mode Programmer</li>
+      <li>Multi-Decoder Control</li>
+    </ul>
+  </li>
+  <li>Tables
+    <ul>
+      <li>Various Tables used with Panel Pro and not covered in this manual</li>
+    </ul>
+  </li>
+  <li>Clocks
+    <ul>
+      <li>Setup Fast Clock...</li>
+      <li>Nixie Clock</li>
+      <li>LCD Clock</li>
+      <li>Analog Clock</li>    
+    </ul>
+  </li>
+  <li>Power Control</li>
+  <li>Turnout Control...</li>
+  <li>Simple Signal Logic</li>
+  <li>Sensor Groups...</li>
+  <li>Speedometer...</li>
+  <li>Light Control...</li>
+  <li>Dispatcher...</li>
+  <li>Send DCC Packet...</li>
+  <li>USS CTC Controls...(not covered in this manual)</li>
+  <li>Operations (covered in another section)</li>
+</ul>
+<h4><a href="Main_Roster.shtml">Roster</a></h4>
+<ul>
+  <li>Create Entry...</li>
+  <li>Edit Entry...</li>
+  <li>Copy Entry...</li>
+  <li>Import Entry...</li>
+  <li>Export Entry...</li>
+  <li>Delete Entry...</li>
+  <li>Print Summary...</li>
+  <li>Print Preview Summary...</li>
+</ul>
+<h4><a href="Main_Panels.shtml">Panels</a></h4>
+<p>Beyond the scope of this manual, primarily for use in connection with PanelPro</p>
+<h4><span class="style1"><a name="System"></a>System</span><br>
+  <span class="ACCENT">(This menu name will depend upon the system that you selected in Preferences. The options are listed. If (none) is selected in Preferences this menu will not be displayed.)</span></h4>
+<ul>
+  <li><a href="Main_acela.shtml">Acela</a></li>
+  <li><a href="Main_CMRI.shtml">CMRI</a></li>
+  <li><a href="Main_EasyDCC.shtml">EasyDC</a><a href="#">C</a></li>
+  <li><a href="Main_GrapeVine.shtml">Grapevine</a></li>
+  <li><a href="Main_LocoNet.shtml">LocoNet </a>&nbsp;&nbsp;&nbsp;</li>
+  <li><a href="Main_NCE.shtml">NCE</a></li>
+  <li><a href="Main_OakTreeSystems.shtml">OakTreeSystems</a></li>
+  <li><a href="Main_Powerline.shtml">Powerline</a></li>
+  <li><a href="Main_QSI.shtml">QSI</a></li>
+  <li><a href="Main_RPS.shtml">RPS</a></li>
+  <li><a href="Main_SECSI.shtml">SECSI</a></li>
+  <li><a href="Main_SPROG.shtml">SPROG</a></li>
+  <li><a href="Main_TMCC.shtml">TMCC</a></li>
+  <li><a href="#"></a><a href="Main_wangrow.shtml">wangrow</a></li>
+  <li><a href="Main_XpressNet.shtml">XpressNet</a></li>
+  <li><a href="Main_Zimo.shtml">Zimo</a></li>
+</ul>
+<h4><a href="Main_Debug.shtml">Debug</a></h4>
+<ul>
+  <li>Memory Usage Monitor</li>
+  <li>Import Decoder File</li>
+  <li>Import Decoder URL</li>
+  <li>Recreate Decoder Index</li>
+  <li>Recreate Roster Index</li>
+  <li>Other options are beyond the scope of this manual</li>
+</ul>
+<h4><a href="Main_Window.shtml">Window</a></h4>
+<ul>
+  <li>
+    <input name="checkbox" type="checkbox" id="checkbox" checked>
+  DecoderPro</li>
+  <li>
+    <input type="checkbox" name="checkbox2" id="checkbox2">
+  LocoNet Traffic</li>
+  <li>
+    <input type="checkbox" name="checkbox3" id="checkbox3">
+  Power Control</li>
+</ul>
+<h4><a href="Main_Help.shtml">Help</a></h4>
+<ul>
+  <li>Window Help...</li>
+  <li>General Help...</li>
+  <li>License...</li>
+  <li>Locations...</li>
+  <li>Context....</li>
+</ul>
+<hr>
+
+<div align=right>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Ops_Start.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<html lang="en">
+<head>
+<TITLE>
+Using DecoderPro&reg; to Operate Trains
+</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
+<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
+<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
+<meta name="Revised_By" content="Dale Tripp">
+<meta name="Revised_By" content="Bruce Shanks">
+<meta name="keywords" content="JMRI manual">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Starting DecoderPro&reg;</h1>
+
+<div align=right>
+<p>Back to Previous Section</p>
+<p><a href="index.shtml#">Back to Index</a></p>
+</div>
+
+<hr>
+<p>Besides programming your decoders, DecoderPro&reg; can be used to operate your railroad on DCC using your computer ( laptop or notebook is very convenient) and your DCC system. It can replace the throttle controls without having to use all the knobs and buttons. The number of locomotives that you may operate is limited only by  your layout and your computer screen will display area. The Scenerio used for operating in this manual is A Digitrax Chief with DecoderPro V2.4 installed on a Windows XP platform. Other systems will vary, but should be basically similar in operating and requirements. We will assume a simple layout with one block, either manually operated or accessory power operated switches.</p>
+<h4>Getting Started</h4>
+<p><strong>Connect your Hardware</strong></p>
+<p>Connect your computer to your DCC system via the serial bus (USB adapter or Serial connector) to your communications link, in the case of Digitrax, that would be to the LocoNet via either MS100, LocoBuffer, or PR3. Other systems have their own communications links. </p>
+<p>Make sure your booster is connected to your layout using &quot;track&quot; power output and operating.</p>
+<p><strong>Starting DecoderPro</strong>&reg;</p>
+<p>Start DecoderPro program and the <a href="Main_Main.shtml">opening Screen</a> will be displayed along with any windows or panes that were set to open in <a href="Getting_Started.shtml#Preferences">preferences</a>. At a minimum you will want to open a <a href="Main_Throttle.shtml">throttle</a> to operate a locomotive.</p>
+<p>The throttle may be displayed on your computer screen by having set a throttle to open in your preferences, or in preferences set a throttle button to display, or open a throttle from the <a href="Main_Tool.shtml">Tool menu.</a> </p>
+<p>Some systems allow you to control the track power on/off. In that case you may want to open the Power Control tool from the <a href="Main_Tool.shtml">Tool </a>menu.</p>
+<p>If you need to monitor commands to your DCC system, you may open the <a href="Main_Monitor_Window.shtml">Monitor Communications Window</a> from the system dependent menu (in this case LocoNet menu).</p>
+<p>Now we are ready to run trains.</p>
+<p><strong>Running a locomotive</strong></p>
+<p>Now select your locomotive of choice and place it on the track.</p>
+<p>
+<hr>
+
+<div align=right>
+<p>On to Next Section</p>
+<p><a href="index.shtml#">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Main_Tool.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<html lang="en">
+<head>
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
+<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
+<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
+<meta name="Revised_By" content="Dale Tripp">
+<meta name="Revised_By" content="Bruce Shanks">
+<meta name="keywords" content="JMRI manual">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+
+<h1>DecoderPro&reg; Main Window</h1>
+<h1>Tool Menu </h1>
+
+<div align=right>
+<p><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>Programmers</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9"></p>
+<ul>
+  <li>Single CV Programmer</li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Simple_Programmer.shtml">Simple Programmer </a></p>
+</blockquote>
+<ul>
+  <li>Service Mode Programmer </li>
+</ul>
+<blockquote>
+  <p>	Opens the <a href="Basic_Programming.shtml#ServiceMode">Service Mode Programmer</a>.</p>
+</blockquote>
+<ul>
+  <li>Ops-Mode Programmer</li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Basic_Programming.shtml#OpsMode">Ops-Mode Programmer. </a></p>
+</blockquote>
+<ul>
+  <li>Multi-Decoder Control</li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Multi_Decoder_Control.shtml">Multi-Decoder Control</a> window.</p>
+</blockquote>
+<p><strong>Tables </strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"> (advanced users, beyond the scope of this manual)</p>
+<blockquote>
+  <p>A	series of tables that are used with PanelPro Panels to automate your layout.</p>
+</blockquote>
+<p><strong>Throttles</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9"></p>
+<ul>
+  <li>New Throttle...</li>
+</ul>
+<blockquote>
+  <p>Opens a <a href="Main_Throttle.shtml">Throttle </a>window (more than one throttle may be in use at a time)</p>
+</blockquote>
+<ul>
+  <li>Save Throttle Layout...</li>
+</ul>
+<blockquote>
+  <p>Displays the  <strong>Save</strong> dialog box to save your throttle as an XML file to the default folder, in Windows XP: C:\Document and Settings\userName,\JMRI,\throttles. This can be changed in the save dialog box.</p>
+</blockquote>
+<ul>
+  <li>Load Throttle Layout...</li>
+</ul>
+<blockquote>
+  <p>Displays  the <strong>Open</strong> dialog box allowing you to select a throttle file that has been saved in the default folder above, or the location of your choice.</p>
+</blockquote>
+<ul>
+  <li>Save Throttle Preferences...</li>
+</ul>
+<blockquote>
+  <p>Saves your throttle preferences, you must have a throttle open, in the throttle folder above.</p>
+</blockquote>
+<p><a name="Consist"></a><span class="style1"><a href="Main_ConsistControl.shtml">Consisting Tool..</a>.</span></p>
+<blockquote>
+  <p>Opens the Consist Control window.</p>
+</blockquote>
+<p><strong><a name="Clocks"></a>Clocks </strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"></p>
+<ul>
+  <li><a href="Main_FastClockSetup.shtml">Setup fast Clock...</a></li>
+</ul>
+<blockquote>
+  <p>Opens Fast Clock Setup window</p>
+</blockquote>
+<ul>
+  <li>Nixie Clocks</li>
+</ul>
+<blockquote>
+  <p><img src="images/Main_FastClock_02.png" alt="nixie clock" width="129" height="79" border="4"></p>
+</blockquote>
+<ul>
+  <li>LCD Clock</li>
+</ul>
+<blockquote>
+  <p><img src="images/Main_FastClock_03.png" alt="LCD clock" width="128" height="74" border="4"></p>
+</blockquote>
+<ul>
+  <li>Analog Clock</li>
+</ul>
+<blockquote>
+  <p><img src="images/Main_FastClock_04.png" alt="Analog clock" width="152" height="145" border="4"></p>
+</blockquote>
+<p><strong>Power Control...</strong></p>
+<p>Opens the Power Control Panel, which allows you to turn the power to layout ON/OFF</p>
+<blockquote>
+  <p><img src="images/Main_PowerControl_01.png" alt="Power Control" width="199" height="132"></p>
+</blockquote>
+<p><strong><a name="Turnout"></a><a href="Main_TurnoutControl.shtml">Turnout Control...</a></strong></p>
+<p><strong>Simple Signal Logic </strong>(advanced users, beyond the scope of this manual)</p>
+<p><strong>Sensor Groups.</strong>... (advanced users, beyond the scope of this manual)</p>
+<p><strong><a name="Speedometer"></a><a href="Main_Speedometer.shtml">Speedometer...</a></strong></p>
+<p><strong><a name="Light"></a>Light Control...</strong></p>
+<p><strong>Dispatcher</strong>... (advanced users, beyond the scope of this manual)</p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"><br>
+</p>
+<p><strong>Send DCC Packet...</strong> (not covered in this manual)</p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
+<p><strong>USS CTC Tool</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9">(advanced users, beyond the scope of this manual)</p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
+<p><strong>Operations</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9"> (not covered in this manual)</p>
+<hr>
+
+<div align=right>
+<p><a href="Main_Roster.shtml"></a><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

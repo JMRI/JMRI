@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Comp_FunctionLabel.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<html lang="en">
+<head>
+<TITLE>
+DecoderPro&reg; Comprehensive Programmer
+</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
+<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
+<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
+<meta name="Revised_By" content="Dale Tripp">
+<meta name="Revised_By" content="Bruce Shanks">
+<meta name="keywords" content="JMRI manual">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+
+<a NAME="Top"></a>
+
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h1>Function Labels Pane</h1>
+
+<div align=right>
+<p><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<hr>
+<p>This  Pane is a new edition and is still being worked on by the developers.</p>
+<p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Ops_Throttle.shtml">JMRI throttle</a>. </p>
+<p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
+<p><img src="images/Function_Labels.png" alt="function labels" width="922" height="627"></p>
+<p>It is planned to have it possible  to enter these button labels from an active JMRI throttle.&nbsp; You then have to save the throttle and also  save the throttle information to your roster.&nbsp;  This capability is under development, as of the writing of this manual  (1/2009).
+<hr>
+
+<div align=right>
+<p><a href="Comp_LightFX.shtml"></a><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

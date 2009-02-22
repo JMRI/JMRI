@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Comp_Advanced.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<html lang="en">
+<head>
+<TITLE>
+DecoderPro&reg; Comprehensive Programmer
+</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
+<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
+<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
+<meta name="Revised_By" content="Dale Tripp">
+<meta name="Revised_By" content="Bruce Shanks">
+<meta name="keywords" content="JMRI manual">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+
+<a NAME="Top"></a>
+
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h1>Advanced Features Pane</h1>
+
+<div align=right>
+<p><a href="Comp_Consist.shtml">Previous | </a>
+  <a href="Comp_SoundFX.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<hr>
+<p>
+The <b>Advanced Features</b> pane covers CVs that don't fall readily into
+one of the other categories, and more importantly are not generally part
+of the NMRA DCC standard. This is a bit like the Netscape/Microsoft Browser
+Wars, areas where the manufacturer is pushing the envelope. In this case,
+the CV here controls the Transponding feature of newer Digitrax decoders,
+which allows them to report their location and engine number back to the
+Loconet.
+<p>There  may be one or several of these panes, depending on how complex the decoder  programming is and the style of the person who wrote the definition file for  your particular decoder.
+
+<h1><img src="images/Comp_08_Advanced.png" alt="Comprehensive Programmer - Advanced Features" border=5 height=669 width=922></h1>
+<p>
+<hr>
+
+<div align=right>
+<p><a href="Comp_SoundFX.shtml"></a>
+  <a href="Comp_Consist.shtml">Previous | </a> <a href="Comp_SoundFX.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
