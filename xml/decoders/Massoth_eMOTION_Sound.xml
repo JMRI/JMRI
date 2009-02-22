@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_eMOTION_XLS.xml,v 1.6 2008-02-03 18:51:01 jacobsen Exp $ -->
+<!-- $Id: Massoth_eMOTION_Sound.xml,v 1.1 2009-02-22 22:45:15 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.2" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20080127" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -41,11 +43,13 @@
       55020:           10
       55021:           192
       55022:           16
-      Small onboard:  65, 73, 81, 82, 83
-      Large onboard:  129, 134, 145
+      Small onboard:   65, 73, 81, 82, 83
+      Large onboard:   129, 134, 145
       55027:           193
       eMOTION L:       201 (according to 1.0 manual)
-      eMOTION XL:      193 (according to 1.2 manual), 200
+      eMOTION LS:      202 (according to 2.2 manual)
+      eMOTION XL:      193 (according to 2.0 manual), 200
+      eMOTION XXL:     ???
       eMOTION XLS:     202 (according to 1.3 manual), 203
       eMOTION 8FL:     204 (according to 1.2 manual)
       LED Light:       204
@@ -53,8 +57,8 @@
       This definition was based on the Massoth documents, Einbau und Betriebsanleitung
       eMOTION XLS Sounddecoder 1. Ausgabe, Dezember 2006 (V1.0, 36 pages) and the draft
       English translation provided to me by Massoth Electronics USA LLC.  Updated with
-      eMOTION XLS Sound Decoder Version 1.3 - 06/07 document. Updated with eMOTION XLS
-      Sound Decoder Version 1.4  - 1/08 document.
+      eMOTION XLS Sound Decoder Version 1.3, Version 1.4, Version 2.0, and Version 2.2.
+      Updated with eMOTION LS Version 2.2.
 
       Note regarding the "Internal Light" (LI) decoder output - this output has no CV
       settings specific to it, it is dimmed by CV 50 and is on when the front or rear
@@ -68,7 +72,7 @@
       sound CVs have no default as they vary from loco to loco.  See the sound
       datasheets for each loco for more information.
 
-      This "generic" verison of the definition file contains references to "Sound_01"
+      This "generic" version of the definition file contains references to "Sound_01"
       through "Sound_12".  You should make another copy of this file, changing the name
       of the XML file and changing the "model" name in the "family" definition tag. Then
       do a global search-and-replace to change "Sound_01" to the name of sound #1 for your
@@ -95,23 +99,59 @@
               Added features from firmware version 1.4
                 CV 129-130 Goldcap buffer lag time
               Added default values
+
+        1.2 - 18 Feb 2009
+              ***
+              Changed name of XML file to cover all Sound decoders
+              Please delete all instances of Massoth_eMOTION_XLS.xml from your XML directories
+              ***
+              Added eMOTION LS
+              Added features from firmware version 1.4
+                that I missed last time:
+                CV 168-169 Brake release and trigger thresholds
+                CV 230-234 for multiple-contact switch
+                CV 116 control of voltage buffer only for green PCB
+              Added features from firmware version 2.0
+                CV 114 added value 30 for pulse simulation
+              Added features from firmware version 2.1
+                CV 49 bit 4 electronic parking brake
+              Added features from firmware version 2.2
+                CV 19 Consist address
+                CV 150 Starting inhibit
+                CV 230-234 for multiple contact switch changes
+              Added family lowVersionID & highVersionID, high version is higher than current version at time of writing
 -->
 
 
 <decoder>
-	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
+	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30">
+		<model model="eMOTION LS" lowVersionID="10"
+			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.7 A"
+			numOuts="9" numFns="18"
+			formFactor="G" connector="other" >
+			<size length="54" width="25" height="15" units="mm" />
+			<output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="6" label="F3 " maxcurrent="50 mA" connection="solder" />
+	   	 	<output name="7" label="F4 " maxcurrent="10 mA" connection="solder" />
+	   	 	<output name="8" label="F7 " maxcurrent="10 mA" connection="solder" />
+	   	 	<output name="9" label="F8 " maxcurrent="10 mA" connection="solder" />
+		</model>
 		<model model="eMOTION XLS" lowVersionID="10"
 			maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A"
 			numOuts="11" numFns="18"
 			formFactor="G" connector="other" >
 			<size length="60" width="32" height="18" units="mm" />
-			<output name="1" label="Front light" maxcurrent="0.3 A" connection="plug" />
-	   	 	<output name="2" label="Rear light " maxcurrent="0.3 A" connection="plug" />
-	   	 	<output name="3" label="Interior light " maxcurrent="0.3 A" connection="plug" />
-	   	 	<output name="4" label="F1 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="5" label="F2 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="6" label="F3 " maxcurrent="0.6 A" connection="other" />
-	   	 	<output name="7" label="F4 " maxcurrent="0.6 A" connection="other" />
+			<output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
+	   	 	<output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="6" label="F3 " maxcurrent="600 mA" connection="other" />
+	   	 	<output name="7" label="F4 " maxcurrent="600 mA" connection="other" />
 	   	 	<output name="8" label="F5 " maxcurrent="20 mA" connection="other" />
 	   	 	<output name="9" label="F6 " maxcurrent="20 mA" connection="other" />
 	   	 	<output name="10" label="F7 " maxcurrent="20 mA" connection="solder" />
@@ -247,12 +287,25 @@
 			</enumVal>
 		</variable>
 
+		<variable label = "Consist Address" CV = "19" mask = "XVVVVVVV" default="0"
+                          tooltip="Sets the multiple unit (consist) address, 0 = not in consist. CV19">
+			<decVal min="0" max="127"/>
+		</variable>
+
+		<variable label = "Consist Direction" CV = "19" mask = "VXXXXXXX" default="0"
+                          tooltip="Sets the relative direction of the loco when consist is told to move forward. CV19">
+			<enumVal>
+				<enumChoice choice = "Normal"></enumChoice>
+				<enumChoice choice = "Reversed"></enumChoice>
+			</enumVal>
+		</variable>
+
 		<variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0"
 			item="Speed Step Mode"
 			tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29" >
 			<enumVal>
 				<enumChoice choice="14"/>
-				<enumChoice choice="28"/>
+				<enumChoice choice="28/128"/>
 			</enumVal>
 		</variable>
 
@@ -312,6 +365,14 @@
 			<enumVal>
 				<enumChoice choice="F1-Output Standard"/>
 				<enumChoice choice="Fast Pulse String (P-Update) on F1"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Electronic Parking Brake" CV="49" mask="XXXVXXXX" default="0"
+			tooltip="Only active when loco is halted. CV49" >
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
 			</enumVal>
 		</variable>
 
@@ -683,7 +744,7 @@
 			</enumVal>
 		</variable>
 
-		<variable label="F3: Special Function: Blinking/Monoflop time base" CV="114" mask="XXXXVVVV" default="0"
+		<variable label="F3: Special Function: Blinking/Monoflop time base" CV="114" mask="XXXVVVVV" default="0"
 			tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value CV114">
 			<enumVal>
 				<enumChoice choice="Steady On (Standard Operation)" value="0"/>
@@ -702,6 +763,7 @@
 				<enumChoice choice="3.25 sec" value="13"/>
 				<enumChoice choice="3.50 sec" value="14"/>
 				<enumChoice choice="3.75 sec" value="15"/>
+				<enumChoice choice="Pulse Generator Simulation" value="30"/>
 			</enumVal>
 		</variable>
 
@@ -767,7 +829,7 @@
 				<enumChoice choice="3.50 sec" value="14"/>
 				<enumChoice choice="3.75 sec" value="15"/>
 				<enumChoice choice="Alternate Blinking with F3" value="16"/>
-				<enumChoice choice="Control of Voltage Buffer in Programming Mode" value="31"/>
+				<enumChoice choice="Control of Voltage Buffer in Programming Mode (green PCB only)" value="31"/>
 			</enumVal>
 		</variable>
 
@@ -1288,6 +1350,16 @@
 			</enumVal>
 		</variable>
 
+		<variable label="Starting Inhibit between starting-phase" CV="150" default="0"
+			tooltip="Locomotive starts only after start-up sounds complete, only for E-Locos. CV150">
+			<enumVal>
+				<enumChoice choice="Off" value="0"/>
+				<enumChoice choice="Digital on" value="1"/>
+				<enumChoice choice="Analog on" value="2"/>
+				<enumChoice choice="Digital and Analog on" value="3"/>
+			</enumVal>
+		</variable>
+
 		<variable label="Sound_01: Number of repetitions with F-Key" CV="151"
 			tooltip="How many times Sound_01 loops when F-Key is pressed CV151">
 			<enumVal>
@@ -1572,6 +1644,16 @@
 				<enumChoice choice="Diesel" value="2"/>
 				<enumChoice choice="Electric" value="6"/>
 			</enumVal>
+		</variable>
+
+		<variable label="Brake Release Threshold" CV="168" default="64"
+			tooltip="Loco has to accelerate to a predefined speed to enable the braking noise when slowing down. CV168">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Brake Trigger Threshold" CV="169" default="16"
+			tooltip="Loco has to fall below a predefined speed to trigger the braking noise. CV169">
+			<decVal min="0" max="255"/>
 		</variable>
 
 		<variable label="Standing sound 1 : sound assignment" CV="171"
@@ -2227,6 +2309,50 @@
 			</enumVal>
 		</variable>
 
+		<variable label="Trigger Threshold 1: Multiple-contact switch digital mode" CV="229" default="16"
+			tooltip="Range 0-255. CV229">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Trigger Threshold 2: Multiple-contact switch digital mode" CV="230" default="32"
+			tooltip="Range 0-255. CV230">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Trigger Threshold 3: Multiple-contact switch digital mode" CV="231" default="48"
+			tooltip="Range 0-255. CV231">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Trigger Threshold 4: Multiple-contact switch digital mode" CV="232" default="112"
+			tooltip="Range 0-255. CV232">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Trigger Threshold 5: Multiple-contact switch digital mode" CV="233" default="160"
+			tooltip="Range 0-255. CV233">
+			<decVal min="0" max="255"/>
+		</variable>
+
+		<variable label="Sound on accelerate, Multiple-contact switch" CV="234" default="11"
+			tooltip="Range 0-255. CV234">
+			<enumVal>
+				<enumChoice choice="No Multiple-contact switch sound" value="0"/>
+				<enumChoice choice="Sound_01" value="1"/>
+				<enumChoice choice="Sound_02" value="2"/>
+				<enumChoice choice="Sound_03" value="3"/>
+				<enumChoice choice="Sound_04" value="4"/>
+				<enumChoice choice="Sound_05" value="5"/>
+				<enumChoice choice="Sound_06" value="6"/>
+				<enumChoice choice="Sound_07" value="7"/>
+				<enumChoice choice="Sound_08" value="8"/>
+				<enumChoice choice="Sound_09" value="9"/>
+				<enumChoice choice="Sound_10" value="10"/>
+				<enumChoice choice="Sound_11" value="11"/>
+				<enumChoice choice="Sound_12" value="12"/>
+			</enumVal>
+		</variable>
+
 	</variables>
 
         <resets>
@@ -2364,11 +2490,13 @@
 			<display item="F4: Special Function: Blinking/Monoflop/Voltage Buffer"/>
 			<display item="F4: Special Function: Select Special Function"/>
 			<label label=" "/>
+			<label label="F5 for XLS only"/>
 			<display item="F5: Command Allocation - Direction"/>
 			<display item="F5: Command Allocation - Function Keys"/>
 			<display item="F5: Special Function: Blinking/Monoflop time base"/>
 			<display item="F5: Special Function: Select Special Function"/>
 			<label label=" "/>
+			<label label="F6 for XLS only"/>
 			<display item="F6: Command Allocation - Direction"/>
 			<display item="F6: Command Allocation - Function Keys"/>
 			<display item="F6: Special Function: Blink/flop time or light effects"/>
@@ -2393,7 +2521,7 @@
 			<display item="Cylinder Valves Open/Closed (Steam only)"/>
 			<display item="Directional triggering of reed contacts"/>
 			<display item="Automatic Background Noises"/>
-			<display item="Start Signal Delay"/>
+			<display item="Start Signal Delay" label="Start Signal Delay (from V1.2)"/>
 
 			<label label=" "/>
 		</column>
@@ -2487,10 +2615,24 @@
 			<label label=" "/>
 			<label label=" "/>
 			<display item="Brake Application sound"/>
+			<display item="Brake Release Threshold" label="Brake Release Threshold (from V1.4)"/>
+			<display item="Brake Trigger Threshold" label="Brake Trigger Threshold (from V1.4)"/>
 			<label label=" "/>
 			<label label=" "/>
-			<display item="Trigger Threshold : Sound Output in Analog Mode"/>
-			<display item="Trigger Threshold : Sound Output in Digital Mode"/>
+			<display item="Trigger Threshold : Sound Output in Analog Mode" label="Motor starting RPM trigger - Analog"/>
+			<display item="Trigger Threshold : Sound Output in Digital Mode" label="Motor starting RPM trigger - Digital"/>
+			<label label=" "/>
+			<label label=" "/>
+			<display item="Starting Inhibit between starting-phase" label="Electric Locomotive only moves after starting sounds complete (from V2.2)"/>
+			<label label=" "/>
+			<label label=" "/>
+			<label label="Electric Locomotive Multiple-contact switch (from V2.2)"/>
+			<display item="Trigger Threshold 1: Multiple-contact switch digital mode" label="Trigger Threshold 1"/>
+			<display item="Trigger Threshold 2: Multiple-contact switch digital mode" label="Trigger Threshold 2"/>
+			<display item="Trigger Threshold 3: Multiple-contact switch digital mode" label="Trigger Threshold 3"/>
+			<display item="Trigger Threshold 4: Multiple-contact switch digital mode" label="Trigger Threshold 4"/>
+			<display item="Trigger Threshold 5: Multiple-contact switch digital mode" label="Trigger Threshold 5"/>
+			<display item="Sound on accelerate, Multiple-contact switch" label="Multiple-contact Switch Sound"/>
 			<label label=" "/>
 			<label label=" "/>
 			<display item="Pulse generator : Control register"/>
@@ -2519,10 +2661,10 @@
 			<display item="Sound_11 : Individual Volume Level"/>
 			<display item="Sound_12 : Individual Volume Level"/>
 			<label label=" "/>
-			<display item="Volume Turn-on Phase"/>
-			<display item="Volume Standing Phase"/>
-			<display item="Volume Turn-off Phase"/>
-			<display item="Volume Driving Phase"/>
+			<display item="Volume Turn-on Phase" label="Volume Turn-on Phase (from V1.3)"/>
+			<display item="Volume Standing Phase" label="Volume Standing Phase (from V1.3)"/>
+			<display item="Volume Turn-off Phase" label="Volume Turn-off Phase (from V1.3)"/>
+			<display item="Volume Driving Phase" label="Volume Driving Phase (from V1.3)"/>
 		</column>
 	</pane>
 
@@ -2542,6 +2684,18 @@
 
 	<pane name="Miscellaneous">
 		<column>
+			<row>
+				<column>
+					<label label="Consist (from V2.2)"/>
+					<separator />
+					<label label=" "/>
+					<display item="Consist Address"/>
+					<display item="Consist Direction"/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+				</column>
+			</row>
 			<row>
 				<column>
 					<display item="Switching Speed: Command Allocation - Function Keys"/>
@@ -2567,6 +2721,10 @@
 					<label label=" "/>
 					<display item="Data Processing"/>
 					<display item="F1 Output"/>
+					<display item="Electronic Parking Brake" label="Electronic Parking Brake (from V2.1)"/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
 				</column>
 			</row>
 		</column>
@@ -2579,3 +2737,6 @@
 	</pane>
 
 </decoder-config>
+
+
+ 	  	 
