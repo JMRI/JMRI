@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.13 2009-02-21 15:19:16 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.14 2009-02-22 06:40:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -210,6 +210,14 @@ programming when using an NCE system and certain non-NCE decoders
 
 <p>
 Ken Cameron updated the Team Digital Sic24 decoder, plus added the Sic24AD version.
+
+<p>
+Matt Harris added a decoder definition for versions 41 to 43 of the 
+Lenz LE103XF.
+
+<p>
+Matt Harris updated the definition for the Digitrax TF4 and TF2
+with information from Bob Grosh.
 
 <!--#include virtual="/Footer" -->
 
