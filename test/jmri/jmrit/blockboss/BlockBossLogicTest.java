@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -26,9 +26,9 @@ public class BlockBossLogicTest extends TestCase {
 		    int priority = Thread.currentThread().getPriority(); 
 		    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 		    Thread.yield();
-		    Thread.sleep(100);
+		    Thread.sleep(200);
 		    Thread.currentThread().setPriority(priority);
-			// super.wait(100);
+			super.wait(100);
 		}
 		catch (InterruptedException e) {
 		    Assert.fail("failed due to InterruptedException");
