@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.14 2009-02-22 06:40:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.15 2009-02-22 23:10:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -218,6 +218,16 @@ Lenz LE103XF.
 <p>
 Matt Harris updated the definition for the Digitrax TF4 and TF2
 with information from Bob Grosh.
+
+<p>
+Jeff Schmaltz updated the Massoth decoder definitions.
+
+<p>
+Jeff Schmaltz added additional detail to the Zimo MX69 and MX690 definitions.
+
+<p>
+Jeff Schmaltz updated the version numbers for several ESU decoders.
+
 
 <!--#include virtual="/Footer" -->
 
