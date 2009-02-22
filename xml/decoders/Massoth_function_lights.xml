@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_function_lights.xml,v 1.1 2008-02-03 18:45:23 jacobsen Exp $ -->
+<!-- $Id: Massoth_function_lights.xml,v 1.2 2009-02-22 22:18:47 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.1" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20080127" />
 <!-- 
@@ -67,12 +69,15 @@
       Version History:
 
         1.0 - Initial release 27 Jan 2008
+
+        1.1 - 18 Feb 2009
+              Added highVersionID, high version is higher than current version at time of writing
 -->
 
 
 <decoder>
 	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
-		<model model="eMOTION_8FL" lowVersionID="10"
+		<model model="eMOTION_8FL" lowVersionID="10" highVersionID="19"
 			maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1 A"
 			numOuts="8" numFns="18"
 			formFactor="G" connector="other" >
@@ -86,7 +91,7 @@
 	   	 	<output name="7" label="F7 " maxcurrent="0.6 A" connection="solder" />
 	   	 	<output name="8" label="F8 " maxcurrent="0.6 A" connection="solder" />
 		</model>
-		<model model="LED Lighting with Decoder" lowVersionID="10"
+		<model model="LED Lighting with Decoder" lowVersionID="10" highVersionID="19"
 			maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="150 mA"
 			numOuts="8" numFns="18"
 			formFactor="G" connector="other" >
@@ -963,3 +968,5 @@
 	</pane>
 
 </decoder-config>
+
+ 	  	 
