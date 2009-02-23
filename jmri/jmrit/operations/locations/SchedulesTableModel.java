@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -157,12 +157,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	}
         	return box;
         }
-        case STATUSCOLUMN: {
-        	LocationTrackPair ltp = getLocationTrackPair(row);
-        	if (ltp == null)
-        		return "";
-        	return ltp.getTrack().checkScheduleValid(ltp.getLocation());
-        }
+        case STATUSCOLUMN: return getSidingStatus(row);
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -185,12 +180,18 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Edit schedule");
     	if (sef != null)
     		sef.dispose();
+    	Schedule s = manager.getScheduleById((String)sysList.get(row));
     	LocationTrackPair ltp = getLocationTrackPair(row);
-    	if (ltp == null)
+    	if (ltp == null){
+    		log.debug("Need location track pair");
+			JOptionPane.showMessageDialog(null,
+					MessageFormat.format(rb.getString("AssignSchedule"),new Object[]{s.getName()}),
+					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{rb.getString("Edit")}),
+					JOptionPane.ERROR_MESSAGE);
     		return;
+    	}
        	sef = new ScheduleEditFrame();
     	sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
-    	Schedule s = manager.getScheduleById((String)sysList.get(row));
     	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
     	focusSef = true;
     }
@@ -221,11 +222,21 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
        	JComboBox box = manager.getSidingsByScheduleComboBox(sch); 
        	for (int i=0; i<box.getItemCount(); i++){
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
-           	String s = ltp.getTrack().checkScheduleValid(ltp.getLocation());
-           	if (!s.equals(""))
+           	String status = ltp.getTrack().checkScheduleValid(ltp.getLocation());
+           	if (!status.equals(""))
            		return rb.getString("Error");
        	}
        	return rb.getString("Okay");
+    }
+    
+    private String getSidingStatus(int row){
+     	LocationTrackPair ltp = getLocationTrackPair(row);
+    	if (ltp == null)
+    		return "";
+    	String status = ltp.getTrack().checkScheduleValid(ltp.getLocation());
+    	if (!status.equals(""))
+    		return status;
+    	return rb.getString("Okay");
     }
     
     private void removePropertyChangeSchedules() {
