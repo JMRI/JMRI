@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.5 2008-03-09 20:27:27 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2009-02-23 02:02:24 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -46,7 +46,7 @@ The
 page will given you more information on how DecoderPro looks
 and the basics of how to use it. 
 From there, you can go to the 
-<a href="../../../DecoderProManual/index.shtml">full DecoderPro manual</a>
+<a href="../../../manual/index.shtml">full DecoderPro manual</a>
 for more information on how to use it, or look at the 
 <a href="#guide">User Guide</a> for more
 information on how it works.
@@ -90,7 +90,7 @@ with more information on how DecoderPro works and how to
 install and adapt it.
 <p>
 See also the 
-<a href="../../../DecoderProManual/index.shtml">DecoderPro manual</a>
+<a href="../../../manual/index.shtml">DecoderPro manual</a>
 for more information on how to use DecoderPro.
 <p>
 The User Guide pages:

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: ToolsMenu.shtml,v 1.2 2008-03-08 00:56:37 dan_boudreau Exp $ -->
+<!-- $Id: ToolsMenu.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <title>JMRI: Tools Menu</title>
 
 <!-- Style -->
@@ -33,8 +33,8 @@ The Tools Menu gives access to the basic JMRI tools:
 <li>Programmers
   <ul>
   <li><a href="simpleprog/SimpleProgFrame.shtml">Single CV Programmer</a>
-  <li><a href="../../../DecoderProManual/Basic_Programming.shtml">DecoderPro service mode programmer</a>
-  <li><a href="../../../DecoderProManual/index.shtml">DecoderPro ops-mode programmer</a>
+  <li><a href="../../../manual/Basic_Programming.shtml">DecoderPro service mode programmer</a>
+  <li><a href="../../../manual/index.shtml">DecoderPro ops-mode programmer</a>
   </ul>
 <li>Tables
   <ul>

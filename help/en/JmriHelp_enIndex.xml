@@ -41,9 +41,9 @@
 
   <indexitem text="Introduction " target="html.apps.DecoderPro.index"/>
 
-  <indexitem text="Manual " target="DecoderProManual.Getting_Started"/>
+  <indexitem text="Manual " target="manual.Getting_Started"/>
 
-  <indexitem text="Roster Pane " target="DecoderProManual.Comp_Setup_Roster"/>
+  <indexitem text="Roster Pane " target="manual.Comp_Setup_Roster"/>
 
  </indexitem>
  <indexitem text="Digitrax ">
@@ -75,7 +75,7 @@
  <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
   <indexitem text="Active Trains " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
 
-  <indexitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
+  <indexitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher"/>
 
   <indexitem text="Options " target="package.jmri.jmrit.dispatcher.Options"/>
 
@@ -237,7 +237,7 @@
 
  </indexitem>
  <indexitem text="Programmers ">
-  <indexitem text="DecoderPro programmer " target="DecoderProManual.Basic_Programming_Basic Programmer"/>
+  <indexitem text="DecoderPro programmer " target="manual.Basic_Programming_Basic Programmer"/>
 
   <indexitem text="Single CV Programmer " target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
 

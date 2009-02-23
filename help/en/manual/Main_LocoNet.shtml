@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_LocoNet.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
+<!-- $Id: Main_LocoNet.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -44,7 +44,7 @@ DecoderPro&reg; Main Window
 
 <hr>
 <p><strong>Monitor LocoNet</strong></p>
-<p>Opens the <a href="http://www.daletripp.com/DecoderProManual2-4/Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
+<p>Opens the <a href="Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
 <p><strong><a name="Slots"></a>Monitor Slots</strong></p>
 <p>Opens the <a href="#SlotMonitor">Slot Monitor </a>window, and displays a table of the &quot;command station slots&quot; contents.</p>
 <p><strong><a name="Clock"></a>Monitor Clock</strong></p>
@@ -254,9 +254,9 @@ Because of the way the DS64 board works, this tool can't change  the basic addre
 <h4><a name="SoundDownloader"></a>Decoder Sound Downloader</h4>
 <p><img src="images/Main_Loconet13.png" alt="Sound Download" width="436" height="232"></p>
 <p>Digitrax sound decoders are loaded with "sound projects", stored in  "Sound Project" (.spj) files.  Those contain a number of "sound fragments"  in .wav format, plus some additional control information. </p>
-<p> The Decoder Sound Downloader tool lets you load a new .spj file into   a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're   using a PR3, it needs to be put into "Programmer mode" before   trying to download, see the main <a href="http://jmri.sourceforge.net/help/en/html/hardware/loconet/PR3.shtml">PR3 page</a>. </p>
+<p> The Decoder Sound Downloader tool lets you load a new .spj file into   a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're   using a PR3, it needs to be put into "Programmer mode" before   trying to download, see the main <a href="../html/hardware/loconet/PR3.shtml">PR3 page</a>. </p>
 <p> Digitrax provides sample sound project files at their Sound Depot <a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web site. You can also find links to documentation and additional tools there. </p>
-<p> JMRI also provides tools for <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">editing sound project files</a> to include new sounds and even to <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">change the sound logic</a>. When you first select the Download Sounds tool, it opens a dialog  with most of the controls disabled:<br>
+<p> JMRI also provides tools for <a href="../package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">editing sound project files</a> to include new sounds and even to <a href="../package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">change the sound logic</a>. When you first select the Download Sounds tool, it opens a dialog  with most of the controls disabled:<br>
   <br>
 (Click on any image on this page to see a larger version)</p>
 <p> The status line at the bottom will walk you through the steps needed. </p>

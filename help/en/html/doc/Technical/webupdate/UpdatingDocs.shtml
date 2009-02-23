@@ -1,5 +1,5 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: UpdatingDocs.shtml,v 1.2 2009-02-10 04:44:58 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -25,7 +25,7 @@
 <head>
 <!-- Copyright Joseph A. Ellis - TesserAct Studios -->
 <!-- Copyright Bob Blakcwell - afticarr@sympatico.ca 2007 -->
-<!-- $Id: UpdatingDocs.shtml,v 1.2 2009-02-10 04:44:58 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <title>Updating JMRI Manuals/Documents</title>
 
 <!-- Style -->
@@ -71,11 +71,17 @@ href="http://www.w3.org/Amaya/">Amaya</a> because it allows you to view the
 document in two ways-- the way it will display in one pane, and the source code
 behind it in another. The nice thing is you can make your edits in the
 &ldquo;display&ldquo; view, and never even look at the code!</p>
+<p>
+If you do use an editor like Amaya, it is very important that you
+set it to make minimal changes to the files you're editing.
+If you use an editor that (automatically) reformats the original text,
+it may not be possible to merge your changes into the common version.</p>
 
 <p>To get started, you can drill down inside your CPU's JMRI program files to
-the DecoderProManual folder. On a WinXP system, the location for this folder
+the folder for the DecoderPro manual.
+On a WinXP system, the location for this folder
 looks something like this -- <span
-style="font-family: monospace">C:\ProgramFiles\JMRI\help\en\DecoderProManual</span>.
+style="font-family: monospace">C:\ProgramFiles\JMRI\help\en\manual</span>.
 In this folder is a file called <span
 style="font-family: monospace">index.shtml</span>. Open that file with Amaya
 and look around, being careful not to change it unless you have saved a

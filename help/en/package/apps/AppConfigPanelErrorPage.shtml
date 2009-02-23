@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanelErrorPage.shtml,v 1.1 2008-12-14 06:08:37 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanelErrorPage.shtml,v 1.2 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -39,14 +39,14 @@ by selecting "Window Help" in the Help menu of the preferences window.
 <p>
 There's also more information on setting preferences
 on the 
-<a href="../../DecoderProManual/Getting_Started.shtml#Preferences">tutorial pages</a>.
+<a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
 
 <h2>Basic Preferences</h2>
 <p>
 The first thing to do is set the basic preferences.
 <p>
-<a href="../../DecoderProManual/Pix/Preferences.png">
-<img src="../../DecoderProManual/Pix/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../manual/images/Preferences.png">
+<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
 <dl>
 <dt>Layout Connection
 <dd>You can select any of the various JMRI layout connections here.
@@ -69,7 +69,7 @@ all of the following may be available:
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
 can select one at the same time you 
-<a href="../../DecoderProManual/Basic_Programming.shtml">select your locomotive decoder</a>,
+<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 </dl>

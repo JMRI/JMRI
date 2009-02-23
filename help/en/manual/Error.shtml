@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Error.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
+<!-- $Id: Error.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -43,8 +43,9 @@ Error Messages
 </div>
 
 <hr>
-<p>Various things can go wrong when JMRI tries to work  with your DCC command station to program a DCC decoder.  This page lists the error message that can result, and   describes what they mean.</p>
-<h4>JMRI Error Codes( <a href="http://jmri.sourceforge.net/help/en/html/Errors.shtml">http://jmri.sourceforge.net/help/en/html/Errors.shtml</a> )</h4>
+<p>Various things can go wrong when JMRI tries to work  with your DCC command station to program a DCC decoder.  
+This page lists the error message that can result, and   describes what they mean.</p>
+<h4><a href="../html/Errors.shtml">JMRI Error Codes</a></h4>
 
 <dl>
  

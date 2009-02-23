@@ -135,13 +135,13 @@
 
   
 <li>
-<a href="DecoderProManual/Getting_Started.shtml">Manual </a>
+<a href="manual/Getting_Started.shtml">Manual </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="DecoderProManual/Comp_Setup_Roster.shtml">Roster Pane </a>
+<a href="manual/Comp_Setup_Roster.shtml">Roster Pane </a>
 <ul></ul>
 </li>
 
@@ -230,13 +230,13 @@
 <ul>
   
 <li>
-<a href="">Active Trains </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="">Glossary </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Glossary </a>
 <ul></ul>
 </li>
 
@@ -724,7 +724,7 @@
 <li>Programmers <ul>
   
 <li>
-<a href="DecoderProManual/Basic_Programming.shtml#Basic Programmer">DecoderPro programmer </a>
+<a href="manual/Basic_Programming.shtml#Basic Programmer">DecoderPro programmer </a>
 <ul></ul>
 </li>
 

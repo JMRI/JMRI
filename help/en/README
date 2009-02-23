@@ -4,7 +4,7 @@ This directory contains metadata for the javahelp sub-system,
 plus the actual content.
 
 There are several content subtrees:
-  DecoderProManual - a help version of the original manual
+  manual - a help version of the original DecoderPro manual
   html - a help-customized version of the web site
   package - package-sensitive help, organized by Java package
   

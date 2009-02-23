@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.16 2008-12-02 00:25:58 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.17 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -35,15 +35,15 @@ a separate section for advanced preferences.
 This page is under construction. 
 In the meantime, there's some more information on preferences
 on some 
-<a href="../../DecoderProManual/Getting_Started.shtml#Preferences">tutorial pages</a>.
+<a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
 <p>
 <a name="basic">
 <h2>Basic Preferences</h2></a>
 <p>
 When the window first opens, it displays the basic preferences.
 <p>
-<a href="../../DecoderProManual/Pix/Preferences.png">
-<img src="../../DecoderProManual/Pix/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../manual/images/Preferences.png">
+<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
 <dl>
 <dt>Layout Connection
 <dd>You can select any of the various JMRI layout connections here.
@@ -66,7 +66,7 @@ all of the following may be available:
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
 can select one at the same time you 
-<a href="../../DecoderProManual/Basic_Programming.shtml">select your locomotive decoder</a>,
+<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 </dl>
@@ -85,8 +85,8 @@ get your initial connection to the layout up and running, and it is
 recommended that you leave them alone until the connection to your
 command station is operational. To set the advanced preferences, check
 the "Show Advanced Preferences" box.<br><p>
-<a href="../../DecoderProManual/Pix/Preferences2.png">
-<img src="../../DecoderProManual/Pix/Preferences2.png" height="222" width="256" align="right"></a>
+<a href="../../manual/images/Preferences2.png">
+<img src="../../manual/images/Preferences2.png" height="150" width="256" align="right"></a>
 
 <dl>
 	<dt>Auxiliary layout connections
