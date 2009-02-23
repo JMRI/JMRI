@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Basic_Programming.shtml,v 1.1 2009-02-22 09:16:46 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -230,10 +230,10 @@ But you  say...&quot;I want to change more than what's shown on the Basic decode
 </p>
 <p>Comprehensive is the only other programmer <strong>Normal Users </strong>will ever need, because it  is, well&hellip;Comprehensive.&nbsp; So why all the  others?</p>
 <p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a Zimo or ESU system).&nbsp; </p>
-<p>We can also eliminate the Tutorial and Custom  programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer  (not you right?) all the possible ways to gather input and to have a common  starting point in the roster pane. Now if you wish to pursue writing a custom programmer go to this <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Programmer.shtml" target="_blank">site</a>.</p>
+<p>We can also eliminate the Tutorial and Custom  programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer  (not you right?) all the possible ways to gather input and to have a common  starting point in the roster pane. Now if you wish to pursue writing a custom programmer go to this <a href="../html/apps/DecoderPro/Programmer.shtml" target="_blank">site</a>.</p>
 <p>If you have need for a special situation programmer  you might want to look at Sample Club or TrainShowBasic to see what panes can  be taken out of Comprehensive to make an intermediate complexity, special  purpose programmer.&nbsp; Again, how to do this  is a subject for another manual.</p>
 <p>And that leaves us with the Registers  programmer.&nbsp; If you have an old or  bargain basement decoder that only programs using registers, then of course  you&rsquo;ll be interested in &ldquo;Registers&rdquo;.</p>
-<p>Now that we&rsquo;ve narrowed our &ldquo;real&rdquo; choices  down to the&nbsp; Basic and Comprehensive,  let's explore the <a href="http://www.daletripp.com/DecoderProManual2-4/Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
+<p>Now that we&rsquo;ve narrowed our &ldquo;real&rdquo; choices  down to the&nbsp; Basic and Comprehensive,  let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
 
 <div align="right">
 <p><a href="Getting_Started.shtml#Getting Started">Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
