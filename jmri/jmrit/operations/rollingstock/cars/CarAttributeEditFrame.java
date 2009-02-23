@@ -3,10 +3,14 @@
  package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,13 +21,11 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 
-
-
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -34,6 +36,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	// labels
 	JLabel textAttribute = new JLabel();
 	JLabel textSep = new JLabel();
+	JLabel quanity = new JLabel("0");
 
 	// major buttons
 	JButton addButton = new JButton();
@@ -49,7 +52,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     public CarAttributeEditFrame() {}
     
     String _comboboxName;		// track which combo box is being edited
-    boolean menuActive = false;
     
     public void initComponents(String comboboxName) {
     	
@@ -73,24 +75,36 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         replaceButton.setText(rb.getString("Replace"));
         replaceButton.setVisible(true);
         
+        quanity.setVisible(showQuanity);
+        
 		// row 1
-		addItem(textAttribute,1,1);
+		addItem(textAttribute,2,1);
 		// row 2
-		addItem(addTextBox, 1, 2);
-        addItem(addButton, 2, 2);
+		addItem(addTextBox, 2, 2);
+        addItem(addButton, 3, 2);
         
         // row 3
-        addItem(comboBox, 1, 3);
-        addItem(deleteButton, 2, 3);
+        addItem(quanity, 1, 3);
+        addItem(comboBox, 2, 3);
+        addItem(deleteButton, 3, 3);
         
         // row 4 
-        addItem(replaceButton, 2, 4);
+        addItem(replaceButton, 3, 4);
         
 		addButtonAction(addButton);
         addButtonAction(deleteButton);
 		addButtonAction(replaceButton);
+		
+		addComboBoxAction(comboBox);
+		manager.addPropertyChangeListener(this);
  
-        // add help menu to window
+ 		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new CarAttributeAction(rb.getString("CarQuanity"), this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
+		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
 		
     	pack();
@@ -98,7 +112,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     		setSize(200, getHeight()+10);
     	else
     		setSize(getWidth()+50, getHeight()+10);
-// 		setAlwaysOnTop(true); // this blows up in Java 1.4
     	setVisible(true);
     }
  
@@ -141,6 +154,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			replaceItem(oldItem, newItem);
 			deleteItemFromCombobox (oldItem);
 		}
+	}
+	
+	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("Combo box action");
+		updateCarQuanity();
 	}
 
 	private void deleteItemFromCombobox (String deleteItem){
@@ -294,8 +312,54 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 		if(_comboboxName == CarsEditFrame.KERNEL){
 			comboBox = manager.getKernelComboBox();
-			manager.addPropertyChangeListener(this);
 		}
+	}
+	
+	boolean showQuanity = false;
+	public void toggleShowQuanity(){
+		if (showQuanity)
+			showQuanity = false;		
+		else
+			showQuanity = true;
+		quanity.setVisible(showQuanity);
+		updateCarQuanity();
+	}
+	
+	private void updateCarQuanity(){
+		if(!showQuanity)
+			return;
+		int number = 0;
+		String item = (String)comboBox.getSelectedItem();
+		List<String> cars = manager.getCarsByIdList();
+		for (int i=0; i<cars.size(); i++){
+			Car car = manager.getCarById(cars.get(i));
+
+			if(_comboboxName == CarsEditFrame.ROAD){
+				if (car.getRoad().equals(item))
+					number++;
+			}
+			if(_comboboxName == CarsEditFrame.TYPE){
+				if (car.getType().equals(item))
+					number++;
+			}
+			if(_comboboxName == CarsEditFrame.COLOR){
+				if (car.getColor().equals(item))
+					number++;
+			}
+			if(_comboboxName == CarsEditFrame.LENGTH){
+				if (car.getLength().equals(item))
+					number++;
+			}
+			if(_comboboxName == CarsEditFrame.OWNER){
+				if (car.getOwner().equals(item))
+					number++;
+			}
+			if(_comboboxName == CarsEditFrame.KERNEL){
+				if (car.getKernelName().equals(item))
+					number++;
+			}
+		}
+		quanity.setText(Integer.toString(number));
 	}
 
     public void dispose() {
@@ -323,6 +387,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY))
 			manager.updateKernelComboBox(comboBox);
+		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY))
+			updateCarQuanity();
 	}
 	
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
@@ -344,6 +410,22 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		pcs.firePropertyChange(p, old, n);
 	}
     
+	static org.apache.log4j.Category log = org.apache.log4j.Category
+	.getInstance(CarAttributeEditFrame.class.getName());
+}
+
+final class CarAttributeAction extends AbstractAction {	
+    public CarAttributeAction(String actionName, CarAttributeEditFrame caef) {
+        super(actionName);
+        this.caef = caef;
+    }
+    
+    CarAttributeEditFrame caef;
+    
+    public void actionPerformed(ActionEvent ae) {
+    	log.debug("Show attribute quanity");
+    	caef.toggleShowQuanity();
+    }
 	static org.apache.log4j.Category log = org.apache.log4j.Category
 	.getInstance(CarAttributeEditFrame.class.getName());
 }
