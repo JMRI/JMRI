@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.15 2009-02-22 23:10:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.16 2009-02-23 03:57:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -228,6 +228,10 @@ Jeff Schmaltz added additional detail to the Zimo MX69 and MX690 definitions.
 <p>
 Jeff Schmaltz updated the version numbers for several ESU decoders.
 
+<p>
+Mark Waters fixed CV38 in the Zimo MX620 series of decoder definitions,
+updated the more recent versions to include additional CVs,
+and created a new definition for the MX620 decoder version 9.12.
 
 <!--#include virtual="/Footer" -->
 
