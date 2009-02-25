@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -48,7 +48,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             Point2D userPt = currentAT.inverseTransform(new Point2D.Double((double)mouse.x, (double)mouse.y), null);
             // find the path object containing it, if any
             for (int i = measurementRepList.size()-1; i>=0 ; i--) {
-                MeasurementRep r = (MeasurementRep)measurementRepList.get(i);
+                MeasurementRep r = measurementRepList.get(i);
                 if (r.contains(userPt)) {
                     Measurement m = r.measurement;
                     return "ID "+m.getID()+" at "+m.getX()+","+m.getY();
@@ -155,7 +155,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         
         // Draw the measurements; changes graphics
         for (int i = 0; i<measurementRepList.size(); i++) {
-            ((MeasurementRep)measurementRepList.get(i)).draw(g2);
+            measurementRepList.get(i).draw(g2);
         }
         if (showReceivers) { // draw receivers
             for (int i = 1; i<Engine.instance().getMaxReceiverNumber()+1; i++) {  // indexed from 1
@@ -179,8 +179,8 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         g2.setTransform(saveAT);
     }
     
-    ArrayList measurementRepList = new ArrayList();
-    java.util.HashMap transmitters = new java.util.HashMap(); // TransmitterStatus, keyed by Integer(measurement id)
+    ArrayList<MeasurementRep> measurementRepList = new ArrayList<MeasurementRep>();
+    java.util.HashMap<String, TransmitterStatus> transmitters = new java.util.HashMap<String, TransmitterStatus>(); // TransmitterStatus, keyed by Integer(measurement id)
     
     /**
      * Pick a color for the next set of measurement lines to draw
@@ -195,7 +195,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     
     public void notify(Measurement m) {
         String id = m.getID();
-        TransmitterStatus transmitter = (TransmitterStatus)transmitters.get(id);
+        TransmitterStatus transmitter = transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
         if (log.isDebugEnabled()) log.debug("notify "+xend+","+yend);
@@ -217,6 +217,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
                                    MEASUREMENT_ACCURACY, MEASUREMENT_ACCURACY);
             r.measurement = m;
             measurementRepList.add(r);
+            pruneMeasurementRepList();
 
             return;
         }
@@ -235,6 +236,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
             r.rep1 = new Line2D.Double(xinit, yinit, xend, yend);
             r.measurement = m;
             measurementRepList.add(r);
+            pruneMeasurementRepList();
             // cause repaint of whole thing for now
             repaint(getBounds());
         }        
@@ -242,11 +244,18 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         transmitter.measurement = m;
     }
     
+    static final int MAXREPLISTSIZE = 1000;
+    void pruneMeasurementRepList() {
+        while (measurementRepList.size() > MAXREPLISTSIZE) {
+            measurementRepList.remove(0);
+        }
+    }
+    
     /**
      * Clear the measurement history
      */
     void clear() {
-        measurementRepList = new ArrayList();
+        measurementRepList = new ArrayList<MeasurementRep>();
         repaint(getBounds());
     }
     
