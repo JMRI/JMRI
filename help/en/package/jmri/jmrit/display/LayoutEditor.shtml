@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.14 2008-12-10 16:17:00 pinkrdp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.15 2009-02-26 20:18:32 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -106,6 +106,12 @@ and save your panel. You need not be concerned about the position and size of
 your panel changing during subsequent saves! The position and size of your panel will 
 only change when you select <b>Save Location and Size</b>. So save your panel often to 
 preserve your work.</p>
+<p>
+Below is a short tutorial on the basics of using Layout Editor. A more complete
+tutorial is available for download as a pdf file on the JMRI web site. See 
+<a href="http://jmri.org/community/clinics/NMRA2008/index.html"> <b>Using the 
+JMRI/PanelPro Layout Editor</b></a> 
+and its two associated demonstration .xml files.
 
 <a name="start"><H2>Getting Started with Layout Editor</H2>
 
