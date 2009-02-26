@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @since 2.1.2
  *
  */
@@ -85,6 +85,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                             .setAttribute("systemName", sname);
                 if (uname!=null) elem.setAttribute("userName", uname);
                 if (log.isDebugEnabled()) log.debug("second store Block "+sname+":"+uname);
+				// store length and curvature attributes
+				elem.setAttribute("length", ""+b.getLengthMm());
+				elem.setAttribute("curve", ""+b.getCurvature());
                 
                 // store common parts
                 storeCommon(b, elem);
@@ -178,6 +181,14 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                 block = InstanceManager.blockManagerInstance().getBlock(sysName);
             }
             if (userName!=null) block.setUserName(userName);
+			if (element.getAttribute("length") != null) {
+				// load length in millimeters
+				block.setLength(Float.valueOf(element.getAttribute("length").getValue()).floatValue());
+			}
+			if (element.getAttribute("curve") != null) {
+				// load curve attribute
+				block.setCurvature(Integer.parseInt((element.getAttribute("curve")).getValue()));
+			}
             
             // load common parts
             loadCommon(block, element);

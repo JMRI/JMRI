@@ -63,8 +63,26 @@ import java.util.List;
  * <li>UNOCCUPIED - No content, because the sensor has determined this block is unoccupied.
  *</ul>
  *
+ *<P>
+ * Possible Curvature attributes (optional) User can set the curvature if desired. 
+ *     For use in automatic running of trains, to indicate where slow down is required.
+ *<ul>
+ * <li>NONE - No curvature in Block track, or Not entered.
+ * <li>GRADUAL - Gradual curve - no action by engineer is warranted - full speed OK
+ * <li>TIGHT - Tight curve in Block track - Train should slow down some
+ * <li>SEVERE - Severe curve in Block track - Train should slow down a lot
+ *</ul>
+ *
+ *<P>
+ * The length of the block may also optionally be entered if desired.  This attribute
+ *		is for use in automatic running of trains.
+ * Length should be the actual length of model railroad track in the block.  It is 
+ *		always stored here in millimeter units. A length of 0.0 indicates no entry of 
+ *		length by the user.
+ *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.12 $
+ * @author  Dave Duchamp Copywright (C) 2009
+ * @version	$Revision: 1.13 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -80,6 +98,12 @@ public class Block extends jmri.AbstractNamedBean {
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
+	
+	// Curvature attributes
+	static final public int NONE = 0x00;
+	static final public int GRADUAL = 0x01;
+	static final public int TIGHT = 0x02;
+	static final public int SEVERE = 0x04;
     
     public void setSensor(Sensor sensor) {
         if (_sensor!=null) {
@@ -155,6 +179,13 @@ public class Block extends jmri.AbstractNamedBean {
         firePropertyChange("direction", new Integer(oldDirection), new Integer(direction));
     }
     public int getDirection() { return _direction; }
+	
+	public void setCurvature(int c) { _curvature = c; }
+	public int getCurvature() { return _curvature; }
+	public void setLength(float l) { _length = l; }  // l must be in millimeters
+	public float getLengthMm() { return _length; } // return length in millimeters
+	public float getLengthCm() { return (_length/10.0f); }  // return length in centimeters
+	public float getLengthIn() { return (_length/25.4f); }  // return length in inches
     
     // internal data members
     private int _current = UNOCCUPIED; // state
@@ -162,6 +193,8 @@ public class Block extends jmri.AbstractNamedBean {
 	private java.beans.PropertyChangeListener _sensorListener = null;
     private Object _value;
     private int _direction;
+	private int _curvature = NONE;
+	private float _length = 0.0f;  // always stored in millimeters
     
     /** Handle change in sensor state.
      * <P>
