@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.17 2009-02-26 02:43:42 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.18 2009-02-26 21:49:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -233,6 +233,14 @@ Jeff Schmaltz updated the version numbers for several ESU decoders.
 Mark Waters fixed CV38 in the Zimo MX620 series of decoder definitions,
 updated the more recent versions to include additional CVs,
 and created a new definition for the MX620 decoder version 9.12.
+
+<p>
+David Duchamp updated Blocks to contain length and curvature information,
+and improved the associated help files.
+
+<p>
+David Duchamp added saving and restoring train setup information 
+and the ability to select layout scale to Dispatcher.
 
 <!--#include virtual="/Footer" -->
 
