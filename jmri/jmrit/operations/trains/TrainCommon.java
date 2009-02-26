@@ -58,7 +58,7 @@ public class TrainCommon {
 				+ carNumber[0] + " " + carType[0] + " "
 				+ car.getLength() + LENGTHABV + carLoad + " " + car.getColor() 
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
-				+ (car.hasFred() ? " ("+rb.getString("fred")+")" : "") + " " + rb.getString("from")+ " "
+				+ (car.hasFred() ? " ("+rb.getString("FRED")+")" : "") + " " + rb.getString("from")+ " "
 				+ car.getTrackName() + carComment);
 	}
 	

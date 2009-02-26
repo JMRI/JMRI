@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,7 +22,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Builds a switchlist for a location on the railroad
+ * Builds a switch list for a location on the railroad
  * @author Daniel Boudreau (C) Copyright 2008
  *
  */
@@ -31,7 +32,7 @@ public class TrainSwitchLists extends TrainCommon {
 	
 	TrainManager manager = TrainManager.instance();
 	
-	// builds a switchlist for a location
+	// builds a switch list for a location
 	public void buildSwitchList(Location location){
 		// create manifest file
 		File file = TrainManagerXml.instance().createSwitchListFile(
@@ -48,8 +49,8 @@ public class TrainSwitchLists extends TrainCommon {
 		// build header
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		addLine(fileOut, "Switchlist for " + location.getName());
-		addLine(fileOut, "Valid " + new Date());
+		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{location.getName()}));
+		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{new Date()}));
 		
 		// get a list of trains
 		List<String> trains = manager.getTrainsByTimeList();
@@ -74,17 +75,17 @@ public class TrainSwitchLists extends TrainCommon {
 				if (rl.getName().equals(location.getName())){
 					if (stops > 1){
 						newLine(fileOut);
-						addLine(fileOut, "Visit number "+stops);
+						addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops}));
 					} else {
 						newLine(fileOut);
-						addLine(fileOut, "Scheduled work for Train (" + train.getName() +") "+train.getDescription());
+						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));
 						String expected = "";
 						if (r != 0)
-							expected = " expected arrival " + train.getExpectedArrivalTime(rl);
+							expected = MessageFormat.format(rb.getString("expectedArrival"), new Object[]{train.getExpectedArrivalTime(rl)});
 						if (train.isTrainInRoute()){
-							addLine(fileOut, "Departed "+train.getTrainDepartsName()+ ", expect to arrive in "+ train.getExpectedArrivalTime(rl));
+							addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{train.getTrainDepartsName(), train.getExpectedArrivalTime(rl)}));
 						} else {
-							addLine(fileOut, "Departs "+train.getTrainDepartsName()+" at " + train.getDepartureTime() + expected);
+							addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{train.getTrainDepartsName(), train.getDepartureTime(), expected}));
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
@@ -126,11 +127,11 @@ public class TrainSwitchLists extends TrainCommon {
 				}
 			}
 			if (stops > 1 && pickupCars == 0){
-				addLine(fileOut, "No car pickups for this train at this location");
+				addLine(fileOut, rb.getString("NoCarPickUps"));
 			}
 	
 			if (stops > 1 && dropCars == 0){
-				addLine(fileOut, "No car drops for this train at this location");
+				addLine(fileOut, rb.getString("NoCarDrops"));
 			}
 		}
 		fileOut.flush();
@@ -139,7 +140,7 @@ public class TrainSwitchLists extends TrainCommon {
 
 	public void printSwitchList(Location location, boolean preview){
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-		Train.printReport(buildFile, "Switchlist " + location.getName(), preview, Setup.getFontName(), false);
+		Train.printReport(buildFile, "Switch List " + location.getName(), preview, Setup.getFontName(), false);
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category
