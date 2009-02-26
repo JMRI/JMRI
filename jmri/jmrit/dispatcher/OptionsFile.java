@@ -37,7 +37,7 @@ import org.jdom.Attribute;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -138,6 +138,14 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("shortnameinblock").getValue().equals("no"))
 							dispatcher.setShortNameInBlock(false);
 					}
+					if (options.getAttribute("layoutscale")!=null) {
+						String s = (options.getAttribute("layoutscale")).getValue();
+						for (int i = 1; i<=Scale.NUM_SCALES; i++) {
+							if (Scale.getShortScaleID(i).equals(s)) {
+								dispatcher.setScale(i);
+							}
+						}
+					}
 				}
 			}
 		} 
@@ -174,6 +182,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("hasoccupancydetection", ""+(dispatcher.getHasOccupancyDetection()?"yes":"no"));
 		options.setAttribute("shortactivetrainnames", ""+(dispatcher.getShortActiveTrainNames()?"yes":"no"));
 		options.setAttribute("shortnameinblock", ""+(dispatcher.getShortNameInBlock()?"yes":"no"));
+		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
 		root.addContent(options);
 			
 		// write out the file
@@ -194,8 +203,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 			log.error("JDOM Exception "+jde);
 			throw (jde);
 		}
-	}	
-   
+	}
+  
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OptionsFile.class.getName());
 }
 

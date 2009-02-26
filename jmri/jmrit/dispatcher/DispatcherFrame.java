@@ -46,7 +46,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -57,6 +57,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		autoTurnouts = new AutoTurnouts(this);
 		if (autoTurnouts==null)
 			log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
+		atFrame = new ActivateTrainFrame(this);
+		if (atFrame==null)
+			log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
      }
 
 	static final ResourceBundle rb = ResourceBundle
@@ -73,6 +76,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _AutoTurnouts = false;
 	private boolean _ShortActiveTrainNames = false;
 	private boolean _ShortNameInBlock = true;
+	private int _LayoutScale = Scale.HO;
 			
 	// operational instance variables
 	private ArrayList activeTrainsList = new ArrayList();  // list of ActiveTrain objects
@@ -82,6 +86,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private ArrayList allocatedSections = new ArrayList();  // List of AllocatedSection objects
 	private boolean optionsRead = false;
 	private AutoTurnouts autoTurnouts = null;
+	private ActivateTrainFrame atFrame = null;
+	private boolean newTrainActive = false;
 			
 	// dispatcher window variables
 	protected JmriJFrame dispatcherFrame=null;
@@ -170,7 +176,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			p13.add (addTrainButton = new JButton(rb.getString("InitiateTrain")+"..."));
             addTrainButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    initiateTrain(e);
+					if (!newTrainActive) {
+						atFrame.initiateTrain(e);
+						newTrainActive = true;
+					}
+					else {
+						atFrame.showActivateFrame();
+					}
                 }
             });
 			addTrainButton.setToolTipText(rb.getString("InitiateTrainButtonHint"));
@@ -194,7 +206,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			p13.add (terminateTrainButton = new JButton(rb.getString("TerminateTrain")+"..."));
             terminateTrainButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    terminateTrain(e);
+					if (!newTrainActive) 
+						terminateTrain(e);
+					else if (activeTrainsList.size()>0)  {
+						atFrame.showActivateFrame();
+						JOptionPane.showMessageDialog(dispatcherFrame,rb.getString("Message1"), 
+							rb.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+						atFrame.showActivateFrame();
                 }
             });
 			terminateTrainButton.setToolTipText(rb.getString("TerminateTrainButtonHint"));			
@@ -254,399 +274,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         dispatcherFrame.pack();
         dispatcherFrame.setVisible(true);
     }
-	
-	// initiate train window variables
-	private Transit selectedTransit = null;
-	private String selectedTrain = "";
-	private JmriJFrame initiateFrame=null;
-	private Container initiatePane = null;
-	private JComboBox transitSelectBox = new JComboBox();
-	private ArrayList transitBoxList = new ArrayList();
-	private JLabel trainBoxLabel = new JLabel("     "+rb.getString("TrainBoxLabel")+":");
-	private JComboBox trainSelectBox = new JComboBox();
-	private ArrayList trainBoxList = new ArrayList();
-	private JLabel trainFieldLabel = new JLabel(rb.getString("TrainBoxLabel")+":");
-	private JTextField trainNameField = new JTextField(10);
-	private JLabel dccAddressFieldLabel = new JLabel("     "+rb.getString("DccAddressFieldLabel")+":");
-	private JTextField dccAddressField = new JTextField(6);
-	private JCheckBox inTransitBox = new JCheckBox(rb.getString("TrainInTransit"));
-	private JComboBox startingBlockBox = new JComboBox();
-	private ArrayList startingBlockBoxList = new ArrayList();
-	private ArrayList startingBlockSeqList = new ArrayList();
-	private JComboBox destinationBlockBox = new JComboBox();
-	private ArrayList destinationBlockBoxList = new ArrayList();
-	private ArrayList destinationBlockSeqList = new ArrayList();
-	private JButton addNewTrainButton = null;
-	private JCheckBox autoRunBox = new JCheckBox(rb.getString("AutoRun"));
-	private JTextField priorityField = new JTextField(6);
-	
-	// display a window that allows a new Transit/Train to be activated
-	void initiateTrain(ActionEvent e) {
-        if (initiateFrame==null) {
-            initiateFrame = new JmriJFrame(rb.getString("AddTrainTitle"));
-            initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
-			initiatePane = initiateFrame.getContentPane();
-            initiatePane.setLayout(new BoxLayout(initiateFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p1 = new JPanel(); 
-			p1.setLayout(new FlowLayout());
-			p1.add(new JLabel(rb.getString("TransitBoxLabel")+":"));
-			p1.add(transitSelectBox);
-            transitSelectBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    handleTransitSelectionChanged(e);
-                }
-            });
-			transitSelectBox.setToolTipText(rb.getString("TransitBoxHint"));
-			p1.add(trainBoxLabel);
-			p1.add(trainSelectBox);
-			trainSelectBox.setToolTipText(rb.getString("TrainBoxHint"));
-			initiatePane.add(p1);
-            JPanel p1a = new JPanel(); 
-			p1a.setLayout(new FlowLayout());
-			p1a.add(trainFieldLabel);
-			p1a.add(trainNameField);
-			trainNameField.setToolTipText(rb.getString("TrainFieldHint"));
-			p1a.add(dccAddressFieldLabel);
-			p1a.add(dccAddressField);
-			dccAddressField.setToolTipText(rb.getString("DccAddressFieldHint"));			
-			initiatePane.add(p1a);
-            JPanel p2 = new JPanel(); 
-			p2.setLayout(new FlowLayout());
-			p2.add(inTransitBox);
-            inTransitBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    handleInTransitClick(e);
-                }
-            });
-			inTransitBox.setToolTipText(rb.getString("InTransitBoxHint"));
-			initiatePane.add(p2);
-            JPanel p3 = new JPanel(); 
-			p3.setLayout(new FlowLayout());
-			p3.add(new JLabel(rb.getString("StartingBlockBoxLabel")+":"));
-			p3.add(startingBlockBox);
-			startingBlockBox.setToolTipText(rb.getString("StartingBlockBoxHint"));
-            startingBlockBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    handleStartingBlockSelectionChanged(e);
-                }
-            });
-			initiatePane.add(p3);
-            JPanel p4 = new JPanel(); 
-			p4.setLayout(new FlowLayout());
-			p4.add(new JLabel(rb.getString("DestinationBlockBoxLabel")+":"));
-			p4.add(destinationBlockBox);
-			destinationBlockBox.setToolTipText(rb.getString("DestinationBlockBoxHint"));
-			initiatePane.add(p4);
-            JPanel p5 = new JPanel(); 
-			p5.setLayout(new FlowLayout());
-			p5.add(new JLabel(rb.getString("PriorityLabel")+":"));
-			p5.add(priorityField);
-			priorityField.setToolTipText(rb.getString("PriorityHint"));
-			priorityField.setText("5");    
-			p5.add(new JLabel("     "));
-			p5.add(autoRunBox);
-            autoRunBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    handleAutoRunClick(e);
-                }
-            });
-			autoRunBox.setToolTipText(rb.getString("AutoRunBoxHint"));
-			initiatePane.add(p5);
-			initiatePane.add(new JSeparator());
-			JPanel p7 = new JPanel();
-			p7.setLayout(new FlowLayout());
-			JButton cancelButton = null;
-			p7.add(cancelButton = new JButton(rb.getString("CancelButton")));
-            cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancelInitiateTrain(e);
-                }
-            });
-			cancelButton.setToolTipText(rb.getString("CancelButtonHint"));
-			p7.add (addNewTrainButton = new JButton(rb.getString("AddNewTrainButton")));
-            addNewTrainButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    addNewTrain(e);
-                }
-            });
-			addNewTrainButton.setToolTipText(rb.getString("AddNewTrainButtonHint"));
-			initiatePane.add(p7);
-		}
-		if (_TrainsFromRoster || _TrainsFromTrains) {
-			trainBoxLabel.setVisible(true);
-			trainSelectBox.setVisible(true);
-			trainFieldLabel.setVisible(false);
-			trainNameField.setVisible(false);
-			dccAddressFieldLabel.setVisible(false);
-			dccAddressField.setVisible(false);
-		}
-		else if (_TrainsFromUser) {
-			trainNameField.setText("");
-			trainBoxLabel.setVisible(false);
-			trainSelectBox.setVisible(false);
-			trainFieldLabel.setVisible(true);
-			trainNameField.setVisible(true);
-			dccAddressFieldLabel.setVisible(true);
-			dccAddressField.setVisible(true);
-		}
-		initializeFreeTransitsCombo();
-		initializeFreeTrainsCombo();	
-		initiateFrame.pack();
-		initiateFrame.setVisible(true);	
-	}
-	private void handleTransitSelectionChanged(ActionEvent e) {
-		int index = transitSelectBox.getSelectedIndex();
-		if (index<0) return;
-		Transit t = (Transit)transitBoxList.get(index);
-		if ( (t!=null) && (t!=selectedTransit) ) {
-			selectedTransit = t;
-			initializeStartingBlockCombo();
-			initializeDestinationBlockCombo();
-			initiateFrame.pack();
-		}
-	}
-	private void handleInTransitClick(ActionEvent e) {
-		initializeStartingBlockCombo();
-		initializeDestinationBlockCombo();
-		initiateFrame.pack();
-	}
-	private void handleAutoRunClick(ActionEvent e) {
-// here add code for requesting automatic running and remove the message below.
-		javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
-				.getString("NoAutoRunMessage"), rb.getString("InformationTitle"),
-						javax.swing.JOptionPane.INFORMATION_MESSAGE);
-		autoRunBox.setSelected(false);
-	}
-	private void handleStartingBlockSelectionChanged(ActionEvent e) {
-		initializeDestinationBlockCombo();
-		initiateFrame.pack();
-	}
-	private void cancelInitiateTrain(ActionEvent e) {
-		initiateFrame.setVisible(false);
-		initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
-		initiateFrame = null;
-	}
-	private void addNewTrain(ActionEvent e) {
-		// get information
-		if (selectedTransit==null) {
-			// no transits available
-			JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error15"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-			cancelInitiateTrain(null);
-			return;
-		}				
-		String transitName = selectedTransit.getSystemName();
-		String trainName = "";
-		int index = startingBlockBox.getSelectedIndex();
-		if (index<0) return;
-		String startBlockName = ((Block)startingBlockBoxList.get(index)).getSystemName();
-		int startBlockSeq = ((Integer)startingBlockSeqList.get(index)).intValue();
-		index = destinationBlockBox.getSelectedIndex();
-		if (index<0) return;
-		String endBlockName = ((Block)destinationBlockBoxList.get(index)).getSystemName();
-		int endBlockSeq = ((Integer)destinationBlockSeqList.get(index)).intValue();
-		boolean autoRun = autoRunBox.isSelected();
-		int tSource = 0;
-		String dccAddress = "unknown";
-		if (_TrainsFromRoster) {
-			index = trainSelectBox.getSelectedIndex();
-			if (index<0) {
-				// no trains available
-				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error14"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				cancelInitiateTrain(null);
-				return;
-			}				
-			trainName = (String)trainSelectBox.getSelectedItem();
-			RosterEntry r = (RosterEntry)trainBoxList.get(index);
-			dccAddress = r.getDccAddress();
-			tSource = ActiveTrain.ROSTER;
-		}
-		else if (_TrainsFromTrains) {
-			tSource = ActiveTrain.OPERATIONS;
-			index = trainSelectBox.getSelectedIndex();
-			if (index<0) {
-				// no trains available
-				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error14"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				cancelInitiateTrain(null);
-				return;
-			}
-			trainName = (String)trainSelectBox.getSelectedItem();
-		}
-		else if (_TrainsFromUser) {
-			trainName = trainNameField.getText();
-			if ( (trainName==null) || trainName.equals("") ) {
-				// no train name entered
-				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error14"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			if (!isTrainFree(trainName)) {
-				// train name is already in use by an Active Train
-				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
-						"Error24"),new Object[] { trainName }), rb.getString("ErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);	
-				return;
-			}	
-			dccAddress = dccAddressField.getText();
-			int address = -1;
-			try {
-				address = Integer.parseInt(dccAddress);
-			}
-			catch (Exception ex) {
-				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error23"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				log.error ("Conversion exception in dccAddress field");
-				return;
-			}
-			if ( (address<1) || (address>9999) ) {
-				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error23"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			tSource = ActiveTrain.USER;
-		}
-		int priority = 5;
-		try {
-			priority = Integer.parseInt(priorityField.getText());
-		} 
-		catch (Exception ex) {
-			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
-						"BadEntry"),new Object[] { priorityField.getText() }), rb.getString("ErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);		
-			log.error ("Conversion exception in priority field");
-			return;
-		}
-		// create a new Active Train
-		ActiveTrain at = createActiveTrain ( transitName, trainName, tSource, startBlockName, startBlockSeq, 
-					endBlockName, endBlockSeq, autoRun, dccAddress, priority, true, initiateFrame);
-		if (at==null) return;  // error message sent by createActiveTrain
-		initiateFrame.setVisible(false);
-		initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
-		initiateFrame = null;
-	}	
-	private void initializeFreeTransitsCombo() {
-		ArrayList allTransits = (ArrayList)transitManager.getSystemNameList();
-		transitSelectBox.removeAllItems();
-		transitBoxList.clear();
-		for (int i = 0; i<allTransits.size(); i++) {
-			String tName = (String)allTransits.get(i);
-			Transit t = transitManager.getBySystemName(tName);
-			boolean free = true;
-			for (int j = 0; j<activeTrainsList.size(); j++) {
-				ActiveTrain at = (ActiveTrain)activeTrainsList.get(j);
-				if (t == at.getTransit()) free = false;
-			}
-			if (free) {
-				transitBoxList.add((Object)t);
-				if ( (t.getUserName()!=null) && (!t.getUserName().equals("")) )
-					tName = tName+"( "+t.getUserName()+" )";
-				transitSelectBox.addItem(tName);
-			}
-		}
-		if (transitBoxList.size()>0) {
-			transitSelectBox.setSelectedIndex(0);
-			selectedTransit = (Transit)transitBoxList.get(0);
-		}
-		else {
-			selectedTransit = null;
-		}
-	}
-	private void initializeFreeTrainsCombo() {
-		trainSelectBox.removeAllItems();
-		trainBoxList.clear();
-		if (_TrainsFromRoster) {
-			// initialize free trains from roster
-			List l = Roster.instance().matchingList(null, null, null, null, null, null, null );
-			if (l.size()>0) {
-				for (int i = 0; i<l.size(); i++) {
-					RosterEntry r = (RosterEntry)l.get(i);
-					String rName = r.titleString();
-					if (isTrainFree(rName)) {
-						trainBoxList.add((Object)r);
-						trainSelectBox.addItem(rName);
-					}
-				}
-			}
-		}
-		else if (_TrainsFromTrains) {
-			// initialize free trains from operations
-			List l = TrainManager.instance().getTrainsByNameList();
-			if (l.size()>0) {
-				for (int i = 0; i<l.size(); i++) {
-					String rName = (String)l.get(i);
-					Train t = TrainManager.instance().getTrainByName(rName);
-					if (t!=null) {
-						if (isTrainFree(rName)) {
-							trainSelectBox.addItem(rName);
-						}
-					}
-				}
-			}	
-		}
-		if (trainBoxList.size()>0) {
-			trainSelectBox.setSelectedIndex(0);
-			selectedTrain = (String)trainSelectBox.getSelectedItem();
-		}
-		else {
-			selectedTrain = "";
-		}
-	}
-	private boolean isTrainFree (String rName) {
-		for (int j = 0; j<activeTrainsList.size(); j++) {
-			ActiveTrain at = (ActiveTrain)activeTrainsList.get(j);
-			if (rName.equals(at.getTrainName())) return false;
-		}
-		return true;
-	}
-		
-	private void initializeStartingBlockCombo() {
-		startingBlockBox.removeAllItems();
-		startingBlockBoxList.clear();
-		if (inTransitBox.isSelected()) {
-			startingBlockBoxList = selectedTransit.getInternalBlocksList();
-		}
-		else {
-			startingBlockBoxList = selectedTransit.getEntryBlocksList();
-		}
-		startingBlockSeqList = selectedTransit.getBlockSeqList();
-		for (int i = 0; i<startingBlockBoxList.size(); i++) {
-			Block b = (Block)startingBlockBoxList.get(i);
-			int seq = ((Integer)startingBlockSeqList.get(i)).intValue();
-			startingBlockBox.addItem(getBlockName(b)+"-"+seq);
-		}
-	}
-	private void initializeDestinationBlockCombo() {
-		destinationBlockBox.removeAllItems();
-		destinationBlockBoxList.clear();
-		int index = startingBlockBox.getSelectedIndex();
-		if (index<0) return;
-		Block startBlock = (Block)startingBlockBoxList.get(index);
-		destinationBlockBoxList = selectedTransit.getDestinationBlocksList(
-					startBlock, inTransitBox.isSelected());
-		destinationBlockSeqList = selectedTransit.getDestBlocksSeqList();
-		for (int i = 0; i<destinationBlockBoxList.size(); i++) {
-			Block b = (Block)destinationBlockBoxList.get(i);
-			String bName = getBlockName(b);
-			if (selectedTransit.getBlockCount(b)>1) {
-				int seq = ((Integer)destinationBlockSeqList.get(i)).intValue();
-				bName = bName+"-"+seq;
-			}
-			destinationBlockBox.addItem(bName);
-		}
-	}
-	private String getBlockName(Block b) {
-		if (b!=null) {
-			String sName = b.getSystemName();
-			String uName = b.getUserName();
-			if ( (uName!=null) && (uName!="") ) {
-				return (sName+"( "+uName+" )");
-			}
-			return sName;
-		}
-		return " ";
-	}
 	
 	// show all allocated Sections
 	JmriJFrame allocatedSectionsFrame = null;
@@ -1432,6 +1059,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	}
 	protected boolean getShortNameInBlock() {return _ShortNameInBlock;}
 	protected void setShortNameInBlock(boolean set) {_ShortNameInBlock = set;}
+	protected int getScale() {return _LayoutScale;}
+	protected void setScale(int sc) {_LayoutScale = sc;}
+	protected ArrayList getActiveTrainsList() {return activeTrainsList;}
+	protected void newTrainDone() {newTrainActive = false;}
 	
 	static DispatcherFrame _instance = null;
     static public DispatcherFrame instance() {

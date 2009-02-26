@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -108,6 +108,7 @@ public class OptionsMenu extends JMenu {
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
+	JComboBox layoutScaleBox = new JComboBox();
 	
 	private void optionWindowRequested(ActionEvent e) {
 		if (optionsFrame == null) {
@@ -162,6 +163,12 @@ public class OptionsMenu extends JMenu {
 			p7.add(nameInBlockCheckBox);
 			nameInBlockCheckBox.setToolTipText(rb.getString("NameInBlockBoxHint"));
 			optionsPane.add(p7);
+			JPanel p8 = new JPanel();
+			initializeScaleCombo();
+			p8.add(new JLabel(rb.getString("LayoutScale")+":"));
+			p8.add(layoutScaleBox); 
+			layoutScaleBox.setToolTipText(rb.getString("ScaleBoxHint"));
+			optionsPane.add(p8);
 			optionsPane.add(new JSeparator());
 			JPanel p9 = new JPanel();
 			p9.setLayout(new FlowLayout());
@@ -225,6 +232,7 @@ public class OptionsMenu extends JMenu {
 		}
 		dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
+		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
 		optionsFrame = null;
@@ -267,6 +275,13 @@ public class OptionsMenu extends JMenu {
 			layoutEditorBox.setSelectedIndex(0);
 		}
 		return true;
+	}
+	private void initializeScaleCombo() {
+		layoutScaleBox.removeAllItems();
+		for (int i=0; i<Scale.NUM_SCALES; i++) {
+			layoutScaleBox.addItem(Scale.getScaleID(i+1));
+		}
+		layoutScaleBox.setSelectedIndex(dispatcher.getScale()-1);
 	}
    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OptionsMenu.class.getName());
