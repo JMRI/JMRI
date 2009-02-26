@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-2.dtd,v 1.2 2009-01-20 12:20:44 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-5-2.dtd,v 1.3 2009-02-26 20:01:56 djduchamp Exp $ -->
 
 <!-- This DTD is part of version 2.5.2 development.  Do not modify it       -->
 <!-- after version 2.5.2 is released.  For more information,                -->
@@ -491,6 +491,8 @@
 <!ELEMENT block (sensor?, path*) >
     <!ATTLIST block systemName		CDATA #REQUIRED>
     <!ATTLIST block userName		CDATA #IMPLIED>
+    <!ATTLIST block length		CDATA #IMPLIED>
+    <!ATTLIST block curve		CDATA #IMPLIED>
 
     <!ELEMENT path (beansetting*) >
         <!ATTLIST path todir	CDATA #REQUIRED>
