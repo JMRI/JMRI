@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+@SuppressWarnings("unused")
 
 /**
  * Frame to display NCE cabs
@@ -46,10 +48,10 @@ import jmri.jmrix.nce.NceTrafficController;
  * Bits 0 and 7 indicate the type of cab being use this session at this cab
  * address
  * 
- * Bit 0,7 = 0,0 Procab or other cab with an LCD display 
- * Bit 0,7 = 0,1 Cab04 other cab without an LCD 
- * Bit 0,7 = 1,0 USB or similar device 
- * Bit 0,7 = 1,1 AIU or similar device
+ * Bit 7,0 = 0,0 Procab or other cab with an LCD display 
+ * Bit 7,0 = 0,1 Cab04 other cab without an LCD 
+ * Bit 7,0 = 1,0 USB or similar device 
+ * Bit 7,0 = 1,1 AIU or similar device
  * 
  * 
  * CAB_BASE EQU 0 ; 
@@ -98,7 +100,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 
  * FLAGS2 EQU 93 
  * 				;bit 0 = \ 
- * 				;bit 1 = >Number of recalls for this cab 
+ * 				;bit 1 =  >Number of recalls for this cab 
  * 				;bit 2 = / 1-6 valid 
  * 				;bit 3 = 1=refresh LCD on ProCab 
  * 				;bit 4 = Do not use 
@@ -117,17 +119,18 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
-
+	
 	private static final int CS_CAB_MEM = 0x8800;	// start of NCE CS cab context page for cab 0
 													// memory
 	private static final int CAB_SIZE = 256;		// Each cab has 256 bytes
 	private static final int CAB_CURR_SPEED = 32;	// NCE cab speed
-	//private static final int CAB_ADDR_H = 33; 		//loco address, high byte
-	//private static final int CAB_ADDR_L = 34; 		//loco address, low byte
+	private static final int CAB_ADDR_H = 33; 		//loco address, high byte
+	private static final int CAB_ADDR_L = 34; 		//loco address, low byte
+	private static final int CAB_FLAGS = 35;		//FLAGS
 	private static final int CAB_FLAGS1 = 101;		// NCE flag 1
 	private static final int CAB_MAX = 64;			// There are up to 64 cabs
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
@@ -137,8 +140,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private int waiting = 0;						// to catch responses not
 													// intended for this module
 	private static final int FLAGS1_PROCAB = 0x02;	// bit 0=0, bit 1=1, bit 7=0;
-	private static final int FLAGS1_CAB04 = 0x82;	// bit 0=0, bit 1=1, bit 7=1;
-	private static final int FLAGS1_USB = 0x03;		// bit 0=1, bit 1=1, bit 7=0;
+	private static final int FLAGS1_CAB04 = 0x03;	// bit 0=1, bit 1=1, bit 7=0;
+	private static final int FLAGS1_USB = 0x82;		// bit 0=0, bit 1=1, bit 7=1;
 	private static final int FLAGS1_AIU = 0x83;		// bit 0=1, bit 1=1, bit 7=1;
 	private static final int FLAGS1_MASK = 0x83;	// Only bits 0,1, and 7.
 	
@@ -156,7 +159,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     JButton refreshButton = new JButton("Refresh");
     
     // check boxes
-    
+    JCheckBox checkBoxActive = new JCheckBox ("Active");
     // text field
     
     // for padding out panel
@@ -171,7 +174,6 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         cabsPane = new JScrollPane(cabsPanel);
     	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     }
- 
 
     public void initComponents() throws Exception {
     	// the following code sets the frame's initial state
@@ -179,12 +181,17 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	setTitle("Show NCE Cabs");
     	getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
     	cabsPane.setVisible(false);
+    	//cabsPane.setMinimumSize(new Dimension(300,300));
     	
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
     	// row 1
+    	refreshButton.setToolTipText("Press to reload table");
+    	checkBoxActive.setToolTipText("Show only active cabs when selected");
+    	checkBoxActive.setSelected(true);
     	addItem(p1, refreshButton, 2, 1);
     	addItem(p1, textStatus, 3, 1);
+    	addItem(p1, checkBoxActive, 4, 1);
     	
     	// row 2
     	addItem(p1, space1, 2, 2);
@@ -203,10 +210,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     	// set frame size for display
     	pack();
-    	setSize(300, 400);
+    	setSize(350, 350);
     }
 
-    // Show buttons
+    // refresh button
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	if (ae.getSource() == refreshButton) {
     		refreshPanel();
@@ -214,10 +221,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	}
  
     private void refreshPanel(){
-    	textStatus.setText("Reading NCE memory");
     	// Set up a separate thread to read CS memory
         if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
         	return; // thread is already running
+    	textStatus.setText("Reading NCE memory");
         waiting = 0;
     	NceCabUpdateThread = new Thread(new Runnable() {
     		public void run() {
@@ -229,59 +236,82 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	NceCabUpdateThread.start();
     }
     
-    // Thread to update cab info, protects receive and xmt threads
+    // Thread to update cab info, allows the use of sleep or wait
     private void cabUpdate() {	
     	cabsPanel.removeAll();
     	cabsPanel.setLayout(new GridBagLayout());
         // build table of cabs
-        for (int i=0; i<CAB_MAX; i++){
+        for (int i=1; i<CAB_MAX; i++){
         	JLabel number = new JLabel();
-        	number.setText(Integer.toString(i));
-        	addItem(cabsPanel, number, 1, 4+i);
         	JLabel type = new JLabel();
-        	addItem(cabsPanel, type, 2, 4+i);
-        	JLabel address = new JLabel();
-        	addItem(cabsPanel, address, 3, 4+i);
+         	JLabel address = new JLabel();
            	JLabel speed = new JLabel();
-        	addItem(cabsPanel, speed, 4, 4+i);
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
         	log.debug("Read flag1 character "+recChar);
-        	recChar = recChar & FLAGS1_MASK; // mask off don't care bits
-        	if (recChar == FLAGS1_PROCAB)
+        	int flags1 = recChar & FLAGS1_MASK; // mask off don't care bits
+        	if (flags1 == FLAGS1_PROCAB)
         		type.setText("ProCab");
-        	else if (recChar == FLAGS1_CAB04) 
+        	else if (flags1 == FLAGS1_CAB04) 
         		type.setText("Cab04");
-           	else if (recChar == FLAGS1_USB)
+           	else if (flags1 == FLAGS1_USB)
         		type.setText("USB");
-            else if (recChar == FLAGS1_AIU)
+            else if (flags1 == FLAGS1_AIU)
         		type.setText("AIU");
-            else
+            else {
+            	if (checkBoxActive.isSelected())
+            		continue;
             	type.setText("unknown");
+            }
+        	// add items to table
+        	addItem(cabsPanel, number, 1, 4+i);
+        	number.setText(Integer.toString(i));
+        	addItem(cabsPanel, type, 2, 4+i);
+        	addItem(cabsPanel, address, 3, 4+i);
+          	addItem(cabsPanel, speed, 4, 4+i);
+          	if (flags1 == FLAGS1_AIU)
+          		continue;
+          	// read 16 bytes of memory, we need 4 of them
         	readCabMemory16(i, CAB_CURR_SPEED);
         	if (!waitNce())
         		return;
-        	int recChar = recChars[0];
-        	log.debug("Read speed character "+Integer.toString(recChar));
-        	speed.setText(Integer.toString(recChar));
-        	recChar = recChars[1];
-        	log.debug("Read address high character "+recChar);
-        	int locoAddress = (recChar & 0x3F) *256;
-        	recChar = recChars[2];
-        	log.debug("Read address low character "+recChar);
-        	locoAddress = locoAddress + (recChar & 0xFF);
+        	// read the Speed byte
+        	int readChar = recChars[0];
+        	log.debug("Read speed character "+Integer.toString(readChar));
+        	String sped = Integer.toString(readChar);
+        	// read the FLAG byte
+        	readChar = recChars[3];
+        	int direction = readChar & 0x04;
+        	if (direction > 0)
+        		sped = sped + " F";
+        	else
+        		sped = sped + " R";
+        	int mode = readChar & 0x02;
+        	// USB doesn't use the 28/128 bit
+        	if (flags1 != FLAGS1_USB){
+        		if (mode > 0)
+        			sped = sped + " / 128";
+        		else
+        			sped = sped + " / 28";
+        	}
+        	speed.setText(sped);
+        	// read the high address byte
+        	readChar = recChars[1];
+        	log.debug("Read address high character "+readChar);
+        	int locoAddress = (readChar & 0x3F) *256;
+        	// read the low address byte
+        	readChar = recChars[2];
+        	log.debug("Read address low character "+readChar);
+        	locoAddress = locoAddress + (readChar & 0xFF);
         	address.setText(Integer.toString(locoAddress));
         }
-        
-    	// set frame size for display
-    	//pack();
-    	//setSize(300, getHeight());
     	validate();
     	cabsPane.setVisible(true);
     	textStatus.setText("");
     }
     
+    // puts the thread to sleep while we wait for the read CS memory to complete
     private boolean waitNce(){
     	int count = 100;
        	while (waiting > 0){
@@ -340,10 +370,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 		NceTrafficController.instance().sendNceMessage(m, this);
     }
     
-    // Reads 1 byte of NCE cab memory 
+    // Reads 16 bytes of NCE cab memory 
     private void readCabMemory16(int cabNum, int offset) {
        	int nceCabAddr = (cabNum * CAB_SIZE) + CS_CAB_MEM + offset;
-    	replyLen = REPLY_16;			// Expect 1 byte response
+    	replyLen = REPLY_16;			// Expect 16 byte response
     	waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
