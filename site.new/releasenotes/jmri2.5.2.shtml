@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.18 2009-02-26 21:49:24 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.19 2009-03-01 01:35:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -241,6 +241,16 @@ and improved the associated help files.
 <p>
 David Duchamp added saving and restoring train setup information 
 and the ability to select layout scale to Dispatcher.
+
+<p>
+Dan Boudreau added a tool to the NCE menu that
+provides a table of active NCE cabs addresses.
+
+<p>
+Matt Harris has created a new, much more professional Windows installer.
+
+<p>
+
 
 <!--#include virtual="/Footer" -->
 
