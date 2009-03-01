@@ -36,7 +36,7 @@ import org.jdom.Attribute;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -135,6 +135,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 					else {
 						log.error("Priority missing when reading TrainInfoFile "+name);
 					}
+					if (traininfo.getAttribute("resetwhendone")!=null) {
+						tInfo.setResetWhenDone(true);
+						if (traininfo.getAttribute("resetwhendone").getValue().equals("no"))
+							tInfo.setResetWhenDone(false);
+					}
 					if (traininfo.getAttribute("autorun")!=null) {
 						tInfo.setRunAuto(true);
 						if (traininfo.getAttribute("autorun").getValue().equals("no"))
@@ -177,6 +182,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		traininfo.setAttribute("trainfromtrains", ""+(tf.getTrainFromTrains()?"yes":"no"));
 		traininfo.setAttribute("trainfromuser", ""+(tf.getTrainFromUser()?"yes":"no"));
 		traininfo.setAttribute("priority", tf.getPriority());
+		traininfo.setAttribute("resetwhendone", ""+(tf.getResetWhenDone()?"yes":"no"));
 		traininfo.setAttribute("autorun", ""+(tf.getRunAuto()?"yes":"no"));
 
 		root.addContent(traininfo);

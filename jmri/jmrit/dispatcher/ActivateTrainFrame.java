@@ -39,7 +39,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 
@@ -88,6 +88,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 	private JButton saveButton = null;
 	private JCheckBox autoRunBox = new JCheckBox(rb.getString("AutoRun"));
 	private JTextField priorityField = new JTextField(6);
+	private JCheckBox resetWhenDoneBox = new JCheckBox(rb.getString("ResetWhenDone"));
 	
 	/**
 	 * Displays a window that allows a new ActiveTrain to be activated
@@ -128,7 +129,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			// add items relating to both manually run and automatic trains.
             JPanel p1 = new JPanel(); 
 			p1.setLayout(new FlowLayout());
-			p1.add(new JLabel(rb.getString("TransitBoxLabel")+":"));
+			p1.add(new JLabel(rb.getString("TransitBoxLabel")+" :"));
 			p1.add(transitSelectBox);
             transitSelectBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -161,7 +162,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			initiatePane.add(p2);
             JPanel p3 = new JPanel(); 
 			p3.setLayout(new FlowLayout());
-			p3.add(new JLabel(rb.getString("StartingBlockBoxLabel")+":"));
+			p3.add(new JLabel(rb.getString("StartingBlockBoxLabel")+" :"));
 			p3.add(startingBlockBox);
 			startingBlockBox.setToolTipText(rb.getString("StartingBlockBoxHint"));
             startingBlockBox.addActionListener(new ActionListener() {
@@ -176,13 +177,24 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			p4.add(destinationBlockBox);
 			destinationBlockBox.setToolTipText(rb.getString("DestinationBlockBoxHint"));
 			initiatePane.add(p4);
-            JPanel p5 = new JPanel(); 
-			p5.setLayout(new FlowLayout());
-			p5.add(new JLabel(rb.getString("PriorityLabel")+":"));
-			p5.add(priorityField);
+            JPanel p6 = new JPanel(); 
+			p6.setLayout(new FlowLayout());
+			p6.add(new JLabel(rb.getString("PriorityLabel")+" :"));
+			p6.add(priorityField);
 			priorityField.setToolTipText(rb.getString("PriorityHint"));
 			priorityField.setText("5");    
-			p5.add(new JLabel("     "));
+			p6.add(new JLabel("     "));
+			p6.add(resetWhenDoneBox);
+            resetWhenDoneBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    handleResetWhenDoneClick(e);
+                }
+            });
+			resetWhenDoneBox.setToolTipText(rb.getString("ResetWhenDoneBoxHint"));
+			initiatePane.add(p6);
+			initiatePane.add(new JSeparator());
+            JPanel p5 = new JPanel(); 
+			p5.setLayout(new FlowLayout());
 			p5.add(autoRunBox);
             autoRunBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -257,6 +269,14 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		initializeDestinationBlockCombo();
 		initiateFrame.pack();
 	}
+	private void handleResetWhenDoneClick(ActionEvent e) {
+		if (!selectedTransit.canBeResetWhenDone()) {
+			resetWhenDoneBox.setSelected(false);
+			javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
+					.getString("NoResetMessage"), rb.getString("InformationTitle"),
+						javax.swing.JOptionPane.INFORMATION_MESSAGE);
+		}			
+	}
 	private void handleAutoRunClick(ActionEvent e) {
 // here add code for requesting automatic running and remove the message below.
 		javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
@@ -294,6 +314,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		String endBlockName = ((Block)destinationBlockBoxList.get(index)).getSystemName();
 		int endBlockSeq = ((Integer)destinationBlockSeqList.get(index)).intValue();
 		boolean autoRun = autoRunBox.isSelected();
+		boolean resetWhenDone = resetWhenDoneBox.isSelected();
 		int tSource = 0;
 		String dccAddress = "unknown";
 		if (_TrainsFromRoster) {
@@ -367,8 +388,9 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			return;
 		}
 		// create a new Active Train
-		ActiveTrain at = _dispatcher.createActiveTrain ( transitName, trainName, tSource, startBlockName, startBlockSeq, 
-					endBlockName, endBlockSeq, autoRun, dccAddress, priority, true, initiateFrame);
+		ActiveTrain at = _dispatcher.createActiveTrain ( transitName, trainName, tSource, startBlockName, 
+					startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority, 
+						resetWhenDone, true, initiateFrame);
 		if (at==null) return;  // error message sent by createActiveTrain
 		else if (autoRunBox.isSelected()) {
 		
@@ -605,6 +627,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		setComboBox(startingBlockBox, info.getStartBlockName());
 		setComboBox(destinationBlockBox, info.getDestinationBlockName());
 		priorityField.setText(info.getPriority());
+		resetWhenDoneBox.setSelected(info.getResetWhenDone());
 		autoRunBox.setSelected(info.getRunAuto());
 // here add items for auto running		
 		
@@ -627,6 +650,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		info.setTrainFromTrains(_TrainsFromTrains);
 		info.setTrainFromUser(_TrainsFromUser);
 		info.setPriority(priorityField.getText());
+		info.setResetWhenDone(resetWhenDoneBox.isSelected());
 		info.setRunAuto(autoRunBox.isSelected());
 // here add auto run items to Train Info object
 		

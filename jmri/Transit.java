@@ -48,7 +48,7 @@ import java.util.List;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -339,7 +339,24 @@ public class Transit extends AbstractNamedBean
 		}
 		return list;
 	}
-											
+	
+	/**
+	 * Determines whether this Transit is capable of continuous running.  That is, after an  
+	 *	   Active Train completes the Transit, can it automatically be set up to start again?
+	 *  To be resetable, the first Section and the last Section must be the same Section, and
+	 *	   the first and last Sections must be defined to run in the same direction.
+	 * Returns 'true' if continuous running is possible, returns 'false' otherwise.
+	 */
+	public boolean canBeResetWhenDone() {
+		TransitSection firstTS = (TransitSection)mTransitSectionList.get(0);
+		TransitSection lastTS = (TransitSection)mTransitSectionList.get(mTransitSectionList.size()-1);
+		if (firstTS.getSection() != lastTS.getSection())
+			return false;
+		// same Section, check direction
+		if (firstTS.getDirection() != lastTS.getDirection())
+			return false;		
+		return true;
+	}											
 	    
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Transit.class.getName());
 	

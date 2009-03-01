@@ -46,7 +46,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -577,6 +577,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	 *    dccAddress - required if "autoRun" is "true", set to null otherwise
 	 *    priority - any integer, higher number is higher priority. Used to arbitrate allocation 
 	 *            request conflicts
+	 *    resetWhenDone - set to "true" if the Active Train is capable of continuous running and the 
+	 *		      user has requested that it be automatically reset for another run thru its Transit
+	 *            each time it completes running through its Transit. 
 	 *    showErrorMessages - "true" if error message dialogs are to be displayed for detected errors
 	 *            Set to "false" to suppress error message dialogs from this method.
 	 *    frame - window request is from, or "null" if not from a window
@@ -585,7 +588,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	 */
 	public ActiveTrain createActiveTrain (String transitID, String trainID, int tSource, String startBlockName, 
 				int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber, 
-				boolean autoRun, String dccAddress, int priority, boolean showErrorMessages, JmriJFrame frame) {
+				boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean showErrorMessages, 
+				JmriJFrame frame) {
 		// validate input
 		Transit t = transitManager.getTransit(transitID);
 		if (t==null) {
@@ -687,6 +691,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			log.error("Invalid sequence number '"+endBlockSectionSequenceNumber+"' when attempting to create an Active Train");
 			return null;
 		}
+		if ( resetWhenDone && (!t.canBeResetWhenDone()) ) {
+			if (showErrorMessages) {
+				JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+						"Error26"),new Object[] {(t.getSystemName()+"("+t.getUserName()+")") }), 
+								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+			}
+			log.error("Incompatible Transit set up and request to Reset When Done when attempting to create an Active Train");
+			return null;
+		}
 		if ( autoRun && ( (dccAddress==null) || dccAddress.equals("") ) ) {
 			if (showErrorMessages) {
 				JOptionPane.showMessageDialog(frame, rb.getString("Error10"), 
@@ -713,10 +726,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		at.setEndBlock(endBlock);
 		at.setEndBlockSection(t.getSectionFromBlockAndSeq(endBlock,endBlockSectionSequenceNumber));
 		at.setEndBlockSectionSequenceNumber(endBlockSectionSequenceNumber);
+		at.setResetWhenDone(resetWhenDone);
 		at.setPriority(priority);
 		at.setAutoRun(autoRun);
 		at.setDccAddress(dccAddress);
-		at.initializeFirstAllocation();
+		AllocationRequest ar = at.initializeFirstAllocation();
+		if (ar!=null) {
+			if ((ar.getSection()).containsBlock(at.getStartBlock())) {
+				// Active Train is in the first Section, go ahead and allocate it
+				AllocatedSection als = allocateSection(ar,null);
+				if (als==null) {
+					log.error("Problem allocating the first Section of the Active Train - "+at.getActiveTrainName());
+				}
+			}
+		}
 		activeTrainsTableModel.fireTableDataChanged();
 		if (allocatedSectionTableModel!=null) {
 			allocatedSectionTableModel.fireTableDataChanged();

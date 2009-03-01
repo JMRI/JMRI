@@ -78,7 +78,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ActiveTrain {
 
@@ -129,6 +129,7 @@ public class ActiveTrain {
 	private int mMode = DISPATCHED;
 	private java.util.ArrayList mAllocatedSections = new java.util.ArrayList();
 	private jmri.Section mLastAllocatedSection = null;
+	private jmri.Section mSecondAllocatedSection = null;
 	private jmri.Section mNextSectionToAllocate = null;
 	private int mNextSectionSeqNumber = 0;
 	private int mNextSectionDirection = 0;
@@ -140,6 +141,8 @@ public class ActiveTrain {
 	private int mPriority = 0;
 	private boolean mAutoRun = false;
 	private String mDccAddress = "";
+// djd debugging
+	private boolean mResetWhenDone = true;   
 	
 	/**
      * Access methods 
@@ -219,6 +222,9 @@ public class ActiveTrain {
 			if (mStatus==WAITING) {
 				setStatus(RUNNING);
 			}
+			if (as.getSequence()==2) {
+				mSecondAllocatedSection = as.getSection();
+			}
 		}
 		else {
 			log.error("Null Allocated Section reference in addAllocatedSection of ActiveTrain");
@@ -244,6 +250,13 @@ public class ActiveTrain {
 				mLastAllocatedSection = ((AllocatedSection)mAllocatedSections.get(
 								mAllocatedSections.size()-1)).getSection();
 			}
+		}
+		if ( (mResetWhenDone) && (mAllocatedSections.size()==1) && (mNextSectionToAllocate==null) ) {
+			AllocatedSection las = (AllocatedSection)mAllocatedSections.get(0);
+			las.resetToBeginning();
+			mNextSectionToAllocate = mSecondAllocatedSection;
+			mNextSectionSeqNumber = 2;
+			mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(mNextSectionToAllocate,2);
 		}	
 	}
 	public java.util.ArrayList getAllocatedSectionList() {
@@ -288,14 +301,17 @@ public class ActiveTrain {
 	public void setAutoRun(boolean autoRun) {mAutoRun = autoRun;}
 	public String getDccAddress() {return mDccAddress;}
 	public void setDccAddress(String dccAddress) {mDccAddress = dccAddress;}
+	public boolean getResetWhenDone() {return mResetWhenDone;}
+	public void setResetWhenDone(boolean s) {mResetWhenDone = s;}
+	protected jmri.Section getSecondAllocatedSection() {return mSecondAllocatedSection;}
 		
 	/**
 	 * Operating methods
 	 */
-	public void initializeFirstAllocation() {
+	public AllocationRequest initializeFirstAllocation() {
 		if (mAllocatedSections.size()>0) {
 			log.error("ERROR - Request to initialize first allocation, when allocations already present");
-			return;
+			return null;
 		}
 		if ( (mStartBlockSectionSequenceNumber>0) && (mStartBlock!=null) ) {
 			mNextSectionToAllocate = mTransit.getSectionFromBlockAndSeq(mStartBlock,
@@ -306,7 +322,7 @@ public class ActiveTrain {
 				if (mNextSectionToAllocate==null) {
 					log.error("ERROR - Cannot find Section for first allocation of ActiveTrain"+
 																		getActiveTrainName());
-					return;
+					return null;
 				}
 			}				
 			mNextSectionSeqNumber = mStartBlockSectionSequenceNumber;
@@ -315,7 +331,7 @@ public class ActiveTrain {
 		}
 		else {
 			log.error("ERROR - Insufficient information to initialize first allocation");
-			return;
+			return null;
 		}
 		AllocationRequest ar = DispatcherFrame.instance().requestAllocation(this,
 				mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null);	
@@ -324,6 +340,7 @@ public class ActiveTrain {
 			mStartBlock.setValue((Object)mTrainName);
 		}
 // here add code to start a throttle and start running the train if it is in autoRun
+		return ar;
 	}
 	
 	public void terminate() {

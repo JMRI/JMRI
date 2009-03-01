@@ -12,7 +12,7 @@ package jmri.jmrit.dispatcher;
  *		TrainInfoFile.java and dispatcher-traininfo.DTD as well as this module.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TrainInfo {
 
@@ -31,6 +31,7 @@ public class TrainInfo {
 	boolean trainFromUser = false;
 	String priority = "";
 	boolean autoRun = false;
+	boolean resetWhenDone = false;
 	
 	// instance variables for automatic operation 
 	
@@ -61,6 +62,8 @@ public class TrainInfo {
 	protected String getPriority() {return priority;}
 	protected void setRunAuto(boolean b) {autoRun = b;}
 	protected boolean getRunAuto() {return autoRun;}
+	protected void setResetWhenDone(boolean b) {resetWhenDone = b;}
+	protected boolean getResetWhenDone() {return resetWhenDone;}
 	
 	/**
      * Access methods for automatic operation instance variables

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitTable.shtml,v 1.4 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: TransitTable.shtml,v 1.5 2009-03-01 18:48:38 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -124,8 +124,23 @@ be brought up that will allow you to define the Sections in the new Transit.
 (Obviously, Sections must be defined before any Transit can be created.) Since a 
 Transit may be used in only one Active Train at a time, the Duplicate option 
 (see above) may save time when creating multiple copies of the same Transit.</p>
+<H2>Setting up for Continuous Running
+</H2>
+<p> A Transit may be set up for continuous running, allowing an Active Train to 
+travel through its Transit multiple times without being terminated and 
+re-activated. Provided its Transit is set up for continuous running, 
+each time an Active Train completes travelling through its Transit, the Active 
+Train optionally may be automatically reset by Dispatcher so it 
+is ready to run through its Transit again.  For continuous running, an Active 
+Train must start and end in the same Section, and must be pointed in the same 
+direction when starting and when ending. For a Transit to be capable of 
+continuous running, its first Section and its last Section must be the same, 
+and both must be set up for running in the same direction. This applies to 
+both manual running of trains and automatic running of trains. For more 
+information on setting the continuous running option, visit the help file for 
+the <a href="../dispatcher/NewTrain.shtml">Activate New Train</a> window.</p>
 <H2>Saving Transits to Disk
-</H2
+</H2>
 <P> Use the Store item in the File menu to save Transit information to disk. This 
 information is saved with the configuration in an XML file, along
 with control panel setup and similar items.  To store your panels in the same 

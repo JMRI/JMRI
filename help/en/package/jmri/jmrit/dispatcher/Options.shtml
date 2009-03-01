@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Options.shtml,v 1.4 2009-02-05 23:54:11 djduchamp Exp $ -->
+<!-- $Id: Options.shtml,v 1.5 2009-03-01 18:51:26 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,7 +38,7 @@ in the following section.
 </H2
 <p>Selecting <b>Options Window...</b> in the <b>Options</b> menu of the Dispatcher 
 window brings up the window shown below.</p>
-<img src="OptionsWindow.jpg" height="312" width="519">
+<img src="OptionsWindow.jpg" height="346" width="519">
 
 <p>This window shows options currently selected for Dispatcher. To change 
 Dispatcher options, change to the desired option configuration, and 
@@ -85,7 +85,8 @@ activate automatic setting of turnouts. Uncheck to deactivate automatic
 setting of turnouts. This item is equivalent to <b>Auto Set Turnouts</b> in 
 Dispatcher's <b>Options</b> menu. This item requires that "<i>Use connectivity 
 from Layout Editor panel</i>" be checked (see above). Turnouts will not be set 
-unless the Section to be allocated is free and unoccupied. If turnouts cannot be 
+unless the Section to be allocated is free and unoccupied, except for the first
+Section of an Active Train that starts in the Transit. If turnouts cannot be 
 set, the dispatcher will be warned. When setting turnouts, Dispatcher only issues 
 commands to set turnouts; it does not wait for turnouts to actually change.</p>
 </li>
@@ -99,6 +100,8 @@ creating a new Active Train. Uncheck to suppress setting the starting Block
 value to the train name. This feature is designed to facilitate Train 
 Tracking in Layout Editor panels.</p>
 </li>
+<li><p>Select layout scale in the <b>Layout Scale</b> selection box. The selected 
+scale is used in conjunction with Block length in automatic running of trains.
 </ul>
 <p><b>Note: Automated dispatching is not fully implemented in this version of 
 Dispatcher.</b> Some limited function is available, but more will 

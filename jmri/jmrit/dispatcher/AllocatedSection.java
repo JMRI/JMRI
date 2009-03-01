@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AllocatedSection {
 
@@ -74,6 +74,10 @@ public class AllocatedSection {
 	 */
 	private void handleSectionChange(java.beans.PropertyChangeEvent e) {
 		DispatcherFrame.instance().sectionOccupancyChanged();
+	}
+	protected void resetToBeginning() {	
+		mSequence = 1;
+		mNextSection = mActiveTrain.getSecondAllocatedSection();
 	}
 		
 	public void dispose() {
