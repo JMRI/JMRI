@@ -4,11 +4,14 @@ package jmri.jmrit.operations.trains;
  
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -27,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -176,6 +179,14 @@ public class TrainsTableFrame extends OperationsFrame {
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
     	
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
+    
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     	
@@ -261,6 +272,10 @@ public class TrainsTableFrame extends OperationsFrame {
 			sortById.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
+	}
+	
+	public List<String> getSortByList(){
+		return trainsModel.getSelectedTrainList();
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -82,6 +82,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 					.addPropertyChangeListener(this);
 		}
 	}
+    
+    public List<String> getSelectedTrainList(){
+		return sysList;
+    }
 
 	List<String> sysList = null;
 	JTable table = null;
