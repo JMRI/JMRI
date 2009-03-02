@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.19 2009-03-01 01:35:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.20 2009-03-02 00:04:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -250,7 +250,10 @@ provides a table of active NCE cabs addresses.
 Matt Harris has created a new, much more professional Windows installer.
 
 <p>
+Bob Jacobsen updated the RPS support to handle large number of points better.
 
+<p>
+David Duchamp added a continuous running option to Dispatcher.
 
 <!--#include virtual="/Footer" -->
 
