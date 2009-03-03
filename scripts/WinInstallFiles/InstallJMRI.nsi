@@ -35,8 +35,9 @@
 ; -   http://cho.hapgoods.com/wordpress/?p=138
 ; -
 ; - This installer makes use of the following NSIS plugins and macros
-; - that are all included with the NSIS v2.34 or later distribution:
+; - that are all included with the NSIS v2.35 or later distribution:
 ; -   ModernUI 2.0
+; -   MultiUser
 ; -   System
 ; -   nsisDL
 ; -   WordFunc
@@ -48,6 +49,9 @@
 
 ; -------------------------------------------------------------------------
 ; - Version History
+; -------------------------------------------------------------------------
+; - Version 0.1.1.0
+; - Tidied up the previous version check.
 ; -------------------------------------------------------------------------
 ; - Version 0.1.0.0
 ; - First release for production.
@@ -89,7 +93,7 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.5.2"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.0.0"                     ; Installer version
+!define INST_VER  "0.1.1.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 #!define SRCDIR    "Z:\JMRI"                     ; Path to head of sources
 !define SRCDIR    "JMRI"                        ; Path to head of sources
@@ -199,11 +203,9 @@ OutFile "${PNAME}.exe"
 ; - Define pages
 ; -------------------------------------------------------------------------
 !define MUI_TEXT_WELCOME_INFO_TEXT "This wizard will guide you through the installation of $(^NameDA).$\r$\n$\r$\nIt is recommended that you close all other applications before starting Setup. This will make it possible to update relevant system files without having to reboot your computer.$\r$\n$\r$\n$(^NameDA) requires Java Runtime Environment ${JRE_VER} or later installed on your computer. During installation, this wizard will check for Java.$\r$\n$\r$\n$_CLICK"
-#!define MUI_PAGE_CUSTOMFUNCTION_LEAVE CheckJRE ; called later on so that feedback can be seen.
 !insertmacro MUI_PAGE_WELCOME
 #!insertmacro MUI_PAGE_LICENSE "${SRCDIR}\COPYING" ; removed licence page
-Page custom nsDialogRemoveOldJMRI
-Page custom RemoveOldJMRI
+Page custom nsDialogRemoveOldJMRI RemoveOldJMRI
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !define MUI_PAGE_CUSTOMFUNCTION_PRE .onSelChange
 !insertmacro MUI_PAGE_COMPONENTS
