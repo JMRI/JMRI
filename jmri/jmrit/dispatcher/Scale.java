@@ -7,7 +7,7 @@ package jmri.jmrit.dispatcher;
  * <P>
  * *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Scale {
 
@@ -22,15 +22,18 @@ public class Scale {
 	public static final int S = 0x05;   //  1:64
 	public static final int O = 0x06;	//  1:48
 	public static final int G = 0x07;   //  1:24
+	public static final int UK_N = 0x08;  //  1:148
+	public static final int UK_OO = 0x09; //  1:76.2
+	public static final int UK_O = 0x0A;  //  1:43.5
 	
-	public static final int NUM_SCALES = 7;
+	public static final int NUM_SCALES = 10;
 	
 	public static double getScaleFactor (int scale) {
 		switch (scale) {
 			case Z:
 				return (1.0/220.0);
 			case N:
-				return (1.0/260.0);
+				return (1.0/160.0);
 			case TT:
 				return (1.0/120.0);
 			case HO:
@@ -41,6 +44,12 @@ public class Scale {
 				return (1.0/48.0);
 			case G:
 				return (1.0/24.0);
+			case UK_N:
+				return (1.0/148.0);
+			case UK_OO:
+				return (1.0/76.2);
+			case UK_O:
+				return (1.0/43.5);
 			default:
 				return 1.0;
 		}
@@ -62,6 +71,12 @@ public class Scale {
 				return ("O - 1:48");
 			case G:
 				return ("G = 1:24");
+			case UK_N:
+				return ("UK N - 1:148");
+			case UK_OO:
+				return ("UK OO - 1:76.2");
+			case UK_O:
+				return ("UK O - 1:43.5");
 			default:
 				return ("???");
 		}
@@ -84,6 +99,12 @@ public class Scale {
 				return ("O");
 			case G:
 				return ("G");
+			case UK_N:
+				return ("UK-N");
+			case UK_OO:
+				return ("UK-OO");
+			case UK_O:
+				return ("UK-O");
 			default:
 				return ("???");
 		}
