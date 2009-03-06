@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -153,14 +153,22 @@ public class FnMapPanel extends JPanel {
         if (log.isDebugEnabled()) log.debug("Function map complete");
     }
     
-    final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7",
-                                           "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19" };
+    final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", 
+                                           "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19",
+                                           "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28"
+                                            };
     
     final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
-                                            "", "", "", "", "","", "", "", "", ""  };
+                                            "", "", "", "", "","", "", "", "", "",
+                                            "", "", "", "", "","", "", "", "", "",
+                                            "", "", "", "", "","", "", "", "", ""
+                                            };
     
     final String[] outName = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
+                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+                                           "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
+                                           "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"
+                                            };
     
     void saveAt(int row, int column, JComponent j) {
         if (row<0 || column<0) return;
