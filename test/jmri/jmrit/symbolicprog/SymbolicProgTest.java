@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -42,6 +42,7 @@ public class SymbolicProgTest extends TestCase {
     // test suite from all defined tests, including others in the package
     public static Test suite() {
         TestSuite suite = new TestSuite(SymbolicProgTest.class);
+        suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
