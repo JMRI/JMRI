@@ -50,6 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.2.0
+; - Modified offline JRE installer for Windows 98 and ME to look for a JRE
+; - installer in the JRE_98ME sub-directory. This allows for a single CD to
+; - be created for offline distribution.
+; -------------------------------------------------------------------------
 ; - Version 0.1.1.0
 ; - Tidied up the previous version check.
 ; -------------------------------------------------------------------------
@@ -93,7 +98,7 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.5.2"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.1.0"                     ; Installer version
+!define INST_VER  "0.1.2.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 #!define SRCDIR    "Z:\JMRI"                     ; Path to head of sources
 !define SRCDIR    "JMRI"                        ; Path to head of sources
@@ -745,7 +750,15 @@ Function CheckJRE
     ; -- below that of the installer. It needs to be of the format jre*.exe
     ; -- (This is to allow for automatic off-line installation
     ; -- and creation of turn-key distribution CD's)
-    FindFirst $2 $JREINSTALLER "$EXEDIR\JRE\jre*.exe"
+    ; -- For Windows 98 and ME, use the JRE_98ME sub-directory instead.
+    
+    StrCmp $PROFILE "" Win98ME ; -- skip prior to Win2k
+      FindFirst $2 $JREINSTALLER "$EXEDIR\JRE\jre*.exe"
+      Goto OfflineJREInstall
+    Win98ME:
+      FindFirst $2 $JREINSTALLER "$EXEDIR\JRE_98ME\jre*.exe"
+    
+    OfflineJREInstall:
     StrCmp $JREINSTALLER "" DownloadJREQuery
       StrCpy $JREINSTALLER "$EXEDIR\JRE\$JREINSTALLER"
       StrCpy $OFFLINEINSTALL "1"
