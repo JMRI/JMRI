@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -204,6 +204,12 @@ public class SerialNode extends AbstractNode {
      */
     public boolean sensorsActive() { return hasActiveSensors; }
 
+    /**
+     * Public method to set state of Sensors.
+     * Used to disable polling for test purposes only.
+     */
+    public void setSensorsActive(boolean flag) { hasActiveSensors = flag; }
+    
     /**
      * Public method to return number of input cards.
      */
