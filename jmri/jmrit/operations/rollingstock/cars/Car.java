@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -196,6 +196,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 */
 	public String setDestination(Location destination, Track track) {
 		String destinationName = getDestinationName();
+		Track destTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track);
 		// return if not Okay 
 		if (!status.equals(OKAY))
@@ -206,7 +207,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (destinationName.equals("") || (destination != null && track != null))
 			return status;
 		// update load when car reaches a siding
-		if (getTrack().getLocType().equals(Track.SIDING)){
+		if (destTrack.equals(Track.SIDING)){
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
@@ -219,8 +220,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 				setLoad(carLoads.getDefaultEmptyName());
 		}
 		// update load optionally when car reaches staging
-		if (getTrack().getLocType().equals(Track.STAGING)){
-			if (getTrack().isLoadSwapEnabled()){
+		if (destTrack.equals(Track.STAGING)){
+			if (destTrack.isLoadSwapEnabled()){
 				if (getLoad().equals(carLoads.getDefaultEmptyName())){
 					setLoad(carLoads.getDefaultLoadName());
 					return status;
@@ -231,7 +232,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 				}
 			}
 			// empty car if it has a schedule load
-			if (getTrack().isRemoveLoadsEnabled()){
+			if (destTrack.isRemoveLoadsEnabled()){
 				if (!getLoad().equals(carLoads.getDefaultEmptyName()) ||
 						!getLoad().equals(carLoads.getDefaultLoadName())){
 					setLoad(carLoads.getDefaultEmptyName());

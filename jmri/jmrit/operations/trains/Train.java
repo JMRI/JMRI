@@ -25,6 +25,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 
 import jmri.jmrit.operations.setup.Setup;
@@ -42,7 +43,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.37 $
+ * @version             $Revision: 1.38 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -989,12 +990,15 @@ public class Train implements java.beans.PropertyChangeListener {
 				log.debug("car ("+car.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
 				if(car.getRouteLocation() == car.getRouteDestination()){
 					log.debug("car ("+car.getId()+") has arrived at destination");
-					String status = car.setLocation(car.getDestination(), car.getDestinationTrack());
-					if (!status.equals(car.OKAY)){
-						car.setLocation(car.getDestination(), null); // can't place car at destination track
-						log.error("Can't drop car ("+car.getId()+") on track " + car.getDestinationTrack() + " due to " +status);
-					}
+					Location destination = car.getDestination();
+					Track destTrack = car.getDestinationTrack();
 					car.setDestination(null, null); 	// this also clears the route locations
+					String status = car.setLocation(destination, destTrack);
+					if (!status.equals(car.OKAY)){
+						car.setLocation(destination, null); // can't place car at destination track
+						log.error("Can't drop car ("+car.getId()+") on track " + destTrack + " due to " +status);
+					}
+					
 					car.setTrain(null);
 					dropCars++;
 				}else{

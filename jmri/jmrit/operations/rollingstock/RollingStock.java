@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -259,7 +259,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			return LENGTH;
 		}
 		if (track != null && _trackLocation != track &&
-				(track.getUsedLength() - track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
+				(track.getUsedLength() + track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
 			log.debug("Can't set (" + getId() + ") at track location ("+ location.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH;	
 		}
