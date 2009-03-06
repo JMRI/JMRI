@@ -6,7 +6,7 @@ import javax.swing.*;
 import jmri.*;
 import junit.framework.*;
 
-// Revision: $Revision: 1.9 $
+// Revision: $Revision: 1.10 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 
@@ -41,7 +41,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", VariableTableModelTest.class.getName()};
+		String[] testCaseName = {"-noloading", CombinedLocoSelListPaneTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
