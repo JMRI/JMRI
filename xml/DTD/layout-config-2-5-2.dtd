@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-2.dtd,v 1.3 2009-02-26 20:01:56 djduchamp Exp $ -->
+<!-- $Id: layout-config-2-5-2.dtd,v 1.4 2009-03-07 18:56:34 djduchamp Exp $ -->
 
 <!-- This DTD is part of version 2.5.2 development.  Do not modify it       -->
 <!-- after version 2.5.2 is released.  For more information,                -->
@@ -644,12 +644,15 @@
     <!ATTLIST layoutturnout connectdname CDATA #IMPLIED>
     <!ATTLIST layoutturnout signala1name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signala2name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signala3name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signalb1name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signalb2name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signalc1name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signalc2name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signald1name CDATA #IMPLIED>
     <!ATTLIST layoutturnout signald2name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout linkedturnoutname CDATA #IMPLIED>
+    <!ATTLIST layoutturnout linktype     CDATA #IMPLIED>
     <!ATTLIST layoutturnout continuing   CDATA #REQUIRED>
     <!ATTLIST layoutturnout disabled	 (yes|no) "yes">
     <!ATTLIST layoutturnout xb		 CDATA #REQUIRED>
