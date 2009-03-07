@@ -63,10 +63,19 @@ import javax.swing.*;
  * <P>
  * Signal Head names are saved here to keep track of where signals are. LayoutTurnout 
  *		only serves as a storage place for signal head names. The names are placed here
- *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
+ *		by tools, e.g., Set Signals at Turnout, and Set Signals at Double Crossover.
+ * <P>
+ * A LayoutTurnout may be linked to another LayoutTurnout to form a turnout pair. 
+ *		Throat-To-Throat Turnouts - Two turnouts connected closely at their throats, 
+ *			so closely that signals are not appropriate at the their throats. This is the 
+ *			situation when two RH, LH, or WYE turnouts are used to model a double slip.
+ *		3-Way Turnout - Two turnouts modeling a 3-way turnout, where the throat of the 
+ *			second turnout is closely connected to the continuing track of the first
+ *			turnout.  The throat will have three heads, or one head.
+ * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutTurnout
@@ -82,6 +91,14 @@ public class LayoutTurnout
 	public static final int DOUBLE_XOVER = 4;
 	public static final int RH_XOVER = 5;
 	public static final int LH_XOVER = 6;	
+	// defined constants - link types
+	public static final int NO_LINK = 0;
+	public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
+													// turnout pair (closest to the throat)
+	public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
+													// turnout pair (furthest from the throat)
+	public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat 
+													// turnouts - no signals at throat
 
 	// operational instance variables (not saved between sessions)
 	private Turnout turnout = null;
@@ -103,6 +120,7 @@ public class LayoutTurnout
 	public String blockDName = "";  // Xover - name for fourth block, if there is one
 	public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
 	public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
+	public String signalA3Name = ""; // signal 3 (second diverging) (3-way turnouts only)
 	public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
 	public String signalB2Name = ""; // LH_Xover and double crossover only
 	public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
@@ -119,6 +137,8 @@ public class LayoutTurnout
 	public Point2D center = new Point2D.Double(50.0,50.0);
 	public Point2D dispB = new Point2D.Double(20.0,0.0);
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
+	public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
+	public int linkType = NO_LINK;
 
 	/** 
 	 * constructor method
@@ -218,6 +238,8 @@ public class LayoutTurnout
 	public void setSignalA1Name(String signalName) {signalA1Name = signalName;}
 	public String getSignalA2Name() {return signalA2Name;}
 	public void setSignalA2Name(String signalName) {signalA2Name = signalName;}
+	public String getSignalA3Name() {return signalA3Name;}
+	public void setSignalA3Name(String signalName) {signalA3Name = signalName;}
 	public String getSignalB1Name() {return signalB1Name;}
 	public void setSignalB1Name(String signalName) {signalB1Name = signalName;}
 	public String getSignalB2Name() {return signalB2Name;}
@@ -230,6 +252,10 @@ public class LayoutTurnout
 	public void setSignalD1Name(String signalName) {signalD1Name = signalName;}
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
+	public String getLinkedTurnoutName() {return linkedTurnoutName;}
+	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}
+	public int getLinkType() {return linkType;}
+	public void setLinkType(int type) {linkType = type;}
 	public int getTurnoutType() {return type;}
 	public Object getConnectA() {return connectA;}
 	public Object getConnectB() {return connectB;}
@@ -969,9 +995,21 @@ public class LayoutTurnout
 						tools.setSignalsAtXoverTurnoutFromMenu(instance,
 							layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
-					else {
+					else if (linkType==NO_LINK) {
 						tools.setSignalsAtTurnoutFromMenu(instance,
 							layoutEditor.signalIconEditor,layoutEditor.signalFrame);											
+					}
+					else if (linkType==THROAT_TO_THROAT) {
+						tools.setThroatToThroatFromMenu(instance,linkedTurnoutName,
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+					}
+					else if (linkType==FIRST_3_WAY) {
+						tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+					}
+					else if (linkType==SECOND_3_WAY) {
+						tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 				}
 			});

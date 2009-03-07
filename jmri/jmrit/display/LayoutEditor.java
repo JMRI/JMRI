@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -103,6 +103,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutPane targetPanel = null;
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
+	protected boolean skipIncludedTurnout = false;
     public ArrayList backgroundImage = new ArrayList();  // background images
     public ArrayList sensorImage = new ArrayList();  // sensor images
     public ArrayList signalHeadImage = new ArrayList();  // signal head images
@@ -196,6 +197,7 @@ public class LayoutEditor extends JmriJFrame {
 	private JCheckBoxMenuItem snapToGridOnAddItem = null;
 	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
 	private JCheckBoxMenuItem antialiasingOnItem = null;
+	private JCheckBoxMenuItem skipTurnoutItem = null;
 	private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
@@ -661,6 +663,15 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			});
 		toolsMenu.addSeparator();
+		// skip turnout
+		skipTurnoutItem = new JCheckBoxMenuItem(rb.getString("SkipInternalTurnout"));
+        toolsMenu.add(skipTurnoutItem);
+        skipTurnoutItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    skipIncludedTurnout = skipTurnoutItem.isSelected();
+                }
+            });                    
+        skipTurnoutItem.setSelected(skipIncludedTurnout);		
 		// set signals at turnout
 		JMenuItem turnoutItem = new JMenuItem(rb.getString("SignalsAtTurnout")+"...");
         toolsMenu.add(turnoutItem);
@@ -719,6 +730,18 @@ public class LayoutEditor extends JmriJFrame {
 					}
 					// bring up signals at throat-to-throat turnouts tool dialog
 					tools.setSignalsAtTToTTurnouts(signalIconEditor,signalFrame);
+                }
+            });
+		// set signals at 3-way turnout
+		JMenuItem way3Item = new JMenuItem(rb.getString("SignalsAt3WayTurnout")+"...");
+        toolsMenu.add(way3Item);
+        way3Item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at 3-way turnout tool dialog
+					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
                 }
             });
 	}

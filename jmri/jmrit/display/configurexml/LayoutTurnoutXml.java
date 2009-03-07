@@ -20,7 +20,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutTurnoutXml implements XmlAdapter {
 
@@ -75,6 +75,9 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		if (p.getSignalA2Name().length()>0) {
 			element.setAttribute("signala2name", p.getSignalA2Name());
 		}
+		if (p.getSignalA3Name().length()>0) {
+			element.setAttribute("signala3name", p.getSignalA3Name());
+		}
 		if (p.getSignalB1Name().length()>0) {
 			element.setAttribute("signalb1name", p.getSignalB1Name());
 		}
@@ -93,6 +96,11 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		if (p.getSignalD2Name().length()>0) {
 			element.setAttribute("signald2name", p.getSignalD2Name());
 		}
+		if (p.getLinkedTurnoutName().length()>0) {
+			element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
+			element.setAttribute("linktype", ""+p.getLinkType());
+		}
+
 		element.setAttribute("continuing", ""+p.getContinuingSense());		
         element.setAttribute("disabled", ""+(p.isDisabled()?"yes":"no"));
 		Point2D coords = p.getCoordsCenter();
@@ -185,6 +193,10 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		if (a != null) {
 			l.signalA2Name = a.getValue();
 		}		
+		a = element.getAttribute("signala3name");
+		if (a != null) {
+			l.signalA3Name = a.getValue();
+		}		
 		a = element.getAttribute("signalb1name");
 		if (a != null) {
 			l.signalB1Name = a.getValue();
@@ -208,6 +220,15 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		a = element.getAttribute("signald2name");
 		if (a != null) {
 			l.signalD2Name = a.getValue();
+		}		
+		a = element.getAttribute("linkedturnoutname");
+		if (a != null) {
+			l.linkedTurnoutName = a.getValue();
+			try {
+				l.linkType = element.getAttribute("linktype").getIntValue();
+			} catch (org.jdom.DataConversionException e) {
+				log.error("failed to convert linked layout turnout type");
+			}			
 		}		
 		a = element.getAttribute("continuing");
 		if (a != null) {
