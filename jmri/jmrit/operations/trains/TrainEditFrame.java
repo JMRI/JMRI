@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -18,6 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JRadioButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -383,11 +386,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		modelEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
 		roadEngineBox.setEnabled(!numEnginesBox.getSelectedItem().equals("0"));
 
-		// build menu
-//		JMenuBar menuBar = new JMenuBar();
-//		JMenu toolMenu = new JMenu("Tools");
-//		menuBar.add(toolMenu);
-//		setJMenuBar(menuBar);
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, _train));
+		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, _train));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
 		// load route location checkboxes
