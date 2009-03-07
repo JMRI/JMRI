@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -29,32 +29,32 @@ public class SerialSensorManagerTest extends TestCase {
         SerialNode n2 = new SerialNode(2,SerialNode.IO24);
         
         SerialSensorManager s = new SerialSensorManager();
-        Assert.assertTrue("none expected A0", !(n0.sensorsActive()) );
-        Assert.assertTrue("none expected A1", !(n1.sensorsActive()) );
-        Assert.assertTrue("none expected A2", !(n2.sensorsActive()) );
+        Assert.assertTrue("none expected A0", !(n0.getSensorsActive()) );
+        Assert.assertTrue("none expected A1", !(n1.getSensorsActive()) );
+        Assert.assertTrue("none expected A2", !(n2.getSensorsActive()) );
         s.provideSensor("3");
-        Assert.assertTrue("UA 0", n0.sensorsActive() );
-        Assert.assertTrue("2nd none expected A1", !(n1.sensorsActive()) );
-        Assert.assertTrue("2nd none expected A2", !(n2.sensorsActive()) );
+        Assert.assertTrue("UA 0", n0.getSensorsActive() );
+        Assert.assertTrue("2nd none expected A1", !(n1.getSensorsActive()) );
+        Assert.assertTrue("2nd none expected A2", !(n2.getSensorsActive()) );
         s.provideSensor("11");
         s.provideSensor("8");
         s.provideSensor("9");
         s.provideSensor("13");
         s.provideSensor("OS2006");
-        Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
-        Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
-        Assert.assertTrue("UA 2", n2.sensorsActive() );
+        Assert.assertTrue("2nd UA 0", n0.getSensorsActive() );
+        Assert.assertTrue("3rd none expected UA 1", !(n1.getSensorsActive()) );
+        Assert.assertTrue("UA 2", n2.getSensorsActive() );
         s.provideSensor("15");
         s.provideSensor("1001");
-        Assert.assertTrue("3rd UA 0", n0.sensorsActive() );
-        Assert.assertTrue("UA 1", n1.sensorsActive() );
-        Assert.assertTrue("2nd UA 2", n0.sensorsActive() );
+        Assert.assertTrue("3rd UA 0", n0.getSensorsActive() );
+        Assert.assertTrue("UA 1", n1.getSensorsActive() );
+        Assert.assertTrue("2nd UA 2", n0.getSensorsActive() );
         s.provideSensor("7");
         s.provideSensor("1007");
         s.provideSensor("2007");
-        Assert.assertTrue("4th UA 0", n0.sensorsActive() );
-        Assert.assertTrue("2nd UA 1", n1.sensorsActive() );
-        Assert.assertTrue("3rd UA 2", n0.sensorsActive() );
+        Assert.assertTrue("4th UA 0", n0.getSensorsActive() );
+        Assert.assertTrue("2nd UA 1", n1.getSensorsActive() );
+        Assert.assertTrue("3rd UA 2", n0.getSensorsActive() );
     }
 
     // from here down is testing infrastructure

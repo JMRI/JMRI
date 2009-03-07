@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.12 $
+ * @version		$Revision: 1.13 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -139,7 +139,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s2 = sm.provideSensor("GS1110");
         Sensor s3 = sm.provideSensor("GS1111");
 
-        //Assert.assertTrue("check sensors active", b.sensorsActive());
+        //Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
@@ -183,7 +183,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s2 = sm.provideSensor("GS1102");
         Sensor s3 = sm.provideSensor("GS1103");
 
-        //Assert.assertTrue("check sensors active", b.sensorsActive());
+        //Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
@@ -227,7 +227,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s2 = sm.provideSensor("GS1a2");
         Sensor s3 = sm.provideSensor("GS1a3");
 
-        //Assert.assertTrue("check sensors active", b.sensorsActive());
+        //Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
@@ -276,7 +276,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s7 = sm.provideSensor("GS1027");
         Sensor s8 = sm.provideSensor("GS1028");
 
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("1 check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("1 check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("1 check s3", Sensor.UNKNOWN, s3.getKnownState());
@@ -345,7 +345,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s7 = sm.provideSensor("GS1s7");
         Sensor s8 = sm.provideSensor("GS1s8");
 
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("1 check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("1 check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("1 check s3", Sensor.UNKNOWN, s3.getKnownState());
@@ -755,7 +755,7 @@ public class SerialNodeTest extends TestCase {
         Sensor s7 = sm.provideSensor("GS1007");
         Sensor s8 = sm.provideSensor("GS1008");
 
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         Assert.assertEquals("1 check s1", Sensor.UNKNOWN, s1.getKnownState());
         Assert.assertEquals("1 check s2", Sensor.UNKNOWN, s2.getKnownState());
         Assert.assertEquals("1 check s3", Sensor.UNKNOWN, s3.getKnownState());

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -52,7 +52,7 @@ public class SerialNodeTest extends TestCase {
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         SerialReply r = new jmri.jmrix.powerline.cm11.SpecificReply();
         r.setElement(0, 0x02);
         r.setElement(1, 0x00);

@@ -10,7 +10,7 @@ import jmri.jmrix.grapevine.*;
  * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public abstract class AbstractNode {
     
@@ -66,7 +66,7 @@ public abstract class AbstractNode {
      * Are there sensors present, and hence this node will need to be polled?
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    abstract public boolean sensorsActive();
+    abstract public boolean getSensorsActive();
     
     /**
      * Deal with a timeout in the transmission controller.

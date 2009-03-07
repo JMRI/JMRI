@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -131,7 +131,7 @@ public class SerialNode extends AbstractNode {
      * Public method to return state of Sensors.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    public boolean sensorsActive() { return hasActiveSensors; }
+    public boolean getSensorsActive() { return hasActiveSensors; }
 
     /**
      * Public to reset state of needSend flag.

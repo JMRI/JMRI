@@ -88,7 +88,7 @@ public class AcelaNodeTest extends TestCase {
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         // from UNKNOWN, 1st poll goes to new state
         SerialReply r = new SerialReply();
         r.setElement(2, '2');

@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -136,7 +136,7 @@ public class SerialNodeTest extends TestCase {
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
-        Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
         // from UNKNOWN, 1st poll goes to new state
         SerialReply r = new SerialReply();
         // set reply all zero

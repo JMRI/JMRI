@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -339,7 +339,7 @@ public class AcelaNode extends AbstractNode {
      * Public method to return state of Sensors.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    public boolean sensorsActive() {
+    public boolean getSensorsActive() {
         return hasActiveSensors;
     }
 
