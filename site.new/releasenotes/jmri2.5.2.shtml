@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.20 2009-03-02 00:04:47 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.21 2009-03-07 05:47:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -254,6 +254,15 @@ Bob Jacobsen updated the RPS support to handle large number of points better.
 
 <p>
 David Duchamp added a continuous running option to Dispatcher.
+
+<p>
+Fixed a problem with the function mapping in DecoderPro when a decoder
+has a large number of functions and outputs, which was causing trouble 
+for the MRC Sound Brilliance 1644 decoder.
+
+<p>
+Pete Cressman and David Parks fixed a problem with a tiny active 
+area for MultiSensors when the default inactive, etc, icons are still used.
 
 <!--#include virtual="/Footer" -->
 
