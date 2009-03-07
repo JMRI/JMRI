@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialNode {
 
@@ -127,7 +127,7 @@ public class SerialNode {
      * Public method to return state of Sensors.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    public boolean sensorsActive() { return hasActiveSensors; }
+    public boolean getSensorsActive() { return hasActiveSensors; }
 
     /**
      * Public method to return state of needSend flag.
