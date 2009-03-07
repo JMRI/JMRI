@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -233,24 +233,34 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         return;
     }
 
-    // Note that this does not include the active icons;
-    // these need to all be the same size
+    // Use largest size. If icons are not same size, 
+    // this can result in drawing artifacts.
     protected int maxHeight() {
-        return Math.max(
+        int size = Math.max(
                         ((inactive!=null) ? inactive.getIconHeight() : 0),
                 Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
                         (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
             );
+        if (entries != null) {
+            for (int i = 0; i<entries.size(); i++)
+                size = Math.max(size, ((Entry)entries.get(i)).icon.getIconHeight());
+        }
+        return size;
     }
     
-    // Note that this does not include the active icons;
-    // these need to all be the same size
+    // Use largest size. If icons are not same size, 
+    // this can result in drawing artifacts.
     protected int maxWidth() {
-        return Math.max(
+        int size = Math.max(
                         ((inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
                         (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
             );
+        if (entries != null) {
+            for (int i = 0; i<entries.size(); i++)
+                size = Math.max(size, ((Entry)entries.get(i)).icon.getIconWidth());
+        }
+        return size;
     }
     
     /**
