@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtXoverTurnout.shtml,v 1.4 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: SetSignalsAtXoverTurnout.shtml,v 1.5 2009-03-07 20:09:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -62,6 +62,12 @@ whether an icon is to be placed on the panel, and whether Simple Signal Logic
 is to be created for the signal head. Regardless of whether icons 
 are placed or logic is created, Layout Editor will record that the entered 
 signal heads are assigned to the specified crossover turnout.</p>
+<p>
+<b>Assigning signal heads 
+to turnouts is important to completely describe your layout in Layout 
+Editor.</b> Even if you elect to place your icons and set up your signal logic 
+manually, you should use this tool to assign the signal heads to their 
+crossover turnout.</p>
 
 <h2>The Set Signals at Crossover Dialog</h2>
 <p>
@@ -145,6 +151,18 @@ not correspond to an actual signal on the layout) at
 the unsignaled end of the block that connects a section of track that is 
 signaled with track that is not signaled. If a block ends with an 
 end bumper, no signal is required at the end bumper end.</p>
+<p>
+If a block has an internal turnout (the turnout, and the track segments at its 
+throat and continuing legs are within the block), the program will expect signals 
+at that turnout even if it's not at the end of the block. However, at 
+times the user may not want to signal a seldom used turnout within a block. 
+When following track through a block, the program will skip over unsignaled  
+internal turnouts if <b>Skip Unsignaled Internal Turnouts</b> is checked in 
+the Layout Editor <b>Tools</b> menu. 
+It will always, however, warn that it is doing so. <b>Use this option with 
+caution.</b> There is no signal protecting against a skipped turnout being 
+set incorrectly, so if an unsignaled internal turnout is not set correctly, 
+derailed trains could result.</p> 
 <p>
 This tool sets up three-aspect signaling. With crossovers, the 
 crossover tracks are always considered side track, and any mainline track 

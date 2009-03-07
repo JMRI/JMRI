@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.15 2009-02-26 20:18:32 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.16 2009-03-07 20:09:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -462,6 +462,20 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	sizes of new turnouts to Layout Editor program defaults, canceling any 
 	changes to turnout default sizes that may have been made. See 
 	<a href="#turnouts">Turnouts</a> for more information on turnout sizes.</li>
+	<li><b>Skip Unsignaled Internal Turnouts</b> - When setting up signal logic, 
+	Layout Editor's <b>Set Signals ...</b> tools (described below) will follow 
+	track within a block until it finds a signal or a place where they expect to 
+	find a signal. If the expected signal is absent, a message is sent and the 
+	logic is not set up. If a block has an internal turnout (the turnout, and the 
+	track segments at its throat and continuing legs are within the block), the 
+	tools will expect signals at that turnout even if it's not at the end of the 
+	block. However, at times the user may not want to signal a seldom used turnout 
+	within a block. When following track through a block, the program will skip over 
+	unsignaled internal turnouts if this item, <b>Skip Unsignaled Internal 
+	Turnouts</b>, is checked. It will always, however, warn that it is doing so. 
+	<b>Use this option with caution.</b> There is no signal protecting against a 
+	skipped turnout being set incorrectly, so if an unsignaled internal turnout 
+	is not set correctly, derailed trains could result.
 	<li><b>Set Signals at Turnout...</b> - This item provides an automated 
 	procedure for assigning signals to a turnout. Right-handed turnouts, 
 	left-handed turnouts, and wye turnouts are supported. Prior to accessing this 
@@ -561,12 +575,48 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	head icon is to be placed on the panel, and whether signal logic 
 	is to be created for the signal head. Regardless of whether icons 
 	are placed or logic is created, Layout Editor will record that the entered 
-	signal heads are assigned to the specified turnouts. If create logic 
+	signal heads are assigned to the specified turnouts, and that the two turnouts 
+	are linked in a special throat-to-throat configuration. If create logic 
 	is requested and the tool does not have enough information available to 
 	set up the logic, you may have to return later after more signals have 
-	been assigned. This tool is invoked from the Tools menu only. It cannot be 
-	reached a turnout's popup menu. (For more information, see the help page for 
-	the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
+	been assigned. The first time it is used for each throat-to-throat setup, this 
+	tool must be invoked from the Tools menu. After Layout Editor has recorded that 
+	the two turnouts are linked in a special throat-to-throat configuration, 
+	selecting <b>Set Signals...</b> in the popup menu of either turnout will bring 
+	up this tool with both turnouts identified.  (For more information, see the 
+	help page for the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
+	<li><b>Set Signals at 3-Way Turnout...</b> - This item provides an 
+	automated procedure for assigning signals to two turnouts used to model a 
+	3-way turnout in Layout Editor. A 3-way turnout is modeled by using two 
+	turnouts, usually one right-hand and one left-hand, oriented so that the throat 
+	of the second turnout is connected to the continuing track of the first turnout 
+	by a very short Track Segment. This tool provides an automated procedure for 
+	assigning signal heads, placing them on the layout, and automatically creating 
+	signal logic for a 3-way turnout modeled in this way. This tool can also be 
+	used to place signal heads and set logic for two real turnouts that are 
+	configured as described above, where the user does not want to put signals 
+	between the two turnouts--essentially two real left-handed or right-handed 
+	turnouts that simulate a 3-way turnout. Each of the two turnouts may be 
+	either right-hand (RH) or left-hand (LH). Prior to accessing this item, blocks 
+	must be defined for signaled regions of track on the panel, and the required 
+	signal heads must be in the Signal Table. When this item is selected, a dialog 
+	is shown for entry of the names (system or user) of the two turnouts comprising 
+	the 3-way turnout to be signaled, and for entry of names (system or user) of 
+	six (or four) signal heads to be assigned. For each signal head, check boxes 
+	are available for selecting whether a signal head icon is to be placed on the 
+	panel, and whether signal logic is to be created for the signal head. 
+	Regardless of whether icons are placed or logic is created, Layout Editor will 
+	record that the entered signal heads are assigned to the specified turnouts, 
+	and that the two turnouts are 'linked' to simulate a 3-way turnout. If create 
+	logic is requested and the tool does not have enough information available to 
+	set up the logic, you may have to return later after more signals have 
+	been assigned. The first time it is used for each 3-way turnout, this tool 
+	must be invoked from the Tools menu. After Layout Editor has recorded that 
+	the two turnouts are linked to simulate a 3-way turnout, selecting <b>Set 
+	Signals...</b> in the popup menu of either turnout will bring up this tool 
+	with both turnouts identified. (For more information, see the help page for 
+	the Set Signals at 3-Way Turnouts window.)</li>
+
 </ul></p>
 
 <a name="zoommenu"><h2>Using Layout Editor's Zoom Menu</h2>

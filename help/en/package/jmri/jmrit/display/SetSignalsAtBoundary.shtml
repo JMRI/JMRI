@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtBoundary.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: SetSignalsAtBoundary.shtml,v 1.4 2009-03-07 20:09:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -39,7 +39,7 @@ correctly when track through the anchor point is vertical or horizontal (or
 mostly vertical or horizontal), so design your panel accordingly.</p>
 <p>
 When this item is selected, a dialog is shown for entry of  
-names of the two blocks whose boundary is to be signalled, and for entry of
+names of the two blocks whose boundary is to be signaled, and for entry of
 names (system or user) of one or two signal heads to be assigned to the 
 block boundary. For each signal head, check boxes are available for 
 selecting whether an icon is to be placed on the panel, and whether Simple 
@@ -89,19 +89,32 @@ the tool does not have enough information available to set up the
 logic, a message results, and you will have to return later after 
 more signals have been assigned to turnouts and block boundaries on the
 panel.</p> 
+<h2>Notes</h2>
 <p>
-<b>Note:</b> When setting up logic, this tool will follow track within 
+When setting up logic, this tool will follow track within 
 a block until it finds a signal at the end of the block away from the 
-block boundary being signalled.  If your layout contains sections that are 
-signalled and sections that are not, to get this tool to set up logic
+block boundary being signaled.  If your layout contains sections that are 
+signaled and sections that are not, to get this tool to set up logic
 correctly, you may have to place a virtual signal (a signal that does 
 not correspond to an actual signal on the layout) at 
-the unsignalled end of the block that connects a section of track that is 
-signalled with track that is not signalled. If a block ends with an 
+the unsignaled end of the block that connects a section of track that is 
+signaled with track that is not signaled. If a block ends with an 
 end bumper, no signal is required at the end bumper end.</p>
 <p>
-This tool sets up three-aspect signalling. If you have a special situation 
-at a signal, or would like four aspect signalling or approach lighting you 
+If a block has an internal turnout (the turnout, and the track segments at its 
+throat and continuing legs are within the block), the program will expect signals 
+at that turnout even if it's not at the end of the block. However, at 
+times the user may not want to signal a seldom used turnout within a block. 
+When following track through a block, the program will skip over unsignaled  
+internal turnouts if <b>Skip Unsignaled Internal Turnouts</b> is checked in 
+the Layout Editor <b>Tools</b> menu. 
+It will always, however, warn that it is doing so. <b>Use this option with 
+caution.</b> There is no signal protecting against a skipped turnout being 
+set incorrectly, so if an unsignaled internal turnout is not set correctly, 
+derailed trains could result.</p> 
+<p>
+This tool sets up three-aspect signaling. If you have a special situation 
+at a signal, or would like four aspect signaling or approach lighting you 
 will have to edit the information entered by the tool. The Simple Signal 
 Logic dialog can be accessed from the popup menu of the signal icon. If 
 your special situation cannot be handled by Simple Signal Logic, you should 

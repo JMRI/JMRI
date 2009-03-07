@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTurnout.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: SetSignalsAtTurnout.shtml,v 1.4 2009-03-07 20:09:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,9 +32,9 @@ Right-handed turnouts, left-handed turnouts, and wye turnouts are supported.
 If requested, this tool will place signal icons on the panel at the specified 
 turnout, and will set up Simple Signal Logic for the specified signal heads. 
 Prior to selecting this tool, the turnout must be on the panel, and the required 
-signal heads must be in the Signal Table. This tool only works correctly when 
-the main track of the turnout is vertical or horizontal (or mostly vertical or 
-horizontal) on the panel, so design your panel accordingly.</p>
+signal heads must be in the Signal Table. This tool only places signal heads 
+correctly when the main track of the turnout is vertical or horizontal (or mostly 
+vertical or horizontal) on the panel, so design your panel accordingly.</p>
 <p>
 When this item is selected, a dialog is shown for entry of the turnout name 
 (system or user), and the names of the three or four signal heads to be assigned 
@@ -43,6 +43,11 @@ whether an icon is to be placed on the panel, and whether Simple Signal Logic
 is to be created for the signal head. Regardless of whether icons 
 are placed or logic is created, Layout Editor will record that the entered 
 signal heads are assigned to the specified turnout.</p>
+<p><b>Assigning signal heads 
+to turnouts is important to completely describe your layout in Layout 
+Editor.</b> Even if you elect to place your icons and set up your signal logic 
+manually, you should use this tool to assign the signal heads to their 
+turnout.</p>
 
 <h2>The Set Signals at Turnout Dialog</h2>
 <p>
@@ -96,19 +101,31 @@ panel.</p>
 <p>
 When setting up logic, this tool will follow track within 
 a block until it finds a signal at the end of the block away from the 
-turnout being signalled.  If your layout contains sections that are 
-signalled and sections that are not, to get this tool to set up logic
+turnout being signaled.  If your layout contains sections that are 
+signaled and sections that are not, to get this tool to set up logic
 correctly, you may have to place a virtual signal (a signal that does 
 not correspond to an actual signal on the layout) at 
-the unsignalled end of the block that connects a section of track that is 
-signalled with track that is not signalled. If a block ends with an 
+the unsignaled end of the block that connects a section of track that is 
+signaled with track that is not signaled. If a block ends with an 
 end bumper, no signal is required at the end bumper end.</p>
 <p>
-This tool sets up three-aspect signalling. If the diverging route through
+If a block has an internal turnout (the turnout, and the track segments at its 
+throat and continuing legs are within the block), the program will expect signals 
+at that turnout even if it's not at the end of the block. However, at 
+times the user may not want to signal a seldom used turnout within a block. 
+When following track through a block, the program will skip over unsignaled  
+internal turnouts if <b>Skip Unsignaled Internal Turnouts</b> is checked in 
+the Layout Editor <b>Tools</b> menu. 
+It will always, however, warn that it is doing so. <b>Use this option with 
+caution.</b> There is no signal protecting against a skipped turnout being 
+set incorrectly, so if an unsignaled internal turnout is not set correctly, 
+derailed trains could result.</p> 
+<p>
+This tool sets up three-aspect signaling. If the diverging route through
 the turnout is not mainline track, limited speed (the least restrictive 
 is not green, but yellow) is set up. If you have a special situation at a 
 signal, you may have to edit the information entered by the tool. If you 
-would like four-aspect signalling, you can easily manually edit the logic 
+would like four-aspect signaling, you can easily manually edit the logic 
 to achieve this. Similarly, by simple hand edits of the logic, you can
 add approach lighting. The Simple Signal Logic dialog can
 be accessed from the popup menu of the signal icon. If your special 
@@ -117,12 +134,10 @@ to Logix to tailor the signal logic to your needs.</p>
 <p>
 If you are using two turnouts to represent a double-slip turnout, or if 
 you are using two turnouts to represent a three-way turnout, the logic
-set up by this tool will not work correctly. These are examples where
-you may be better off going directly to Logix, instead of trying to get
-Simple Signal Logic to work correctly by hand edits. Another example 
-where the logic set up by this tool might not work correctly is for very 
-short blocks, or turnouts within blocks.  Hand edits will probably work 
-in these cases. </p>
+set up by this tool will not work correctly. For these two cases, you should 
+use the <b>Set Signals at Throat-To-Throat Turnouts</b> or the <b>Set Signals at 
+3-Way Turnout</b> tools that are available in Layout Editor's <b>Tools</b> menu. 
+</p>
 <p>
 <b>Please remember to save your panel after using this tool.</b></p>
 
