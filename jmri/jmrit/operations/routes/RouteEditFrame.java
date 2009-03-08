@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.*;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -172,11 +173,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// setup combobox
        	
 
-		// build menu
-//		JMenuBar menuBar = new JMenuBar();
-//		JMenu toolMenu = new JMenu("Tools");
-//		menuBar.add(toolMenu);
-//		setJMenuBar(menuBar);
+		//	build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
 
 		//	 get notified if combo box gets modified
