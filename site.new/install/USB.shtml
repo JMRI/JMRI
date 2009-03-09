@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: USB.shtml,v 1.3 2008-05-20 16:43:55 jacobsen Exp $ -->
+<!-- $Id: USB.shtml,v 1.4 2009-03-09 16:47:18 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -70,7 +70,8 @@ use, library for general access to all USB devices, not just HID devices.
 We intend to use it in JMRI to access Insteon adapters and other 
 devices that have complicated (i.e. powerful) interfaces.
 <p>
-In JMRI 2.1.5, there's only a browsing tool that we'll be using to
+In JMRI 2.1.5, there's only a "USB Device Viewer" 
+browsing tool that we'll be using to
 check connections to various USB devices on various types of computers.
 By putting this out in the general test release, even if 
 it doesn't do anything model-railroad related, it makes it much
@@ -79,9 +80,11 @@ easier to test how well this works in various situations.
 Eventually, we'll have more in this section.
 
 <h3>Limitations</h3>
-libusb requires Java 1.5 or later. (It might be possible to make
-small modifications and compile it with Java 1.4, but we haven't done that,
-and because JMRI is shortly going to require Java 1.5 we probably won't)
+The browsing tool comes directly from libusb, and is coded
+to end the application when the window is closed.  The libusb authors
+consider this a feature.  Since we don't want to distribute our
+own version of the library with that behavior changed, we'll just 
+live with it for now.
 
 <h3>Installing LibUSB</h3>
 
