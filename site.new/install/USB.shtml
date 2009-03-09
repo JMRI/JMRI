@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: USB.shtml,v 1.4 2009-03-09 16:47:18 jacobsen Exp $ -->
+<!-- $Id: USB.shtml,v 1.5 2009-03-09 16:52:23 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -114,9 +114,9 @@ install them all.
 <h4>MacOS X</h4>
 
 You need to install a library package to use libUSB on Mac OS X.
-<a href="http://www.ellert.se/twain-sane/">here</a>
+Click <a href="http://www.ellert.se/twain-sane/">here</a>
 for an installer
-(you don't need the TWAIN or others, just LibUSB).
+(you don't need the TWAIN or others, just LibUSB),
 or you can download an installer using one of the following direct links.
 <table border="1">
 <tr class="even">
@@ -133,9 +133,9 @@ or you can download an installer using one of the following direct links.
 <th rowspan="2">libusb</th>
 <td rowspan="2">0.1.13 beta 2008-02-02</td>
 <td>binary</td>
-<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.3/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
-<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.4/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
-<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.5/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.3/libusb.pkg.tar.gz">Installer</a></td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.4/libusb.pkg.tar.gz">Installer</a></td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.5/libusb.pkg.tar.gz">Installer</a></td>
 <td rowspan="2"><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/src/libusb-2008-02-02-svn-macosx.tar.gz"><img src="http://www.ellert.se/gz.png"></a></td>
 <td rowspan="2"><a href="http://libusb.sourceforge.net/">http://libusb.sourceforge.net/</a></td>
 </tr>
