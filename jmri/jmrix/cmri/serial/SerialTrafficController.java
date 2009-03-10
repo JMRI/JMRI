@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -131,7 +131,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
                                 getNode(curSerialNodeIndex).getNodeAddress());
-            if (curSerialNodeIndex>=getNumNodes()) curSerialNodeIndex = 0;
             return m;
         }
         else {
