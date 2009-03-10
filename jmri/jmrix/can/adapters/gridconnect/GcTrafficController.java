@@ -19,12 +19,12 @@ import jmri.jmrix.can.TrafficController;
  * as an ASCII string of up to 24 characters of the form:
  *      :ShhhhNd0d1d2d3d4d5d6d7;
  * The S indicates a standard CAN frame
- * hhhh is the two byte header
+ * hhhh is the two byte header (11 useful bits)
  * N or R indicates a normal or remote frame
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -110,21 +110,7 @@ public class GcTrafficController extends TrafficController {
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.warn("Decoding from hardware");
 	    GridConnectReply gc = (GridConnectReply)m;
-        CanReply ret = new CanReply();
-
-	    // Get the Priority
-        ret.setPri(gc.getPri());
-	    // and ID
-        ret.setId(gc.getID());
-        // Is it an Extended frame?
-	    if (gc.isExtended()) ret.setExtended(true);
-        // Is it an RTR frame?
-	    if (gc.isRtr()) ret.setRtr(true);
-        // Get the data
-        for (int i = 0; i < gc.getNumBytes(); i++) {
-            ret.setElement(i, gc.getByte(i));
-        }
-        ret.setNumDataElements(gc.getNumBytes());
+        CanReply ret = gc.createReply();
         return ret;
     }
 
@@ -133,29 +119,8 @@ public class GcTrafficController extends TrafficController {
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-	    GridConnectMessage ret = new GridConnectMessage();
-        // Prefix
-        ret.setElement(0, ':');
-        // Standard or extended frame
-        if (m.isExtended())
-            ret.setElement(1, 'X');
-        else
-            ret.setElement(1, 'S');
-            
-        // CBUS Priority
-        ret.setPri(m.getPri());
-        // CBUS ID 
-        ret.setID(m.getId());
-        // Normal or Remote frame?
-        ret.setElement(6, m.isRtr() ? 'R' : 'N');
-        // Data payload
-        for (int i = 0 ; i < m.getNumDataElements(); i++) {
-            ret.setByte(m.getElement(i), i);
-        }
-        // Terminator
-        ret.setElement(7 + m.getNumDataElements()*2, ';');
-        ret.setNumDataElements(8 + m.getNumDataElements()*2);
-        if (log.isDebugEnabled()) log.debug("encoded as "+ret);
+	    GridConnectMessage ret = new GridConnectMessage(m);
+
         return ret;
     }
 

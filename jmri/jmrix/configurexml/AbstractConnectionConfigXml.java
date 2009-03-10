@@ -11,7 +11,7 @@ import org.jdom.Attribute;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -79,6 +79,7 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
         adapter.setPort(portName);
         String baudRate = e.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
+
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);

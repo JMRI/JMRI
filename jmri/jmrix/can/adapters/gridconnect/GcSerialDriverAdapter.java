@@ -21,7 +21,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -110,34 +110,18 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
      */
     public void configure() {
 
-        // Set the CAN protocol being used
-        int p = validOption1Values[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i<validForOption1.length; i++ ) {
-            if (validForOption1[i].equals(mOpt1)) {
-                p = validOption1Values[i];
-            }
-        }
-        CanMessage.setProtocol(p);
-//        CanReply.setProtocol(p);
-
         // Register the CAN traffic controller being used for this connection
         GcTrafficController.instance();
         
         // Now connect to the traffic controller
+        log.debug("Connecting port");
         GcTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
-       
-//        jmri.jmrix.can.adapters.gridconnect.canrs.ActiveFlag.setActive();
-        setActive();
+        // do central protocol-specific configuration    
+        jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
 
     }
     
-    protected void setActive() { ; }
-    
-
     // base class methods for the PortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -178,18 +162,15 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     protected int [] validSpeedValues = new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     
     /**
-     * Option 1 is binary vs ASCII command set.
+     * Option 1 is CAN-based protocol
      */
-    public String[] validOption1() { return validForOption1; }
-    
-    protected String [] validForOption1 = new String[]{"MERG CBUS", "Test - do not use"};
-    protected int [] validOption1Values = new int[]{CanConstants.CBUS, CanConstants.FOR_TESTING};
+    public String[] validOption1() { return jmri.jmrix.can.ConfigurationManager.getSystemOptions(); }
     
     /**
      * Get a String that says what Option 1 represents
      * May be an empty string, but will not be null
      */
-    public String option1Name() { return "CAN Protocol"; }
+    public String option1Name() { return "Connection Protocol"; }
 
     /**
      * Set the CAN protocol option.

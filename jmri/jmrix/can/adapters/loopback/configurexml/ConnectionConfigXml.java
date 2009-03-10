@@ -17,7 +17,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -37,6 +37,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         Element e = new Element("connection");
 
+        if (adapter.getCurrentOption1Setting()!=null)
+            e.setAttribute("option1", adapter.getCurrentOption1Setting());
+
         e.setAttribute("class", this.getClass().getName());
 
         return e;
@@ -47,11 +50,19 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * @param e Top level Element to unpack.
       */
     public void load(Element e) {
-        // hex file has no options in the XML
-        jmri.jmrix.can.adapters.loopback.ActiveFlag.setActive();
+
+        getInstance();
+
+        // simulator has fewer options in the XML, so implement
+        // just needed one here        
+        if (e.getAttribute("option1")!=null) {
+            String option1Setting = e.getAttribute("option1").getValue();
+            adapter.configureOption1(option1Setting);
+        }
+        
+        adapter.configure();
         
         // register, so can be picked up
-        getInstance();
         register();
     }
 

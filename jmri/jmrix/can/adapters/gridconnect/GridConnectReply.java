@@ -12,11 +12,11 @@ import jmri.jmrix.can.CanReply;
  * 
  * @author                      Andrew Crosland Copyright (C) 2008
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
-    static final int MAXLEN = 24;
+    static final int MAXLEN = 27;
     
     // Creates a new instance of GridConnectReply
     public GridConnectReply() {
@@ -24,30 +24,32 @@ public class GridConnectReply extends AbstractMRReply {
         _dataChars = new int[MAXLEN];
     }
 
-    // create a new one of given length
-    public GridConnectReply(int i) {
-	this();
-        _nDataChars = (i <= MAXLEN) ? i : MAXLEN;
+    public GridConnectReply(String s) {
+        _nDataChars = s.length();
+        for (int i = 0; i<s.length(); i++)
+            _dataChars[i] = s.charAt(i);
     }
+    
+    public CanReply createReply() {
+        CanReply ret = new CanReply();
 
-    // create a new one from an array
-    public GridConnectReply(int [] d) {
-	this();
-	int _nDataChars = (d.length <= MAXLEN) ? d.length : MAXLEN;
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = d[i];
+        // Is it an Extended frame?
+	    if (isExtended()) ret.setExtended(true);
+	    
+	    // Copy the header
+        ret.setHeader(getHeader());
+
+        // Is it an RTR frame?
+	    if (isRtr()) ret.setRtr(true);
+
+        // Get the data
+        for (int i = 0; i < getNumBytes(); i++) {
+            ret.setElement(i, getByte(i));
         }
+        ret.setNumDataElements(getNumBytes());
+        return ret;
     }
-
-    // copy one
-    public  GridConnectReply(GridConnectReply m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-    }
-
+    
     protected int skipPrefix(int index) {
         while (_dataChars[index] == ':') { index++; }
         return index;
@@ -64,8 +66,8 @@ public class GridConnectReply extends AbstractMRReply {
         }
     }
 
-    public boolean isExtended() {return (getElement(2) == 'X');}
-    public boolean isRtr() {return (getElement(6) == 'R');}
+    public boolean isExtended() {return (getElement(1) == 'X');}
+    public boolean isRtr() {return (getElement(_RTRoffset) == 'R');}
     
     // 
     public int maxSize() { return MAXLEN; }
@@ -77,24 +79,25 @@ public class GridConnectReply extends AbstractMRReply {
         }
     }
 
-    /**
-     * Get the CBUS ID as an int
-     *
-     * @return int the CBUS ID
-     */        
-    public int getID() {
-        return (getHexDigit(3)<<3) + (getHexDigit(4)>>1);
-    }
+    // pointer to the N or R character
+    int _RTRoffset = -1;
     
     /**
-     * Get the CBUS Priority as an int
+     * Get the CAN header by using chars from 2 to up to 9
      *
-     * @return int the CBUS priority
+     * @return the CAN header as an int
      */        
-    public int getPri() {
-        return getHexDigit(2);
+    public int getHeader() {
+        int val = 0;
+        for (int i = 2; i<10; i++) {
+            _RTRoffset = i;
+            if (_dataChars[i] == 'N') return val;
+            if (_dataChars[i] == 'R') return val;
+            val = val*16 + getHexDigit(i);
+        }
+        return val;
     }
-    
+        
     /**
      * Get the number of data bytes
      *
@@ -102,7 +105,7 @@ public class GridConnectReply extends AbstractMRReply {
      */
     public int getNumBytes() {
         // subtract framing and ID bytes, etc and each byte is two ASCII hex digits
-        return (_nDataChars - 8)/2;
+        return (_nDataChars - (_RTRoffset+1))/2;
     }
     
     /**
@@ -116,7 +119,7 @@ public class GridConnectReply extends AbstractMRReply {
      */
     public int getByte(int b) {
         if ((b >= 0) && (b <= 7)) {
-            int index = b*2 + 7;
+            int index = b*2 + _RTRoffset+1;
             int hi = getHexDigit(index++);
             int lo = getHexDigit(index);
             if ((hi < 16) && (lo < 16)) {

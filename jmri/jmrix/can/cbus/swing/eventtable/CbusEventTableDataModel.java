@@ -23,7 +23,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -206,7 +206,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      */
     public void message(CanMessage m) {
         log.debug("Received new message event: "+m);
-        _id[_rowCount] = m.getId();
+        _id[_rowCount] = m.getCbusId();
         _node[_rowCount] = m.getElement(1)*256 + m.getElement(2);
         _event[_rowCount] = m.getElement(3)*256 + m.getElement(4);
         _type[_rowCount] = (m.getOpCode()&1) == 0;

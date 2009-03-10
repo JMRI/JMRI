@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class Reply extends AbstractMRReply {
     
@@ -20,11 +20,33 @@ public class Reply extends AbstractMRReply {
         super();
     }
 
-    // copy one
-    public  Reply(Reply m) {
-        super(m);
-    }
+/*     // copy one */
+/*     public  Reply(Reply m) { */
+/*         super(m); */
+/*     } */
 
+    public Reply(String s) {
+        _nDataChars = s.length();
+        for (int i = 0; i<s.length(); i++)
+            _dataChars[i] = s.charAt(i);
+    }
+    
+    public CanReply createReply() {
+        CanReply ret = new CanReply();
+        
+        ret.setExtended(isExtended());
+        
+	    // Copy the header
+        ret.setHeader(getHeader());
+        
+        // Get the data
+        for (int i = 0; i < getNumBytes(); i++) {
+            ret.setElement(i, getByte(i));
+        }
+        ret.setNumDataElements(getNumBytes());
+        return ret;
+    }
+    
     protected int skipPrefix(int index) {
         while (_dataChars[index] == ':') { index++; }
         return index;
@@ -40,13 +62,22 @@ public class Reply extends AbstractMRReply {
     public boolean isExtended() { return _dataChars[0]=='T'; }
 
     /**
-     * Get the CAN ID as an int
+     * Get the CAN header as an int
      *
      * @return int the CAN ID
      */        
-    public int getID() {
-        return getHexDigit(1)*256
+    public int getHeader() {
+        if (isExtended()) {
+            // 11 bit header
+            int val = 0;
+            for (int i = 1; i <= 8; i++)
+                val = val*16 + getHexDigit(i);
+            return val;
+        } else {
+            // 11 bit header
+            return getHexDigit(1)*256
                     + getHexDigit(2)*16 + getHexDigit(3);
+        }
     }
     
     /**

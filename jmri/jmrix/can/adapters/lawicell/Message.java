@@ -10,16 +10,17 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  * The Lawicell adapter protocol encodes messages as an ASCII string of up to 24
  * characters of the form:
- *      ;ShhhhNd0d1d2d3d4d5d6d7:
- * The S indicates a standard CAN frame
- * hhhh is the two byte header
- * N or R indicates a normal or remote frame
- * d0 - d7 are the (up to) 8 data bytes
+ *      tiiildd...[CR]
+ *      Tiiiiiiiildd...[CR]
+ * The t or T indicates a standard or extended CAN frame
+ * iiiiiiii is the two byte header
+ * l is the number of bytes of data
+ * dd are the (up to) 8 data bytes
  * <P>
  *
  * @author      Andrew Crosland Copyright (C) 2008
- * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.2 $
+ * @author      Bob Jacobsen Copyright (C) 2008, 2009
+ * @version	    $Revision: 1.3 $
  */
 public class Message extends AbstractMRMessage {
     
@@ -28,30 +29,32 @@ public class Message extends AbstractMRMessage {
         _dataChars = new int[24];
     }
 
-    // create a new one of given length
-    public Message(int i) {
-	this();
-        _nDataChars = (i <= 24) ? i : 24;
-    }
+    public Message(CanMessage m) {
+        this();
+	    
+        // Standard or extended frame?
+        setExtended(m.isExtended());
 
-    // create a new one from an array
-    public Message(int [] d) {
-	this();
-	int _nDataChars = (d.length <= 24) ? d.length : 24;
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = d[i];
+        // CAN header
+	    int index = 1;
+        index = setHeader(m.getHeader(), index);
+        
+        // don't know how to assert RTR in this protocol
+        if (m.isRtr()) log.error("Lawicell protocol cannot assert RTR");
+        
+        // length
+        setHexDigit(m.getNumDataElements(), index++);
+        
+        // Data payload
+        for (int i = 0 ; i < m.getNumDataElements(); i++) {
+            setHexDigit((m.getElement(i)>>4)&0x0F, index++);
+            setHexDigit(m.getElement(i)&0x0F, index++);
         }
+        // Terminator
+        setElement(index++, 0x0D);
+        setNumDataElements(index);
     }
-
-    // copy one
-    public  Message(Message m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-    }
-
+    
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
     public void setNumDataElements(int n) { _nDataChars = (n <= 24) ? n : 24;}
@@ -67,26 +70,38 @@ public class Message extends AbstractMRMessage {
         }
     }
     
+    public void setExtended(boolean extended) {
+        if (extended) {
+            // extended
+            setElement(0, 'T');  
+        } else {
+             // standard
+            setElement(0, 't'); 
+        }
+    }
+    
+    public boolean isExtended() { return getElement(0) == 'T'; }
+    
     /**
-     * Set the ID as ASCII hex digits.
+     * Set the CAN header as ASCII hex digits.
      * Handles extended/standard internally
      *
-     * @param id A valid CAN ID
+     * @param id A valid CAN header
      * @return index to next bytes, after this
      */
-    public int setID(int id, boolean extended, int index) {
-        if (extended) {
+    public int setHeader(int header, int index) {
+        if (isExtended()) {
             // extended MSB part
-            setHexDigit((id>>28)&0xF, index++);
-            setHexDigit((id>>24)&0xF, index++);
-            setHexDigit((id>>20)&0xF, index++);
-            setHexDigit((id>>16)&0xF, index++);
-            setHexDigit((id>>12)&0xF, index++);
+            setHexDigit((header>>28)&0xF, index++);
+            setHexDigit((header>>24)&0xF, index++);
+            setHexDigit((header>>20)&0xF, index++);
+            setHexDigit((header>>16)&0xF, index++);
+            setHexDigit((header>>12)&0xF, index++);
         }
         // standard part
-        setHexDigit((id>>8)&0xF, index++);
-        setHexDigit((id>>4)&0xF, index++);
-        setHexDigit((id>>0)&0xF, index++);
+        setHexDigit((header>>8)&0xF, index++);
+        setHexDigit((header>>4)&0xF, index++);
+        setHexDigit((header>>0)&0xF, index++);
         
         return index;
     }

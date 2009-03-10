@@ -1,4 +1,4 @@
-// CanTest.java
+// CanMessageTest.java
 
 package jmri.jmrix.can;
 
@@ -8,40 +8,38 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.can package.
- * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes
+ *
+ * @author      Bob Jacobsen  Copyright 2008, 2009
+ * @version   $Revision: 1.1 $
  */
-public class CanTest extends TestCase {
+public class CanMRCommonTest extends TestCase {
 
-    public void testDefinitions() {
-    }
     
     // from here down is testing infrastructure
 
-    public CanTest(String s) {
+    public CanMRCommonTest(String s) {
         super(s);
     }
 
-    // Main entry point
+    // Main entry point - this runs both CanMessage, CanReply
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", CanTest.class.getName()};
+        String[] testCaseName = {"-noloading", CanMRCommonTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
-    // test suite from all defined tests
+    // test suite from all defined tests in CanMessage, CanReply
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.can.CanTest");
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite("jmri.jmrix.can.CanMRCommonTest");
         suite.addTest(jmri.jmrix.can.CanMessageTest.suite());
         suite.addTest(jmri.jmrix.can.CanReplyTest.suite());
-        suite.addTest(jmri.jmrix.can.swing.monitor.MonitorTest.suite());
-        suite.addTest(jmri.jmrix.can.cbus.CbusTest.suite());
-        suite.addTest(jmri.jmrix.can.adapters.AdapterTest.suite());
         return suite;
     }
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
 }

@@ -28,7 +28,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -225,11 +225,26 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
         if (a.check()) {
             m = a.makeMessage();
         } else {
+            m = new CanMessage();
+            // check for header
+            if (s.charAt(0)=='[') {
+                // extended header
+                m.setExtended(true);
+                int i = s.indexOf(']');
+                String h = s.substring(1, i);
+                m.setHeader(Integer.parseInt(h, 16));
+                s = s.substring(i+1, s.length());
+            } else if (s.charAt(0) == '(') {
+                // standard header
+                int i = s.indexOf(')');
+                String h = s.substring(1, i);
+                m.setHeader(Integer.parseInt(h, 16));
+                s = s.substring(i+1, s.length());
+            }
             // Try to get hex bytes
             byte b[] = StringUtil.bytesFromHexString(s);
-            if (b.length == 0) return null;  // no such thing as a zero-length message
-            m = new CanMessage(b.length);
-            // Use &oxff to ensure signed bytes are stored as unsigned ints
+            m.setNumDataElements(b.length);
+            // Use &0xff to ensure signed bytes are stored as unsigned ints
             for (int i=0; i<b.length; i++) m.setElement(i, b[i]&0xff);
         }
         return m;

@@ -1,17 +1,16 @@
 // ActiveFlag.java
 
-package jmri.jmrix.can.adapters.gridconnect.canrs;
+package jmri.jmrix.can.cbus;
 
 /**
- * Provide a flag to indicate that the system provided by
- * this package is active.
+ * Provide a flag to indicate that the CBUS support is active.
  * <P>
  * This is a very light-weight class, carrying only the flag,
  * so as to limit the number of unneeded class loadings.
  *
- * @author		Bob Jacobsen  Copyright (C) 2003
- * @author              Andrew Crosland 2008
- * @version             $Revision: 1.1 $
+ * @author		Bob Jacobsen  Copyright (C) 2003, 2008, 2009
+ * @author      Andrew Crosland 2008
+ * @version     $Revision: 1.1 $
  */
 abstract public class ActiveFlag {
 
@@ -22,10 +21,6 @@ abstract public class ActiveFlag {
     static public boolean isActive() {
         return flag;
     }
-
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveFlag.class.getName());
-
 }
-
 
 /* @(#)ActiveFlag.java */

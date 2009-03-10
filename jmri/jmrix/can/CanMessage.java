@@ -13,13 +13,18 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * The _dataChars[] and _nDataChars members refer to the data field, not the
  * entire message.
+ *<p>
+ * "header" refers to the full 11 or 29 bit header; which mode is separately
+ * set via the "extended" parameter
+ *<p>
+ * CBUS uses a 2-bit "Pri" field and 7-bit "ID" ("CAN ID") field, with
+ * separate accessors.
  *
- * @author                      Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.4 $
+ * @author      Andrew Crosland Copyright (C) 2008
+ * @author      Bob Jacobsen Copyright (C) 2008, 2009
+ * @version     $Revision: 1.5 $
  */
 public class CanMessage extends AbstractMRMessage {
-    
-    // *** Needs toString() method to handle _id etc
     
     // tag whether translation is needed.
     // a "native" message has been converted already
@@ -29,8 +34,8 @@ public class CanMessage extends AbstractMRMessage {
     
     // Creates a new instance of CanMessage
     public CanMessage() {
-        _pri = 0;
-        _id = 0x7a;
+        _header = 0;
+        setHeader(0x7a);  // default value
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
@@ -57,14 +62,38 @@ public class CanMessage extends AbstractMRMessage {
     public  CanMessage(CanMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
-        _pri = m._pri;
-        _id = m._id;
+        _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
         setBinary(true);
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+    }
+    
+    /** 
+     * Note that a CanMessage and a CanReply can be tested for equality
+     */
+    public boolean equals(Object a) {
+        if (a.getClass().equals(CanMessage.class)) {
+            CanMessage m = (CanMessage) a;
+            if ( (_header!=m.getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
+                return false;
+            if ( _nDataChars != m.getNumDataElements() ) return false;
+            for (int i = 0; i<_nDataChars; i++) {
+                if (_dataChars[i] != m.getElement(i)) return false;
+            }
+            return true;
+        } else if (a.getClass().equals(CanReply.class)) {
+            CanReply m = (CanReply) a;
+            if ( (_header!=getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
+                return false;
+            if ( _nDataChars != m.getNumDataElements() ) return false;
+            for (int i = 0; i<_nDataChars; i++) {
+                if (_dataChars[i] != m.getElement(i)) return false;
+            }
+            return true;
+        } else return false;
     }
     
     /**
@@ -85,6 +114,8 @@ public class CanMessage extends AbstractMRMessage {
         }      
     }
     
+    public boolean replyExpected() { return false; }
+    
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
     public void setNumDataElements(int n) { _nDataChars = n; }
@@ -100,25 +131,10 @@ public class CanMessage extends AbstractMRMessage {
         }
     }
     
-    public boolean replyExpected() { return false; }
     
-    /**
-     * Get the full 11 bit ID.
-     */
-    public int getId() { return _id; }
-    
-    /**
-     * Set the full 11 bit ID for a standard frame.
-     */
-    public void setId(int id) { _id = id; }
-    
-    /**
-     * Set the ID for a standard or extended frame.
-     */
-    public void setId(int id, boolean b) { _id = id; _isExtended = b; }
-    
-    public int getPri() { return _pri; }
-    public void setPri(int pri) { _pri = pri; }
+    // CAN header
+    public int getHeader() { return _header; }
+    public void setHeader(int h) { _header = h; }
     
     public boolean isExtended() { return _isExtended; }
     public void setExtended(boolean b) { _isExtended = b; }
@@ -126,18 +142,28 @@ public class CanMessage extends AbstractMRMessage {
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
     
-    public static int getProtocol() { return _protocol; }
-    public static void setProtocol(int p) { _protocol = p; }
+    // CBUS format header
+    public int getCbusId() { return getHeader()&0x7f; }
+    public void setCbusId(int id) { 
+        if ( (id& ~0x7f) != 0 ) 
+            throw new IllegalArgumentException("invalid ID value: "+id);
+        int update = getHeader();
+        setHeader( (update&~0x07f) | id);
+    }
     
+    public int getCbusPri() { return (getHeader()>>9)&0x03; }
+    public void setCbusPri(int pri) { 
+        if ( (pri& ~0x03) != 0 ) 
+            throw new IllegalArgumentException("invalid CBUS Pri value: "+pri);
+        int update = getHeader();
+        setHeader( (update&~0x600) | (pri << 9));
+    }
+
     // contents (private)
-    protected int _pri;
-    protected int _id;
-    protected boolean _isExtended;
-    protected boolean _isRtr;
-    
-    // CAN protocols supported
-    protected static int _protocol;
-    
+    private int _header;
+    private boolean _isExtended;
+    private boolean _isRtr;
+        
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanMessage.class.getName());
 }
 

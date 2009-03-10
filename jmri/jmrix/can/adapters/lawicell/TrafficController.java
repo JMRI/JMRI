@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     
@@ -107,18 +107,8 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     public CanReply decodeFromHardware(AbstractMRReply m) {
         if (log.isDebugEnabled()) log.debug("Decoding from hardware: '"+m+"'\n");
 	    Reply gc = (Reply)m;
-        CanReply ret = new CanReply();
-
-	    // Get the ID
-        ret.setId(gc.getID());
-        
-        // Get the data
-        for (int i = 0; i < gc.getNumBytes(); i++) {
-            ret.setElement(i, gc.getByte(i));
-        }
-        ret.setNumDataElements(gc.getNumBytes());
+        CanReply ret = gc.createReply();
         if (log.isDebugEnabled()) log.debug("Decoded as "+ret);
-        
         return ret;
     }
 
@@ -127,30 +117,8 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         log.debug("Encoding for hardware");
-	    Message ret = new Message();
-	    int index = 0;
-        // Standard frame?
-        boolean extended = m.isExtended();
-        if (extended) {
-            // extended
-            ret.setElement(index++, 'T');  
-        } else {
-             // standard
-            ret.setElement(index++, 't'); 
-        }
-        // CAN ID
-        index = ret.setID(m.getId(), extended, index);
-        // length
-        ret.setHexDigit(m.getNumDataElements(), index++);
-        // Data payload
-        for (int i = 0 ; i < m.getNumDataElements(); i++) {
-            ret.setHexDigit((m.getElement(i)>>4)&0x0F, index++);
-            ret.setHexDigit(m.getElement(i)&0x0F, index++);
-        }
-        // Terminator
-        ret.setElement(index++, 0x0D);
-        ret.setNumDataElements(index);
-        if (log.isDebugEnabled()) log.debug("encoded as "+ret);
+	    Message ret = new Message(m);
+        if (log.isDebugEnabled()) log.debug("encoded as "+ret);        
         return ret;
     }
 
@@ -163,11 +131,9 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     
     /*
      * Normal CAN-RS replies will end with ":"
-     * Bootloader will end with ETX with no preceding DLE
      */
     protected boolean endOfMessage(AbstractMRReply r) {
         if (endNormalReply(r)) return true;
-//        if (endBootReply(r)) return true;
         return false;
     }
     
@@ -178,19 +144,6 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
         if (r.getElement(num) == 0x07) return true;
         return false;
     }
-
-//    boolean endBootReply(CanReply msg) {
-//        // Detect that the reply buffer ends with ETX with no preceding DLE
-//        // This is the end of a CAN-RS bootloader reply
-//        int num = msg.getNumDataElements();
-//        if ( num >= 2) {
-//            // ptr is offset of last element in CanrsReply
-//            int ptr = num-1;
-//            if ((int)(msg.getElement(ptr) & 0xff)   != CanrsMessage.ETX) return false;
-//            if ((int)(msg.getElement(ptr-1) & 0xff) == CanrsMessage.DLE) return false;
-//            return true;
-//        } else return false;
-//    }
     
     private boolean unsolicited;
     private int gcState;

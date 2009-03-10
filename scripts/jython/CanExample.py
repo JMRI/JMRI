@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import java
 
@@ -16,7 +16,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     def reply(self, msg) :
         print "received Frame"
-        print "ID: 0x"+java.lang.Integer.toHexString(msg.getId())
+        print "ID: 0x"+java.lang.Integer.toHexString(msg.getHeader())
         print "content: ", msg.toString()
         return
     
@@ -24,8 +24,9 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 
 
 # Send a frame
-frame = jmri.jmrix.can.CanMessage(2)  # will load 2 bytes
-frame.setId(0x123)
+frame = jmri.jmrix.can.CanMessage()
+frame.setHeader(0x123)
+frame.setNumDataElements(2)   # will load 2 bytes
 frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)

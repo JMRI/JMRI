@@ -27,58 +27,34 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Port extends AbstractPortController {
 
 
     public Port() {
-        configure();
     }
 
     public void configure() {
-        // Set the CAN protocol being used
-        int p = validOption1Values[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i<validForOption1.length; i++ ) {
-            if (validForOption1[i].equals(mOpt1)) {
-                p = validOption1Values[i];
-            }
-        }
-        CanMessage.setProtocol(p);
-//        CanReply.setProtocol(p);
 
         // Register the CAN traffic controller being used for this connection
         TrafficController.instance();
-    
 
-//        jmri.InstanceManager.setProgrammerManager(
-//                new NceProgrammerManager(
-//                    new NceProgrammer()));
+        // do central protocol-specific configuration    
+        jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
 
-//        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
-
-//        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
-
-//        jmri.InstanceManager.addClockControl(new jmri.jmrix.nce.NceClockControl());
     }
 
     /**
-     * Option 1 is binary vs ASCII command set.
+     * Option 1 is CAN-based protocol
      */
-    public String[] validOption1() { return validForOption1; }
-    
-    protected String [] validForOption1 = new String[]{"MERG CBUS", "Test - do not use"};
-    protected int [] validOption1Values = new int[]{CanConstants.CBUS, CanConstants.FOR_TESTING};
-    
+    public String[] validOption1() { return jmri.jmrix.can.ConfigurationManager.getSystemOptions(); }
+        
     /**
      * Get a String that says what Option 1 represents
      * May be an empty string, but will not be null
      */
-    public String option1Name() { return "CAN Protocol"; }
+    public String option1Name() { return "Connection Protocol"; }
 
     /**
      * Set the CAN protocol option.
@@ -86,6 +62,7 @@ public class Port extends AbstractPortController {
     public void configureOption1(String value) { mOpt1 = value; }
     protected String mOpt1 = null;
     public String getCurrentOption1Setting() {
+        System.err.println("getCurrentOption1Setting "+mOpt1+" "+ this);
         if (mOpt1 == null) return validOption1()[0];
         return mOpt1;
     }

@@ -12,14 +12,10 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  * <P>
  *
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
-    protected void setActive() { 
-        jmri.jmrix.can.adapters.gridconnect.canusb.ActiveFlag.setActive();
-    }
-    
     /**
      * Get an array of valid baud rates.
      */

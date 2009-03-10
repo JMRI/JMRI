@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.2 2008-11-24 16:50:03 jacobsen Exp $
+  $Id: package.html,v 1.3 2009-03-10 05:03:28 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -14,14 +14,14 @@
 </head>
 <body bgcolor="white">
 
-Defines classes for interfacing to a CAN based model railway
+Defines classes for interfacing to a CAN-based model railway
 control bus.
 
 <p>
 It is expected that there will be multiple CAN implementations (e.g. MERG
-CBUS or ATBUS) each accessible through a variety of CAN adapters (e.g. 
+CBUS, ATBUS, etc) each accessible through a variety of CAN adapters (e.g. 
 CAN232 or MERG CAN-RS), but that each implementation will be based uppon
-basic CANbus concepts such as ID (standard or extended), Normal and RTR
+basic CANbus concepts such as header (standard or extended), Normal and RTR
 frames and a data field.
 
 <p>
@@ -35,13 +35,22 @@ This package is therefore organized in several subtrees:
 <dd>Specific implementations for e.g. CBUS, NmraNet, etc:
 <ul>
 <li>cbus - MERG CBUS
-<li>nmranet - NMRA NMRAnet
+<li>atbus - ATBUS
+<li>nmranet - NMRA NMRAnet (not yet present)
 </ul>
 <dt>swing
 <dd>Swing-based GUI tools. 
 </dl>
 <!-- Put @see and @since tags down here. -->
 <!-- @see jmri.InstanceManager -->
+
+<h3>A note on terminology</h3>
+
+CBUS refers to a 7-bit field in the standard CAN header 
+as the "ID", "Node ID", and "CAN ID", 
+but occasionally refers to the entire 11-bit CAN header by the same names.
+<p>
+The JMRI classes use "cbusId" to refer to the 7-bit field.
 
 @since 2.1.7
 

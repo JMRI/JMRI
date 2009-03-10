@@ -11,16 +11,12 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  *
  * @author			Andrew Crosland Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter 
         extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter 
         implements jmri.jmrix.SerialPortAdapter {
 
-    protected void setActive() { 
-        jmri.jmrix.can.adapters.lawicell.canusb.ActiveFlag.setActive();
-    }
-    
     /**
      * Get an array of valid baud rates.
      */

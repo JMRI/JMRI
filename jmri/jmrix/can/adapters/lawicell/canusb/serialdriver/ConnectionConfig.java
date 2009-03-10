@@ -8,7 +8,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
  * @author      Andrew Crosland 2008
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -26,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "CBUS via Lawicell CANUSB"; }
+    public String name() { return "CAN via Lawicell CANUSB"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
