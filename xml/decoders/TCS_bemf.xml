@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.12 2009-02-15 17:06:19 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.13 2009-03-10 02:27:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -63,6 +63,17 @@
                 <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
                 <output name="Dim"/>
                 <output name="Motor"/>
+            </model>
+            <model model="1278"  numOuts="4" numFns="14"
+                maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+                <size length="2.860" width="0.680" height="0.145" units="inches" />
+                <output name="1" label="White"  connection="solder" maxcurrent="100 mA" />
+                <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+                <output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
+                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+                <output name="Dim" />
+                <output name="Ditch" />
+                <output name="Motor" />
             </model>
             <model model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions">
                 <size length="0.834" width="0.361" height="0.101" units="inches"/>
