@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
@@ -85,7 +85,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     /**
      * Set the header
      *
-     * @param id A valid CAN header
+     * @param header A valid CAN header value
      */
     public void setHeader(int header) {
         if (isExtended()) {

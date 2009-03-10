@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class Message extends AbstractMRMessage {
     
@@ -86,7 +86,7 @@ public class Message extends AbstractMRMessage {
      * Set the CAN header as ASCII hex digits.
      * Handles extended/standard internally
      *
-     * @param id A valid CAN header
+     * @param header A valid CAN header value
      * @return index to next bytes, after this
      */
     public int setHeader(int header, int index) {
