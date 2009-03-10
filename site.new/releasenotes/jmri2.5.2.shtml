@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.22 2009-03-10 02:44:08 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.23 2009-03-10 03:09:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -271,6 +271,17 @@ C/MRI, etc, nodes via scripts.
 <p>
 Richard Sauerbrun provided info for the TCS 1278 decoder model.
 
+<p>
+David Duchamp added a 3-way turnout tool and other additions to Layout Editor tools
+
+<p>
+Dan Boudreau added a train print and preview to operations.
+
+<p>
+Simon Ginsburg updated the German, Czech and Spanish translations.
+
+<p>
+Ken Cameron provided an example script for turning CMRI node polling on and off.
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
