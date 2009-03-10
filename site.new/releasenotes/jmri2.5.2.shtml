@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.21 2009-03-07 05:47:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.22 2009-03-10 02:44:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -263,6 +263,13 @@ for the MRC Sound Brilliance 1644 decoder.
 <p>
 Pete Cressman and David Parks fixed a problem with a tiny active 
 area for MultiSensors when the default inactive, etc, icons are still used.
+
+<p>
+Ken Cameron added methods so you can enable and disable polling of 
+C/MRI, etc, nodes via scripts.
+
+<p>
+Richard Sauerbrun provided info for the TCS 1278 decoder model.
 
 <!--#include virtual="/Footer" -->
 
