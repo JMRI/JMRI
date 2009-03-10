@@ -54,6 +54,8 @@
 
 <mapID target="manual.DecoderPro_index" url="manual/DecoderPro.shtml#index"/>
 
+<mapID target="package.jmri.jmrix.nce.cab.NceShowCabFrame" url="package/jmri/jmrix/nce/cab/NceShowCabFrame.shtml"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor" url="package/jmri/jmrit/display/LayoutEditor.shtml"/>
 
 <mapID target="html.apps.PanelPro.Panels_editor" url="html/apps/PanelPro/Panels.shtml#editor"/>
@@ -596,6 +598,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.BlockAddEdit" url="package/jmri/jmrit/beantable/BlockAddEdit.shtml"/>
 
+<mapID target="package.jmri.jmrit.dispatcher.NewTrain_loadsave" url="package/jmri/jmrit/dispatcher/NewTrain.shtml#loadsave"/>
+
 <mapID target="html.apps.DecoderPro.Tour" url="html/apps/DecoderPro/Tour.shtml"/>
 
 <mapID target="manual.Basic_Programming_Basic 2" url="manual/Basic_Programming.shtml#Basic 2"/>
@@ -671,6 +675,8 @@
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame" url="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.SetSignalsAt3WayTurnout" url="package/jmri/jmrit/display/SetSignalsAt3WayTurnout.shtml"/>
 
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
