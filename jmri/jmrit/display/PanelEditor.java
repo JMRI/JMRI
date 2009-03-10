@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.91 $
+ * @version $Revision: 1.92 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -77,6 +77,9 @@ public class PanelEditor extends JmriJFrame {
     JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
     JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
+    JCheckBox scrollableBox = new JCheckBox(rb.getString("CheckBoxScrollable"));
+
+    JScrollPane js = new JScrollPane();
 
     JButton labelAdd = new JButton(rb.getString("ButtonAddText"));
     JTextField nextLabel = new JTextField(10);
@@ -621,6 +624,16 @@ public class PanelEditor extends JmriJFrame {
                     setPanelMenu(menuBox.isSelected());
                 }
             });
+
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(scrollableBox);
+            scrollableBox.setSelected(true);
+            scrollableBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setScrollable(scrollableBox.isSelected());
+                }
+            });
        }
 
         // register the resulting panel for later configuration
@@ -1155,6 +1168,23 @@ public class PanelEditor extends JmriJFrame {
         }
     }
 
+    /**
+     *  Control whether target panel shows scrollbars
+     * @param state
+     */
+    public void setScrollable(boolean state) {
+        if (scrollableBox.isSelected()!=state) scrollableBox.setSelected(state); {
+            if (state) {
+                js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            } else {
+                js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            }
+                    
+            getFrame().validate();
+        }
+    }
     /** 
      * Set properties of an item from GUI
      * <ul>
@@ -1187,6 +1217,10 @@ public class PanelEditor extends JmriJFrame {
 
     public boolean hasPanelMenu() {
         return menuBox.isSelected();
+    }
+
+    public boolean isScrollable() {
+        return scrollableBox.isSelected();
     }
     
     /**
@@ -1246,9 +1280,9 @@ public class PanelEditor extends JmriJFrame {
         };
         targetPanel.setLayout(null);
 
-        JScrollPane js = new JScrollPane(targetPanel);
-        js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        js = new JScrollPane(targetPanel);
+        //js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        //js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
@@ -1298,11 +1332,14 @@ public class PanelEditor extends JmriJFrame {
 
         // show menubar?
         menuBar.setVisible(menuBox.isSelected());
-        
-        
+                
+
         // set initial size, and force layout
         targetPanel.setSize(200, 200);
         targetPanel.revalidate();
+
+        // set scrollbar initial state
+        setScrollable(isScrollable());
 
         return targetFrame;
 

@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -44,6 +44,7 @@ public class PanelEditorXml implements XmlAdapter {
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
         panel.setAttribute("panelmenu", p.hasPanelMenu()?"yes":"no");
+        panel.setAttribute("scrollable", p.isScrollable()?"yes":"no");
 
         // include contents
 
@@ -154,12 +155,19 @@ public class PanelEditorXml implements XmlAdapter {
             value = false;
         panel.setPanelMenu(value);
 
+        value = true;
+        if ((a = element.getAttribute("scrollable"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setScrollable(value);
+
         // display the results, with the editor in back
         panel.pack();
 
         if (!hide) panel.setVisible(true);    // show the editor if wanted
 
         // we don't pack the target frame here, because size was specified
+        // TODO: Work out why, when calling this method, panel size is increased
+        // vertically (at least on MS Windows)
         panel.getFrame().setVisible(true);    // always show the panel
 
         // register the resulting panel for later configuration
