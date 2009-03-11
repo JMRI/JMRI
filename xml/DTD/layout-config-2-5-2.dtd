@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-2.dtd,v 1.5 2009-03-10 19:42:54 matthewharris Exp $ -->
+<!-- $Id: layout-config-2-5-2.dtd,v 1.6 2009-03-11 17:31:46 matthewharris Exp $ -->
 
 <!-- This DTD is part of version 2.5.2 development.  Do not modify it       -->
 <!-- after version 2.5.2 is released.  For more information,                -->
@@ -335,7 +335,7 @@
   <!ATTLIST paneleditor hide		(yes|no) "no" >
   <!ATTLIST paneleditor showcoordinates		(yes|no) "no" >
   <!ATTLIST paneleditor panelmenu	(yes|no) "yes" >  <!-- menu present on panel window -->
-  <!ATTLIST paneleditor scrollable	(yes|no) "yes" >  <!-- scrollbars present on panel window -->
+  <!ATTLIST paneleditor scrollable	(none|both|horizontal|vertical) "both" >  <!-- scrollbars present on panel window -->
 
   <!ELEMENT positionablelabel EMPTY>
     <!ATTLIST positionablelabel class	CDATA #REQUIRED>

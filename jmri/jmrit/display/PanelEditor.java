@@ -49,7 +49,8 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.92 $
+ * @author  Matthew Harris Copyright: Copyright (c) 2009
+ * @version $Revision: 1.93 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -64,7 +65,12 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
-    final public static Integer MARKERS   = new Integer(10); 		
+    final public static Integer MARKERS   = new Integer(10);
+
+    final public static int SCROLL_NONE       = 0;
+    final public static int SCROLL_BOTH       = 1;
+    final public static int SCROLL_HORIZONTAL = 2;
+    final public static int SCROLL_VERTICAL   = 3;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
@@ -77,7 +83,8 @@ public class PanelEditor extends JmriJFrame {
     JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
     JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
-    JCheckBox scrollableBox = new JCheckBox(rb.getString("CheckBoxScrollable"));
+    JLabel scrollableLabel = new JLabel(rb.getString("ComboBoxScrollable"));
+    JComboBox scrollableComboBox = new JComboBox();
 
     JScrollPane js = new JScrollPane();
 
@@ -627,11 +634,17 @@ public class PanelEditor extends JmriJFrame {
 
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
-            p.add(scrollableBox);
-            scrollableBox.setSelected(true);
-            scrollableBox.addActionListener(new ActionListener() {
+            scrollableLabel.setLabelFor(scrollableComboBox);
+            p.add(scrollableLabel);
+            p.add(scrollableComboBox);
+            scrollableComboBox.addItem(rb.getString("ScrollNone"));
+            scrollableComboBox.addItem(rb.getString("ScrollBoth"));
+            scrollableComboBox.addItem(rb.getString("ScrollHorizontal"));
+            scrollableComboBox.addItem(rb.getString("ScrollVertical"));
+            scrollableComboBox.setSelectedIndex(SCROLL_BOTH);
+            scrollableComboBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    setScrollable(scrollableBox.isSelected());
+                    setScrollable(scrollableComboBox.getSelectedIndex());
                 }
             });
        }
@@ -1170,18 +1183,36 @@ public class PanelEditor extends JmriJFrame {
 
     /**
      *  Control whether target panel shows scrollbars
-     * @param state
+     * @param state which scrollbars to display
      */
-    public void setScrollable(boolean state) {
-        if (scrollableBox.isSelected()!=state) scrollableBox.setSelected(state); {
-            if (state) {
-                js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            } else {
-                js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-                js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    public void setScrollable(String state) {
+        if (state.equals("none")) setScrollable(SCROLL_NONE);
+        else if (state.equals("horizontal")) setScrollable(SCROLL_HORIZONTAL);
+        else if (state.equals("vertical")) setScrollable(SCROLL_VERTICAL);
+        else setScrollable(SCROLL_BOTH); // anything else is both
+    }
+
+    public void setScrollable(int state) {
+        if (scrollableComboBox.getSelectedIndex()!=state) scrollableComboBox.setSelectedIndex(state); {
+            switch (state) {
+                case SCROLL_NONE:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    break;
+                case SCROLL_BOTH:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    break;
+                case SCROLL_HORIZONTAL:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    break;
+                case SCROLL_VERTICAL:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    break;
             }
-                    
+            
             getFrame().validate();
         }
     }
@@ -1219,8 +1250,27 @@ public class PanelEditor extends JmriJFrame {
         return menuBox.isSelected();
     }
 
-    public boolean isScrollable() {
-        return scrollableBox.isSelected();
+    /**
+     *  Get the enabled scrollbars for this Panel
+     * @return a string representing which scrollbars are enabled
+     */
+    public String getScrollable() {
+        String value = new String();
+        switch (scrollableComboBox.getSelectedIndex()) {
+            case SCROLL_NONE:
+                value = "none";
+                break;
+            case SCROLL_BOTH:
+                value = "both";
+                break;
+            case SCROLL_HORIZONTAL:
+                value = "horizontal";
+                break;
+            case SCROLL_VERTICAL:
+                value = "vertical";
+                break;
+        }
+        return value;
     }
     
     /**
@@ -1339,7 +1389,7 @@ public class PanelEditor extends JmriJFrame {
         targetPanel.revalidate();
 
         // set scrollbar initial state
-        setScrollable(isScrollable());
+        setScrollable(SCROLL_BOTH);
 
         return targetFrame;
 
