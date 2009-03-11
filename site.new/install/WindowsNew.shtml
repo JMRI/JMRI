@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.1 2009-03-11 17:27:41 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.2 2009-03-11 18:09:06 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-        <TITLE>JMRI 2.52 and later Install Guide: Windows</TITLE>
+        <TITLE>JMRI 2.5.2 and later Install Guide: Windows</TITLE>
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -23,7 +23,7 @@
 <p>This Install Guide is suitable for JMRI versions 2.5.2 and later - for versions 2.5.1 and earlier, <a href="Windows.html">refer to the old Install Guide</a>.</p>
 
 <H1> 
-JMRI 2.52 and later Install Guide: Windows
+JMRI 2.5.2 and later Install Guide: Windows
 </H1>
 
 <OL>
