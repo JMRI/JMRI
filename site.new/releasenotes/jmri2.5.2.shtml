@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.23 2009-03-10 03:09:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.24 2009-03-11 04:29:45 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,7 +136,8 @@ shipped for a siding by using the schedule feature. Schedules can now be
 accessed from the Locations menu under Tools. You can now also modify
 the default load names for empty and loaded.  Edit frames now appear on top
 when launched from tables.  He also fixed a print problem when 
-a car with a FRED was printed in a switch list or manifest.
+a car with a FRED was printed in a switch list or manifest.  Trains, Train, and 
+Route windows now have print and preview tools.
 
 <p>
 Matt Harris fixed a problem launching JMRI on a Windows 64-bit machine with
@@ -274,8 +275,6 @@ Richard Sauerbrun provided info for the TCS 1278 decoder model.
 <p>
 David Duchamp added a 3-way turnout tool and other additions to Layout Editor tools
 
-<p>
-Dan Boudreau added a train print and preview to operations.
 
 <p>
 Simon Ginsburg updated the German, Czech and Spanish translations.
