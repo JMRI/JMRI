@@ -1,5 +1,0 @@
-This directory builds a small override jar file
-that modifies jmrit.roster class(es) for use in 
-the "USB stick portable" version of JMRI.
-
-Written and contributed by Matthew Harris
