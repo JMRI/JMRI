@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.2 2009-03-11 18:09:06 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.3 2009-03-11 18:11:17 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -104,7 +104,7 @@ JMRI 2.5.2 and later Install Guide: Windows
   <li>In the JRE_98ME directory, place a copy of the Java offline installer for Windows 98 and ME. If required, this can be <a href="http://javadl.sun.com/webapps/download/AutoDL?BundleId=26411">downloaded from Sun Microsystems here</a>. The filename should be 'jre-1_5_0_17-windows-i586-p-s.exe'.
 </ol>
 <p>Setup of the JMRI offline installation media is now complete.</p>
-<p>Note: If you do not wish to support offline installation on Windows 98 and Windows ME, skip the creation of the directory 'JRE98ME'.
+<p>Note: If you do not wish to support offline installation on Windows 98 and Windows ME, skip the creation of the directory 'JRE_98ME'.
 
 <a id="largewindow"/>
 <h4>Large Windows</h4>
