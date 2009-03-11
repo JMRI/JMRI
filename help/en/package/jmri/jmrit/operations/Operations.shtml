@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.35 2009-02-23 00:43:26 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.36 2009-03-11 04:23:52 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -371,7 +371,7 @@ using staging tracks.
 
 <P>You can also access your Schedules from the Locations Tools menu.  The
 Schedules table provides status for each schedule.  Since you can assign
-a schedule to multiple sidings, the table also provides addition status for each
+a schedule to multiple sidings, the table also provides additional status for each
 of the sidings that use that particular schedule.  The table also allows you
 the edit a schedule once its been assigned to a siding.
 
@@ -401,7 +401,7 @@ track by a train on a given route will not be picked up by any train
 using that route. Another train with a different route is required to
 pickup the cars. For example, you might have a branch line that picks up
 and drops off cars from a terminal. By defining the track as an
-interchange, once the branch line train setouts cars, they will remain
+interchange, once the branch line train delivers the cars, they will remain
 there until the main line train stops to service the terminal's
 interchange track.
 
@@ -541,7 +541,7 @@ identical roads and numbers, simply add a -1, -2, etc. to each of the
 car numbers. The program when printing out the manifest or switch list
 will drop the -1, -2, etc. from the car's road number.
 
-<H3>Car Type, Length, Color, Weigth</H3>
+<H3>Car Type, Length, Color, Weight</H3>
 
 Select the car's type, length, and color from the menu boxes. Use the
 "Edit" button to add or delete car types, lengths, or colors that you
@@ -851,7 +851,8 @@ If you want to accept only some road names, select "Accept only" radio
 button. Then use the menu of road names and "Add Road" button to make a
 list of road names that the train will service. To remove a road name
 from your list, select the road name from the menu and use the "Delete
-Road" button. <BR>
+Road" button. 
+<P>
 To build a list of road names that the train will not service, select
 the "Exclude" radio button. Use the menu of road names and the "Add
 Road" button to build a list of roads that this train will not service.
