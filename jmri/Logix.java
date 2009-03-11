@@ -2,18 +2,21 @@
 
 package jmri;
 
+import java.util.ArrayList;
 /**
  * A Logix is a group of Conditionals that monitor one or more conditions 
- * (internal or on the layout) and take action when these conditionals 
- * change in a user specified way.
+ * (internal or on the layout).  It services these Conditionals by installing
+ * and deinstalling the proper listeners for their variables.
  * <P>
- * A Logix can be enabled or not.  By default it is enabled and will act
- * when one or more of its Conditionals changes in a user specified way.
- * When not enabled, the Logix will not trigger actions when its 
- * Conditionals change.  Enabled is a bound property of a Logix.
+ * A Logix can be enabled or not.  It passes this attribute to its Conditionals.
+ * By default it is enabled.  When not enabled, a Conditional will still respond
+ * to callbacks from its listeners and calculate its state, however it will not
+ * execute its actions.  Enabled is a bound property of a Logix.
+ * <P>
+ * A Logix can be deactivated or not.  When deactivated, the listeners of the
+ * Conditional variables are deinstalled.
  * <P>
  * A Logix does not have a "state", however, each of its Conditionals does.
- *
  *
  * <hr>
  * This file is part of JMRI.
@@ -29,13 +32,11 @@ package jmri;
  * for more details.
  * <P>
  * @author			Dave Duchamp Copyright (C) 2007
+ * Additional modifications  Pete Cressman 2009 
  * @version			$Revision 1.0 $
  */
  
 public interface Logix extends NamedBean {
-
-	public static final int MAX_CONDITIONALS = 50;
-	public static final int MAX_LISTENERS = 250;
 	
 	public static final int LISTENER_TYPE_SENSOR = 1;
 	public static final int LISTENER_TYPE_TURNOUT = 2;
@@ -43,6 +44,7 @@ public interface Logix extends NamedBean {
 	public static final int LISTENER_TYPE_CONDITIONAL = 4;
 	public static final int LISTENER_TYPE_SIGNAL = 5;
 	public static final int LISTENER_TYPE_MEMORY = 6;	
+	public static final int LISTENER_TYPE_FASTCLOCK = 7;	
 
     /**
      * Set enabled status.  Enabled is a bound property
@@ -63,21 +65,10 @@ public interface Logix extends NamedBean {
 	public int getNumConditionals();
 
 	/**
-	 * Initialize for reordering Conditionals
+	 * Move 'row' to 'nextInOrder' and shift all between 'nextInOrder' and 'row'
+     * up one position.  ( row > nextInOrder ) 
 	 */
-	public void initializeReorder();
-	
-	/**
-	 * Make the Conditional with given current order, the next in order
-	 * Returns 'true' if reordering is done, returns 'false' if continue
-	 */
-	public boolean nextConditionalInOrder(int oldOrder);
-	
-	/**
-	 * Get never used number for next Conditional system name
-	 */
-	public int getNextConditionalNumber();
-		
+   public void swapConditional(int nextInOrder, int row);
 	/**
 	 * Returns the system name of the conditional that will calculate in the
 	 * specified order. This is also the order the Conditional is listed in
@@ -105,11 +96,11 @@ public interface Logix extends NamedBean {
 	 * Note: Since each Logix must have at least one Conditional,
 	 *    the last Conditional will not be deleted.
      * <P>
-	 * Returns true if Conditional was successfully deleted, otherwise 
-	 *    returns false. 
+	 * Returns An array of names used in an error message explaining why Conditional 
+     * should not be deleted. 
      * @param systemName The Conditional system name
      */
-    public boolean deleteConditional(String systemName);	
+    public String[] deleteConditional(String systemName);	
 	
     /**
 	 * Calculate all Conditionals, triggering action if the user specified
@@ -147,7 +138,7 @@ public interface Logix extends NamedBean {
 	 *    Returns an empty string if there are none, probably because 
 	 *    "checkLoopCondition" was not invoked before the call, or returned false.
 	 */
-	public String getLoopGremlins();
+	public ArrayList <String[]> getLoopGremlins();
 	
 	/**
 	 * Assembles and returns a list of state variables that are used by conditionals 
@@ -157,16 +148,13 @@ public interface Logix extends NamedBean {
 	 * The main use of this method is to return information that can be used to test 
 	 *   for inconsistency in suppressing triggering of a calculation among multiple 
 	 *   occurances of the same state variable.
-	 * Note that FastClockRange state varible type is not returned, since each 
-	 *   occurance is considered a unique state variable - there is no duplication 
-	 *   possible.
-	 * Returns the number of state variables returned.
-	 * Note that 'arrayMax' is the dimension of the arrays passed in the call.  If 
-	 *   more state variables are found than 'arrayMax', the overflow is skipped.
+     * Caller provides an ArrayList of the variables to check and and empty Array list
+     *   to return the counts for triggering or suppressing calculation.  The first 
+     *   index is a count that the correspondeing variable triggers calculation and
+     *   second is a count that the correspondeing variable suppresses Calculation.
+     * Note this method must not modify the supplied variable list in any way.
 	 */
-	public int getStateVariableList(String[] varName, int[] varListenerType, 
-			String[] varListenerProperty, int[] varAppearance, int[] numTriggersCalc, 
-								int[] numTriggerSuppressed, int arrayMax);  
+	public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
 }
 
 /* @(#)Logix.java */

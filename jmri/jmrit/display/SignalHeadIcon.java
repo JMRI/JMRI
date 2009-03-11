@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -180,7 +180,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    public String getNameString() {
         String name;
         if (mHead == null) name = "<Not connected>";
         else if (mHead.getUserName() == null)
@@ -416,7 +416,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * logic controlling the signal head.
      * @param e
      */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
+     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+    public void mouseReleased(java.awt.event.MouseEvent e) {
+        super.mouseReleased(e);
         if (!getControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;

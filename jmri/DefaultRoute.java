@@ -9,7 +9,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2006, 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -25,8 +25,8 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      *  Persistant instance variables (saved between runs)
      */
-    static final int MAX_OUTPUT_TURNOUTS_PER_ROUTE = 100;
-    static final int MAX_OUTPUT_SENSORS_PER_ROUTE = 100;
+    static public final int MAX_OUTPUT_TURNOUTS_PER_ROUTE = 100;
+    static public final int MAX_OUTPUT_SENSORS_PER_ROUTE = 100;
 
     protected String[] mOutputTurnout = new String[MAX_OUTPUT_TURNOUTS_PER_ROUTE];
     protected int[] mOutputTurnoutState = new int[MAX_OUTPUT_TURNOUTS_PER_ROUTE];
@@ -114,6 +114,10 @@ public class DefaultRoute extends AbstractNamedBean
      */
     public void clearOutputTurnouts() {
         mNumOutputTurnouts = 0;
+    }
+
+    public int getNumOutputTurnouts() {
+        return mNumOutputTurnouts;
     }
 
     /**
@@ -220,6 +224,10 @@ public class DefaultRoute extends AbstractNamedBean
         mNumOutputSensors = 0;
     }
     
+    public int getNumOutputSensors() {
+        return mNumOutputSensors;
+    }
+
     /**
      * Method to get an ouput Sensor system name by Index
      *  Returns null if there is no sensor with that index

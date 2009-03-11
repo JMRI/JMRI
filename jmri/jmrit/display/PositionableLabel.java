@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class PositionableLabel extends JLabel
@@ -114,7 +114,7 @@ public class PositionableLabel extends JLabel
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
-        // if (debug) log.debug("Pressed: "+where(e));
+        // if (debug) log.debug("mousePressed: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -127,7 +127,7 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
-        // if (debug) log.debug("Release: "+where(e));
+        // if (debug) log.debug("mouseReleased: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -135,7 +135,7 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (debug) log.debug("Clicked: "+where(e));
+        if (debug) log.debug("mouseClicked: "+where(e));
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
         if (e.isPopupTrigger()) {

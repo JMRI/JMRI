@@ -1,18 +1,25 @@
-// DefaultConditional.java
-
 package jmri;
+
 import jmri.Timebase;
+import jmri.jmrit.Sound;
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Date;
+import java.util.ResourceBundle;
 import javax.swing.Timer;
 
  /**
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
+
+	static final ResourceBundle rbx = ResourceBundle
+			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);
@@ -22,233 +29,97 @@ public class DefaultConditional extends AbstractNamedBean
         super(systemName);
     }
 
-    /**
-     *  Persistant instance variables (saved between runs)
-     */
-	 // state variables in logical expression
-	 protected int[] varOperator = new int[MAX_STATE_VARIABLES];
-	 protected int[] varType = new int[MAX_STATE_VARIABLES];
-	 protected String[] varName = new String[MAX_STATE_VARIABLES];
-	 protected String[] varDataString = new String[MAX_STATE_VARIABLES];
-	 protected int[] varNum1 = new int[MAX_STATE_VARIABLES];
-	 protected int[] varNum2 = new int[MAX_STATE_VARIABLES];
-	 protected boolean[] varTriggersCalculation = new boolean[MAX_STATE_VARIABLES];
-	 // action parameters - 2 actions allowed
-	 protected int[] actionOption = {ACTION_OPTION_ON_CHANGE_TO_TRUE,
-									ACTION_OPTION_ON_CHANGE_TO_TRUE};
-	 protected int[] actionDelay = {0,0}; // delay before action (seconds)
-	 protected int[] actionType = {ACTION_NONE,ACTION_NONE};
-	 protected String[] actionName = {" "," "};
-	 protected int[] actionData = {0,0};
-	 protected String[] actionString = {" "," "};
+    // boolean expression of state variables
+    private String _antecedent = "";
+    private int _logicType = Conditional.ALL_AND;
+    // variables (antecedent) parameters
+    private ArrayList <ConditionalVariable> _variableList = new ArrayList<ConditionalVariable>();
+    // actions (consequent) parameters
+    private ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
+
+	private int _currentState = Conditional.UNKNOWN;
+
+	/**
+	 * Get antecedent (boolean expression) of Conditional
+	 */
+	public String getAntecedentExpression() {
+		return _antecedent;
+	}
+
+	/**
+	 * Get type of operators in the antecedent statement
+	 */
+    public int getLogicType() {
+        return _logicType;
+    }
 
     /**
-     *  Operational instance variables (not saved between runs)
-     */
-	 protected int numStateVariables = 0;	 
-	 protected int currentState = Conditional.UNKNOWN;
-	 protected Timer[] mDelayTimer = {null,null};
-	 protected java.awt.event.ActionListener[] mDelayListener = {null,null};
-	 protected boolean [] mDelayTimerActive = {false,false}; 
-	 protected jmri.jmrit.Sound[] snd = {null,null};
-	
-	/**
-	 * Get number of State Variables for this Conditional
-	 */
-	public int getNumStateVariables() {
-		return (numStateVariables);
-	}
+    * set the logic type (all AND's all OR's or mixed AND's and OR's
+    * set the antecedent expression - should be a well formed boolean
+    * statement with parenthesis indicating the order of evaluation
+    */
+    public void setLogicType(int type, String antecedent) {
+        _logicType = type;
+        _antecedent = antecedent;
+        setState(Conditional.UNKNOWN);
+    }
 	
 	/**
      * Set State Variables for this Conditional. Each state variable will 
 	 * evaluate either True or False when this Conditional is calculated.
 	 *<P>
-	 * Returns true if state variables were successfully set, otherwise false.
-	 *<P>
-	 * This method should only be called by LogixTableAction.  It assumes that all
+	 * This method assumes that all
 	 * information has been validated.
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] name,String[] data,
-					int[] num1,int[] num2,boolean[] triggersCalc,int numVariables) {
-		if (numVariables<=0) {
-			// return without doing anything - user will have been warned elsewhere
-			return (true);
-		}
-		if (numVariables>MAX_STATE_VARIABLES) {
-			// too many state variables - ignore the excess
-			log.error("attempt to set too many State Variables for Conditional");
-			numVariables = MAX_STATE_VARIABLES;
-		}
-		// copy information to this Conditional's arrays
-		for (int i = 0;i<numVariables;i++) {
-			varOperator[i] = opern[i];
-			varType[i] = type[i];
-			varName[i] = name[i];
-			varDataString[i] = data[i];
-			varNum1[i] = num1[i];
-			varNum2[i] = num2[i];
-			varTriggersCalculation[i] = triggersCalc[i];
-		}
-		numStateVariables = numVariables;
-		return (true);
+    public void setStateVariables(ArrayList <ConditionalVariable> arrayList) {
+        _variableList = arrayList;
 	}
 	
 	/**
-     * Get State Variables for this Conditional. 
-	 *<P>
-	 * Returns state variables for this Conditional in supplied arrays.
-	 *<P>
-	 * This method should only be called by LogixTableAction and methods to save
-	 * this conditional to disk in a panel file.  
-     */
-    public void getStateVariables(int[] opern,int[] type,String[] name,
-					String[] data,int[] num1,int[] num2,boolean[] triggersCalc) {
-		if (numStateVariables == 0) {
-			return;
+	 * Make deep clone of variables
+	 */
+    public ArrayList <ConditionalVariable> getCopyOfStateVariables() {
+        ArrayList <ConditionalVariable> variableList = new ArrayList <ConditionalVariable> ();
+		for (int i = 0; i<_variableList.size(); i++) {
+            ConditionalVariable variable = (ConditionalVariable)_variableList.get(i);
+            ConditionalVariable clone = new ConditionalVariable();
+            clone.setNegation(variable.isNegated());
+            clone.setOpern(variable.getOpern());
+            clone.setType(variable.getType());
+            clone.setName(variable.getName());
+            clone.setDataString(variable.getDataString());
+            clone.setNum1(variable.getNum1());
+            clone.setNum2(variable.getNum2());
+            clone.setTriggerCalculation(variable.doCalculation());
+            clone.setState(variable.getState());
+            variableList.add(clone);
 		}
-		// copy information from this Conditional's arrays
-		for (int i = 0;i<numStateVariables;i++) {
-			opern[i] = varOperator[i];
-			type[i] = varType[i];
-			name[i] = varName[i];
-			data[i] = varDataString[i];
-			num1[i] = varNum1[i];
-			num2[i] = varNum2[i];
-			triggersCalc[i] = varTriggersCalculation[i];
-		}
+        return variableList;
 	}
 
 	/**
-	 * Provide access to operator of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
+	 * Set list of actions
 	 */
-	public int getStateVariableOperator(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varOperator[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableOperator");
-		return (-1);
-	}
-
-	/**
-	 * Provide access to type of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableType(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varType[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableType");
-		return (-1);
-	}
-	
-	/**
-	 * Provide access to Name (user or system, whichever was specified) of 
-	 *    state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public String getStateVariableName(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varName[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableName");
-		return ("");
-	}
-	
-	/**
-	 * Provide access to data string of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public String getStateVariableDataString(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varDataString[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableDataString");
-		return ("");
-	}
-
-	/**
-	 * Provide access to number 1 data of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableNum1(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varNum1[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableNum1");
-		return (-1);
-	}
-
-	/**
-	 * Provide access to number 2 data of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableNum2(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varNum2[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableNum2");
-		return (-1);
-	}
-
-	/**
-	 * Provide access to triggers option of state variable by index
-	 *  Note: returns true if Logix should listen for changes in this
-	 *		state variable to trigger calculation (default) and
-	 *		returns false if the listener should be suppressed.
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public boolean getStateVariableTriggersCalculation(int index) {
-		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varTriggersCalculation[index]);
-		}
-		// illegal index
-		log.warn("bad index in call to getStateVariableTriggersCalculation");
-		return (true);
-	}
-
-	/**
-     * Delete all State Variables from this Conditional
-     */
-    public void deleteAllStateVariables() {
-		numStateVariables = 0;
-	}
-	
-	/**
-	 * Set action parameters for action 1 and action 2
-	 */
-	public void setAction (int[] opt, int[] delay, int[] type,
-				String[] name,int[] data,String[] s) {
-		for (int i = 0;i<2;i++) {
-			actionOption[i] = opt[i];
-			actionDelay[i] = delay[i];
-			actionType[i] = type[i];
-			actionName[i] = name[i];
-			actionData[i] = data[i];
-			actionString[i] = s[i];
-			snd[i] = null;
-		}
+	public void setAction (ArrayList <ConditionalAction> arrayList) {
+		_actionList = arrayList;
 	}		
 	
 	/**
-	 * Get action parameters for action 1 and action 2
+	 * Make deep clone of actions
 	 */
-	public void getAction (int[] opt, int[] delay, int[] type,
-				String[] name,int[] data,String[] s) {
-		for (int i = 0;i<2;i++) {
-			opt[i] = actionOption[i];
-			delay[i] = actionDelay[i];
-			type[i] = actionType[i];
-			name[i] = actionName[i];
-			data[i] = actionData[i];
-			s[i] = actionString[i];
+	public ArrayList <ConditionalAction> getCopyOfActions () {
+        ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
+		for (int i = 0; i<_actionList.size(); i++) {
+            ConditionalAction action = _actionList.get(i);
+            ConditionalAction clone = new ConditionalAction();
+            clone.setType(action.getType());
+            clone.setOption(action.getOption());
+            clone.setDeviceName(action.getDeviceName());
+            clone.setActionData(action.getActionData());
+            clone.setActionString(action.getActionString());
+            actionList.add(clone);
 		}
+        return actionList;
 	}		
 	
     /**
@@ -263,246 +134,295 @@ public class DefaultConditional extends AbstractNamedBean
 	 */
 	public int calculate (boolean logixEnabled) {
 		// check if  there are no state variables
-		if (numStateVariables==0) {
+		if (_variableList.size()==0) {
 			// if there are no state variables, no state can be calculated
-			currentState = Conditional.UNKNOWN;
+            setState(Conditional.UNKNOWN);
+			return _currentState;
 		}
-		else {
-			// calculate the state
-			int oldState = currentState;
-			boolean result = true;
-			for (int index = 0;(index<numStateVariables)&&result;index++) {
-				result = evaluateStateVariable(index);
-			}
-			int newState = FALSE;
-			if (result) newState = TRUE;
-			if (newState!=oldState) {
-				// a change has occurred, set state and take action if needed
-				setState(newState);
-				if (logixEnabled) {
-					takeActionIfNeeded();
-				}
-			}
+        boolean result = true;
+        switch (_logicType) {
+            case Conditional.ALL_AND:
+                for (int i=0; (i<_variableList.size())&&result; i++) {
+                    result = _variableList.get(i).evaluate();
+                }
+                break;
+            case Conditional.ALL_OR:
+                result = false;
+                for (int k=0; (k<_variableList.size())&&!result; k++) {
+                    result = _variableList.get(k).evaluate();
+                }
+                break;
+            case Conditional.MIXED:
+                char[] ch = _antecedent.toCharArray();
+                int n = 0;
+                for (int j=0; j<ch.length; j++) {
+                    if (ch[j] != ' ') {
+                        if (ch[j] == '{' || ch[j] == '[')  {
+                            ch[j] = '(';
+                        } else if (ch[j] == '}' || ch[j] == ']')  {
+                            ch[j] = ')';
+                        }
+                        ch[n++] = ch[j];
+                    }
+                }
+                try {
+                    DataPair dp = parseCalculate(new String(ch, 0, n).toUpperCase(), _variableList);
+                    result = dp.result;
+                } catch ( NumberFormatException nfe) {
+                    result = false;
+                    log.error("parseCalculation error " + nfe);
+                } catch ( IndexOutOfBoundsException ioob) {
+                    result = false;
+                    log.error("parseCalculation error " + ioob);
+                }  catch ( JmriException je) {
+                    result = false;
+                    log.error("parseCalculation error " + je);
+                }
+                break;
+        }
+		int newState = FALSE;
+        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
+                  result+". current state is "+_currentState+".  logixEnabled= "+logixEnabled);
+		if (result) newState = TRUE;
+        if (newState != _currentState) {
+            setState(newState);
+            if (logixEnabled) {
+                takeActionIfNeeded();
+            }
 		}
-		return currentState;
+		return _currentState;
 	}
 
-	/**
-	*  Evaluates one State Variable
-	*  <P>
-	*  Returns true if variable evaluates true, otherwise false. 
-	*/
-	@SuppressWarnings("deprecation")
-	private boolean evaluateStateVariable(int index) {
-		// check vNOT and translate to the proper Conditional operator designation
-		boolean result = true;
-		String vName = varName[index];
-		Sensor sn = null;
-		Turnout t = null;
-		SignalHead h = null;
-		Conditional c = null;
-		Light lgt = null;
-		Memory m = null;
-		Logix x = null;
-		// evaluate according to state variable type		
-		switch (varType[index]) {
-			case TYPE_SENSOR_ACTIVE:
-				sn = InstanceManager.sensorManagerInstance().provideSensor(vName);
-				if (sn == null) {
-					log.error("invalid sensor name in state variable - "+vName);
-					return (false);
-				}
-				if (sn.getState() == Sensor.ACTIVE) result = true;
-				else result = false;
-				break;
-			case TYPE_SENSOR_INACTIVE:
-				sn = InstanceManager.sensorManagerInstance().provideSensor(vName);
-				if (sn == null) {
-					log.error("invalid sensor name in state variable - "+vName);
-					return (false);
-				}
-				if (sn.getState() == Sensor.INACTIVE) result = true;
-				else result = false;
-				break;
-			case TYPE_TURNOUT_THROWN:
-				t = InstanceManager.turnoutManagerInstance().provideTurnout(vName);
-				if (t == null) {
-					log.error("invalid turnout name in state variable - "+vName);
-					return (false);
-				}
-				if (t.getKnownState() == Turnout.THROWN) result = true;
-				else result = false;
-				break;
-			case TYPE_TURNOUT_CLOSED:
-				t = InstanceManager.turnoutManagerInstance().provideTurnout(vName);
-				if (t == null) {
-					log.error("invalid turnout name in state variable - "+vName);
-					return (false);
-				}
-				if (t.getKnownState() == Turnout.CLOSED) result = true;
-				else result = false;
-				break;
-			case TYPE_CONDITIONAL_TRUE:
-				x = InstanceManager.conditionalManagerInstance().getParentLogix(getSystemName());
-				if (x==null) {
-					log.error("cannot find parent logix for "+getSystemName());
-				}
-				c = InstanceManager.conditionalManagerInstance().getConditional(x,vName);
-				if (c == null) {
-					log.error("invalid conditional name in state variable - "+vName);
-					return (false);
-				}
-				if (c.getState() == TRUE) result = true;
-				else result = false;
-				break;
-			case TYPE_CONDITIONAL_FALSE:
-				x = InstanceManager.conditionalManagerInstance().getParentLogix(getSystemName());
-				if (x==null) {
-					log.error("cannot find parent logix for "+getSystemName());
-				}
-				c = InstanceManager.conditionalManagerInstance().getConditional(x,vName);
-				if (c == null) {
-					log.error("invalid conditional system name in state variable - "+vName);
-					return (false);
-				}
-				if (c.getState() == FALSE) result = true;
-				else result = false;
-				break;
-			case TYPE_LIGHT_ON:
-				lgt = InstanceManager.lightManagerInstance().getLight(vName);
-				if (lgt == null) {
-					log.error("invalid light name in state variable - "+vName);
-					return (false);
-				}
-				if (lgt.getState() == Light.ON) result = true;
-				else result = false;
-				break;
-			case TYPE_LIGHT_OFF:
-				lgt = InstanceManager.lightManagerInstance().getLight(vName);
-				if (lgt == null) {
-					log.error("invalid light name in state variable - "+vName);
-					return (false);
-				}
-				if (lgt.getState() == Light.OFF) result = true;
-				else result = false;
-				break;
-			case TYPE_MEMORY_EQUALS:
-				m = InstanceManager.memoryManagerInstance().provideMemory(vName);
-				if (m == null) {
-					log.error("invalid memory name in state variable - "+vName);
-					return (false);
-				}
-				String str = (String)m.getValue();
-				if (str!=null && str.equals(varDataString[index])) result = true; 
-				else result = false;
-				break;
-			case TYPE_FAST_CLOCK_RANGE:
-				// get current fast clock time
-				Timebase fastClock = InstanceManager.timebaseInstance();
-				Date currentTime = fastClock.getTime();
-				int currentMinutes = (currentTime.getHours()*60) + currentTime.getMinutes();
-				// check if current time is within range specified
-				int beginTime = varNum1[index];
-				int endTime = varNum2[index];
-				if (endTime>beginTime) {
-					// range is entirely within one day
-					if ( (currentMinutes<endTime) && (currentMinutes>=beginTime) ) result = true;
-					else result = false;
-				}
-				else {
-					// range includes midnight
-					if (currentMinutes>=beginTime) result = true;
-					else if (currentMinutes<endTime) result = true;
-					else result = false;
-				}
-				break;
-			case TYPE_SIGNAL_HEAD_RED:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.RED) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_YELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.YELLOW) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_GREEN:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.GREEN) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_DARK:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.DARK) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_FLASHRED:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.FLASHRED) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_FLASHYELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.FLASHYELLOW) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_FLASHGREEN:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				if (h.getAppearance() == SignalHead.FLASHGREEN) result = true;
-				else result = false; 
-				break;
-			case TYPE_SIGNAL_HEAD_LIT:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				result = h.getLit(); 
-				break;
-			case TYPE_SIGNAL_HEAD_HELD:
-				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
-				if (h == null) {
-					log.error("invalid signal head name in state variable - "+vName);
-					return (false);
-				}
-				result = h.getHeld();
-				break;
-		}
-		// apply NOT if specified
-		if ( (varOperator[index]==OPERATOR_AND_NOT) || (varOperator[index]==OPERATOR_NOT) ) {
-			result = !result;
-		}
-		return (result);
-	}
-	
+    class DataPair {
+        boolean result = false;
+        int indexCount = 0;         // index reached when parsing completed
+        BitSet argsUsed = null;     // error detection for missing arguments
+    }
+
+    /**
+    *  Check that an antecedent is well formed
+    *  
+    */
+    public String validateAntecedent(String ant, ArrayList <ConditionalVariable> variableList) {
+        char[] ch = ant.toCharArray();
+        int n = 0;
+        for (int j=0; j<ch.length; j++) {
+            if (ch[j] != ' ') {
+                if (ch[j] == '{' || ch[j] == '[')  {
+                    ch[j] = '(';
+                } else if (ch[j] == '}' || ch[j] == ']')  {
+                    ch[j] = ')';
+                }
+                ch[n++] = ch[j];
+            }
+        }
+        int count = 0;
+        for (int j=0; j<n; j++)  {
+            if (ch[j] == '(') {
+                count++;
+            }
+            if (ch[j] == ')') {
+                count--;
+            }
+        }
+        if (count > 0) {
+            return java.text.MessageFormat.format(
+                            rbx.getString("ParseError7"), new Object[] { ')' });
+        }
+        if (count < 0) {
+            return java.text.MessageFormat.format(
+                            rbx.getString("ParseError7"), new Object[] { '(' });
+        }
+        try {
+            DataPair dp = parseCalculate(new String(ch, 0, n).toUpperCase(), variableList);
+            if (n != dp.indexCount) {
+                return java.text.MessageFormat.format(
+                            rbx.getString("ParseError4"), new Object[] { ch[dp.indexCount-1] });                
+            }
+            int index = dp.argsUsed.nextClearBit(0);
+            if ( index >= 0 && index < variableList.size() ) {
+                return java.text.MessageFormat.format(
+                            rbx.getString("ParseError5"), 
+                            new Object[] { new Integer(variableList.size()), 
+                                            new Integer(index+1) }); 
+            }
+        } catch ( NumberFormatException nfe) {
+            return rbx.getString("ParseError6") + nfe.getMessage();
+        } catch ( IndexOutOfBoundsException ioob) {
+            return rbx.getString("ParseError6") + ioob.getMessage();
+        }  catch ( JmriException je) {
+            return rbx.getString("ParseError6") + je.getMessage();
+        }
+        return null;
+    }
+
+    /**
+    * parses and computes one parenthsis level of a boolean statement.
+    * returns a data pair consisting of the truth value of the level
+    * a count of the indices consumed to parse the level and a
+    * bitmap of the variable indices used.
+    * Recursively calls inner parentheses levels.
+    * Note that all logic operators are dectected by the parsing, therefore the
+    * internal negation of a variable is washed.
+    */
+    DataPair parseCalculate(String s, ArrayList <ConditionalVariable> variableList) 
+            throws NumberFormatException, IndexOutOfBoundsException, JmriException
+    {
+        BitSet argsUsed = new BitSet(_variableList.size());
+        DataPair dp = null;
+        boolean leftArg = false;
+        boolean rightArg = false;
+        int oper = OPERATOR_NONE;
+        int k = -1;
+        int i = 0;      // index of String s
+        int numArgs = 0;
+        if (s.charAt(i) == '(')  {
+            dp = parseCalculate(s.substring(++i), variableList);
+            leftArg = dp.result;
+            i += dp.indexCount;
+            argsUsed.or( dp.argsUsed);
+        } else {
+            // cannot be '('.  must be either leftArg or notleftArg
+            if (s.charAt(i) == 'R') {
+                try {
+                    k = Integer.parseInt(String.valueOf(s.substring(i+1, i+3)));
+                    i += 2;
+                } catch (NumberFormatException nfe) {
+                    k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                } catch (IndexOutOfBoundsException ioob) {
+                    k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                }
+                leftArg = variableList.get(k-1).evaluate();
+                if (variableList.get(k-1).isNegated())
+                {
+                    leftArg = !leftArg;
+                }
+                i++;
+                argsUsed.set(k-1);
+            } else if (rbx.getString("LogicNOT").equals(s.substring(i, i+3)) ) {
+                i += 3;
+                //not leftArg
+                if (s.charAt(i) == '(')  {
+                    dp = parseCalculate(s.substring(++i), variableList);
+                    leftArg = dp.result;
+                    i += dp.indexCount;
+                    argsUsed.or( dp.argsUsed);
+                } else if (s.charAt(i) == 'R') {
+                    try {
+                        k = Integer.parseInt(String.valueOf(s.substring(i+1, i+3)));
+                        i += 2;
+                    } catch (NumberFormatException nfe) {
+                        k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                    } catch (IndexOutOfBoundsException ioob) {
+                        k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                    }
+                    leftArg = variableList.get(k-1).evaluate();
+                    if (variableList.get(k-1).isNegated())
+                    {
+                        leftArg = !leftArg;
+                    }
+                    i++;
+                    argsUsed.set(k-1);
+                } else {
+                    throw new JmriException(java.text.MessageFormat.format(
+                            rbx.getString("ParseError1"), new Object[] { s.substring(i) }));
+                }
+                leftArg = !leftArg;
+            } else {
+                throw new JmriException(java.text.MessageFormat.format(
+                    rbx.getString("ParseError9"), new Object[] { s.substring(i) }));
+            }
+        }
+        // crank away to the right until a matching paren is reached
+        while ( i<s.length() ) {
+            if ( s.charAt(i) != ')' ) {
+                // must be either AND or OR
+                if (rbx.getString("LogicAND").equals(s.substring(i, i+3)))  {
+                    i += 3;
+                    oper = OPERATOR_AND;
+                } else if (rbx.getString("LogicOR").equals(s.substring(i, i+2))) {
+                    i += 2;
+                    oper = OPERATOR_OR;
+                }else {
+                    throw new JmriException(java.text.MessageFormat.format(
+                            rbx.getString("ParseError2"), new Object[] { s.substring(i) }));
+                } 
+                if (s.charAt(i) == '(')  {
+                    dp = parseCalculate(s.substring(++i), variableList);
+                    rightArg =dp.result;
+                    i += dp.indexCount;
+                    argsUsed.or( dp.argsUsed);
+                } else {
+                    // cannot be '('.  must be either rightArg or notRightArg
+                    if (s.charAt(i) == 'R') {
+                        try {
+                            k = Integer.parseInt(String.valueOf(s.substring(i+1, i+3)));
+                            i += 2;
+                        } catch (NumberFormatException nfe) {
+                            k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                        } catch (IndexOutOfBoundsException ioob) {
+                            k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                        }
+                        rightArg = variableList.get(k-1).evaluate();
+                        if (variableList.get(k-1).isNegated())
+                        {
+                            rightArg = !rightArg;
+                        }
+                        i++;
+                        argsUsed.set(k-1);
+                    } else if ((i+3)<s.length() && rbx.getString("LogicNOT").equals(s.substring(i, i+3)) )
+                    {
+                        i += 3;
+                        //not rightArg
+                        if (s.charAt(i) == '(')  {
+                            dp = parseCalculate(s.substring(++i), variableList);
+                            rightArg = dp.result;
+                            i += dp.indexCount;
+                            argsUsed.or( dp.argsUsed);
+                        } else if (s.charAt(i) == 'R') {
+                            try {
+                                k = Integer.parseInt(String.valueOf(s.substring(i+1, i+3)));
+                                i += 2;
+                            } catch (NumberFormatException nfe) {
+                                k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                            } catch (IndexOutOfBoundsException ioob) {
+                                k = Integer.parseInt(String.valueOf(s.charAt(++i)));
+                            }
+                            rightArg = variableList.get(k-1).evaluate();
+                            if (variableList.get(k-1).isNegated())
+                            {
+                                rightArg = !rightArg;
+                            }
+                            i++;
+                            argsUsed.set(k-1);
+                        } else {
+                            throw new JmriException(java.text.MessageFormat.format(
+                                rbx.getString("ParseError3"), new Object[] { s.substring(i) }));
+                        }
+                        rightArg = !rightArg;
+                    } else {
+                        throw new JmriException(java.text.MessageFormat.format(
+                            rbx.getString("ParseError9"), new Object[] { s.substring(i) }));
+                    }
+                }
+                if (oper == OPERATOR_AND)   {
+                    leftArg = (leftArg && rightArg);
+                } else if (oper == OPERATOR_OR) {
+                    leftArg = (leftArg || rightArg);
+                }
+            }
+            else {  // This level done, pop recursion
+                i++;
+                break;
+            }
+        }
+        dp = new DataPair();
+        dp.result = leftArg;
+        dp.indexCount = i;
+        dp.argsUsed = argsUsed;
+        return dp;
+    }
+   
 	/**
 	 * Compares action options, and takes action if appropriate
 	 * <P>
@@ -510,63 +430,62 @@ public class DefaultConditional extends AbstractNamedBean
 	 */
 	@SuppressWarnings("deprecation")
 	private void takeActionIfNeeded() {
-		// cycle over both actions
-		for (int i = 0;i<2;i++) {
-			if ( ((currentState==TRUE) && (actionOption[i]==ACTION_OPTION_ON_CHANGE_TO_TRUE)) ||
-				((currentState==FALSE) && (actionOption[i]==ACTION_OPTION_ON_CHANGE_TO_FALSE)) ||
-					(actionOption[i]==ACTION_OPTION_ON_CHANGE) ) {
+        int actionNeeded = 0;       // debug info
+        int actionCount = 0;        // debug info
+        // Use a local copy of state to guarantee the entire list of actions will be fired off
+        // before a state change occurs that may block their completion.
+        int currentState = _currentState;
+		for (int i = 0; i < _actionList.size(); i++) {
+            ConditionalAction action = _actionList.get(i);
+            //log.debug("Actual! currentState= "+_currentState+" action = "+action.getOptionString()+" "+action.getTypeString()+" "+action.getActionString());
+            int option = action.getOption();
+			if ( ((currentState==TRUE) && (option==ACTION_OPTION_ON_CHANGE_TO_TRUE)) ||
+				((currentState==FALSE) && (option==ACTION_OPTION_ON_CHANGE_TO_FALSE)) ||
+					(option==ACTION_OPTION_ON_CHANGE) ) {
 				// need to take this action
+                actionNeeded++;
 				SignalHead h = null;
 				Logix x = null;	
-				Light lgt = null;	
-				switch (actionType[i]) {
+				Light lgt = null;
+                int value = 0;
+                Timer timer = null;
+				switch (action.getType()) {
 					case Conditional.ACTION_NONE:
 						break;
 					case Conditional.ACTION_SET_TURNOUT:
 						Turnout t = InstanceManager.turnoutManagerInstance().
-									getTurnout(actionName[i]);
+									getTurnout(action.getDeviceName());
 						if (t == null) {
-							log.error("invalid turnout name in action - "+actionName[i]);
+							log.error("invalid turnout name in action - "+action.getDeviceName());
 						}
 						else {
-							t.setCommandedState(actionData[i]);
+							t.setCommandedState(action.getActionData());
+                            actionCount++;
 						}
 						break;
+                    case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                        action.stopTimer();
+                        // fall through
 					case Conditional.ACTION_DELAYED_TURNOUT:
-						if (!mDelayTimerActive[i]) {
+						if (!action.isTimerActive()) {
 							// Create a timer if one does not exist
-							if (mDelayTimer[i]==null) {
-								mDelayListener[i] = new TimeTurnout(i);
-								mDelayTimer[i] = new Timer(2000,
-															mDelayListener[i]);
-								mDelayTimer[i].setRepeats(false);
+                            timer = action.getTimer();
+							if (timer==null) {
+								action.setListener(new TimeTurnout(i));
+								timer = new Timer(2000, action.getListener());
+								timer.setRepeats(false);
 							}
 							// Start the Timer to set the turnout
-							mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
-							mDelayTimerActive[i] = true;
-							mDelayTimer[i].start();
+                            value = getIntegerValue(action.getActionString());
+							timer.setInitialDelay(value*1000);
+                            action.setTimer(timer);
+                            action.startTimer();
+                            actionCount++;
 						}
 						else {
 							log.warn("timer already active on request to start delayed turnout action - "+
-																				actionName[i]);
+																				action.getDeviceName());
 						}
-						break;
-					case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-						if (mDelayTimerActive[i]) {
-							// Stop the timer if it is active
-							mDelayTimer[i].stop();
-							mDelayTimerActive[i] = false;
-						}
-						else if (mDelayTimer[i]==null) {
-							// Create a timer if one does not exist							
-							mDelayListener[i] = new TimeTurnout(i);
-							mDelayTimer[i] = new Timer(2000,mDelayListener[i]);
-							mDelayTimer[i].setRepeats(false);
-						}
-						// Start the Timer to set the turnout
-						mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
-						mDelayTimerActive[i] = true;
-						mDelayTimer[i].start();
 						break;
 					case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
 						ConditionalManager cmg = jmri.InstanceManager.conditionalManagerInstance();
@@ -575,141 +494,139 @@ public class DefaultConditional extends AbstractNamedBean
 							String sname = (String)iter.next();
 							if (sname==null) 
 								log.error("Conditional system name null during cancel turnput timers for "
-														+ actionName[i]);
+														+ action.getDeviceName());
 							Conditional c = cmg.getBySystemName(sname);
 							if (c==null)
 								log.error("Conditional null during cancel turnout timers for "
-														+ actionName[i]);
+														+ action.getDeviceName());
 							else {
-								c.cancelTurnoutTimer(actionName[i]);
+								c.cancelTurnoutTimer(action.getDeviceName());
+                                actionCount++;
 							}
 						}						
 						break;
 					case Conditional.ACTION_LOCK_TURNOUT:
 						Turnout tl = InstanceManager.turnoutManagerInstance().
-									getTurnout(actionName[i]);
+									getTurnout(action.getDeviceName());
 						if (tl == null) {
-							log.error("invalid turnout name in action - "+actionName[i]);
+							log.error("invalid turnout name in action - "+action.getDeviceName());
 						}
 						else {
-							if (actionData[i] == Turnout.LOCKED){
+							if (action.getActionData() == Turnout.LOCKED){
 								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+                                actionCount++;
 							}
-							else if (actionData[i] == Turnout.UNLOCKED){
+							else if (action.getActionData() == Turnout.UNLOCKED){
 								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
+                                actionCount++;
 							}
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(actionName[i]);
+									getSignalHead(action.getDeviceName());
 						if (h == null) {
-							log.error("invalid signal head name in action - "+actionName[i]);
+							log.error("invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
-							h.setAppearance(actionData[i]);
+							h.setAppearance(action.getActionData());
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_HELD:
 						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(actionName[i]);
+									getSignalHead(action.getDeviceName());
 						if (h == null) {
-							log.error("invalid signal head name in action - "+actionName[i]);
+							log.error("invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
 							h.setHeld(true);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_CLEAR_SIGNAL_HELD:
 						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(actionName[i]);
+									getSignalHead(action.getDeviceName());
 						if (h == null) {
-							log.error("invalid signal head name in action - "+actionName[i]);
+							log.error("invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
 							h.setHeld(false);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_DARK:
 						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(actionName[i]);
+									getSignalHead(action.getDeviceName());
 						if (h == null) {
-							log.error("invalid signal head name in action - "+actionName[i]);
+							log.error("invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
 							h.setLit(false);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_LIT:
 						h = InstanceManager.signalHeadManagerInstance().
-									getSignalHead(actionName[i]);
+									getSignalHead(action.getDeviceName());
 						if (h == null) {
-							log.error("invalid signal head name in action - "+actionName[i]);
+							log.error("invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
 							h.setLit(true);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_TRIGGER_ROUTE:
 						Route r = InstanceManager.routeManagerInstance().
-									getRoute(actionName[i]);
+									getRoute(action.getDeviceName());
 						if (r == null) {
-							log.error("invalid route name in action - "+actionName[i]);
+							log.error("invalid route name in action - "+action.getDeviceName());
 						}
 						else {
 							r.setRoute();
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SENSOR:
 						Sensor sn = InstanceManager.sensorManagerInstance().
-									getSensor(actionName[i]);
+									getSensor(action.getDeviceName());
 						if (sn == null) {
-							log.error("invalid sensor name in action - "+actionName[i]);
+							log.error("invalid sensor name in action - "+action.getDeviceName());
 						}
 						else {
 							try {
-								sn.setKnownState(actionData[i]);
+								sn.setKnownState(action.getActionData());
+                                actionCount++;
 							} 
 							catch (JmriException e) {
-								log.warn("Exception setting sensor "+actionName[i]+" in action");
+								log.warn("Exception setting sensor "+action.getDeviceName()+" in action");
 							}
-						}
-						break;
-					case Conditional.ACTION_DELAYED_SENSOR:
-						if (!mDelayTimerActive[i]) {
-							// Create a timer if one does not exist
-							if (mDelayTimer[i]==null) {
-								mDelayListener[i] = new TimeSensor(i);
-								mDelayTimer[i] = new Timer(2000,
-															mDelayListener[i]);
-								mDelayTimer[i].setRepeats(false);
-							}
-							// Start the Timer to set the sensor
-							mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
-							mDelayTimerActive[i] = true;
-							mDelayTimer[i].start();
-						}
-						else {
-							log.warn("timer already active on request to start delayed sensor action - "+
-																				actionName[i]);
 						}
 						break;
 					case Conditional.ACTION_RESET_DELAYED_SENSOR:
-						if (mDelayTimerActive[i]) {
-							// Stop the timer if it is active
-							mDelayTimer[i].stop();
-							mDelayTimerActive[i] = false;
+                        action.stopTimer();
+                        // fall through
+					case Conditional.ACTION_DELAYED_SENSOR:
+						if (!action.isTimerActive()) {
+							// Create a timer if one does not exist
+                            timer = action.getTimer();
+							if (timer==null) {
+								action.setListener(new TimeSensor(i));
+								timer = new Timer(2000, action.getListener());
+								timer.setRepeats(false);
+							}
+							// Start the Timer to set the turnout
+                            value = getIntegerValue(action.getActionString());
+							timer.setInitialDelay(value*1000);
+                            action.setTimer(timer);
+                            action.startTimer();
+                            actionCount++;
 						}
-						else if (mDelayTimer[i]==null) {
-							// Create a timer if one does not exist							
-							mDelayListener[i] = new TimeSensor(i);
-							mDelayTimer[i] = new Timer(2000,mDelayListener[i]);
-							mDelayTimer[i].setRepeats(false);
+						else {
+							log.warn("timer already active on request to start delayed sensor action - "+
+																				action.getDeviceName());
 						}
-						// Start the Timer to set the sensor
-						mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
-						mDelayTimerActive[i] = true;
-						mDelayTimer[i].start();
 						break;
 					case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
 						ConditionalManager cm = jmri.InstanceManager.conditionalManagerInstance();
@@ -718,35 +635,39 @@ public class DefaultConditional extends AbstractNamedBean
 							String sname = (String)itr.next();
 							if (sname==null) 
 								log.error("Conditional system name null during cancel sensor timers for "
-														+ actionName[i]);
+														+ action.getDeviceName());
 							Conditional c = cm.getBySystemName(sname);
 							if (c==null)
 								log.error("Conditional null during cancel sensor timers for "
-														+ actionName[i]);
+														+ action.getDeviceName());
 							else {
-								c.cancelSensorTimer(actionName[i]);
+								c.cancelSensorTimer(action.getDeviceName());
+                                actionCount++;
 							}
 						}						
 						break;
 					case Conditional.ACTION_SET_LIGHT:
 						lgt = InstanceManager.lightManagerInstance().
-										getLight(actionName[i]);
+										getLight(action.getDeviceName());
 						if (lgt == null) {
-							log.error("invalid light name in action - "+actionName[i]);
+							log.error("invalid light name in action - "+action.getDeviceName());
 						}
 						else {
-							lgt.setState(actionData[i]);
+							lgt.setState(action.getActionData());
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_LIGHT_INTENSITY:
 						lgt = InstanceManager.lightManagerInstance().
-										getLight(actionName[i]);
+										getLight(action.getDeviceName());
 						if (lgt == null) {
-							log.error("invalid light name in action - "+actionName[i]);
+							log.error("invalid light name in action - "+action.getDeviceName());
 						}
 						else {
 							try {
-								lgt.setTargetIntensity(((double)actionData[i])/100.0);
+                                value = getIntegerValue(action.getActionString());
+								lgt.setTargetIntensity(((double)value)/100.0);
+                                actionCount++;
 							}
 							catch (IllegalArgumentException e) {
 								log.error("Exception in set light intensity action - "+e);
@@ -755,13 +676,15 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
 						lgt = InstanceManager.lightManagerInstance().
-										getLight(actionName[i]);
+										getLight(action.getDeviceName());
 						if (lgt == null) {
-							log.error("invalid light name in action - "+actionName[i]);
+							log.error("invalid light name in action - "+action.getDeviceName());
 						}
 						else {
 							try {
-								lgt.setTransitionTime((double)actionData[i]);
+                                value = getIntegerValue(action.getActionString());
+								lgt.setTransitionTime((double)value);
+                                actionCount++;
 							}
 							catch (IllegalArgumentException e) {
 								log.error("Exception in set light transition time action - "+e);
@@ -770,107 +693,142 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_MEMORY:
 						Memory m = InstanceManager.memoryManagerInstance().
-										provideMemory(actionName[i]);
+										provideMemory(action.getDeviceName());
 						if (m == null) {
-							log.error("invalid memory name in action - "+actionName[i]);
+							log.error("invalid memory name in action - "+action.getDeviceName());
 						}
 						else {
-							m.setValue(actionString[i]);
+							m.setValue(action.getActionString());
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_COPY_MEMORY:
 						Memory mFrom = InstanceManager.memoryManagerInstance().
-										provideMemory(actionName[i]);
+										provideMemory(action.getDeviceName());
 						if (mFrom == null) {
-							log.error("invalid memory name in action - "+actionName[i]);
+							log.error("invalid memory name in action - "+action.getDeviceName());
 						}
 						else {
 							Memory mTo = InstanceManager.memoryManagerInstance().
-										provideMemory(actionString[i]);
+										provideMemory(action.getActionString());
 							if (mTo == null) {
-								log.error("invalid memory name in action - "+actionString[i]);
+								log.error("invalid memory name in action - "+action.getActionString());
 							}
 							else {
 								mTo.setValue(mFrom.getValue());
+                                actionCount++;
 							}
 						}
 						break;
 					case Conditional.ACTION_ENABLE_LOGIX:
-						x = InstanceManager.logixManagerInstance().getLogix(actionName[i]);
+						x = InstanceManager.logixManagerInstance().getLogix(action.getDeviceName());
 						if (x == null) {
-							log.error("invalid logix name in action - "+actionName[i]);
+							log.error("invalid logix name in action - "+action.getDeviceName());
 						}
 						else {
 							x.setEnabled(true);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_DISABLE_LOGIX:
-						x = InstanceManager.logixManagerInstance().getLogix(actionName[i]);
+						x = InstanceManager.logixManagerInstance().getLogix(action.getDeviceName());
 						if (x == null) {
-							log.error("invalid logix name in action - "+actionName[i]);
+							log.error("invalid logix name in action - "+action.getDeviceName());
 						}
 						else {
 							x.setEnabled(false);
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_PLAY_SOUND:
-						if (!(actionString[i].equals(""))) {
-							if (snd[i] == null) {
-								snd[i] = new jmri.jmrit.Sound(actionString[i]);
+						if (!(action.getActionString().equals(""))) {
+                            Sound sound = action.getSound();
+							if (sound == null) {
+								sound = new jmri.jmrit.Sound(action.getActionString());
 							}
-							snd[i].play();
+							sound.play();
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_RUN_SCRIPT:
-						if (!(actionString[i].equals(""))) {
-							jmri.util.PythonInterp.runScript(actionString[i]);
+						if (!(action.getActionString().equals(""))) {
+							jmri.util.PythonInterp.runScript(action.getActionString());
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_FAST_CLOCK_TIME:
 						Date date = InstanceManager.timebaseInstance().getTime();
-						date.setHours(actionData[i]/60);
-						date.setMinutes(actionData[i] - ((actionData[i]/60)*60));
+						date.setHours(action.getActionData()/60);
+						date.setMinutes(action.getActionData() - ((action.getActionData()/60)*60));
 						date.setSeconds(0);
 						InstanceManager.timebaseInstance().userSetTime(date);
+                        actionCount++;
 						break;
 					case Conditional.ACTION_START_FAST_CLOCK:
 						InstanceManager.timebaseInstance().setRun(true);
+                        actionCount++;
 						break;
 					case Conditional.ACTION_STOP_FAST_CLOCK:
 						InstanceManager.timebaseInstance().setRun(false);
+                        actionCount++;
 						break;
 				}
 			}
 		}
+        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has taken "+actionCount
+                  +" actions of "+actionNeeded+" actions needed on change to "+currentState);
 	}
+
+	/**
+	 * Return int from either literal String or Internal memory reference.
+	 */
+    int getIntegerValue(String sNumber) {
+        int time = 0;
+        try {
+            time = Integer.valueOf(sNumber).intValue();
+        } catch (NumberFormatException e) {
+            Memory mem = InstanceManager.memoryManagerInstance().provideMemory(sNumber);
+            if (mem == null) {
+                log.error("invalid memory name for action time variable - "+sNumber);
+            }
+            else {
+                try {
+                    time = Integer.valueOf((String)mem.getValue()).intValue();
+                } catch (NumberFormatException ex) {
+                    log.error("invalid action time variable from memory, "
+                              +getUserName()+"("+mem.getSystemName()
+                              +"), value = "+(String)mem.getValue());
+                }
+            }
+        }
+        return time;
+    }
 	
 	/**
 	 * Stop a sensor timer if one is actively delaying setting of the specified sensor
 	 */
 	public void cancelSensorTimer (String sname) {
-		// cycle over both actions
-		for (int i = 0;i<2;i++) {
-			if ( (actionType[i] == Conditional.ACTION_DELAYED_SENSOR) || 
-						(actionType[i] == Conditional.ACTION_RESET_DELAYED_SENSOR) ) {
-				if ( mDelayTimerActive[i] ) {
+		for (int i = 0; i < _actionList.size(); i++) {
+            ConditionalAction action = _actionList.get(i);
+			if ( (action.getType() == Conditional.ACTION_DELAYED_SENSOR) || 
+						(action.getType() == Conditional.ACTION_RESET_DELAYED_SENSOR) ) {
+				if ( action.isTimerActive() ) {
 					// have active set sensor timer - is it for our sensor?
-					if ( actionName[i].equals(sname) ) {
+					if ( action.getDeviceName().equals(sname) ) {
 						// yes, names match, cancel timer
-						mDelayTimer[i].stop();
-						mDelayTimerActive[i] = false;
+						action.stopTimer();
 					}
 					else {
 						// check if same sensor by a different name
 						Sensor sn = InstanceManager.sensorManagerInstance().
-												getSensor(actionName[i]);
+												getSensor(action.getDeviceName());
 						if (sn == null) {
-							log.error("Unknown sensor *"+actionName[i]+" in cancelSensorTimer.");
+							log.error("Unknown sensor *"+action.getDeviceName()+" in cancelSensorTimer.");
 						}
 						else if (sname.equals(sn.getSystemName()) || 
 												sname.equals(sn.getUserName())) {
 							// same sensor, cancel timer
-							mDelayTimer[i].stop();
-							mDelayTimerActive[i] = false;
+                            action.stopTimer();
 						}
 					}
 				}
@@ -882,29 +840,27 @@ public class DefaultConditional extends AbstractNamedBean
 	 * Stop a turnout timer if one is actively delaying setting of the specified turnout
 	 */
 	public void cancelTurnoutTimer (String sname) {
-		// cycle over both actions
-		for (int i = 0;i<2;i++) {
-			if ( (actionType[i] == Conditional.ACTION_DELAYED_TURNOUT) || 
-						(actionType[i] == Conditional.ACTION_RESET_DELAYED_TURNOUT) ) {
-				if ( mDelayTimerActive[i] ) {
+		for (int i = 0; i < _actionList.size(); i++) {
+            ConditionalAction action = _actionList.get(i);
+			if ( (action.getType() == Conditional.ACTION_DELAYED_TURNOUT) || 
+						(action.getType() == Conditional.ACTION_RESET_DELAYED_TURNOUT) ) {
+				if ( action.isTimerActive() ) {
 					// have active set turnout timer - is it for our turnout?
-					if ( actionName[i].equals(sname) ) {
+					if ( action.getDeviceName().equals(sname) ) {
 						// yes, names match, cancel timer
-						mDelayTimer[i].stop();
-						mDelayTimerActive[i] = false;
+                        action.stopTimer();
 					}
 					else {
 						// check if same turnout by a different name
 						Turnout tn = InstanceManager.turnoutManagerInstance().
-												getTurnout(actionName[i]);
+												getTurnout(action.getDeviceName());
 						if (tn == null) {
-							log.error("Unknown turnout *"+actionName[i]+" in cancelTurnoutTimer.");
+							log.error("Unknown turnout *"+action.getDeviceName()+" in cancelTurnoutTimer.");
 						}
 						else if (sname.equals(tn.getSystemName()) || 
 												sname.equals(tn.getUserName())) {
 							// same turnout, cancel timer
-							mDelayTimer[i].stop();
-							mDelayTimerActive[i] = false;
+                            action.stopTimer();
 						}
 					}
 				}
@@ -917,7 +873,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @return state value
      */
     public int getState() {
-        return currentState;
+        return _currentState;
     }
     
     /**
@@ -926,10 +882,10 @@ public class DefaultConditional extends AbstractNamedBean
 	 *    really a read-only bound property.
      */
     public void setState(int state) {
-        if (currentState != state) {
-            int oldState = currentState;
-            currentState = state;
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(currentState));
+        if (_currentState != state) {
+            int oldState = _currentState;
+            _currentState = state;
+            firePropertyChange("KnownState", new Integer(oldState), new Integer(_currentState));
         }
     }
 	
@@ -947,23 +903,23 @@ public class DefaultConditional extends AbstractNamedBean
 		public void actionPerformed(java.awt.event.ActionEvent event)
 		{
 			// set sensor state
+            ConditionalAction action = _actionList.get(mIndex);
 			Sensor sn = InstanceManager.sensorManagerInstance().
-										getSensor(actionName[mIndex]);
+										getSensor(action.getDeviceName());
 			if (sn==null) {
-				log.error("Invalid delayed sensor name - "+actionName[mIndex]);
+				log.error("Invalid delayed sensor name - "+action.getDeviceName());
 			}
 			else {
 				// set the sensor
 				try {
-					sn.setKnownState(actionData[mIndex]);
+					sn.setKnownState(action.getActionData());
 				} 
 				catch (JmriException e) {
-					log.warn("Exception setting delayed sensor "+actionName[mIndex]+" in action");
+					log.warn("Exception setting delayed sensor "+action.getDeviceName()+" in action");
 				}
 			}
 			// Turn Timer OFF
-			mDelayTimer[mIndex].stop();
-			mDelayTimerActive[mIndex] = false;
+			action.stopTimer();
 		}
 	}
 	
@@ -981,18 +937,18 @@ public class DefaultConditional extends AbstractNamedBean
 		public void actionPerformed(java.awt.event.ActionEvent event)
 		{
 			// set turnout state
+            ConditionalAction action = _actionList.get(mIndex);
 			Turnout t = InstanceManager.turnoutManagerInstance().
-										getTurnout(actionName[mIndex]);
+										getTurnout(action.getDeviceName());
 			if (t==null) {
-				log.error("Invalid delayed turnout name - "+actionName[mIndex]);
+				log.error("Invalid delayed turnout name - "+action.getDeviceName());
 			}
 			else {
 				// set the turnout
-				t.setCommandedState(actionData[mIndex]);
+				t.setCommandedState(action.getActionData());
 			}
 			// Turn Timer OFF
-			mDelayTimer[mIndex].stop();
-			mDelayTimerActive[mIndex] = false;
+			action.stopTimer();
 		}
 	}
 

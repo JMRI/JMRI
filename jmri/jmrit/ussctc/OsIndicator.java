@@ -3,6 +3,7 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
+import java.util.ArrayList;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories,
  * etc that make up a OsIndicator.
@@ -12,7 +13,7 @@ import jmri.*;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class OsIndicator implements Constants {
 
@@ -35,14 +36,6 @@ public class OsIndicator implements Constants {
         this.output = output;
     }
 
-    // Variables to load actions
-	private static final int[] actionOption = {Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-									Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE};
-	private static final int[] actionDelay = {0,0};
-	private static final int[] actionType = {Conditional.ACTION_SET_TURNOUT,Conditional.ACTION_SET_TURNOUT};
-	private static final int[] actionData = {Turnout.CLOSED, Turnout.THROWN};
-	private static final String[] actionString = {" "," "};
-
     /**
      * Create the underlying objects that implement this
      */
@@ -64,32 +57,25 @@ public class OsIndicator implements Constants {
         }
         
         // Load variable into the Conditional
-        // Omit lock term if no lock specified
-        if (!lock.equals("")) {
-            int[] opern = new int[]{Conditional.OPERATOR_NONE, Conditional.OPERATOR_AND};
-            int[] type = new int[]{Conditional.TYPE_SENSOR_INACTIVE,Conditional.TYPE_SENSOR_INACTIVE};
-            String[] name = new String[]{osSensor,lock};
-            String[] data = new String[]{"N/A","N/A"};
-            int[] num1 = new int[]{0,0};
-            int[] num2 = new int[]{0,0};
-			boolean[] triggersCalc = new boolean[]{true,true};
-            c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
-            String[] actionName = {output,output};
-		    c.setAction(actionOption,actionDelay,actionType,
-							actionName,actionData,actionString);
-        } else {
-            int[] opern = new int[]{Conditional.OPERATOR_NONE};
-            int[] type = new int[]{Conditional.TYPE_SENSOR_INACTIVE};
-            String[] name = new String[]{osSensor};
-            String[] data = new String[]{"N/A"};
-            int[] num1 = new int[]{0};
-            int[] num2 = new int[]{0};
-			boolean[] triggersCalc = new boolean[]{true};
-            c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
-            String[] actionName = {output,output};
-		    c.setAction(actionOption,actionDelay,actionType,
-							actionName,actionData,actionString);
+        ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+                                             Conditional.TYPE_SENSOR_INACTIVE, 
+                                             osSensor, true));
+        if (!lock.equals(""))
+        {
+            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                                                 Conditional.TYPE_SENSOR_INACTIVE,
+                                                 lock, true));
         }
+        
+        ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
+        actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                                             Conditional.ACTION_SET_TURNOUT, output,
+                                             Turnout.CLOSED, " "));
+        actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+                                             Conditional.ACTION_SET_TURNOUT, output,
+                                             Turnout.THROWN, " "));
+        c.setAction(actionList);										// string data
                 
         // and put it back in operation
         l.activateLogix();
@@ -116,22 +102,14 @@ public class OsIndicator implements Constants {
         if (c==null) throw new jmri.JmriException("Conditional does not exist");
         
         // Load variables from the Conditional
-        int length = c.getNumStateVariables();
-        int[] opern = new int[length];
-        int[] type = new int[length];
-        String[] name = new String[length];
-        String[] data = new String[length];
-        int[] num1 = new int[length];
-        int[] num2 = new int[length];
-		boolean[] triggersCalc = new boolean[length];
-        c.getStateVariables(opern, type, name, data, num1, num2, triggersCalc);
-        
-        // and load internals
-        osSensor = name[0];
-        lock = "";
-        if (length>1) 
-            lock = name[1];
-        
+        ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+        ConditionalVariable variable = variableList.get(0);
+        osSensor = variable.getName();
+        if (variableList.size() > 0)
+        {
+            variable = variableList.get(1);
+            lock = variable.getName();
+        }
     }
 
     public String getOutputName() {

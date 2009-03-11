@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -53,6 +53,14 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                             
                 // store common part
                 storeCommon(m, elem);
+                // store value
+                String value = " ";
+                Object obj = m.getValue();
+                if (obj != null)
+                {
+                    value = (String)obj;
+                }
+                elem.setAttribute("value", value);
 
                 log.debug("store Memory "+sname);
                 memories.addContent(elem);
@@ -100,10 +108,13 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             String sysName = ((Element)(memoryList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
             if ( ((Element)(memoryList.get(i))).getAttribute("userName") != null)
-            userName = ((Element)(memoryList.get(i))).getAttribute("userName").getValue();
+                userName = ((Element)(memoryList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create Memory: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Memory m = tm.newMemory(sysName, userName);
-            
+            if ( ((Element)(memoryList.get(i))).getAttribute("value") != null) {
+                String value = ((Element)(memoryList.get(i))).getAttribute("value").getValue();
+                m.setValue(value);
+            }
             // load common parts
             loadCommon(m, ((Element)(memoryList.get(i))) );
         }

@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -67,7 +67,6 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     public CvValue getMatchingIndexedCV(String name) {
         for (int i = 0; i<_numRows; i++) {
             CvValue cv = (CvValue)_indxCvAllVector.get(i);
-            
             if (cv == null) {
                 // no longer should run off end
                 log.error("cv == null in getMatchingIndexedCV");
@@ -500,13 +499,16 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             row = existingRow;
         }
         // make sure readonly set true if required
-        CvValue indxcv = (CvValue) _indxCvAllVector.elementAt(row);
-        if (readOnly) indxcv.setReadOnly(readOnly);
-        if (infoOnly) {
-            indxcv.setReadOnly(infoOnly);
-            indxcv.setInfoOnly(infoOnly);
+        if (row > -1 && row < _indxCvAllVector.size() )
+        {
+            CvValue indxcv = (CvValue) _indxCvAllVector.elementAt(row);
+            if (readOnly) indxcv.setReadOnly(readOnly);
+            if (infoOnly) {
+                indxcv.setReadOnly(infoOnly);
+                indxcv.setInfoOnly(infoOnly);
+            }
+            if (writeOnly) indxcv.setWriteOnly(writeOnly);
         }
-        if (writeOnly) indxcv.setWriteOnly(writeOnly);
         return row;
     }
 

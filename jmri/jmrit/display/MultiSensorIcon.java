@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -274,8 +274,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 			layoutPanel.handleMouseClicked(e,getX(),getY());
 			return;
 		}
+        /* moved to mouseRelease to workaround touch screen driver limitation
         if (e.isAltDown() || e.isMetaDown()) return;
 		performMouseClicked(e, e.getX(), e.getY() );
+        */
 	}
 		
 	protected void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
@@ -325,6 +327,9 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     public void mouseReleased(MouseEvent e) {
+        if ( !e.isAltDown() &&  !e.isMetaDown() ) {
+            performMouseClicked(e, e.getX(), e.getY() );
+        }
         // do rest of mouse processing
         super.mouseReleased(e);
     }

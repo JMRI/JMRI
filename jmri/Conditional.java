@@ -2,6 +2,7 @@
 
 package jmri;
 
+import java.util.ArrayList;
 /**
  * A Conditional is layout control logic, consisting of a logical 
  * expression and an action.
@@ -44,6 +45,11 @@ public interface Conditional extends NamedBean {
     public static final int TRUE      = 0x01;
     public static final int FALSE     = 0x02;
 	public static final int UNKNOWN   = 0x04;
+
+    // logic operators used in antecedent
+    public static final int ALL_AND     = 0x01;
+    public static final int ALL_OR      = 0x02;
+	public static final int MIXED       = 0x03;
 	
 	// state variables definitions
 	public static final int MAX_STATE_VARIABLES = 20;
@@ -54,8 +60,11 @@ public interface Conditional extends NamedBean {
 	public static final int OPERATOR_NOT = 2;
 	public static final int OPERATOR_AND_NOT = 3;	
 	public static final int OPERATOR_NONE = 4;
+    public static final int OPERATOR_OR = 5;
+    public static final int OPERATOR_OR_NOT = 6;
 	// state variable types
 	public static final int NUM_STATE_VARIABLE_TYPES = 19;	
+	public static final int TYPE_NONE = 0;
 	public static final int TYPE_SENSOR_ACTIVE = 1;
 	public static final int TYPE_SENSOR_INACTIVE = 2;
 	public static final int TYPE_TURNOUT_THROWN = 3;
@@ -82,6 +91,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
 	public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
+	public static final int NUM_ACTION_OPTIONS = 3;
 	// action types
 	public static final int NUM_ACTION_TYPES = 28;
 	public static final int ACTION_NONE = 1;
@@ -135,108 +145,46 @@ public interface Conditional extends NamedBean {
 	// copies value from memory variable (in name) to memory variable (in string)
 	public static final int ACTION_SET_LIGHT_TRANSITION_TIME = 28;
 	// copies value from memory variable (in name) to memory variable (in string)
-	
+				
+    /**
+    * set the logic type (all AND's all OR's or mixed AND's and OR's
+    * set the antecedent expression - should be a well formed boolean
+    * statement with parenthesis indicating the order of evaluation
+    */
+    public void setLogicType(int type, String antecedent);
+
 	/**
-	 * Get number of State Variables for this Conditional
+	 * Get antecedent (boolean expression) of Conditional
 	 */
-	public int getNumStateVariables();
-	
+	public String getAntecedentExpression();
+
 	/**
+	 * Get type of operators in the antecedent statement
+	 */
+    public int getLogicType();
+
+	/**
+	 * Set list of actions
+	 */
+	public void setAction (ArrayList <ConditionalAction> arrayList);
+
+	/**
+	 * Make deep clone of actions
+	 */
+	public ArrayList <ConditionalAction> getCopyOfActions ();
+
+   /**
      * Set State Variables for this Conditional. Each state variable will 
 	 * evaluate either True or False when this Conditional is calculated.
 	 *<P>
-	 * Returns true if state variables were successfully set, otherwise false.
-	 *<P>
-	 * This method assumes that all
-	 * information has been validated.
-	 * <P>
-	 * All the argument arrays must be of the same length, numVariables.
-	 * @param numVariables the number of variables being set, also the length
-	 *  of the parameter arrays
-	 * @param opern array of operator values, e.g. OPERATOR_NOT, OPERATOR_AND, etc
-	 * @param type array of type variables, e.g. TYPE_SENSOR_ACTIVE, etc
-	 * @param name array of system or user names for NamedBeans being referenced
-	 * @param data
-	 * @param num1
-	 * @param num2
+	 * This method assumes that all information has been validated.
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] name,String[] data,
-					int[] num1,int[] num2,boolean[] triggersCalc,int numVariables);
-			
+    public void setStateVariables(ArrayList <ConditionalVariable> arrayList);
+		
 	/**
-     * Get State Variables for this Conditional. 
-	 *<P>
-	 * Returns state variables for this Conditional in supplied arrays.
-	 *<P>
-	 * This method should only be called by LogixTableAction and methods to save
-	 * this conditional to disk in a panel file.  
-     */
-    public void getStateVariables(int[] opern,int[] type,String[] name,
-			String[] data,int[] num1,int[] num2,boolean[] triggersCalc);
-
-	/**
-	 * Provide access to operator of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
+	 * Make deep clone of variables
 	 */
-	public int getStateVariableOperator(int index);
-
-	/**
-	 * Provide access to type of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableType(int index);
-	
-	/**
-	 * Provide access to Name (user or system, whichever was specified) of 
-	 *    state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public String getStateVariableName(int index);
-	
-	/**
-	 * Provide access to data string of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public String getStateVariableDataString(int index);
-
-	/**
-	 * Provide access to number 1 data of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableNum1(int index);
-
-	/**
-	 * Provide access to number 2 data of state variable by index
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public int getStateVariableNum2(int index);
-
-	/**
-	 * Provide access to triggers option of state variable by index
-	 *  Note: returns true if Logix should listen for changes in this
-	 *		state variable to trigger calculation (default) and
-	 *		returns false if the listener should be suppressed.
-	 *  Note: index ranges from 0 to numStateVariables-1
-	 */
-	public boolean getStateVariableTriggersCalculation(int index);
-
-	/**
-     * Delete all State Variables from this Conditional
-     */
-    public void deleteAllStateVariables();
-			
-	
-	/**
-	 * Set action parameters for action 1 and action 2
-	 */
-	public void setAction (int[] opt, int[] delay, int[] type,
-				String[] name,int[] data,String[] s);
-	
-	/**
-	 * Get action parameters for action 1 and action 2
-	 */
-	public void getAction (int[] opt, int[] delay, int[] type,
-				String[] name,int[] data,String[] s);
+	public ArrayList <ConditionalVariable> getCopyOfStateVariables ();
 		
     /**
 	 * Calculate this Conditional, triggering either or both actions if the user 
@@ -248,8 +196,14 @@ public interface Conditional extends NamedBean {
 	 * Sets the state of the conditional.
 	 * Returns the calculated state of this Conditional.
 	 */
-	public int calculate (boolean logixEnabled);		
-	
+	public int calculate (boolean logixEnabled);
+
+   /**
+    *  Check that an antecedent is well formed.  If not,
+    * returns an error message.  Otherwise returns null.
+    */
+    public String validateAntecedent(String ant, ArrayList <ConditionalVariable> variableList);
+
 	/**
 	 * Stop a sensor timer if one is actively delaying setting of the specified sensor
 	 */
@@ -265,12 +219,6 @@ public interface Conditional extends NamedBean {
      * @return state value
      */
     public int getState();
-
-    /**
-     * State of Conditional is set. Not really public for Conditionals.
-	 * The state of a Conditional is only changed by its calculate method.
-     */
-    public void setState(int state);
 
     /**
      * Request a call-back when the bound KnownState property changes.

@@ -5,6 +5,8 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.Conditional;
+import jmri.ConditionalAction;
+import jmri.ConditionalVariable;
 import jmri.Logix;
 
 import java.awt.*;
@@ -30,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutEditorTools 
@@ -5558,22 +5560,18 @@ public class LayoutEditorTools
 			}
 			int type = Conditional.TYPE_TURNOUT_THROWN;
 			if (!continuing) type = Conditional.TYPE_TURNOUT_CLOSED;
-			c.setStateVariables(new int[]{Conditional.OPERATOR_AND},	// operand
-								new int[]{type},						// type
-								new String[]{turnoutName},				// name
-								new String[]{""},						// data
-								new int[]{0},							// num 1
-								new int[]{0},							// num 2
-								new boolean[]{true},					// triggersCalc
-								1);										// num variables
-			c.setAction(new int[]{Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-									Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE},	// option
-						new int[]{0,0},											// delay
-						new int[]{Conditional.ACTION_SET_SENSOR,
-											Conditional.ACTION_SET_SENSOR},			// type
-						new String[]{sensorName,sensorName},						// name
-						new int[]{Sensor.ACTIVE,Sensor.INACTIVE},					// data
-						new String[]{"",""});										// string data
+            ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                                 type, sensorName, true));
+            c.setStateVariables(variableList);
+            ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
+            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                                                 Conditional.ACTION_SET_SENSOR, sensorName,
+                                                 Sensor.ACTIVE, ""));
+            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+                                                 Conditional.ACTION_SET_SENSOR, sensorName,
+                                                 Sensor.INACTIVE, ""));
+			c.setAction(actionList);										// string data
 			x.addConditional(cName,-1);
 			x.activateLogix();
 		}

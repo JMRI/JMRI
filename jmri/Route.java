@@ -41,7 +41,7 @@ package jmri;
  * @author			Bob Jacobsen Copyright (C) 2007
  * @author          Simon Reader Copyright (C) 2008
  * 
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public interface Route extends NamedBean {
 
@@ -80,6 +80,7 @@ public interface Route extends NamedBean {
      * Delete all output Turnouts from this Route.
      */
     public void clearOutputTurnouts();
+    public int getNumOutputTurnouts();
     
     /**
      * Inquire if a Turnout is included in this Route as an output.
@@ -122,6 +123,7 @@ public interface Route extends NamedBean {
      * Delete all output Sensors from this Route.
      */
     public void clearOutputSensors();
+    public int getNumOutputSensors();
     
     /**
      * Inquire if a Sensor is included in this Route as an output.

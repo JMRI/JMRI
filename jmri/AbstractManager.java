@@ -16,7 +16,7 @@ import java.util.List;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -115,6 +115,18 @@ abstract public class AbstractManager
             if (old!= null) _tuser.remove(old);
             if (now!= null) _tuser.put(now, t);
         }
+    }
+
+    public String[] getSystemNameArray() {
+        String[] arr = new String[_tsys.size()];
+        Enumeration en = _tsys.keys();
+        int i=0;
+        while (en.hasMoreElements()) {
+            arr[i] = (String)en.nextElement();
+            i++;
+        }
+        java.util.Arrays.sort(arr, new jmri.util.SystemNameComparator());
+        return arr;
     }
 
     public List getSystemNameList() {

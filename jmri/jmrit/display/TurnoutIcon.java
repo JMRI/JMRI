@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -154,7 +154,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    public String getNameString() {
         String name;
         if (turnout == null) name = "<Not connected>";
         else if (turnout.getUserName()!=null)
@@ -214,7 +214,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		});
 
 		// end creation of pop-up menu
-
 		popup.show(e.getComponent(), e.getX(), e.getY());
 	}
 
@@ -250,7 +249,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Throw the turnout when the icon is clicked
      * @param e
      */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
+    // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+    public void mouseReleased(java.awt.event.MouseEvent e) {
+        super.mouseReleased(e);
         if (!getControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;

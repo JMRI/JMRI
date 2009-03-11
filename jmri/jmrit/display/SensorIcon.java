@@ -16,7 +16,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -116,7 +116,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    public String getNameString() {
         String name;
         if (sensor == null) name = "<Not connected>";
         else if (sensor.getUserName()!=null) {
@@ -233,25 +233,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     boolean momentary = false;
     public boolean getMomentary() { return momentary; }
     public void setMomentary(boolean m) { momentary = m; }
-    
-    /**
-     * (Temporarily) change occupancy on click
-     * @param e
-     */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        super.mouseClicked(e);
-        if (e.isAltDown() || e.isMetaDown()) return;
-        if (getMomentary()) return; // click is only for non-momentary
-        if (!buttonLive()) return;
-        try {
-            if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
-                sensor.setKnownState(jmri.Sensor.ACTIVE);
-            else
-                sensor.setKnownState(jmri.Sensor.INACTIVE);
-        } catch (jmri.JmriException reason) {
-            log.warn("Exception flipping sensor: "+reason);
-        }
-    }
 
     boolean buttonLive() {
         if (!getControlling()) return false;
@@ -277,13 +258,24 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (getMomentary() && buttonLive()) {
-            // this is a momentary button
-            try {
-                sensor.setKnownState(jmri.Sensor.INACTIVE);
-            } catch (jmri.JmriException reason) {
-                log.warn("Exception setting momentary sensor: "+reason);
-            }        
+        if (buttonLive()) {
+            if (getMomentary()) {
+                // this is a momentary button
+                try {
+                    sensor.setKnownState(jmri.Sensor.INACTIVE);
+                } catch (jmri.JmriException reason) {
+                    log.warn("Exception setting momentary sensor: "+reason);
+                }        
+            } else {
+                try {
+                    if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
+                        sensor.setKnownState(jmri.Sensor.ACTIVE);
+                    else
+                        sensor.setKnownState(jmri.Sensor.INACTIVE);
+                } catch (jmri.JmriException reason) {
+                    log.warn("Exception flipping sensor: "+reason);
+                }
+            }
         }
         // do rest of mouse processing
         super.mouseReleased(e);

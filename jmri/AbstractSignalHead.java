@@ -2,11 +2,12 @@
 
 package jmri;
 
+import java.util.ResourceBundle;
  /**
  * Abstract class providing the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -17,6 +18,29 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     public AbstractSignalHead(String systemName) {
         super(systemName);
+    }
+
+	static final ResourceBundle rbx = ResourceBundle
+			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+
+    public static String getAppearanceString(int appearance) {
+		switch (appearance) {
+            case SignalHead.RED:
+    			return (rbx.getString("AppearanceRed"));
+            case SignalHead.YELLOW:
+    			return (rbx.getString("AppearanceYellow"));
+    		case SignalHead.GREEN:
+    			return (rbx.getString("AppearanceGreen"));
+    		case SignalHead.DARK:
+    			return (rbx.getString("AppearanceDark"));
+    		case SignalHead.FLASHRED:
+    			return (rbx.getString("AppearanceFlashRed"));
+    		case SignalHead.FLASHYELLOW:
+    			return (rbx.getString("AppearanceFlashYellow"));
+    		case SignalHead.FLASHGREEN:
+    			return (rbx.getString("AppearanceFlashGreen"));
+		}
+		return ("");
     }
 
     protected int mAppearance = DARK;

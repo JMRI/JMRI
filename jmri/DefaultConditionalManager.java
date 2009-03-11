@@ -2,6 +2,7 @@
 
 package jmri;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
  * is enforced when a new Conditional is created via LogixTableAction.java.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -40,25 +41,28 @@ public class DefaultConditionalManager extends AbstractManager
 	 *      is loaded from a file after its Conditionals.
      */
     public Conditional createNewConditional(String systemName, String userName) {
-		// Check that the parent Logix exists, if not can't check user Name
-		String sName = systemName.toUpperCase().trim();
-		Logix x = getParentLogix(sName);
-        Conditional c;
-		if (x!=null) {
-			// Check that Conditional with same user name does not already exist for this Logix
-			if (userName!= null && !userName.equals("")) {
-				c = getByUserName(x,userName);
-				if (c!=null) return null;
-			}
-		}
 		// check that Conditional with same system name does not already exist
-        c = getBySystemName(systemName);
-		if (c==null) getBySystemName(sName);
-        if (c!=null) return null;
-        // Conditional does not exist, create a new Conditional
-        c = new DefaultConditional(sName,userName);
+        systemName = systemName.toUpperCase().trim();
+        Conditional c = getBySystemName(systemName);
         if (c!=null) {
-            // save in the maps
+            return null;
+        }
+        if (userName != null && userName.length() > 0) {
+            c = getByUserName(userName);
+            if (c!=null) {
+                return null;
+            }
+        }
+        String sName = userName.toUpperCase().trim();
+        if (sName != null && sName.length() > 0) {
+            c = getBySystemName(sName);
+            if (c!=null) {
+                return null;
+            }
+        }
+        // Conditional does not exist, create a new Conditional
+        c = new DefaultConditional(systemName, userName);
+        if (c!=null) {  // save in the maps
             register(c);
         }
         return c;
@@ -105,6 +109,43 @@ public class DefaultConditionalManager extends AbstractManager
 			if (c!=null) return c;
 		}
         return getBySystemName(name);
+    }
+
+    public Conditional getConditional(String name) {
+		Conditional c = getBySystemName(name);
+		if (c == null) {
+			c = getByUserName(name);
+		}
+        return c;
+    }
+
+    public Conditional getByUserName(String key) {
+        if (key == null)  return null;
+        jmri.LogixManager logixManager = InstanceManager.logixManagerInstance();
+        Iterator iter = logixManager.getSystemNameList().iterator();
+        while (iter.hasNext()) {
+            // get the next Logix
+            String sName = (String)iter.next();     //sName a logix nams
+			Logix x = logixManager.getBySystemName(sName);
+            if (x == null) {
+				break;
+            }
+            for (int i=0; i<x.getNumConditionals(); i++)  {
+                sName = x.getConditionalByNumberOrder(i);   // sName now a conditional name
+                if (sName == null) {
+                    break;
+                }
+				Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
+				if (c == null) {
+                    break;
+				}
+                if (key.equals(c.getUserName()))
+                {
+                    return c;
+                }
+            }
+        }
+        return null;
     }
 
     public Conditional getByUserName(Logix x,String key) {

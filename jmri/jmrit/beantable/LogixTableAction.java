@@ -9,18 +9,27 @@ import jmri.Light;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Conditional;
+import jmri.ConditionalAction;
+import jmri.ConditionalVariable;
 import jmri.ConditionalManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
+import jmri.DefaultSignalHead;
 import jmri.Route;
 import jmri.Memory;
 import jmri.Timebase;
+
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.Font;
+import java.awt.MenuBar;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -29,11 +38,15 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JScrollPane;
 import javax.swing.table.*;
 
-import java.util.List;
+//import java.util.List;
 
 import jmri.util.JmriJFrame;
+import jmri.Route;
 
 /**
  * Swing action to create and register a Logix Table.
@@ -44,9 +57,19 @@ import jmri.util.JmriJFrame;
  * Most of the text used in this GUI is in LogixTableBundle.properties, accessed
  * via rbx, and the remainder of the text is in BeanTableBundle.properties,
  * accessed via rb.
+ *
+ * Methods and Members for 'state variables' and 'actions' removed to become their
+ * own objects - 'ConditionalVariable' and 'ConditionalAction' in jmri package.
+ * Two more types of logic for a Conditional to use in its antecedent have been added
+ * to the original 'AND'ing all statevariables - 'OR' (i.e. all OR's) and 'MIXED' 
+ * (i.e. general boolean statement with any mixture of boolean operations). 
+ * The 'OR's an 'AND's types are unambiguous and do not require parentheses.
+ * The 'Mixed' type uses a TextField for the user to insert parenthees. 
+ * Jan 22, 2009 - Pete Cressman
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
+ * @author Pete Cressman Copyright (C) 2009
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -64,10 +87,10 @@ public class LogixTableAction extends AbstractTableAction {
 		// set up managers - no need to use InstanceManager since both managers are
 		// Default only (internal). We use InstanceManager to get managers for
 		// compatibility with other facilities.
-		logixManager = InstanceManager.logixManagerInstance();
-		conditionalManager = InstanceManager.conditionalManagerInstance();
+		_logixManager = InstanceManager.logixManagerInstance();
+		_conditionalManager = InstanceManager.conditionalManagerInstance();
 		// disable ourself if there is no Logix manager or no Conditional manager available
-		if ((logixManager == null) || (conditionalManager == null)) {
+		if ((_logixManager == null) || (_conditionalManager == null)) {
 			setEnabled(false);
 		}
 	}
@@ -119,7 +142,7 @@ public class LogixTableAction extends AbstractTableAction {
 			public int getPreferredWidth(int col) {
 				// override default value for SystemName and UserName columns
 				if (col == SYSNAMECOL)
-					return new JTextField(8).getPreferredSize().width;
+					return new JTextField(9).getPreferredSize().width;
 				if (col == USERNAMECOL)
 					return new JTextField(17).getPreferredSize().width;
 				if (col == EDITCOL)
@@ -174,7 +197,7 @@ public class LogixTableAction extends AbstractTableAction {
 				Logix l = (Logix) bean;
 				l.deActivateLogix();
 				// delete the Logix and all its Conditionals
-				logixManager.deleteLogix(l);
+				_logixManager.deleteLogix(l);
 			}
 
 			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
@@ -211,127 +234,154 @@ public class LogixTableAction extends AbstractTableAction {
 	// set title for Logix table
 	void setTitle() {
 		f.setTitle(f.rb.getString("TitleLogixTable"));
+
+        // Hack into Logix frame to add my junk. (pwc)
+        _devNameField = new JTextField(30);
+        JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint");
+        JButton referenceButton = new JButton(rbx.getString("ReferenceButton"));
+        panel.add(referenceButton);
+        referenceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                deviceReportPressed(e);
+            }
+        });
+        panel.add(referenceButton);
+        panel.setVisible(true);
+        f.addToBottomBox(panel);
+        JButton orphanButton = new JButton(rbx.getString("OrphanButton"));
+        orphanButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                findOrphansPressed(e);
+            }
+        });
+        f.addToBottomBox(orphanButton);
+
+        JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
+        menu.setMnemonic(KeyEvent.VK_O);
+
+        menu.addSeparator();
+        JCheckBoxMenuItem cbMenuItem = new JCheckBoxMenuItem(rbx.getString("SuppressWithDisable"));
+        cbMenuItem.setSelected(_suppressReminder);
+        cbMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SuppressReminder(false);
+            }
+        });
+        menu.add(cbMenuItem);
+
+        cbMenuItem = new JCheckBoxMenuItem(rbx.getString("SuppressWithEnable"));
+        cbMenuItem.setSelected(_suppressDisable);
+        cbMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SuppressReminder(true);
+            }
+        });
+        menu.add(cbMenuItem);
+
+        javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        menuBar.add(menu);
 	}
 
 	String helpTarget() {
 		return "package.jmri.jmrit.beantable.LogixTable";
 	}
 
+    void SuppressReminder(boolean suppressDisable) {
+        if (suppressDisable)   {
+            _suppressDisable = !_suppressDisable;
+        } else {
+            _suppressReminder = !_suppressReminder;
+        }
+    }
+
 	// *********** variable definitions ********************
 
 	// Multi use variables
-	ConditionalManager conditionalManager = null; // set when LogixAction is created
+	ConditionalManager _conditionalManager = null; // set when LogixAction is created
 
-	LogixManager logixManager = null; // set when LogixAction is created
-	boolean logixCreated = false;
-	boolean warnMsg = false;
-	boolean noWarn = false;
-	boolean reminderActive = false;
-	int showReminderCount = 0;
-	boolean showReminder = false;
-	boolean warnStateVariables = true;
+	LogixManager _logixManager = null; // set when LogixAction is created
+	boolean _showReminder = false;
+    boolean _suppressReminder = false;
+    boolean _suppressDisable = false;
 
 	// current focus variables
-	Logix curLogix = null;
+	Logix _curLogix = null;
 	int numConditionals = 0;
 	int conditionalRowNumber = 0;
-	Conditional curConditional = null;
+	Conditional _curConditional = null;
 
 	// Add Logix Variables
 	JmriJFrame addLogixFrame = null;
 	JTextField systemName = new JTextField(10);
 	JTextField addUserName = new JTextField(10);
-	JButton create;
-	JButton cancel;
+    JTextField _devNameField;
 
 	// Edit Logix Variables
 	JmriJFrame editLogixFrame = null;
 	boolean inEditMode = false;
-	boolean inReorderMode = false;
-	int nextInOrder = 0;
-	JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
+	boolean _inReorderMode = false;
+	int _nextInOrder = 0;
 	JTextField editUserName = new JTextField(20);
 	ConditionalTableModel conditionalTableModel = null;
-	JPanel pct = null; // conditional table
-	JButton newConditionalButton;
-	JButton reorderButton;
-	JButton calculateButton;
-	JButton done;
-	JButton delete;
 	JLabel status = new JLabel(" ");
 
 	// Edit Conditional Variables
 	boolean inEditConditionalMode = false;
 	JmriJFrame editConditionalFrame = null;
-	JLabel conditionalSystemName = new JLabel("xxxxxxxxxxx");
-	JLabel conditionalSystemNameLabel = new JLabel(rbx
-			.getString("ConditionalSystemName"));
 	JTextField conditionalUserName = new JTextField(20);
-	JLabel conditionalUserNameLabel = new JLabel(rbx
-			.getString("ConditionalUserName"));
-	VariableTableModel variableTableModel = null;
-	JPanel vt = null; // state variables table
-	JLabel cStatus = new JLabel(" ");
-	JButton addVariableButton;
-	JButton checkVariableButton;
-	JButton updateConditional;
-	JButton cancelConditional;
-	JButton deleteConditional;
-	JRadioButton action1OnTrue;
-	JRadioButton action1OnFalse;
-	JRadioButton action1OnChange;
-	ButtonGroup action1Group;
-	JComboBox action1TypeBox;
-	JTextField action1NameField;
-	JTextField action1DataField;
-	JComboBox action1TurnoutSetBox;
-	JComboBox action1SensorSetBox;
-	JComboBox action1SignalSetBox;
-	JComboBox action1LightSetBox;
-	JComboBox action1LockSetBox;
-	JButton action1SetButton;
-	JRadioButton action2OnTrue;
-	JRadioButton action2OnFalse;
-	JRadioButton action2OnChange;
-	ButtonGroup action2Group;
-	JComboBox action2TypeBox;
-	JTextField action2NameField;
-	JTextField action2DataField;
-	JComboBox action2TurnoutSetBox;
-	JComboBox action2SensorSetBox;
-	JComboBox action2SignalSetBox;
-	JComboBox action2LightSetBox;
-	JComboBox action2LockSetBox;
-	JButton action2SetButton;
+   
+	private ActionTableModel _actionTableModel = null;
+	private VariableTableModel _variableTableModel = null;
+    private JComboBox _operatorBox;
+    private JComboBox _andOperatorBox;
+    private JComboBox _notOperatorBox;
+    private JTextField _antecedentField;
+    private JPanel _antecedentPanel;
+    private int _logicType = Conditional.ALL_AND;
+    private String _antecedent = null;
+    private boolean _newItem = false;   // marks a new Action or Variable object added
 
-	// Current State Variable Information
-	int numStateVariables = 0;
-	private int[] variableOpern = new int[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableNOT = new String[Conditional.MAX_STATE_VARIABLES];
-	private int[] variableType = new int[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableName = new String[Conditional.MAX_STATE_VARIABLES];
-	private boolean[] variableNameEditable = new boolean[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableData1 = new String[Conditional.MAX_STATE_VARIABLES];
-	private boolean[] variableData1Editable = new boolean[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableData2 = new String[Conditional.MAX_STATE_VARIABLES];
-	private boolean[] variableData2Editable = new boolean[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableState = new String[Conditional.MAX_STATE_VARIABLES];
-	// the following are not displayed in the State Variable Table. Derived from
-	// Data1 and Data2 strings
-	private int[] variableNum1 = new int[Conditional.MAX_STATE_VARIABLES];
-	private int[] variableNum2 = new int[Conditional.MAX_STATE_VARIABLES];
-	private boolean[] variableTriggersCalculation = new boolean[Conditional.MAX_STATE_VARIABLES];
+    /***  Conponents of Edit Variable Windows */
+	JmriJFrame _editVariableFrame = null;
+    JComboBox _variableTypeBox;
+	JTextField _variableNameField;
+	JTextField _variableData1Field;
+	JTextField _variableData2Field;
+    JPanel _variableNamePanel;
+    JPanel _variableData1Panel;
+    JPanel _variableData2Panel;
+
+    /***  Conponents of Edit Action Windows */
+	JmriJFrame _editActionFrame = null;
+    JComboBox _actionOptionBox;
+    JComboBox _actionTypeBox;
+	JTextField _actionNameField;
+	JTextField _actionStringField;
+	JComboBox _actionTurnoutSetBox;
+	JComboBox _actionSensorSetBox;
+	JComboBox _actionSignalSetBox;
+	JComboBox _actionLightSetBox;
+	JComboBox _actionLockSetBox;
+	JButton _actionSetButton;
+    JPanel _optionPanel;
+    JPanel _namePanel;
+    JPanel _turnoutPanel;
+    JPanel _sensorPanel;
+    JPanel _lightPanel;
+    JPanel _signalPanel;
+    JPanel _lockPanel;
+    JPanel _setPanel;
+    JPanel _textPanel;
+
+	// Current Variable Information
+    private ArrayList <ConditionalVariable> _variableList;
+    private ConditionalVariable _curVariable;
+    private int _curVariableRowNumber;
 
 	// Current Action Information
-	private int[] actionOption = { Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-			Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE };
-
-	private int[] actionDelay = { 0, 0 };
-	private int[] actionType = { Conditional.ACTION_NONE,
-			Conditional.ACTION_NONE };
-	private String[] actionName = { " ", " " };
-	private int[] actionData = { 0, 0 };
-	private String[] actionString = { " ", " " };
+    private ArrayList <ConditionalAction> _actionList;
+    private ConditionalAction _curAction;
+    private int _curActionRowNumber;
 
 	// *********** Methods for Add Logix Window ********************
 
@@ -341,7 +391,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 */
 	void addPressed(ActionEvent e) {
 		// possible change
-		showReminder = true;
+		_showReminder = true;
 		if (inEditMode) {
 			// cancel Edit and reactivate the edited Logix
 			donePressed(null);
@@ -356,8 +406,7 @@ public class LogixTableAction extends AbstractTableAction {
 			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel();
 			panel1.setLayout(new FlowLayout());
-			JLabel systemNameLabel = new JLabel(rbx
-					.getString("LogixSystemName"));
+			JLabel systemNameLabel = new JLabel(rbx.getString("LogixSystemName"));
 			panel1.add(systemNameLabel);
 			panel1.add(systemName);
 			systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
@@ -386,7 +435,8 @@ public class LogixTableAction extends AbstractTableAction {
 			JPanel panel5 = new JPanel();
 			panel5.setLayout(new FlowLayout());
 			// Create Logix
-			panel5.add(create = new JButton(rbx.getString("CreateLogixButton")));
+            JButton create = new JButton(rbx.getString("CreateLogixButton"));
+			panel5.add(create);
 			create.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					createPressed(e);
@@ -394,13 +444,14 @@ public class LogixTableAction extends AbstractTableAction {
 			});
 			create.setToolTipText(rbx.getString("LogixCreateButtonHint"));
 			// Cancel
-			panel5.add(cancel = new JButton(rbx.getString("CancelButton")));
+            JButton cancel = new JButton(rbx.getString("CancelButton")); 
+			panel5.add(cancel);
 			cancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cancelAddPressed(e);
 				}
 			});
-			cancel.setToolTipText(rbx.getString("CancelButtonHint"));
+			cancel.setToolTipText(rbx.getString("CancelLogixButtonHint"));
 			contentPane.add(panel5);
 		}
 
@@ -424,12 +475,20 @@ public class LogixTableAction extends AbstractTableAction {
 		f.setVisible(true);
 	}
 
+
+    void findOrphansPressed(ActionEvent e) {
+        Maintenance.findOrphansPressed(f);
+    }
+
+    void deviceReportPressed(ActionEvent e) {
+        Maintenance.deviceReportPressed(_devNameField.getText(), f);
+    }
 	/**
 	 * Responds to the Create Logix button in Add Logix window
 	 */
 	void createPressed(ActionEvent e) {
 		// possible change
-		showReminder = true;
+		_showReminder = true;
 		String sName = systemName.getText().toUpperCase();
 		String uName = addUserName.getText().trim();
 		// check validity of Logix system name
@@ -449,7 +508,7 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		systemName.setText(sName);
 		// check if a Logix with this name already exists
-		Logix x = logixManager.getBySystemName(sName);
+		Logix x = _logixManager.getBySystemName(sName);
 		if (x != null) {
 			// Logix already exists
 			log.error("Duplicate Logix system name entered: " + sName);
@@ -460,7 +519,7 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		// check if a Logix with the same user name exists
 		if (uName.length() > 0) {
-			x = logixManager.getByUserName(uName);
+			x = _logixManager.getByUserName(uName);
 			if (x != null) {
 				// Logix with this user name already exists
 				log.error("Duplicate Logix user name entered: " + uName);
@@ -471,19 +530,18 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 		}
 		// Create the new Logix
-		curLogix = logixManager.createNewLogix(sName, uName);
-		if (curLogix == null) {
+		_curLogix = _logixManager.createNewLogix(sName, uName);
+		if (_curLogix == null) {
 			// should never get here unless there is an assignment conflict
 			log.error("Failure to create Logix with System Name: " + sName);
 			return;
 		}
 		numConditionals = 0;
-		logixCreated = true;
 		addLogixFrame.setVisible(false);
 		addLogixFrame.dispose();
 		addLogixFrame = null;
 		// create the Edit Logix Window
-		makeEditLogixWindow();
+        makeEditLogixWindow();
 	}
 
 	// *********** Methods for Edit Logix Window ********************
@@ -496,13 +554,13 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Logix, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
 					java.text.MessageFormat.format(rbx.getString("Error32"),
-							new Object[] { curLogix.getSystemName() }), rbx
+							new Object[] { _curLogix.getSystemName() }), rbx
 							.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		// check if a Logix with this name exists
-		Logix x = logixManager.getBySystemName(sName);
+		Logix x = _logixManager.getBySystemName(sName);
 		if (x == null) {
 			// Logix does not exist, so cannot be edited
 			log.error("No Logix with system name: " + sName);
@@ -515,20 +573,26 @@ public class LogixTableAction extends AbstractTableAction {
 			return;
 		}
 		// Logix was found, initialize for edit
-		curLogix = x;
-		numConditionals = curLogix.getNumConditionals();
+		_curLogix = x;
+		numConditionals = _curLogix.getNumConditionals();
 		// deactivate this Logix
-		curLogix.deActivateLogix();
+		_curLogix.deActivateLogix();
 		// create the Edit Logix Window
-		makeEditLogixWindow();
+        // Use separate Thread so window is created on top
+        Thread t = new Thread() {
+                public void run() {
+                    Thread.yield();
+                    makeEditLogixWindow();
+                    }
+                };
+        t.start();
 	}
 
 	/**
 	 * creates and/or initializes the Edit Logix window
 	 */
 	void makeEditLogixWindow() {
-		fixedSystemName.setText(curLogix.getSystemName());
-		editUserName.setText(curLogix.getUserName());
+		editUserName.setText(_curLogix.getUserName());
 		// clear conditional table if needed
 		if (conditionalTableModel != null) {
 			conditionalTableModel.fireTableStructureChanged();
@@ -546,6 +610,7 @@ public class LogixTableAction extends AbstractTableAction {
 			JLabel systemNameLabel = new JLabel(rbx
 					.getString("LogixSystemName"));
 			panel1.add(systemNameLabel);
+            JLabel fixedSystemName = new JLabel(_curLogix.getSystemName());
 			panel1.add(fixedSystemName);
 			contentPane.add(panel1);
 			JPanel panel2 = new JPanel();
@@ -562,10 +627,9 @@ public class LogixTableAction extends AbstractTableAction {
 			contentPane.add(pctSpace);
 			JPanel pTitle = new JPanel();
 			pTitle.setLayout(new FlowLayout());
-			pTitle.add(new JLabel(rbx.getString("ConditionalTableTitle") + " "
-					+ Logix.MAX_CONDITIONALS + " )"));
+			pTitle.add(new JLabel(rbx.getString("ConditionalTableTitle")));
 			contentPane.add(pTitle);
-			pct = new JPanel();
+			JPanel pct = new JPanel();
 			// initialize table of conditionals
 			conditionalTableModel = new ConditionalTableModel();
 			JTable conditionalTable = new JTable(conditionalTableModel);
@@ -599,7 +663,7 @@ public class LogixTableAction extends AbstractTableAction {
 			conditionalTable.setDefaultEditor(JButton.class, buttonEditor);
 			JButton testButton = new JButton("XXXXX");
 			conditionalTable.setRowHeight(testButton.getPreferredSize().height);
-			buttonColumn.setPreferredWidth(testButton.getPreferredSize().width);
+			buttonColumn.setMinWidth(testButton.getPreferredSize().width);
 			buttonColumn.setResizable(false);
 			JScrollPane conditionalTableScrollPane = new JScrollPane(
 					conditionalTable);
@@ -616,18 +680,17 @@ public class LogixTableAction extends AbstractTableAction {
 			JPanel panel42 = new JPanel();
 			panel42.setLayout(new FlowLayout());
 			// Conditional panel buttons - New Conditional
-			panel42.add(newConditionalButton = new JButton(rbx
-					.getString("NewConditionalButton")));
+            JButton newConditionalButton = new JButton(rbx.getString("NewConditionalButton"));
+			panel42.add(newConditionalButton);
 			newConditionalButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					newConditionalPressed(e);
 				}
 			});
-			newConditionalButton.setToolTipText(rbx
-					.getString("NewConditionalButtonHint"));
+			newConditionalButton.setToolTipText(rbx.getString("NewConditionalButtonHint"));
 			// Conditional panel buttons - Reorder
-			panel42.add(reorderButton = new JButton(rbx
-					.getString("ReorderButton")));
+            JButton reorderButton = new JButton(rbx.getString("ReorderButton"));
+			panel42.add(reorderButton);
 			reorderButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					reorderPressed(e);
@@ -635,15 +698,14 @@ public class LogixTableAction extends AbstractTableAction {
 			});
 			reorderButton.setToolTipText(rbx.getString("ReorderButtonHint"));
 			// Conditional panel buttons - Calculate
-			panel42.add(calculateButton = new JButton(rbx
-					.getString("CalculateButton")));
+            JButton calculateButton = new JButton(rbx.getString("CalculateButton"));
+			panel42.add(calculateButton);
 			calculateButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					calculatePressed(e);
 				}
 			});
-			calculateButton
-					.setToolTipText(rbx.getString("CalculateButtonHint"));
+			calculateButton.setToolTipText(rbx.getString("CalculateButtonHint"));
 			panel4.add(panel42);
 			Border panel4Border = BorderFactory.createEtchedBorder();
 			panel4.setBorder(panel4Border);
@@ -652,7 +714,8 @@ public class LogixTableAction extends AbstractTableAction {
 			JPanel panel5 = new JPanel();
 			panel5.setLayout(new FlowLayout());
 			// Bottom Buttons - Done Logix
-			panel5.add(done = new JButton(rbx.getString("DoneButton")));
+            JButton done = new JButton(rbx.getString("DoneButton"));
+			panel5.add(done);
 			done.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					donePressed(e);
@@ -660,8 +723,8 @@ public class LogixTableAction extends AbstractTableAction {
 			});
 			done.setToolTipText(rbx.getString("DoneButtonHint"));
 			// Delete Logix
-			panel5.add(delete = new JButton(rbx
-							.getString("DeleteLogixButton")));
+            JButton delete = new JButton(rbx.getString("DeleteLogixButton"));
+			panel5.add(delete);
 			delete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					deletePressed(e);
@@ -671,23 +734,20 @@ public class LogixTableAction extends AbstractTableAction {
 			contentPane.add(panel5);
 		}
 
-		if (!reminderActive) {
-			editLogixFrame
-					.addWindowListener(new java.awt.event.WindowAdapter() {
-						public void windowClosing(java.awt.event.WindowEvent e) {
-							// if in Edit mode, complete the Edit and reactivate
-							// the Logix
-							if (inEditMode) {
-								donePressed(null);
-							} else {
-								editLogixFrame.setVisible(false);
-								// bring Logix Table to front
-								f.setVisible(true);
-							}
-						}
-					});
-			reminderActive = true;
-		}
+        editLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        // if in Edit mode, complete the Edit and reactivate
+                        // the Logix
+                        showSaveReminder();
+                        if (inEditMode) {
+                            donePressed(null);
+                        } else {
+                            editLogixFrame.setVisible(false);
+                            // bring Logix Table to front
+                            f.setVisible(true);
+                        }
+                    }
+                });
 		editLogixFrame.pack();
 		editLogixFrame.setVisible(true);
 	}
@@ -696,15 +756,11 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Display reminder to save
 	 */
 	void showSaveReminder() {
-		if (showReminder) {
-			showReminder = false;
-			showReminderCount++;
-			if (showReminderCount < 4) {
-				javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-						.getString("Reminder1"),
-						rbx.getString("ReminderTitle"),
-						javax.swing.JOptionPane.INFORMATION_MESSAGE);
-			}
+		if (_showReminder && !_suppressReminder) {
+            javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
+                    .getString("Reminder1"),
+                    rbx.getString("ReminderTitle"),
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -715,21 +771,26 @@ public class LogixTableAction extends AbstractTableAction {
 		if (checkEditConditional())
 			return;
 		// Check if reorder is reasonable
-		if (numConditionals <= 1) {
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-					.getString("Error11"), rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		// possible change
-		showReminder = true;
-		// Initialize for reordering Conditionals
-		curLogix.initializeReorder();
-		nextInOrder = 0;
-		inReorderMode = true;
+		_showReminder = true;
+		_nextInOrder = 0;
+		_inReorderMode = true;
 		status.setText(rbx.getString("ReorderMessage"));
 		conditionalTableModel.fireTableDataChanged();
-	}
+    }
+
+	/**
+	 * Responds to the First/Next (Delete) Button in the Edit Logix window
+	 */
+    void swapConditional(int row) {
+        _curLogix.swapConditional(_nextInOrder, row);
+        _nextInOrder++;
+        if (_nextInOrder >= numConditionals)
+        {
+            _inReorderMode = false;
+        }
+        //status.setText("");
+        conditionalTableModel.fireTableDataChanged();
+    } 
 
 	/**
 	 * Responds to the Calculate Button in the Edit Logix window
@@ -743,16 +804,19 @@ public class LogixTableAction extends AbstractTableAction {
 			String cName = "";
 			Conditional c = null;
 			for (int i = 0; i < numConditionals; i++) {
-				cName = curLogix.getConditionalByNumberOrder(i);
-				c = conditionalManager.getBySystemName(cName);
-				if (c == null) {
-					log
-							.error("Invalid conditional system name when calculating - "
-									+ cName);
-				} else {
-					// calculate without taking any action
-					c.calculate(false);
-				}
+				cName = _curLogix.getConditionalByNumberOrder(i);
+                if (cName != null) {
+                    c = _conditionalManager.getBySystemName(cName);
+                    if (c == null) {
+                        log.error("Invalid conditional system name when calculating - "
+                                        + cName);
+                    } else {
+                        // calculate without taking any action
+                        c.calculate(false);
+                    }
+                } else {
+                    log.error("null conditional system name when calculating");
+                }
 			}
 			// force the table to update
 			conditionalTableModel.fireTableDataChanged();
@@ -767,50 +831,12 @@ public class LogixTableAction extends AbstractTableAction {
 	void donePressed(ActionEvent e) {
 		if (checkEditConditional())
 			return;
-		if (curLogix != null) {
-			Logix x = curLogix;
-			// Check for consistency in suppressing triggering of calculation
-			// among state variables of this Logix.
-			String[] varName = new String[Logix.MAX_LISTENERS];
-			int[] varListenerType = new int[Logix.MAX_LISTENERS];
-			String[] varListenerProperty = new String[Logix.MAX_LISTENERS];
-			int[] varAppearance = new int[Logix.MAX_LISTENERS];
-			int[] numTriggersCalc = new int[Logix.MAX_LISTENERS];
-			int[] numTriggerSuppressed = new int[Logix.MAX_LISTENERS];
-			int numVs = x.getStateVariableList(varName, varListenerType,
-					varListenerProperty, varAppearance, numTriggersCalc,
-					numTriggerSuppressed, Logix.MAX_LISTENERS);
-			if (numVs > 0) {
-				// scan table testing for inconsistencies
-				for (int k = 0; k < numVs; k++) {
-					if ((numTriggersCalc[k] > 0)
-							&& (numTriggerSuppressed[k] > 0)) {
-						// have inconsistency, synthesize a warning message
-						log.warn("Triggers calculation inconsistency - "
-								+ varName[k]);
-
-						String msg7 = "";
-						if (varListenerProperty[k].equals("Appearance")) {
-							msg7 = java.text.MessageFormat
-									.format(
-											rbx.getString("Warn7"),
-											new Object[] { signalAppearanceIndexToString(signalAppearanceToAppearanceIndex(varAppearance[k])) });
-						}
-						String msg6 = java.text.MessageFormat.format(rbx
-								.getString("Warn6"), new Object[] {
-								varListenerProperty[k], varName[k], msg7 });
-						javax.swing.JOptionPane.showMessageDialog(
-								editLogixFrame, msg6, rbx
-										.getString("WarnTitle"),
-								javax.swing.JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			}
+		if (_curLogix != null) {
 			// Check if the User Name has been changed
 			String uName = editUserName.getText();
-			if (!(uName.equals(x.getUserName()))) {
+			if (!(uName.equals(_curLogix.getUserName()))) {
 				// user name has changed - check if already in use
-				Logix p = logixManager.getByUserName(uName);
+				Logix p = _logixManager.getByUserName(uName);
 				if (p != null) {
 					// Logix with this user name already exists
 					log.error("Failure to update Logix with Duplicate User Name: "
@@ -822,41 +848,52 @@ public class LogixTableAction extends AbstractTableAction {
 
 				} else {
 					// user name is unique, change it
-					x.setUserName(uName);
+					_curLogix.setUserName(uName);
 					m.fireTableDataChanged();
-					showReminder = true;
 				}
 			}
 			// check for possible loop situation
-			if (x.checkLoopCondition()) {
-				// loop condition is present - warn user and give options
-				int response = JOptionPane.showOptionDialog(editLogixFrame, rbx
-						.getString("Warn9")
-						+ x.getLoopGremlins(), rbx.getString("WarnTitle"),
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, new Object[] {
-								rbx.getString("ButtonDisabled"),
-								rbx.getString("ButtonEnabled") }, rbx
-								.getString("ButtonDisabled"));
-				if (response == 0) {
-					// user elected to disable the Logix
-					x.setEnabled(false);
-					JOptionPane.showMessageDialog(editLogixFrame, rbx
-							.getString("Logix")
-							+ " "
-							+ x.getSystemName()
-							+ "( "
-							+ x.getUserName()
-							+ " ) " + rbx.getString("Warn10"), "",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
+            if (!_suppressDisable)  {
+                // user does not want any change to enabling -REGARDLESS!
+                boolean disabled = _curLogix.checkLoopCondition();
+                int response = 0;
+                if (disabled && !_suppressReminder) {
+                    // loop condition is present - warn user and give options
+                    ArrayList <String[]> list = _curLogix.getLoopGremlins();
+                    String msg = "";
+                    int k = 0;
+                    for (int i=0; i<list.size(); i++) {
+                        String[] str = list.get(i);
+                        if (k==7) {
+                            msg = msg + "\n";
+                            k=0;
+                        } else if (i>0) {
+                            msg = msg + ", ";
+                        }
+                        k++;
+                        msg = msg + rbx.getString(str[0]) +": "+ str[1];
+                    }
+                    response = JOptionPane.showOptionDialog(editLogixFrame, rbx.getString("Warn9")
+                            +msg, rbx.getString("WarnTitle"),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, 
+                            null, new Object[] {rbx.getString("ButtonDisabled"),
+                                    rbx.getString("ButtonEnabled") }, rbx.getString("ButtonDisabled"));
+                }
+                if (disabled && response == 0) {
+                    if (!_suppressReminder) {
+                        // user elected to disable the Logix
+                        JOptionPane.showMessageDialog(editLogixFrame, rbx.getString("Logix")
+                                + " " + _curLogix.getSystemName() + "( "+ _curLogix.getUserName()
+                                + " ) " + rbx.getString("Warn10"), "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    _curLogix.setEnabled(false);
+                }
+            }
 			// complete update and activate Logix
-			x.activateLogix();
+			_curLogix.activateLogix();
 		} else {
-			log.error("null pointer to curLogix in donePressed method");
+			log.error("null pointer to _curLogix in donePressed method");
 		}
-		logixCreated = true;
 		inEditMode = false;
 		showSaveReminder();
 		editLogixFrame.setVisible(false);
@@ -864,7 +901,7 @@ public class LogixTableAction extends AbstractTableAction {
 		editLogixFrame = null;
 		// bring Logix Table to front
 		f.setVisible(true);
-	}
+	}  /* donePressed */
 
 	/**
 	 * Responds to the Delete button in the Edit Logix window
@@ -872,13 +909,11 @@ public class LogixTableAction extends AbstractTableAction {
 	void deletePressed(ActionEvent e) {
 		if (checkEditConditional())
 			return;
-		showReminder = true;
-		showSaveReminder();
-		Logix x = curLogix;
+		_showReminder = true;
+		Logix x = _curLogix;
 		// delete this Logix
-		logixManager.deleteLogix(x);
-		curLogix = null;
-		logixCreated = true;
+		_logixManager.deleteLogix(x);
+		_curLogix = null;
 		inEditMode = false;
 		editLogixFrame.setVisible(false);
 		editLogixFrame.dispose();
@@ -892,54 +927,27 @@ public class LogixTableAction extends AbstractTableAction {
 	void newConditionalPressed(ActionEvent e) {
 		if (checkEditConditional())
 			return;
-		if (numConditionals >= Logix.MAX_CONDITIONALS) {
-			// Already have the maximum number of conditionals
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					java.text.MessageFormat.format(rbx.getString("Error36"),
-							new Object[] { curConditional.getSystemName() }),
-					rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
-		}
 		// make system name for new conditional
-		int num = curLogix.getNextConditionalNumber();
-		String cName = curLogix.getSystemName() + "C" + Integer.toString(num);
-		Conditional c = conditionalManager.createNewConditional(cName, "");
-		if (c == null) {
+		int num = _curLogix.getNumConditionals()+1;
+		Conditional c = null;
+        String cName = null;
+		while (c == null) {
 			// should never get here unless there is an assignment conflict
-			log.error("Failure to create Conditional with System Name: "
-					+ cName);
-			return;
+            cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
+            c = _conditionalManager.createNewConditional(cName, "");
+            num++;
+			log.error("Failure to create Conditional with System Name: " + cName);
 		}
 		// add to Logix at the end of the calculate order
-		if (!curLogix.addConditional(cName, -1)) {
-			// too many conditionals - should never happen since tested above.
-			log.error("Too many Conditionals with for Logix: "
-					+ curLogix.getSystemName());
-			return;
-		}
-		// Conditional successfully added to Logix
-		showReminder = true;
-		curConditional = c;
-		conditionalTableModel.fireTableRowsInserted(numConditionals,
-				numConditionals);
+		_curLogix.addConditional(cName, -1);
+		_curConditional = c;
+		conditionalTableModel.fireTableRowsInserted(numConditionals, numConditionals);
 		conditionalRowNumber = numConditionals;
 		numConditionals++;
-		numStateVariables = 0;
+		_showReminder = true;
 		// clear action items
-		actionOption[0] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-		actionDelay[0] = 0;
-		actionType[0] = Conditional.ACTION_NONE;
-		actionName[0] = " ";
-		actionData[0] = 0;
-		actionString[0] = " ";
-		actionOption[1] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-		actionDelay[1] = 0;
-		actionType[1] = Conditional.ACTION_NONE;
-		actionName[1] = " ";
-		actionData[1] = 0;
-		actionString[1] = " ";
-		// move to edit this Conditional's information
+        _actionList = new ArrayList <ConditionalAction>();
+        _variableList = new  ArrayList <ConditionalVariable>();
 		makeEditConditionalWindow();
 	}
 
@@ -951,68 +959,23 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error34"),
-							new Object[] { curConditional.getSystemName() }),
+							new Object[] { _curConditional.getSystemName() }),
 					rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		// get Conditional to edit
-		curConditional = conditionalManager.getBySystemName(curLogix
-				.getConditionalByNumberOrder(rx));
-		if (curConditional == null) {
+		_curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+		if (_curConditional == null) {
 			log.error("Attempted edit of non-existant conditional.");
 			return;
 		}
-		numStateVariables = curConditional.getNumStateVariables();
+        _variableList = _curConditional.getCopyOfStateVariables();
 		conditionalRowNumber = rx;
-		// get Conditional information and set up in display variables
-		if (numStateVariables > 0) {
-			curConditional.getStateVariables(variableOpern, variableType,
-					variableName, variableData1, variableNum1, variableNum2,
-					variableTriggersCalculation);
-			int saveType = 0;
-			String saveName = "";
-			String saveData1 = "";
-			int saveNum1 = 0;
-			int saveNum2 = 0;
-			for (int i = 0; i < numStateVariables; i++) {
-				if ((variableOpern[i] == Conditional.OPERATOR_NOT)
-						|| (variableOpern[i] == Conditional.OPERATOR_AND_NOT)) {
-					variableNOT[i] = rbx.getString("LogicNOT");
-				} else {
-					variableNOT[i] = " ";
-				}
-				variableData2[i] = " ";
-				// save current values for this state variable
-				saveType = variableType[i];
-				saveName = variableName[i];
-				saveData1 = variableData1[i];
-				saveNum1 = variableNum1[i];
-				saveNum2 = variableNum2[i];
-				// initialize as a new state variable
-				variableType[i] = -1;
-				variableTypeChanged(i, stateVariableTypeToString(saveType));
-				// restore current values for this state variable
-				variableName[i] = saveName;
-				variableData1[i] = saveData1;
-				variableNum1[i] = saveNum1;
-				variableNum2[i] = saveNum2;
-				// since number variables are not directly displayed, format as
-				// needed
-				if (variableType[i] == Conditional.TYPE_FAST_CLOCK_RANGE) {
-					// need to format strings for display
-					variableData1[i] = formatTime(variableNum1[i] / 60,
-							variableNum1[i] - ((variableNum1[i] / 60) * 60));
-					variableData2[i] = formatTime(variableNum2[i] / 60,
-							variableNum2[i] - ((variableNum2[i] / 60) * 60));
-				}
-			}
-		}
 		// get action variables
-		curConditional.getAction(actionOption, actionDelay, actionType,
-				actionName, actionData, actionString);
+       	_actionList = _curConditional.getCopyOfActions();
 		makeEditConditionalWindow();
-	}
+	}  /* editConditionalPressed */
 
 	/**
 	 * Checks if edit of a conditional is in progress Returns true after sending
@@ -1023,7 +986,7 @@ public class LogixTableAction extends AbstractTableAction {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error35"),
-							new Object[] { curConditional.getSystemName() }),
+							new Object[] { _curConditional.getSystemName() }),
 					rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return true;
@@ -1031,7 +994,7 @@ public class LogixTableAction extends AbstractTableAction {
 		return false;
 	}
 
-	// *********** Methods for Edit Conditional Window ********************
+/*********************** Edit Conditional Window and Mwthods********************/
 
 	/**
 	 * Creates and/or initializes the Edit Conditional window Note: you can get
@@ -1039,12 +1002,10 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Edit button in the Conditional table of the Edit Logix window.
 	 */
 	void makeEditConditionalWindow() {
-		conditionalSystemName.setText(curConditional.getSystemName());
-		conditionalUserName.setText(curConditional.getUserName());
-		cStatus.setText(" ");
+
+		conditionalUserName.setText(_curConditional.getUserName());
 		if (editConditionalFrame == null) {
-			editConditionalFrame = new JmriJFrame(rbx
-					.getString("TitleEditConditional"));
+			editConditionalFrame = new JmriJFrame(rbx.getString("TitleEditConditional"));
 			editConditionalFrame.addHelpMenu(
 					"package.jmri.jmrit.beantable.ConditionalAddEdit", true);
 			editConditionalFrame.setLocation(50, 40);
@@ -1052,791 +1013,1249 @@ public class LogixTableAction extends AbstractTableAction {
 			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel();
 			panel1.setLayout(new FlowLayout());
-			panel1.add(conditionalSystemNameLabel);
-			panel1.add(conditionalSystemName);
+			panel1.add(new JLabel(rbx.getString("ConditionalSystemName")));
+			panel1.add(new JLabel(_curConditional.getSystemName()));
 			contentPane.add(panel1);
 			JPanel panel2 = new JPanel();
 			panel2.setLayout(new FlowLayout());
-			panel2.add(conditionalUserNameLabel);
+			panel2.add(new JLabel(rbx.getString("ConditionalUserName")));
 			panel2.add(conditionalUserName);
-			conditionalUserName.setToolTipText(rbx
-					.getString("ConditionalUserNameHint"));
+			conditionalUserName.setToolTipText(rbx.getString("ConditionalUserNameHint"));
 			contentPane.add(panel2);
-			// add logical expression section
+
+			// add Logical Expression Section
 			JPanel logicPanel = new JPanel();
 			logicPanel.setLayout(new BoxLayout(logicPanel, BoxLayout.Y_AXIS));
+            
+            // add Antecedent Expression Panel -ONLY appears for MIXED operator statements
+            _antecedent = _curConditional.getAntecedentExpression();
+            _logicType = _curConditional.getLogicType();
+            _antecedentField = new JTextField(65);
+            _antecedentField.setFont(new Font("SansSerif", Font.BOLD, 14));
+            _antecedentField.setText(_antecedent);
+            _antecedentPanel = makeEditPanel(_antecedentField, "LabelAntecedent", "LabelAntecedentHint");
+
+            JButton helpButton = new JButton(rbx.getString("HelpButton"));
+			_antecedentPanel.add(helpButton);
+			helpButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					helpPressed(e);
+				}
+			});
+            _antecedentPanel.add(helpButton);
+            _antecedentPanel.setVisible(_logicType == Conditional.MIXED);
+            logicPanel.add(_antecedentPanel);
+
+            // add state variable table title
 			JPanel varTitle = new JPanel();
 			varTitle.setLayout(new FlowLayout());
-			varTitle.add(new JLabel(rbx.getString("StateVariableTableTitle")
-					+ " " + Conditional.MAX_STATE_VARIABLES + " )"));
+			varTitle.add(new JLabel(rbx.getString("StateVariableTableTitle")));
 			logicPanel.add(varTitle);
 			// set up state variables table
-			vt = new JPanel();
+			JPanel vt = new JPanel();
 			// initialize and populate Combo boxes for table of state variables
-			JComboBox notCombo = new JComboBox();
-			notCombo.addItem(" ");
-			notCombo.addItem(rbx.getString("LogicNOT"));
-			JComboBox typeCombo = new JComboBox();
-			for (int i = 1; i <= Conditional.NUM_STATE_VARIABLE_TYPES; i++) {
-				typeCombo.addItem(stateVariableTypeToString(i));
-			}
+			_notOperatorBox = new JComboBox();
+			_notOperatorBox.addItem(" ");
+			_notOperatorBox.addItem(rbx.getString("LogicNOT"));
+
+			_andOperatorBox = new JComboBox();
+			_andOperatorBox.addItem(rbx.getString("LogicAND"));
+			_andOperatorBox.addItem(rbx.getString("LogicOR"));
 			// initialize table of state variables
-			variableTableModel = new VariableTableModel();
-			JTable variableTable = new JTable(variableTableModel);
+			_variableTableModel = new VariableTableModel();
+			JTable variableTable = new JTable(_variableTableModel);
 			variableTable.setRowSelectionAllowed(false);
-			variableTable
-					.setPreferredScrollableViewportSize(new java.awt.Dimension(
-							720, 150));
-			TableColumnModel variableColumnModel = variableTable
-					.getColumnModel();
-			TableColumn andColumn = variableColumnModel
-					.getColumn(VariableTableModel.AND_COLUMN);
+			variableTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 150));
+
+			TableColumnModel variableColumnModel = variableTable.getColumnModel();
+
+			TableColumn rowColumn = variableColumnModel.getColumn(VariableTableModel.ROWNUM_COLUMN);
+			rowColumn.setResizable(false);
+			rowColumn.setMaxWidth(new JTextField(3).getPreferredSize().width);
+            
+			TableColumn andColumn = variableColumnModel.getColumn(VariableTableModel.AND_COLUMN);
 			andColumn.setResizable(false);
-			andColumn
-					.setPreferredWidth(new JTextField(3).getPreferredSize().width);
-			TableColumn notColumn = variableColumnModel
-					.getColumn(VariableTableModel.NOT_COLUMN);
-			notColumn.setCellEditor(new DefaultCellEditor(notCombo));
-			variableTable.setRowHeight(notCombo.getPreferredSize().height);
-			notColumn.setPreferredWidth(notCombo.getPreferredSize().width);
+			andColumn.setCellEditor(new DefaultCellEditor(_andOperatorBox));
+			andColumn.setMaxWidth(_andOperatorBox.getPreferredSize().width - 5);
+            
+			TableColumn notColumn = variableColumnModel.getColumn(VariableTableModel.NOT_COLUMN);
+			notColumn.setCellEditor(new DefaultCellEditor(_notOperatorBox));
+			variableTable.setRowHeight(_notOperatorBox.getPreferredSize().height);
+			notColumn.setMaxWidth(_notOperatorBox.getPreferredSize().width - 5);
 			notColumn.setResizable(false);
-			TableColumn typeColumn = variableColumnModel
-					.getColumn(VariableTableModel.TYPE_COLUMN);
-			typeColumn.setCellEditor(new DefaultCellEditor(typeCombo));
-			typeColumn.setPreferredWidth(typeCombo.getPreferredSize().width);
-			typeColumn.setResizable(false);
-			TableColumn sysNameColumn = variableColumnModel
-					.getColumn(VariableTableModel.SNAME_COLUMN);
-			sysNameColumn.setResizable(true);
-			sysNameColumn.setMinWidth(105);
-			sysNameColumn.setMaxWidth(160);
-			TableColumn data1Column = variableColumnModel
-					.getColumn(VariableTableModel.DATA1_COLUMN);
-			data1Column.setResizable(true);
-			data1Column.setMinWidth(65);
-			data1Column.setMaxWidth(90);
-			TableColumn data2Column = variableColumnModel
-					.getColumn(VariableTableModel.DATA2_COLUMN);
-			data2Column.setResizable(true);
-			data2Column.setMinWidth(65);
-			data2Column.setMaxWidth(90);
-			TableColumn stateColumn = variableColumnModel
-					.getColumn(VariableTableModel.STATE_COLUMN);
+            
+			TableColumn descColumn = variableColumnModel.getColumn(VariableTableModel.DESCRIPTION_COLUMN);
+			descColumn.setPreferredWidth(300);
+			descColumn.setMinWidth(200);
+			descColumn.setMaxWidth(600);
+			descColumn.setResizable(true);
+
+			TableColumn stateColumn = variableColumnModel.getColumn(VariableTableModel.STATE_COLUMN);
 			stateColumn.setResizable(false);
-			stateColumn.setPreferredWidth(60);
-			TableColumn triggersColumn = variableColumnModel
-					.getColumn(VariableTableModel.TRIGGERS_COLUMN);
-			triggersColumn.setResizable(true);
-			triggersColumn.setMinWidth(65);
-			triggersColumn.setMaxWidth(200);
-			TableColumn deleteColumn = variableColumnModel
-					.getColumn(VariableTableModel.DELETE_COLUMN);
+			stateColumn.setMaxWidth(new JTextField(7).getPreferredSize().width);
+
+			TableColumn triggerColumn = variableColumnModel.getColumn(VariableTableModel.TRIGGERS_COLUMN);
+			triggerColumn.setResizable(false);
+			triggerColumn.setMinWidth(30);
+			triggerColumn.setMaxWidth(60);
+
+			TableColumn editColumn = variableColumnModel.getColumn(VariableTableModel.EDIT_COLUMN);
 			ButtonRenderer buttonRenderer = new ButtonRenderer();
 			variableTable.setDefaultRenderer(JButton.class, buttonRenderer);
 			TableCellEditor buttonEditor = new ButtonEditor(new JButton());
 			variableTable.setDefaultEditor(JButton.class, buttonEditor);
-			JButton testButton = new JButton("Delete");
+			JButton testButton = new JButton("XXXXX");
 			variableTable.setRowHeight(testButton.getPreferredSize().height);
-			deleteColumn
-					.setPreferredWidth(testButton.getPreferredSize().width + 5);
+;			editColumn.setMinWidth(testButton.getPreferredSize().width);
+			editColumn.setResizable(false);
+
+			TableColumn deleteColumn = variableColumnModel.getColumn(VariableTableModel.DELETE_COLUMN);
+            // ButtonRenderer and TableCellEditor already set
+			variableTable.setRowHeight(testButton.getPreferredSize().height);
+;			deleteColumn.setMinWidth(testButton.getPreferredSize().width);
 			deleteColumn.setResizable(false);
 			// add a scroll pane
 			JScrollPane variableTableScrollPane = new JScrollPane(variableTable);
 			vt.add(variableTableScrollPane, BorderLayout.CENTER);
 			logicPanel.add(vt);
 			vt.setVisible(true);
-			// set up state variable message area and buttons
-			JPanel panel41 = new JPanel();
-			panel41.setLayout(new FlowLayout());
-			panel41.add(cStatus);
-			logicPanel.add(panel41);
+
+			// set up state variable buttons and logic
 			JPanel panel42 = new JPanel();
 			panel42.setLayout(new FlowLayout());
-			// State Variable panel buttons - Add State Variable
-			panel42.add(addVariableButton = new JButton(rbx
-					.getString("AddVariableButton")));
+			        //  Add State Variable
+            JButton addVariableButton = new JButton(rbx.getString("AddVariableButton"));
+			panel42.add(addVariableButton);
 			addVariableButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					addVariablePressed(e);
 				}
 			});
-			addVariableButton.setToolTipText(rbx
-					.getString("AddVariableButtonHint"));
-			// State Variable panel buttons - Check State Variables
-			panel42.add(checkVariableButton = new JButton(rbx
-					.getString("CheckVariableButton")));
+			addVariableButton.setToolTipText(rbx.getString("AddVariableButtonHint"));
+
+            JButton checkVariableButton = new JButton(rbx.getString("CheckVariableButton"));
+			panel42.add(checkVariableButton);
 			checkVariableButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					checkVariablePressed(e);
 				}
 			});
-			checkVariableButton.setToolTipText(rbx
-					.getString("CheckVariableButtonHint"));
+			checkVariableButton.setToolTipText(rbx.getString("CheckVariableButtonHint"));
 			logicPanel.add(panel42);
+                    
+            // logic type area
+			_operatorBox = new JComboBox(new String[] {
+                    rbx.getString("LogicAND"),
+                    rbx.getString("LogicOR"),
+                    rbx.getString("LogicMixed") });
+            JPanel typePanel = makeEditPanel(_operatorBox, "LabelLogicType", "TypeLogicHint");
+			_operatorBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					logicTypeChanged(e);
+				}
+			});
+            _operatorBox.setSelectedIndex(_logicType-1);
+            logicPanel.add(typePanel);
+            logicPanel.add(Box.createHorizontalStrut(10));
+
 			Border logicPanelBorder = BorderFactory.createEtchedBorder();
 			Border logicPanelTitled = BorderFactory.createTitledBorder(
 					logicPanelBorder, rbx.getString("TitleLogicalExpression"));
 			logicPanel.setBorder(logicPanelTitled);
 			contentPane.add(logicPanel);
-			// set up Action information area - Action 1
+            // End of Logic Expression Section
+
+			// add Action Consequents Section
+			JPanel conseqentPanel = new JPanel();
+			conseqentPanel.setLayout(new BoxLayout(conseqentPanel, BoxLayout.Y_AXIS));
+            
+			JPanel actTitle = new JPanel();
+			actTitle.setLayout(new FlowLayout());
+			actTitle.add(new JLabel(rbx.getString("ActionTableTitle")));
+			conseqentPanel.add(actTitle);
+
+            // set up action consequents table
+			_actionTableModel = new ActionTableModel();
+			JTable actionTable = new JTable(_actionTableModel);
+			actionTable.setRowSelectionAllowed(false);
+			actionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 150));
 			JPanel actionPanel = new JPanel();
 			actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
-			JPanel action1Title = new JPanel();
-			action1Title.setLayout(new FlowLayout());
-			action1Title.add(new JLabel(rbx.getString("Action1Title")));
-			action1Group = new ButtonGroup();
-			action1OnTrue = new JRadioButton(rbx.getString("OnChangeToTrue"),
-					true);
-			action1OnTrue.addActionListener(new ActionListener() {
+			JPanel actionTitle = new JPanel();
+			actionTitle.setLayout(new FlowLayout());
+			conseqentPanel.add(actionPanel);
+
+			TableColumnModel actionColumnModel = actionTable.getColumnModel();
+
+			TableColumn descriptionColumn = actionColumnModel.getColumn(
+                ActionTableModel.DESCRIPTION_COLUMN);
+			descriptionColumn.setResizable(true);
+            descriptionColumn.setPreferredWidth(600);
+			descriptionColumn.setMinWidth(300);
+			descriptionColumn.setMaxWidth(760);
+
+			TableColumn actionEditColumn = actionColumnModel.getColumn(ActionTableModel.EDIT_COLUMN);
+			// ButtonRenderer already exists
+			actionTable.setDefaultRenderer(JButton.class, buttonRenderer);
+			TableCellEditor editButEditor = new ButtonEditor(new JButton());
+			actionTable.setDefaultEditor(JButton.class, editButEditor);
+			actionTable.setRowHeight(testButton.getPreferredSize().height);
+			actionEditColumn.setMinWidth(testButton.getPreferredSize().width);
+			actionEditColumn.setResizable(false);
+
+			TableColumn actionDeleteColumn = actionColumnModel.getColumn(ActionTableModel.DELETE_COLUMN);
+            // ButtonRenderer and TableCellEditor already set
+			actionDeleteColumn.setMinWidth(testButton.getPreferredSize().width);
+			actionDeleteColumn.setResizable(false);
+			// add a scroll pane
+			JScrollPane actionTableScrollPane = new JScrollPane(actionTable);
+			JPanel at = new JPanel();
+			at.add(actionTableScrollPane, BorderLayout.CENTER);
+			conseqentPanel.add(at);
+			at.setVisible(true);
+
+            // add action buttons to Action Section
+			JPanel panel43 = new JPanel();
+			panel43.setLayout(new FlowLayout());
+            JButton addActionButton = new JButton(rbx.getString("addActionButton"));
+			panel43.add(addActionButton);
+			addActionButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					actionOption[0] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+					addActionPressed(e);
 				}
 			});
-			action1Group.add(action1OnTrue);
-			action1Title.add(action1OnTrue);
-			action1OnFalse = new JRadioButton(rbx.getString("OnChangeToFalse"),
-					false);
-			action1OnFalse.addActionListener(new ActionListener() {
+
+			addActionButton.setToolTipText(rbx.getString("addActionButtonHint"));
+			conseqentPanel.add(panel43);
+			//  - Reorder action button
+            JButton reorderButton = new JButton(rbx.getString("ReorderButton"));
+			panel43.add(reorderButton);
+			reorderButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					actionOption[0] = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
+					reorderActionPressed(e);
 				}
 			});
-			action1Group.add(action1OnFalse);
-			action1Title.add(action1OnFalse);
-			action1OnChange = new JRadioButton(rbx.getString("OnChange"), false);
-			action1OnChange.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionOption[0] = Conditional.ACTION_OPTION_ON_CHANGE;
-				}
-			});
-			action1Group.add(action1OnChange);
-			action1Title.add(action1OnChange);
-			actionPanel.add(action1Title);
-			JPanel action1Data = new JPanel();
-			action1Data.setLayout(new FlowLayout());
-			action1Data.add(new JLabel(rbx.getString("Action1Type")));
-			action1TypeBox = new JComboBox();
-			for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
-				action1TypeBox.addItem(actionTypeToString(i));
-			}
-			action1TypeBox.setToolTipText(rbx.getString("ActionTypeHint"));
-			action1Data.add(action1TypeBox);
-			action1TypeBox.setSelectedIndex(0);
-			action1NameField = new JTextField(8);
-			action1Data.add(action1NameField);
-			action1NameField.setVisible(false);
-			action1TurnoutSetBox = new JComboBox(new String[] {
-					rbx.getString("TurnoutClosed"),
-					rbx.getString("TurnoutThrown") });
-			action1Data.add(action1TurnoutSetBox);
-			action1TurnoutSetBox
-					.setToolTipText(rbx.getString("TurnoutSetHint"));
-			action1TurnoutSetBox.setVisible(false);
-			action1SensorSetBox = new JComboBox(new String[] {
-					rbx.getString("SensorActive"),
-					rbx.getString("SensorInactive") });
-			action1Data.add(action1SensorSetBox);
-			action1SensorSetBox.setToolTipText(rbx.getString("SensorSetHint"));
-			action1SensorSetBox.setVisible(false);
-			action1LightSetBox = new JComboBox(new String[] {
-					rbx.getString("LightOn"), rbx.getString("LightOff") });
-			action1Data.add(action1LightSetBox);
-			action1LightSetBox.setToolTipText(rbx.getString("LightSetHint"));
-			action1LightSetBox.setVisible(false);
-			action1SignalSetBox = new JComboBox();
-			for (int i = 0; i < 7; i++) {
-				action1SignalSetBox.addItem(signalAppearanceIndexToString(i));
-			}
-			action1Data.add(action1SignalSetBox);
-			action1SignalSetBox.setToolTipText(rbx.getString("SignalSetHint"));
-			action1SignalSetBox.setVisible(false);
-			action1SetButton = new JButton("Set");
-			action1SetButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setFileLocation(1);
-				}
-			});
-			action1Data.add(action1SetButton);
-			action1SetButton.setVisible(false);
-			action1DataField = new JTextField(20);
-			action1Data.add(action1DataField);
-			action1DataField.setVisible(false);
-			action1LockSetBox = new JComboBox(new String[] {
-					rbx.getString("TurnoutUnlock"),
-					rbx.getString("TurnoutLock") });
-			action1Data.add(action1LockSetBox);
-			action1LockSetBox.setToolTipText(rbx.getString("LockSetHint"));
-			action1LockSetBox.setVisible(false);
-			// note - this listener cannot be added before other action 1 items
-			// have been created
-			action1TypeBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionTypeChanged(1);
-				}
-			});
-			actionPanel.add(action1Data);
-			// Space between the two Actions
-			JPanel actionSpace = new JPanel();
-			actionSpace.setLayout(new FlowLayout());
-			actionSpace.add(new JLabel("   "));
-			actionPanel.add(actionSpace);
-			// Action 2 items
-			JPanel action2Title = new JPanel();
-			action2Title.setLayout(new FlowLayout());
-			action2Title.add(new JLabel(rbx.getString("Action2Title")));
-			action2Group = new ButtonGroup();
-			action2OnTrue = new JRadioButton(rbx.getString("OnChangeToTrue"),
-					true);
-			action2OnTrue.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionOption[1] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-				}
-			});
-			action2Group.add(action2OnTrue);
-			action2Title.add(action2OnTrue);
-			action2OnFalse = new JRadioButton(rbx.getString("OnChangeToFalse"),
-					false);
-			action2OnFalse.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionOption[1] = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
-				}
-			});
-			action2Group.add(action2OnFalse);
-			action2Title.add(action2OnFalse);
-			action2OnChange = new JRadioButton(rbx.getString("OnChange"), false);
-			action2OnChange.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionOption[1] = Conditional.ACTION_OPTION_ON_CHANGE;
-				}
-			});
-			action2Group.add(action2OnChange);
-			action2Title.add(action2OnChange);
-			actionPanel.add(action2Title);
-			JPanel action2Data = new JPanel();
-			action2Data.setLayout(new FlowLayout());
-			action2Data.add(new JLabel(rbx.getString("Action2Type")));
-			action2TypeBox = new JComboBox();
-			for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
-				action2TypeBox.addItem(actionTypeToString(i));
-			}
-			action2TypeBox.setToolTipText(rbx.getString("ActionTypeHint"));
-			action2Data.add(action2TypeBox);
-			action2TypeBox.setSelectedIndex(0);
-			action2NameField = new JTextField(8);
-			action2Data.add(action2NameField);
-			action2NameField.setVisible(false);
-			action2TurnoutSetBox = new JComboBox(new String[] {
-					rbx.getString("TurnoutClosed"),
-					rbx.getString("TurnoutThrown") });
-			action2Data.add(action2TurnoutSetBox);
-			action2TurnoutSetBox
-					.setToolTipText(rbx.getString("TurnoutSetHint"));
-			action2TurnoutSetBox.setVisible(false);
-			action2SensorSetBox = new JComboBox(new String[] {
-					rbx.getString("SensorActive"),
-					rbx.getString("SensorInactive") });
-			action2Data.add(action2SensorSetBox);
-			action2SensorSetBox.setToolTipText(rbx.getString("SensorSetHint"));
-			action2SensorSetBox.setVisible(false);
-			action2LightSetBox = new JComboBox(new String[] {
-					rbx.getString("LightOn"), rbx.getString("LightOff") });
-			action2Data.add(action2LightSetBox);
-			action2LightSetBox.setToolTipText(rbx.getString("LightSetHint"));
-			action2LightSetBox.setVisible(false);
-			action2SignalSetBox = new JComboBox();
-			for (int i = 0; i < 7; i++) {
-				action2SignalSetBox.addItem(signalAppearanceIndexToString(i));
-			}
-			action2Data.add(action2SignalSetBox);
-			action2SignalSetBox.setToolTipText(rbx.getString("SignalSetHint"));
-			action2SignalSetBox.setVisible(false);
-			action2SetButton = new JButton("Set");
-			action2SetButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setFileLocation(2);
-				}
-			});
-			action2Data.add(action2SetButton);
-			action2SetButton.setVisible(false);
-			action2DataField = new JTextField(20);
-			action2Data.add(action2DataField);
-			action2DataField.setVisible(false);
-			action2LockSetBox = new JComboBox(new String[] {
-					rbx.getString("TurnoutUnlock"),
-					rbx.getString("TurnoutLock") });
-			action2Data.add(action2LockSetBox);
-			action2LockSetBox.setToolTipText(rbx.getString("LockSetHint"));
-			action2LockSetBox.setVisible(false);
-			// note - this listener cannot be added before other action 2 items
-			// have been created
-			action2TypeBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					actionTypeChanged(2);
-				}
-			});
-			actionPanel.add(action2Data);
-			// Complete Action data section
-			Border actionPanelBorder = BorderFactory.createEtchedBorder();
-			Border actionPanelTitled = BorderFactory.createTitledBorder(
-					actionPanelBorder, rbx.getString("TitleAction"));
-			actionPanel.setBorder(actionPanelTitled);
-			contentPane.add(actionPanel);
+			reorderButton.setToolTipText(rbx.getString("ReorderButtonHint"));
+			conseqentPanel.add(panel43);
+
+			Border conseqentPanelBorder = BorderFactory.createEtchedBorder();
+			Border conseqentPanelTitled = BorderFactory.createTitledBorder(
+					conseqentPanelBorder, rbx.getString("TitleAction"));
+			conseqentPanel.setBorder(conseqentPanelTitled);
+			contentPane.add(conseqentPanel);
+            // End of Action Consequents Section
+
 			// Bottom Buttons - Update Conditional
 			JPanel panel5 = new JPanel();
 			panel5.setLayout(new FlowLayout());
-			panel5.add(updateConditional = new JButton(rbx
-					.getString("UpdateConditionalButton")));
+            JButton updateConditional = new JButton(rbx.getString("UpdateConditionalButton"));
+			panel5.add(updateConditional);
 			updateConditional.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					updateConditionalPressed(e);
 				}
 			});
-			updateConditional.setToolTipText(rbx
-					.getString("UpdateConditionalButtonHint"));
+			updateConditional.setToolTipText(rbx.getString("UpdateConditionalButtonHint"));
 			// Cancel
-			panel5.add(cancelConditional = new JButton(rbx
-					.getString("CancelButton")));
+            JButton cancelConditional = new JButton(rbx.getString("CancelButton"));
+			panel5.add(cancelConditional);
 			cancelConditional.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cancelConditionalPressed(e);
 				}
 			});
-			cancelConditional.setToolTipText(rbx
-					.getString("CancelConditionalButtonHint"));
+			cancelConditional.setToolTipText(rbx.getString("CancelConditionalButtonHint"));
 			// Delete Conditional
-			panel5.add(deleteConditional = new JButton(rbx
-					.getString("DeleteConditionalButton")));
+            JButton deleteConditional = new JButton(rbx.getString("DeleteConditionalButton"));
+			panel5.add(deleteConditional);
 			deleteConditional.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					deleteConditionalPressed(e);
 				}
 			});
-			deleteConditional.setToolTipText(rbx
-					.getString("DeleteConditionalButtonHint"));
+			deleteConditional.setToolTipText(rbx.getString("DeleteConditionalButtonHint"));
 
 			contentPane.add(panel5);
 		}
 		// setup window closing listener
-		editConditionalFrame
-				.addWindowListener(new java.awt.event.WindowAdapter() {
+		editConditionalFrame.addWindowListener(
+            new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
 						if (inEditConditionalMode)
 							cancelConditionalPressed(null);
 					}
 				});
 		// initialize state variable table
-		variableTableModel.fireTableDataChanged();
+		_variableTableModel.fireTableDataChanged();
 		// initialize action variables
-		initializeActionVariables();
+		_actionTableModel.fireTableDataChanged();
 		editConditionalFrame.pack();
 		editConditionalFrame.setVisible(true);
 		inEditConditionalMode = true;
-	}
-
-	/**
-	 * Initializes new set of action variables when display changes
-	 */
-	void initializeActionVariables() {
-		// initialize for the type of actions
-		action1TypeBox.setSelectedIndex(actionType[0] - 1);
-		actionType[0] = 0;
-		actionTypeChanged(1);
-		action2TypeBox.setSelectedIndex(actionType[1] - 1);
-		actionType[1] = 0;
-		actionTypeChanged(2);
-		// initialize action options
-		if (actionOption[0] == Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE) {
-			action1OnTrue.setSelected(true);
-		} else if (actionOption[0] == Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE) {
-			action1OnFalse.setSelected(true);
-		} else if (actionOption[0] == Conditional.ACTION_OPTION_ON_CHANGE) {
-			action1OnChange.setSelected(true);
-		}
-		if (actionOption[1] == Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE) {
-			action2OnTrue.setSelected(true);
-		} else if (actionOption[1] == Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE) {
-			action2OnFalse.setSelected(true);
-		} else if (actionOption[1] == Conditional.ACTION_OPTION_ON_CHANGE) {
-			action2OnChange.setSelected(true);
-		}
-		// set variables specific to action type
-		action1NameField.setText(actionName[0]);
-		action2NameField.setText(actionName[1]);
-		switch (actionType[0]) {
-		case Conditional.ACTION_SET_TURNOUT:
-			if (actionData[0] == Turnout.CLOSED) {
-				action1TurnoutSetBox.setSelectedIndex(0);
-			} else {
-				action1TurnoutSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_DELAYED_TURNOUT:
-		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-			if (actionData[0] == Turnout.CLOSED) {
-				action1TurnoutSetBox.setSelectedIndex(0);
-			} else {
-				action1TurnoutSetBox.setSelectedIndex(1);
-			}
-			action1DataField.setText(Integer.toString(actionDelay[0]));
-			break;
-		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-			break;
-		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-			action1SignalSetBox
-					.setSelectedIndex(signalAppearanceToAppearanceIndex(actionData[0]));
-			break;
-		case Conditional.ACTION_SET_SENSOR:
-			if (actionData[0] == Sensor.ACTIVE) {
-				action1SensorSetBox.setSelectedIndex(0);
-			} else {
-				action1SensorSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_DELAYED_SENSOR:
-		case Conditional.ACTION_RESET_DELAYED_SENSOR:
-			if (actionData[0] == Sensor.ACTIVE) {
-				action1SensorSetBox.setSelectedIndex(0);
-			} else {
-				action1SensorSetBox.setSelectedIndex(1);
-			}
-			action1DataField.setText(Integer.toString(actionDelay[0]));
-			break;
-		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-			break;
-		case Conditional.ACTION_SET_LIGHT:
-			if (actionData[0] == Light.ON) {
-				action1LightSetBox.setSelectedIndex(0);
-			} else {
-				action1LightSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_SET_LIGHT_INTENSITY:
-		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-			action1DataField.setText(Integer.toString(actionData[0]));
-			break;		
-		case Conditional.ACTION_LOCK_TURNOUT:
-			if (actionData[0] == Turnout.UNLOCKED) {
-				action1LockSetBox.setSelectedIndex(0);
-			} else {
-				action1LockSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_SET_MEMORY:
-		case Conditional.ACTION_COPY_MEMORY:
-		case Conditional.ACTION_PLAY_SOUND:
-		case Conditional.ACTION_RUN_SCRIPT:
-			action1DataField.setText(actionString[0]);
-			break;
-		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-			action1DataField.setText(formatTime(actionData[0] / 60,
-							actionData[0] - ((actionData[0] / 60) * 60)));
-			break;
-		case Conditional.ACTION_START_FAST_CLOCK:
-		case Conditional.ACTION_STOP_FAST_CLOCK:	
-			break;
-		}
-		switch (actionType[1]) {
-		case Conditional.ACTION_SET_TURNOUT:
-			if (actionData[1] == Turnout.CLOSED) {
-				action2TurnoutSetBox.setSelectedIndex(0);
-			} else {
-				action2TurnoutSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_DELAYED_TURNOUT:
-		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-			if (actionData[1] == Turnout.CLOSED) {
-				action2TurnoutSetBox.setSelectedIndex(0);
-			} else {
-				action2TurnoutSetBox.setSelectedIndex(1);
-			}
-			action2DataField.setText(Integer.toString(actionDelay[1]));
-			break;
-		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-			break;
-		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-			action2SignalSetBox
-					.setSelectedIndex(signalAppearanceToAppearanceIndex(actionData[1]));
-			break;
-		case Conditional.ACTION_SET_SENSOR:
-			if (actionData[1] == Sensor.ACTIVE) {
-				action2SensorSetBox.setSelectedIndex(0);
-			} else {
-				action2SensorSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_DELAYED_SENSOR:
-		case Conditional.ACTION_RESET_DELAYED_SENSOR:		
-			if (actionData[1] == Sensor.ACTIVE) {
-				action2SensorSetBox.setSelectedIndex(0);
-			} else {
-				action2SensorSetBox.setSelectedIndex(1);
-			}
-			action2DataField.setText(Integer.toString(actionDelay[1]));
-			break;
-		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-			break;
-		case Conditional.ACTION_SET_LIGHT:
-			if (actionData[1] == Light.ON) {
-				action2LightSetBox.setSelectedIndex(0);
-			} else {
-				action2LightSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_SET_LIGHT_INTENSITY:
-		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-			action2DataField.setText(Integer.toString(actionData[1]));
-			break;		
-		case Conditional.ACTION_LOCK_TURNOUT:
-			if (actionData[1] == Turnout.UNLOCKED) {
-				action2LockSetBox.setSelectedIndex(0);
-			} else {
-				action2LockSetBox.setSelectedIndex(1);
-			}
-			break;
-		case Conditional.ACTION_SET_MEMORY:
-		case Conditional.ACTION_COPY_MEMORY:
-		case Conditional.ACTION_PLAY_SOUND:
-		case Conditional.ACTION_RUN_SCRIPT:
-			action2DataField.setText(actionString[1]);
-			break;
-		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-			action2DataField.setText(formatTime(actionData[1] / 60,
-										actionData[1] - ((actionData[1] / 60) * 60)));
-			break;
-		case Conditional.ACTION_START_FAST_CLOCK:
-		case Conditional.ACTION_STOP_FAST_CLOCK:
-			break;
-		}
-	}
+        checkVariablePressed(null);     // update variables to their current states
+	}   /* makeEditConditionalWindow */
 
 	/**
 	 * Responds to the Add State Variable Button in the Edit Conditional window
 	 */
 	void addVariablePressed(ActionEvent e) {
-		if (numStateVariables >= Conditional.MAX_STATE_VARIABLES) {
-			log
-					.error("Attempt to exceed maximum number of state variables for conditional: "
-							+ curConditional.getSystemName());
-			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame, rbx
-					.getString("Error37"), rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
+		if (alreadyEditingActionOrVariable()) {
+            return;
 		}
-		showReminder = true;
-		variableNOT[numStateVariables] = " ";
-		variableType[numStateVariables] = 0;
-		variableName[numStateVariables] = " ";
-		variableName[numStateVariables] = " ";
-		variableNameEditable[numStateVariables] = false;
-		variableData1[numStateVariables] = " ";
-		variableData1Editable[numStateVariables] = false;
-		variableData2[numStateVariables] = " ";
-		variableNum1[numStateVariables] = 0;
-		variableNum2[numStateVariables] = 0;
-		variableTriggersCalculation[numStateVariables] = true;
-		variableData2Editable[numStateVariables] = false;
-		variableState[numStateVariables] = rbx.getString("Unknown");
-		cStatus.setText(rbx.getString("TypeSelectMessage"));
-		numStateVariables++;
-		variableTableModel.fireTableRowsInserted(numStateVariables,
-				numStateVariables);
+		_showReminder = true;
+        ConditionalVariable variable = new ConditionalVariable();
+		_variableList.add(variable);
+        _newItem = true;
+        int size = _variableList.size();
+        // default of operator for postion 0 (row 1) is Conditional.OPERATOR_NONE
+        if (size > 1)
+        {
+            if (_logicType == Conditional.ALL_OR)
+                variable.setOpern(Conditional.OPERATOR_OR);
+            else
+                variable.setOpern(Conditional.OPERATOR_AND);
+        }
+        size--;
+		_variableTableModel.fireTableRowsInserted(size, size);
+        makeEditVariableWindow(size);
+        appendToAntecedent(variable);
 	}
 
 	/**
-	 * Responds to the Check State Variables button in the Edit Conditional
-	 * window Note: If the user is in process of editting a cell, the value of
-	 * that cell may not be entered into arrays. To prevent this, it is
-	 * recommended in the hints and error messages, that the State column be
-	 * clicked before checking State Variables.
+	 * Responds to the Check State Variable Button in the Edit Conditional window
 	 */
-	boolean checkVariablePressed(ActionEvent e) {
-		if (numStateVariables == 0) {
-			return (true);
+    void checkVariablePressed(ActionEvent e) {
+        for (int i=0; i<_variableList.size(); i++)
+        {
+            _variableList.get(i).evaluate();
+        }
+        _variableTableModel.fireTableDataChanged();
+    }
+
+	/**
+	 * Responds to the Negation column in the Edit Conditional window
+	 */
+    void variableNegationChanged(int row, String oper) {
+        ConditionalVariable variable = _variableList.get(row);
+        boolean state = variable.isNegated();
+        if (oper == null)
+            variable.setNegation(false);
+        else
+            variable.setNegation(oper.equals(rbx.getString("LogicNOT")));
+        if (variable.isNegated() != state )
+            makeAntecedent();
+    }
+
+	/**
+	 * Responds to the Operator column in the Edit Conditional window
+	 */
+    void variableOperatorChanged(int row, String oper) {
+        ConditionalVariable variable = _variableList.get(row);
+        int oldOper = variable.getOpern();
+        if (row > 0)
+        {
+            if (oper.equals(rbx.getString("LogicOR")))
+                variable.setOpern(Conditional.OPERATOR_OR);
+            else
+                variable.setOpern(Conditional.OPERATOR_AND);
+        }
+        else
+            variable.setOpern(Conditional.OPERATOR_NONE);
+        if (variable.getOpern() != oldOper )
+            makeAntecedent();
+
+    }
+
+    /*
+    * Responds to Add action button in the EditConditional window
+    */
+	void addActionPressed(ActionEvent e) {
+		if (alreadyEditingActionOrVariable()) {
+            return;
 		}
-		// check individual state variables
-		boolean result = true;
-		for (int i = 0; (i < numStateVariables); i++) {
-			result = checkStateVariable(i);
-			if (!result) {
-				if (log.isDebugEnabled())
-					log.debug("checkStateVariable(" + i + ") failed, stopping");
-				break;
-			}
+		_showReminder = true;
+        _actionList.add(new ConditionalAction());
+        _newItem = true;
+		_actionTableModel.fireTableRowsInserted(_actionList.size(),
+				_actionList.size());
+        makeEditActionWindow(_actionList.size() - 1);
+    }
+
+	/**
+	 * Responds to the Reorder Button in the Edit Conditional window
+	 */
+	void reorderActionPressed(ActionEvent e) {
+		if (alreadyEditingActionOrVariable()) {
+            return;
 		}
-		if (result)
-			cStatus.setText(rbx.getString("VariableOKMessage"));
-		else
-			cStatus.setText(rbx.getString("VariableErrorMessage"));
-		variableTableModel.fireTableDataChanged();
-		return (result);
+		_showReminder = true;
+		// Check if reorder is reasonable
+		if (_actionList.size() <= 1) {
+			javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
+					.getString("Error46"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		_nextInOrder = 0;
+		_inReorderMode = true;
+		//status.setText(rbx.getString("ReorderMessage"));
+		_actionTableModel.fireTableDataChanged();
 	}
+
+	/**
+	 * Responds to the First/Next (Delete) Button in the Edit Conditional window
+	 */
+    void swapActions(int row) {
+        ConditionalAction temp = _actionList.get(row);
+        for (int i = row; i > _nextInOrder; i--)
+        {
+            _actionList.set(i, _actionList.get(i-1));
+        }
+        _actionList.set(_nextInOrder, temp);
+        _nextInOrder++;
+        if (_nextInOrder >= _actionList.size())
+        {
+            _inReorderMode = false;
+        }
+        //status.setText("");
+        _actionTableModel.fireTableDataChanged();
+    } 
+
+    /**
+    * Responds to the Update Conditional Button in the Edit Conditional window
+    */
+    void updateConditionalPressed(ActionEvent e) {
+		if (alreadyEditingActionOrVariable()) {
+            return;
+		}
+        Conditional c = _curConditional;
+        // Check if the User Name has been changed
+        String uName = conditionalUserName.getText().trim();
+        if (!(uName.equals(c.getUserName()))) {
+            // user name has changed - check if already in use
+            if ((uName != null) && (!(uName.equals("")))) {
+                Conditional p = _conditionalManager.getByUserName(_curLogix, uName);
+                if (p != null) {
+                    // Conditional with this user name already exists
+                    log.error("Failure to update Conditional with Duplicate User Name: "
+                                    + uName);
+                    javax.swing.JOptionPane.showMessageDialog(
+                            editConditionalFrame, rbx.getString("Error10"), rbx
+                                    .getString("ErrorTitle"),
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            // user name is unique or blank, change it
+            c.setUserName(uName);
+            conditionalTableModel.fireTableDataChanged();
+        }
+        if (_variableList.size() <= 0 && !_suppressReminder) {
+            javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+                    java.text.MessageFormat.format(rbx.getString("Warn5"),
+                            new Object[] { c.getUserName(), c.getSystemName() }), rbx
+                            .getString("WarnTitle"),
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+        // Check for consistency in suppressing triggering of calculation
+        // among state variables of this Logix.
+        // Move this to a button to be used at the user's descretion.
+        ArrayList <int[]> triggerPair = new ArrayList<int[]>(_variableList.size());
+        for (int i=0; i<_variableList.size(); i++) {
+            triggerPair.add(new int[2]);
+        }
+        _curLogix.getStateVariableList(_variableList, triggerPair);
+        for (int i=0; i<_variableList.size(); i++)
+        {
+            ConditionalVariable variable = _variableList.get(i);
+            int[] trigPair = triggerPair.get(i);  // 1st is triggerCalc, 2nd is triggerSupress
+            if ( (trigPair[0] > 0) && (trigPair[1] > 0) ) {
+                // have inconsistency, synthesize a warning message
+                log.warn("Triggers calculation inconsistency - " + variable.getName());
+
+                String msg7 = "";
+                int type = variable.getType();
+                if (type == Conditional.TYPE_SIGNAL_HEAD_RED ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_YELLOW ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_GREEN ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_DARK ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHRED ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW ||
+                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN )
+                {
+                    msg7 = java.text.MessageFormat.format(rbx.getString("Warn7"),
+                         DefaultSignalHead.getAppearanceString(variable.getType()));
+                }
+                if (!_suppressReminder) {
+                    String msg6 = java.text.MessageFormat.format(rbx.getString("Warn6"), 
+                             new Object[] {"Appearance", variable.getName(), msg7 });
+                    javax.swing.JOptionPane.showMessageDialog(editLogixFrame, msg6,
+                             rbx.getString("WarnTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        if (!validateAntecedent()) {
+            return;
+        } 
+        // complete update
+        _curConditional.setStateVariables(_variableList);
+        _curConditional.setAction(_actionList);
+        _curConditional.setLogicType(_logicType, _antecedent);
+        cancelConditionalPressed(null);
+    }
+
+    /**
+     * Responds to the Cancel button in the Edit Conditional frame Also
+     * activated if the user dismisses the Edit Conditional window.
+     */
+    void cancelConditionalPressed(ActionEvent e) {
+        if (_editActionFrame != null) {
+            cleanUpAction();
+        }
+        if (_editVariableFrame != null) {
+            cleanUpVariable();
+            }
+        inEditConditionalMode = false;
+        editConditionalFrame.setVisible(false);
+        editConditionalFrame.dispose();
+        editConditionalFrame = null;
+        editLogixFrame.setVisible(true);
+    }
+
+    /**
+     * Responds to the Delete Conditional Button in the Edit Conditional window
+     */
+
+    void deleteConditionalPressed(ActionEvent e) {
+        // delete this Conditional - this is done by the parent Logix
+        String sName = _curConditional.getSystemName();
+        if (sName == null) {
+            log.error("Unable to delete Conditional, null system name");
+            return;
+        }
+		_showReminder = true;
+        _curConditional = null;
+        numConditionals--;
+        String[] msgs = _curLogix.deleteConditional(sName);
+        if (msgs != null) {
+            javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+                    java.text.MessageFormat.format(rbx.getString("Error11"), (Object[])msgs), 
+                    rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        // complete deletion
+        cancelConditionalPressed(null);
+        conditionalTableModel.fireTableRowsDeleted(conditionalRowNumber,
+                conditionalRowNumber);
+        if (numConditionals < 1 && !_suppressReminder) {
+            // warning message - last Conditional deleted
+            javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
+                    .getString("Warn1"), rbx.getString("WarnTitle"),
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+
+    boolean logicTypeChanged(ActionEvent e) {
+        int type = _operatorBox.getSelectedIndex() + 1;
+        if (type == _logicType) {
+                return false;
+        }
+        makeAntecedent();
+        int oper = Conditional.OPERATOR_OR;
+        switch (type) {
+            case Conditional.ALL_AND:
+                oper = Conditional.OPERATOR_AND;
+                // fall through
+            case Conditional.ALL_OR:
+                for (int i=1; i<_variableList.size(); i++)
+                {
+                    _variableList.get(i).setOpern(oper);
+                }
+                _antecedentPanel.setVisible(false);
+                break;
+            case Conditional.MIXED:
+                _antecedentPanel.setVisible(true);
+        }
+        _logicType = type;
+        _variableTableModel.fireTableDataChanged();
+        editConditionalFrame.repaint();
+        return true;
+    }
+
+    void helpPressed(ActionEvent e) {
+        javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                new String[] {
+                    rbx.getString("LogicHelpText1"),
+                    rbx.getString("LogicHelpText2"),
+                    rbx.getString("LogicHelpText3"),
+                    rbx.getString("LogicHelpText4"),
+                    rbx.getString("LogicHelpText5"),
+                    rbx.getString("LogicHelpText6"),
+                    rbx.getString("LogicHelpText7")
+                },
+        rbx.getString("HelpButton"), javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+    * build the antecedent statement
+    */
+    void makeAntecedent() {
+        String not = rbx.getString("LogicNOT").toLowerCase();
+        String row = rbx.getString("rowAbrev");
+        String and = " " + rbx.getString("LogicAND").toLowerCase() + " ";
+        String or = " " + rbx.getString("LogicOR").toLowerCase() + " ";
+        String str = new String("");
+        for (int i=0; i<_variableList.size(); i++) {
+            ConditionalVariable variable = _variableList.get(i);
+            switch (variable.getOpern() ) {
+                case Conditional.OPERATOR_AND:
+                    str = str + and;
+                    break;
+                case Conditional.OPERATOR_OR:
+                    str = str + or;
+                    break;
+            }
+            if (variable.isNegated())
+            {
+                str = str + not;
+            }
+            str = str + row + (i+1);
+            if (i>0 && i+1<_variableList.size()) {
+                str = "(" + str  + ")";
+            }
+        }
+        _antecedent = str;
+        _antecedentField.setText(_antecedent);
+		_showReminder = true;
+    }
+
+    void appendToAntecedent(ConditionalVariable variable) {
+        if (_variableList.size() > 1) {
+            if (_logicType == Conditional.OPERATOR_OR) {
+                _antecedent = _antecedent + " " + rbx.getString("LogicOR").toLowerCase() + " ";
+            } else {
+                _antecedent = _antecedent + " " + rbx.getString("LogicAND").toLowerCase() + " ";
+            }
+        }
+        _antecedent = _antecedent + rbx.getString("rowAbrev") + _variableList.size();
+        _antecedentField.setText(_antecedent);
+    }
+
+    /**
+    *  Check the antecedent and logic type
+    */
+    boolean validateAntecedent() {
+        if (_logicType !=Conditional.MIXED) {
+            return true;
+        }
+        _antecedent = _antecedentField.getText();
+        if (_antecedent == null || _antecedent.trim().length() == 0)
+        {
+            makeAntecedent();
+        }
+        String message = _curConditional.validateAntecedent(_antecedent, _variableList);
+        if (message != null)
+        {
+			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+					message+rbx.getString("ParseError8"),  rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+/************************* Methods for Edit Variable Window ********************/
+
+    boolean alreadyEditingActionOrVariable() {
+        if (_editActionFrame != null) {
+			// Already editing an Action, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
+                    rbx.getString("Error48"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+            _editActionFrame.setVisible(true);
+			return true;
+        }
+        if (_editVariableFrame != null) {
+			// Already editing a state variable, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(_editVariableFrame,
+                    rbx.getString("Error47"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+            _editVariableFrame.setVisible(true);
+			return true;
+        }
+        return false;
+    }
+
+	/**
+	 * Creates and/or initializes the Edit a Variable window Note: you can get
+	 * here via the New Variable button (addVariablePressed) or via an
+	 * Edit button in the Variable table of the EditConditional window.
+	 */
+    void makeEditVariableWindow(int row) {
+		if (alreadyEditingActionOrVariable()) {
+            return;
+		}
+        _curVariableRowNumber = row;
+        _curVariable = _variableList.get(row);
+        _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"));
+        _editVariableFrame.setLocation(10, 100);
+        JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);
+
+        Box panel1 = Box.createHorizontalBox();
+        panel1.add(Box.createHorizontalGlue());
+
+        _variableTypeBox = new JComboBox();
+        for (int i = 1; i <= Conditional.NUM_STATE_VARIABLE_TYPES; i++) {
+            _variableTypeBox.addItem(ConditionalVariable.getTypeString(i));
+        }
+        JPanel typePanel = makeEditPanel(_variableTypeBox, "LabelVariableType", "TypeVariableHint");
+        panel1.add(typePanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _variableNameField = new JTextField(30);
+        _variableNamePanel = makeEditPanel(_variableNameField, "LabelActionName", null);
+        _variableNamePanel.setMaximumSize(
+                    new Dimension(50, _variableNamePanel.getPreferredSize().height));
+        _variableNamePanel.setVisible(false);
+        panel1.add(_variableNamePanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _variableData1Field = new JTextField(30);
+        _variableData1Panel = makeEditPanel(_variableData1Field, "LabelVariableData", null);
+        _variableData1Panel.setMaximumSize(
+                    new Dimension(45, _variableData1Panel.getPreferredSize().height));
+        _variableData1Panel.setVisible(false);
+        panel1.add(_variableData1Panel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _variableData2Field = new JTextField(30);
+        _variableData2Panel = makeEditPanel(_variableData2Field, "LabelVariableData", null);
+        _variableData2Panel.setMaximumSize(
+                    new Dimension(45, _variableData2Panel.getPreferredSize().height));
+        _variableData2Panel.setVisible(false);
+        panel1.add(_variableData2Panel);
+        panel1.add(Box.createHorizontalStrut(10));
+        topPanel.add(panel1);
+
+        ActionListener updateListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    updateVariablePressed();
+                }
+            };
+       ActionListener cancelListener = new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                   cancelEditVariablePressed();
+               }
+           };
+       ActionListener deleteListener = new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                   deleteVariablePressed();
+               }
+           };
+        JPanel panel = makeButtonPanel(updateListener, cancelListener, deleteListener);
+        topPanel.add(panel);
+        topPanel.add(Box.createVerticalGlue());
+
+        Container contentPane = _editVariableFrame.getContentPane();
+        contentPane.add(topPanel);
+        contentPane.add(Box.createHorizontalGlue());
+        contentPane.add(topPanel,_actionLockSetBox);
+        contentPane.add(Box.createHorizontalGlue());
+        // note - this listener cannot be added before other action items
+        // have been created
+        _variableTypeBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                variableTypeChanged(true);
+            }
+        });
+        // setup window closing listener
+        _editVariableFrame.addWindowListener(
+            new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        cancelEditVariablePressed();
+                    }
+                });
+        initializeStateVariables();
+        _editVariableFrame.pack();
+        _editVariableFrame.setVisible(true);
+    }
+
+/***************************** Edit Action Window and methods ***********************/
+
+	/**
+	 * Creates and/or initializes the Edit Action window Note: you can get
+	 * here via the New Action button (addActionPressed) or via an
+	 * Edit button in the Action table of the EditConditional window.
+	 */
+	void makeEditActionWindow(int row) {
+		if (alreadyEditingActionOrVariable()) {
+            return;
+		}
+        _curActionRowNumber = row;
+        _curAction = _actionList.get(row);
+        _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"));
+        _editActionFrame.setLocation(10, 300);
+        JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);
+
+        Box panel1 = Box.createHorizontalBox();
+        panel1.add(Box.createHorizontalGlue());
+
+        _actionTypeBox = new JComboBox();
+        for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
+            _actionTypeBox.addItem(ConditionalAction.getTypeString(i));
+        }
+        JPanel typePanel = makeEditPanel(_actionTypeBox, "LabelActionType", "ActionTypeHint");
+        panel1.add(typePanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _actionOptionBox = new JComboBox();
+        for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
+            _actionOptionBox.addItem(ConditionalAction.getOptionString(i));
+        }
+        _optionPanel = makeEditPanel(_actionOptionBox, "LabelActionOption", "ActionOptionHint");
+        _optionPanel.setVisible(false);
+        panel1.add(_optionPanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _actionNameField = new JTextField(30);
+        _namePanel = makeEditPanel(_actionNameField, "LabelActionName", null);
+        _namePanel.setMaximumSize(
+                    new Dimension(50, _namePanel.getPreferredSize().height));
+        _namePanel.setVisible(false);
+        panel1.add(_namePanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
+        _actionTurnoutSetBox = new JComboBox(new String[] {
+                rbx.getString("TurnoutClosed"),
+                rbx.getString("TurnoutThrown") });
+        _turnoutPanel = makeEditPanel(_actionTurnoutSetBox, "LabelActionTurnout", "TurnoutSetHint");
+        _turnoutPanel.setVisible(false);
+        panel1.add(_turnoutPanel);
+
+        _actionSensorSetBox = new JComboBox(new String[] {
+                rbx.getString("SensorActive"),
+                rbx.getString("SensorInactive") });
+        _sensorPanel = makeEditPanel(_actionSensorSetBox, "LabelActionSensor", "SensorSetHint");
+        _sensorPanel.setVisible(false);
+        panel1.add(_sensorPanel);
+
+        _actionLightSetBox = new JComboBox(new String[] {
+                rbx.getString("LightOn"), rbx.getString("LightOff") });
+        _lightPanel = makeEditPanel(_actionLightSetBox, "LabelActionLight", "LightSetHint");
+        _lightPanel.setVisible(false);
+        panel1.add(_lightPanel);
+
+        _actionSignalSetBox = new JComboBox();
+        for (int i = 0; i < 7; i++) {
+            _actionSignalSetBox.addItem(
+                DefaultSignalHead.getAppearanceString(signalAppearanceIndexToAppearance(i)));
+        }
+        _signalPanel = makeEditPanel(_actionSignalSetBox, "LabelActionSignal", "SignalSetHint");
+        _signalPanel.setVisible(false);
+        panel1.add(_signalPanel);
+
+        _actionLockSetBox = new JComboBox(new String[] {
+                rbx.getString("TurnoutUnlock"),
+                rbx.getString("TurnoutLock") });
+        _lockPanel = makeEditPanel(_actionLockSetBox, "LabelActionLock", "LockSetHint");
+        _lockPanel.setVisible(false);
+        panel1.add(_lockPanel);
+
+        panel1.add(Box.createHorizontalGlue());
+        topPanel.add(panel1);
+        topPanel.add(Box.createVerticalStrut(5));
+        topPanel.add(Box.createVerticalGlue());
+
+        Box panel2 = Box.createHorizontalBox();
+        panel2.add(Box.createHorizontalGlue());
+
+        _setPanel = new JPanel();
+        _setPanel.setLayout(new BoxLayout(_setPanel, BoxLayout.Y_AXIS));
+        JPanel p = new JPanel();
+        p.add(new JLabel(rbx.getString("LabelActionFile")));
+        _setPanel.add(p);
+        _actionSetButton = new JButton(rbx.getString("FileButton"));
+        _actionSetButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    validateAction();
+                    setFileLocation(e);
+                }
+            });
+        _actionSetButton.setMaximumSize(_actionSetButton.getPreferredSize());
+        _setPanel.add(_actionSetButton);
+        _setPanel.add(Box.createVerticalGlue());
+        _setPanel.setVisible(false);
+        panel2.add(_setPanel);
+        panel2.add(Box.createHorizontalStrut(5));
+
+        _actionStringField = new JTextField(50);
+        _textPanel = makeEditPanel(_actionStringField, "LabelActionText", null);
+        _textPanel.setMaximumSize(
+                    new Dimension(80, _textPanel.getPreferredSize().height));
+        _textPanel.add(Box.createVerticalGlue());
+        _textPanel.setVisible(false);
+        panel2.add(_textPanel);
+        panel2.add(Box.createHorizontalGlue());
+        topPanel.add(panel2);
+        topPanel.add(Box.createVerticalStrut(5));
+        topPanel.add(Box.createVerticalGlue());
+
+        ActionListener updateListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    updateActionPressed();
+                }
+            };
+       ActionListener cancelListener = new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                   cancelEditActionPressed();
+               }
+           };
+       ActionListener deleteListener = new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                   deleteActionPressed();
+               }
+           };
+        JPanel panel = makeButtonPanel(updateListener, cancelListener, deleteListener);
+        topPanel.add(panel);
+        topPanel.add(Box.createVerticalGlue());
+
+        Container contentPane = _editActionFrame.getContentPane();
+        contentPane.add(topPanel);
+        // note - this listener cannot be added before other action items
+        // have been created
+        _actionTypeBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                actionTypeChanged(true);
+            }
+        });
+        // setup window closing listener
+        _editActionFrame.addWindowListener(
+            new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        cancelEditActionPressed();
+                    }
+                });
+        initializeActionVariables();
+        _editActionFrame.pack();
+        _editActionFrame.setVisible(true);
+    } /* makeEditActionWindow */
+
+    /******* Methods shared by Edit Variable and Edit Action Windows **********/
+
+    /**
+    * Utility for making Variable and Action editing Windows
+    */
+    JPanel makeTopPanel(JFrame frame, String title, int width, int height) {
+        Container contentPane = frame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        contentPane.add(Box.createRigidArea(new Dimension(0, height)));
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        Border panelBorder = BorderFactory.createEtchedBorder();
+        Border panelTitled = BorderFactory.createTitledBorder(panelBorder, rbx.getString(title));
+        topPanel.setBorder(panelTitled);
+        topPanel.add(Box.createRigidArea(new Dimension(width, 0)));
+        topPanel.add(Box.createVerticalGlue());
+        return topPanel;
+    }
+
+    /**
+    * Utility for making Variable and Action editing Windows
+    */
+    JPanel makeEditPanel(JComponent comp, String label, String hint) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel p = new JPanel();
+        p.add(new JLabel(rbx.getString(label)));
+        panel.add(p);
+        if (hint != null)
+        {
+            comp.setToolTipText(rbx.getString(hint));
+        }
+        comp.setMaximumSize(comp.getPreferredSize());  // override for  text fields
+        panel.add(comp);
+        panel.add(Box.createVerticalGlue());
+        return panel;
+    }
+
+    /**
+    * Utility for making Variable and Action editing Windows
+    */
+    JPanel makeButtonPanel(ActionListener updateListener, 
+                           ActionListener cancelListener,
+                           ActionListener deleteListener) {
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+        JButton updateAction = new JButton(rbx.getString("UpdateButton"));
+        panel3.add(updateAction);
+        panel3.add(Box.createHorizontalStrut(10));
+        updateAction.addActionListener(updateListener);
+        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
+
+        JButton cancelAction = new JButton(rbx.getString("CancelButton"));
+        panel3.add(cancelAction);
+        panel3.add(Box.createHorizontalStrut(10));
+        cancelAction.addActionListener(cancelListener);
+        cancelAction.setToolTipText(rbx.getString("CancelButtonHint"));
+
+        JButton deleteAction = new JButton(rbx.getString("DeleteButton"));
+        panel3.add(deleteAction);
+        deleteAction.addActionListener(deleteListener);
+        deleteAction.setToolTipText(rbx.getString("DeleteButtonHint"));
+        return panel3;
+    }
+
+    /************* Responses for Edit Action and Edit Variable Buttons ***********/
+    /*
+    * Responds to Update action button in the Edit Action window 
+    */
+    void updateActionPressed() {
+        if (!validateAction() ) {
+            _editActionFrame.toFront();
+            return;
+        }
+        _actionTableModel.fireTableRowsUpdated(_curActionRowNumber, _curActionRowNumber);
+        cleanUpAction();
+    }
+
+    /*
+    * Responds to Update action button in the Edit Action window 
+    */
+    void updateVariablePressed() {
+        if (!validateVariable() ) {
+            _editVariableFrame.toFront();
+            return;
+        }
+        _curVariable.evaluate();
+        _variableTableModel.fireTableRowsUpdated(_curVariableRowNumber, _curVariableRowNumber);
+        cleanUpVariable();
+    }
+
+    /*
+    * Responds to Cancel action button and window closer of the 
+    * Edit Action window.  Also does cleanup of Update and Delete
+    * buttons.  
+    */
+    void cancelEditActionPressed() {
+        if (_newItem) {
+            deleteActionPressed(_curActionRowNumber);
+        } else {
+            cleanUpAction();
+        }
+    }
+
+    void cleanUpAction() {
+        _newItem = false;
+        if (_editActionFrame != null) {
+            _editActionFrame.setVisible(false);
+            _editActionFrame.dispose();
+            _editActionFrame = null;
+            _curActionRowNumber = -1;
+        }
+		editConditionalFrame.setVisible(true);
+    }
+
+    /*
+    * Responds to Cancel action button and window closer of the 
+    * Edit Variable window.  Also does cleanup of Update and Delete
+    * buttons.  
+    */
+    void cancelEditVariablePressed() {
+        if (_newItem) {
+            deleteVariablePressed(_curVariableRowNumber);
+        } else {
+            cleanUpVariable();
+        }
+    }
+
+    void cleanUpVariable() {
+        _newItem = false;
+        if (_editVariableFrame != null) {
+            _editVariableFrame.setVisible(false);
+            _editVariableFrame.dispose();
+            _editVariableFrame = null;
+        }
+        _curVariableRowNumber = -1;
+        editConditionalFrame.setVisible(true);
+    }
+
+    /*
+    * Responds to Delete action button in the Edit Action window 
+    */
+	void deleteActionPressed() {
+        deleteActionPressed(_curActionRowNumber);
+    }
+
+    /*
+    * Responds to Delete action button in an action row of the
+    * Edit Conditional window 
+    */
+	void deleteActionPressed(int row) {
+		if (row != _curActionRowNumber && alreadyEditingActionOrVariable()) {
+            return;
+		}
+        _actionList.remove(row);
+		_actionTableModel.fireTableRowsDeleted(row, row);
+        cleanUpAction();
+		_showReminder = true;
+    }
+
+    /*
+    * Responds to Delete action button in the Edit Variable window 
+    */
+	void deleteVariablePressed() {
+        deleteVariablePressed(_curVariableRowNumber);
+    }
 
 	/**
 	 * Responds to the Delete Button in the State Variable Table of the Edit
 	 * Conditional window
 	 */
-	void deleteVariablePressed(int r) {
-		if (numStateVariables == 0) {
-			log
-					.error("attempt to delete state variables when none are present");
-			return;
+	void deleteVariablePressed(int row) {
+		if (row != _curVariableRowNumber && alreadyEditingActionOrVariable()) {
+            return;
 		}
-		showReminder = true;
-		numStateVariables--;
-		if (numStateVariables == 0) {
-			if (warnStateVariables) {
-				// warning message - last State Variable deleted
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						rbx.getString("Warn3"), rbx.getString("WarnTitle"),
-						javax.swing.JOptionPane.WARNING_MESSAGE);
-				warnStateVariables = false;
-			}
+		if (_variableList.size() < 1 && !_suppressReminder) {
+            // warning message - last State Variable deleted
+            javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                    rbx.getString("Warn3"), rbx.getString("WarnTitle"),
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
 		}
 		// move remaining state variables if needed
-		if (r < numStateVariables) {
-			for (int i = r; i < numStateVariables; i++) {
-				variableOpern[i] = variableOpern[i + 1];
-				variableNOT[i] = variableNOT[i + 1];
-				variableType[i] = variableType[i + 1];
-				variableName[i] = variableName[i + 1];
-				variableNameEditable[i] = variableNameEditable[i + 1];
-				variableData1[i] = variableData1[i + 1];
-				variableData1Editable[i] = variableData1Editable[i + 1];
-				variableData2[i] = variableData2[i + 1];
-				variableData2Editable[i] = variableData2Editable[i + 1];
-				variableState[i] = variableState[i + 1];
-				variableNum1[i] = variableNum1[i + 1];
-				variableNum2[i] = variableNum2[i + 1];
-				variableTriggersCalculation[i] = variableTriggersCalculation[i + 1];
-			}
-		}
-		variableTableModel.fireTableDataChanged();
-	}
+		_variableList.remove(row);
+        _variableTableModel.fireTableRowsDeleted(row, row);
+        makeAntecedent();
+        cleanUpVariable();
+		_showReminder = true;
+    }
 
-	/**
-	 * Responds to the Update Conditional Button in the Edit Conditional window
-	 */
-	void updateConditionalPressed(ActionEvent e) {
-		showReminder = true;
-		Conditional c = curConditional;
-		// Check if the User Name has been changed
-		String uName = conditionalUserName.getText().trim();
-		if (!(uName.equals(c.getUserName()))) {
-			// user name has changed - check if already in use
-			if ((uName != null) && (!(uName.equals("")))) {
-				Conditional p = conditionalManager.getByUserName(curLogix,
-						uName);
-				if (p != null) {
-					// Conditional with this user name already exists
-					log
-							.error("Failure to update Conditional with Duplicate User Name: "
-									+ uName);
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame, rbx.getString("Error10"), rbx
-									.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
-			// user name is unique or blank, change it
-			c.setUserName(uName);
-			conditionalTableModel.fireTableDataChanged();
-		}
-		if (numStateVariables <= 0) {
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					java.text.MessageFormat.format(rbx.getString("Warn5"),
-							new Object[] { c.getSystemName() }), rbx
-							.getString("WarnTitle"),
-					javax.swing.JOptionPane.WARNING_MESSAGE);
-		} else {
-			// validate and update state variables
-			if (!checkVariablePressed(null)) {
-				// State Variables are not OK - don't save
-				return;
-			}
-		}
-		// validate and update action variables
-		if (!validateActionVariables(0, action1NameField, action1DataField,
-				action1TurnoutSetBox, action1SensorSetBox, action1SignalSetBox,
-				action1LightSetBox, action1LockSetBox)) {
-			return;
-		}
-		if (!validateActionVariables(1, action2NameField, action2DataField,
-				action2TurnoutSetBox, action2SensorSetBox, action2SignalSetBox,
-				action2LightSetBox, action2LockSetBox)) {
-			return;
-		}
-		// complete update
-		curConditional.setStateVariables(variableOpern, variableType,
-				variableName, variableData1, variableNum1, variableNum2,
-				variableTriggersCalculation, numStateVariables);
-		curConditional.setAction(actionOption, actionDelay, actionType,
-				actionName, actionData, actionString);
-		inEditConditionalMode = false;
-		editConditionalFrame.setVisible(false);
-		editConditionalFrame.dispose();
-		editConditionalFrame = null;
-		editLogixFrame.setVisible(true);
-	}
+    /**
+    * set display to show current state variable (curVariable) parameters
+    */
+    void initializeStateVariables() {
+        int type = _curVariable.getType();
+        switch (type)  {
+            case Conditional.TYPE_MEMORY_EQUALS:
+                _variableData2Field.setText(_curVariable.getDataString());
+                // fall through
+            case Conditional.TYPE_SENSOR_ACTIVE:
+            case Conditional.TYPE_SENSOR_INACTIVE:
+            case Conditional.TYPE_TURNOUT_THROWN:
+            case Conditional.TYPE_TURNOUT_CLOSED:
+            case Conditional.TYPE_CONDITIONAL_TRUE:
+            case Conditional.TYPE_CONDITIONAL_FALSE:
+            case Conditional.TYPE_LIGHT_ON:
+            case Conditional.TYPE_LIGHT_OFF:
+            case Conditional.TYPE_SIGNAL_HEAD_RED:
+            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_DARK:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+            case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                _variableNameField.setText(_curVariable.getName());
+                break;
+            case Conditional.TYPE_FAST_CLOCK_RANGE:
+                int time = _curVariable.getNum1();
+                _variableData1Field.setText(formatTime(time / 60, time - ((time / 60) * 60)));
+                time = _curVariable.getNum2();
+                _variableData2Field.setText(formatTime(time / 60, time - ((time / 60) * 60)));
+                _variableNameField.setText("");
+                break;
+        }
+		variableTypeChanged(false);
+        // set type after call to variableTypeChanged
+		_variableTypeBox.setSelectedIndex(type - 1);
+        _editVariableFrame.transferFocusBackward();
+    }
 
-	/**
-	 * Responds to the Cancel button in the Edit Conditional frame Also
-	 * activated if the user dismisses the Edit Conditional window.
-	 */
-	void cancelConditionalPressed(ActionEvent e) {
-		inEditConditionalMode = false;
-		editConditionalFrame.setVisible(false);
-		editConditionalFrame.dispose();
-		editConditionalFrame = null;
-		editLogixFrame.setVisible(true);
-	}
+    /**
+    * set display to show current action (curAction) parameters
+    */
+	void initializeActionVariables() {
+        _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
+        _actionNameField.setText(_curAction.getDeviceName());
+        int type = _curAction.getType();
+        switch (type)  {
+            case Conditional.ACTION_DELAYED_TURNOUT:
+            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                _actionStringField.setText(_curAction.getActionString());
+                // fall through
+            case Conditional.ACTION_SET_TURNOUT:
+                if (_curAction.getActionData() == Turnout.CLOSED) {
+                    _actionTurnoutSetBox.setSelectedIndex(0);
+                } else {
+                    _actionTurnoutSetBox.setSelectedIndex(1);
+                }
+                break;
+            case Conditional.ACTION_DELAYED_SENSOR:
+            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                _actionStringField.setText(_curAction.getActionString());
+                // fall through
+            case Conditional.ACTION_SET_SENSOR:
+                if (_curAction.getActionData() == Sensor.ACTIVE) {
+                    _actionSensorSetBox.setSelectedIndex(0);
+                } else {
+                    _actionSensorSetBox.setSelectedIndex(1);
+                }
+                break;
+            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                _actionSignalSetBox.setSelectedIndex(
+                    signalAppearanceToAppearanceIndex(_curAction.getActionData()));
+                break;
+            case Conditional.ACTION_SET_LIGHT:
+                if (_curAction.getActionData() == Light.ON) {
+                    _actionLightSetBox.setSelectedIndex(0);
+                } else {
+                    _actionLightSetBox.setSelectedIndex(1);
+                }
+                break;
+            case Conditional.ACTION_LOCK_TURNOUT:
+                if (_curAction.getActionData() == Turnout.UNLOCKED) {
+                    _actionLockSetBox.setSelectedIndex(0);
+                } else {
+                    _actionLockSetBox.setSelectedIndex(1);
+                }
+                break;
+            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                _actionStringField.setText(_curAction.getActionString());
+                break;		
+            case Conditional.ACTION_PLAY_SOUND:
+            case Conditional.ACTION_RUN_SCRIPT:
+                _actionNameField.setText("");
+                // fall through
+            case Conditional.ACTION_SET_MEMORY:
+            case Conditional.ACTION_COPY_MEMORY:
+                _actionStringField.setText(_curAction.getActionString());
+                break;
+            case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+                int time = _curAction.getActionData();
+                _actionStringField.setText(formatTime(time / 60, time - ((time / 60) * 60)));
+                _actionNameField.setText("");
+                break;
+        }
+		actionTypeChanged(false);
+        // set type after call to actionTypeChanged
+		_actionTypeBox.setSelectedIndex(type - 1);
+        _editActionFrame.transferFocusBackward();
+    }   /* initializeActionVariables */
 
-	/**
-	 * Responds to the Delete Conditional Button in the Edit Conditional window
-	 */
-	void deleteConditionalPressed(ActionEvent e) {
-		showReminder = true;
-		Conditional c = curConditional;
-		// delete this Conditional - this is done by the parent Logix
-		curConditional = null;
-		curLogix.deleteConditional(c.getSystemName());
-		numConditionals--;
-		// complete deletion
-		logixCreated = true; // mark the parent Logix as modified
-		inEditConditionalMode = false;
-		editConditionalFrame.setVisible(false);
-		editConditionalFrame.dispose();
-		editConditionalFrame = null;
-		conditionalTableModel.fireTableRowsDeleted(conditionalRowNumber,
-				conditionalRowNumber);
-		if (numConditionals < 1) {
-			// warning message - last Conditional deleted
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-					.getString("Warn1"), rbx.getString("WarnTitle"),
-					javax.swing.JOptionPane.WARNING_MESSAGE);
-		}
-		editLogixFrame.setVisible(true);
-	}
 
 	JFileChooser sndFileChooser = null;
 	JFileChooser scriptFileChooser = null;
 	JFileChooser defaultFileChooser = null;
 
 	/**
-	 * Responds to the Set button in the Edit Conditional window action section.
-	 * 
-	 * @param actionNum -
-	 *            equal to 1 or 2, depending upon which action button is clicked
+	 * Responds to the Set button in the Edit Action window action section.
 	 */
-	void setFileLocation(int actionNum) {
-
-        if ( (actionNum<1) || (actionNum >2)) {
-            log.error("invalid actionNum: "+actionNum);
-            return;
-        }
+	void setFileLocation(ActionEvent e) {
+        ConditionalAction action = (ConditionalAction)_actionList.get(_curActionRowNumber);
         JFileChooser currentChooser;
-        if (actionType[actionNum-1] == Conditional.ACTION_PLAY_SOUND) {
+        int actionType = action.getType();
+        if (actionType == Conditional.ACTION_PLAY_SOUND) {
             if (sndFileChooser == null) {
                 sndFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources"+java.io.File.separator+"sounds");
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");
@@ -1844,7 +2263,7 @@ public class LogixTableAction extends AbstractTableAction {
                 sndFileChooser.setFileFilter(filt);
             }
             currentChooser = sndFileChooser;
-        } else if (actionType[actionNum-1] == Conditional.ACTION_RUN_SCRIPT) {
+        } else if (actionType == Conditional.ACTION_RUN_SCRIPT) {
             if (scriptFileChooser == null) {
                 scriptFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
@@ -1853,7 +2272,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType["+(actionNum-1)+"] = "+actionType[actionNum-1]);
+            log.warn("Unexpected actionType["+actionType+"] = "+ConditionalAction.getTypeString(actionType));
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -1867,944 +2286,464 @@ public class LogixTableAction extends AbstractTableAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
         // set selected file location in data string
             try {
-                if (actionNum == 1) {
-                    action1DataField.setText(currentChooser.getSelectedFile()
-                            .getCanonicalPath());
-                } else if (actionNum == 2) {
-                    action2DataField.setText(currentChooser.getSelectedFile()
-                            .getCanonicalPath());
-                }
-            } catch (java.io.IOException e) {
-                log.error("exception setting file location: " + e);
-                if (actionNum == 1)
-                    action1DataField.setText("");
-                else if (actionNum == 2)
-                    action2DataField.setText("");
+                _actionStringField.setText(currentChooser.getSelectedFile().getCanonicalPath());
+            } catch (java.io.IOException ex) {
+                log.error("exception setting file location: " + ex);
+                _actionStringField.setText("");
             }
         }
 	}
 
 	/**
-	 * Responds to a change in an Action Type Box in the Edit Conditional
-	 * window. Also used to initialize window for edit
-	 * 
-	 * @param actionNum -
-	 *            equal to 1 or 2, depending upon which action has changed type
+	 * Responds to a change in an Action Type Box of Edit Action Window
+	 * Set components visible for the selected type
 	 */
-	void actionTypeChanged(int actionNum) {
-		int type = 1;
-		// get Action type
-		if (actionNum == 1) {
-			// get new Action type
-			type = action1TypeBox.getSelectedIndex() + 1;
-			if (type == actionType[0]) {
-				// no change - simply return
-				return;
-			}
-			// set up for new type
-			actionType[0] = type;
-			// set defaults
-			action1NameField.setVisible(false);
-			action1NameField.setText("");
-			action1DataField.setVisible(false);
-			action1DataField.setText("");
-			action1SetButton.setVisible(false);
-			action1TurnoutSetBox.setVisible(false);
-			action1SensorSetBox.setVisible(false);
-			action1SignalSetBox.setVisible(false);
-			action1LightSetBox.setVisible(false);
-			action1LockSetBox.setVisible(false);
-			switch (type) {
-			case Conditional.ACTION_NONE:
-				break;
-			case Conditional.ACTION_SET_TURNOUT:
-				action1NameField.setVisible(true);
-				action1TurnoutSetBox.setVisible(true);
-				action1NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				break;
-			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-				action1NameField.setVisible(true);
-				action1SignalSetBox.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
+	void actionTypeChanged(boolean fromTypeBox) {
+        int type = _actionTypeBox.getSelectedIndex() + 1;
+        if (fromTypeBox) {
+            if (type == _curAction.getType()) {
+                // no change - simply return
+                return;
+            }
+        }
+        else {
+            type = _curAction.getType();
+
+        }
+        _setPanel.setVisible(false);
+        _turnoutPanel.setVisible(false);
+        _sensorPanel.setVisible(false);
+        _signalPanel.setVisible(false);
+        _lightPanel.setVisible(false);
+        _lockPanel.setVisible(false);
+        _textPanel.setVisible(false);
+        _namePanel.setVisible(false);
+        if (type == Conditional.ACTION_NONE) {
+            _optionPanel.setVisible(false);
+        }
+        else {
+            _optionPanel.setVisible(true);
+        }
+        switch (type)  {
+            case Conditional.ACTION_DELAYED_TURNOUT:
+            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                _actionStringField.setToolTipText(rbx.getString("DataHintDelayedTurnout"));
+                _textPanel.setVisible(true);
+                // fall through
+            case Conditional.ACTION_SET_TURNOUT:
+                _turnoutPanel.setVisible(true);
+                // fall through
+            case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+                _actionNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_DELAYED_SENSOR:
+            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                _actionStringField.setToolTipText(rbx.getString("DataHintDelayedSensor"));
+                _textPanel.setVisible(true);
+                // fall through
+            case Conditional.ACTION_SET_SENSOR:
+                _sensorPanel.setVisible(true);
+                // fall through
+            case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+                _actionNameField.setToolTipText(rbx.getString("NameHintSensor"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                _signalPanel.setVisible(true);
+                // fall through
 			case Conditional.ACTION_SET_SIGNAL_HELD:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
 			case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
 			case Conditional.ACTION_SET_SIGNAL_DARK:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
 			case Conditional.ACTION_SET_SIGNAL_LIT:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
 			case Conditional.ACTION_TRIGGER_ROUTE:
-				action1NameField.setVisible(true);
-				action1NameField.setToolTipText(rbx.getString("NameHintRoute"));
-				break;
-			case Conditional.ACTION_SET_SENSOR:
-				action1NameField.setVisible(true);
-				action1SensorSetBox.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				break;
-			case Conditional.ACTION_DELAYED_SENSOR:
-			case Conditional.ACTION_RESET_DELAYED_SENSOR:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1SensorSetBox.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				action1DataField.setToolTipText(rbx
-						.getString("DataHintDelayedSensor"));
-				break;
-			case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				break;
-			case Conditional.ACTION_DELAYED_TURNOUT:
-			case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1TurnoutSetBox.setVisible(true);
-				action1NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				action1DataField.setToolTipText(rbx
-						.getString("DataHintDelayedTurnout"));
-				break;
-			case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-				action1NameField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintTurnout"));
-				break;
-			case Conditional.ACTION_SET_LIGHT:
-				action1NameField.setVisible(true);
-				action1LightSetBox.setVisible(true);
-				action1NameField.setToolTipText(rbx.getString("NameHintLight"));
-				break;
-			case Conditional.ACTION_SET_LIGHT_INTENSITY:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintLight"));
-				action1DataField
-						.setToolTipText(rbx.getString("DataHintLightIntensity"));
-				break;
-			case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintLight"));
-				action1DataField
-						.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
-				break;
-			case Conditional.ACTION_SET_MEMORY:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintMemory"));
-				action1DataField
-						.setToolTipText(rbx.getString("DataHintMemory"));
-				break;
-			case Conditional.ACTION_COPY_MEMORY:
-				action1NameField.setVisible(true);
-				action1DataField.setVisible(true);
-				action1NameField
-						.setToolTipText(rbx.getString("NameHintFromMemory"));
-				action1DataField
-						.setToolTipText(rbx.getString("DataHintToMemory"));
-				break;
 			case Conditional.ACTION_ENABLE_LOGIX:
-				action1NameField.setVisible(true);
-				action1NameField.setToolTipText(rbx.getString("NameHintLogix"));
-				break;
 			case Conditional.ACTION_DISABLE_LOGIX:
-				action1NameField.setVisible(true);
-				action1NameField.setToolTipText(rbx.getString("NameHintLogix"));
-				break;
-			case Conditional.ACTION_PLAY_SOUND:
-				action1DataField.setVisible(true);
-				action1SetButton.setVisible(true);
-				action1DataField.setToolTipText(rbx.getString("DataHintSound"));
-				action1SetButton.setToolTipText(rbx.getString("SetHintSound"));
-				break;
-			case Conditional.ACTION_RUN_SCRIPT:
-				action1DataField.setVisible(true);
-				action1SetButton.setVisible(true);
-				action1DataField
-						.setToolTipText(rbx.getString("DataHintScript"));
-				action1SetButton.setToolTipText(rbx.getString("SetHintScript"));
-				break;
-			case Conditional.ACTION_LOCK_TURNOUT:
-				action1NameField.setVisible(true);
-				action1LockSetBox.setVisible(true);
-				action1NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				break;
+                _actionNameField.setToolTipText(rbx.getString("NameHintSignal"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                _actionStringField.setToolTipText(rbx.getString("DataHintLightIntensity"));
+                _textPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                _actionStringField.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
+                _textPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_SET_LIGHT:
+                _lightPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_LOCK_TURNOUT:
+                _lockPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_SET_MEMORY:
+                _actionStringField.setToolTipText(rbx.getString("DataHintMemory"));
+                _textPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _namePanel.setVisible(true);
+                break;
+            case Conditional.ACTION_COPY_MEMORY:
+                _actionStringField.setToolTipText(rbx.getString("DataHintToMemory"));
+                _textPanel.setVisible(true);
+                _actionNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _namePanel.setVisible(true);
+                break;
 			case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-				action1DataField.setVisible(true);
-				action1DataField.setText("00:00");
-				action1DataField.setToolTipText(rbx.getString("DataHintTime"));
-				break;
+                _actionStringField.setToolTipText(rbx.getString("DataHintTime"));
+                _textPanel.setVisible(true);
+                break;
+            case Conditional.ACTION_PLAY_SOUND:
+                _actionStringField.setToolTipText(rbx.getString("SetHintSound"));
+                _textPanel.setVisible(true);
+                _setPanel.setVisible(true);
+                break;
+            case Conditional.ACTION_RUN_SCRIPT:
+                _actionStringField.setToolTipText(rbx.getString("SetHintScript"));
+                _textPanel.setVisible(true);
+                _setPanel.setVisible(true);
+                break;
 			case Conditional.ACTION_START_FAST_CLOCK:
 			case Conditional.ACTION_STOP_FAST_CLOCK:
 				break;
-			}
-		} else if (actionNum == 2) {
-			// get new Action type
-			type = action2TypeBox.getSelectedIndex() + 1;
-			if (type == actionType[1]) {
-				// no change - simply return
-				return;
-			}
-			// set up for new type
-			actionType[1] = type;
-			// set defaults
-			action2NameField.setVisible(false);
-			action2NameField.setText("");
-			action2DataField.setVisible(false);
-			action2DataField.setText("");
-			action2SetButton.setVisible(false);
-			action2TurnoutSetBox.setVisible(false);
-			action2SensorSetBox.setVisible(false);
-			action2SignalSetBox.setVisible(false);
-			action2LightSetBox.setVisible(false);
-			action2LockSetBox.setVisible(false);
-			switch (type) {
-			case Conditional.ACTION_NONE:
-				break;
-			case Conditional.ACTION_SET_TURNOUT:
-				action2NameField.setVisible(true);
-				action2TurnoutSetBox.setVisible(true);
-				action2NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				break;
-			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-				action2NameField.setVisible(true);
-				action2SignalSetBox.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
-			case Conditional.ACTION_SET_SIGNAL_HELD:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
-			case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
-			case Conditional.ACTION_SET_SIGNAL_DARK:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
-			case Conditional.ACTION_SET_SIGNAL_LIT:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSignal"));
-				break;
-			case Conditional.ACTION_TRIGGER_ROUTE:
-				action2NameField.setVisible(true);
-				action2NameField.setToolTipText(rbx.getString("NameHintRoute"));
-				break;
-			case Conditional.ACTION_SET_SENSOR:
-				action2NameField.setVisible(true);
-				action2SensorSetBox.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				break;
-			case Conditional.ACTION_DELAYED_SENSOR:
-			case Conditional.ACTION_RESET_DELAYED_SENSOR:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2SensorSetBox.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				action2DataField.setToolTipText(rbx
-						.getString("DataHintDelayedSensor"));
-				break;
-			case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintSensor"));
-				break;
-			case Conditional.ACTION_DELAYED_TURNOUT:
-			case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2TurnoutSetBox.setVisible(true);
-				action2NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				action2DataField.setToolTipText(rbx
-						.getString("DataHintDelayedTurnout"));
-				break;
-			case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-				action2NameField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintTurnout"));
-				break;
-			case Conditional.ACTION_SET_LIGHT:
-				action2NameField.setVisible(true);
-				action2LightSetBox.setVisible(true);
-				action2NameField.setToolTipText(rbx.getString("NameHintLight"));
-				break;
-			case Conditional.ACTION_SET_LIGHT_INTENSITY:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintLight"));
-				action2DataField
-						.setToolTipText(rbx.getString("DataHintLightIntensity"));
-				break;
-			case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintLight"));
-				action2DataField
-						.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
-				break;
-			case Conditional.ACTION_SET_MEMORY:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintMemory"));
-				action2DataField
-						.setToolTipText(rbx.getString("DataHintMemory"));
-				break;
-			case Conditional.ACTION_COPY_MEMORY:
-				action2NameField.setVisible(true);
-				action2DataField.setVisible(true);
-				action2NameField
-						.setToolTipText(rbx.getString("NameHintFromMemory"));
-				action2DataField
-						.setToolTipText(rbx.getString("DataHintToMemory"));
-				break;
-			case Conditional.ACTION_ENABLE_LOGIX:
-				action2NameField.setVisible(true);
-				action2NameField.setToolTipText(rbx.getString("NameHintLogix"));
-				break;
-			case Conditional.ACTION_DISABLE_LOGIX:
-				action2NameField.setVisible(true);
-				action2NameField.setToolTipText(rbx.getString("NameHintLogix"));
-				break;
-			case Conditional.ACTION_PLAY_SOUND:
-				action2SetButton.setVisible(true);
-				action2DataField.setVisible(true);
-				action2DataField.setToolTipText(rbx.getString("DataHintSound"));
-				action2SetButton.setToolTipText(rbx.getString("SetHintSound"));
-				break;
-			case Conditional.ACTION_RUN_SCRIPT:
-				action2SetButton.setVisible(true);
-				action2DataField.setVisible(true);
-				action2DataField
-						.setToolTipText(rbx.getString("DataHintScript"));
-				action2SetButton.setToolTipText(rbx.getString("SetHintScript"));
-				break;
-			case Conditional.ACTION_LOCK_TURNOUT:
-				action2NameField.setVisible(true);
-				action2LockSetBox.setVisible(true);
-				action2NameField.setToolTipText(rbx
-						.getString("NameHintTurnout"));
-				break;
-			case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-				action2DataField.setVisible(true);
-				action2DataField.setText("00:00");
-				action2DataField.setToolTipText(rbx.getString("DataHintTime"));
-				break;
-			case Conditional.ACTION_START_FAST_CLOCK:
-			case Conditional.ACTION_STOP_FAST_CLOCK:
-				break;
-			}
-		}
-		// Ask window to reconfigure itself
-		editConditionalFrame.pack();
-	}
+        }
+	} /* actionTypeChanged */
 
 	/**
 	 * Responds to change in variable type in State Variable Table in the Edit
 	 * Conditional window Also used to set up for Edit of a Conditional with
 	 * state variables.
-	 * 
-	 * @param r =
-	 *            row number in state variable table == subscript of state
-	 *            variables arrays
 	 */
-	void variableTypeChanged(int r, String typeString) {
-		int oldType = variableType[r];
-		// get new variable type
-		int type = stringToStateVariableType(typeString);
-		if (type != oldType) {
-			// set defaults needed by most types, specific types should override
-			// as needed
-			variableNameEditable[r] = true;
-			variableData1[r] = rbx.getString("NotApplicableAbbreviation");
-			variableData1Editable[r] = false;
-			variableData2[r] = rbx.getString("NotApplicableAbbreviation");
-			variableData2Editable[r] = false;
-			// set up table row by type
-			switch (type) {
-			case Conditional.TYPE_SENSOR_ACTIVE:
-				if (oldType != Conditional.TYPE_SENSOR_INACTIVE) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSensorMessage"));
-				break;
-			case Conditional.TYPE_SENSOR_INACTIVE:
-				if (oldType != Conditional.TYPE_SENSOR_ACTIVE) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSensorMessage"));
-				break;
-			case Conditional.TYPE_TURNOUT_THROWN:
-				if (oldType != Conditional.TYPE_TURNOUT_CLOSED) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeTurnoutMessage"));
-				break;
-			case Conditional.TYPE_TURNOUT_CLOSED:
-				if (oldType != Conditional.TYPE_TURNOUT_THROWN) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeTurnoutMessage"));
-				break;
-			case Conditional.TYPE_CONDITIONAL_TRUE:
-				if (oldType != Conditional.TYPE_CONDITIONAL_FALSE) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeConditionalMessage"));
-				break;
-			case Conditional.TYPE_CONDITIONAL_FALSE:
-				if (oldType != Conditional.TYPE_CONDITIONAL_TRUE) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeConditionalMessage"));
-				break;
-			case Conditional.TYPE_LIGHT_ON:
-				if (oldType != Conditional.TYPE_LIGHT_OFF) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeLightMessage"));
-				break;
-			case Conditional.TYPE_LIGHT_OFF:
-				if (oldType != Conditional.TYPE_LIGHT_ON) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeLightMessage"));
-				break;
-			case Conditional.TYPE_MEMORY_EQUALS:
-				variableName[r] = "";
-				variableData1[r] = "";
-				variableData1Editable[r] = true;
-				cStatus.setText(rbx.getString("TypeMemoryMessage"));
-				break;
-			case Conditional.TYPE_FAST_CLOCK_RANGE:
-				variableNameEditable[r] = false;
-				variableName[r] = rbx.getString("NotApplicableAbbreviation");
-				variableData1[r] = "00:00";
-				variableData1Editable[r] = true;
-				variableData2[r] = "00:00";
-				variableData2Editable[r] = true;
-				variableNum1[r] = 0;
-				variableNum2[r] = 0;
-				cStatus.setText(rbx.getString("TypeClockMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_RED:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_DARK:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			case Conditional.TYPE_SIGNAL_HEAD_HELD:
-				if (!((oldType >= Conditional.TYPE_SIGNAL_HEAD_RED) && (oldType <= Conditional.TYPE_SIGNAL_HEAD_HELD))) {
-					variableName[r] = "";
-				}
-				cStatus.setText(rbx.getString("TypeSignalMessage"));
-				break;
-			default:
-				break;
-			}
-		}
-		// complete processing this type change
-		variableType[r] = type;
-		if (variableTableModel != null) {
-			variableTableModel.fireTableRowsUpdated(r, r);
-		}
-	}
+	void variableTypeChanged(boolean fromTypeBox) {
+        int type = _variableTypeBox.getSelectedIndex() + 1;
+        if (fromTypeBox) {
+            if (type == _curVariable.getType()) {
+                // no change - simply return
+                return;
+            }
+        }
+        else {
+            type = _curVariable.getType();
+
+        }
+        _variableNamePanel.setVisible(false);
+        _variableData1Panel.setVisible(false);
+        _variableData2Panel.setVisible(false);
+		switch (type) {
+            case Conditional.TYPE_SENSOR_ACTIVE:
+            case Conditional.TYPE_SENSOR_INACTIVE:
+                _variableNameField.setToolTipText(rbx.getString("NameHintSensor"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_TURNOUT_THROWN:
+            case Conditional.TYPE_TURNOUT_CLOSED:
+                _variableNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_CONDITIONAL_TRUE:
+            case Conditional.TYPE_CONDITIONAL_FALSE:
+                _variableNameField.setToolTipText(rbx.getString("NameHintConditional"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_LIGHT_ON:
+            case Conditional.TYPE_LIGHT_OFF:
+                _variableNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_MEMORY_EQUALS:
+                _variableData1Field.setToolTipText(rbx.getString("DataHintMemory"));
+                _variableData1Panel.setVisible(true);
+                _variableNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_FAST_CLOCK_RANGE:
+                _variableData1Field.setToolTipText(rbx.getString("DataHintTime"));
+                _variableData1Panel.setVisible(true);
+                _variableData2Field.setToolTipText(rbx.getString("DataHintTime"));
+                _variableData2Panel.setVisible(true);
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_RED:
+            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_DARK:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+            case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                _variableNameField.setToolTipText(rbx.getString("NameHintSignal"));
+                _variableNamePanel.setVisible(true);
+                break;
+        }
+    } /* variableTypeChanged */
 
 	/**
-	 * Checks one State Variable in State Variable table of the Edit Conditional
-	 * Window
+	 * Validates Variable data from Edit Variable Window, and transfers it to
+	 * current action object as appropriate
 	 * <P>
 	 * Returns true if all data checks out OK, otherwise false.
 	 * <P>
 	 * Messages are sent to the user for any errors found. This routine returns
 	 * false immediately after finding an error, even if there might be more
 	 * errors.
-	 * <P>
-	 * If data checks out, this method returns the current state of the state
-	 * variable
 	 */
-	@SuppressWarnings("deprecation")
-	boolean checkStateVariable(int index) {
-		// check vNOT and translate to the proper Conditional operator
-		// designation
-		boolean isNOT = false;
-		if (variableNOT[index].equals(rbx.getString("LogicNOT"))) {
-			isNOT = true;
-			if (index == 0) {
-				variableOpern[index] = Conditional.OPERATOR_NOT;
-			} else {
-				variableOpern[index] = Conditional.OPERATOR_AND_NOT;
-			}
-		} else {
-			if (index == 0) {
-				variableOpern[index] = Conditional.OPERATOR_NONE;
-			} else {
-				variableOpern[index] = Conditional.OPERATOR_AND;
-			}
-		}
-		// check according to state variable type
-		String vUName = variableName[index].trim();
-		String sTemp = variableName[index].toUpperCase();
-		String vSName = sTemp.trim();
-		variableName[index] = vSName;
+	@SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
+    boolean validateVariable() {
+        int type = _variableTypeBox.getSelectedIndex() + 1;
+        if (type != _curVariable.getType()) {
+            _curVariable.setType(type);
+        }
+        String name = _variableNameField.getText().trim();
+		_variableNameField.setText(name);
+        _curVariable.setDataString("");
+        _curVariable.setNum1(0);
+        _curVariable.setNum2(0);
+		// validate according to action type
 		Sensor sn = null;
 		Turnout t = null;
 		SignalHead h = null;
 		Conditional c = null;
 		Light lgt = null;
 		Memory m = null;
-		variableNum1[index] = 0;
-		variableNum2[index] = 0;
 		boolean result = false;
-		switch (variableType[index]) {
-		case Conditional.TYPE_SENSOR_ACTIVE:
-			sn = InstanceManager.sensorManagerInstance().getByUserName(vUName);
-			if (sn != null) {
-				variableName[index] = vUName;
-			} else {
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(
-						vSName);
-				if (sn == null) {
-					variableName[index] = vUName;
-					messageInvalidSensorName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Sensor " + vSName
-								+ " not found");
-					return (false);
-				}
-			}
-			if (sn.getState() == Sensor.ACTIVE)
-				result = true;
-			break;
-		case Conditional.TYPE_SENSOR_INACTIVE:
-			sn = InstanceManager.sensorManagerInstance().getByUserName(vUName);
-			if (sn != null) {
-				variableName[index] = vUName;
-			} else {
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(
-						vSName);
-				if (sn == null) {
-					variableName[index] = vUName;
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Sensor " + vSName
-								+ " not found");
-					messageInvalidSensorName(vUName, true);
-					return (false);
-				}
-			}
-			if (sn.getState() == Sensor.INACTIVE)
-				result = true;
-			break;
-		case Conditional.TYPE_TURNOUT_THROWN:
-			t = InstanceManager.turnoutManagerInstance().getByUserName(vUName);
-			if (t != null) {
-				variableName[index] = vUName;
-			} else {
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(
-						vSName);
-				if (t == null) {
-					variableName[index] = vUName;
-					messageInvalidTurnoutName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Turnout "
-								+ vSName + " not found");
-					return (false);
-				}
-			}
-			if (t.getState() == Turnout.THROWN)
-				result = true;
-			break;
-		case Conditional.TYPE_TURNOUT_CLOSED:
-			t = InstanceManager.turnoutManagerInstance().getByUserName(vUName);
-			if (t != null) {
-				variableName[index] = vUName;
-			} else {
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(
-						vSName);
-				if (t == null) {
-					variableName[index] = vUName;
-					messageInvalidTurnoutName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Turnout "
-								+ vSName + " not found");
-					return (false);
-				}
-			}
-			if (t.getState() == Turnout.CLOSED)
-				result = true;
-			break;
-		case Conditional.TYPE_CONDITIONAL_TRUE:
-			c = InstanceManager.conditionalManagerInstance().getByUserName(
-					curLogix, vUName);
-			if (c != null) {
-				variableName[index] = vUName;
-			} else {
-				c = InstanceManager.conditionalManagerInstance()
-						.getBySystemName(vSName);
-				if (c == null) {
-					variableName[index] = vUName;
-					messageInvalidConditionalName(vUName);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Conditional "
-								+ vSName + " not found");
-					return (false);
-				}
-			}
-			if (c.getState() == Conditional.TRUE)
-				result = true;
-			break;
-		case Conditional.TYPE_CONDITIONAL_FALSE:
-			c = InstanceManager.conditionalManagerInstance().getByUserName(
-					curLogix, vUName);
-			if (c != null) {
-				variableName[index] = vUName;
-			} else {
-				c = InstanceManager.conditionalManagerInstance()
-						.getBySystemName(vSName);
-				if (c == null) {
-					variableName[index] = vUName;
-					messageInvalidConditionalName(vUName);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Conditional "
-								+ vSName + " not found");
-					return (false);
-				}
-			}
-			if (c.getState() == Conditional.FALSE)
-				result = true;
-			break;
-		case Conditional.TYPE_LIGHT_ON:
-			lgt = InstanceManager.lightManagerInstance().getByUserName(vUName);
-			if (lgt != null) {
-				variableName[index] = vUName;
-			} else {
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(
-						vSName);
-				if (lgt == null) {
-					variableName[index] = vUName;
-					messageInvalidLightName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Light " + vSName
-								+ " not found");
-					return (false);
-				}
-			}
-			if (lgt.getState() == Light.ON)
-				result = true;
-			break;
-		case Conditional.TYPE_LIGHT_OFF:
-			lgt = InstanceManager.lightManagerInstance().getByUserName(vUName);
-			if (lgt != null) {
-				variableName[index] = vUName;
-			} else {
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(
-						vSName);
-				if (lgt == null) {
-					variableName[index] = vUName;
-					messageInvalidLightName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Light " + vSName
-								+ " not found");
-					return (false);
-				}
-			}
-			if (lgt.getState() == Light.OFF)
-				result = true;
-			break;
-		case Conditional.TYPE_MEMORY_EQUALS:
-			m = InstanceManager.memoryManagerInstance().getByUserName(vUName);
-			if (m != null) {
-				variableName[index] = vUName;
-			} else {
-				m = InstanceManager.memoryManagerInstance().getBySystemName(
-						vSName);
-				if (m == null) {
-					variableName[index] = vUName;
-					messageInvalidMemoryName(vUName, true);
-					if (log.isDebugEnabled())
-						log.debug("checkStateVariable failed: Memory " + vSName
-								+ " not found");
-					return (false);
-				}
-			}
-			String s = (String) m.getValue();
-			if (s == null) {
-				return (true); // result is false, because null doesn't match
-				// content
-			}
-			if (s.equals(variableData1[index]))
-				result = true;
-			break;
-		case Conditional.TYPE_FAST_CLOCK_RANGE:
-			int beginTime = parseTime(variableData1[index]);
-			if (beginTime < 0) {
-				// parse error occurred - message has been sent
-				return (false);
-			}
-			int endTime = parseTime(variableData2[index]);
-			if (endTime < 0) {
-				return (false);
-			}
-			// set beginning and end time (minutes since midnight)
-			variableNum1[index] = beginTime;
-			variableNum2[index] = endTime;
-			// get current fast clock time
-			Timebase fastClock = InstanceManager.timebaseInstance();
-			Date currentTime = fastClock.getTime();
-			int currentMinutes = (currentTime.getHours() * 60)
-					+ currentTime.getMinutes();
-			// check if current time is within range specified
-			if (endTime > beginTime) {
-				// range is entirely within one day
-				if ((currentMinutes < endTime) && (currentMinutes >= beginTime))
-					result = true;
-			} else {
-				// range includes midnight
-				if (currentMinutes >= beginTime)
-					result = true;
-				else if (currentMinutes < endTime)
-					result = true;
-			}
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_RED:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.RED)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.YELLOW)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.GREEN)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_DARK:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.DARK)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.FLASHRED)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.FLASHYELLOW)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getAppearance() == SignalHead.FLASHGREEN)
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_LIT:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getLit())
-				result = true;
-			break;
-		case Conditional.TYPE_SIGNAL_HEAD_HELD:
-			h = InstanceManager.signalHeadManagerInstance().getByUserName(
-					vUName);
-			if (h != null) {
-				variableName[index] = vUName;
-			} else {
-				h = InstanceManager.signalHeadManagerInstance()
-						.getBySystemName(vSName);
-				if (h == null) {
-					variableName[index] = vUName;
-					messageInvalidSignalHeadName(vUName, true);
-					return (false);
-				}
-			}
-			if (h.getHeld())
-				result = true;
-			break;
+		switch ( type ) {
+            case Conditional.TYPE_SENSOR_ACTIVE:
+                name = validateSensorReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                sn = getSensor(name);
+                if (sn.getState() == Sensor.ACTIVE)
+                    result = true;
+                break;
+            case Conditional.TYPE_SENSOR_INACTIVE:
+                name = validateSensorReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                sn = getSensor(name);
+                if (sn.getState() == Sensor.INACTIVE)
+                    result = true;
+                break;
+            case Conditional.TYPE_TURNOUT_THROWN:
+                name = validateTurnoutReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                t = getTurnout(name);
+                if (t.getState() == Turnout.THROWN)
+                    result = true;
+                break;
+            case Conditional.TYPE_TURNOUT_CLOSED:
+                name = validateTurnoutReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                t = getTurnout(name);
+                if (t.getState() == Turnout.CLOSED)
+                    result = true;
+                break;
+            case Conditional.TYPE_CONDITIONAL_TRUE:
+                name = validateConditionalReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                c = getConditional(name);
+                if (c.getState() == Conditional.TRUE)
+                    result = true;
+                break;
+            case Conditional.TYPE_CONDITIONAL_FALSE:
+                name = validateConditionalReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                c = getConditional(name);
+                if (c.getState() == Conditional.FALSE)
+                    result = true;
+                break;
+            case Conditional.TYPE_LIGHT_ON:
+                name = validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                lgt = getLight(name);
+                if (lgt.getState() == Light.ON)
+                    result = true;
+                break;
+            case Conditional.TYPE_LIGHT_OFF:
+                name = validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                lgt = getLight(name);
+                if (lgt.getState() == Light.OFF)
+                    result = true;
+                break;
+            case Conditional.TYPE_MEMORY_EQUALS:
+                name = validateMemoryReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                String str = _variableData1Field.getText();
+                _curVariable.setDataString(str);
+                m = getMemory(name);
+                String s = (String) m.getValue();
+                if (s == null) {
+                    return (true); // result is false, because null doesn't match content
+                }
+                if ( s.equals(str) ) {
+                    result = true;
+                }
+                break;
+            case Conditional.TYPE_FAST_CLOCK_RANGE:
+                int beginTime = parseTime(_variableData1Field.getText());
+                if (beginTime < 0) {
+                    // parse error occurred - message has been sent
+                    return (false);
+                }
+                int endTime = parseTime(_variableData2Field.getText());
+                if (endTime < 0) {
+                    return (false);
+                }
+                // set beginning and end time (minutes since midnight)
+                _curVariable.setNum1(beginTime);
+                _curVariable.setNum2(endTime);
+                // get current fast clock time
+                Timebase fastClock = InstanceManager.timebaseInstance();
+                Date currentTime = fastClock.getTime();
+                int currentMinutes = (currentTime.getHours() * 60)
+                        + currentTime.getMinutes();
+                // check if current time is within range specified
+                if (endTime > beginTime) {
+                    // range is entirely within one day
+                    if ((currentMinutes < endTime) && (currentMinutes >= beginTime))
+                        result = true;
+                } else {
+                    // range includes midnight
+                    if (currentMinutes >= beginTime)
+                        result = true;
+                    else if (currentMinutes < endTime)
+                        result = true;
+                }
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_RED:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.RED)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.YELLOW)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.GREEN)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.DARK)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.FLASHRED)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.FLASHYELLOW)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getAppearance() == SignalHead.FLASHGREEN)
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getLit())
+                    result = true;
+                break;
+            case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                h = getSignalHead(name);
+                if (h.getHeld())
+                    result = true;
+                break;
 		}
 		// set state variable
-		if (isNOT)
+		if (_curVariable.isNegated()) {
 			result = !result;
-		if (result)
-			variableState[index] = rbx.getString("True");
-		else
-			variableState[index] = rbx.getString("False");
+        }
+        _curVariable.setState(result);
 		return (true);
-	}
+	}   /* validateVariable */
 
 	/**
-	 * Validates Action data from Edit Conditional Window, and transfers it to
-	 * current action variables as appropriate
+	 * Validates Action data from Edit Action Window, and transfers it to
+	 * current action object as appropriate
 	 * <P>
 	 * Returns true if all data checks out OK, otherwise false.
 	 * <P>
@@ -2812,668 +2751,599 @@ public class LogixTableAction extends AbstractTableAction {
 	 * false immediately after finding an error, even if there might be more
 	 * errors.
 	 */
-	boolean validateActionVariables(int index, JTextField systemNameField,
-			JTextField dataField, JComboBox turnoutSetBox,
-			JComboBox sensorSetBox, JComboBox signalSetBox,
-			JComboBox lightSetBox, JComboBox lockSetBox) {
-		// get possible user name
-		String uName = systemNameField.getText().trim();
-		// get possible system name, make upper case, and tentatively initialize
-		String sName = systemNameField.getText().toUpperCase().trim();
-		// initialize to system name, changing to user name later if needed
-		actionName[index] = sName;
-		systemNameField.setText(sName);
+	boolean validateAction() {
+        int type = _actionTypeBox.getSelectedIndex() + 1;
+        if (type != _curAction.getType()) {
+            _curAction.setType(type);
+        }
+        if (type != Conditional.ACTION_NONE) {
+            _curAction.setOption(_actionOptionBox.getSelectedIndex() + 1);
+        }
+        else {
+            _curAction.setOption(0);
+        }
+        String name = _actionNameField.getText().trim();
+		_actionNameField.setText(name);
+        String actionString = _actionStringField.getText().trim();
+        _curAction.setActionString("");
+        _curAction.setActionData(-1);
 		// validate according to action type
-		actionDelay[index] = 0;
-		switch (actionType[index]) {
-		case Conditional.ACTION_NONE:
-			actionName[index] = " ";
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_TURNOUT:
-			Turnout t = null;
-			// check if turnout user name was entered
-			if ((uName != null) && (uName != "")) {
-				t = InstanceManager.turnoutManagerInstance().getByUserName(
-						uName);
-				if (t != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check turnout system name
-					t = InstanceManager.turnoutManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (t == null) {
-				systemNameField.setText(uName);
-				messageInvalidTurnoutName(uName, false);
-				return (false);
-			}
-			if (turnoutSetBox.getSelectedIndex() == 0)
-				actionData[index] = Turnout.CLOSED;
-			else
-				actionData[index] = Turnout.THROWN;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_DELAYED_TURNOUT:
-			Turnout tx = null;
-			// check if turnout user name was entered
-			if ((uName != null) && (uName != "")) {
-				tx = InstanceManager.turnoutManagerInstance().getByUserName(
-						uName);
-				if (tx != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check turnout system name
-					tx = InstanceManager.turnoutManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (tx == null) {
-				systemNameField.setText(uName);
-				messageInvalidTurnoutName(uName, false);
-				return (false);
-			}
-			if (turnoutSetBox.getSelectedIndex() == 0)
-				actionData[index] = Turnout.CLOSED;
-			else
-				actionData[index] = Turnout.THROWN;
-			try {
-				actionDelay[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if (actionDelay[index] <= 0) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error38"),
-									new Object[] { dataField.getText() }), rbx
-									.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error39"),
-								new Object[] { dataField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-			Turnout txz = null;
-			// check if turnout user name was entered
-			if ((uName != null) && (uName != "")) {
-				txz = InstanceManager.turnoutManagerInstance().getByUserName(
-						uName);
-				if (txz != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check turnout system name
-					txz = InstanceManager.turnoutManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (txz == null) {
-				systemNameField.setText(uName);
-				messageInvalidTurnoutName(uName, false);
-				return (false);
-			}
-			if (turnoutSetBox.getSelectedIndex() == 0)
-				actionData[index] = Turnout.CLOSED;
-			else
-				actionData[index] = Turnout.THROWN;
-			try {
-				actionDelay[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if (actionDelay[index] <= 0) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error40"),
-									new Object[] { dataField.getText() }), 
-									rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error41"),
-								new Object[] { dataField.getText() }), 
-								rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-			Turnout tnz = null;
-			// check if turnout user name was entered
-			if ((uName != null) && (uName != "")) {
-				tnz = InstanceManager.turnoutManagerInstance().getByUserName(
-						uName);
-				if (tnz != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check sensor system name
-					tnz = InstanceManager.turnoutManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (tnz == null) {
-				systemNameField.setText(uName);
-				messageInvalidTurnoutName(uName, false);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_LOCK_TURNOUT:
-			Turnout tl = null;
-			// check if turnout user name was entered
-			if ((uName != null) && (uName != "")) {
-				tl = InstanceManager.turnoutManagerInstance().getByUserName(
-						uName);
-				if (tl != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check turnout system name
-					tl = InstanceManager.turnoutManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (tl == null) {
-				systemNameField.setText(uName);
-				messageInvalidTurnoutName(uName, false);
-				return (false);
-			}
-			if (lockSetBox.getSelectedIndex() == 0)
-				actionData[index] = Turnout.UNLOCKED;
-			else
-				actionData[index] = Turnout.LOCKED;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-			SignalHead hx = null;
-			// check if signal head user name was entered
-			if ((uName != null) && (uName != "")) {
-				hx = InstanceManager.signalHeadManagerInstance().getByUserName(
-						uName);
-				if (hx != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check signal head system name
-					hx = InstanceManager.signalHeadManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (hx == null) {
-				systemNameField.setText(uName);
-				messageInvalidSignalHeadName(uName, false);
-				return (false);
-			}
-			actionData[index] = signalAppearanceIndexToAppearance(signalSetBox
-					.getSelectedIndex());
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_SIGNAL_HELD:
-		case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-		case Conditional.ACTION_SET_SIGNAL_DARK:
-		case Conditional.ACTION_SET_SIGNAL_LIT:
-			SignalHead h = null;
-			// check if signal head user name was entered
-			if ((uName != null) && (uName != "")) {
-				h = InstanceManager.signalHeadManagerInstance().getByUserName(
-						uName);
-				if (h != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check signal head system name
-					h = InstanceManager.signalHeadManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (h == null) {
-				systemNameField.setText(uName);
-				messageInvalidSignalHeadName(uName, false);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_TRIGGER_ROUTE:
-			Route r = null;
-			// check if route user name was entered
-			if ((uName != null) && (uName != "")) {
-				r = InstanceManager.routeManagerInstance().getByUserName(uName);
-				if (r != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check route system name
-					r = InstanceManager.routeManagerInstance().getBySystemName(
-							sName);
-				}
-			}
-			if (r == null) {
-				systemNameField.setText(uName);
-				messageInvalidRouteName(uName);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_SENSOR:
-			Sensor sn = null;
-			// check if sensor user name was entered
-			if ((uName != null) && (uName != "")) {
-				sn = InstanceManager.sensorManagerInstance().getByUserName(
-						uName);
-				if (sn != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check sensor system name
-					sn = InstanceManager.sensorManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (sn == null) {
-				systemNameField.setText(uName);
-				messageInvalidSensorName(uName, false);
-				return (false);
-			}
-			if (sensorSetBox.getSelectedIndex() == 0)
-				actionData[index] = Sensor.ACTIVE;
-			else
-				actionData[index] = Sensor.INACTIVE;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_DELAYED_SENSOR:
-			Sensor snx = null;
-			// check if sensor user name was entered
-			if ((uName != null) && (uName != "")) {
-				snx = InstanceManager.sensorManagerInstance().getByUserName(
-						uName);
-				if (snx != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check sensor system name
-					snx = InstanceManager.sensorManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (snx == null) {
-				systemNameField.setText(uName);
-				messageInvalidSensorName(uName, false);
-				return (false);
-			}
-			if (sensorSetBox.getSelectedIndex() == 0)
-				actionData[index] = Sensor.ACTIVE;
-			else
-				actionData[index] = Sensor.INACTIVE;
-			try {
-				actionDelay[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if (actionDelay[index] <= 0) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error25"),
-									new Object[] { dataField.getText() }), rbx
-									.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error23"),
-								new Object[] { dataField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_RESET_DELAYED_SENSOR:
-			Sensor snxy = null;
-			// check if sensor user name was entered
-			if ((uName != null) && (uName != "")) {
-				snxy = InstanceManager.sensorManagerInstance().getByUserName(
-						uName);
-				if (snxy != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check sensor system name
-					snxy = InstanceManager.sensorManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (snxy == null) {
-				systemNameField.setText(uName);
-				messageInvalidSensorName(uName, false);
-				return (false);
-			}
-			if (sensorSetBox.getSelectedIndex() == 0)
-				actionData[index] = Sensor.ACTIVE;
-			else
-				actionData[index] = Sensor.INACTIVE;
-			try {
-				actionDelay[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if (actionDelay[index] <= 0) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error28"),
-									new Object[] { dataField.getText() }), 
-										rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error27"),
-								new Object[] { dataField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-			Sensor snz = null;
-			// check if sensor user name was entered
-			if ((uName != null) && (uName != "")) {
-				snz = InstanceManager.sensorManagerInstance().getByUserName(
-						uName);
-				if (snz != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check sensor system name
-					snz = InstanceManager.sensorManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (snz == null) {
-				systemNameField.setText(uName);
-				messageInvalidSensorName(uName, false);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_LIGHT:
-			Light lgt = null;
-			// check if light user name was entered
-			if ((uName != null) && (uName != "")) {
-				lgt = InstanceManager.lightManagerInstance().getByUserName(
-						uName);
-				if (lgt != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check light system name
-					lgt = InstanceManager.lightManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (lgt == null) {
-				systemNameField.setText(uName);
-				messageInvalidLightName(uName, false);
-				return (false);
-			}
-			if (lightSetBox.getSelectedIndex() == 0)
-				actionData[index] = Light.ON;
-			else
-				actionData[index] = Light.OFF;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_LIGHT_INTENSITY:
-			Light lgtx = null;
-			// check if light user name was entered
-			if ((uName != null) && (uName != "")) {
-				lgtx = InstanceManager.lightManagerInstance().getByUserName(
-						uName);
-				if (lgtx != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check light system name
-					lgtx = InstanceManager.lightManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (lgtx == null) {
-				systemNameField.setText(uName);
-				messageInvalidLightName(uName, false);
-				return (false);
-			}
-			if (!lgtx.isIntensityVariable()) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error45"),
-								new Object[] { systemNameField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);				
-			}
-			try {
-				actionData[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if ( (actionData[index] < 0) || (actionData[index] > 100) ) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error42"),
-									new Object[] { dataField.getText() }), 
-										rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error43"),
-								new Object[] { dataField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}			
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-			Light lgtz = null;
-			// check if light user name was entered
-			if ((uName != null) && (uName != "")) {
-				lgtz = InstanceManager.lightManagerInstance().getByUserName(
-						uName);
-				if (lgtz != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check light system name
-					lgtz = InstanceManager.lightManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (lgtz == null) {
-				systemNameField.setText(uName);
-				messageInvalidLightName(uName, false);
-				return (false);
-			}
-			if (!lgtz.isIntensityVariable()) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error45"),
-								new Object[] { systemNameField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);				
-			}
-			try {
-				actionData[index] = Integer.valueOf(dataField.getText())
-						.intValue();
-				if (actionData[index] < 0) {
-					javax.swing.JOptionPane.showMessageDialog(
-							editConditionalFrame,
-							java.text.MessageFormat.format(rbx
-									.getString("Error44"),
-									new Object[] { dataField.getText() }), 
-										rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return (false);
-				}
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-						java.text.MessageFormat.format(
-								rbx.getString("Error44"),
-								new Object[] { dataField.getText() }), rbx
-								.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return (false);
-			}			
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_SET_MEMORY:
-			Memory m = null;
-			// check if memory user name was entered
-			if ((uName != null) && (uName != "")) {
-				m = InstanceManager.memoryManagerInstance()
-						.getByUserName(uName);
-				if (m != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check memory system name
-					m = InstanceManager.memoryManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (m == null) {
-				systemNameField.setText(uName);
-				messageInvalidMemoryName(uName, false);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = dataField.getText();
-			break;
-		case Conditional.ACTION_COPY_MEMORY:
-			m = null;
-			// check if memory user name was entered for "from" Memory
-			if ((uName != null) && (uName != "")) {
-				m = InstanceManager.memoryManagerInstance()
-						.getByUserName(uName);
-				if (m != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check memory system name
-					m = InstanceManager.memoryManagerInstance()
-							.getBySystemName(sName);
-				}
-			}
-			if (m == null) {
-				systemNameField.setText(uName);
-				messageInvalidMemoryName(uName, false);
-				return (false);
-			}
-			actionData[index] = 0;
-			// get possible user name and system name of "to" Memory
-			uName = dataField.getText().trim();
-			sName = dataField.getText().toUpperCase().trim();
-			// check if memory user name was entered
-			if ((uName != null) && (uName != "")) {
-				m = InstanceManager.memoryManagerInstance()
-						.getByUserName(uName);
-				if (m != null) {
-					actionString[index] = uName;
-					dataField.setText(uName);
-				} else {
-					// check memory system name
-					m = InstanceManager.memoryManagerInstance()
-							.getBySystemName(sName);
-					if (m != null) {
-						actionString[index] = sName;
-						dataField.setText(sName);
-					}
-				}
-			}
-			if (m == null) {
-				messageInvalidMemoryName(uName, false);
-				return (false);
-			}
-			break;
-		case Conditional.ACTION_ENABLE_LOGIX:
-		case Conditional.ACTION_DISABLE_LOGIX:
-			Logix x = null;
-			// check if logix user name was entered
-			if ((uName != null) && (uName != "")) {
-				x = InstanceManager.logixManagerInstance().getByUserName(uName);
-				if (x != null) {
-					actionName[index] = uName;
-					systemNameField.setText(uName);
-				} else {
-					// check logix system name
-					x = InstanceManager.logixManagerInstance().getBySystemName(
-							sName);
-				}
-			}
-			if (x == null) {
-				systemNameField.setText(uName);
-				messageInvalidLogixName(uName);
-				return (false);
-			}
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_PLAY_SOUND:
-			actionName[index] = " ";
-			actionData[index] = 0;
-			actionString[index] = dataField.getText();
-			break;
-		case Conditional.ACTION_RUN_SCRIPT:
-			actionName[index] = " ";
-			actionData[index] = 0;
-			actionString[index] = dataField.getText();
-			break;
-		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-			actionName[index] = " ";
-			actionData[index] = parseTime(dataField.getText());
-			if (actionData[index]<0) {
-				// error in entry of time - message already sent
-				actionData[index] = 0;
-				return (false);
-			}
-			actionString[index] = " ";
-			break;
-		case Conditional.ACTION_START_FAST_CLOCK:
-		case Conditional.ACTION_STOP_FAST_CLOCK:
-			actionName[index] = " ";
-			actionData[index] = 0;
-			actionString[index] = " ";
-			break;
+		switch (type) {
+            case Conditional.ACTION_NONE:
+                _curAction.setDeviceName("");
+                break;
+            case Conditional.ACTION_DELAYED_TURNOUT:
+            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                if (!validateIntegerReference(Conditional.ACTION_RESET_DELAYED_TURNOUT, actionString)) 
+                {
+                    return (false);
+                }
+                _curAction.setActionString(actionString);
+                // fall through
+            case Conditional.ACTION_SET_TURNOUT:
+                if (_actionTurnoutSetBox.getSelectedIndex() == 0)
+                    _curAction.setActionData(Turnout.CLOSED);
+                else
+                    _curAction.setActionData(Turnout.THROWN);
+                // fall through
+            case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+                name = validateTurnoutReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
+            case Conditional.ACTION_LOCK_TURNOUT:
+                name = validateTurnoutReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                if (_actionLockSetBox.getSelectedIndex() == 0)
+                    _curAction.setActionData(Turnout.UNLOCKED);
+                else
+                    _curAction.setActionData(Turnout.LOCKED);
+                break;
+            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                _curAction.setActionData(signalAppearanceIndexToAppearance(
+                        _actionSignalSetBox.getSelectedIndex()));
+                // fall through;
+            case Conditional.ACTION_SET_SIGNAL_HELD:
+            case Conditional.ACTION_CLEAR_SIGNAL_HELD:
+            case Conditional.ACTION_SET_SIGNAL_DARK:
+            case Conditional.ACTION_SET_SIGNAL_LIT:
+                name = validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
+            case Conditional.ACTION_TRIGGER_ROUTE:  
+                name = validateRouteReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
+            case Conditional.ACTION_DELAYED_SENSOR:
+            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                if (!validateIntegerReference(Conditional.ACTION_RESET_DELAYED_TURNOUT, actionString)) 
+                {
+                    return (false);
+                }
+                _curAction.setActionString(actionString);
+                // fall through
+            case Conditional.ACTION_SET_SENSOR:
+                if (_actionSensorSetBox.getSelectedIndex() == 0)
+                    _curAction.setActionData(Sensor.ACTIVE);
+                else
+                    _curAction.setActionData(Sensor.INACTIVE);
+                // fall through
+            case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+                name = validateSensorReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
+            case Conditional.ACTION_SET_LIGHT:
+                name = validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                if (_actionLightSetBox.getSelectedIndex() == 0)
+                    _curAction.setActionData(Light.ON);
+                else
+                    _curAction.setActionData(Light.OFF);
+                break;
+            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                name = validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                Light lgtx = getLight(name);
+                // check if light user name was entered
+                if (lgtx == null) {
+                    return false;
+                }
+                if (!lgtx.isIntensityVariable()) {
+                    javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                            java.text.MessageFormat.format(
+                            rbx.getString("Error45"), new Object[] { name }), 
+                            rbx.getString("ErrorTitle"),  javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return (false);				
+                }
+                if (!validateIntegerReference(type, actionString)) 
+                {
+                    return (false);
+                }
+                _curAction.setActionString(actionString);
+                break;
+            case Conditional.ACTION_SET_MEMORY:
+                name = validateMemoryReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                _curAction.setActionString(actionString);
+                break;
+            case Conditional.ACTION_COPY_MEMORY:
+                // check "from" Memory
+                name = validateMemoryReference(name);
+                if (name == null) {
+                    return false;
+                }
+                actionString = validateMemoryReference(actionString);
+                if (actionString == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _actionStringField.setText(actionString);
+                _curAction.setDeviceName(name);
+                _curAction.setActionString(actionString);
+                break;
+            case Conditional.ACTION_ENABLE_LOGIX:
+            case Conditional.ACTION_DISABLE_LOGIX:
+                name = validateLogixReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
+            case Conditional.ACTION_PLAY_SOUND:
+            case Conditional.ACTION_RUN_SCRIPT:
+                _curAction.setActionString(actionString);
+                break;
+            case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+                int time = parseTime(actionString);
+                if ( time<0 ) {
+                    return (false);
+                }
+                _curAction.setActionData(time);
+                break;
+            case Conditional.ACTION_START_FAST_CLOCK:
+            case Conditional.ACTION_STOP_FAST_CLOCK:
+                break;
 		}
 		return (true);
 	}
 
 	// *********** Utility Methods ********************
+
+    /**
+    * Checks if String is an integer or references an integer
+    */
+    boolean validateIntegerReference(int actionType, String intReference) {
+        intReference = intReference.trim();
+        if (intReference == null || intReference.length() == 0)
+        {
+            displayBadIntegerFormat(actionType, intReference);
+            return false;
+        }
+        try {
+            return validateInteger(actionType, Integer.valueOf(intReference).intValue());
+        } catch (NumberFormatException e) {
+            intReference = validateMemoryReference(intReference);
+            if (intReference != null)
+            {
+                Memory m = getMemory(intReference);
+                try {
+                    return validateInteger(actionType, Integer.valueOf((String)m.getValue()).intValue());
+                } catch (NumberFormatException ex) {
+                    displayBadIntegerFormat(actionType, intReference);
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+    * Checks text represents an integer suitable for timing
+    * throws NumberFormatException
+    */
+    boolean validateInteger(int actionType, int time) {
+        int maxTime = 3600;
+        if (actionType == Conditional.ACTION_SET_LIGHT_INTENSITY)
+        {
+            maxTime = 100;
+
+        }
+        if (time <= 0 || time > maxTime) {
+            String errorNum = " ";
+            switch(actionType) {
+                case Conditional.ACTION_DELAYED_TURNOUT:
+                    errorNum = "Error38";
+                    break;
+                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                    errorNum = "Error40";
+                    break;
+                case Conditional.ACTION_DELAYED_SENSOR:
+                    errorNum = "Error25";
+                    break;
+                case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                    errorNum = "Error28";
+                    break;
+                case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                    errorNum = "Error42";
+                    break;
+                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                    errorNum = "Error44";
+                    break;
+            }
+            javax.swing.JOptionPane.showMessageDialog(
+                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString(errorNum),
+                    time), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    void displayBadIntegerFormat(int actionType, String intReference)
+    {
+        String errorNum = " ";
+        switch(actionType) {
+            case Conditional.ACTION_DELAYED_TURNOUT:
+                errorNum = "Error39";
+                break;
+            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                errorNum = "Error41";
+                break;
+            case Conditional.ACTION_DELAYED_SENSOR:
+                errorNum = "Error23";
+                break;
+            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                errorNum = "Error27";
+                break;
+            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                errorNum = "Error43";
+                break;
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                errorNum = "Error45";
+                break;
+        }
+        javax.swing.JOptionPane.showMessageDialog(
+                editConditionalFrame, java.text.MessageFormat.format(rbx.getString(errorNum),
+                intReference), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+    * Checks Memory reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateMemoryReference(String name) {
+        Memory m = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            m = InstanceManager.memoryManagerInstance().getByUserName(name);
+            if (m != null) {
+                //return m.getSystemName();
+                return name;
+            }
+            // check memory system name
+            name = name.toUpperCase().trim();
+            m = InstanceManager.memoryManagerInstance().getBySystemName(name);
+        }
+        if (m == null) {
+            messageInvalidMemoryName(name, false);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks Turnout reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateTurnoutReference(String name) {
+        Turnout t = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            t = InstanceManager.turnoutManagerInstance().getByUserName(name);
+            if (t != null) {
+                //return t.getSystemName();
+                return name;
+            }
+            name = name.toUpperCase().trim();
+            t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+        }
+        if (t == null) {
+            messageInvalidTurnoutName(name, false);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks SignalHead reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateSignalHeadReference(String name) {
+        SignalHead h = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+            if (h != null) {
+                //return h.getSystemName();
+                return name;
+            }
+            name = name.toUpperCase().trim();
+            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        }
+        if (h == null) {
+            messageInvalidSignalHeadName(name, false);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks Sensor reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateSensorReference(String name) {
+        Sensor s = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            s = InstanceManager.sensorManagerInstance().getByUserName(name);
+            if (s != null) {
+                //return s.getSystemName();
+                return name;
+            }
+            name = name.toUpperCase().trim();
+            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+        }
+        if (s == null) {
+            messageInvalidSensorName(name, false);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks Light reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateLightReference(String name) {
+        Light l = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            l = InstanceManager.lightManagerInstance().getByUserName(name);
+            if (l != null) {
+                //return l.getSystemName();
+                return name;
+            }
+            name = name.toUpperCase().trim();
+            l = InstanceManager.lightManagerInstance().getBySystemName(name);
+        }
+        if (l == null) {
+            messageInvalidLightName(name, false);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks Conditional reference of text.  Upshifts text of field if it is a system name
+    * Forces name to System name
+    */
+    String validateConditionalReference(String name) {
+        Conditional c = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            c = _conditionalManager.getByUserName(_curLogix, name);
+            if (c != null) {
+                return name;
+            }
+            c = _conditionalManager.getByUserName(name);
+            if (c != null) {
+                return name;
+            }
+            name = name.toUpperCase().trim();
+            c = _conditionalManager.getBySystemName(name);
+        }
+        if (c == null) {
+            messageInvalidConditionalName(name);
+            return null;
+        }
+        return name;
+    }
+
+    /**
+    * Checks Logix reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateLogixReference(String name) {
+        Logix l = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            l = _logixManager.getByUserName(name);
+            if (l != null) {
+                return name;
+            }
+            // check memory system name
+            name = name.toUpperCase().trim();
+            l = _logixManager.getBySystemName(name);
+        }
+        if (l == null) {
+            messageInvalidLogixName(name);
+            return null;
+        }
+        return name;
+    }
+    /**
+    * Checks Route reference of text.  Upshifts text of field if it is a system name
+    */
+    String validateRouteReference(String name) {
+        Route r = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            r = InstanceManager.routeManagerInstance().getByUserName(name);
+            if (r != null) {
+                return name;
+            }
+            // check memory system name
+            name = name.toUpperCase().trim();
+            r = InstanceManager.routeManagerInstance().getBySystemName(name);
+        }
+        if (r == null) {
+            messageInvalidRouteName(name);
+            return null;
+        }
+        return name;
+    }
+
+
+    /**
+    * get Coditional instance.  Upshifts text of string if it is a system name
+    */
+    Conditional getConditional(String name) {
+        Conditional c = null;
+
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            c = _conditionalManager.getByUserName(_curLogix, name);
+            if (c != null) {
+                return c;
+            }
+            c = _conditionalManager.getByUserName(name);
+            if (c != null) {
+                return c;
+            }
+            name = name.toUpperCase().trim();
+            c = _conditionalManager.getBySystemName(name);
+        }
+        if (c == null) {
+            messageInvalidLightName(name, false);
+        }
+        return c;
+    }
+
+    /**
+    * get Memory instance.  Upshifts text of string if it is a system name
+    */
+    Memory getMemory(String name) {
+        Memory m = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            m = InstanceManager.memoryManagerInstance().getByUserName(name);
+            if (m != null) {
+                return m;
+            }
+            // check memory system name
+            name = name.toUpperCase().trim();
+            m = InstanceManager.memoryManagerInstance().getBySystemName(name);
+        }
+        if (m == null) {
+            messageInvalidMemoryName(name, false);
+        }
+        return m;
+    }
+
+    /**
+    * get Light instance.  Upshifts text of string if it is a system name
+    */
+    Light getLight(String name) {
+        Light l = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            l = InstanceManager.lightManagerInstance().getByUserName(name);
+            if (l != null) {
+                return l;
+            }
+            name = name.toUpperCase().trim();
+            l = InstanceManager.lightManagerInstance().getBySystemName(name);
+        }
+        if (l == null) {
+            messageInvalidLightName(name, false);
+        }
+        return l;
+    }
+
+    /**
+    * get sensor instance.  Upshifts text of string if it is a system name
+    */
+    Sensor getSensor(String name) {
+        Sensor s = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            s = InstanceManager.sensorManagerInstance().getByUserName(name);
+            if (s != null) {
+                return s;
+            }
+            name = name.toUpperCase().trim();
+            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+        }
+        if (s == null) {
+            messageInvalidSensorName(name, false);
+        }
+        return s;
+    }
+
+    /**
+    * get Turnout instance.  Upshifts text of string if it is a system name
+    */
+    Turnout getTurnout(String name) {
+        Turnout t = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            t = InstanceManager.turnoutManagerInstance().getByUserName(name);
+            if (t != null) {
+                return t;
+            }
+            name = name.toUpperCase().trim();
+            t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+        }
+        if (t == null) {
+            messageInvalidTurnoutName(name, false);
+        }
+        return t;
+    }
+
+    /**
+    * get SignalHead instance.  Upshifts text of string if it is a system name
+    */
+    SignalHead getSignalHead(String name) {
+        SignalHead h = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+            if (h != null) {
+                return h;
+            }
+            name = name.toUpperCase().trim();
+            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        }
+        if (h == null) {
+            messageInvalidSignalHeadName(name, false);
+        }
+        return h;
+    }
 
 	/**
 	 * Identifies State Variable Type from Text String Note: if string does not
@@ -3483,170 +3353,12 @@ public class LogixTableAction extends AbstractTableAction {
 	int stringToStateVariableType(String s) {
 		int type = 0;
 		for (int i = 1; i <= Conditional.MAX_STATE_VARIABLES; i++) {
-			if (s.equals(stateVariableTypeToString(i))) {
+			if (s.equals(ConditionalVariable.getTypeString(i))) {
 				type = i;
 				return (type);
 			}
 		}
 		return type;
-	}
-
-	/**
-	 * State Variable Type to Text String
-	 */
-	String stateVariableTypeToString(int type) {
-		switch (type) {
-		case Conditional.TYPE_SENSOR_ACTIVE:
-			return (rbx.getString("TypeSensorActive"));
-		case Conditional.TYPE_SENSOR_INACTIVE:
-			return (rbx.getString("TypeSensorInactive"));
-		case Conditional.TYPE_TURNOUT_THROWN:
-			return (rbx.getString("TypeTurnoutThrown"));
-		case Conditional.TYPE_TURNOUT_CLOSED:
-			return (rbx.getString("TypeTurnoutClosed"));
-		case Conditional.TYPE_CONDITIONAL_TRUE:
-			return (rbx.getString("TypeConditionalTrue"));
-		case Conditional.TYPE_CONDITIONAL_FALSE:
-			return (rbx.getString("TypeConditionalFalse"));
-		case Conditional.TYPE_LIGHT_ON:
-			return (rbx.getString("TypeLightOn"));
-		case Conditional.TYPE_LIGHT_OFF:
-			return (rbx.getString("TypeLightOff"));
-		case Conditional.TYPE_MEMORY_EQUALS:
-			return (rbx.getString("TypeMemoryEquals"));
-		case Conditional.TYPE_FAST_CLOCK_RANGE:
-			return (rbx.getString("TypeFastClockRange"));
-		case Conditional.TYPE_SIGNAL_HEAD_RED:
-			return (rbx.getString("TypeSignalHeadRed"));
-		case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-			return (rbx.getString("TypeSignalHeadYellow"));
-		case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-			return (rbx.getString("TypeSignalHeadGreen"));
-		case Conditional.TYPE_SIGNAL_HEAD_DARK:
-			return (rbx.getString("TypeSignalHeadDark"));
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-			return (rbx.getString("TypeSignalHeadFlashRed"));
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-			return (rbx.getString("TypeSignalHeadFlashYellow"));
-		case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-			return (rbx.getString("TypeSignalHeadFlashGreen"));
-		case Conditional.TYPE_SIGNAL_HEAD_LIT:
-			return (rbx.getString("TypeSignalHeadLit"));
-		case Conditional.TYPE_SIGNAL_HEAD_HELD:
-			return (rbx.getString("TypeSignalHeadHeld"));
-		}
-		return ("");
-	}
-
-	/**
-	 * State Variable Type to Text String
-	 */
-	String actionTypeToString(int type) {
-		switch (type) {
-		case Conditional.ACTION_NONE:
-			return (rbx.getString("ActionNone"));
-		case Conditional.ACTION_SET_TURNOUT:
-			return (rbx.getString("ActionSetTurnout"));
-		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-			return (rbx.getString("ActionSetSignal"));
-		case Conditional.ACTION_SET_SIGNAL_HELD:
-			return (rbx.getString("ActionSetSignalHeld"));
-		case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-			return (rbx.getString("ActionClearSignalHeld"));
-		case Conditional.ACTION_SET_SIGNAL_DARK:
-			return (rbx.getString("ActionSetSignalDark"));
-		case Conditional.ACTION_SET_SIGNAL_LIT:
-			return (rbx.getString("ActionSetSignalLit"));
-		case Conditional.ACTION_TRIGGER_ROUTE:
-			return (rbx.getString("ActionTriggerRoute"));
-		case Conditional.ACTION_SET_SENSOR:
-			return (rbx.getString("ActionSetSensor"));
-		case Conditional.ACTION_DELAYED_SENSOR:
-			return (rbx.getString("ActionDelayedSensor"));
-		case Conditional.ACTION_SET_LIGHT:
-			return (rbx.getString("ActionSetLight"));
-		case Conditional.ACTION_SET_MEMORY:
-			return (rbx.getString("ActionSetMemory"));
-		case Conditional.ACTION_ENABLE_LOGIX:
-			return (rbx.getString("ActionEnableLogix"));
-		case Conditional.ACTION_DISABLE_LOGIX:
-			return (rbx.getString("ActionDisableLogix"));
-		case Conditional.ACTION_PLAY_SOUND:
-			return (rbx.getString("ActionPlaySound"));
-		case Conditional.ACTION_RUN_SCRIPT:
-			return (rbx.getString("ActionRunScript"));
-		case Conditional.ACTION_DELAYED_TURNOUT:
-			return (rbx.getString("ActionDelayedTurnout"));
-		case Conditional.ACTION_LOCK_TURNOUT:
-			return (rbx.getString("ActionTurnoutLock"));
-		case Conditional.ACTION_RESET_DELAYED_SENSOR:
-			return (rbx.getString("ActionResetDelayedSensor"));
-		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-			return (rbx.getString("ActionCancelSensorTimers"));
-		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-			return (rbx.getString("ActionResetDelayedTurnout"));
-		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-			return (rbx.getString("ActionCancelTurnoutTimers"));
-		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-			return (rbx.getString("ActionSetFastClockTime"));
-		case Conditional.ACTION_START_FAST_CLOCK:
-			return (rbx.getString("ActionStartFastClock"));
-		case Conditional.ACTION_STOP_FAST_CLOCK:
-			return (rbx.getString("ActionStopFastClock"));			
-		case Conditional.ACTION_COPY_MEMORY:
-			return (rbx.getString("ActionCopyMemory"));
-		case Conditional.ACTION_SET_LIGHT_INTENSITY:
-			return (rbx.getString("ActionSetLightIntensity"));
-		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-			return (rbx.getString("ActionSetLightTransitionTime"));
-		}
-		return ("");
-	}
-
-	/**
-	 * Signal Appearance Index to Text String
-	 */
-	String signalAppearanceIndexToString(int appearanceIndex) {
-		switch (appearanceIndex) {
-		case 0:
-			return (rbx.getString("AppearanceRed"));
-		case 1:
-			return (rbx.getString("AppearanceYellow"));
-		case 2:
-			return (rbx.getString("AppearanceGreen"));
-		case 3:
-			return (rbx.getString("AppearanceDark"));
-		case 4:
-			return (rbx.getString("AppearanceFlashRed"));
-		case 5:
-			return (rbx.getString("AppearanceFlashYellow"));
-		case 6:
-			return (rbx.getString("AppearanceFlashGreen"));
-		}
-		return ("");
-	}
-
-	/**
-	 * Signal Appearance Index to Signal Appearance
-	 */
-	int signalAppearanceIndexToAppearance(int appearanceIndex) {
-		switch (appearanceIndex) {
-		case 0:
-			return (SignalHead.RED);
-		case 1:
-			return (SignalHead.YELLOW);
-		case 2:
-			return (SignalHead.GREEN);
-		case 3:
-			return (SignalHead.DARK);
-		case 4:
-			return (SignalHead.FLASHRED);
-		case 5:
-			return (SignalHead.FLASHYELLOW);
-		case 6:
-			return (SignalHead.FLASHGREEN);
-		}
-		return (0);
 	}
 
 	/**
@@ -3673,6 +3385,29 @@ public class LogixTableAction extends AbstractTableAction {
 	}
 
 	/**
+	 * Signal Appearance Index to Signal Appearance
+	 */
+	int signalAppearanceIndexToAppearance(int appearanceIndex) {
+		switch (appearanceIndex) {
+		case 0:
+			return (SignalHead.RED);
+		case 1:
+			return (SignalHead.YELLOW);
+		case 2:
+			return (SignalHead.GREEN);
+		case 3:
+			return (SignalHead.DARK);
+		case 4:
+			return (SignalHead.FLASHRED);
+		case 5:
+			return (SignalHead.FLASHYELLOW);
+		case 6:
+			return (SignalHead.FLASHGREEN);
+		}
+		return (0);
+	}
+
+	/**
 	 * Parses time in hh:mm format given a string in the correct format
 	 * <P>
 	 * Returns integer = hh*60 + mm (minutes since midnight) if parse is
@@ -3688,37 +3423,48 @@ public class LogixTableAction extends AbstractTableAction {
 		int nHour = 0;
 		int nMin = 0;
 		boolean error = false;
-		// check length and : in the 3rd character
-		if ((s.length() != 5) || (s.charAt(2) != ':')) {
-			error = true;
-		}
-		if (!error) {
-			// get hour and check if it is within range
-			try {
-				nHour = Integer.valueOf(s.substring(0, 2)).intValue();
-				if ((nHour < 0) || (nHour > 24)) {
-					error = true;
-				}
-			} catch (Exception e) {
-				error = true;
-			}
-		}
-		if (!error) {
-			// get miinutes and check if it is within range
-			try {
-				nMin = Integer.valueOf(s.substring(3, 5)).intValue();
-				if ((nMin < 0) || (nMin > 59)) {
-					error = true;
-				}
-			} catch (Exception e) {
-				error = true;
-			}
-		}
+        int index = s.indexOf(':');
+        String hour = null;
+        String minute = null;
+        try {
+            if (index > 0)
+            {
+                hour = s.substring(0, index);
+                if (index > 1)
+
+                    minute = s.substring(index+1);
+                else
+                    minute = "0";
+            } else if (index == 0)
+            {
+                hour = "0";
+                minute = s.substring(index+1);
+            } else {
+                hour = s;
+                minute = "0";
+            }
+        } catch (IndexOutOfBoundsException ioob ) {
+            error = true;
+        }
+        if (!error)  {
+            try {
+                nHour = Integer.valueOf(hour);
+                if ((nHour < 0) || (nHour > 24)) {
+                    error = true;
+                }
+                nMin = Integer.valueOf(minute);
+                if ((nMin < 0) || (nMin > 59)) {
+                    error = true;
+                }
+            } catch (NumberFormatException e) {
+                error = true;
+            }
+        }
 		if (error) {
 			// if unsuccessful, print error message
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 					java.text.MessageFormat.format(rbx.getString("Error26"),
-							new Object[] { s }), rbx.getString("ErrorTitle"),
+					new Object[] { s }), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return (-1);
 		}
@@ -3853,7 +3599,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 		public ConditionalTableModel() {
 			super();
-			conditionalManager.addPropertyChangeListener(this);
+			_conditionalManager.addPropertyChangeListener(this);
 			updateConditionalListeners();
 		}
 
@@ -3864,16 +3610,16 @@ public class LogixTableAction extends AbstractTableAction {
 			if (numConditionals > 0) {
 				for (int i = 0; i < numConditionals; i++) {
 					// if object has been deleted, it's not here; ignore it
-					sNam = curLogix.getConditionalByNumberOrder(i);
-					c = conditionalManager.getBySystemName(sNam);
+					sNam = _curLogix.getConditionalByNumberOrder(i);
+					c = _conditionalManager.getBySystemName(sNam);
 					if (c != null)
 						c.removePropertyChangeListener(this);
 				}
 			}
 			// and add them back in
 			for (int i = 0; i < numConditionals; i++) {
-				sNam = curLogix.getConditionalByNumberOrder(i);
-				c = conditionalManager.getBySystemName(sNam);
+				sNam = _curLogix.getConditionalByNumberOrder(i);
+				c = _conditionalManager.getBySystemName(sNam);
 				if (c != null)
 					addPropertyChangeListener(this);
 			}
@@ -3918,10 +3664,10 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 
 		public boolean isCellEditable(int r, int c) {
-			if (!inReorderMode) {
+			if (!_inReorderMode) {
 				return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN));
 			} else if (c == BUTTON_COLUMN) {
-				if (r >= nextInOrder)
+				if (r >= _nextInOrder)
 					return (true);
 			}
 			return (false);
@@ -3957,33 +3703,36 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 		}
 
-		public Object getValueAt(int r, int c) {
+		public Object getValueAt(int r, int col) {
 			int rx = r;
-			if ((rx > numConditionals) || (curLogix == null)) {
+			if ((rx > numConditionals) || (_curLogix == null)) {
 				return null;
 			}
-			switch (c) {
+			switch (col) {
 			case BUTTON_COLUMN:
-				if (!inReorderMode) {
+				if (!_inReorderMode) {
 					return rb.getString("ButtonEdit");
-				} else if (nextInOrder == 0) {
+				} else if (_nextInOrder == 0) {
 					return rbx.getString("ButtonFirst");
-				} else if (nextInOrder <= r) {
+				} else if (_nextInOrder <= r) {
 					return rbx.getString("ButtonNext");
 				} else
 					return Integer.toString(rx + 1);
 			case SNAME_COLUMN:
-				return curLogix.getConditionalByNumberOrder(rx);
+				return _curLogix.getConditionalByNumberOrder(rx);
 			case UNAME_COLUMN: //
-				return conditionalManager.getBySystemName(
-						curLogix.getConditionalByNumberOrder(rx)).getUserName();
-			case STATE_COLUMN: //
-				int curState = conditionalManager.getBySystemName(
-						curLogix.getConditionalByNumberOrder(rx)).getState();
-				if (curState == Conditional.TRUE)
-					return rbx.getString("True");
-				if (curState == Conditional.FALSE)
-					return rbx.getString("False");
+				return _conditionalManager.getBySystemName(
+						_curLogix.getConditionalByNumberOrder(rx)).getUserName();
+                case STATE_COLUMN:
+                    Conditional c = _conditionalManager.getBySystemName(
+						_curLogix.getConditionalByNumberOrder(rx));
+                    if (c != null) {
+                        int curState = c.getState();
+                        if (curState == Conditional.TRUE)
+                            return rbx.getString("True");
+                        if (curState == Conditional.FALSE)
+                            return rbx.getString("False");
+                    }
 				return rbx.getString("Unknown");
 			default:
 				return rbx.getString("Unknown");
@@ -3992,38 +3741,41 @@ public class LogixTableAction extends AbstractTableAction {
 
 		public void setValueAt(Object value, int row, int col) {
 			int rx = row;
-			if ((rx > numConditionals) || (curLogix == null)) {
+			if ((rx > numConditionals) || (_curLogix == null)) {
 				return;
 			}
 			if (col == BUTTON_COLUMN) {
 				// button fired
-				if (inReorderMode) {
-					if (curLogix.nextConditionalInOrder(rx)) {
-						// reordering done
-						status.setText("");
-						inReorderMode = false;
-					} else {
-						nextInOrder++;
-					}
-					fireTableDataChanged();
+				if (_inReorderMode) {
+					swapConditional(row);
 				} else {
-					editConditionalPressed(rx);
+                    // Use separate Thread so window is created on top
+                    class WindowMaker extends Thread {
+                        int row;
+                        WindowMaker(int r){
+                            row = r;
+                        }
+                        public void run() {
+                                Thread.yield();
+                                editConditionalPressed(row);
+                            }
+                        }
+                    WindowMaker t = new WindowMaker(rx);
+					t.start();
 				}
 			} else if (col == UNAME_COLUMN) {
-				showReminder = true;
 				String uName = (String) value;
-				if (curLogix != null) {
-					Conditional cn = conditionalManager.getByUserName(curLogix,
+				if (_curLogix != null) {
+					Conditional cn = _conditionalManager.getByUserName(_curLogix,
 							uName.trim());
 					if (cn == null) {
-						conditionalManager.getBySystemName(
-								curLogix.getConditionalByNumberOrder(rx))
+						_conditionalManager.getBySystemName(
+								_curLogix.getConditionalByNumberOrder(rx))
 								.setUserName(uName.trim());
 						fireTableRowsUpdated(rx, rx);
 					} else {
-						String svName = curLogix
-								.getConditionalByNumberOrder(rx);
-						if (cn != conditionalManager.getBySystemName(svName)) {
+						String svName = _curLogix.getConditionalByNumberOrder(rx);
+						if (cn != _conditionalManager.getBySystemName(svName)) {
 							messageDuplicateConditionalUserName(cn
 									.getSystemName());
 						}
@@ -4038,176 +3790,415 @@ public class LogixTableAction extends AbstractTableAction {
 	 */
 	public class VariableTableModel extends AbstractTableModel {
 
-		public static final int AND_COLUMN = 0;
+		public static final int ROWNUM_COLUMN = 0;
 
-		public static final int NOT_COLUMN = 1;
+		public static final int AND_COLUMN = 1;
 
-		public static final int TYPE_COLUMN = 2;
+		public static final int NOT_COLUMN = 2;
 
-		public static final int SNAME_COLUMN = 3;
+		public static final int DESCRIPTION_COLUMN = 3;
 
-		public static final int DATA1_COLUMN = 4;
+		public static final int STATE_COLUMN = 4;
 
-		public static final int DATA2_COLUMN = 5;
+		public static final int TRIGGERS_COLUMN = 5;
 
-		public static final int STATE_COLUMN = 6;
+		public static final int EDIT_COLUMN = 6;
 
-		public static final int TRIGGERS_COLUMN = 7;
-
-		public static final int DELETE_COLUMN = 8;
+		public static final int DELETE_COLUMN = 7;
 
 		public Class getColumnClass(int c) {
-			if (c == NOT_COLUMN)
-				return JComboBox.class;
-			if (c == TYPE_COLUMN)
-				return JComboBox.class;
-			if (c == TRIGGERS_COLUMN)
-				return Boolean.class;
-			if (c == DELETE_COLUMN)
-				return JButton.class;
+            switch (c)
+            {
+                case ROWNUM_COLUMN:
+                    return String.class;
+                case AND_COLUMN:
+                    return JComboBox.class;
+                case NOT_COLUMN:
+                    return JComboBox.class;
+                case DESCRIPTION_COLUMN:
+                    return String.class;
+                case STATE_COLUMN:
+                    return String.class;
+                case TRIGGERS_COLUMN:
+                    return Boolean.class;
+                case EDIT_COLUMN:
+                    return JButton.class;
+                case DELETE_COLUMN:
+                    return JButton.class;
+            }
 			return String.class;
 		}
 
 		public int getColumnCount() {
-			return 9;
+			return 8;
 		}
 
 		public int getRowCount() {
-			return (numStateVariables);
+			return _variableList.size();
 		}
 
 		public boolean isCellEditable(int r, int c) {
 			switch (c) {
-			case AND_COLUMN:
-				return (false);
-			case NOT_COLUMN:
-				return (true);
-			case TYPE_COLUMN:
-				return (true);
-			case SNAME_COLUMN:
-				return (variableNameEditable[r]);
-			case DATA1_COLUMN:
-				return (variableData1Editable[r]);
-			case DATA2_COLUMN:
-				return (variableData2Editable[r]);
-			case STATE_COLUMN:
-				return (false);
-			case TRIGGERS_COLUMN:
-				return (true);
-			case DELETE_COLUMN:
-				return (true);
+                case ROWNUM_COLUMN:
+                    return (false);
+                case AND_COLUMN:
+                    return (_logicType == Conditional.MIXED );
+                case NOT_COLUMN:
+                    return (true);
+                case DESCRIPTION_COLUMN:
+                    return (false);
+                case STATE_COLUMN:
+                    return (false);
+                case TRIGGERS_COLUMN:
+                    return (true);
+                case EDIT_COLUMN:
+                    return (true);
+                case DELETE_COLUMN:
+                    return (true);
 			}
 			return (false);
 		}
 
 		public String getColumnName(int col) {
 			switch (col) {
-			case AND_COLUMN:
-				return ("  ");
-			case NOT_COLUMN:
-				return ("  ");
-			case TYPE_COLUMN:
-				return (rbx.getString("ColumnLabelVariableType"));
-			case SNAME_COLUMN:
-				return (rbx.getString("ColumnLabelName"));
-			case DATA1_COLUMN:
-				return (rbx.getString("ColumnLabelData1"));
-			case DATA2_COLUMN:
-				return (rbx.getString("ColumnLabelData2"));
-			case STATE_COLUMN:
-				return (rbx.getString("ColumnLabelState"));
-			case TRIGGERS_COLUMN:
-				return (rbx.getString("ColumnLabelTriggersCalculation"));
-			case DELETE_COLUMN:
-				return ("  ");
-			}
+                case ROWNUM_COLUMN:
+                    return (rbx.getString("ColumnLabelRow"));
+                case AND_COLUMN:
+                    return (rbx.getString("ColumnLabelOperator"));
+                case NOT_COLUMN:
+                    return (rbx.getString("ColumnLabelNot"));
+                case DESCRIPTION_COLUMN:
+                    return (rbx.getString("ColumnLabelDescription"));
+                case STATE_COLUMN:
+                    return (rbx.getString("ColumnLabelState"));
+                case TRIGGERS_COLUMN:
+                    return (rbx.getString("ColumnLabelTriggersCalculation"));
+                case EDIT_COLUMN:
+                    return "";
+                case DELETE_COLUMN:
+                    return "";
+ 			}
 			return "";
 		}
 
 		public int getPreferredWidth(int col) {
-			switch (col) {
-			case AND_COLUMN:
-				return new JTextField(3).getPreferredSize().width;
-			case NOT_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			case TYPE_COLUMN:
-				return new JTextField(14).getPreferredSize().width;
-			case SNAME_COLUMN:
-				return new JTextField(5).getPreferredSize().width;
-			case DATA1_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			case DATA2_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			case STATE_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			case TRIGGERS_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			case DELETE_COLUMN:
-				return new JTextField(4).getPreferredSize().width;
-			}
-			return new JTextField(5).getPreferredSize().width;
+			if (col == DESCRIPTION_COLUMN) {
+                return 500;
+            }
+            return 10;
 		}
 
 		public Object getValueAt(int r, int c) {
-			int rx = r;
-			if (rx >= numStateVariables) {
+			if ( r >= _variableList.size() ) {
 				return null;
 			}
+            ConditionalVariable variable = _variableList.get(r);
 			switch (c) {
-			case AND_COLUMN:
-				if (r == 0)
-					return ("");
-				return rbx.getString("LogicAND");
-			case NOT_COLUMN:
-				return variableNOT[rx];
-			case TYPE_COLUMN:
-				return stateVariableTypeToString(variableType[rx]);
-			case SNAME_COLUMN:
-				return variableName[rx];
-			case DATA1_COLUMN:
-				return variableData1[rx];
-			case DATA2_COLUMN:
-				return variableData2[rx];
-			case STATE_COLUMN:
-				return variableState[rx];
-			case TRIGGERS_COLUMN:
-				return new Boolean(variableTriggersCalculation[rx]);
-			case DELETE_COLUMN:
-				return rbx.getString("ButtonDelete");
+                case ROWNUM_COLUMN:
+                    return (rbx.getString("rowAbrev") + (r + 1));
+                case AND_COLUMN:
+                    if (r==0) {
+                        return "";
+                    }
+                    return variable.getOpernString();
+                case NOT_COLUMN:
+                    if (variable.isNegated())
+                        return rbx.getString("LogicNOT");
+                    break;
+                case DESCRIPTION_COLUMN:
+                    String str = rbx.getString("Test") + " ";
+                    String name = ", " + variable.getName();
+                    String set = rbx.getString("For") + " ";
+                    String type = variable.getTypeString();
+                    switch (variable.getType()) {
+                        case Conditional.TYPE_NONE:
+                            return type;
+                        case Conditional.TYPE_SENSOR_ACTIVE:
+                        case Conditional.TYPE_SENSOR_INACTIVE:
+                            return str = str + rbx.getString("Sensor") + name + set + type;
+                        case Conditional.TYPE_TURNOUT_THROWN:
+                        case Conditional.TYPE_TURNOUT_CLOSED:
+                            return str = str + rbx.getString("Turnout") + name + set + type;
+                        case Conditional.TYPE_CONDITIONAL_TRUE:
+                        case Conditional.TYPE_CONDITIONAL_FALSE:
+                            return str = str + rbx.getString("Conditional") + name + set + type;
+                        case Conditional.TYPE_LIGHT_ON:
+                        case Conditional.TYPE_LIGHT_OFF:
+                            return str = str + rbx.getString("Light") + name + set + type;
+                        case Conditional.TYPE_MEMORY_EQUALS:
+                            return str = str + rbx.getString("Memory")+name+set+type+" "+variable.getDataString();
+                        case Conditional.TYPE_FAST_CLOCK_RANGE:
+                            int begin = variable.getNum1();
+                            int end = variable.getNum2();
+                            return str = str + rbx.getString("FastClock")+set+type
+                                + " "+java.text.MessageFormat.format(rbx.getString("fromTo"),
+                                                                     formatTime(begin / 60, begin - ((begin / 60) * 60)),
+                                                                     formatTime(end / 60, end - ((end / 60) * 60)));
+                        case Conditional.TYPE_SIGNAL_HEAD_RED:
+                        case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                        case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                        case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                        case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                        case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                            return str = rbx.getString("SignalHead")+", "+name+", "+type;
+                    }
+                    return str;
+                case STATE_COLUMN:
+                    switch (variable.getState()) {
+                        case Conditional.TRUE:
+                            return rbx.getString("True"); 
+                        case Conditional.FALSE:
+                            return rbx.getString("False"); 
+                        case Conditional.UNKNOWN:
+                            return rbx.getString("Unknown"); 
+                    }
+                    break;
+                case TRIGGERS_COLUMN:
+                    return new Boolean(variable.doCalculation());
+                case EDIT_COLUMN:
+                    return rbx.getString("ButtonEdit");
+                case DELETE_COLUMN:
+                    return rbx.getString("ButtonDelete");
 			}
 			return null;
 		}
 
-		public void setValueAt(Object value, int row, int col) {
-			int rx = row;
-			if (rx > numStateVariables) {
+		public void setValueAt(Object value, int r, int c) {
+			if ( r >= _variableList.size() ) {
 				return;
 			}
-			switch (col) {
-			case NOT_COLUMN:
-				variableNOT[rx] = (String) value;
-				break;
-			case TYPE_COLUMN:
-				variableTypeChanged(rx, (String) value);
-				break;
-			case SNAME_COLUMN:
-				variableName[rx] = (String) value;
-				break;
-			case DATA1_COLUMN:
-				variableData1[rx] = (String) value;
-				break;
-			case DATA2_COLUMN:
-				variableData2[rx] = (String) value;
-				break;
-			case TRIGGERS_COLUMN:
-				variableTriggersCalculation[rx] = !variableTriggersCalculation[rx];
-				break;
-			case DELETE_COLUMN:
-				deleteVariablePressed(row);
-				break;
-			}
+            ConditionalVariable variable = _variableList.get(r);
+			switch (c) {
+                case AND_COLUMN:
+                    variableOperatorChanged(r, (String)value);
+                    break;
+                case NOT_COLUMN:
+                    variableNegationChanged(r, (String)value);
+                    break;
+                case STATE_COLUMN:
+                    String state = ((String)value).toUpperCase().trim();
+                    if ( state.equals(rbx.getString("True").toUpperCase().trim()) ) {
+                        variable.setState(Conditional.TRUE);
+                    } else  if ( state.equals(rbx.getString("False").toUpperCase().trim()) )  {
+                        variable.setState(Conditional.FALSE);
+                    } else {
+                        variable.setState(Conditional.UNKNOWN);
+                    }
+                    break;
+                case TRIGGERS_COLUMN:
+                    variable.setTriggerCalculation(!variable.doCalculation());
+                    break;
+                case EDIT_COLUMN:
+                    // Use separate Thread so window is created on top
+                    class WindowMaker extends Thread {
+                        int row;
+                        WindowMaker(int r){
+                            row = r;
+                        }
+                        public void run() {
+                                Thread.yield();
+                                makeEditVariableWindow(row);
+                            }
+                        }
+                    WindowMaker t = new WindowMaker(r);
+                    t.start();
+                    break;
+                case DELETE_COLUMN:
+                    deleteVariablePressed(r);
+                    break;
+            }
 		}
 	}
+
+	/**
+	 * Table model for Actions in Edit Conditional window
+	 */
+	public class ActionTableModel extends AbstractTableModel {
+
+		public static final int DESCRIPTION_COLUMN = 0;
+
+		public static final int EDIT_COLUMN = 1;
+
+		public static final int DELETE_COLUMN = 2;
+
+		public Class getColumnClass(int c) {
+            if (c == EDIT_COLUMN || c ==DELETE_COLUMN )
+            {
+                return JButton.class;
+            }
+			return super.getColumnClass(c);
+		}
+
+		public int getColumnCount() {
+			return 3;
+		}
+
+		public int getRowCount() {
+			return _actionList.size();
+		}
+
+		public boolean isCellEditable(int r, int c) {
+            if (c == DESCRIPTION_COLUMN)  {
+                return false;
+            }
+			if ( _inReorderMode && (c ==EDIT_COLUMN || r < _nextInOrder) ) {
+                return false;
+			}
+            return true;
+        }
+
+		public String getColumnName(int col) {
+			if ( col == DESCRIPTION_COLUMN)
+            {
+                return rbx.getString("LabelActionDescription");
+            }
+			return "";
+		}
+
+		public int getPreferredWidth(int col) {
+            if (col == DESCRIPTION_COLUMN)
+            {
+                return 680;
+            }
+            return 20;
+        }
+
+        public Object getValueAt(int row, int col) {
+            if (row >= _actionList.size()) {
+                return null;
+            }
+			switch (col) {
+                case DESCRIPTION_COLUMN:
+                    ConditionalAction action = (ConditionalAction)_actionList.get(row);
+                    int type =action.getType();
+                    String str = action.getOptionString()+", "+ action.getTypeString();
+                    String name = action.getDeviceName();
+                    if (name.length() > 0) {
+                        switch (type) {
+                            case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+                            case Conditional.ACTION_SET_SIGNAL_HELD:
+                            case Conditional.ACTION_CLEAR_SIGNAL_HELD:
+                            case Conditional.ACTION_SET_SIGNAL_DARK:
+                            case Conditional.ACTION_SET_SIGNAL_LIT:
+                            case Conditional.ACTION_TRIGGER_ROUTE:
+                            case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+                            case Conditional.ACTION_SET_MEMORY:
+                            case Conditional.ACTION_ENABLE_LOGIX:
+                            case Conditional.ACTION_DISABLE_LOGIX:
+                            case Conditional.ACTION_COPY_MEMORY:
+                            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                                str = str + ", " + name;
+                                break;
+                            case Conditional.ACTION_SET_SENSOR:
+                            case Conditional.ACTION_SET_TURNOUT:
+                            case Conditional.ACTION_SET_LIGHT:
+                            case Conditional.ACTION_LOCK_TURNOUT:
+                            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                            case Conditional.ACTION_DELAYED_TURNOUT:
+                            case Conditional.ACTION_DELAYED_SENSOR:
+                                str = str + ", " + name + " " + rbx.getString("to")
+                                      + " " + action.getActionDataString();
+                                break;
+                        }
+                    }
+                    String data = action.getActionString();
+                    if (data.length() > 0)
+                    {
+                        switch (type)
+                        {
+                            case Conditional.ACTION_SET_MEMORY:
+                            case Conditional.ACTION_COPY_MEMORY:
+                                str = str + " " + rbx.getString("to")+ " " + data + ".";
+                                break;
+                            case Conditional.ACTION_PLAY_SOUND:
+                            case Conditional.ACTION_RUN_SCRIPT:
+                                str = str + " " + rbx.getString("FromFile")+ " "+ data+ ".";
+                                break;
+                            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                                str = str + " " + rbx.getString("to")+ " "+ data+ ".";
+                                break;
+                            case Conditional.ACTION_DELAYED_TURNOUT:
+                            case Conditional.ACTION_DELAYED_SENSOR:
+                                str = str + rbx.getString("After") + " ";
+                                try {
+                                    int t = Integer.parseInt(data);
+                                    str = str + data + " " + rbx.getString("Seconds")+ ".";
+                                } catch (NumberFormatException nfe) { 
+                                    str = str + data + " " + rbx.getString("ValueInMemory")
+                                         + " " + rbx.getString("Seconds") + ".";
+                                }
+                                break;
+                            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                                try {
+                                    int t = Integer.parseInt(data);
+                                    str = str + " " + rbx.getString("to")+ " "+ data + ".";
+                                } catch (NumberFormatException nfe) { 
+                                    str = str + " " + rbx.getString("to") + " " + data + " "
+                                        + rbx.getString("ValueInMemory") + ".";
+                                }
+                                break;
+                        }
+                    }
+                    int time = action.getActionData();
+                    switch (type)
+                    {
+                        case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                        case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                            str = str + " " + rbx.getString("to")+ " " + time + ".";
+                            break;
+                        case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+                            str = str + " " +rbx.getString("to")+ " " +
+                                  formatTime(time / 60, time - ((time / 60) * 60));
+                            break;
+                    }
+					return str;
+                case EDIT_COLUMN:
+                    return rbx.getString("ButtonEdit");
+                case DELETE_COLUMN:
+                    if (!_inReorderMode) {
+                        return rb.getString("ButtonDelete");
+                    } else if (_nextInOrder == 0) {
+                        return rbx.getString("ButtonFirst");
+                    } else if (_nextInOrder <= row) {
+                        return rbx.getString("ButtonNext");
+                    }
+                    return Integer.toString(row + 1);
+			}
+            return null;
+        }
+
+        public void setValueAt(Object value, int row, int col) {
+            if (col == EDIT_COLUMN) {
+                // Use separate Thread so window is created on top
+                class WindowMaker extends Thread {
+                    int row;
+                    WindowMaker(int r){
+                        row = r;
+                    }
+                    public void run() {
+                            Thread.yield();
+                            makeEditActionWindow(row);
+                        }
+                    }
+                WindowMaker t = new WindowMaker(row);
+                t.start();
+            }
+            else if (col == DELETE_COLUMN) {
+				if (_inReorderMode) 
+					swapActions(row);
+				else
+                    deleteActionPressed(row);
+            }
+        }
+    }
 
 	static final org.apache.log4j.Category log = org.apache.log4j.Category
 			.getInstance(LogixTableAction.class.getName());

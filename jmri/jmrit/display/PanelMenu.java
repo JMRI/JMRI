@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -250,6 +250,18 @@ public class PanelMenu extends JMenu {
 			try{
 				LayoutEditor le = (LayoutEditor)panelsList.get(i);
 				lePanelsList.add((Object)le);
+			} catch(Exception e){
+			}
+		}				
+		return lePanelsList;
+	}
+	
+	public ArrayList getPanelEditorPanelList() {
+		ArrayList lePanelsList = new ArrayList();
+		for (int i = 0; (i<panelsList.size()); i++) {
+			try{
+				PanelEditor le = (PanelEditor)panelsList.get(i);
+				lePanelsList.add(le);
 			} catch(Exception e){
 			}
 		}				

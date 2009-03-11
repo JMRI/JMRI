@@ -4,8 +4,11 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.Conditional;
+import jmri.ConditionalAction;
+import jmri.ConditionalVariable;
 import jmri.ConditionalManager;
 import jmri.DefaultConditionalManager;
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 
@@ -15,7 +18,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -33,8 +36,7 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
         setStoreElementClass(conditionals);
         ConditionalManager tm = (ConditionalManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
-                                    tm.getSystemNameList().iterator();
+            java.util.Iterator iter = tm.getSystemNameList().iterator();
             
             // don't return an element if there are not conditionals to include
             if (!iter.hasNext()) return null;
@@ -45,54 +47,58 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
                 if (sname==null) log.error("System name null during store");
                 log.debug("conditional system name is "+sname);
                 Conditional c = tm.getBySystemName(sname);
-                Element elem = new Element("conditional")
-                            .setAttribute("systemName", sname);
+                Element elem = new Element("conditional").setAttribute("systemName", sname);
                 
                 // store common parts
                 storeCommon(c, elem);
+                elem.setAttribute("antecedent", c.getAntecedentExpression());
+                elem.setAttribute("logicType", Integer.toString(c.getLogicType()));
 
 				// save child state variables
-				int numStateVariables = c.getNumStateVariables();
-				if (numStateVariables>0) {
-					Element cElem = null;
-					for (int k = 0;k<numStateVariables;k++) {
-						cElem = new Element("conditionalStateVariable");
-						cElem.setAttribute("operator",Integer.toString(
-								c.getStateVariableOperator(k)));
-						cElem.setAttribute("type",Integer.toString(
-								c.getStateVariableType(k)));
-						cElem.setAttribute("systemName",
-								c.getStateVariableName(k));
-						cElem.setAttribute("dataString",
-								c.getStateVariableDataString(k));
-						cElem.setAttribute("num1",Integer.toString(
-								c.getStateVariableNum1(k)));
-						cElem.setAttribute("num2",Integer.toString(
-								c.getStateVariableNum2(k)));
-						if (c.getStateVariableTriggersCalculation(k)) 
-							cElem.setAttribute("triggersCalc","yes");
-						else
-							cElem.setAttribute("triggersCalc","no");						
-						elem.addContent(cElem);
-					}
-				}
+                ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                for (int k=0; k < variableList.size(); k++) {
+                    ConditionalVariable variable = variableList.get(k); 
+                    Element vElem = new Element("conditionalStateVariable");
+                    int oper = variable.getOpern();
+                    if (oper == Conditional.OPERATOR_AND && variable.isNegated()) {
+                        oper = Conditional.OPERATOR_AND_NOT;    // backward compatibility
+                    } else if (oper == Conditional.OPERATOR_NONE && variable.isNegated()) {
+                        oper = Conditional.OPERATOR_NOT;        // backward compatibility
+                    }
+                    vElem.setAttribute("operator",Integer.toString(oper));
+                    if (variable.isNegated())
+                        vElem.setAttribute("negated","yes");
+                    else
+                        vElem.setAttribute("negated","no");
+                    vElem.setAttribute("type",Integer.toString(variable.getType()));
+                    vElem.setAttribute("systemName", variable.getName());
+                    vElem.setAttribute("dataString", variable.getDataString());
+                    vElem.setAttribute("num1",Integer.toString(variable.getNum1()));
+                    vElem.setAttribute("num2",Integer.toString(variable.getNum2()));
+                    if (variable.doCalculation()) 
+                        vElem.setAttribute("triggersCalc","yes");
+                    else
+                        vElem.setAttribute("triggersCalc","no");						
+                    elem.addContent(vElem);
+                }
 				// save action information
-				int[] opt = {0,0};
-				int[] delay = {0,0};
-				int[] type = {0,0};
-				String[] name = {" "," "};
-				int[] data = {0,0};
-				String[] dataString = {" "," "};
-				c.getAction(opt,delay,type,name,data,dataString);
-				Element aElem = null;
-				for (int k = 0;k<2;k++) {
-					aElem = new Element("conditionalAction");
-					aElem.setAttribute("option",Integer.toString(opt[k]));
-					aElem.setAttribute("delay",Integer.toString(delay[k]));
-					aElem.setAttribute("type",Integer.toString(type[k]));
-					aElem.setAttribute("systemName",name[k]);
-					aElem.setAttribute("data",Integer.toString(data[k]));
-					aElem.setAttribute("string",dataString[k]);
+                ArrayList actionList = c.getCopyOfActions();
+				for (int k=0; k < actionList.size(); k++) {
+                    ConditionalAction action = (ConditionalAction)actionList.get(k);
+					Element aElem = new Element("conditionalAction");
+					aElem.setAttribute("option",Integer.toString(action.getOption()));
+					aElem.setAttribute("type",Integer.toString(action.getType()));
+					aElem.setAttribute("systemName",action.getDeviceName());
+					aElem.setAttribute("data",Integer.toString(action.getActionData()));
+                    // To allow regression of config files back to previous releases
+                    // add "delay" attribute 
+                    try {
+                        Integer.parseInt(action.getActionString());
+                        aElem.setAttribute("delay",action.getActionString());
+                    } catch (NumberFormatException nfe) {
+                        aElem.setAttribute("delay","0");
+                    }
+					aElem.setAttribute("string",action.getActionString());
 					elem.addContent(aElem);
 				}
 				conditionals.addContent(elem);
@@ -157,96 +163,150 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
             if (c!=null) {
                 // load common parts
                 loadCommon(c, (Element)(conditionalList.get(i)));
+
+                String ant = "";
+                int logicType = Conditional.ALL_AND;
+                if (((Element)(conditionalList.get(i))).getAttribute("antecedent") != null)
+                {
+                    ant = ((Element)(conditionalList.get(i))).getAttribute("antecedent").getValue();
+                }
+                if (((Element)(conditionalList.get(i))).getAttribute("logicType") != null)
+                {
+                    logicType = Integer.parseInt(
+                        ((Element)(conditionalList.get(i))).getAttribute("logicType").getValue());
+                }
+                c.setLogicType(logicType, ant);
                 
 				// load state variables, if there are any
                 List conditionalVarList = ((Element)(conditionalList.get(i))).
 												getChildren("conditionalStateVariable");
-				if (conditionalVarList.size()>0) {
-					// load state variables
-					int[] svOperator = new int[Conditional.MAX_STATE_VARIABLES];
-					int[] svType = new int[Conditional.MAX_STATE_VARIABLES];
-					String[] svName = new String[Conditional.MAX_STATE_VARIABLES];
-					String[] svDataString = new String[Conditional.MAX_STATE_VARIABLES];
-					int[] svNum1 = new int[Conditional.MAX_STATE_VARIABLES];
-					int[] svNum2 = new int[Conditional.MAX_STATE_VARIABLES];
-					boolean[] svTriggersCalc = new boolean[Conditional.MAX_STATE_VARIABLES];
-					int numVariables = conditionalVarList.size();
-					// check if number is reasonable
-					if (numVariables>Conditional.MAX_STATE_VARIABLES) {
-						log.error("too many state variables found for conditional "+sysName);
-						numVariables = Conditional.MAX_STATE_VARIABLES;
-					}
-                    for (int n=0; n<numVariables; n++) {
-                        if ( ((Element)(conditionalVarList.get(n))).getAttribute("operator") == null) {
-                            log.warn("unexpected null in operator "+((Element)(conditionalVarList.get(n)))+
-								" "+((Element)(conditionalVarList.get(n))).getAttributes());
-                            break;
+
+				if (conditionalVarList.size() == 0) {
+                    log.error("No state variables found for conditional "+sysName);
+                }
+                ArrayList <ConditionalVariable> variableList = new ArrayList <ConditionalVariable> ();
+                for (int n=0; n<conditionalVarList.size(); n++)
+                {
+                    ConditionalVariable variable = new ConditionalVariable();
+                    if ( ((Element)(conditionalVarList.get(n))).getAttribute("operator") == null) {
+                        log.warn("unexpected null in operator "+((Element)(conditionalVarList.get(n)))+
+                            " "+((Element)(conditionalVarList.get(n))).getAttributes());
+                    } else {
+                        int oper = Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                                                        .getAttribute("operator").getValue());
+                        if (oper == Conditional.OPERATOR_AND_NOT) {
+                            variable.setNegation(true);
+                            oper = Conditional.OPERATOR_AND; 
+                        } else if (oper == Conditional.OPERATOR_NOT) {
+                            variable.setNegation(true);
+                            oper = Conditional.OPERATOR_NONE; 
                         }
-						svOperator[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
-														.getAttribute("operator").getValue());
-						svType[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
-														.getAttribute("type").getValue());
-                        svName[n] = ((Element)(conditionalVarList.get(n)))
-														.getAttribute("systemName").getValue();
-                        svDataString[n] = ((Element)(conditionalVarList.get(n)))
-														.getAttribute("dataString").getValue();
-						svNum1[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
-														.getAttribute("num1").getValue());
-						svNum2[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
-														.getAttribute("num2").getValue());
-						svTriggersCalc[n] = true;
-						if (((Element)(conditionalVarList.get(n))).
-													getAttribute("triggersCalc") != null) {
-							if ("no".equals(((Element)(conditionalVarList.get(n)))
-													.getAttribute("triggersCalc").getValue()))
-								svTriggersCalc[n] = false;
-						}
-					}
-					// add state variables to conditional
-					c.setStateVariables(svOperator,svType,svName,svDataString,svNum1,
-															svNum2,svTriggersCalc,numVariables);
+                        variable.setOpern(oper);
+                    }
+                    if ( ((Element)(conditionalVarList.get(n))).getAttribute("negated") != null) {
+                        if ("yes".equals(((Element)(conditionalVarList.get(n)))
+                                                .getAttribute("negated").getValue()))
+                            variable.setNegation(true);
+                        else
+                            variable.setNegation(false);
+                     }
+                    variable.setType(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                                                    .getAttribute("type").getValue()));
+                    variable.setName(((Element)(conditionalVarList.get(n)))
+                                                    .getAttribute("systemName").getValue());
+                    if (((Element)(conditionalVarList.get(n))).getAttribute("dataString") != null) {
+                        variable.setDataString(((Element)(conditionalVarList.get(n)))
+                                                        .getAttribute("dataString").getValue());
+                    }
+                    if (((Element)(conditionalVarList.get(n))).getAttribute("num1") != null) {
+                        variable.setNum1(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                                                        .getAttribute("num1").getValue()));
+                    }
+                    if (((Element)(conditionalVarList.get(n))).getAttribute("num2") != null) {
+                        variable.setNum2(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                                                        .getAttribute("num2").getValue()));
+                    }
+                    variable.setTriggerCalculation(true);
+                    if (((Element)(conditionalVarList.get(n))).getAttribute("triggersCalc") != null) {
+                        if ("no".equals(((Element)(conditionalVarList.get(n)))
+                                                .getAttribute("triggersCalc").getValue()))
+                            variable.setTriggerCalculation(false);
+                    }
+                    variableList.add(variable);
 				}
+                c.setStateVariables(variableList);
+
 				// load actions - there better be some
                 List conditionalActionList = ((Element)(conditionalList.get(i))).
 												getChildren("conditionalAction");
-				if (conditionalActionList.size()>0) {
-					// load actions
-					int[] opt = {0,0};
-					int[] delay = {0,0};
-					int[] type = {Conditional.ACTION_NONE,Conditional.ACTION_NONE};
-					String[] aName = {" "," "};
-					int[] data = {0,0};
-					String[] dataString = {" "," "};						
-					int num = conditionalActionList.size();
-					// check if number is within limit of 2					
-					if (num>2) {
-						log.error("more than 2 actions found for conditional "+sysName);
-						num = 2;
-					}
-					for (int n = 0;n<num;n++) {
-                        if ( ((Element)(conditionalActionList.get(n))).getAttribute("option") == null) {
-                            log.warn("unexpected null in option "+((Element)(conditionalActionList.get(n)))+
-								" "+((Element)(conditionalActionList.get(n))).getAttributes());
-                            break;
+
+				if (conditionalActionList.size() == 0) {
+                    log.warn("No actions found for conditional "+sysName);
+                }
+                ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
+                org.jdom.Attribute attr = null;
+                for (int n=0; n<conditionalActionList.size(); n++)
+                {
+                    ConditionalAction action = new ConditionalAction();
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("option");
+                    if ( attr != null) {
+                        action.setOption(Integer.parseInt(attr.getValue()));
+                    }
+                    else {
+                        log.warn("unexpected null in option "+((Element)(conditionalActionList.get(n)))+
+                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                    }
+                    // actionDelay is removed.  delay data is stored as a String to allow
+                    // such data be referenced by internal memory.
+                    // For backward compatibility, set delay "int" as a string
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("delay");
+                    if (attr != null)
+                    {
+                        action.setActionString(attr.getValue());
+                    }
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("type");
+                    if ( attr != null) {
+                        action.setType(Integer.parseInt(attr.getValue()));
+                    }
+                    else {
+                        log.warn("unexpected null in type "+((Element)(conditionalActionList.get(n)))+
+                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                    }
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("systemName");
+                    if ( attr != null) {
+                        action.setDeviceName(attr.getValue());
+                    }
+                    else {
+                        log.warn("unexpected null in systemName "+((Element)(conditionalActionList.get(n)))+
+                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                    }
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("data");
+                    if ( attr != null) {
+                        action.setActionData(Integer.parseInt(attr.getValue()));
+                    }
+                    else {
+                        log.warn("unexpected null in action data "+((Element)(conditionalActionList.get(n)))+
+                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                    }
+                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("string");
+                    if ( attr != null) {
+                        String str = attr.getValue().trim();
+                        if (str.length() > 0 )
+                        {
+                            action.setActionString(str);
                         }
-						opt[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
-														.getAttribute("option").getValue());
-						delay[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
-														.getAttribute("delay").getValue());
-						type[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
-														.getAttribute("type").getValue());
-						aName[n] = ((Element)(conditionalActionList.get(n)))
-														.getAttribute("systemName").getValue();
-						data[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
-														.getAttribute("data").getValue());
-						dataString[n] = ((Element)(conditionalActionList.get(n)))
-														.getAttribute("string").getValue();
-					}
-					// set actions in conditional
-					c.setAction(opt,delay,type,aName,data,dataString);
-				}
-			}	
-	    }
+                    }
+                    else {
+                        log.warn("unexpected null in action string "+((Element)(conditionalActionList.get(n)))+
+                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                    }
+                    actionList.add(action);
+                }
+			    c.setAction(actionList);
+            } else {
+                log.error("createNewConditional failed for " + sysName + ", " +userName);
+            }
+        }
 	}
 
     /**

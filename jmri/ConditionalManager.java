@@ -24,7 +24,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public interface ConditionalManager extends Manager {
 
@@ -59,7 +59,9 @@ public interface ConditionalManager extends Manager {
      * @return null if no match found
      */
     public Conditional getConditional(Logix x,String name);
+    public Conditional getConditional(String name);
 
+    public Conditional getByUserName(String s);
     public Conditional getByUserName(Logix x,String s);
     public Conditional getBySystemName(String s);
     
