@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -230,7 +231,14 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				train.printIfSelected();
+				if(train.getBuild()){
+					if(!train.printManifest()){
+						String string = "Need to build train (" +train.getName()+ ") before printing manifest";
+						JOptionPane.showMessageDialog(null, string,
+								"Can not print manifest",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		}
 		if (ae.getSource() == printSwitchButton){
@@ -243,6 +251,12 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = getTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
+				if (train.getBuild() && train.getBuilt() && !train.getPrinted())
+					if (JOptionPane.showConfirmDialog(null,
+							"Warning, train manifest hasn't been printed!",
+							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+						return;
+					}
 				train.terminateIfSelected();
 			}
 		}

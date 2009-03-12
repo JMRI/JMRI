@@ -48,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -474,7 +474,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == resetButton){
 			if (_train != null)
-				_train.reset();
+				if(!_train.reset())			
+					JOptionPane.showMessageDialog(null,
+							"Train is in route to "+_train.getTrainTerminatesName(), "Can not reset train!",
+							JOptionPane.ERROR_MESSAGE);
 		}
 		if (ae.getSource() == addRoadButton){
 			if (_train != null){
