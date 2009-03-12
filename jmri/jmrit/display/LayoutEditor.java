@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -70,6 +70,13 @@ public class LayoutEditor extends JmriJFrame {
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
 	final public static Integer MARKERS   = new Integer(10); 		
+
+    // Scroll bar settings
+    final public static int SCROLL_NONE       = 0;
+    final public static int SCROLL_BOTH       = 1;
+    final public static int SCROLL_HORIZONTAL = 2;
+    final public static int SCROLL_VERTICAL   = 3;
+
    // size of point boxes
 	private static final double SIZE = 3.0;
 	private static final double SIZE2 = 6.0;  // must be twice SIZE
@@ -193,7 +200,12 @@ public class LayoutEditor extends JmriJFrame {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
-    private JCheckBoxMenuItem scrollOff = null;
+    private JMenu scrollMenu = null;
+    private ButtonGroup scrollGroup = null;
+    private JRadioButtonMenuItem scrollBoth = null;
+    private JRadioButtonMenuItem scrollNone = null;
+    private JRadioButtonMenuItem scrollHorizontal = null;
+    private JRadioButtonMenuItem scrollVertical = null;
 	private JCheckBoxMenuItem snapToGridOnAddItem = null;
 	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
 	private JCheckBoxMenuItem antialiasingOnItem = null;
@@ -285,7 +297,7 @@ public class LayoutEditor extends JmriJFrame {
     private boolean savedControlLayout = true;
     private boolean savedAnimatingLayout = true;
 	private boolean savedShowHelpBar = false;
-	private boolean savedSliders = false;
+	private int savedSliders = SCROLL_NONE;
 	private JScrollPane js;
 	// Antialiasing rendering
 	private static final RenderingHints antialiasing = new RenderingHints(
@@ -544,8 +556,8 @@ public class LayoutEditor extends JmriJFrame {
 
 //        JScrollPane js = new JScrollPane(targetPanel); //RDP
         js = new JScrollPane(targetPanel);
-        js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
-        js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
+        js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		vertScroll = js.getVerticalScrollBar();
 		horScroll = js.getHorizontalScrollBar();
 
@@ -837,17 +849,54 @@ public class LayoutEditor extends JmriJFrame {
         snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 
 		// Show/Hide Scroll Bars
-		scrollOff = new JCheckBoxMenuItem(rb.getString("ScrollBarsOff"));
-        optionMenu.add(scrollOff);
-        scrollOff.addActionListener(new ActionListener() {
+        scrollMenu = new JMenu(rb.getString("ScrollBarsSubMenu"));
+        optionMenu.add(scrollMenu);
+        scrollGroup = new ButtonGroup();
+        scrollBoth = new JRadioButtonMenuItem(rb.getString("ScrollBoth"));
+        scrollGroup.add(scrollBoth);
+        scrollMenu.add(scrollBoth);
+        scrollBoth.setSelected(savedSliders==SCROLL_BOTH);
+        scrollBoth.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                	savedSliders = !scrollOff.isSelected();
-                	setScroll(savedSliders);
-					repaint();
+                    savedSliders = SCROLL_BOTH;
+                    setScroll(savedSliders);
+                    repaint();
                 }
-            });                    
-        scrollOff.setSelected(savedSliders);
-       
+            });
+        scrollNone = new JRadioButtonMenuItem(rb.getString("ScrollNone"));
+        scrollGroup.add(scrollNone);
+        scrollMenu.add(scrollNone);
+        scrollNone.setSelected(savedSliders==SCROLL_NONE);
+        scrollNone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    savedSliders = SCROLL_NONE;
+                    setScroll(savedSliders);
+                    repaint();
+                }
+            });
+        scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
+        scrollGroup.add(scrollHorizontal);
+        scrollMenu.add(scrollHorizontal);
+        scrollHorizontal.setSelected(savedSliders==SCROLL_HORIZONTAL);
+        scrollHorizontal.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    savedSliders = SCROLL_HORIZONTAL;
+                    setScroll(savedSliders);
+                    repaint();
+                }
+            });
+        scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
+        scrollGroup.add(scrollVertical);
+        scrollMenu.add(scrollVertical);
+        scrollVertical.setSelected(savedSliders==SCROLL_VERTICAL);
+        scrollVertical.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    savedSliders = SCROLL_VERTICAL;
+                    setScroll(savedSliders);
+                    repaint();
+                }
+            });
+
         // antialiasing
 		antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
@@ -1981,12 +2030,12 @@ public class LayoutEditor extends JmriJFrame {
 	}
     
     public void setEditMode(boolean visible) {
-    	boolean restoreScroll = savedSliders;
+    	int restoreScroll = savedSliders;
         editMode = visible;
         topEditBar.setVisible(visible);
         setAllEditable(visible);
         if (visible) {
-        	setScroll(true);
+        	setScroll(SCROLL_BOTH);
         	savedSliders = restoreScroll;
         	helpBar.setVisible(showHelpBar);
         } else {
@@ -4305,18 +4354,46 @@ public class LayoutEditor extends JmriJFrame {
 		editModeItem.setSelected(editMode);
 		setEditMode(editMode);
 	}
-	public void setScroll(boolean state) {
-		if (state) {
-			js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
-			js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
-		} else {
-			if (!editMode) {
-				js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_NEVER);
-				js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_NEVER);
-			}
-		}
-		savedSliders = state;
-		scrollOff.setSelected(!savedSliders);
+	public void setScroll(String state) {
+        if (state.equals("none") || state.equals("no")) setScroll(SCROLL_NONE, true);
+        else if (state.equals("horizontal")) setScroll(SCROLL_HORIZONTAL, true);
+        else if (state.equals("vertical")) setScroll(SCROLL_VERTICAL, true);
+        else setScroll(SCROLL_BOTH, true); // anything else is both
+    }
+
+    public void setScroll(int state) {
+        setScroll(state, false);
+    }
+    
+    public void setScroll(int state, boolean ignoreEditMode) {
+        if (!editMode || ignoreEditMode) {
+            switch (state) {
+                case SCROLL_NONE:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    scrollNone.setSelected(true);
+                    break;
+                case SCROLL_BOTH:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                    scrollBoth.setSelected(true);
+                    break;
+                case SCROLL_HORIZONTAL:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                    scrollHorizontal.setSelected(true);
+                    break;
+                case SCROLL_VERTICAL:
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    scrollVertical.setSelected(true);
+                    break;
+            }
+        } else if (editMode) {
+			js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);            
+        }
+        savedSliders = state;
 	}
     public boolean isPositionable() {
         return positionable;
@@ -4333,7 +4410,30 @@ public class LayoutEditor extends JmriJFrame {
 	public int getWindowHeight() {return windowHeight;}
 	public int getUpperLeftX() {return upperLeftX;}
 	public int getUpperLeftY() {return upperLeftY;}
-	public boolean getScroll() {return savedSliders;}
+	public boolean getScroll() {
+        // deprecated but kept to allow opening files
+        // on version 2.5.1 and earlier
+        if (savedSliders==SCROLL_NONE) return false;
+        else return true;
+    }
+    public String getScrollable() {
+        String value = new String();
+        switch (savedSliders) {
+            case SCROLL_NONE:
+                value = "none";
+                break;
+            case SCROLL_BOTH:
+                value = "both";
+                break;
+            case SCROLL_HORIZONTAL:
+                value = "horizontal";
+                break;
+            case SCROLL_VERTICAL:
+                value = "vertical";
+                break;
+        }
+        return value;
+    }
 	public int getMainlineTrackWidth() {
 		int wid = (int)mainlineTrackWidth;
 		return wid;

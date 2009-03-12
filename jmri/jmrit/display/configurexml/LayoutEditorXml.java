@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -46,7 +46,8 @@ public class LayoutEditorXml implements XmlAdapter {
         panel.setAttribute("windowwidth", ""+p.getWindowWidth());
         panel.setAttribute("panelheight", ""+p.getLayoutHeight());
         panel.setAttribute("panelwidth", ""+p.getLayoutWidth());
-        panel.setAttribute("sliders", ""+(p.getScroll()?"yes":"no"));
+        panel.setAttribute("sliders", ""+(p.getScroll()?"yes":"no")); // deprecated
+        panel.setAttribute("scrollable", ""+p.getScrollable());
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
@@ -324,9 +325,11 @@ public class LayoutEditorXml implements XmlAdapter {
         }
 
         // set contents state
-        boolean slValue = true;
+        String slValue = "both";
         if ((a = element.getAttribute("sliders"))!=null && a.getValue().equals("no"))
-        	slValue = false;
+        	slValue = "none";
+        if ((a = element.getAttribute("scrollable"))!=null)
+            slValue = a.getValue();
 
         boolean edValue = true;
         if ((a = element.getAttribute("editable"))!=null && a.getValue().equals("no"))

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-2.dtd,v 1.6 2009-03-11 17:31:46 matthewharris Exp $ -->
+<!-- $Id: layout-config-2-5-2.dtd,v 1.7 2009-03-12 17:37:56 matthewharris Exp $ -->
 
 <!-- This DTD is part of version 2.5.2 development.  Do not modify it       -->
 <!-- after version 2.5.2 is released.  For more information,                -->
@@ -590,7 +590,8 @@
   <!ATTLIST LayoutEditor xoverlong		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor xoverhwid		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor xovershort		CDATA #IMPLIED>
-  <!ATTLIST LayoutEditor sliders		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor sliders		(yes|no) "yes"> <!-- deprecated -->
+  <!ATTLIST LayoutEditor scrollable		(none|both|horizontal|vertical) "both" >  <!-- scrollbars present on LayoutEditor window -->
   <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
