@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: LocoFile.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: LocoFile.shtml,v 1.2 2009-03-12 22:59:03 matthewharris Exp $ -->
 <title>JMRI: DecoderPro User Guide - Locomotive Files</title>
 
 <!-- Style -->
@@ -32,7 +32,7 @@ First, the XML contains some header information that describes the format & hist
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
 &lt;!DOCTYPE locomotive-config SYSTEM "locomotive-config.dtd"&gt;<br>
 &lt;locomotive-config&gt;<br>
-&nbsp;&nbsp;&lt;!--Written by JMRI version 1.6.1 on Sat Oct 08 07:00:30 PDT 2005 $Id: LocoFile.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $--&gt;
+&nbsp;&nbsp;&lt;!--Written by JMRI version 1.6.1 on Sat Oct 08 07:00:30 PDT 2005 $Id: LocoFile.shtml,v 1.2 2009-03-12 22:59:03 matthewharris Exp $--&gt;
 </p>
 
 This is followed by the summary information for the entry.  Most of this
@@ -71,8 +71,8 @@ future, we can sort out what's actually in the decoder.
 </p>
 
 
-</div>
     
 <!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Debug.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: Debug.shtml,v 1.2 2009-03-12 22:59:03 matthewharris Exp $ -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
 <!-- Style -->
@@ -80,8 +80,8 @@ file.  DTD's can be found in the dtd subdirectory of the xml directory.
 </dd>
 </DL>
 
-</div>
     
 <!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>
