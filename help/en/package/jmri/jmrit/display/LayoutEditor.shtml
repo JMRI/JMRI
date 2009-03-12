@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.16 2009-03-07 20:09:27 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.17 2009-03-12 18:15:47 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -394,10 +394,14 @@ selection is described below.
 	points of turnouts or level crossings are moved, their coordinates are also 
 	constrained to grid points. For icons and labels, the coordinates of upper 
 	left corners are constrained to grid points.</li>
-	<li><b>Scroll Bars Off</b> - If this item is checked, the horizontal and
+	<li><b>Scroll Bars Off (JMRI 2.5.1 and earlier)</b> - If this item is checked, the horizontal and
 	vertical scroll bars are removed. You can still pan the display by holding
 	down the left mouse button and dragging outside the window in the direction you
 	want to pan. The scroll bars are always enabled during edit mode.</li>
+	<li><b>Show scrollbars (JMRI 2.5.2 and later)</b> - This sub-menu allows you
+	to choose which scrollbars to display. You can still pan the display by
+	holding down the left mouse button and dragging outside the window in the
+	direction you want to pan. The scrollbars are always enabled during edit mode.</li>
 	<li> <b>Enable antialiasing (Smoother lines)</b> - If this item is selected,
 	the panel is displayed (rendered) with antialiasing enabled. Antialiasing 
 	smoothes out lines in the drawn panel, but it does take longer to refresh
