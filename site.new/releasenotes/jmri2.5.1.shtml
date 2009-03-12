@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.17 2009-02-19 17:12:18 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.18 2009-03-12 17:12:00 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -87,6 +87,12 @@ To see JMRI's future plans for this and other compatibility issues, please see t
 <p>
 The way you drag things in the Layout Editor has changed if you
 are using a Linux computer. 
+
+<h3>Windows specific issues with this version:</h3>
+
+<p>Problems have been experienced when running on 64 bit versions of Windows when more than 2GBytes of RAM is installed. An updated version of the LaunchJMRI.exe file can be <a href="http://jmri.cvs.sourceforge.net/viewvc/*checkout*/jmri/scripts/WinInstallFiles/LaunchJMRI.exe?revision=1.5">downloaded from the JMRI Source Code repository</a>. This should then replace the version installed in "C:\Program Files (x86)\JMRI".</p>
+
+<p>Problems have been experienced when running on Windows 98 and Windows ME, causing problems when trying to shutdown the computer. An updated version of the LaunchJMRI.exe file can be <a href="http://jmri.cvs.sourceforge.net/viewvc/*checkout*/jmri/scripts/WinInstallFiles/LaunchJMRI.exe?revision=1.5">downloaded from the JMRI Source Code repository</a>. This should then replace the version installed in "C:\Program Files\JMRI".</p>
 
 <h3>Warnings from older versions:</h3>
 
