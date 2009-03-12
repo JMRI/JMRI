@@ -50,7 +50,7 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @version $Revision: 1.93 $
+ * @version $Revision: 1.94 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1200,15 +1200,15 @@ public class PanelEditor extends JmriJFrame {
                     js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                     break;
                 case SCROLL_BOTH:
-                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                     break;
                 case SCROLL_HORIZONTAL:
                     js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                     break;
                 case SCROLL_VERTICAL:
-                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
                     js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                     break;
             }

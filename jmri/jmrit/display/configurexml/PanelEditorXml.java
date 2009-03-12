@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -156,8 +156,8 @@ public class PanelEditorXml implements XmlAdapter {
         panel.setPanelMenu(value);
 
         String state = new String("both");
-        if ((element.getAttribute("scrollable"))!=null)
-            state = element.getAttribute("scrollable").getValue();
+        if ((a = element.getAttribute("scrollable"))!=null)
+            state = a.getValue();
         panel.setScrollable(state);
 
         // display the results, with the editor in back
