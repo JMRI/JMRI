@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.34 $
+ * @version             $Revision: 1.35 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -60,7 +60,8 @@ public class TrainBuilder extends TrainCommon{
 	Track departStageTrack;		// departure staging track (null if not staging)
 	Location terminateLocation; // train terminate at this location
 	Track terminateStageTrack; 	// terminate staging track (null if not staging)
-	boolean success;	// true when enough cars have been picked up from a location
+	boolean success;		// true when enough cars have been picked up from a location
+	boolean jOptionPane;	// when true, JOptionPane enabled (interactive mode)
 	
 	// managers 
 	CarManager carManager = CarManager.instance();
@@ -80,8 +81,9 @@ public class TrainBuilder extends TrainCommon{
 	 * 9. Ignore track direction when train is a local (serves one location)
 	 *
 	 */
-	public void build(Train train){
+	public void build(Train train, boolean jOptionPane){
 		this.train = train;
+		this.jOptionPane = jOptionPane;
 		train.setStatus(BUILDING);
 		train.setBuilt(false);
 		train.setLeadEngine(null);
@@ -1111,9 +1113,11 @@ public class TrainBuilder extends TrainCommon{
 		train.setStatus(BUILDFAILED);
 		if(log.isDebugEnabled())
 			log.debug(string);
-		JOptionPane.showMessageDialog(null, string,
-				MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
-				JOptionPane.ERROR_MESSAGE);
+		if(jOptionPane){
+			JOptionPane.showMessageDialog(null, string,
+					MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
+					JOptionPane.ERROR_MESSAGE);
+		}
 		if (file != null){
 			addLine(file, ONE, string);
 			// Write to disk and close file

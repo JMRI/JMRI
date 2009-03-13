@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.39 $
+ * @version             $Revision: 1.40 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -402,6 +402,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			_skipLocationsList.add(locationIds[i]);
 	}
 
+	/**
+	 * Train will skip the RouteLocation
+	 * @param locationId RouteLocation Id
+	 */
 	public void addTrainSkipsLocation(String locationId){
 		// insert at start of _skipLocationsList, sort later
 		if (_skipLocationsList.contains(locationId))
@@ -605,17 +609,17 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public boolean buildIfSelected(){
 		if(_build && !_built){
-			build();
+			build(true);
 			return true;
 		}
 		log.debug("Train ("+getName()+") not selected or already built, skipping build");
 		return false;
 	}
 
-	public void build(){
+	public void build(boolean jOptionPane){
 		reset();
 		TrainBuilder tb = new TrainBuilder();
-		tb.build(this);
+		tb.build(this, jOptionPane);
 		setPrinted(false);
 	}
 
