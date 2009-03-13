@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.40 $
+ * @version             $Revision: 1.41 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1022,7 +1022,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean reset(){
 		// is this train in route?
 		if (isTrainInRoute()){
-			log.error("Train has started its route, can not reset");
+			log.info("Train has started its route, can not reset");
 			return false;
 		}
 		// remove engines assigned to this train
