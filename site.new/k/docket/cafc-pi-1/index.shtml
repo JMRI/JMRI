@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.19 2008-11-17 04:09:19 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.20 2009-03-14 22:01:44 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
- <TITLE>JMRI Defense: Appeals Court Papers</TITLE>
+ <TITLE>JMRI Defense: Appeals Court Papers I</TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META name="keywords" content="JMRI Jacobsen open-source patent defense copyright trademark">
 
@@ -23,7 +23,7 @@
 <!--#include virtual="/k/Sidebar" -->
  <div id="mainContent">
   <div class="list">
-    <h2>JMRI Defense: Papers from the Court of Appeals for the Federal Circuit</h2>
+    <h2>JMRI Defense: Papers from First Appeal to the Court of Appeals for the Federal Circuit</h2>
  
  <!-- the content goes here -->
  
@@ -33,8 +33,12 @@ Papers from there are available on our
 <A HREF="../index.shtml">main docket page</a>.
 <P>
 On this page, we're providing copies of the court papers from
-our appeal to the Court of Appeals for the Federal Circuit, located in
-Washington DC.
+our first appeal to the Court of Appeals for the Federal Circuit, located in
+Washington DC. 
+This took place during 2008.  
+If you're interested
+in papers from the second appeal, during 2009, they're on a 
+<a href="../cafc-pi-2/index.shtml">separate page</a>.
 
 <h4>Court of Appeals Decision</h4>
 
@@ -88,6 +92,10 @@ In the meantime, the
 <li>The CAFC's 
 <a href="08-1001.pdf">ruling in favor of JMRI</a>.
 <li>Our <a href="mtncosts.pdf">motion for costs</a>.
+    <ul>
+    <li>Katzer's <a href="KatzerOppositionToMotionForCosts9-2008.pdf">opposition</a> to the motion for costs.
+    </ul>
+
 </UL><!-- end of summary index -->
 
 <A ID="docketlisting"/>
