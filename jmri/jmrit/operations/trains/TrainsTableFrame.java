@@ -2,8 +2,8 @@
 
 package jmri.jmrit.operations.trains;
  
-import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,13 +25,12 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 
 
-
 /**
  * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -50,7 +49,6 @@ public class TrainsTableFrame extends OperationsFrame {
 	LocationManagerXml locationManagerXml = LocationManagerXml.instance();
 	RouteManagerXml routeManagerXml = RouteManagerXml.instance();
 
-	
 	TrainsTableModel trainsModel = new TrainsTableModel();
 	javax.swing.JTable trainsTable = new javax.swing.JTable(trainsModel);
 	JScrollPane trainsPane;
@@ -65,7 +63,6 @@ public class TrainsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortByTime = new javax.swing.JRadioButton(TIME);
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(ID);
      
-
 	// major buttons
 	javax.swing.JButton addButton = new javax.swing.JButton();
 	javax.swing.JButton buildButton = new javax.swing.JButton();
@@ -112,7 +109,12 @@ public class TrainsTableFrame extends OperationsFrame {
      	     	
      	// Set up the control panel
     	JPanel controlPanel = new JPanel();
+    	JScrollPane controlPane = new JScrollPane(controlPanel);
+    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     	controlPanel.setLayout(new FlowLayout());
+    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
+    	controlPane.setMaximumSize(new Dimension(Control.panelWidth,100));
      	
     	textSort.setText(rb.getString("SortBy"));
     	controlPanel.add(textSort);
@@ -161,9 +163,8 @@ public class TrainsTableFrame extends OperationsFrame {
 		controlPanel.add (printSwitchButton);
 		controlPanel.add (terminateButton);
 		controlPanel.add (saveButton);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 		
-	   	getContentPane().add(controlPanel);
+	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
 		addButtonAction(addButton);
@@ -190,11 +191,12 @@ public class TrainsTableFrame extends OperationsFrame {
     
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
-    	
+    		
     	pack();
     	setSize(trainManager.getTrainFrameSize());
     	setLocation(trainManager.getTrainFramePosition());
     	setSortBy(trainManager.getTrainFrameSortBy());
+    	
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

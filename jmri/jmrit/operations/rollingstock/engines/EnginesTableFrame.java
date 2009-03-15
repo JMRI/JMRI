@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -74,7 +74,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
      	
      	// Set up the control panel
     	JPanel controlPanel = new JPanel();
+	  	JScrollPane controlPane = new JScrollPane(controlPanel);
+    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     	controlPanel.setLayout(new FlowLayout());
+    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
     	numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
     	EngineManager.instance().addPropertyChangeListener(this);
     	textEngines.setText(rb.getString("engines"));
@@ -107,9 +111,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		findEngineTextBox.setToolTipText(rb.getString("findEngine"));
 		controlPanel.add (findButton);
 		controlPanel.add (findEngineTextBox);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
-		
-	   	getContentPane().add(controlPanel);
+				
+	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
 		addButtonAction(addButton);

@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -81,7 +81,11 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
      	
      	// Set up the control panel
     	JPanel controlPanel = new JPanel();
+    	JScrollPane controlPane = new JScrollPane(controlPanel);
+    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     	controlPanel.setLayout(new FlowLayout());
+    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
     	numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
     	CarManager.instance().addPropertyChangeListener(this);
     	textCars.setText(rb.getString("cars"));
@@ -116,9 +120,9 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		findCarTextBox.setToolTipText(rb.getString("findCar"));
 		controlPanel.add (findButton);
 		controlPanel.add (findCarTextBox);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+		//controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 		
-	   	getContentPane().add(controlPanel);
+	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
 		addButtonAction(addButton);
