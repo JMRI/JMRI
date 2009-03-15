@@ -18,7 +18,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
-@SuppressWarnings("unused")
+
 
 /**
  * Frame to display NCE cabs
@@ -119,7 +119,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -128,9 +128,11 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 													// memory
 	private static final int CAB_SIZE = 256;		// Each cab has 256 bytes
 	private static final int CAB_CURR_SPEED = 32;	// NCE cab speed
-	private static final int CAB_ADDR_H = 33; 		//loco address, high byte
-	private static final int CAB_ADDR_L = 34; 		//loco address, low byte
-	private static final int CAB_FLAGS = 35;		//FLAGS
+	private static final int CAB_ADDR_H = 33; 		// loco address, high byte
+	private static final int CAB_ADDR_L = 34; 		// loco address, low byte
+	private static final int CAB_FLAGS = 35;		// FLAGS
+	private static final int CAB_FUNC_L = 36;		// Function keys low
+	private static final int CAB_FUNC_H = 37;		// Function keys high
 	private static final int CAB_FLAGS1 = 101;		// NCE flag 1
 	private static final int CAB_MAX = 64;			// There are up to 64 cabs
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
@@ -145,13 +147,29 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private static final int FLAGS1_AIU = 0x83;		// bit 0=1, bit 1=1, bit 7=1;
 	private static final int FLAGS1_MASK = 0x83;	// Only bits 0,1, and 7.
 	
+	private static final int FUNC_L_F0 = 0x10;		// F0 or headlight
+	private static final int FUNC_L_F1 = 0x01;		// F1
+	private static final int FUNC_L_F2 = 0x02;		// F2
+	private static final int FUNC_L_F3 = 0x04;		// F3
+	private static final int FUNC_L_F4 = 0x08;		// F4
+	
+	private static final int FUNC_H_F5 = 0x01;		// F5
+	private static final int FUNC_H_F6 = 0x02;		// F6
+	private static final int FUNC_H_F7 = 0x04;		// F7
+	private static final int FUNC_H_F8 = 0x08;		// F8
+	private static final int FUNC_H_F9 = 0x10;		// F9
+	private static final int FUNC_H_F10 = 0x20;		// F10
+	private static final int FUNC_H_F11 = 0x40;		// F11
+	private static final int FUNC_H_F12 = 0x80;		// F12
+	
 	Thread NceCabUpdateThread;	
 	
 	// member declarations
 	JLabel textNumer = new JLabel("Number");
     JLabel textCab = new JLabel("Cab Type");
-    JLabel textAddress = new JLabel("Loco Address");
-    JLabel textSpeed = new JLabel("Speed");
+    JLabel textAddress = new JLabel("Loco Addr");
+    JLabel textSpeed = new JLabel("Speed                ");		// with some padding to shift left
+    JLabel textFunctions = new JLabel("Functions              ");// with some padding to shift left
     JLabel textReply = new JLabel("Reply:");
     JLabel textStatus = new JLabel("");
     
@@ -201,6 +219,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         addItem(p1, textCab, 2,3);
         addItem(p1, textAddress, 3,3);
         addItem(p1, textSpeed, 4,3);
+        addItem(p1, textFunctions, 5,3);
         
     	addButtonAction(refreshButton);
     	
@@ -210,7 +229,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     	// set frame size for display
     	pack();
-    	setSize(350, 350);
+    	setSize(400, 350);
     }
 
     // refresh button
@@ -246,6 +265,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	JLabel type = new JLabel();
          	JLabel address = new JLabel();
            	JLabel speed = new JLabel();
+           	JLabel functions = new JLabel();
+           	// read the FLAGS1 byte
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
@@ -270,9 +291,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	addItem(cabsPanel, type, 2, 4+i);
         	addItem(cabsPanel, address, 3, 4+i);
           	addItem(cabsPanel, speed, 4, 4+i);
+          	addItem(cabsPanel, functions, 5, 4+i);
           	if (flags1 == FLAGS1_AIU)
           		continue;
-          	// read 16 bytes of memory, we need 4 of them
+          	// read 16 bytes of memory, we need 6 of them
         	readCabMemory16(i, CAB_CURR_SPEED);
         	if (!waitNce())
         		return;
@@ -280,8 +302,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	int readChar = recChars[0];
         	log.debug("Read speed character "+Integer.toString(readChar));
         	String sped = Integer.toString(readChar);
-        	// read the FLAG byte
-        	readChar = recChars[3];
+        	// read the FLAGS byte
+        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
         	int direction = readChar & 0x04;
         	if (direction > 0)
         		sped = sped + " F";
@@ -297,14 +319,73 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	}
         	speed.setText(sped);
         	// read the high address byte
-        	readChar = recChars[1];
+        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
         	log.debug("Read address high character "+readChar);
         	int locoAddress = (readChar & 0x3F) *256;
         	// read the low address byte
-        	readChar = recChars[2];
+        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
         	log.debug("Read address low character "+readChar);
         	locoAddress = locoAddress + (readChar & 0xFF);
         	address.setText(Integer.toString(locoAddress));
+        	// read the low function keys
+        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
+        	log.debug("Function low character "+readChar);
+        	String func = "";
+        	if ((readChar & FUNC_L_F0) > 0)
+        		func = func + "L";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_L_F1) > 0)
+        		func = func + "1";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_L_F2) > 0)
+        		func = func + "2";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_L_F3) > 0)
+        		func = func + "3";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_L_F4) > 0)
+        		func = func + "4";
+        	else
+        		func = func + "-";
+        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
+        	log.debug("Function high character "+readChar);
+           	if ((readChar & FUNC_H_F5) > 0)
+        		func = func + "5";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_H_F6) > 0)
+        		func = func + "6";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_H_F7) > 0)
+        		func = func + "7";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_H_F8) > 0)
+        		func = func + "8";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_H_F9) > 0)
+        		func = func + "9";
+        	else
+        		func = func + "-";
+           	if ((readChar & FUNC_H_F10) > 0)
+        		func = func + "A";
+        	else
+        		func = func + "-";
+          	if ((readChar & FUNC_H_F11) > 0)
+        		func = func + "B";
+        	else
+        		func = func + "-";
+          	if ((readChar & FUNC_H_F12) > 0)
+        		func = func + "C";
+        	else
+        		func = func + "-";
+          	functions.setText(func);
         }
     	validate();
     	cabsPane.setVisible(true);
