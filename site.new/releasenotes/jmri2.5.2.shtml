@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.24 2009-03-11 04:29:45 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.25 2009-03-16 11:44:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -281,6 +281,23 @@ Simon Ginsburg updated the German, Czech and Spanish translations.
 
 <p>
 Ken Cameron provided an example script for turning CMRI node polling on and off.
+
+<p>
+Fixed a bug in C/MRI error handling that would cause the wrong node to be reset
+if several polls were missed.  (This only effected C/MRI, not other hardware types)
+
+<p>
+Matt Harris added scrolling options to the panel editor and layout editor
+windows.
+
+<p>
+Dan Boudreau made some minor improvements to NCE show cabs tool, 
+table now also shows function keys.
+
+<p>
+Dan Boudreau fix a problem where some buttons were occasionally not
+visible on operations windows.
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
