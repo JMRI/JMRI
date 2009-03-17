@@ -13,7 +13,6 @@ import jmri.jmrix.nce.NceUSB;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
@@ -30,7 +29,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -115,7 +114,10 @@ public class UsbDriverAdapter extends NcePortController {
      * set up all of the other objects to operate with an NCE command
      * station connected to this port
      */
-    public void configure() {
+    public void configure() {  	
+        // set binary mode
+		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
+		
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
         
@@ -146,10 +148,6 @@ public class UsbDriverAdapter extends NcePortController {
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
 
         jmri.jmrix.nce.ActiveFlag.setActive();
-
-        // set binary mode
-		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-
 	}
 
     // base class methods for the NcePortController interface

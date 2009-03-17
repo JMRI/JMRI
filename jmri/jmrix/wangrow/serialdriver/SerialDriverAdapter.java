@@ -33,7 +33,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -112,11 +112,12 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      * station connected to this port
      */
     public void configure() {
+    	// set the command option
+        NceMessage.setCommandOptions(NceMessage.OPTION_1999);
+        
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
         
-        NceMessage.setCommandOptions(NceMessage.OPTION_1999);
-
         jmri.InstanceManager.setProgrammerManager(
                 new NceProgrammerManager(
                     new NceProgrammer()));
