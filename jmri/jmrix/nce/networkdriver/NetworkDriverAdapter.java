@@ -21,7 +21,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -30,8 +30,9 @@ public class NetworkDriverAdapter extends NcePortController {
      * station connected to this port
      */
     public void configure() {
-    	// set the command options
-        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+    	// set the command options, Note that the NetworkDriver uses
+    	// the second option for EPROM revision
+        if (getCurrentOption2Setting().equals(validOption2()[0])) {
         	NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         } else {
             // setting binary mode
