@@ -2,8 +2,10 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_soundbrilliance1663.xml,v 1.1 2008-05-07 05:29:53 billchown Exp $ -->
+<!-- $Id: MRC_soundbrilliance1663.xml,v 1.2 2009-03-21 22:06:09 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Pete Cesaro"
+			version="2" lastUpdated="20090216" />
 		<version author="Pete Cesaro"
 			version="1.1" lastUpdated="20080205" />
 <!-- made from the MRC_1630 file by Pete Cesaro -->
@@ -25,31 +27,37 @@
 	<variables>
 
 		<variable label="Primary Address" CV="1" comment="Short address"
+					tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" 				
 						item="Short Address"  default="3">
 			<shortAddressVal/>
 		</variable>
 
 		<variable label="Start Voltage" CV="2" item="Vstart" default="0"
+				tooltip="Sets the motor voltage at Speed Step 1, range 0(default)-32, CV2"
 				comment="Range 0-32">
 			<decVal max="32"/>
 		</variable>
 
 		<variable label="Acceleration" CV="3" item="Accel" default="0"
+				tooltip="Note: Sets the acceleration rate (delay) in CV3, range 0(default)-32"
 				comment="Range 0-32">
 			<decVal max="32"/>
 			</variable>
 
 		<variable label="Deceleration" CV="4" item="Decel" default="0"
+				tooltip="Note: Sets the deceleration rate (delay) in CV4, range 0(default)-32"
 				comment="Range 0-32">
 			<decVal max="32"/>
 			</variable>
 			
 		<variable label="Top Voltage" CV="5" item="Vhigh" default="0"
+				tooltip="Sets the motor voltage at top Speed Step, range 0-32(default), CV5"
 				comment="Range 0-32">
 			<decVal max="32"/>
 			</variable>
 		
-		<variable label="Speed curve select" CV="6" item="Vmid" default="0">
+		<variable label="Speed curve select" CV="6" item="Vmid" default="0"
+				tooltip="Sets the motor voltage increase curve with Speed Steps, range 0(default)-2, CV6">
 				<enumVal>
 					<enumChoice choice="Linear" value="0"/>
 					<enumChoice choice="Slow - increase at slow speed" value="1"/>
@@ -58,32 +66,38 @@
 			</variable>
 		
 		<variable label="Manufacturer version number" CV="7" readOnly="yes"
+				tooltip="CV7=32 for all MRC Brilliance models, Read Only"
 				item="Decoder Version" default="1">
 			<decVal/>
 		</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+				tooltip="CV8=143 for MRC, Read Only"
 				item="Manufacturer" default="143">
 			<decVal/>
 			</variable>
 
 		<variable label="Long Address" CV="17" item="Extended Address"
+				tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18" 
 		        comment="4 digit address (Range 0001-9999)">
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Advanced Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+		<variable label="Advanced Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address"
+				tooltip="CV19, range 1-127">
 			<decVal/>
 			</variable>
 
-		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX"
+				tooltip="CV19, Normal(default) or Reversed(address+128)">
 			<enumVal>
 				<enumChoice choice="Normal"></enumChoice>
 				<enumChoice choice="Reversed"></enumChoice>
 				</enumVal>
 		</variable>
 
-        <variable label="Functions Respond To Address" CV="21" mask="XXXXXXXV">
+        <variable label="Functions Respond To Address" CV="21" mask="XXXXXXXV"
+				tooltip="CV21, least bit">
                 <enumVal>
                         <enumChoice choice="Locomotive Address Only"/>
                         <enumChoice choice="Respond to Consist Address"/>
@@ -91,6 +105,7 @@
 		</variable>
 
 		<variable label="Normal direction of motion" CV="29"
+				tooltip="CV29, '1' (least significant) bit, Forward(0)(default) or Reverse(1)"
 				mask="XXXXXXXV"
 		        item="Locomotive Direction">
 			<enumVal>
@@ -100,6 +115,7 @@
 			</variable>
 
 		<variable label="Speed Steps" CV="29" mask="XXXXXXVX"
+				tooltip="CV29, '2' bit. Sets the Speed Step for motor, also affects some light settings"
 				item="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
@@ -108,6 +124,7 @@
 			</variable>
 
 		<variable label="Analog conversion mode" CV="29"
+				tooltip="CV29, '4' bit. Allows the loco to run on DC, default is Off"
 				mask="XXXXXVXX" default="0"
 				item="Analog (DC) Operation">
 			<enumVal>
@@ -117,6 +134,7 @@
 			</variable>
 
 		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+				tooltip="CV29, '32' bit"
 				item="Address Format">
 			<enumVal>
 				<enumChoice choice="2 digit addressing"/>
@@ -125,108 +143,129 @@
 			</variable>
 			
        	<variable label="Horn Type" CV="50" item="Sound Option 2" default="4"
+				tooltip="CV50, range 0-16"
 				comment="Range 0-16">
 			<decVal max="16"/>
 			</variable>
 
 		<variable label="Horn Volume" CV="51" item="Sound Setting 1" default="3"
+				tooltip="CV51, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 								
 		<variable label="Bell Type" CV="52" item="Sound Option 3" default="3"
+				tooltip="CV52, range 0-6"
 				comment="Range 0-6">
 			<decVal max="6"/>
 			</variable>
 
 		<variable label="Bell Volume" CV="53" item="Sound Setting 2" default="3"
+				tooltip="CV53, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 			
 		<variable label="Bell Ring Rate" CV="54" item="Sound Setting 3" default="3"
+				tooltip="CV54, range 0-50"
 				comment="Range 0-50">
 			<decVal max="50"/>
 			</variable>
 			
 		<variable label="Diesel rumble volume" CV="55" item="Sound Setting 4" default="3"
+				tooltip="CV55, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
 		<variable label="Brake squeal volume" CV="56" item="Sound Setting 5" default="3"
+				tooltip="CV56, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
 		<variable label="Dynamic brake volume" item="Sound Setting 6" CV="57" default="3"
+				tooltip="CV57, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 
 		<variable label="Air Release Volume" item="Sound Setting 7" CV="58" default="3"
+				tooltip="CV58, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 
 		<variable label="Air Pump Volume" CV="59" item="Sound Setting 8" default="3"
+				tooltip="CV59, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 			
 		<variable label="Safety pop valve volume" CV="60" item="Sound Setting 9" default="3"
+				tooltip="CV60, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 
 		<variable label="Engine Cooling Fan Volume" CV="61" item="Sound Setting 10" default="3"
+				tooltip="CV61, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 			
 		<variable label="Coupling Volume" CV="62" item="Sound Setting 11" default="3"
+				tooltip="CV62, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 
 		<variable label="Random noise Volume" CV="63" item="Sound Setting 12" default="3"
+				tooltip="CV63, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 
 		<variable label="Rail clack volume" CV="64" item="Sound Setting 13" default="3"
+				tooltip="CV64, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 			
 		<variable label="User ID #1" CV="105" item="User Id #1" default="0"
-					comment="Range 0-255">			
+				tooltip="CV105, range 0-255"
+				comment="Range 0-255">			
 				<decVal max="255"/>
 			</variable>
 			
 		<variable label="User ID #2" CV="106" item="User Id #2" default="0"
+				tooltip="CV106, range 0-255"
 				comment="Range 0-255">			
 			<decVal max="255"/>
 			</variable>
 
 		<variable label="Coupling fire volume" CV="113" item="Sound Setting 16" default="3"
+				tooltip="CV113, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 			
 		<variable label="Brake Release volume" CV="114" item="Sound Setting 17" default="3"
+				tooltip="CV114, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 
-		<variable label="Auto Brake squeal" item="Sound Option 5" CV="115" default="1">
+		<variable label="Auto Brake squeal" item="Sound Option 5" CV="115" default="1"
+				tooltip="CV115, Off(0) or On(1)(default)">
 		     <enumVal>
 		         <enumChoice choice="Off"/>
 		         <enumChoice choice="On"/>
 	         </enumVal>
 		</variable>
 
-		<variable label="Coupling Sound Type" item="Sound Option 6" CV="116" default="1">
+		<variable label="Coupling Sound Type" item="Sound Option 6" CV="116" default="1"
+				tooltip="CV116, Off(0) or Type1(1)(default) or Type2(2)">
 		     <enumVal>
 		         <enumChoice choice="Off"/>
 		         <enumChoice choice="Type 1"/>
@@ -234,7 +273,8 @@
 	         </enumVal>
 		</variable>
 
-		<variable label="Diesel notch mode" item="Sound Option 7" CV="122" default="1">
+		<variable label="Diesel notch mode" item="Sound Option 7" CV="122" default="1"
+				tooltip="CV122, Off(0) or Auto(1)(default) or Linear(2) or Manual(3)">
 		     <enumVal>
 		         <enumChoice choice="Off" value="0"/>
 		         <enumChoice choice="Auto notch - RPM and notch synchro to speed" value="1"/>
@@ -261,3 +301,5 @@
 
 
 
+
+ 	  	 
