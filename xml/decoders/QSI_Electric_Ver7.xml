@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Electric_Ver7.xml,v 1.8 2008-12-26 19:53:40 jacobsen Exp $ -->
+<!-- $Id: QSI_Electric_Ver7.xml,v 1.9 2009-03-21 21:44:59 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+  <version author="Michael Mosher" version="6" lastUpdated="20090302"/>
   <version author="Michael Mosher" version="5" lastUpdated="20080906"/>
   <version author="Michael Mosher" version="4" lastUpdated="20080811"/>
   <version author="Michael Mosher" version="3" lastUpdated="20071019"/>
@@ -28,6 +29,7 @@
 <!-- version 3 - Added CV62bit2 & output feature 154 grade crossing -->
 <!-- version 4 - Added new models & CV's -->
 <!-- version 5 - removed leading zeros on IDs -->
+<!-- version 6 - Added CV 55.70.12,55.73.12,55.76.6,11,12,13,56.18.1,56.19.1,56.20.1,56.21.1 -->
 
 <decoder>
  
@@ -53,6 +55,21 @@
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
+ 	<functionlabels>
+   	  <functionlabel num="0" lockable="true">Light</functionlabel>
+      <functionlabel num="1" lockable="true">Bell</functionlabel>
+      <functionlabel num="2" lockable="true">Horn</functionlabel>
+      <functionlabel num="3" lockable="true">Coupler</functionlabel>
+      <functionlabel num="4" lockable="true">Fans</functionlabel>
+      <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+      <functionlabel num="6" lockable="true">Doppler</functionlabel>
+      <functionlabel num="7" lockable="true">Squeal</functionlabel>
+      <functionlabel num="8" lockable="true">Mute</functionlabel>
+      <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+      <functionlabel num="10" lockable="true">Status</functionlabel>
+      <functionlabel num="11" lockable="true">Number Board</functionlabel>
+      <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+    </functionlabels>
 
    </family>
 
@@ -596,6 +613,9 @@
     <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Alt Horn" CVname="52.40" CV="52" PI="40" default="11" comment="QSI" item="CV52.40"
+    	include="2001,2050">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Other" CVname="52.46" CV="52" PI="46" default="11" comment="QSI" item="CV52.46"
     	include="2001,2050">
       <indexedVal max="15"/> </ivariable>
 
@@ -2395,6 +2415,12 @@
 		<indexedVal/>	               
     </ivariable>
     
+    <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12"
+              default="255" item="CV55.70.12" 
+              include ="2001,2050">
+		<indexedVal/>	               
+    </ivariable>
+    
     <ivariable label="Reverse Light Initial State" CVname="55.73.0" CV="55" PI="73" SI="0"
                default="1" item="CV55.73.0" >
       <ienumVal>
@@ -2447,6 +2473,12 @@
 		<indexedVal/>
     </ivariable>
 
+    <ivariable label="Reverse Light Max Intensity" CVname="55.73.12" CV="55" PI="73" SI="12"
+              default="255" item="CV55.73.12" 
+              include="2001,2050">
+		<indexedVal/>	               
+    </ivariable>
+    
     <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0"
                default="1" item="CV55.76.0"
               include="2001,2050">
@@ -2503,9 +2535,33 @@
       </ienumVal>
     </ivariable>
 
+    <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6"
+               default="100" item="CV55.76.6"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
     <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10"
               default="0" item="CV55.76.10"
               include="2001,2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11"
+               default="4" item="CV55.76.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12"
+               default="255" item="CV55.76.12"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13"
+               default="32" item="CV55.76.13"
+               include="2050">
 		<indexedVal/>
     </ivariable>
 
@@ -2568,6 +2624,24 @@
     <ivariable label="Rear Mars Light Dim Intensity" CVname="55.80.10" CV="55" PI="80" SI="10"
               default="0" item="CV55.80.10"
               include="2001,2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Mars Light Min Intensity" CVname="55.80.11" CV="55" PI="80" SI="11"
+               default="4" item="CV55.80.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Mars Light Max Intensity" CVname="55.80.12" CV="55" PI="80" SI="12"
+               default="255" item="CV55.80.12"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Mars Light Mid Intensity" CVname="55.80.13" CV="55" PI="80" SI="13"
+               default="32" item="CV55.80.13"
+               include="2050">
 		<indexedVal/>
     </ivariable>
 
@@ -2678,9 +2752,27 @@
 		<indexedVal max="31"/>
     </ivariable>
 
+    <ivariable label="Ditch Lights Strobe Period" CVname="55.84.6" CV="55" PI="84" SI="6"
+               default="100" item="CV55.84.6"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
     <ivariable label="Ditch Lights Intensity" CVname="55.84.10" CV="55" PI="84" SI="10"
               default="32" item="CV55.84.10"
               include="2001,2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Ditch Lights Max Intensity" CVname="55.84.11" CV="55" PI="84" SI="11"
+              default="255" item="CV55.84.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Ditch Lights Min Intensity" CVname="55.84.12" CV="55" PI="84" SI="12"
+              default="0" item="CV55.84.12"
+               include="2050">
 		<indexedVal/>
     </ivariable>
 
@@ -2791,9 +2883,27 @@
 		<indexedVal max="31"/>
     </ivariable>
 
+    <ivariable label="Rear Ditch Lights Strobe Period" CVname="55.88.6" CV="55" PI="88" SI="6"
+               default="100" item="CV55.88.6"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
     <ivariable label="Rear Ditch Lights Intensity" CVname="55.88.10" CV="55" PI="88" SI="10"
               default="32" item="CV55.88.10"
               include="2001,2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Ditch Lights Max Intensity" CVname="55.88.11" CV="55" PI="88" SI="11"
+              default="255" item="CV55.88.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Ditch Lights Min Intensity" CVname="55.88.12" CV="55" PI="88" SI="12"
+              default="0" item="CV55.88.12"
+               include="2050">
 		<indexedVal/>
     </ivariable>
 
@@ -2806,7 +2916,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Front Overhead Beacon Effect" CVname="55.92.0" CV="55" PI="92" SI="1"
+    <ivariable label="Front Overhead Beacon Effect" CVname="55.92.0" CV="55" PI="92" SI="0"
                default="0" item="CV55.92.0 Effect" mask="XXVVXXXX"
               include="2001,2050">
       <ienumVal>
@@ -2814,6 +2924,24 @@
         <ienumChoice choice="Rotary" />
         <ienumChoice choice="Strobe" />
       </ienumVal>
+    </ivariable>
+
+    <ivariable label="Front Overhead Beacon Period" CVname="55.92.6" CV="55" PI="92" SI="6"
+               default="100" item="CV55.92.6"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Front Overhead Beacon Min Intensity" CVname="55.92.11" CV="55" PI="92" SI="11"
+               default="4" item="CV55.92.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Front Overhead Beacon Max Intensity" CVname="55.92.12" CV="55" PI="92" SI="12"
+               default="255" item="CV55.92.12"
+               include="2050">
+		<indexedVal/>
     </ivariable>
 
     <ivariable label="Rear Overhead Beacon Initial State" CVname="55.96.0" CV="55" PI="96" SI="0"
@@ -2825,7 +2953,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Rear Overhead Beacon Effect" CVname="55.96.0" CV="55" PI="96" SI="1"
+    <ivariable label="Rear Overhead Beacon Effect" CVname="55.96.0" CV="55" PI="96" SI="0"
                default="0" item="CV55.96.0 Effect" mask="XXVVXXXX"
               include="2001,2050">
       <ienumVal>
@@ -2833,6 +2961,24 @@
         <ienumChoice choice="Rotary" />
         <ienumChoice choice="Strobe" />
       </ienumVal>
+    </ivariable>
+
+    <ivariable label="Rear Overhead Beacon Period" CVname="55.96.6" CV="55" PI="96" SI="6"
+               default="100" item="CV55.96.6"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Overhead Beacon Min Intensity" CVname="55.96.11" CV="55" PI="96" SI="11"
+               default="4" item="CV55.96.11"
+               include="2050">
+		<indexedVal/>
+    </ivariable>
+
+    <ivariable label="Rear Overhead Beacon Max Intensity" CVname="55.96.12" CV="55" PI="96" SI="12"
+               default="255" item="CV55.96.12"
+               include="2050">
+		<indexedVal/>
     </ivariable>
 
     <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0"
@@ -3019,98 +3165,6 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Front Step Lights Initial State" CVname="55.112.0" CV="55" PI="112" SI="0"
-               default="1" item="CV55.112.0" mask="XXXXXXVV"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" value="0"/>
-        <ienumChoice choice="Automatic" value="1"/>
-        <ienumChoice choice="On" value="2"/>
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights Config FWD" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 FWD" mask="XXXXXXXV"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights Config NFF" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 NFF" mask="XXXXXVXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights Config REV" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 REV" mask="XXXVXXXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights Config NFR" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 NFR" mask="XVXXXXXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Rear Step Lights Initial State" CVname="55.114.0" CV="55" PI="114" SI="0"
-               default="1" item="CV55.114.0" mask="XXXXXXVV"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" value="0"/>
-        <ienumChoice choice="Automatic" value="1"/>
-        <ienumChoice choice="On" value="2"/>
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights Config FWD" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 FWD" mask="XXXXXXXV"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights Config NFF" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 NFF" mask="XXXXXVXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights Config REV" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 REV" mask="XXXVXXXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights Config NFR" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 NFR" mask="XVXXXXXX"
-              include="2001">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
     <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0"
                default="1" item="CV55.116.0" mask="XXXXXXVV">
       <ienumVal>
@@ -3192,6 +3246,24 @@
     <ivariable label="Auto Rear Cab Lights Config NFR" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFR" mask="XVXXXXXX"
               include="2000,2001,2050">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Truck Lights" CVname="55.134.0" CV="55" PI="134" SI="0"
+               default="1" item="CV55.134.0 Truck" mask="XXXXXXXV"
+               include="2001">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Step Lights" CVname="55.134.0" CV="55" PI="134" SI="0"
+               default="1" item="CV55.134.0 Step" mask="XXXXXVXX"
+               include="2001">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3698,6 +3770,12 @@
       <indexedVal /> 
     </ivariable>
 
+    <ivariable label="Very Low Speed Intergral Gain" CVname="56.18.1" CV="56" PI="18" SI="1"
+		include="2001,2050"
+    	default="2" item="CV56.18.1" >
+      <indexedVal /> 
+    </ivariable>
+
     <ivariable label="Very Low Speed Differential Gain" CVname="56.18.2" CV="56" PI="18" SI="2"
     	 default="100" item="CV56.18.2">
       <indexedVal /> 
@@ -3705,6 +3783,12 @@
 
     <ivariable label="Low Speed Proportional Gain" CVname="56.19.0" CV="56" PI="19" SI="0"
     	default="10" item="CV56.19.0" >
+      <indexedVal /> 
+    </ivariable>
+
+    <ivariable label="Low Speed Intergral Gain" CVname="56.19.1" CV="56" PI="19" SI="1"
+		include="2001,2050"
+    	default="2" item="CV56.19.1" >
       <indexedVal /> 
     </ivariable>
 
@@ -3718,6 +3802,12 @@
       <indexedVal /> 
     </ivariable>
 
+    <ivariable label="Medium Speed Intergral Gain" CVname="56.20.1" CV="56" PI="20" SI="1"
+		include="2001,2050"
+    	default="2" item="CV56.20.1" >
+      <indexedVal /> 
+    </ivariable>
+
     <ivariable label="Medium Speed Differential Gain" CVname="56.20.2" CV="56" PI="20" SI="2"
     	 default="30" item="CV56.20.2">
       <indexedVal /> 
@@ -3725,6 +3815,12 @@
 
     <ivariable label="High Speed Proportional Gain" CVname="56.21.0" CV="56" PI="21" SI="0"
     	default="10" item="CV56.21.0" >
+      <indexedVal /> 
+    </ivariable>
+
+    <ivariable label="High Speed Intergral Gain" CVname="56.21.1" CV="56" PI="21" SI="1"
+		include="2001,2050"
+    	default="2" item="CV56.21.1" >
       <indexedVal /> 
     </ivariable>
 
@@ -3835,189 +3931,55 @@
   </resets>
 </decoder>
 
-<pane name="Sound / Volume Control">
+<pane name="Sound Control">
   <column>
     <row>
-      <column>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
-        <row>
-        	<display item="CV51.0" layout="above" label="" />
-        	<display item="CV51.0" layout="above" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
-        </row>
-        <label label=" "/>
-        <row>
-        	<display item="CV51.1" layout="above" label="" />
-        	<display item="CV51.1" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-         <row>
-        	<display item="CV51.5" layout="above" label="" />
-        	<display item="CV51.5" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-     </column>
-      <column>
-        <display item="CV51.2 Doppler" format="checkbox"/>
-        <display item="CV51.2 Horn" format="checkbox"/>
-        <display item="CV51.2 Whistle" format="checkbox"/>
-        <display item="CV51.2 Heavy" format="checkbox"/>
-        <display item="CV51.2 Cocks1" format="checkbox"/>
-        <display item="CV51.2 Cocks2" format="checkbox"/>
-        <display item="CV55.3.1" />
-	    <display item="CV56.0 Power" />
-	    <display item="CV56.0 Reed" />
-	    <display item="CV56.24.0" />
-	    <display item="CV56.25.0" />
-        <row>
-	        <display item="CV56.12" layout="above" label="" />
-	        <display item="CV56.12" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV56.13" layout="above" label="" />
-	        <display item="CV56.13" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-      </column>
-    </row>
-    <separator/>
-    <row>
-      <column>
-        <label label="Individual Sound Volumes "/>
-      </column>
+		<column>
+        	<label label="You must have JMRI 2.4a or later to use this definition"/>
+        	<label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+		    <label label=" "/>
+		</column>
     </row>
     <row>
-      <column>
-        <row>
-	        <display item="CV52.0" layout="above" label="" />
-	        <display item="CV52.0" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-	        <display item="CV52.8" layout="above" label="" />
-	        <display item="CV52.8" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-	        <display item="CV52.10" layout="above" label="" />
-	        <display item="CV52.10" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-	        <display item="CV52.16" layout="above" label="" />
-	        <display item="CV52.16" layout="above" format="hslider"/>
-        </row>
-      </column>
-      <column>
-        <label label="        "/>
-      </column>
-      <column>
-        <row>
-    	    <display item="CV52.19" layout="above" label="" />
-    	    <display item="CV52.19" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-    	    <display item="CV52.21" layout="above" label="" />
-    	    <display item="CV52.21" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-    	    <display item="CV52.22" layout="above" label="" />
-    	    <display item="CV52.22" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-    	    <display item="CV52.24" layout="above" label="" />
-    	    <display item="CV52.24" layout="above" format="hslider"/>
-        </row>
-      </column>
-      <column>
-        <label label="        "/>
-      </column>
-      <column>
-        <row>
-        	<display item="CV52.28" layout="above" label="" />
-        	<display item="CV52.28" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-        	<display item="CV52.34" layout="above" label="" />
-        	<display item="CV52.34" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-        	<display item="CV52.37" layout="above" label="" />
-        	<display item="CV52.37" layout="above" format="hslider"/>
-        </row>
-	    <label label=" "/>
-        <row>
-        	<display item="CV52.40" layout="above" label="" />
-        	<display item="CV52.40" layout="above" format="hslider"/>
-        </row>
-      </column>
+		<column>
+		    <row>
+		    	<display item="CV51.5" layout="above" label="" />
+		    	<display item="CV51.5" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		     	<display item="CV56.12" layout="above" label="" />
+		     	<display item="CV56.12" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		     	<display item="CV56.13" layout="above" label="" />
+		     	<display item="CV56.13" layout="above" format="hslider"/>
+		    </row>
+		</column>
+      	<label label="      "/>
+		<column>
+        	<display item="CV51.2 Doppler" format="checkbox"/>
+        	<display item="CV51.2 Horn" format="checkbox"/>
+        	<display item="CV51.2 Whistle" format="checkbox"/>
+        	<display item="CV51.2 Heavy" format="checkbox"/>
+        	<display item="CV51.2 Cocks1" format="checkbox"/>
+        	<display item="CV51.2 Cocks2" format="checkbox"/>
+        	<display item="CV55.3.1" />
+	    	<display item="CV56.0 Power" />
+	    	<display item="CV56.0 Cal" />
+	    	<display item="CV56.0 Sync" />
+	    	<display item="CV56.0 Reed" />
+	    	<display item="Wheel Diameter" />
+	    	<display item="Locomotive Scale" />
+		    <display item="CV55.178.0 MPH" format="checkbox"/>
+		    <display item="CV55.178.0 BEMF" format="checkbox"/>
+		    <display item="CV55.178.0 PWM" format="checkbox"/>
+		    <display item="CV56.0 Units" />
+	        <label label=" "/>
+		</column>
     </row>
-    <label label=" "/>
-  </column>
-</pane>
-
-<pane name="Function Output">
-  <column>
     <row>
-      <column>
-        <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
-      </column>
-    </row>
-    <separator/>
-    <label label=" "/>
-    <row>
-      <column>
-        <display item="CV53.1.0"/>
-        <display item="CV53.2.0"/>
-        <display item="CV53.3.0"/>
-        <display item="CV53.4.0"/>
-        <display item="CV53.5.0"/>
-        <display item="CV53.6.0"/>
-        <display item="CV53.7.0"/>
-        <display item="CV53.8.0"/>
-        <display item="CV53.9.0"/>
-        <display item="CV53.10.0"/>
-        <display item="CV53.11.0"/>
-        <display item="CV53.12.0"/>
-        <display item="CV53.13.0"/>
-        <display item="CV53.14.0"/>
-      </column>
-      <column>
-        <display item="CV53.1.1"/>
-        <display item="CV53.2.1"/>
-        <display item="CV53.3.1"/>
-        <display item="CV53.4.1"/>
-        <display item="CV53.5.1"/>
-        <display item="CV53.6.1"/>
-        <display item="CV53.7.1"/>
-        <display item="CV53.8.1"/>
-        <display item="CV53.9.1"/>
-        <display item="CV53.10.1"/>
-        <display item="CV53.11.1"/>
-        <display item="CV53.12.1"/>
-        <display item="CV53.13.1"/>
-        <display item="CV53.14.1"/>
-      </column>
-    </row>
-    <label label=" "/>
-    <row>
-    <column>
-	    <display item="CV55.178.0 MPH" format="checkbox"/>
-	    <display item="CV55.178.0 BEMF" format="checkbox"/>
-	    <display item="CV55.178.0 PWM" format="checkbox"/>
-	    <label label=" "/>
-	    <display item="CV56.0 Units" />
-     </column>
-      <label label="        "/>
      <column>
         <row>
 	        <display item="CV55.154.0" layout="above" label="" />
@@ -4055,11 +4017,337 @@
   </column>
 </pane>
 
+<pane name="Volume">
+  <column>
+    <row>
+      <column>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <row>
+      <column>
+	    <row>
+        	<display item="CV51.0" layout="above" label="" />
+        	<display item="CV51.0" layout="above" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        </row>
+      </column>
+      <label label="      "/>
+      <column>
+        <row>
+        	<display item="CV51.1" layout="above" label="" />
+        	<display item="CV51.1" layout="above" format="hslider"/>
+        </row>
+      </column>
+        <label label=" "/>
+    </row>
+    <label label=" "/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Individual Sound Volumes "/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <row>
+        	<display item="CV52.0" layout="above" label="" />
+        	<display item="CV52.0" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.8" layout="above" label="" />
+        	<display item="CV52.8" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.10" layout="above" label="" />
+        	<display item="CV52.10" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+       		<display item="CV52.11" layout="above" label="" />
+       		<display item="CV52.11" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+       		<display item="CV52.13" layout="above" label="" />
+       		<display item="CV52.13" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+       		<display item="CV52.14" layout="above" label="" />
+       		<display item="CV52.14" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+       		<display item="CV52.15" layout="above" label="" />
+       		<display item="CV52.15" layout="above" format="hslider"/>
+        </row>
+      </column>
+      <column>
+        <label label="        "/>
+      </column>
+      <column>
+        <row>
+        	<display item="CV52.16" layout="above" label="" />
+        	<display item="CV52.16" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.17" layout="above" label="" />
+        	<display item="CV52.17" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.19" layout="above" label="" />
+        	<display item="CV52.19" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.21" layout="above" label="" />
+        	<display item="CV52.21" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.22" layout="above" label="" />
+        	<display item="CV52.22" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.24" layout="above" label="" />
+        	<display item="CV52.24" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.26" layout="above" label="" />
+        	<display item="CV52.26" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.28" layout="above" label="" />
+        	<display item="CV52.28" layout="above" format="hslider"/>
+        </row>
+      </column>
+      <column>
+        <label label="        "/>
+      </column>
+      <column>
+        <row>
+        	<display item="CV52.29" layout="above" label="" />
+        	<display item="CV52.29" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.30" layout="above" label="" />
+        	<display item="CV52.30" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.31" layout="above" label="" />
+        	<display item="CV52.31" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.34" layout="above" label="" />
+        	<display item="CV52.34" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.37" layout="above" label="" />
+        	<display item="CV52.37" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.40" layout="above" label="" />
+        	<display item="CV52.40" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.46" layout="above" label="" />
+        	<display item="CV52.46" layout="above" format="hslider"/>
+        </row>
+      </column>
+    </row>
+    <label label=" "/>
+  </column>
+</pane>
+
+<pane name="Function Output">
+  <column>
+    <row>
+      <column>
+        <label label=" "/>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <separator/>
+    <label label=" "/>
+    <row>
+      <column>
+        <display item="CV53.1.0"/>
+      </column>
+      <column>
+        <display item="CV53.1.1"/>
+      </column>
+      <column>
+        <label label=" F0f"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.2.0"/>
+      </column>
+      <column>
+        <display item="CV53.2.1"/>
+      </column>
+      <column>
+        <label label=" F0f"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.3.0"/>
+      </column>
+      <column>
+        <display item="CV53.3.1"/>
+      </column>
+      <column>
+        <label label=" F1"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.4.0"/>
+      </column>
+      <column>
+        <display item="CV53.4.1"/>
+      </column>
+      <column>
+        <label label=" F2"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.5.0"/>
+      </column>
+      <column>
+        <display item="CV53.5.1"/>
+      </column>
+      <column>
+        <label label=" F3"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.6.0"/>
+      </column>
+      <column>
+        <display item="CV53.6.1"/>
+      </column>
+      <column>
+        <label label=" F4"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.7.0"/>
+      </column>
+      <column>
+        <display item="CV53.7.1"/>
+      </column>
+      <column>
+        <label label=" F5"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.8.0"/>
+      </column>
+      <column>
+        <display item="CV53.8.1"/>
+      </column>
+      <column>
+        <label label=" F6"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.9.0"/>
+      </column>
+      <column>
+        <display item="CV53.9.1"/>
+      </column>
+      <column>
+        <label label=" F7"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.10.0"/>
+      </column>
+      <column>
+        <display item="CV53.10.1"/>
+      </column>
+      <column>
+        <label label=" F8"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.11.0"/>
+      </column>
+      <column>
+        <display item="CV53.11.1"/>
+      </column>
+      <column>
+        <label label=" F9"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.12.0"/>
+      </column>
+      <column>
+        <display item="CV53.12.1"/>
+      </column>
+      <column>
+        <label label=" F10"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.13.0"/>
+      </column>
+      <column>
+        <display item="CV53.13.1"/>
+      </column>
+      <column>
+        <label label=" F11"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.14.0"/>
+      </column>
+      <column>
+        <display item="CV53.14.1"/>
+      </column>
+      <column>
+        <label label=" F12"/>
+      </column>
+    </row>
+</column>
+</pane>
+
 <pane name="Light Control">
   <column>
     <row>
       <column>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
@@ -4072,11 +4360,16 @@
         <display item="CV55.70.1 REV"/>
         <display item="CV55.70.1 NFR"/>
         <row>
-	        <display item="CV55.70.10" layout="above" label="" />
-	        <display item="CV55.70.10" layout="above" format="hslider"/>
+	        <display item="CV55.70.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.70.10" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.70.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.70.12" format="hslider" label="" />
         </row>
       </column>
-
       <column>
         <display item="CV55.73.0"/>
         <display item="CV55.73.1 FWD"/>
@@ -4084,8 +4377,14 @@
         <display item="CV55.73.1 REV"/>
         <display item="CV55.73.1 NFR"/>
         <row>
-	        <display item="CV55.73.10" layout="above" label="" />
-	        <display item="CV55.73.10" layout="above" format="hslider"/>
+	        <display item="CV55.73.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.73.10" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.73.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.73.12" format="hslider" label="" />
         </row>
       </column>
     </row>
@@ -4098,8 +4397,29 @@
         <display item="CV55.76.3"/>
         <display item="CV55.76.4"/>
         <row>
-	        <display item="CV55.76.10" layout="above" label="" />
-	        <display item="CV55.76.10" layout="above" format="hslider"/>
+	        <display item="CV55.76.6" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.6" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.76.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.10" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.76.11" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.11" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.76.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.12" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.76.13" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.13" format="hslider" label="" />
         </row>
       </column>
 
@@ -4110,85 +4430,160 @@
         <display item="CV55.80.3"/>
         <display item="CV55.80.4"/>
         <row>
-	        <display item="CV55.80.10" layout="above" label="" />
-	        <display item="CV55.80.10" layout="above" format="hslider"/>
+	        <display item="CV55.80.6" />                          
+		    <label label="          "/>
+	        <display item="CV55.80.6" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.80.10" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.10" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.80.11" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.11" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.80.12" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.12" format="hslider" label="" />
+        </row>
+        <row>
+	        <display item="CV55.80.13" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.13" format="hslider" label="" />
         </row>
       </column>
 	</row>
     <label label=" "/>
-	<row>
-      <column>
-        <display item="CV55.84.0"/>
-        <display item="CV55.84.1"/>
-        <display item="CV55.84.2"/>
-        <display item="CV55.84.3"/>
-        <display item="CV55.84.4"/>
-        <row>
-	        <display item="CV55.84.5" layout="above" label="" />
-	        <display item="CV55.84.5" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.84.10" layout="above" label="" />
-	        <display item="CV55.84.10" layout="above" format="hslider"/>
-        </row>
-  	  </column>
-
-      <column>
-        <display item="CV55.84.0 Horn" format="checkbox"/>
-        <display item="CV55.84.1 Horn" format="checkbox"/>
-        <display item="CV55.84.2 Horn" format="checkbox"/>
-        <display item="CV55.84.3 Horn" format="checkbox"/>
-        <display item="CV55.84.4 Horn" format="checkbox"/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-      </column>
-      <column>
-        <display item="CV55.88.0"/>
-        <display item="CV55.88.1"/>
-        <display item="CV55.88.2"/>
-        <display item="CV55.88.3"/>
-        <display item="CV55.88.4"/>
-        <row>
-	        <display item="CV55.88.5" layout="above" label="" />
-	        <display item="CV55.88.5" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.88.10" layout="above" label="" />
-	        <display item="CV55.88.10" layout="above" format="hslider"/>
-        </row>
-  	  </column>
-      <label label=" "/>
-      <column>
-        <display item="CV55.88.0 Horn" format="checkbox"/>
-        <display item="CV55.88.1 Horn" format="checkbox"/>
-        <display item="CV55.88.2 Horn" format="checkbox"/>
-        <display item="CV55.88.3 Horn" format="checkbox"/>
-        <display item="CV55.88.4 Horn" format="checkbox"/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-        <label label=" "/>
-      </column>
-  	</row>
+		<row>
+    	  <column>
+ 			<row>
+    		  <column>
+    		    <display item="CV55.84.0"/>
+    		    <display item="CV55.84.1"/>
+    		    <display item="CV55.84.2"/>
+    		    <display item="CV55.84.3"/>
+    		    <display item="CV55.84.4"/>
+    		  </column>
+    		  <column>
+    		    <display item="CV55.84.0 Horn" format="checkbox"/>
+    		    <display item="CV55.84.1 Horn" format="checkbox"/>
+    		    <display item="CV55.84.2 Horn" format="checkbox"/>
+    		    <display item="CV55.84.3 Horn" format="checkbox"/>
+    		    <display item="CV55.84.4 Horn" format="checkbox"/>
+    		  </column>
+    		</row>
+    		<row>
+			    <display item="CV55.84.5" />                          
+			   <label label="          "/>
+			    <display item="CV55.84.5" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.84.6" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.6" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.84.10" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.10" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.84.11" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.11" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.84.12" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.12" format="hslider" label="" />
+    		</row>
+   		  </column>
+   		  <column>
+    		<row>
+    		  <column>
+    		    <display item="CV55.88.0"/>
+    		    <display item="CV55.88.1"/>
+    		    <display item="CV55.88.2"/>
+    		    <display item="CV55.88.3"/>
+    		    <display item="CV55.88.4"/>
+    		  </column>
+    		  <column>
+    		    <display item="CV55.88.0 Horn" format="checkbox"/>
+    		    <display item="CV55.88.1 Horn" format="checkbox"/>
+    		    <display item="CV55.88.2 Horn" format="checkbox"/>
+    		    <display item="CV55.88.3 Horn" format="checkbox"/>
+    		    <display item="CV55.88.4 Horn" format="checkbox"/>
+    		  </column>
+  			</row>
+    		<row>
+    		   <display item="CV55.88.5" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.5" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.88.6" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.6" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.88.10" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.10" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.88.11" />
+			   <label label="          "/>
+    		   <display item="CV55.88.11" format="hslider" label="" />
+    		</row>
+    		<row>
+    		   <display item="CV55.88.12" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.12" format="hslider" label="" />
+    		</row>
+		</column>
+	</row>
     <label label=" "/>
     <row>
       <column>
         <display item="CV55.92.0 Init" />
-        <display item="CV55.92.0 Effect" />
+   	    <display item="CV55.92.0 Effect" />
+   		<row>
+   		   <display item="CV55.92.6"  />
+		   <label label="          "/>
+   		   <display item="CV55.92.6" format="hslider" label=""/>
+   		</row>
+   		<row>
+   		   <display item="CV55.92.11"  />          
+		   <label label="          "/>
+   		   <display item="CV55.92.11" format="hslider" label=""/>
+   		</row>
+   		<row>
+   		   <display item="CV55.92.12"  />          
+		   <label label="          "/>
+   		   <display item="CV55.92.12" format="hslider" label=""/>
+   		</row>
       </column>
       <column>
         <display item="CV55.96.0 Init" />
         <display item="CV55.96.0 Effect" />
+   		<row>
+   		   <display item="CV55.96.6"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.6" format="hslider" label=""/>
+   		</row>
+   		<row>
+   		   <display item="CV55.96.11"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.11" format="hslider" label=""/>
+   		</row>
+   		<row>
+   		   <display item="CV55.96.12"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.12" format="hslider" label=""/>
+   		</row>
       </column>
   	</row>
     <label label=" "/>
@@ -4259,15 +4654,23 @@
         <display item="CV55.118.1 NFR" format="checkbox"/>
       </column>
   	</row>
+    <label label=" "/>
+  	<row>
+      <column>
+        <display item="CV55.134.0 Truck" format="checkbox"/>
+        <display item="CV55.134.0 Step" format="checkbox"/>
+      </column>
+    </row>
   </column>
 </pane>
+
 
 <pane name="Multi Auto Lights">
   <column>
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1 or later"/>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
@@ -4339,7 +4742,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1 or later"/>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
@@ -4349,7 +4752,7 @@
         	<display item="CV56.5" layout="above" label=""/>
         	<display item="CV56.5" layout="above" format="hslider" />
         </row>
-      <label label=" "/>
+        <label label=" "/>
         <row>
         	<display item="CV56.9" layout="above" label=""/>
         	<display item="CV56.9" layout="above" format="hslider" />
@@ -4365,6 +4768,11 @@
         </row>
         <label label=" "/>
         <row>
+        	<display item="CV56.18.1" layout="above" label="" />
+        	<display item="CV56.18.1" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
        		<display item="CV56.18.2" layout="above" label="" />
        		<display item="CV56.18.2" layout="above" format="hslider" />
         </row>
@@ -4372,6 +4780,11 @@
         <row>
         	<display item="CV56.19.0" layout="above" label="" />
         	<display item="CV56.19.0" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.19.1" layout="above" label="" />
+        	<display item="CV56.19.1" layout="above" format="hslider" />
         </row>
         <label label=" "/>
         <row>
@@ -4387,6 +4800,11 @@
         </row>
         <label label=" "/>
         <row>
+        	<display item="CV56.20.1" layout="above" label="" />
+        	<display item="CV56.20.1" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
         	<display item="CV56.20.2" layout="above" label="" />
         	<display item="CV56.20.2" layout="above" format="hslider" />
         <label label=" "/>
@@ -4395,6 +4813,11 @@
         <row>
         	<display item="CV56.21.0" layout="above" label="" />
         	<display item="CV56.21.0" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.21.1" layout="above" label="" />
+        	<display item="CV56.21.1" layout="above" format="hslider" />
         </row>
         <label label=" "/>
         <row>
@@ -4411,7 +4834,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
+        <label label="You must have JMRI 2.4a or later to use this definition"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
@@ -4429,7 +4852,7 @@
 	<display item="Decoder Version" />
     <display item="CV56.254.6"/>
     <display item="CV56.254.8"/>
-	<display item="Product Number" />
+	<display item="Product number" />
     <display item="Sound Set"/>
     <display item="Sound Set Number"/>
 	<display item="Hardware Profile"/>
