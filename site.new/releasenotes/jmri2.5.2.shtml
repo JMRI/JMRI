@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.26 2009-03-21 04:07:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.27 2009-03-21 20:09:41 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,14 +130,15 @@ This lets JMRI run cleanly on Windows 7.
 Nigel Cliffe and Mark Waters provided new definitions for the
 Zimo MX620 decoder.
 
-<p>Dan Boudreau made several enhancements to the operations program. You
-can now specify car loads, and define the name of the load received or
-shipped for a siding by using the schedule feature. Schedules can now be
-accessed from the Locations menu under Tools. You can now also modify
-the default load names for empty and loaded.  Edit frames now appear on top
-when launched from tables.  He also fixed a print problem when 
-a car with a FRED was printed in a switch list or manifest.  Trains, Train, and 
-Route windows now have print and preview tools.
+<p>Dan Boudreau made several enhancements to the operations program.
+You can now specify car loads, and define the name of the load received
+or shipped for a siding by using the schedule feature. Schedules can now
+be accessed from the Locations menu under Tools. You can now also modify
+the default load names for empty and loaded. Edit frames now appear on
+top when launched from tables. He also fixed a print problem when a car
+with a FRED was printed in a switch list or manifest. Trains, Train, and
+Route windows now have print and preview tools. Also fixed a problem
+where some buttons were not visible on some operations windows.
 
 <p>
 Matt Harris fixed a problem launching JMRI on a Windows 64-bit machine with
@@ -245,7 +246,7 @@ and the ability to select layout scale to Dispatcher.
 
 <p>
 Dan Boudreau added a tool to the NCE menu that
-provides a table of active NCE cabs addresses.
+provides a table of active NCE cabs addresses, loco speed, and function keys.
 
 <p>
 Matt Harris has created a new, much more professional Windows installer.
@@ -291,17 +292,7 @@ Matt Harris added scrolling options to the panel editor and layout editor
 windows.
 
 <p>
-Dan Boudreau made some minor improvements to NCE show cabs tool, 
-table now also shows function keys.
-
-<p>
-Dan Boudreau fix a problem where some buttons were occasionally not
-visible on operations windows.
-
-<p>
-Dan Boudreau fixed a race condition during configuration of
-NCE links.
-This should fix a false EPROM revision error message when using TCP/IP connections.
+Dan Boudreau fixed a problem a with the EPROM revision error message when using NCE and a TCP/IP connection.
 
 <!--#include virtual="/Footer" -->
 
