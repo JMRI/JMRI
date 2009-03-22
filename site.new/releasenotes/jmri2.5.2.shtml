@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.28 2009-03-22 00:18:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.29 2009-03-22 06:16:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -283,7 +283,6 @@ Richard Sauerbrun provided info for the TCS 1278 decoder model.
 <p>
 David Duchamp added a 3-way turnout tool and other additions to Layout Editor tools
 
-
 <p>
 Simon Ginsburg updated the German, Czech and Spanish translations.
 
@@ -312,6 +311,9 @@ Nigel Cliffe updated the CT Elektronik DCX decoder definition.
 
 <p>
 Peter Cesaro updated the MRC Sound Brilliance 1663 and 1656 definitions.
+
+<p>
+Jim Thompson provided a new "PM42forCTC.py" sample script.
 
 <!--#include virtual="/Footer" -->
 

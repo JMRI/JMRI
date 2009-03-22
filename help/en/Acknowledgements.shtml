@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.70 2009-02-15 17:10:14 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.71 2009-03-22 06:11:43 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -112,6 +112,7 @@
         added the Light Control, provided sample scripts, 
         improved the titling of throttle windows, 
         and created the InstallTest app.
+    <li>Peter Cesaro provided MRC decoder definitions
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions
@@ -122,6 +123,8 @@
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
+    <li>Peter Cressman provided a major improvement to Logix, and 
+    several other internal improvements.
 	<LI>Andrew Crossland create the SPROG implementation, SPROG programming
 	tools, 
 	has generously contributed lots of time for SPROG users,
@@ -195,7 +198,8 @@
 	<li>Matthew Harris, who provided instructions for installing JMRI on EeePCs,
 	updated the roster pane to work on small screens,
 	improved handling of screen insets,
-	and provided a shutdown task.
+	provided a shutdown task,
+	and greatly improved the handling of scroll bars on panels.
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Tim Hatch, who added the support for TCH Technology devices
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
@@ -336,10 +340,11 @@
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>.
         He also wrote the 
         <a href="http://jmri.sf.net/community/connections/XtrkCadReader/">XTrkCadReader</a> tool.
+    <li>Jim Thompson provided a sample script for handling messages from PM42 power controllers
    	<LI>Walter Thompson, who provided the ID information for the Lionel
-	Challenger decoder and DS54 accessory decoder,
-	updated lots of decoder definitions,
-	and is a jmriusers moderator.
+	    Challenger decoder and DS54 accessory decoder,
+	    updated lots of decoder definitions,
+	    and is a jmriusers moderator.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
     <a href="http://jmri.sourceforge.net/community/clinics/">clinic presentations</a>
