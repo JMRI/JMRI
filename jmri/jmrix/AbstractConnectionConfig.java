@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -105,6 +105,9 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         }
 
         portBox.removeAllItems();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(portBox.getActionListeners().length >0)
+        	portBox.removeActionListener(portBox.getActionListeners()[0]);
         for (int i=0; i<v.size(); i++) {
                 portBox.addItem(v.elementAt(i));
         }
@@ -113,6 +116,9 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
 
         String[] baudList = adapter.validBaudRates();
         baudBox.removeAllItems();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(baudBox.getActionListeners().length >0)
+        	baudBox.removeActionListener(baudBox.getActionListeners()[0]);
     	if (log.isDebugEnabled()) log.debug("after remove, "+baudBox.getItemCount()+" items, first is "
     											+baudBox.getItemAt(0));        
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
@@ -121,9 +127,15 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     	
         String[] opt1List = adapter.validOption1();
         opt1Box.removeAllItems();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(opt1Box.getActionListeners().length >0)
+        	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         String[] opt2List = adapter.validOption2();
         opt2Box.removeAllItems();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(opt2Box.getActionListeners().length >0)
+        	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
         if (baudList.length>1) {
@@ -181,6 +193,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
             opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
         }
 
+        init = false;		// need to reload action listeners
         checkInitDone();
     }
 
