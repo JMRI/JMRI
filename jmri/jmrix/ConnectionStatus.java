@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
 public class ConnectionStatus {
 
@@ -36,6 +36,8 @@ public class ConnectionStatus {
 
 	public synchronized void addConnection (String systemName, String portName){
 		log.debug ("add connection to monitor " + systemName + " " + portName);
+		if (portName == null)
+			return;
 		if (portNames.contains(portName))
 			return;
 		portNames.add(portName);
@@ -49,6 +51,8 @@ public class ConnectionStatus {
 	 */
 	public synchronized void setConnectionState(String portName, String state){
 		log.debug ("set " + portName + " connection status: " + state);
+		if (portName == null)
+			return;
 		if (!portNames.contains(portName)){
 			portNames.add(portName);
 			portStatus.add(state);
@@ -88,7 +92,7 @@ public class ConnectionStatus {
 	/**
 	 * Returns status of a communication port
 	 * @param portName
-	 * @return true if port connection is operatonal or unknown, false if not
+	 * @return true if port connection is operational or unknown, false if not
 	 */
 	public synchronized boolean isConnectionOk(String portName){
 		String stateText = getConnectionState(portName);
