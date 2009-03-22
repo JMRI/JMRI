@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.27 2009-03-21 20:09:41 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.28 2009-03-22 00:18:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -271,6 +271,13 @@ Ken Cameron added methods so you can enable and disable polling of
 C/MRI, etc, nodes via scripts.
 
 <p>
+Peter Cressman provided a large update to Logix. In particular, the 
+Conditionals in the Logix can now compute more complicated logical
+expressions; more than two actions can be attached to a conditional;
+the user interface is more flexible; and certain internal race conditions
+that resulted in inconsistent results have been fixed.
+
+<p>
 Richard Sauerbrun provided info for the TCS 1278 decoder model.
 
 <p>
@@ -293,6 +300,18 @@ windows.
 
 <p>
 Dan Boudreau fixed a problem a with the EPROM revision error message when using NCE and a TCP/IP connection.
+
+<p>
+Mark Waters updated the decoder definitions for the various versions of the Zimo MX640.
+
+<p>
+Mike Mosher updated the QSI Version 7 decoder definitions.
+
+<p>
+Nigel Cliffe updated the CT Elektronik DCX decoder definition.
+
+<p>
+Peter Cesaro updated the MRC Sound Brilliance 1663 and 1656 definitions.
 
 <!--#include virtual="/Footer" -->
 
