@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -27,13 +27,13 @@ public class ProxySensorManager extends AbstractProxyManager
      */
     public void addManager(Manager m) {
         if (mgrs.size() == 0) { 
-            log.debug("initial addmanager");
+            log.debug("initial addmanager "+m);
             mgrs.add(m);
             mgrs.add(new InternalSensorManager());
         } else {
             mgrs.add(m);
         }
-        log.debug("added manager");
+        log.debug("added manager "+m);
     }
 
     /**

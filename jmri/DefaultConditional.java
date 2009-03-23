@@ -6,14 +6,27 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.beans.PropertyChangeEvent;
 import javax.swing.Timer;
 
  /**
  * Class providing the basic logic of the Conditional interface.
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.16 $
  * @author Pete Cressman Copyright (C) 2009
+ * @version     $Revision: 1.17 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -35,7 +48,7 @@ public class DefaultConditional extends AbstractNamedBean
     // variables (antecedent) parameters
     private ArrayList <ConditionalVariable> _variableList = new ArrayList<ConditionalVariable>();
     // actions (consequent) parameters
-    private ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
+    protected ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
 	private int _currentState = Conditional.UNKNOWN;
 
@@ -72,6 +85,8 @@ public class DefaultConditional extends AbstractNamedBean
 	 * information has been validated.
      */
     public void setStateVariables(ArrayList <ConditionalVariable> arrayList) {
+        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+
+                  ") updated ConditionalVariable list.");
         _variableList = arrayList;
 	}
 	
@@ -90,7 +105,7 @@ public class DefaultConditional extends AbstractNamedBean
             clone.setDataString(variable.getDataString());
             clone.setNum1(variable.getNum1());
             clone.setNum2(variable.getNum2());
-            clone.setTriggerCalculation(variable.doCalculation());
+            clone.setTriggerActions(variable.doTriggerActions());
             clone.setState(variable.getState());
             variableList.add(clone);
 		}
@@ -132,7 +147,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 * Sets the state of the conditional.
 	 * Returns the calculated state of this Conditional.
 	 */
-	public int calculate (boolean logixEnabled) {
+	public int calculate (boolean enabled, PropertyChangeEvent evt) {
 		// check if  there are no state variables
 		if (_variableList.size()==0) {
 			// if there are no state variables, no state can be calculated
@@ -182,16 +197,40 @@ public class DefaultConditional extends AbstractNamedBean
         }
 		int newState = FALSE;
         log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
-                  result+". current state is "+_currentState+".  logixEnabled= "+logixEnabled);
+                  result+". current state is "+_currentState+".  enabled= "+enabled);
 		if (result) newState = TRUE;
         if (newState != _currentState) {
             setState(newState);
-            if (logixEnabled) {
-                takeActionIfNeeded();
+            if (enabled) {
+                if (evt != null) {
+                    // check if the current listener wants to (NOT) trigger actions
+                    String listener = "";
+                    try {
+                        listener = ((NamedBean)evt.getSource()).getSystemName();
+                    } catch ( ClassCastException e) {
+                        log.error("PropertyChangeEvent source of unexpected type: "+ evt);
+                    }
+                    enabled = wantsToTrigger(listener);
+                }
+                if (enabled) {
+                    takeActionIfNeeded();
+                }
             }
 		}
 		return _currentState;
 	}
+
+    /**
+    * Find out if the state variable is willing to cause the actions to execute
+    */
+    boolean wantsToTrigger(String varName) {
+        for (int i=0; i<_variableList.size(); i++) {
+            if (varName.equals(_variableList.get(i).getName())) {
+                return _variableList.get(i).doTriggerActions();
+            }
+        }
+        return true;
+    }
 
     class DataPair {
         boolean result = false;
@@ -430,8 +469,10 @@ public class DefaultConditional extends AbstractNamedBean
 	 */
 	@SuppressWarnings("deprecation")
 	private void takeActionIfNeeded() {
-        int actionNeeded = 0;       // debug info
-        int actionCount = 0;        // debug info
+        int actionCount = 0;
+        int actionNeeded = 0;
+        int act = 0;
+        int state = 0;
         // Use a local copy of state to guarantee the entire list of actions will be fired off
         // before a state change occurs that may block their completion.
         int currentState = _currentState;
@@ -459,7 +500,15 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid turnout name in action - "+action.getDeviceName());
 						}
 						else {
-							t.setCommandedState(action.getActionData());
+                            act = action.getActionData();
+                            if (act == Route.TOGGLE) {
+                                state = t.getKnownState();
+                                if (state == Turnout.CLOSED)
+                                    act = Turnout.THROWN;
+                                else
+                                    act = Turnout.CLOSED;
+                            }
+							t.setCommandedState(act);
                             actionCount++;
 						}
 						break;
@@ -512,14 +561,20 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid turnout name in action - "+action.getDeviceName());
 						}
 						else {
-							if (action.getActionData() == Turnout.LOCKED){
+                            act = action.getActionData();
+                            if (act == Route.TOGGLE) {
+                                if (tl.getLocked(Turnout.CABLOCKOUT) )
+                                    act = Turnout.UNLOCKED;
+                                else
+                                    act = Turnout.LOCKED;
+                            }
+							if (act == Turnout.LOCKED){
 								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-                                actionCount++;
 							}
-							else if (action.getActionData() == Turnout.UNLOCKED){
+							else if (act == Turnout.UNLOCKED){
 								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
-                                actionCount++;
 							}
+                            actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
@@ -595,8 +650,16 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid sensor name in action - "+action.getDeviceName());
 						}
 						else {
+                            act = action.getActionData();
+                            if (act == Route.TOGGLE) {
+                                state = sn.getState();
+                                if (state == Sensor.ACTIVE)
+                                    act = Sensor.INACTIVE;
+                                else
+                                    act = Sensor.ACTIVE;
+                            }
 							try {
-								sn.setKnownState(action.getActionData());
+								sn.setKnownState(act);
                                 actionCount++;
 							} 
 							catch (JmriException e) {
@@ -653,7 +716,15 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid light name in action - "+action.getDeviceName());
 						}
 						else {
-							lgt.setState(action.getActionData());
+                            act = action.getActionData();
+                            if (act == Route.TOGGLE) {
+                                state = lgt.getState();
+                                if (state == Light.ON)
+                                    act = Light.OFF;
+                                else
+                                    act =Light.ON;
+                            }
+							lgt.setState(act);
                             actionCount++;
 						}
 						break;

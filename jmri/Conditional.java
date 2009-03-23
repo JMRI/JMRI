@@ -2,6 +2,7 @@
 
 package jmri;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 /**
  * A Conditional is layout control logic, consisting of a logical 
@@ -13,9 +14,9 @@ import java.util.ArrayList;
  * its parent Logix.  There is no Conditional Table.  Conditionals
  * are created, editted, and deleted via the Logix Table. 
  * <P>
- * A has a "state", which changes depending on whether its logical
- * expression calculates to TRUE or FALSE. The "state" may not be
- * changed by the user. It only changes in response to changes in
+ * A Conditional has a "state", which changes depending on whether its
+ * logical expression calculates to TRUE or FALSE. The "state" may not
+ * be changed by the user. It only changes in response to changes in
  * the "state variables" used in its logical expression.
  * <P>
  * Listeners may be set to monitor a change in the state of a 
@@ -189,20 +190,17 @@ public interface Conditional extends NamedBean {
     /**
 	 * Calculate this Conditional, triggering either or both actions if the user 
 	 *   specified conditions are met, and the Logix is enabled.
-	 * Note: if any state variable evaluates false, the Conditional calculates
-	 *   to false.  If all state variables evaluate true, the Conditional 
-	 *   calculates to true.  So, the first false state variable results in 
-	 *   a false state for the conditional.
-	 * Sets the state of the conditional.
-	 * Returns the calculated state of this Conditional.
+	 *  Sets the state of the conditional.
+	 *  Returns the calculated state of this Conditional.
 	 */
-	public int calculate (boolean logixEnabled);
+	public int calculate (boolean enabled, PropertyChangeEvent evt);
 
    /**
     *  Check that an antecedent is well formed.  If not,
     * returns an error message.  Otherwise returns null.
     */
     public String validateAntecedent(String ant, ArrayList <ConditionalVariable> variableList);
+
 
 	/**
 	 * Stop a sensor timer if one is actively delaying setting of the specified sensor

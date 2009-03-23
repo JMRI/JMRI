@@ -39,7 +39,7 @@ public class ConditionalAction {
     }
 
     public ConditionalAction(int option, int type, String name, int actionData, String actionStr) {
-        _option = _option;
+        _option = option;
         _type = type;
         _deviceName = name;
         _actionData = actionData;
@@ -390,8 +390,8 @@ public class ConditionalAction {
                     return (rbx.getString("TurnoutClosed"));
                 } else if (data == Turnout.THROWN) {
                     return (rbx.getString("TurnoutThrown"));
-                }
-                break;
+                } else
+                    return (rbx.getString("Toggle"));
             case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
                 return DefaultSignalHead.getAppearanceString(data);
     		case Conditional.ACTION_SET_SENSOR:
@@ -399,21 +399,24 @@ public class ConditionalAction {
     		case Conditional.ACTION_RESET_DELAYED_SENSOR:
                 if (data == Sensor.ACTIVE) {
                     return (rbx.getString("SensorActive"));
-                } else {
+                } else if (data == Sensor.INACTIVE) {
                     return (rbx.getString("SensorInactive"));
-                }
+                } else
+                    return (rbx.getString("Toggle"));
     		case Conditional.ACTION_SET_LIGHT:
                 if (data == Light.ON) {
                     return (rbx.getString("LightOn"));
-                } else {
+                } else if (data == Light.OFF) {
                     return (rbx.getString("LightOff"));
-                }
+                } else
+                    return (rbx.getString("Toggle"));
     		case Conditional.ACTION_LOCK_TURNOUT:
                 if (data == Turnout.UNLOCKED) {
                     return (rbx.getString("TurnoutUnlock"));
-                } else {
+                } else if (data == Turnout.LOCKED) {
                     return (rbx.getString("TurnoutLock"));
-                }
+                } else
+                    return (rbx.getString("Toggle"));
 		}
 //        log.warn("Unexpected parameters to getActionDataString("+t+", "+data+
 //                  ")  type= "+getTypeString(t));

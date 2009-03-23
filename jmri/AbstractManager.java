@@ -16,7 +16,7 @@ import java.util.List;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -125,7 +125,7 @@ abstract public class AbstractManager
             arr[i] = (String)en.nextElement();
             i++;
         }
-        java.util.Arrays.sort(arr, new jmri.util.SystemNameComparator());
+        java.util.Arrays.sort(arr);
         return arr;
     }
 

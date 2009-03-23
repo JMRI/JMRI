@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class Maintenance
@@ -162,10 +162,10 @@ public class Maintenance
         JButton button = new JButton(rbm.getString("DeleteButton"));
         button.setToolTipText(rbm.getString("OrphanDeleteHint"));
 
-        class searchListener implements ActionListener {
+        class SearchListener implements ActionListener {
              JList l;
              Vector n;
-             searchListener(JList list, Vector name) {
+             SearchListener(JList list, Vector name) {
                  l = list;
                  n = name;
              }
@@ -174,7 +174,7 @@ public class Maintenance
                  if (index < 0)  {
                      javax.swing.JOptionPane.showMessageDialog(null,
                              rbm.getString("OrphanDeleteHint"),
-                             rbm.getString("ReminderTitle"),
+                             rbm.getString("DeleteTitle"),
                              javax.swing.JOptionPane.INFORMATION_MESSAGE);
                      return;
                  }
@@ -239,7 +239,90 @@ public class Maintenance
              }
         }
         JScrollPane scrollPane = new JScrollPane(list);
-        button.addActionListener(new searchListener(list, names));
+        button.addActionListener(new SearchListener(list, names));
+        button.setMaximumSize(button.getPreferredSize());
+        makeDialog(scrollPane, button, parent);
+    }
+
+    /**
+    *  Find orphaned elements in the various Manager Objects
+    */
+    public static void findEmptyPressed(Frame parent) {
+        Vector <String> display = new Vector<String>();
+        Vector <String> names = new Vector<String>();
+
+        System.out.println("findEmptyPressed");
+        Iterator iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
+        jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        while (iter.hasNext()) {
+            String name = (String)iter.next();
+            Conditional c = cm.getBySystemName(name);
+            if (c != null) {
+                ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                if (variableList.size()==0) {
+                    String userName = c.getUserName();
+                    display.add(MessageFormat.format(rbm.getString("OrphanName"), 
+                                       new Object[]{"Conditional", userName, name}));
+                    names.add( name);
+                }
+            }
+        }
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i=0; i<display.size(); i++)  {
+            listModel.addElement(display.get(i));
+        }
+        JList list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        JButton button = new JButton(rbm.getString("DeleteButton"));
+        button.setToolTipText(rbm.getString("OrphanDeleteHint"));
+
+        class EmptyListener implements ActionListener {
+             JList l;
+             Vector n;
+             EmptyListener(JList list, Vector name) {
+                 l = list;
+                 n = name;
+             }
+             public void actionPerformed(ActionEvent e) {
+                 int index = l.getMaxSelectionIndex();
+                 if (index < 0)  {
+                     javax.swing.JOptionPane.showMessageDialog(null,
+                             rbm.getString("OrphanDeleteHint"),
+                             rbm.getString("DeleteTitle"),
+                             javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                     return;
+                 }
+                 int min =l.getMinSelectionIndex();
+                 DefaultListModel model = (DefaultListModel)l.getModel();
+                 while (index>=min) {
+                     String[] names = getTypeAndNames((String)n.get(index));
+                     model.remove(index);
+                     Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
+                     if (c != null) {
+                         Logix x = InstanceManager.conditionalManagerInstance().getParentLogix(names[2]);
+                         if (x != null) {
+                             x.deActivateLogix();
+                             x.deleteConditional(names[2]);
+                             x.activateLogix();
+                         } else {
+                             InstanceManager.conditionalManagerInstance().deregister(c);
+                         }
+                         n.remove(index);
+                         index--;
+                     }
+                 }
+                 index++;
+                 if (index >= model.getSize()) {
+                     index = model.getSize()-1;
+                 }
+                 if (index >= 0) {
+                     l.setSelectedIndex(index);
+                 }
+             }
+        }
+        JScrollPane scrollPane = new JScrollPane(list);
+        button.addActionListener(new EmptyListener(list, names));
         button.setMaximumSize(button.getPreferredSize());
         makeDialog(scrollPane, button, parent);
     }
@@ -367,17 +450,16 @@ public class Maintenance
             return (new String[] {"Section", userName, sysName, 
                                   Integer.toString(sec.getNumPropertyChangeListeners())});
         }
-        return (new String[] {null, userName, sysName});
+        return (new String[] {"", userName, sysName});
     }
 
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
-        if (names[0] == null)
+        if (names[0].length() == 0)
         {
             if (text != null) {
                 text.append(MessageFormat.format(rbm.getString("ElementNotFound"), (Object[])names));
             }
-            return false;
         }
         if (text != null) {
             text.append(MessageFormat.format(rbm.getString("ReferenceFollows"), (Object[])names));
@@ -385,6 +467,7 @@ public class Maintenance
         String sysName = names[2];
         String userName = names[1];
         int referenceCount = 0;
+        String tempText = null;
         boolean found = false;
         boolean empty = true;
         // search for references
@@ -398,14 +481,13 @@ public class Maintenance
 				break;
 			}
             String uName = x.getUserName();
-            if (text != null)  {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Logix"), uName,  sName}));
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { "", rbm.getString("Logix"), uName,  sName});
             empty = false;
             for (int i=0; i<x.getNumConditionals(); i++)  {
                 sName = x.getConditionalByNumberOrder(i);
                 if (sName == null) {
+					log.error("Null conditional system name");
                     break;
                 }
 				Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
@@ -414,33 +496,24 @@ public class Maintenance
                     break;
 				}
                 uName = c.getUserName();
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                                new Object[] { "\t", rbm.getString("Conditional"), uName,  sName}));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ReferenceTitle"),
+                                new Object[] { "\t", rbm.getString("Conditional"), uName,  sName});
                 if (sName.equals(sysName) || uName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(
-                            rbm.getString("ConditionalReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format("\t",rbm.getString("ConditionalReference"));
                     found = true;
                     referenceCount++;
                 }
                 ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 if (variableList.size()==0) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("NoVariables"),
+                    tempText = tempText + MessageFormat.format(rbm.getString("NoVariables"),
                                     new Object[] {c.getUserName(), c.getSystemName(),
-                                         x.getUserName(), x.getSystemName()}));
-                    }
+                                         x.getUserName(), x.getSystemName()});
                 } else for (int k=0; k<variableList.size(); k++)  {
                     ConditionalVariable v = variableList.get(k);
                     if (v.getName().equals(sysName) || v.getName().equals(userName))
                     {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("VariableReference"),
-                                        new Object[] { "\t\t", v.getTypeString(), v.getDataString()}));
-                        }
+                        tempText = tempText + MessageFormat.format(rbm.getString("VariableReference"),
+                                        new Object[] { "\t\t", v.getTypeString(), v.getDataString()});
                         found = true;
                         referenceCount++;
                     }
@@ -450,23 +523,25 @@ public class Maintenance
                     ConditionalAction a = actionList.get(k);
                     if (a.getDeviceName().equals(sysName) || a.getDeviceName().equals(userName))
                     {
-                        if (text != null) {
-                            text.append(MessageFormat.format(
+                        tempText = tempText + MessageFormat.format(
                                 rbm.getString("ActionReference"),
-                                new Object[] {"\t\t", a.getTypeString(), a.getOptionString(), a.getActionDataString()}));
-                        }
+                                new Object[] {"\t\t", a.getTypeString(), a.getOptionString(), a.getActionDataString()});
                         found = true;
                         referenceCount++;
                     }
                 }
             }
+            if (text != null && !empty) {
+                if (!found)
+                    text.append(MessageFormat.format(rbm.getString("NoReference"), "Logix"));
+                else {
+                    text.append(tempText);
+                    text.append("\n");
+                    found = false;
+                }
+            }
         }
-        if (text != null && !empty) {
-            if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
-                text.append("\n");
-        }
+        tempText = null;
         found = false;
         empty = true;
         jmri.RouteManager routeManager = InstanceManager.routeManagerInstance();
@@ -480,89 +555,76 @@ public class Maintenance
                 break;
             }
             String uName = r.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Route"), uName,  sName}));
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("Route"), uName,  sName});
             empty = false;
             for (int i=0; i<jmri.Route.MAX_CONTROL_SENSORS; i++) {
                 sName = r.getRouteSensorName(i);
-                if (sName == null)  {
-                    break;
-                }
-                if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ControlReference"),
-                                    rbm.getString("Sensor")));
+                if (sName != null)  {
+                    if (sName.equals(sysName) || sName.equals(userName))  {
+                        tempText = tempText + MessageFormat.format(rbm.getString("ControlReference"),
+                                        rbm.getString("Sensor"));
+                        found = true;
+                        referenceCount++;
                     }
-                    found = true;
-                    referenceCount++;
                 }
             }
             sName = r.getTurnoutsAlignedSensor();
             if (sName.equals(sysName) || sName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ControlReference"),
-                                rbm.getString("Sensor")));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ControlReference"),
+                                rbm.getString("Sensor"));
                 found = true;
                 referenceCount++;
             }
             sName = r.getControlTurnout();
             if (sName != "" && (sName.equals(sysName) || sName.equals(userName)))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ControlReference"),
-                                rbm.getString("Turnout")));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ControlReference"),
+                                rbm.getString("Turnout"));
                 found = true;
                 referenceCount++;
             }
             sName = r.getLockControlTurnout();
             if (sName != "" && (sName.equals(sysName) || sName.equals(userName)))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ControlReference"),
-                                rbm.getString("Turnout")));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ControlReference"),
+                                rbm.getString("Turnout"));
                 found = true;
                 referenceCount++;
             }
             for (int i=0; i<r.getNumOutputTurnouts(); i++)
             {
                 sName = r.getOutputTurnoutByIndex(i);
-                if (sName == null) {
-                    break;
-                }
-                if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("OutputReference"),
-                                    rbm.getString("Turnout")));
+                if (sName != null) {
+                    if (sName.equals(sysName) || sName.equals(userName))  {
+                        tempText = tempText + MessageFormat.format(rbm.getString("OutputReference"),
+                                        rbm.getString("Turnout"));
+                        found = true;
+                        referenceCount++;
                     }
-                    found = true;
-                    referenceCount++;
                 }
             }
             for (int i=0; i<r.getNumOutputSensors(); i++)
             {
                 sName = r.getOutputSensorByIndex(i);
-                if (sName == null) {
-                    break;
-                }
-                if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("OutputReference"),
-                                    rbm.getString("Sensor")));
+                if (sName != null) {
+                    if (sName.equals(sysName) || sName.equals(userName))  {
+                        tempText = tempText + MessageFormat.format(rbm.getString("OutputReference"),
+                                        rbm.getString("Sensor"));
+                        found = true;
+                        referenceCount++;
                     }
-                    found = true;
-                    referenceCount++;
                 }
             }
         }
         if (text != null && !empty) {
             if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
+                text.append(MessageFormat.format(rbm.getString("NoReference"), "Route"));
+            else {
+                text.append(tempText);
                 text.append("\n");
+                found = false;
+            }
         }
+        tempText = null;
         found = false;
         empty = true;
         jmri.TransitManager transitManager = InstanceManager.transitManagerInstance();
@@ -576,11 +638,8 @@ public class Maintenance
                 break;
             }
             String uName = transit.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Transit"), uName,  sName}));
-
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("Transit"), uName,  sName});
             empty = false;
             ArrayList sectionList = transit.getTransitSectionList();
             for (int i=0; i<sectionList.size(); i++) {
@@ -588,46 +647,34 @@ public class Maintenance
                 jmri.Section section = transitSection.getSection();
                 uName = section.getUserName();
                 sName = section.getSystemName();
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                                new Object[] { "\t", rbm.getString("TransitSection"), uName, sName}));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ReferenceTitle"),
+                                new Object[] { "\t", rbm.getString("TransitSection"), uName, sName});
                 if (sName.equals(sysName) || uName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("SectionReference"),"\t\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("SectionReference"),"\t\t");
                     found = true;
                     referenceCount++;
                 }
                 sName = section.getForwardBlockingSensorName();
                 if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ForwardBlocking"),"\t\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("ForwardBlocking"),"\t\t");
                     found = true;
                     referenceCount++;
                 }
                 sName = section.getForwardStoppingSensorName();
                 if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ForwardStopping"),"\t\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("ForwardStopping"),"\t\t");
                     found = true;
                     referenceCount++;
                 }
                 sName = section.getReverseBlockingSensorName();
                 if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ReverseBlocking"),"\t\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("ReverseBlocking"),"\t\t");
                     found = true;
                     referenceCount++;
                 }
                 sName = section.getReverseStoppingSensorName();
                 if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ReverseStopping"),"\t\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("ReverseStopping"),"\t\t");
                     found = true;
                     referenceCount++;
                 }
@@ -637,51 +684,65 @@ public class Maintenance
                     jmri.Block block = (jmri.Block)blockList.get(k);
                     if (block==null) {
                         log.error("Error getting Block - "+sName);
-                        break;
-                    }
-                    sName = block.getSystemName();
-                    uName = block.getUserName();
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                                    new Object[] { "\t\t", rbm.getString("Block"), uName, sName}));
-                    }
-                    if (sName.equals(sysName) || uName.equals(userName))  {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("BlockReference"),"\t\t"));
+                    } else {
+                        sName = block.getSystemName();
+                        uName = block.getUserName();
+                        tempText = tempText + MessageFormat.format(rbm.getString("ReferenceTitle"),
+                                        new Object[] { "\t\t", rbm.getString("Block"), uName, sName});
+                        if (sName.equals(sysName) || uName.equals(userName))  {
+                            tempText = tempText + MessageFormat.format(rbm.getString("BlockReference"),"\t\t");
+                            found = true;
+                            referenceCount++;
                         }
-                        found = true;
-                        referenceCount++;
-                    }
-                    Sensor sensor = block.getSensor();
-                    if (sensor == null) {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("BlockNoSensor"),"\t\t\t"));
+                        Sensor sensor = block.getSensor();
+                        if (sensor == null) {
+                            tempText = tempText + MessageFormat.format(rbm.getString("BlockNoSensor"),"\t\t\t");
+                        } else {
+                            sName = sensor.getSystemName();
+                            uName = sensor.getUserName();
+                            if (sName.equals(sysName) || uName.equals(userName))  {
+                                tempText = tempText + MessageFormat.format(rbm.getString("BlockSensor"),"\t\t\t");
+                                found = true;
+                                referenceCount++;
+                            }
                         }
-                        break;
-                    }
-                    sName = sensor.getSystemName();
-                    uName = sensor.getUserName();
-                    if (sName.equals(sysName) || uName.equals(userName))  {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("BlockSensor"),"\t\t\t"));
-                        }
-                        found = true;
-                        referenceCount++;
                     }
                 }
             }
+            if (text != null && !empty) {
+                if (!found)
+                    text.append(MessageFormat.format(rbm.getString("NoReference"), "Transit"));
+                else {
+                    text.append(tempText);
+                    text.append("\n");
+                    found = false;
+                }
+            }
         }
-        if (text != null && !empty) {
-            if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
-                text.append("\n");
+        if (text != null)
             text.append(rbm.getString("NestMessage"));
-        }
+        tempText = null;
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
-        iter1 = sectionManager.getSystemNameList().iterator();
+        java.util.List sysNameList = sectionManager.getSystemNameList();
+        
+        transitManager = InstanceManager.transitManagerInstance();
+        iter1 = transitManager.getSystemNameList().iterator();
+        while (iter1.hasNext()) {
+            // get the next Logix
+            String sName = (String)iter1.next();
+            jmri.Transit transit = transitManager.getBySystemName(sName);
+            if (transit!=null) {
+                ArrayList sectionList = transit.getTransitSectionList();
+                for (int i=0; i<sectionList.size(); i++) {
+                    jmri.TransitSection transitSection = (jmri.TransitSection)sectionList.get(i);
+                    jmri.Section section = transitSection.getSection();
+                    sysNameList.remove(section.getSystemName());
+                }
+            }
+        }       
+        iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = (String)iter1.next();
@@ -691,47 +752,36 @@ public class Maintenance
                 break;
             }
             String uName = section.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Section"), uName,  sName}));
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("Section"), uName,  sName});
             empty = false;
             if (sName.equals(sysName) || uName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("SectionReference"),"\t\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("SectionReference"),"\t\t");
+
                 found = true;
                 referenceCount++;
             }
             sName = section.getForwardBlockingSensorName();
             if (sName.equals(sysName) || sName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ForwardBlocking"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ForwardBlocking"),"\t");
                 found = true;
                 referenceCount++;
             }
             sName = section.getForwardStoppingSensorName();
             if (sName.equals(sysName) || sName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ForwardStopping"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ForwardStopping"),"\t");
                 found = true;
                 referenceCount++;
             }
             sName = section.getReverseBlockingSensorName();
             if (sName.equals(sysName) || sName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ReverseBlocking"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ReverseBlocking"),"\t");
                 found = true;
                 referenceCount++;
             }
             sName = section.getReverseStoppingSensorName();
             if (sName.equals(sysName) || sName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ReverseStopping"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ReverseStopping"),"\t");
                 found = true;
                 referenceCount++;
             }
@@ -741,86 +791,85 @@ public class Maintenance
                 jmri.Block block = (jmri.Block)blockList.get(k);
                 if (block==null) {
                     log.error("Error getting Block - "+sName);
-                    break;
-                }
-                sName = block.getSystemName();
-                uName = block.getUserName();
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                                new Object[] { "\t", rbm.getString("Block"), uName, sName}));
-                }
-                if (sName.equals(sysName) || (uName!= null && uName.equals(userName)))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("BlockReference"),"\t"));
+                } else {
+                    sName = block.getSystemName();
+                    uName = block.getUserName();
+                    tempText = tempText + MessageFormat.format(rbm.getString("ReferenceTitle"),
+                                    new Object[] { "\t", rbm.getString("Block"), uName, sName});
+                    if (sName.equals(sysName) || (uName!= null && uName.equals(userName)))  {
+                        tempText = tempText + MessageFormat.format(rbm.getString("BlockReference"),"\t");
+                        found = true;
+                        referenceCount++;
                     }
-                    found = true;
-                    referenceCount++;
-                }
-                Sensor sensor = block.getSensor();
-                if (sensor == null) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("BlockNoSensor"),"\t\t"));
+                    Sensor sensor = block.getSensor();
+                    if (sensor == null) {
+                        tempText = tempText + MessageFormat.format(rbm.getString("BlockNoSensor"),"\t\t");
+                    } else {
+                        sName = sensor.getSystemName();
+                        uName = sensor.getUserName();
+                        if (sName.equals(sysName) || uName.equals(userName))  {
+                            tempText = tempText + MessageFormat.format(rbm.getString("BlockSensor"),"\t\t");
+                            found = true;
+                            referenceCount++;
+                        }
                     }
-                    break;
                 }
-                sName = sensor.getSystemName();
-                uName = sensor.getUserName();
-                if (sName.equals(sysName) || uName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("BlockSensor"),"\t\t"));
-                    }
-                    found = true;
-                    referenceCount++;
+            }
+            if (text != null && !empty) {
+                if (!found)
+                    text.append(MessageFormat.format(rbm.getString("NoReference"), "Section"));
+                else {
+                    text.append(tempText);
+                    text.append("\n");
+                    found = false;
                 }
             }
         }
-        if (text != null && !empty) {
-            if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
-                text.append("\n");
-        }
+        tempText = null;
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
-        iter1 = blockManager.getSystemNameList().iterator();
+        sysNameList = blockManager.getSystemNameList();
+
+        sectionManager = InstanceManager.sectionManagerInstance();
+        iter1 = sectionManager.getSystemNameList().iterator();
+        while (iter1.hasNext()) {
+            // get the next Logix
+            String sName = (String)iter1.next();
+            jmri.Section section = sectionManager.getBySystemName(sName);
+            if (section!=null) {
+                sysNameList.remove(section.getBlockList());
+            }
+        }
+        iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = (String)iter1.next();
             jmri.Block b = blockManager.getBySystemName(sName);
             if (b==null) {
                 log.error("Error getting Block - "+sName);
-                break;
-            }
-            String uName = b.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Block"), uName,  sName}));
-
-            }
-            empty = false;
-            if (sName.equals(sysName) || (uName !=null && uName.equals(userName)))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("BlockReference"),"\t"));
+            } else {
+                String uName = b.getUserName();
+                tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                                new Object[] { " ", rbm.getString("Block"), uName,  sName});
+                empty = false;
+                if (sName.equals(sysName) || (uName !=null && uName.equals(userName)))  {
+                    tempText = tempText + MessageFormat.format(rbm.getString("BlockReference"),"\t");
+                    found = true;
+                    referenceCount++;
                 }
-                found = true;
-                referenceCount++;
-            }
-            jmri.Sensor s = b.getSensor();
-            if (s == null) {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("BlockNoSensor"),"\t"));
+                jmri.Sensor s = b.getSensor();
+                if (s == null) {
+                    MessageFormat.format(rbm.getString("BlockNoSensor"),"\t");
+                } else {
+                    sName = s.getSystemName();
+                    uName = s.getUserName();
+                    if (sName.equals(sysName) || uName.equals(userName))  {
+                        tempText = tempText + MessageFormat.format(rbm.getString("BlockSensor"),"\t");
+                        found = true;
+                        referenceCount++;
+                    }
                 }
-                break;
-            }
-            sName = s.getSystemName();
-            uName = s.getUserName();
-            if (sName.equals(sysName) || uName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("BlockSensor"),"\t"));
-                }
-                found = true;
-                referenceCount++;
             }
         }       
         jmri.jmrit.display.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
@@ -834,35 +883,32 @@ public class Maintenance
                 break;
             }
             String uName = lb.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("LayoutBlock"), uName,  sName}));
-
-            }
+            tempText = tempText + MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("LayoutBlock"), uName,  sName});
             empty = false;
             jmri.Sensor s = lb.getOccupancySensor();
             if (s == null) {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("BlockNoSensor"),"\t"));
+                tempText = tempText + MessageFormat.format(rbm.getString("BlockNoSensor"),"\t");
+            } else {
+                sName = s.getSystemName();
+                uName = s.getUserName();
+                if (sName.equals(sysName) || uName.equals(userName))  {
+                    tempText = tempText + MessageFormat.format(rbm.getString("OccupancySensor"),"\t");
+                    found = true;
+                    referenceCount++;
                 }
-                break;
-            }
-            sName = s.getSystemName();
-            uName = s.getUserName();
-            if (sName.equals(sysName) || uName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("OccupancySensor"),"\t"));
+                if (text != null && !empty) {
+                    if (!found)
+                        text.append(MessageFormat.format(rbm.getString("NoReference"), "Block"));
+                    else {
+                        text.append(tempText);
+                        text.append("\n");
+                        found = false;
+                    }
                 }
-                found = true;
-                referenceCount++;
             }
         }
-        if (text != null && !empty) {
-            if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
-                text.append("\n");
-        }
+        tempText = null;
         found = false;
         empty = true;
         java.util.Enumeration enumeration = BlockBossLogic.entries();
@@ -871,25 +917,18 @@ public class Maintenance
             BlockBossLogic bbl = (BlockBossLogic)enumeration.nextElement();
             String sName = bbl.getName();
             String uName = bbl.getDrivenSignal();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("BlockBossLogic"), uName, sName}));
-
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("BlockBossLogic"), uName, sName});
             empty = false;
             if (uName.equals(sysName) || uName.equals(userName) || sName.equals(sysName) || sName.equals(userName)) {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("SignalReference"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("SignalReference"),"\t");
                 found = true;
                 referenceCount++;
             }
             sName = bbl.getSensor1();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -897,9 +936,7 @@ public class Maintenance
             sName = bbl.getSensor2();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName))  {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -907,9 +944,7 @@ public class Maintenance
             sName = bbl.getSensor3();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -917,9 +952,7 @@ public class Maintenance
             sName = bbl.getSensor4();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -927,9 +960,7 @@ public class Maintenance
             sName = bbl.getTurnout();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchTurnoutReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchTurnoutReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -937,9 +968,7 @@ public class Maintenance
             sName = bbl.getWatchedSignal1();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSignalReference"),"\t"));
-                    }
+                    MessageFormat.format(rbm.getString("WatchSignalReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -947,9 +976,7 @@ public class Maintenance
             sName = bbl.getWatchedSignal1Alt();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSignalReference"),"\t"));
-                    }
+                    MessageFormat.format(rbm.getString("WatchSignalReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -957,9 +984,7 @@ public class Maintenance
             sName = bbl.getWatchedSignal2();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSignalReference"),"\t"));
-                    }
+                    MessageFormat.format(rbm.getString("WatchSignalReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -967,9 +992,7 @@ public class Maintenance
             sName = bbl.getWatchedSignal2Alt();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSignalReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSignalReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -977,9 +1000,7 @@ public class Maintenance
             sName = bbl.getWatchedSensor1();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -987,9 +1008,7 @@ public class Maintenance
             sName = bbl.getWatchedSensor1Alt();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -997,9 +1016,7 @@ public class Maintenance
             sName = bbl.getWatchedSensor2();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
@@ -1007,34 +1024,36 @@ public class Maintenance
             sName = bbl.getWatchedSensor2Alt();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("WatchSensorReference"),"\t"));
-                    }
+                    MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
                     found = true;
                     referenceCount++;
                 }
             }
+            if (text != null && !empty) {
+                if (!found)
+                    text.append(MessageFormat.format(rbm.getString("NoReference"), "BlockBossLogic"));
+                else {
+                    text.append(tempText);
+                    text.append("\n");
+                    found = false;
+                }
+            }
         }
-        if (text != null && !empty) {
-            if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
-                text.append("\n");
-        }
+        tempText = null;
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.conditionalManagerInstance();
-        java.util.List cList = conditionalManager.getSystemNameList();
+        sysNameList = conditionalManager.getSystemNameList();
         iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
         while (iter1.hasNext()) {
             String sName = (String)iter1.next();
 			Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
             for (int i=0; i<x.getNumConditionals(); i++)  {
                 sName = x.getConditionalByNumberOrder(i);
-                cList.remove(sName);
+                sysNameList.remove(sName);
             }
         }
-        iter1 = cList.iterator();
+        iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = (String)iter1.next();
@@ -1044,32 +1063,24 @@ public class Maintenance
                 break;
             }
             String uName = c.getUserName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Conditional"), uName,  sName}));
-            }
+            tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
+                            new Object[] { " ", rbm.getString("Conditional"), uName,  sName});
             empty = false;
             if (sName.equals(sysName) || uName.equals(userName))  {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("ConditionalReference"),"\t"));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("ConditionalReference"),"\t");
                 found = true;
                 //referenceCount++; Don't count, this conditional is orphaned by logix(es)
             }
             ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
             if (variableList.size()==0) {
-                if (text != null) {
-                    text.append(MessageFormat.format(rbm.getString("Warn5"),
-                                new Object[] {c.getUserName(), c.getSystemName()}));
-                }
+                tempText = tempText + MessageFormat.format(rbm.getString("Warn5"),
+                                new Object[] {c.getUserName(), c.getSystemName()});
             } else for (int k=0; k<variableList.size(); k++)  {
                 ConditionalVariable v = variableList.get(k);
                 if (v.getName().equals(sysName) || v.getName().equals(userName))
                 {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("VariableReference"),
-                                    new Object[] { "\t", v.getTypeString(), v.getDataString()}));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("VariableReference"),
+                                    new Object[] { "\t", v.getTypeString(), v.getDataString()});
                     found = true;
                     //referenceCount++; Don't count, this conditional is orphaned by logix(es)
                 }
@@ -1079,10 +1090,9 @@ public class Maintenance
                 ConditionalAction a = actionList.get(k);
                 if (a.getDeviceName().equals(sysName) || a.getDeviceName().equals(userName))
                 {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("ActionReference"),
-                                    new Object[] { "\t", a.getTypeString(), a.getOptionString(), a.getActionDataString()}));
-                    }
+                    tempText = tempText + MessageFormat.format(rbm.getString("ActionReference"),
+                                    new Object[] { "\t", a.getTypeString(), 
+                                        a.getOptionString(), a.getActionDataString()});
                     found = true;
                     //referenceCount++; Don't count, this conditional is orphaned by logix(es)
                 }
@@ -1090,9 +1100,12 @@ public class Maintenance
         }
         if (text != null && !empty) {
             if (!found)
-                text.append(rbm.getString("NoReference"));
-            else
+                text.append(MessageFormat.format(rbm.getString("NoReference"), "Conditional"));
+            else {
+                text.append(tempText);
                 text.append("\n");
+                found = false;
+            }
         }
         found = false;
         empty = true;
@@ -1228,12 +1241,12 @@ public class Maintenance
                 }
             }
         }
-
         if (text != null) {
-            if (!found)  {
-                text.append(rbm.getString("NoReference"));
-            } else {
-                text.append("\n\n");
+            if (!found)
+                text.append(MessageFormat.format(rbm.getString("NoReference"), "Panel"));
+            else {
+                text.append(tempText);
+                text.append("\n");
             }
             if (referenceCount == 0) {
                 text.append(MessageFormat.format(rbm.getString("Orphan"), (Object[])names));
@@ -1242,7 +1255,7 @@ public class Maintenance
                                        new Object[] {new Integer(referenceCount), userName, sysName}));
             }
         }
-        if (Integer.parseInt(names[3]) > referenceCount)
+        if (names[0] != null && Integer.parseInt(names[3]) > referenceCount)
         {
             log.warn(MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+names[3]+
                       " listeners installed. Only "+referenceCount+ " references found.");

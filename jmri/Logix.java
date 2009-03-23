@@ -131,14 +131,14 @@ public interface Logix extends NamedBean {
 	 *   changed by it.  Returns true if any such variables were found.  Returns false
 	 *   otherwise.
 	 */
-	public boolean checkLoopCondition();
+	//public boolean checkLoopCondition();
 	 
 	/** 
 	 * Assembles a string listing state variables that might result in a loop.
 	 *    Returns an empty string if there are none, probably because 
-	 *    "checkLoopCondition" was not invoked before the call, or returned false.
+	 *    "checkLoopConditioncheckLoopCondition" was not invoked before the call, or returned false.
 	 */
-	public ArrayList <String[]> getLoopGremlins();
+	//public ArrayList <String[]> getLoopGremlins();
 	
 	/**
 	 * Assembles and returns a list of state variables that are used by conditionals 
@@ -154,7 +154,7 @@ public interface Logix extends NamedBean {
      *   second is a count that the correspondeing variable suppresses Calculation.
      * Note this method must not modify the supplied variable list in any way.
 	 */
-	public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
+	//public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
 }
 
 /* @(#)Logix.java */

@@ -18,7 +18,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -75,7 +75,7 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
                     vElem.setAttribute("dataString", variable.getDataString());
                     vElem.setAttribute("num1",Integer.toString(variable.getNum1()));
                     vElem.setAttribute("num2",Integer.toString(variable.getNum2()));
-                    if (variable.doCalculation()) 
+                    if (variable.doTriggerActions()) 
                         vElem.setAttribute("triggersCalc","yes");
                     else
                         vElem.setAttribute("triggersCalc","no");						
@@ -226,11 +226,11 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
                         variable.setNum2(Integer.parseInt(((Element)(conditionalVarList.get(n)))
                                                         .getAttribute("num2").getValue()));
                     }
-                    variable.setTriggerCalculation(true);
+                    variable.setTriggerActions(true);
                     if (((Element)(conditionalVarList.get(n))).getAttribute("triggersCalc") != null) {
                         if ("no".equals(((Element)(conditionalVarList.get(n)))
                                                 .getAttribute("triggersCalc").getValue()))
-                            variable.setTriggerCalculation(false);
+                            variable.setTriggerActions(false);
                     }
                     variableList.add(variable);
 				}

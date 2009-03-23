@@ -5,6 +5,8 @@ package jmri;
 import java.util.Iterator;
 import java.util.List;
 
+import jmri.jmrit.sensorgroup.SensorGroupFrame;
+
 /**
  * Basic Implementation of a ConditionalManager.
  * <P>
@@ -20,7 +22,8 @@ import java.util.List;
  * is enforced when a new Conditional is created via LogixTableAction.java.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @author      Pete Cresman Copyright (C) 2009
+ * @version	$Revision: 1.6 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -50,7 +53,9 @@ public class DefaultConditionalManager extends AbstractManager
         if (userName != null && userName.length() > 0) {
             c = getByUserName(userName);
             if (c!=null) {
-                return null;
+                if (systemName.equals(c.getSystemName())) {
+                    return null;
+                }
             }
         }
         String sName = userName.toUpperCase().trim();
@@ -61,7 +66,11 @@ public class DefaultConditionalManager extends AbstractManager
             }
         }
         // Conditional does not exist, create a new Conditional
-        c = new DefaultConditional(systemName, userName);
+        if (systemName.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
+            c = new SensorGroupConditional(systemName, userName);
+        } else {
+            c = new DefaultConditional(systemName, userName);
+        }
         if (c!=null) {  // save in the maps
             register(c);
         }
@@ -161,6 +170,7 @@ public class DefaultConditionalManager extends AbstractManager
     }
 
     public Conditional getBySystemName(String name) {
+		if (name == null) return null;
 		String key = name.toUpperCase();
         return (Conditional)_tsys.get(key);
     }

@@ -69,16 +69,16 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
         _enabled = state;
     }
 
-    public void calculateClient(int idx) {
-        _clients.get(idx).calculate(_enabled);
+    public void calculateClient(int idx, PropertyChangeEvent evt) {
+        _clients.get(idx).calculate(_enabled, evt);
     }	
 	
     public void propertyChange(PropertyChangeEvent evt) {
-        //log.debug("PropertyChange event for "+evt.getPropertyName()+
+        //log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
         //    ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
-        //    ", enabled = "+_enabled+" \" listenerType= "+_type+" for \""+_name+"\"");
+        //    ", enabled = "+_enabled);
         for (int i=0; i<_clients.size(); i++)  {
-            _clients.get(i).calculate(_enabled);
+            _clients.get(i).calculate(_enabled, evt);
         }
     }
 

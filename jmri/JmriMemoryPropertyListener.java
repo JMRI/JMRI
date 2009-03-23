@@ -36,9 +36,9 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        log.debug("Memory propertyChange event for "+evt.getPropertyName()+
-                ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
-                "\" listenerType= "+_type+" for \""+_varName+"\"");
+        log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
+            ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
+            ", enabled = "+_enabled);
         if ( getPropertyName().equals(evt.getPropertyName()) ) {
             String newValue = (String) evt.getNewValue();
             String oldValue = (String) evt.getOldValue();

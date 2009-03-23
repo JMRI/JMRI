@@ -6,6 +6,10 @@ import jmri.Manager;
 import jmri.NamedBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.Iterator;
+
+import jmri.util.SystemNameComparator;
 
 /**
  * Implementation of a Manager that can serves as a proxy
@@ -15,7 +19,7 @@ import java.util.List;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -91,14 +95,29 @@ public class AbstractProxyManager implements Manager {
         return ((Manager)mgrs.get(0)).makeSystemName(s);
     }
 
+    public String[] getSystemNameArray() {
+        TreeSet ts = new TreeSet(new SystemNameComparator());
+        for (int i = 0; i<mgrs.size(); i++) {
+            ts.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
+        }
+        String[] arr = new String[ts.size()];
+        Iterator it = ts.iterator();
+        int i=0;
+        while(it.hasNext()) {
+            arr[i++] = (String)it.next();
+        }
+        return arr;
+    }
+
     /**
      * Get a list of all system names.
      */
     public List getSystemNameList() {
-        ArrayList result = new ArrayList();
-        for (int i = 0; i<mgrs.size(); i++)
-            result.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
-        return result;
+        TreeSet ts = new TreeSet(new SystemNameComparator());
+        for (int i = 0; i<mgrs.size(); i++) {
+            ts.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
+        }
+        return new ArrayList(ts);
     }
 
     List mgrs = new ArrayList();

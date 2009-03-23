@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -35,6 +35,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public java.util.List getSystemNameList()  { return null; }
 	
+    public String[] getSystemNameArray() {return null; }
+
     public String getClosedText()  { return null; }
 	
 	 public String getThrownText()  { return null; }

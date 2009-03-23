@@ -44,7 +44,12 @@ public class ConditionalVariable {
     private String _dataString = "";
     private int _num1 = 0;
     private int _num2 = 0;
-    private boolean _triggersCalculation = true;
+    // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
+    // a listener was installed for this device and thus trigger calcuation of the Conditional.
+    // Now named '_triggersActions' because listeners are always installed for activated Logix 
+    // Conditionals and this parameter nows controls whether, if its change of state changes the
+    // state of the conditional, should that also  trigger the actions.
+    private boolean _triggersActions = true;
     private int _state = Conditional.UNKNOWN;        // tri-state
 
     public ConditionalVariable() {
@@ -55,7 +60,7 @@ public class ConditionalVariable {
         _opern = opern;
         _type = type;
         _name = name;
-        _triggersCalculation = trigger;
+        _triggersActions = trigger;
     }
 
     public boolean isNegated() {
@@ -122,12 +127,16 @@ public class ConditionalVariable {
         _num2 = num;
     }
 
-    public boolean doCalculation() {
-        return _triggersCalculation;
+    /**
+    * If change of state of this object causes a change of state of the Conditional,
+    * should any actions be executed.
+    */
+    public boolean doTriggerActions() {
+        return _triggersActions;
     }
 
-    public void setTriggerCalculation(boolean trigger) {
-        _triggersCalculation = trigger;
+    public void setTriggerActions(boolean trigger) {
+        _triggersActions = trigger;
     }
 
     public int getState() {

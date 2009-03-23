@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -168,16 +168,16 @@ public class DefaultLogix extends AbstractNamedBean
                         ConditionalVariable v = varList.get(k);
                         if ( (v.getType()==Conditional.TYPE_CONDITIONAL_TRUE) || 
                              (v.getType()==Conditional.TYPE_CONDITIONAL_FALSE) )
-                        {                                                       
+                        {
                             String name = v.getName();
                             Conditional c1 = InstanceManager.conditionalManagerInstance().getConditional(name);
                             if (c1 == null) {
-                                log.error("\""+v.getName()+"\" is a non-existent Conditional variable in Conditional \""
-                                          +c.getUserName()+"\" in Logix "+x.getUserName());
+                                log.error("\""+name+"\" is a non-existent Conditional variable in Conditional \""
+                                          +c.getUserName()+"\" in Logix \""+x.getUserName()+"\" ("+sNameLogix+")");
                             } else {
                                 if ( systemName.equals(c1.getSystemName()) ) {
                                     String[] result = new String[] {name, systemName, c.getUserName(),
-                                                                sNameCond, x.getUserName(), sNameLogix};
+                                                            sNameCond, x.getUserName(), sNameLogix};
                                     return result;
                                 }
                             }
@@ -189,14 +189,13 @@ public class DefaultLogix extends AbstractNamedBean
 		// Remove Conditional from this logix
         if (!_conditionalSystemNames.remove(systemName)) {
 			log.error("attempt to delete Conditional not in Logix: "+systemName);
-			return (null);
+            return null;
         }
-        // Check if Conditional is needed by another logix
 		// delete the Conditional object
 		Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(systemName);
 		if (c == null) {
 			log.error("attempt to delete non-existant Conditional - "+systemName);
-			return (null);
+            return null;
 		}
 		InstanceManager.conditionalManagerInstance().deleteConditional(c);
 		return (null);
@@ -219,7 +218,7 @@ public class DefaultLogix extends AbstractNamedBean
             }
             else {
                 // calculate without taking any action unless Logix is enabled
-                c.calculate(mEnabled);
+                c.calculate(mEnabled, null);
             }
         }
 	}
@@ -280,177 +279,180 @@ public class DefaultLogix extends AbstractNamedBean
                 for (int k = 0; k<variableList.size(); k++) {
                     ConditionalVariable variable = (ConditionalVariable)variableList.get(k);
                     // check if listening for a change has been suppressed
-                    if ( variable.doCalculation() ) {
-                        // not suppressed
-                        int varListenerType = 0;
-                        String varName = variable.getName();
-                        int varType = variable.getType();
-                        int signalAspect = -1;
-                        boolean newSV = true;
-                        // Get Listener type from varible type
-                        switch(varType) {
-                            case Conditional.TYPE_SENSOR_ACTIVE:
-                            case Conditional.TYPE_SENSOR_INACTIVE:
-                                varListenerType = LISTENER_TYPE_SENSOR;
-                                break;
-                            case Conditional.TYPE_TURNOUT_THROWN:
-                            case Conditional.TYPE_TURNOUT_CLOSED:
-                                varListenerType = LISTENER_TYPE_TURNOUT;
-                                break;
-                            case Conditional.TYPE_CONDITIONAL_TRUE:
-                            case Conditional.TYPE_CONDITIONAL_FALSE:
-                                varListenerType = LISTENER_TYPE_CONDITIONAL;
-                                break;
-                            case Conditional.TYPE_LIGHT_ON:
-                            case Conditional.TYPE_LIGHT_OFF:
-                                varListenerType = LISTENER_TYPE_LIGHT;
-                                break;
-                            case Conditional.TYPE_MEMORY_EQUALS:
-                                varListenerType = LISTENER_TYPE_MEMORY;
-                                break;
-                            case Conditional.TYPE_FAST_CLOCK_RANGE:
-                                varListenerType = LISTENER_TYPE_FASTCLOCK;
-                                varName = "clock";
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_RED:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.RED;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.YELLOW;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.GREEN;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.DARK;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.FLASHRED;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.FLASHYELLOW;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                signalAspect = SignalHead.FLASHGREEN;
-                                break;
-                            case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                            case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                                varListenerType = LISTENER_TYPE_SIGNAL;
-                                break;
-                        }
-                        newSV = true;
-                            // check if already in list
-                        int positionOfListener = -1;
-                        for (int j=0; (j<_listeners.size()); j++) {
-                            if (varListenerType==_listeners.get(j).getType() ) {
-                                if (varName.equals(_listeners.get(j).getDevName())) {
-                                    if (varListenerType == LISTENER_TYPE_SIGNAL) {
-                                        if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT || 
-                                                    varType == Conditional.TYPE_SIGNAL_HEAD_HELD ) {
-                                            if (varType == _listeners.get(j).getVarType() ) {
-                                                positionOfListener = j;
-                                                newSV = false;
-                                                break;
-                                            }
-                                        } else if ("Appearance".equals(_listeners.get(j).getPropertyName())) {
-                                                // the Appearance Listener can handle all aspects
+                    int varListenerType = 0;
+                    String varName = variable.getName();
+                    int varType = variable.getType();
+                    int signalAspect = -1;
+                    boolean newSV = true;
+                    // Get Listener type from varible type
+                    switch(varType) {
+                        case Conditional.TYPE_SENSOR_ACTIVE:
+                        case Conditional.TYPE_SENSOR_INACTIVE:
+                            varListenerType = LISTENER_TYPE_SENSOR;
+                            break;
+                        case Conditional.TYPE_TURNOUT_THROWN:
+                        case Conditional.TYPE_TURNOUT_CLOSED:
+                            varListenerType = LISTENER_TYPE_TURNOUT;
+                            break;
+                        case Conditional.TYPE_CONDITIONAL_TRUE:
+                        case Conditional.TYPE_CONDITIONAL_FALSE:
+                            varListenerType = LISTENER_TYPE_CONDITIONAL;
+                            break;
+                        case Conditional.TYPE_LIGHT_ON:
+                        case Conditional.TYPE_LIGHT_OFF:
+                            varListenerType = LISTENER_TYPE_LIGHT;
+                            break;
+                        case Conditional.TYPE_MEMORY_EQUALS:
+                            varListenerType = LISTENER_TYPE_MEMORY;
+                            break;
+                        case Conditional.TYPE_FAST_CLOCK_RANGE:
+                            varListenerType = LISTENER_TYPE_FASTCLOCK;
+                            varName = "clock";
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_RED:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.RED;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.YELLOW;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.GREEN;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.DARK;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.FLASHRED;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.FLASHYELLOW;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            signalAspect = SignalHead.FLASHGREEN;
+                            break;
+                        case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                        case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            break;
+                    }
+                    newSV = true;
+                        // check if already in list
+                    int positionOfListener = -1;
+                    for (int j=0; (j<_listeners.size()); j++) {
+                        if (varListenerType==_listeners.get(j).getType() ) {
+                            if (varName.equals(_listeners.get(j).getDevName())) {
+                                if (varListenerType == LISTENER_TYPE_SIGNAL) {
+                                    if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT || 
+                                                varType == Conditional.TYPE_SIGNAL_HEAD_HELD ) {
+                                        if (varType == _listeners.get(j).getVarType() ) {
                                             positionOfListener = j;
                                             newSV = false;
                                             break;
                                         }
-                                    } else {
+                                    } else if ("Appearance".equals(_listeners.get(j).getPropertyName())) {
+                                            // the Appearance Listener can handle all aspects
                                         positionOfListener = j;
                                         newSV = false;
                                         break;
                                     }
+                                } else {
+                                    positionOfListener = j;
+                                    newSV = false;
+                                    break;
                                 }
                             }
+                        }
 
-                        }
-                        // add to list if new
-                        JmriSimplePropertyListener listener = null;
-                        if (newSV) {
-                            switch (varListenerType) {
-                                case LISTENER_TYPE_SENSOR:
-                                    listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
-                                                                        varName, varType, conditional);
-                                    break;
-                                case LISTENER_TYPE_TURNOUT:
-                                    listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
-                                                                        varName, varType, conditional);
-                                    break;
-                                case LISTENER_TYPE_CONDITIONAL:
-                                    listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
-                                                                        varName, varType, conditional);
-                                    break;
-                                case LISTENER_TYPE_LIGHT:
-                                    listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
-                                                                        varName, varType, conditional);
-                                    break;
-                                case LISTENER_TYPE_MEMORY:
-                                    listener = new JmriMemoryPropertyListener("value", LISTENER_TYPE_MEMORY, varName, varType,
-                                                                        conditional, variable.getDataString());
-                                    break;
-                                case LISTENER_TYPE_FASTCLOCK:
-                                    listener = new JmriClockPropertyListener("minutes", LISTENER_TYPE_FASTCLOCK, varName, varType,
-                                                                    conditional, variable.getNum1(), variable.getNum2());
-                                    break;
-                                case LISTENER_TYPE_SIGNAL:
-                                    if (signalAspect <0) {
-                                        if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
-                                            listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNAL,
-                                                                                varName, varType, conditional);
-                                        } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
-                                            listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNAL,
-                                                                                varName, varType, conditional);
-                                        }
-                                    } else {
-                                        listener = new JmriMultiStatePropertyListener("Appearance", LISTENER_TYPE_SIGNAL,
-                                                                            varName, varType, conditional, signalAspect);
+                    }
+                    // add to list if new
+                    JmriSimplePropertyListener listener = null;
+                    if (newSV) {
+                        switch (varListenerType) {
+                            case LISTENER_TYPE_SENSOR:
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
+                                                                    varName, varType, conditional);
+                                break;
+                            case LISTENER_TYPE_TURNOUT:
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
+                                                                    varName, varType, conditional);
+                                break;
+                            case LISTENER_TYPE_CONDITIONAL:
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
+                                                                    varName, varType, conditional);
+                                break;
+                            case LISTENER_TYPE_LIGHT:
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
+                                                                    varName, varType, conditional);
+                                break;
+                            case LISTENER_TYPE_MEMORY:
+                                listener = new JmriMemoryPropertyListener("value", LISTENER_TYPE_MEMORY, 
+                                                                          varName, varType,
+                                                                    conditional, variable.getDataString());
+                                break;
+                            case LISTENER_TYPE_FASTCLOCK:
+                                listener = new JmriClockPropertyListener("minutes", LISTENER_TYPE_FASTCLOCK, 
+                                                                         varName, varType, conditional,
+                                                                    variable.getNum1(), variable.getNum2());
+                                break;
+                            case LISTENER_TYPE_SIGNAL:
+                                if (signalAspect <0) {
+                                    if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
+                                        listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNAL,
+                                                                            varName, varType, conditional);
+                                    } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
+                                        listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNAL,
+                                                                            varName, varType, conditional);
                                     }
-                                    break;
-                            }
-                            _listeners.add(listener);
+                                } else {
+                                    listener = new JmriMultiStatePropertyListener("Appearance", LISTENER_TYPE_SIGNAL,
+                                                                        varName, varType, conditional, signalAspect);
+                                }
+                                break;
                         }
-                        else {
-                            switch (varListenerType) {
-                                case LISTENER_TYPE_SENSOR:
-                                case LISTENER_TYPE_TURNOUT:
-                                case LISTENER_TYPE_CONDITIONAL:
-                                case LISTENER_TYPE_LIGHT:
-                                case LISTENER_TYPE_MEMORY:
+                        _listeners.add(listener);
+                        //log.debug("Add listener for "+varName);
+                    }
+                    else {
+                        switch (varListenerType) {
+                            case LISTENER_TYPE_SENSOR:
+                            case LISTENER_TYPE_TURNOUT:
+                            case LISTENER_TYPE_CONDITIONAL:
+                            case LISTENER_TYPE_LIGHT:
+                            case LISTENER_TYPE_MEMORY:
+                                listener = _listeners.get(positionOfListener);
+                                listener.addConditional(conditional);
+                                break;
+                            case LISTENER_TYPE_FASTCLOCK:
+                                JmriClockPropertyListener cpl = 
+                                        (JmriClockPropertyListener)_listeners.get(positionOfListener);
+                                cpl.setRange(variable.getNum1(), variable.getNum2());
+                                cpl.addConditional(conditional);
+                                break;
+                            case LISTENER_TYPE_SIGNAL:
+                                if (signalAspect < 0) {
                                     listener = _listeners.get(positionOfListener);
                                     listener.addConditional(conditional);
-                                    break;
-                                case LISTENER_TYPE_FASTCLOCK:
-                                    JmriClockPropertyListener cpl = (JmriClockPropertyListener)_listeners.get(positionOfListener);
-                                    cpl.setRange(variable.getNum1(), variable.getNum2());
-                                    cpl.addConditional(conditional);
-                                    break;
-                                case LISTENER_TYPE_SIGNAL:
-                                    if (signalAspect < 0) {
-                                        listener = _listeners.get(positionOfListener);
-                                        listener.addConditional(conditional);
-                                    } else {
-                                        JmriMultiStatePropertyListener mpl = (JmriMultiStatePropertyListener)_listeners.get(positionOfListener);
-                                        mpl.addConditional(conditional);
-                                        mpl.setState(signalAspect);
-                                    }
-                            }
+                                } else {
+                                    JmriMultiStatePropertyListener mpl = 
+                                        (JmriMultiStatePropertyListener)_listeners.get(positionOfListener);
+                                    mpl.addConditional(conditional);
+                                    mpl.setState(signalAspect);
+                                }
                         }
                     }
 				}
 			}
 			else {
-				log.error("invalid conditional system name in Logix assembleListenerList\n\tDELETING "+
-				                _conditionalSystemNames.get(i)+ " from Conditional list." );
+				log.error("invalid conditional system name in Logix \""+getSystemName()+
+                          "\" assembleListenerList DELETING "+
+				          _conditionalSystemNames.get(i)+ " from Conditional list." );
                 _conditionalSystemNames.remove(i);
                 
 			}
@@ -470,7 +472,7 @@ public class DefaultLogix extends AbstractNamedBean
      *   index is a count that the correspondeing variable triggers calculation and
      *   second is a count that the correspondeing variable suppresses Calculation.
      * Note this method must not modify the supplied variable list in any way.
-	 */
+	 *
 	public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair) {  
 		// initialize
 		Conditional c = null;
@@ -605,7 +607,7 @@ public class DefaultLogix extends AbstractNamedBean
 			}
 		}
 	}       // getStateVariableList
-	
+	*/
     /**
      * Deactivate the Logix. This method disconnects the Logix from
      *    all input objects and stops it from being triggered to calculate.
@@ -698,74 +700,78 @@ public class DefaultLogix extends AbstractNamedBean
 	 */
 	private void removeListener(JmriSimplePropertyListener listener) {
         String msg = null;
-		switch (listener.getType()) {
-			case LISTENER_TYPE_SENSOR:
-				Sensor s = InstanceManager.sensorManagerInstance().
-										provideSensor(listener.getDevName());
-				if (s==null) {
-					msg = "sensor";
-					break;
-				}
-				// remove listener for this Sensor
-				s.removePropertyChangeListener(listener);
-				return;
-			case LISTENER_TYPE_TURNOUT:
-				Turnout t = InstanceManager.turnoutManagerInstance().
-										provideTurnout(listener.getDevName());
-				if (t==null) {
-					msg = "turnout";
-					break;
-				}
-				// remove listener for this Turnout
-				t.removePropertyChangeListener(listener);
-				return;
-			case LISTENER_TYPE_LIGHT:
-				Light lgt = InstanceManager.lightManagerInstance().
-										getLight(listener.getDevName());
-				if (lgt==null) {
-					msg = "light";
-					break;
-				}
-				// remove listener for this Light
-				lgt.removePropertyChangeListener(listener);
-				return;
-			case LISTENER_TYPE_CONDITIONAL:
-				Conditional c = InstanceManager.conditionalManagerInstance().
-										getConditional(listener.getDevName());
-				if (c==null) {
-					msg = "conditional";
-					break;
-				}
-				// remove listener for this Conditional
-				c.removePropertyChangeListener(listener);
-				return;
-			case LISTENER_TYPE_SIGNAL:
-				SignalHead h = InstanceManager.signalHeadManagerInstance().
-										getSignalHead(listener.getDevName());
-				if (h==null) {
-					msg = "signal head";
-					break;
-				}
-				// remove listener for this Signal Head
-				h.removePropertyChangeListener(listener);
-				return;
-			case LISTENER_TYPE_MEMORY:
-				Memory m = InstanceManager.memoryManagerInstance().
-										provideMemory(listener.getDevName());
-				if (m==null) {
-					msg= "memory";
-					break;
-				}
-				// remove listener for this Memory
-				m.removePropertyChangeListener(listener);
-				return;
-            case LISTENER_TYPE_FASTCLOCK:
-                Timebase tb = InstanceManager.timebaseInstance();
-				tb.removeMinuteChangeListener (listener);
-				return;
-		}
-        log.error("Bad name for " +msg+" \""+listener.getDevName()+
-                        "\"when removing a Logix listener");
+        try {
+            switch (listener.getType()) {
+                case LISTENER_TYPE_SENSOR:
+                    Sensor s = InstanceManager.sensorManagerInstance().
+                                            provideSensor(listener.getDevName());
+                    if (s==null) {
+                        msg = "sensor";
+                        break;
+                    }
+                    // remove listener for this Sensor
+                    s.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_TURNOUT:
+                    Turnout t = InstanceManager.turnoutManagerInstance().
+                                            provideTurnout(listener.getDevName());
+                    if (t==null) {
+                        msg = "turnout";
+                        break;
+                    }
+                    // remove listener for this Turnout
+                    t.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_LIGHT:
+                    Light lgt = InstanceManager.lightManagerInstance().
+                                            getLight(listener.getDevName());
+                    if (lgt==null) {
+                        msg = "light";
+                        break;
+                    }
+                    // remove listener for this Light
+                    lgt.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_CONDITIONAL:
+                    Conditional c = InstanceManager.conditionalManagerInstance().
+                                            getConditional(listener.getDevName());
+                    if (c==null) {
+                        msg = "conditional";
+                        break;
+                    }
+                    // remove listener for this Conditional
+                    c.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_SIGNAL:
+                    SignalHead h = InstanceManager.signalHeadManagerInstance().
+                                            getSignalHead(listener.getDevName());
+                    if (h==null) {
+                        msg = "signal head";
+                        break;
+                    }
+                    // remove listener for this Signal Head
+                    h.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_MEMORY:
+                    Memory m = InstanceManager.memoryManagerInstance().
+                                            provideMemory(listener.getDevName());
+                    if (m==null) {
+                        msg= "memory";
+                        break;
+                    }
+                    // remove listener for this Memory
+                    m.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_FASTCLOCK:
+                    Timebase tb = InstanceManager.timebaseInstance();
+                    tb.removeMinuteChangeListener (listener);
+                    return;
+            }
+        } catch (Throwable t) {
+            log.error("Bad name for listener on \""+listener.getDevName()+"\": "+t);
+        }
+        log.error("Bad name for "+msg+" listener on \""+listener.getDevName()+
+                        "\"when removing");
 	}
 	
 	/** 
@@ -773,11 +779,10 @@ public class DefaultLogix extends AbstractNamedBean
 	 *   changed by it.  Returns true if any such variables were found.  Returns false
 	 *   otherwise.
      * Can be called when Logix is enabled.
-	 */
+	 *
 	public boolean checkLoopCondition() {
+        loopGremlins = new ArrayList<String[]>();
 		if (!_isActivated) {
-			// Clear the string of possible offenders
-			loopGremlins = new ArrayList<String[]>();
 			// Prepare a list of all variables used in conditionals
             java.util.HashSet <ConditionalVariable> variableList = new java.util.HashSet<ConditionalVariable>();
             ConditionalManager cm = InstanceManager.conditionalManagerInstance();
@@ -789,6 +794,7 @@ public class DefaultLogix extends AbstractNamedBean
                     variableList.addAll(c.getCopyOfStateVariables());
                 }
             }
+            java.util.HashSet <ConditionalVariable> variableList = new java.util.HashSet<ConditionalVariable>();
             ConditionalVariable v = null;
 				// check conditional action items
             Conditional c = null;
@@ -941,7 +947,7 @@ public class DefaultLogix extends AbstractNamedBean
         }
         return (loopGremlins.size()>0);
 	}
-
+    
 	private void addGremlin(String type, String sName, String uName) {
         // check for redundancy
         String names = uName+ (sName == null ? "" : " ("+sName+")");
@@ -964,9 +970,9 @@ public class DefaultLogix extends AbstractNamedBean
 	 * Returns a string listing state variables that might result in a loop.
 	 *    Returns an empty string if there are none, probably because 
 	 *    "checkLoopCondition" was not invoked before the call, or returned false.
-	 */
+	 *
 	public ArrayList <String[]> getLoopGremlins() {return(loopGremlins);}
-
+    */
     /**
      * Not needed for Logixs - included to complete implementation of the NamedBean interface.
      */

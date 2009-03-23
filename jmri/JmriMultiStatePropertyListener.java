@@ -50,9 +50,9 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        log.debug("State propertyChange event for "+evt.getPropertyName()+
-                ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
-                "\" listenerType= "+_type+" for \""+_varName+"\"");
+        log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
+            ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
+            ", enabled = "+_enabled);
         if ( getPropertyName().equals(evt.getPropertyName()) ) {
             int newState = ((Number) evt.getNewValue()).intValue();
             int oldState = ((Number) evt.getOldValue()).intValue();
@@ -60,7 +60,7 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener
                 for (int i=0; i<numStates; i++)
                 {
                     if (oldState == _states[i] || newState == _states[i]) {
-                        calculateClient(i);
+                        calculateClient(i, evt);
                     }
                 }
             }
