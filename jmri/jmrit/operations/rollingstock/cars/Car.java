@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -207,7 +207,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (destinationName.equals("") || (destination != null && track != null))
 			return status;
 		// update load when car reaches a siding
-		if (destTrack.equals(Track.SIDING)){
+		if (destTrack.getLocType().equals(Track.SIDING)){
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
@@ -220,7 +220,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 				setLoad(carLoads.getDefaultEmptyName());
 		}
 		// update load optionally when car reaches staging
-		if (destTrack.equals(Track.STAGING)){
+		if (destTrack.getLocType().equals(Track.STAGING)){
 			if (destTrack.isLoadSwapEnabled()){
 				if (getLoad().equals(carLoads.getDefaultEmptyName())){
 					setLoad(carLoads.getDefaultLoadName());
