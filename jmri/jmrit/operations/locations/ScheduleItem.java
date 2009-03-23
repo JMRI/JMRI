@@ -6,7 +6,7 @@ import jmri.jmrit.operations.setup.Control;
  * Represents a car type to be scheduled for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -44,6 +44,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		return _type;
 	}
 	
+	/**
+	 * Sets the type of car requested.
+	 * @param type The car type requested.
+	 */
 	public void setType(String type){
 		String old = _type;
 		_type = type;
@@ -54,12 +58,20 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		return _road;
 	}
 	
+	/**
+	 * Sets the requested car road name.
+	 * @param raod The car road requested.
+	 */
 	public void setRoad(String road){
 		String old = _road;
 		_road = road;
 		firePropertyChange (ROAD_CHANGED_PROPERTY, old, road);
 	}
 	
+	/**
+	 * Sets the car load requested.
+	 * @param load The load name requested.
+	 */
 	public void setLoad(String load){
 		String old = _load;
 		_load = load;
@@ -70,6 +82,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		return _load;
 	}
 	
+	/**
+	 * Sets the car load that will ship.
+	 * @param load The car load shipped.
+	 */
 	public void setShip(String load){
 		String old = _ship;
 		_ship = load;

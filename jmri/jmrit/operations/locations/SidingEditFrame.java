@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -119,8 +119,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 					if (track.getScheduleName().equals("") ||
 							!track.getScheduleName().equals(sch.getName())){
 						track.setScheduleName(sch.getName());
-						track.setScheduleItemId(l.get(0));
-						track.setScheduleCount(0);
 					} else {
 					// check to see if user deleted the current item for track
 						ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());

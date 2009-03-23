@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.35 $
+ * @version             $Revision: 1.36 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -167,9 +167,10 @@ public class TrainBuilder extends TrainCommon{
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
 		}
+		int numMoves = requested;	// number of car moves
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
-		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(moves)}));
+		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves)}));
 		
 		// does train terminate into staging?
 		terminateStageTrack = null;
@@ -266,7 +267,7 @@ public class TrainBuilder extends TrainCommon{
 		String[] types =train.getTypeNames();
 		String typeNames ="";
     	for (int i=0; i<types.length; i++){
-    		typeNames = typeNames + types[i]+" ";
+    		typeNames = typeNames + types[i]+", ";
     	}
     	addLine(fileOut, FIVE, "Train ("+train.getName()+") services rolling stock types: "+typeNames);
     	// remove cars that don't have a valid track, interchange, road, or type for this train
@@ -775,7 +776,7 @@ public class TrainBuilder extends TrainCommon{
 		String typeNames ="";
     	for (int i=0; i<engineTypes.length; i++){
     		if (train.acceptsTypeName(engineTypes[i]))
-    			typeNames = typeNames + engineTypes[i]+" ";
+    			typeNames = typeNames + engineTypes[i]+", ";
     	}
     	addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+typeNames);
 		// show engine requirements for this train
