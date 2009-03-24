@@ -12,7 +12,7 @@ import jmri.jmrix.can.CanReply;
  * 
  * @author                      Andrew Crosland Copyright (C) 2008
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -33,6 +33,7 @@ public class GridConnectReply extends AbstractMRReply {
     public CanReply createReply() {
         CanReply ret = new CanReply();
 
+        if (log.isDebugEnabled()) log.debug("createReply converts from ["+this+"]");
         // Is it an Extended frame?
 	    if (isExtended()) ret.setExtended(true);
 	    
