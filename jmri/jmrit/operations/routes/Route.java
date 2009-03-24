@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -85,7 +85,7 @@ public class Route implements java.beans.PropertyChangeListener {
     	_IdNumber++;
     	_sequenceNum++;
     	String id = _id + "r"+ Integer.toString(_IdNumber);
-    	log.debug("adding new location to "+getName()+ " id: " + id);
+    	log.debug("adding new location to (" +getName()+ ") id: " + id);
     	RouteLocation rl = new RouteLocation(id, location);
     	rl.setSequenceId(_sequenceNum);
     	Integer old = new Integer(_routeHashTable.size());

@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -21,7 +21,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _maxTrainLength = Setup.getTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
 	protected boolean _drops = true;		// when true drops allowed at this location
-	protected boolean _pickups = true;		// when truen pickups allowed at this location
+	protected boolean _pickups = true;		// when true pickups allowed at this location
 	protected int _sequenceId = 0;			// used to determine location order in route
 	protected double _grade = 0;			// maximum grade between locations
 	protected int _trainIconX = 0;			// the x & y coordinates for the train icon
@@ -51,7 +51,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String MAXMOVES_CHANGED_PROPERTY = "maxMovesChange";
 	
 	public RouteLocation(String id, Location location) {
-		log.debug("New route location " + location.getName() + " " + id);
+		log.debug("New route location (" + location.getName() + ") id: " + id);
 		_location = location;
 		_id = id;
 		// listen for name change or delete

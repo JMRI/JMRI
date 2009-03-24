@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2199,6 +2199,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c11 load from staging", "E", c11.getLoad());
 		
 		// move and terminate train	
+		train1.move();
 		train1.move();
 		train1.move();
 		train1.move();

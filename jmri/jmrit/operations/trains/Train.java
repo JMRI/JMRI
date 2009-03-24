@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.41 $
+ * @version             $Revision: 1.42 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -797,7 +797,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * engines, cars, and train icon.
 	 */
 	public void move() {
-		log.debug("Move train "+getName());
+		log.debug("Move train ("+getName()+")");
 		if (getRoute() == null || getCurrentLocation() == null)
 			return;
 		List<String> routeList = getRoute().getLocationsBySequenceList();
@@ -967,7 +967,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	private void moveCars(RouteLocation old, RouteLocation next){
-		log.debug("Move cars in train "+getName());
+		log.debug("Move cars in train ("+getName()+")");
 		CarManager carManager = CarManager.instance();
 		List<String> cars = carManager.getCarsByTrainList(this);
 		int oldNum = cars.size();
@@ -1002,6 +1002,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		if (old == next && dropCars == 0 && pickupCars == 0 && departCars == 0){
+			log.debug("Train ("+getName()+")terminated");
 			setStatus(TERMINATED);
 			setCurrentLocation(null);
 			setBuilt(false);
