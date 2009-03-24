@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -233,7 +233,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			}
 			// empty car if it has a schedule load
 			if (destTrack.isRemoveLoadsEnabled()){
-				if (!getLoad().equals(carLoads.getDefaultEmptyName()) ||
+				if (!getLoad().equals(carLoads.getDefaultEmptyName()) &&
 						!getLoad().equals(carLoads.getDefaultLoadName())){
 					setLoad(carLoads.getDefaultEmptyName());
 				}
