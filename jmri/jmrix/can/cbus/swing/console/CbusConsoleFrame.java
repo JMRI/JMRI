@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -806,7 +806,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if (data == -1) return;
         data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, "CBUS Console", "Invalid Minor Priority Value");
         if (data2 == -1) return;
-        m.setCbusPri(data*4 + data2);
+        m.setHeader(data*4 + data2);
         for (i=0; i<8; i++) {
             if (!dataFields[i].getText().equals("")) {
                 data = parseBinDecHexByte(dataFields[i].getText(), 255, _decimal, "CBUS Console",
