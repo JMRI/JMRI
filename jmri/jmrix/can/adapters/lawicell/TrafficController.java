@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     
@@ -108,7 +108,7 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
         if (log.isDebugEnabled()) log.debug("Decoding from hardware: '"+m+"'\n");
 	    Reply gc = (Reply)m;
         CanReply ret = gc.createReply();
-        if (log.isDebugEnabled()) log.debug("Decoded as "+ret);
+        if (log.isDebugEnabled()) log.debug("Decoded "+gc+" as "+ret);
         return ret;
     }
 
@@ -130,7 +130,7 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     }
     
     /*
-     * Normal CAN-RS replies will end with ":"
+     * Normal Lawicall replies will end with CR; errors are BELL
      */
     protected boolean endOfMessage(AbstractMRReply r) {
         if (endNormalReply(r)) return true;
