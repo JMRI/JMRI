@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
@@ -177,6 +177,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
         
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
+        if (msg == null) return;  // some replies don't get forwarded
         
         // message is complete, dispatch it !!
         replyInDispatch = true;

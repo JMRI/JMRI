@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class Reply extends AbstractMRReply {
     
@@ -32,6 +32,13 @@ public class Reply extends AbstractMRReply {
     }
     
     public CanReply createReply() {
+        // is this just an ACK to e.g. a send?
+        if (_dataChars[0] != 't' && _dataChars[0]!='T') {
+            if (log.isDebugEnabled()) 
+                log.debug("non-frame reply skipped: "+this);
+            return null;
+        }
+        // carries a frame
         CanReply ret = new CanReply();
         
         ret.setExtended(isExtended());
