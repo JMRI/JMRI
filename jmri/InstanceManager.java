@@ -31,13 +31,14 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  */
 public class InstanceManager {
 
     static private HashMap<Class,ArrayList> managerLists;
     
     static public <T> void store(T val, Class<T> type) {
+        @SuppressWarnings("unchecked")
         ArrayList<T> l = managerLists.get(type);
         if (l==null) {
             l = new ArrayList<T>();
@@ -46,6 +47,7 @@ public class InstanceManager {
         l.add(val);
     }
     
+    @SuppressWarnings("unchecked")
     static public <T> List<T> getList(Class<T> type) {
         return managerLists.get(type);
     }
