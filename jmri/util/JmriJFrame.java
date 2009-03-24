@@ -52,7 +52,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  * GT 28-AUG-2008 Added window menu
  */
 
@@ -210,10 +210,10 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * The returned list is a copy made at the time of the call,
      * so it can be manipulated as needed by the caller.
      */
-    public static java.util.List getFrameList() {
-        java.util.List returnList;
+    public static java.util.List<JmriJFrame> getFrameList() {
+        java.util.List<JmriJFrame> returnList;
         synchronized(list) {
-            returnList = new java.util.ArrayList(list);
+            returnList = new java.util.ArrayList<JmriJFrame>(list);
         }
         return returnList;
     }
@@ -232,7 +232,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return null;
     }
     
-    static java.util.ArrayList list = new java.util.ArrayList();
+    static java.util.ArrayList<JmriJFrame> list = new java.util.ArrayList<JmriJFrame>();
     
     // handle resizing when first shown
     private boolean mShown = false;
