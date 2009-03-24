@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.30 2009-03-23 05:10:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.31 2009-03-24 01:28:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -317,6 +317,26 @@ Jim Thompson provided a new "PM42forCTC.py" sample script.
 
 <p>
 Lou DeHayes provided a definition for the MRC Sound Brilliance 1806 decoder.
+
+<li>
+Pete Cressman improved the user interface for defining Sensor Groups. 
+Also, Sensor Groups can now be migrated to become a logix conditional 
+by viewing the group and then pressing the 'make group' button.
+(This deletes the group as a series of routes and implements it as a Logix Conditional.  
+This is a special type of Conditional for radio button type action 
+and cannot be edited as a Conditional.) 
+A Panel for the names of existing groups is added to the Sensor Group window.  
+Editing of Sensor Groups is done from Sensor Group window - view the group, make changes, 
+press make group.
+
+<LI>
+Pete Cressman made it possible to export Routes to logix conditionals - 
+there, additional attributes can be added to the triggering controls or 
+outputs by ordinary conditional editing.  
+Pressing 'Add Route' still creates a traditional route in the Route Table.  
+Existing Routes can be migrated to their equivalent implementation as Logix 
+Conditionals by pressing the 'Export to Logix' button on the Route Editing window.
+
 
 <!--#include virtual="/Footer" -->
 
