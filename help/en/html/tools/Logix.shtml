@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.shtml,v 1.3 2008-04-17 23:25:37 djduchamp Exp $ -->
+<!-- $Id: Logix.shtml,v 1.4 2009-03-24 18:01:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -173,7 +173,16 @@
 	<b>First</b>. Select the Conditional that is to be first, and it
 	is immediately moved to the top of the table. All remaining buttons change
 	to <b>Next</b>. Select remaining Conditionals in desired order, until
-	all buttons change back to <B>Edit</b>.</p>
+	all buttons change back to <B>Edit</b>.
+	Note that the order that
+	Conditionals are listed in the Logix does not determine the order
+	in which they're evaluated, nor does it force evaluation
+	of one Conditional when an earlier or later one is evaluated.
+	You should think of Conditionals as independent pieces of boolean
+	logic that continually look for some combination of inputs to
+	be true, and when that combination happens, the Conditional
+	will take certain actions.
+	
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
 	change in the Logix user name is checked and made. A check is made for
 	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced
@@ -239,16 +248,13 @@
 	all three of the state variables are true, i.e., if block 10  
 	is occupied AND block 11 is occupied AND turnout 20 is   
 	thrown; otherwise it would calculate false.</p>
-	<p>Two actions may be specified for each Conditional.  Each action has a 
+	<p>Actionas may be specified for each Conditional.  Each action has a 
 	user selectable option of being triggered if: 1) the logical expression
 	changes to true, 2) the logical expression changes to false, or 3) the
 	logical expression changes. A number of action types are available.  For 
 	example, Set Turnout, Set Signal Appearance, Trigger Route, etc. It is also
 	possible to take no action. Available action types are described 
-	<a href="#action">below</a> in detail. With two actions available, you 
-	can specify two actions with the same option, or you can, for example,
-	set a turnout closed when the Conditional changes to true, and thrown when
-	the Conditional changes to false.</p>
+	<a href="#action">below</a> in detail.</p>
 	
 	</dd>
 	
@@ -322,14 +328,16 @@
 	finished your entry. Otherwise your entry may not take effect, and an error 
 	may be reported unnecessarily.</i></p>
 	<p>The action section of the Edit Conditional window provides for specifying
-	up to two actions to be taken when a Conditional is calculated. If either 
-	action is not needed, select "None" for type in the scrollable selection 
-	box. Otherwise select an action type in the type box, and data items needed 
-	to completely specify the action will appear to the right of the type box. 
-	If you don't know what needs to be entered in a data field, hover your 
-	cursor over it, and a hint message will appear. When a name must be entered,
-	the name (system name or user name) must correspond to an existing entity 
-	(sensor, turnout, signal head, etc.) of the proper type. Opening the Sensor 
+	the to be taken when a Conditional is calculated. 
+	To add a new action, press the "Add Action" button.
+    A new "Edit Action" window will appear.
+    Select an action type in the
+    type box, and data items needed to completely specify the action will
+    appear to the right of the type box. If you don't know what needs to be
+    entered in a data field, hover your cursor over it, and a hint message
+    will appear. When a name must be entered, the name must correspond to
+    the system name or the user name of an existing entity (sensor, turnout,
+    signal head, etc.) of the proper type. Opening the Sensor 
 	Table when entering sensor names, or the Turnout Table to see available 
 	turnouts, etc., may be useful. Available action types are described
 	in detail <a href="#action">below</a>. If you use user names to specify 
@@ -339,8 +347,15 @@
 	action: 1) On Change to True, 2) On Change to False, and 3) On Change. These
 	refer to the calculated state of the Conditional, which is equal to
 	the value of the logical expression as specified in the state variable table. 
-	One of these options must be selected. Click the radio button next to an 
-	option to select it and deselect the other two.</p>
+	One of these options must be selected.  When done, click either
+    "Update" to install your changes, 
+    "Cancel" to close the window without any changes 
+    or "Delete" to remove the action entirely.</P>
+    
+    <p>Actions are evaluated in the order listed.  To change that order, 
+    click the "Reorder" button on the "Edit Conditional" window. The right-most
+    buttons by the actions will then let you select the first one, next one, etc.
+
 	<p>When the logical expression and actions have been specified, click 
 	<b>Update Conditional</b> at the bottom of the window. This initiates a
 	check of the logical expression (the same as done by <b>Check State 
@@ -596,19 +611,6 @@
 	needed by Logix users, but in some cases may be important or of 
 	interest. 
 	<ul>
-	<p><li><b>What if more than two actions are needed in a Conditional?</b>
-	<p>Two options are available if multiple actions in response to  
-	the same logical expression are needed:  
-	<ol><li><p>If the multiple  actions are to set the states of a number of 
-	turnouts and/or sensors, define a Route to set the needed turnouts and
-	sensors, then choose Trigger Route as the action of the Conditional.
-	<li><p>If other actions are needed, you can simply follow the first  
-	Conditional with another Conditional using as a logical expression the 
-	calculated state of the first Conditional. For  example,
-	<p>if (logical expression) then (actions 1 and 2)
-	<p>if Conditional True (IX12C1) then (actions 3 and 4)
-	<p>where IX12C1 is the system name of the first Conditional.
-	</ol>	
 	<p><li><b> How can an inclusive OR be done without the OR operator?</b>
 	<p>To achieve "logical expression A"  OR  "logical expression B" without 
 	needing an OR operator use two Conditionals--Conditional 1 would calculate 
@@ -627,8 +629,6 @@
 	Conditionals?</b>
 	<p> A group of Conditionals was chosen for several reasons, including:
 	<ol>
-	<p><li>A group of expressions (Conditionals), evaluated in a specific  
-	order is more powerful than a single expression (Conditional). 
 	<p><li>Grouping Conditionals into a Logix, and focusing the Logix on one 
 	task should end up being much more user friendly. Think about one Logix 
 	with several Conditionals controlling one three-turnout signal head.  The 
@@ -640,8 +640,7 @@
 	the railroad. So with only one Logix, a user should be able to set up the 
 	required logic for setting appearances for one signal head. Thus once the 
 	sensors, turnouts, and signal heads are set up, only one new system name, 
-	the system name of the Logix, need be defined and kept track of. Fairly 
-	simple for the user, isn't it.
+	the system name of the Logix, need be defined and kept track of. 
 	<p><li>Another reason for grouping multiple Conditionals is simpler 
 	operation.  Fewer
 	behind the scene listeners are needed to accomplish the same task.  Even 
@@ -649,13 +648,7 @@
 	signal head (each Conditional) may depend upon a particular sensor (a 
 	block occupancy for example), if the Conditionals are combined into a 
 	single Logix, only _one_ listener for that sensor is required.  This is 
-	simpler in implementation than having multiple listeners and not knowing  
-	which will fire first.  When multiple Conditionals are used in a  
-	related way, the order of evaluation could be important, depending upon 
-	the logic involved.
-	<p><li>Grouping Conditionals reduces the need for internal entities, such
-	as internal sensors, internal signal heads, and internal turnouts.  This
-	simplifies the set up of logic, especially in more complicated cases.
+	simpler in implementation than having multiple listeners.
 	</ol>
 	<p><li><b>How is a Logix started?</b>
 	<p>Start of a Logix is similar to the way a light, a route, or 

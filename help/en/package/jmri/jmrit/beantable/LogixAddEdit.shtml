@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LogixAddEdit.shtml,v 1.3 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: LogixAddEdit.shtml,v 1.4 2009-03-24 18:01:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -72,7 +72,12 @@
 	<b>First</b>. Select the Conditional that is to be first, and it
 	is immediately moved to the top of the table. All remaining buttons change
 	to <b>Next</b>. Select remaining Conditionals in desired order, until
-	all buttons change back to <B>Edit</b>.
+	all buttons change back to <B>Edit</b>. Note that the order that
+	Conditionals are listed in the Logix does not determine the order
+	in which they're evaluated, nor does it force evaluation
+	of one Conditional when an earlier or later one is evaluated.
+	For more on this, see the discussion on the 
+	<A href="../../../../html/tools/Logix.shtml">Logix main page</a>.
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
 	change in the Logix user name is checked and made. A check is made for
 	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced

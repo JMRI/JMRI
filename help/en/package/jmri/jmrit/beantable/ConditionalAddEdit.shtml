@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.8 2008-11-04 18:33:04 djduchamp Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.9 2009-03-24 18:01:03 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -36,9 +36,7 @@ not be the same as the user name of another Conditional in this Logix,
 but may be the same as the user name of a Conditional in a different
 Logix.</P>
 <P>Next are two sections--one for the setup of a logical expression
-and one for set up of actions. Conditionals are statements of the form:
-
-</P>
+and one for set up of actions. Conditionals are statements of the form:</P>
 <UL>
 	if (logical expression) then (action).
 </UL>
@@ -60,15 +58,9 @@ telling what to enter in the remaining column(s) is displayed below the
 table (above the two buttons). Available state variables are documented
 <A HREF="#variable">below</A>. When a name is entered, it must
 correspond to the system name or the user name of an existing entity
-(sensor, turnout, light, etc.). It is useful to open the Sensor Table
+(sensor, turnout, light, etc). It is useful to open the Sensor Table
 when entering sensor names, or the Turnout Table to show available
 turnouts, etc.</P>
-<P><B>Caution:</B> If you use user names to specify state variables,
-be very careful about changing these user names. User names may be
-edited in JMRI, but changing user names without good reason can break
-your state variable definitions. If you want to be able to freely change
-your user names, specify state variables using system names, which
-cannot be changed.</P>
 <P>The Triggers Calculation column contains checkboxes that normally
 are checked, so that a change in the state variable will trigger a
 calculation of the Logix. For those rare cases where a change in a
@@ -102,10 +94,14 @@ clicking <B>Check State Variables</B> (or <B>Update Conditional</B> at
 the bottom of the window) so that the program is notified that you have
 finished your entry. Otherwise your entry may not take effect, and an
 error may be reported unnecessarily.</B></P>
+
 <P>The action section of the Edit Conditional window provides for
-specifying up to two actions to be taken when a Conditional is
-calculated. If either action is not needed, select "None" for type in
-the scrollable selection box. Otherwise select an action type in the
+specifying the actions to be taken when a Conditional is
+calculated. 
+
+<P>To add a new action, press the "Add Action" button.
+A new "Edit Action" window will appear.
+Select an action type in the
 type box, and data items needed to completely specify the action will
 appear to the right of the type box. If you don't know what needs to be
 entered in a data field, hover your cursor over it, and a hint message
@@ -115,17 +111,19 @@ signal head, etc.) of the proper type. Opening the Sensor Table when
 entering sensor names, or the Turnout Table to see available turnouts,
 etc., may be useful. Available action types are described in detail <A
 	HREF="#action">below</A>.</P>
-<P><B>Caution:</B> If you use user names to specify actions, be very
-careful about changing these user names. User names may be edited in
-JMRI, but changing user names without good reason can break your action
-definitions. If you want to be able to freely change your user names,
-specify actions using system names, which cannot be changed.</P>
 <P>For each action, three options are available for when to trigger
 the action: 1) On Change to True, 2) On Change to False, and 3) On
 Change. These refer to the calculated state of the Conditional, which is
 equal to the value of the logical expression as specified in the state
-variable table. One of these options must be selected. Click the radio
-button next to an option to select it and deselect the other two.</P>
+variable table. One of these options must be selected. When done, click either
+"Update" to install your changes, 
+"Cancel" to close the window without any changes 
+or "Delete" to remove the action entirely.</P>
+
+<p>Actions are evaluated in the order listed.  To change that order, 
+click the "Reorder" button on the "Edit Conditional" window. The right-most
+buttons by the actions will then let you select the first one, next one, etc.
+
 <P>When the logical expression and actions have been specified,
 click <B>Update Conditional</B> at the bottom of the window. This
 initiates a check of the logical expression (the same as done by <B>Check
@@ -133,7 +131,7 @@ State Variables</B>) and a check of entered data for actions. If the user
 name has been edited, it is also checked. If an error is found, a
 message box opens announcing the error, and the update is stopped to
 allow you to correct the error and click <B>Update Conditional</B>
-again. If no error is found, the Conditional is updated with the entered
+again. If no error is found, the action is updated with the entered
 data, the Edit Conditional window is closed, and the user is returned to
 the Edit Logix window.</P>
 <P>Two other buttons are available at the bottom of the Edit
