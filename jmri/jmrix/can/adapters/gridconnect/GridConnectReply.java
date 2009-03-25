@@ -12,7 +12,7 @@ import jmri.jmrix.can.CanReply;
  * 
  * @author                      Andrew Crosland Copyright (C) 2008
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -90,7 +90,7 @@ public class GridConnectReply extends AbstractMRReply {
      */        
     public int getHeader() {
         int val = 0;
-        for (int i = 2; i<10; i++) {
+        for (int i = 2; i<=10; i++) {
             _RTRoffset = i;
             if (_dataChars[i] == 'N') return val;
             if (_dataChars[i] == 'R') return val;
