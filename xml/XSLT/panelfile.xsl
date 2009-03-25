@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.19 2009-03-02 00:05:10 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.20 2009-03-25 05:23:32 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -467,6 +467,9 @@ num1="<xsl:value-of select="@num1"/>"
 </xsl:if>
 <xsl:if test='@num2 != 0'>
 num2="<xsl:value-of select="@num2"/>"
+</xsl:if>
+<xsl:if test='@dataString !="N/A" and @dataString !=""'>
+value="<xsl:value-of select="@dataString"/>"
 </xsl:if>
 <xsl:if test='@triggersCalc = "no"'>
 <b>(Doesn't trigger calculation)</b>
