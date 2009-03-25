@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectReply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class GridConnectReplyTest extends TestCase {
     
@@ -94,6 +94,19 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 1", 0x34, r.getElement(1));
         Assert.assertEquals("el 2", 0x56, r.getElement(2));
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
+    }
+
+    public void testFour() {
+        
+        GridConnectReply g = new GridConnectReply(":X1FFFFFFFR63;");
+        
+        CanReply r = g.createReply();
+        
+        Assert.assertEquals("extended", true, r.isExtended());
+        Assert.assertEquals("rtr", true, r.isRtr());
+        Assert.assertEquals("header", 0x1FFFFFFF, r.getHeader());
+        Assert.assertEquals("num elements", 1, r.getNumDataElements());
+        Assert.assertEquals("el 1", 0x63, r.getElement(0));
     }
 
     // from here down is testing infrastructure
