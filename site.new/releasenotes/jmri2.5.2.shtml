@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.31 2009-03-24 01:28:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.32 2009-03-25 05:59:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -328,6 +328,10 @@ and cannot be edited as a Conditional.)
 A Panel for the names of existing groups is added to the Sensor Group window.  
 Editing of Sensor Groups is done from Sensor Group window - view the group, make changes, 
 press make group.
+
+<li>
+Pete Cressman removed the limitation on the number of turnouts or sensors that
+can be set in a route.
 
 <LI>
 Pete Cressman made it possible to export Routes to logix conditionals - 

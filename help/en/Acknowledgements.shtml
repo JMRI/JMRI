@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.72 2009-03-23 05:11:54 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.73 2009-03-25 06:00:13 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -123,8 +123,8 @@
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
-    <li>Peter Cressman provided a major improvement to Logix, and 
-    several other internal improvements.
+    <li>Peter Cressman provided a major improvement to Logix, improved
+    Sensor Groups, and fixed some problems in Routes.
 	<LI>Andrew Crossland create the SPROG implementation, SPROG programming
 	tools, 
 	has generously contributed lots of time for SPROG users,
