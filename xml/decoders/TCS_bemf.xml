@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.14 2009-03-26 03:40:43 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.15 2009-03-26 03:44:35 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -103,13 +103,13 @@
                 <output name="Ditch"/>
                 <output name="Motor"/>
             </model>
-		<model model="K1D4" numOuts="4" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+	    <model model="K1D4" numOuts="4" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
                 <size length="2.7" width="0.4" height="0.0" units="inches"/>
                 <output name="1" label="White" connection="plug" maxcurrent="15 mA"/>
                 <output name="2" label="Yellow" connection="plug" maxcurrent="15 mA"/>
                 <output name="3" label="Green" connection="solder" maxcurrent="15 mA"/>
                 <output name="4" label="Purple" connection="wire" maxcurrent="15 mA"/>                
-		    <output name="Dim"/>
+		<output name="Dim"/>
                 <output name="Ditch"/>
                 <output name="Motor"/>
             </model>
@@ -122,8 +122,7 @@
                 <output name="Ditch"/>
                 <output name="Motor"/>
             </model>
-		
-            <model model="M1" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+	    <model model="M1" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N">
                 <size length="0.57" width="0.355" height="0.132" units="inches"/>
                 <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
                 <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
