@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.32 2009-03-25 05:59:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.33 2009-03-26 21:30:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -313,7 +313,8 @@ Nigel Cliffe updated the CT Elektronik DCX decoder definition.
 Peter Cesaro updated the MRC Sound Brilliance 1663 and 1656 definitions.
 
 <p>
-Jim Thompson provided a new "PM42forCTC.py" sample script.
+Jim Thompson provided a new "PM42forCTC.py" sample script,
+and greatly improved the previous PM4Announce.py script.
 
 <p>
 Lou DeHayes provided a definition for the MRC Sound Brilliance 1806 decoder.
@@ -341,6 +342,11 @@ Pressing 'Add Route' still creates a traditional route in the Route Table.
 Existing Routes can be migrated to their equivalent implementation as Logix 
 Conditionals by pressing the 'Export to Logix' button on the Route Editing window.
 
+<li>
+Marc Fornier added the K1D4 decoder to the TCS definitions.
+
+<li>
+Jim Betz added the Z2 TCS decoder
 
 <!--#include virtual="/Footer" -->
 
