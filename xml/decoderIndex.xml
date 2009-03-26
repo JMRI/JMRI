@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.4 on Sun Jan 11 23:25:18 PST 2009 $Id: decoderIndex.xml,v 1.137 2009-02-19 02:20:42 jacobsen Exp $-->
-  <decoderIndex version="158">
-    <mfgList nmraListDate="2009-01-15" updated="2009-02-18" lastadd="52">
+  <!--Written by JMRI version 2.5.1 on Wed Mar 25 21:57:24 PDT 2009 $Id: decoderIndex.xml,v 1.138 2009-03-26 04:58:32 jacobsen Exp $-->
+  <decoderIndex version="160">
+    <mfgList nmraListDate="2009-01-15" updated="2009-02-18">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -25,9 +25,9 @@
       <manufacturer mfg="Capecom" mfgID="47" />
       <manufacturer mfg="Computer Dialysis France" mfgID="123" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
+      <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="DCCdevices" mfgID="39" />
-      <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digirails" mfgID="42" />
       <manufacturer mfg="Digitrax" mfgID="129" />
@@ -42,8 +42,8 @@
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Hornby" mfgID="48" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
-      <manufacturer mfg="Joka Electronic" mfgID="49" />
       <manufacturer mfg="JMRI" mfgID="18" />
+      <manufacturer mfg="Joka Electronic" mfgID="49" />
       <manufacturer mfg="KAM Industries" mfgID="22" />
       <manufacturer mfg="KATO Precision Models" mfgID="40" />
       <manufacturer mfg="Kreischer Datatechnik" mfgID="21" />
@@ -142,6 +142,13 @@
           <output name="Air" connection="unspecified" />
           <output name="Brakes" connection="unspecified" />
         </model>
+        <functionlabels>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn 1</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Rev Up</functionlabel>
+        </functionlabels>
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_steam.xml">
         <model model="Steam" numOuts="3" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -749,8 +756,15 @@
         <model model="DN93" numOuts="3" numFns="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="DH84" numOuts="3" numFns="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
+      <family name="Function Only, with transponding" mfg="Digitrax" type="locomotive" file="Digitrax_TF2.xml">
+        <!-- <model model="TL1" numOuts="1" lowVersionID="250"/> -->
+        <model model="TF2" numOuts="2" lowVersionID="251" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <!-- <model model="TF4" numOuts="4" lowVersionID="254"/> -->
+      </family>
       <family name="Function Only, with transponding" mfg="Digitrax" type="locomotive" file="Digitrax_TF4.xml">
-        <model model="TF4" lowVersionID="254" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <!-- <model model="TL1" numOuts="1" lowVersionID="250"/> -->
+        <!-- <model model="TF2" numOuts="2" lowVersionID="251"/> -->
+        <model model="TF4" numOuts="4" lowVersionID="254" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Function Only, with transponding" mfg="Digitrax" type="locomotive" file="Digitrax_TL1.xml">
         <model model="TL1" lowVersionID="250" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -762,7 +776,7 @@
       <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
         <model model="DS54" lowVersionID="65" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
-      <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" type="locomotive" file="ESU_LokPilot2.0.xml">
+      <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_LokPilot2.0.xml">
         <model model="LokPilot 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="23" width="15.5" height="6.5" units="mm" />
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -783,7 +797,7 @@
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire" />
         </model>
       </family>
-      <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" type="locomotive" file="ESU_LokPilot3.0.xml">
+      <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_LokPilot3.0.xml">
         <model model="LokPilot micro 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="13.5" width="9" height="3.0" units="mm" />
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire" />
@@ -836,7 +850,7 @@
           <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire" />
         </model>
       </family>
-      <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" type="locomotive" file="ESU_LokPilotBasic1.0.xml">
+      <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_LokPilotBasic1.0.xml">
         <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -899,6 +913,24 @@
           <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
           <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="false">Rev Up</functionlabel>
+          <functionlabel num="6" lockable="false">Rev Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Mars</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Squeal</functionlabel>
+          <functionlabel num="10" lockable="false">CPC</functionlabel>
+          <functionlabel num="11" lockable="true">Shunt</functionlabel>
+          <functionlabel num="12" lockable="false">Set Brk</functionlabel>
+          <functionlabel num="13" lockable="false">Rel Brk</functionlabel>
+          <functionlabel num="14" lockable="false">Slack</functionlabel>
+          <functionlabel num="15" lockable="false">Smash</functionlabel>
+        </functionlabels>
       </family>
       <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" type="locomotive" file="ESU_LokSoundXLV3_5.xml">
         <model model="LokSoundXL Version 3.5" numOuts="8" numFns="12" maxMotorCurrent="3.0A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified">
@@ -912,6 +944,24 @@
           <output name="8" label="AUX 6" maxcurrent="600mA" connection="unspecified" />
           <size length="51" width="40" height="14" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="false">Rev Up</functionlabel>
+          <functionlabel num="6" lockable="false">Rev Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Mars</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Squeal</functionlabel>
+          <functionlabel num="10" lockable="false">CPC</functionlabel>
+          <functionlabel num="11" lockable="true">Shunt</functionlabel>
+          <functionlabel num="12" lockable="false">Set Brk</functionlabel>
+          <functionlabel num="13" lockable="false">Rel Brk</functionlabel>
+          <functionlabel num="14" lockable="false">Slack</functionlabel>
+          <functionlabel num="15" lockable="false">Smash</functionlabel>
+        </functionlabels>
       </family>
       <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH" type="locomotive" file="Haber_u_Koenig.xml">
         <model model="NFA" numOuts="8" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="1.2 A" comment="NFA=Niederfrequenzansteuerung" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -1005,7 +1055,7 @@
           <size length="2.75" width="1.18" height="0.50" units="inches" />
         </model>
       </family>
-      <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
+      <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="51" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
@@ -1177,6 +1227,12 @@
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
       </family>
+      <family name="Lenz version 4.1 decoders" mfg="Lenz" lowVersionID="41" highVersionID="43" type="locomotive" file="Lenz_V41.xml">
+        <model model="LE103" numOuts="2" nmraWarrant="yes" nmraWarrantStart="199611" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+        </model>
+      </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" type="locomotive" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="01" label="White" connection="unspecified" />
@@ -1328,6 +1384,11 @@
           <size length="95" width="14" height="9" units="mm" />
         </model>
       </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" type="locomotive" file="MRC_soundbrilliance1806.xml">
+        <model model="N Scale Drop in DCC Decoder for KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="72" width="9.7" height="3.0" units="mm" />
+        </model>
+      </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1819.xml">
         <model model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note All 28 functions are NMRA compatible -->
@@ -1351,7 +1412,7 @@
         </model>
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
-        <model model="LGB MTS I 55020 loco decoders" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LGB MTS I 55020 loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="55" width="25" height="12" units="mm" />
           <output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
           <output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
@@ -1360,19 +1421,19 @@
         <!-- 55020 currents are for the later Massoth versions,
            the earlier Lenz versions were 1.5 motor, 0.15 per function, and 1.5 total
 -->
-        <model model="LGB MTS II 55021 loco decoders" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LGB MTS II 55021 loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="55" width="25" height="13" units="mm" />
           <output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
           <output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
           <output name="3" label="F1 " maxcurrent="0.3 A" connection="other" />
         </model>
-        <model model="LGB MTS II 55022 small loco decoders" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="0.8 A" maxTotalCurrent="1 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LGB MTS II 55022 small loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="0.8 A" maxTotalCurrent="1 A" numOuts="3" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="28" width="14" height="13" units="mm" />
           <output name="1" label="Front light" maxcurrent="0.05 A" connection="solder" />
           <output name="2" label="Rear light " maxcurrent="0.05 A" connection="solder" />
           <output name="3" label="F1 " maxcurrent="0.05 A" connection="solder" />
         </model>
-        <model model="LGB MTS II onboard loco decoders" lowVersionID="10" maxInputVolts="24 V" numOuts="4" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LGB MTS II onboard loco decoders" lowVersionID="20" highVersionID="39" maxInputVolts="24 V" numOuts="4" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Front light" connection="other" />
           <output name="2" label="Rear light " connection="other" />
           <output name="3" label="F1 " connection="other" />
@@ -1380,7 +1441,7 @@
         </model>
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB_55027.xml">
-        <model model="LGB MTS III 55027 loco decoders" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LGB MTS III 55027 loco decoders" lowVersionID="10" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="55" width="25" height="12" units="mm" />
           <output name="1" label="Front light" maxcurrent="0.3 A" connection="wire" />
           <output name="2" label="Rear light " maxcurrent="0.3 A" connection="wire" />
@@ -1392,41 +1453,76 @@
           <output name="8" label="F6 " maxcurrent="0.3 A" connection="solder" />
         </model>
       </family>
-      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_XL.xml">
-        <model model="eMOTION L" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.8 A" maxTotalCurrent="2.8 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <size length="55" width="25" height="14" units="mm" />
-          <output name="1" label="Front light" maxcurrent="0.5 A" connection="other" />
-          <output name="2" label="Rear light " maxcurrent="0.5 A" connection="other" />
-          <output name="3" label="F1 " maxcurrent="0.5 A" connection="other" />
-          <output name="4" label="F2 " maxcurrent="0.5 A" connection="solder" />
-          <output name="5" label="F3 " maxcurrent="0.5 A" connection="solder" />
-          <output name="6" label="F4 " maxcurrent="0.5 A" connection="solder" />
-          <output name="7" label="F5 " maxcurrent="0.5 A" connection="solder" />
-          <output name="8" label="F6 " maxcurrent="0.5 A" connection="solder" />
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_Motor.xml">
+        <model model="eMOTION M" lowVersionID="1" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.2 A" maxTotalCurrent="1.8 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="30" width="15" height="6" units="mm" />
+          <output name="1" label="Front light" maxcurrent="500 mA" connection="solder" />
+          <output name="2" label="Rear light " maxcurrent="500 mA" connection="solder" />
+          <output name="3" label="F1 " maxcurrent="600 mA" connection="solder" />
+          <output name="4" label="F2 " maxcurrent="600 mA" connection="solder" />
+          <output name="5" label="F3 " maxcurrent="50 mA" connection="solder" />
+          <output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
+          <output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
+          <output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
         </model>
-        <model model="eMOTION XL" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="9" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="eMOTION L" lowVersionID="1" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="1.8 A" maxTotalCurrent="2.8 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="25" height="14" units="mm" />
+          <output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
+          <output name="3" label="F1 " maxcurrent="500 mA" connection="other" />
+          <output name="4" label="F2 " maxcurrent="500 mA" connection="solder" />
+          <output name="5" label="F3 " maxcurrent="50 mA" connection="solder" />
+          <output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
+          <output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
+          <output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
+        </model>
+        <model model="eMOTION XL" lowVersionID="1" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="9" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="50" width="32" height="12" units="mm" />
-          <output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
-          <output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
-          <output name="3" label="Interior light " maxcurrent="0.3 A" connection="other" />
-          <output name="4" label="F1 " maxcurrent="0.6 A" connection="other" />
-          <output name="5" label="F2 " maxcurrent="0.6 A" connection="other" />
-          <output name="6" label="F3 " maxcurrent="0.6 A" connection="other" />
-          <output name="7" label="F4 " maxcurrent="0.6 A" connection="other" />
-          <output name="8" label="F5 " maxcurrent="0.6 A" connection="other" />
-          <output name="9" label="F6 " maxcurrent="0.6 A" connection="other" />
+          <output name="1" label="Front light" maxcurrent="300 mA" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="300 mA" connection="other" />
+          <output name="3" label="Interior light " maxcurrent="300 mA" connection="other" />
+          <output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+          <output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+          <output name="6" label="F3 " maxcurrent="600 mA" connection="other" />
+          <output name="7" label="F4 " maxcurrent="600 mA" connection="other" />
+          <output name="8" label="F5 " maxcurrent="600 mA" connection="other" />
+          <output name="9" label="F6 " maxcurrent="600 mA" connection="other" />
+        </model>
+        <model model="eMOTION XXL" lowVersionID="20" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="6 A" maxTotalCurrent="7 A" numOuts="9" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="65" width="33" height="16" units="mm" />
+          <output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
+          <output name="3" label="Interior light " maxcurrent="500 mA" connection="other" />
+          <output name="4" label="F1 " maxcurrent="500 mA" connection="other" />
+          <output name="5" label="F2 " maxcurrent="500 mA" connection="other" />
+          <output name="6" label="F3 " maxcurrent="500 mA" connection="other" />
+          <output name="7" label="F4 " maxcurrent="500 mA" connection="other" />
+          <output name="8" label="F5 " maxcurrent="500 mA" connection="other" />
+          <output name="9" label="F6 " maxcurrent="500 mA" connection="other" />
         </model>
       </family>
-      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_XLS.xml">
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30" type="locomotive" file="Massoth_eMOTION_Sound.xml">
+        <model model="eMOTION LS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.7 A" numOuts="9" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="54" width="25" height="15" units="mm" />
+          <output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
+          <output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
+          <output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+          <output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+          <output name="6" label="F3 " maxcurrent="50 mA" connection="solder" />
+          <output name="7" label="F4 " maxcurrent="10 mA" connection="solder" />
+          <output name="8" label="F7 " maxcurrent="10 mA" connection="solder" />
+          <output name="9" label="F8 " maxcurrent="10 mA" connection="solder" />
+        </model>
         <model model="eMOTION XLS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="11" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="60" width="32" height="18" units="mm" />
-          <output name="1" label="Front light" maxcurrent="0.3 A" connection="plug" />
-          <output name="2" label="Rear light " maxcurrent="0.3 A" connection="plug" />
-          <output name="3" label="Interior light " maxcurrent="0.3 A" connection="plug" />
-          <output name="4" label="F1 " maxcurrent="0.6 A" connection="other" />
-          <output name="5" label="F2 " maxcurrent="0.6 A" connection="other" />
-          <output name="6" label="F3 " maxcurrent="0.6 A" connection="other" />
-          <output name="7" label="F4 " maxcurrent="0.6 A" connection="other" />
+          <output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
+          <output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
+          <output name="4" label="F1 " maxcurrent="600 mA" connection="other" />
+          <output name="5" label="F2 " maxcurrent="600 mA" connection="other" />
+          <output name="6" label="F3 " maxcurrent="600 mA" connection="other" />
+          <output name="7" label="F4 " maxcurrent="600 mA" connection="other" />
           <output name="8" label="F5 " maxcurrent="20 mA" connection="other" />
           <output name="9" label="F6 " maxcurrent="20 mA" connection="other" />
           <output name="10" label="F7 " maxcurrent="20 mA" connection="solder" />
@@ -1434,7 +1530,7 @@
         </model>
       </family>
       <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_function_lights.xml">
-        <model model="eMOTION_8FL" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="eMOTION_8FL" lowVersionID="10" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1 A" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="28" width="14" height="6" units="mm" />
           <output name="1" label="F1 " maxcurrent="0.6 A" connection="wire" />
           <output name="2" label="F2 " maxcurrent="0.6 A" connection="wire" />
@@ -1445,7 +1541,7 @@
           <output name="7" label="F7 " maxcurrent="0.6 A" connection="solder" />
           <output name="8" label="F8 " maxcurrent="0.6 A" connection="solder" />
         </model>
-        <model model="LED Lighting with Decoder" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="150 mA" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="LED Lighting with Decoder" lowVersionID="10" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="150 mA" numOuts="8" numFns="18" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="100" width="15" height="12" units="mm" />
           <output name="1" label="F1 Internal LED" maxcurrent="15 mA" connection="other" />
           <output name="2" label="F2 " maxcurrent="50 mA" connection="solder" />
@@ -1891,6 +1987,7 @@
       <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" type="locomotive" file="QSI_Articulated_Steam_ver7.xml">
         <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="BLI NW Class A" lowVersionID="7" numFns="14" numOuts="14" productID="400" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -1946,6 +2043,21 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="P2k N USRA 2-8-8-2" lowVersionID="7" numFns="14" numOuts="0" productID="4002" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="5" type="locomotive" file="QSI_Diesel.xml">
         <model model="BLI E7A/B" lowVersionID="4" highVersionID="5" numFns="14" numOuts="14" productID="100" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -2251,6 +2363,24 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <model model="P2k E7A w/Mars" numFns="14" numOuts="14" productID="179" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7A" numFns="14" numOuts="14" productID="180" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7B" numFns="14" numOuts="14" productID="181" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
         <model model="P2k E8/E9 w/Mars" numFns="14" numOuts="14" productID="135" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -2258,6 +2388,24 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="P2k E8/E9 wo/Mars" numFns="14" numOuts="14" productID="136" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F3A w/Mars" numFns="14" numOuts="14" productID="176" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F3A" numFns="14" numOuts="14" productID="177" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7B" numFns="14" numOuts="14" productID="178" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -2365,12 +2513,7 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="G USA GP38" numFns="14" numOuts="14" productID="1015" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
+        <model model="G USA GP38" numFns="14" numOuts="0" productID="1015" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="O Atlas C424" numFns="14" numOuts="14" productID="1034" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -2389,12 +2532,9 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="O Atlas GP9" numFns="14" numOuts="14" productID="1021" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
+        <model model="O Atlas Erie Built" numFns="14" numOuts="0" productID="1038" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="O Atlas F2" numFns="14" numOuts="0" productID="1020" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="O Atlas GP9" numFns="14" numOuts="0" productID="1021" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="O Atlas GP35" numFns="14" numOuts="14" productID="1019" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -2407,24 +2547,31 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="O Atlas MP15" numFns="14" numOuts="14" productID="1033" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
-        <model model="O Atlas RS-1" numFns="14" numOuts="14" productID="1022" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
+        <model model="O Atlas MP15" numFns="14" numOuts="0" productID="1033" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="O Atlas RS-1" numFns="14" numOuts="0" productID="1022" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="O Atlas SD35" numFns="14" numOuts="14" productID="1024" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <model model="O Atlas SD40" numFns="14" numOuts="0" productID="1014" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="O Atlas SW7" numFns="14" numOuts="0" productID="1037" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="QSI Electric" mfg="QSIndustries" lowVersionID="3" highVersionID="6" type="locomotive" file="QSI_Electric.xml">
         <model model="BLI GG-1" lowVersionID="3" highVersionID="6" productID="200" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -2444,6 +2591,21 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6" type="locomotive" file="QSI_Gas_Turbine.xml">
         <model model="Lionel Veranda Turbine" lowVersionID="4" numFns="14" numOuts="14" productID="500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -2457,6 +2619,21 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Turbine/Diesel Transition</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="5" type="locomotive" file="QSI_Steam.xml">
         <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -2600,7 +2777,25 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <model model="BLI UP TTT6/7 2-10-2 brass" lowVersionID="7" numFns="14" numOuts="14" productID="331" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI UP TTT6/7 2-10-2 hybrid" lowVersionID="7" numFns="14" numOuts="14" productID="332" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
         <model model="BLI USRA Mikado 2-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="301" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka C38 4-6-2" lowVersionID="7" numFns="14" numOuts="14" productID="325" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -2636,7 +2831,19 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <model model="PCM PRR I1sa 2-10-0" lowVersionID="7" numFns="14" numOuts="14" productID="333" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
         <model model="Sunset NP 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="320" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Sunset SP 2-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="334" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -2666,12 +2873,7 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="G Aristocraft Steam" lowVersionID="7" numFns="14" numOuts="14" productID="3017" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
+        <model model="G Aristocraft Steam" lowVersionID="7" numFns="14" numOuts="0" productID="3017" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="O Atlas 0-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="3015" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -2690,6 +2892,21 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="05" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -3512,10 +3729,21 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="AMD1" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <size length="3.03" width="0.355" height="0.135" units="inches" />
-          <output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
-          <output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+        <model model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="2.83" width="0.351" height="0.13" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="2.73" width="0.349" height="0.13" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
@@ -3541,6 +3769,15 @@
           <size length="0845" width="0.680" height="0.165" units="inches" />
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="K3D3" numOuts="3" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
@@ -3683,6 +3920,9 @@
       <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
+      <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
+        <model model="SIC24AD" lowVersionID="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMC4.xml">
         <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
@@ -3703,6 +3943,18 @@
       </family>
       <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" type="locomotive" file="Trix_Modelleisenbahn_version_1.xml">
         <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="MicroMultiprotocol Decoder" mfg="Uhlenbrock Elektronik" type="locomotive" file="Uhlenbrock_73400.xml">
+        <model model="73400" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="F0F" connection="wire" maxcurrent="0.2A" />
+          <output name="2" label="F0R" connection="wire" maxcurrent="0.2A" />
+          <size length="10.8 " width="7.5 " height="2.4 " units="mm" />
+        </model>
+        <model model="73410" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="NEM651 version" connector="NMRAsmall" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="1" label="F0F" connection="plug" maxcurrent="0.2A" />
+          <output name="2" label="F0R" connection="plug" maxcurrent="0.2A" />
+          <size length="10.8 " width="7.5 " height="2.4 " units="mm" />
+        </model>
       </family>
       <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" type="locomotive" file="Uhlenbrock_73500.xml">
         <model model="73500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -3933,6 +4185,39 @@
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
       </family>
+      <family name="Zimo MX620" mfg="Zimo" type="locomotive" file="Zimo_MX620_v7-8.xml">
+        <model model="MX620 version 7-8" lowVersionID="7" highVersionID="8" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3 Pad (+5v)" connection="unspecified" />
+          <output name="6" label="FO 4 Pad (+5v)" connection="unspecified" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo MX620" mfg="Zimo" type="locomotive" file="Zimo_MX620_v9.xml">
+        <model model="MX620 version 9" lowVersionID="9" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3 Pad (+5v)" connection="unspecified" />
+          <output name="6" label="FO 4 Pad (+5v)" connection="unspecified" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo MX620" mfg="Zimo" type="locomotive" file="Zimo_MX620_v9dot12.xml">
+        <model model="MX620 version 9.12" lowVersionID="9" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3 Pad (+5v)" connection="unspecified" />
+          <output name="6" label="FO 4 Pad (+5v)" connection="unspecified" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX62_1.xml">
         <model model="MX62 version 4/7" lowVersionID="4" highVersionID="7" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="0.55" width="0.35" height="0.10" units="inches" />
@@ -4028,6 +4313,70 @@
           <output name="8" label="Pad" connection="unspecified" />
         </model>
       </family>
+      <family name="Zimo MX640" mfg="Zimo" type="locomotive" file="Zimo_MX640_v1-2.xml">
+        <model model="MX640 versions 1-2" lowVersionID="1" highVersionID="2" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3" connection="unspecified" />
+          <output name="6" label="FO 4" connection="unspecified" />
+          <output name="7" label="FO 5 (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 (+5v)" connection="unspecified" />
+          <output name="9" label="FO 7 (+5v)" connection="unspecified" />
+          <output name="10" label="FO 8 (+5v)" connection="unspecified" />
+          <output name="11" label="FO 9 (+5v)" connection="unspecified" />
+          <size length="32" width="16" height="6" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo MX640" mfg="Zimo" type="locomotive" file="Zimo_MX640_v3.xml">
+        <model model="MX640 version 3" lowVersionID="3" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3" connection="unspecified" />
+          <output name="6" label="FO 4" connection="unspecified" />
+          <output name="7" label="FO 5 (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 (+5v)" connection="unspecified" />
+          <output name="9" label="FO 7 (+5v)" connection="unspecified" />
+          <output name="10" label="FO 8 (+5v)" connection="unspecified" />
+          <output name="11" label="FO 9 (+5v)" connection="unspecified" />
+          <size length="32" width="16" height="6" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo MX640" mfg="Zimo" type="locomotive" file="Zimo_MX640_v4.xml">
+        <model model="MX640 version 4" lowVersionID="4" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3" connection="unspecified" />
+          <output name="6" label="FO 4" connection="unspecified" />
+          <output name="7" label="FO 5 (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 (+5v)" connection="unspecified" />
+          <output name="9" label="FO 7 (+5v)" connection="unspecified" />
+          <output name="10" label="FO 8 (+5v)" connection="unspecified" />
+          <output name="11" label="FO 9 (+5v)" connection="unspecified" />
+          <size length="32" width="16" height="6" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo MX640" mfg="Zimo" type="locomotive" file="Zimo_MX640_v4dot17.xml">
+        <model model="MX640 version 4.17" lowVersionID="4" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3" connection="unspecified" />
+          <output name="6" label="FO 4" connection="unspecified" />
+          <output name="7" label="FO 5 (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 (+5v)" connection="unspecified" />
+          <output name="9" label="FO 7 (+5v)" connection="unspecified" />
+          <output name="10" label="FO 8 (+5v)" connection="unspecified" />
+          <output name="11" label="FO 9 (+5v)" connection="unspecified" />
+          <size length="32" width="16" height="6" units="mm" />
+        </model>
+      </family>
       <family name="Zimo MX65" mfg="Zimo" type="locomotive" file="Zimo_MX65.xml">
         <model model="MX65L/N" lowVersionID="20" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 5 A)" maxTotalCurrent="2 A" numOuts="2" numFns="10" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="45" width="25" height="12" units="mm" />
@@ -4121,7 +4470,7 @@
           <output name="8" label="on L version" connection="unspecified" />
         </model>
       </family>
-      <family name="Zimo MX69 MX690" mfg="Zimo" type="locomotive" file="Zimo_MX69MX690.xml">
+      <family name="Zimo MX69 MX690" mfg="Zimo" lowVersionID="1" highVersionID="30" type="locomotive" file="Zimo_MX69MX690.xml">
         <model model="MX69L" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 8 A)" maxTotalCurrent="2 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="55" width="26" height="14" units="mm" />
           <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
