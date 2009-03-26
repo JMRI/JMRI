@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -67,6 +67,11 @@
 # turning it into real code as a next step.
 # http://railroadmuseum.net/
 #
+# 3/20/2009 - Change to deal with overlaping events
+#   Thanks to ConrailBill for spotting where I didn't protect against that
+#   and his suggestions to provide a simple fix for this. This will also be
+#   part of RobotThrottle2.
+#
 # Portions of this script are taken from a number of scripts
 # by Bob Jacobsen
 #
@@ -107,6 +112,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     redSignalIcon = None
     darkSignalIcon = None
     unknownSignalIcon = None
+    didWeMoveCounter = 0
 
     def init(self):
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -126,12 +132,35 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
     def handle(self):
         #self.msgText("handle begin:.\n")
-        self.didWeMove(None)
+        #self.didWeMove(None)
         #self.msgText("handle done\n")
         self.waitMsec(5000)
         return 0 #continue if 1, run once if 0
     
+    # Isolate the callback handling from the didWeMove processing
+    #	this makes dealing with multiple events simpler
+    def callBackFromChange(self, event) :
+        #self.msgText("callBackFromChange...start routine...counter = " + self.didWeMoveCounter.toString() + " ...incrementing counter\n")
+        self.didWeMoveCounter = self.didWeMoveCounter + 1
+        if (self.didWeMoveCounter == 1) :
+           #self.msgText("callbackFromChange - counter = 1 ... calling didWeMoveCounterCheck routine\n")
+           self.didWeMoveCounterCheck(None)
+        return
+        
+    # This handles tracking how many overlapping events happened
+    #	and insures we run the didWeMove the right number of times
+    def didWeMoveCounterCheck(self, event) :
+        #self.msgText("didWeMoveCounterCheck: start of routine...counter = " + self.didWeMoveCounter.toString() + "\n")
+        while (self.didWeMoveCounter > 0) :
+             #self.msgText("didWeMoveCounterCheck: non-zero counter - calling didWeMove\n")
+             self.didWeMove(None)
+             self.didWeMoveCounter = self.didWeMoveCounter - 1
+             #self.msgText("didWeMoveCounterCheck: decremented counter down to " + self.didWeMoveCounter.toString() + "\n")
+        #self.msgText("didWeMoveCounterCheck: end of routine\n")
+        return
+ 
     # figure out if we moved and where
+    #	this is the real core of the beast
     def didWeMove(self, event) :
         if (self.isRunning == False) :
             #self.msgText("didWeMove called while isRunning was false\n")
@@ -221,7 +250,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.isInList(bk, self.listenerBlocks) == False) :
             # isn't in list, setup listener and add to list
             bl = self.BlockListener()
-            bl.setCallBack(self.didWeMove)
+            bl.setCallBack(self.callBackFromChange)
             bk.addPropertyChangeListener(bl)
             self.listenerBlocks.append(bk)
             self.listenerBlockListeners.append(bl)
@@ -232,13 +261,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.isInList(sig, self.listenerSignals) == False) :
             # isn't in list, setup listener and add to list
             sl = self.SignalListener()
-            sl.setCallBack(self.didWeMove)
+            sl.setCallBack(self.callBackFromChange)
             sig.addPropertyChangeListener(sl)
             self.listenerSignals.append(sig)
             self.listenerSignalListeners.append(sl)
         return
 
     # release all listeners
+    #	important to reduce the load when using multiple throttles
     def releaseAllListeners(self, event) :
         i = 0
         while(len(self.listenerBlockListeners) > i) :
@@ -364,7 +394,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         #self.msgText("Found signal " + sig.getUserName() + " displaying: " + rep + "\n")
         return rep
         
-    # convert signal appearance to english
+    # convert signal appearance to icon
     def cvtAppearanceIcon(self, sig) :
         rep = self.darkSignalIcon
         if (sig.getLit()) :
@@ -406,6 +436,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("comparing lists: all of b in a\n")
         return doesMatchA and doesMatchB
     
+    # handle shifting to slow speed
     def doSlow(self):
         if (self.currentThrottle != None) :
             i = int(self.locoSlow.text) * 0.01
@@ -414,6 +445,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.locoSpeed.text = self.locoSlow.text
         return
         
+    # handle shifting to fast speed
     def doFast(self):
         if (self.currentThrottle != None) :
             i = int(self.locoFast.text) * .01
@@ -447,6 +479,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     # enable the button when OK
+    #	this is the real test that we have all the right data and
+    #	conditions to allow us to start
     def whenLocoChanged(self, event) : 
         # keep track of whether both fields have been changed
         if (self.isRunning) :
@@ -476,11 +510,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
             
     # handle the horn button on
+    #	this should look for a mouse in type event
     def whenLocoHornOn(self, event) :
         self.whenLocoHorn(event, True)
         return
 
     # handle the horn button off
+    #	this should look for a mouse out (focus lost) type event
     def whenLocoHornOff(self, event) :
         self.whenLocoHorn(event, False)
         return
@@ -519,7 +555,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             foundStart = True
         return foundStart
         
-    # define what button does when clicked and attach that routine to the button
+    # define what button does when clicked and attach
+	#	that routine to the button
     def whenStartButtonClicked(self, event) :
         self.msgText("Run started\n")     # add text
         if (self.testIfBlockNameValid(self.blockStart.text) == False) :
@@ -542,12 +579,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.stopButton.setEnabled(True)
                 self.startButton.setEnabled(False)
                 self.isRunning = True
-                self.didWeMove(None)
+                self.didWeMoveCounter = 1
+                self.didWeMoveCounterCheck(None)
                 if (self.isRunning) :
                     self.msgText("Starting current:" + self.currentBlock.getUserName() + "\n")
         self.msgText("whenStartButtonClicked, done\n")     # add text
         return
             
+    # handle user requested stopping
     def whenStopButtonClicked(self, event):   
         self.msgText("Slow loco to stop\n")     # add text
         self.doStop()
@@ -555,6 +594,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.stopButton.setEnabled(False)
         self.startButton.setEnabled(True)
         self.isRunning = False
+        self.didWeMoveCounter = 0
         self.whenLocoChanged(event)
         return
     
@@ -654,6 +694,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
     
     # setup the user interface
+    #	all the GUI stuff
     def setup(self) :
         # start to initialise the GUI
         # create buttons and define action
