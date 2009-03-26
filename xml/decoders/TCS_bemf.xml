@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.13 2009-03-10 02:27:42 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.14 2009-03-26 03:40:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,10 +18,12 @@
     <version author="Bill Chown" version="2" lastUpdated="20090111"/>
     <version author="Marc Fournier" version="3" lastUpdated="20090125"/>
     <version author="Jim Betz" version="3" lastUpdated="20090211"/>
+    <version author="Marc Fournier" version="4" lastUpdated="20090125"/>
 <!-- V1: - Created from TCS_X -->
 <!-- V2: - Corrected BEMF capabilities, added CN and CN-GP models, comments and tooltips expanded -->
 <!-- V3: - Corrected momentum rate 2/3 CV errors, Additional decoders, Additional tooltips, Corrected CV3/CV4 error -->
 <!-- V4: - updated version number from 46 to 47 -->
+<!-- V4.1- Added decoder K1D4 to file -->
     <decoder>
         <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="47">
             <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
@@ -101,6 +103,16 @@
                 <output name="Ditch"/>
                 <output name="Motor"/>
             </model>
+		<model model="K1D4" numOuts="4" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+                <size length="2.7" width="0.4" height="0.0" units="inches"/>
+                <output name="1" label="White" connection="plug" maxcurrent="15 mA"/>
+                <output name="2" label="Yellow" connection="plug" maxcurrent="15 mA"/>
+                <output name="3" label="Green" connection="solder" maxcurrent="15 mA"/>
+                <output name="4" label="Purple" connection="wire" maxcurrent="15 mA"/>                
+		    <output name="Dim"/>
+                <output name="Ditch"/>
+                <output name="Motor"/>
+            </model>
             <model model="K3D3" numOuts="3" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
                 <size length="2.860" width="0.680" height="0.145" units="inches"/>
                 <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
@@ -110,6 +122,7 @@
                 <output name="Ditch"/>
                 <output name="Motor"/>
             </model>
+		
             <model model="M1" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N">
                 <size length="0.57" width="0.355" height="0.132" units="inches"/>
                 <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
@@ -1424,5 +1437,7 @@
         </column>
     </pane>
 </decoder-config>
+
+ 	  	 
 
  	  	 
