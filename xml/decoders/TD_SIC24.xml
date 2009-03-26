@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TD_SIC24.xml,v 1.6 2009-02-13 18:55:01 ken_c Exp $ -->
+<!-- $Id: TD_SIC24.xml,v 1.7 2009-03-26 05:28:20 jacobsen Exp $ -->
 <decoder-config>
 		<version author="td@teamdigital1.com" 
 					version="1.2" lastUpdated="20070709"/>
@@ -1657,7 +1657,7 @@
 				tooltip="The manufacturer's ID number (read only)" />
 			<display item="Decoder Version"
 				tooltip="The decoder version number (read only)" />
-			<display item="Product number"
+			<display item="Product Number"
 				tooltip="The decoder product number (if used) (read only)" />
 	</column>
 </pane>

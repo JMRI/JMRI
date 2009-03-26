@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.9 2009-03-21 21:44:59 jacobsen Exp $ -->
+<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.10 2009-03-26 05:28:20 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -4834,7 +4834,7 @@
 	<display item="Decoder Version" />
     <display item="CV56.254.6"/>
     <display item="CV56.254.8"/>
-	<display item="Product number" />
+	<display item="Product Number" />
     <display item="Sound Set"/>
     <display item="Sound Set Number"/>
 	<display item="Hardware Profile"/>
