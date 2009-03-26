@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.15 2009-03-26 03:44:35 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.16 2009-03-26 03:58:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -250,6 +250,15 @@
                 <output name="Dim"/>
                 <output name="Ditch"/>
                 <output name="Motor"/>
+            </model>
+            <model model="Z2"   numOuts="2" numFns="14"
+                maxMotorCurrent="1A (peak=2A)" formFactor="Z"
+                comment="Fits Z thru light duty HO">
+                <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+                <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+                <output name="Dim" />
+                <output name="Ditch" />
+                <output name="Motor" />
             </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes"/>
