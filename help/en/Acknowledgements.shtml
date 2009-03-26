@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.73 2009-03-25 06:00:13 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.74 2009-03-26 04:04:09 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -57,7 +57,8 @@
 	made important contributions to the base code, added Lenz XPA support,
 	wrote the Lenz feedback code, wrote the Lenz consisting support,
 	and in general has made more contributions than can be counted.
-	<li>Jim Betz provided a version number for TCS decoders
+	<li>Jim Betz provided a version number for TCS decoders and
+	a model definition for the Z2 decoder.
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
