@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.84 $)
+distribution.  ($Revision: 1.85 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -23,7 +23,7 @@ You also need to have installed:
     
 Make sure everything is up-to-date:
 
-( ) If it's a new year, update copyright dates:
+( ) If it's a new year, update copyright dates (done for 2009):
     * build.xml (2) in the javadoc instructions
     * site/Copyright.html
     * decoder index master
@@ -99,6 +99,8 @@ Make sure everything is up-to-date:
     of the file that's actually being released, so don't do it early!
     Update the comment at the top of the file. Also, copy to the 
     (pre-existing) next production DTD.
+    
+    Check proper value in jmri/configurexml/ConfigXmlManager.java (line 33)
     
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
@@ -190,7 +192,10 @@ change that (temporarily) for a production release
     
     echo put JMRI.2.4.dmg | sftp jacobsen@frs.sf.net:uploads
     echo put JMRI.2.4.tgz | sftp jacobsen@frs.sf.net:uploads
+
+( ) Test Windows:
     
+    ant -f dist.xml -Drelease=Release-2-5-1 -Dnumber=2.5.1 x-rel-installer-windows
 
 ( ) Any time after release1 is complete, start building the Windows installer.
 	
@@ -274,6 +279,10 @@ The complete list of changes is in the release note at http://jmri.sf.net/releas
 
 ( ) Commit site and update on server
 	
+( ) File copyright registration
+
+    https://eco.copyright.gov/eService_enu/   (Firefox only!)
+
 ( ) Mail announcement to jmriusers@yahoogroups.com
     Subject is "Test version 2.4 of JMRI/DecoderPro is available for download"
 

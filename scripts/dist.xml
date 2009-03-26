@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.35 $ -->
+<!-- Revision $Revision: 1.36 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -146,9 +146,6 @@
     
 </target>
 
-<target name="x-rel-create-osx-test" depends="">
-</target>
-
 <target name="x-rel-create-osx" depends=""
  					description="update files in master MacOSX directory">
     <echo message="update files in master MacOSX directory" />
@@ -257,6 +254,16 @@
     <delete dir="Linux/JMRI/scripts" />
 </target>
 
+<target name="x-rel-installer-windows" depends=""
+ 					description="create MacOS X archive">
+	<!-- The following steps build the distribution archive -->
+    <!-- using NSIS tools -->
+    <echo message="create Windows installer"/>
+    <exec executable="/opt/local/bin/makensis" dir="Windows/JMRI">
+        <arg line="InstallJMRI.nsi"/>
+    </exec>
+</target>
+
 <target name="x-rel-installer-osx" depends=""
  					description="create MacOS X archive">
 	<!-- The following steps build the distribution archive -->
@@ -268,18 +275,30 @@
 </target>
 
 <target name="x-rel-installer-linux" depends=""
- 					description="create MacOS X archive">
+ 					description="create linux archive">
 	<!-- The following steps build the distribution archive -->
     <!-- using MacOSX tools -->
     <echo message="create Linux archive"/>
     <tar compression="gzip" 
-        destfile="JMRI.${number}.tgz"
-        basedir="Linux"
-        includes="JMRI/**" />
-        
-    <!-- <exec executable="open">                 -->
-    <!-- 	<arg line="-a DropTar Linux/JMRI" />  -->
-    <!-- </exec>                                  -->
+        destfile="JMRI.${number}.tgz" >
+            <tarfileset dir="Linux">
+                <include name="JMRI/**" />
+                <exclude name="JMRI/DecoderPro" />
+                <exclude name="JMRI/PanelPro" />
+                <exclude name="JMRI/LocoTools" />
+                <exclude name="JMRI/JmriDemo" />
+                <exclude name="JMRI/InstallTest" />
+                <exclude name="JMRI/cornwall" />
+            </tarfileset>
+            <tarfileset  dir="Linux" filemode="755">
+                <include name="JMRI/DecoderPro" />
+                <include name="JMRI/PanelPro" />
+                <include name="JMRI/LocoTools" />
+                <include name="JMRI/JmriDemo" />
+                <include name="JMRI/InstallTest" />
+                <include name="JMRI/cornwall" />
+            </tarfileset>
+    </tar>
 </target>
  
  <target name="x-rel-upload-mac-linux" depends=""
