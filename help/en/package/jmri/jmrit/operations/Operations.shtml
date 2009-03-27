@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.37 2009-03-23 15:25:04 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.38 2009-03-27 17:41:02 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Help NCE Edit Macro ">
+<META NAME="keywords" CONTENT="JMRI Help Operations Setup Cars Engines Trains Routes Locations">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -90,6 +90,8 @@ to load the Settings panel. The Setting panel has fields and buttons to
 allow you to enter your railroad name, the directions your train's
 travel, the scale that you are using, printer and icon controls, and the
 ability to create backups and restore files for operations.
+<P>
+<img src="images/Settings.jpg">
 
 <H3>Railroad Name</H3>
 
@@ -235,7 +237,12 @@ Locations are places on your railroad that trains visit to pickup or
 drop off cars and engines. Locations can be cities, towns, or just
 places where trains need to work cars. Select
 "Tools->Operations->Locations" to add or edit the locations on your
-railroad. To add a location, press the "Add" button located on the
+railroad. 
+
+<P>
+<img src="images/Locations.jpg">
+<P>
+To add a location, press the "Add" button located on the
 bottom of the "Locations" panel. A new panel should appear. In the "Add
 Location" panel, enter the name of the location in box across from
 "Name". The location name must be unique; the program will not allow two
@@ -478,6 +485,10 @@ entire length of the kernel is used to determine if the cars in the
 kernel will fit. Note that the program also includes space for the car's
 couplers when calculating the length of a kernel.
 
+<P>
+<img src="images/Cars.jpg">
+<P>
+
 <H3>Importing Cars from a File</H3>
 
 If you already have a list of cars in a database, you can import the
@@ -655,6 +666,10 @@ used by the program to determine where engines are picked up and or
 stored at the various locations on your layout. Some of default engine
 types are electric, diesel, gas turbine, and steam.
 
+<P>
+<img src="images/Engines.jpg">
+<P>
+
 <H3>Import Engines</H3>
 
 If you already have a list of engines in your JMRI roster or in a
@@ -767,7 +782,12 @@ menu.
 A route is a list of locations that a train will visit. Later you can
 decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
-"Tools->Operations->Routes". Then press the "Add" button located at the
+"Tools->Operations->Routes". 
+
+<P>
+<img src="images/Routes.jpg">
+<P>
+Then press the "Add" button located at the
 bottom of the page. Enter the route name. Each route must have unique
 name. Then press the "Add Route" button located at the bottom of the
 panel. Now select the location the train will depart by selecting the
@@ -820,6 +840,9 @@ want to copy. If you want the route reversed check the "Invert" box.
 
 Now that we've created our routes we need trains to move cars! Create a
 train by selecting "Tools->Operations->Trains" from the top level menu.
+<P>
+<img src="images/Trains.jpg">
+<P>
 Press the "Add" button to create a train. Enter the train's name and
 optional description, and then press the "Add Train" button. Both will
 show up on the train's manifest. The train's name will also show up on
