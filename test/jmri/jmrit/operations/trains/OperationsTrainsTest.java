@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2230,8 +2230,403 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c12 load from staging terminated", "E", c12.getLoad());
 
 	}
+	
+	public void testInterchange(){
+		TrainManager tmanager = TrainManager.instance();
+		RouteManager rmanager = RouteManager.instance();
+		LocationManager lmanager = LocationManager.instance();
+		CarManager cmanager = CarManager.instance();
+		CarTypes ct = CarTypes.instance();
+		
+		Setup.setTrainLength(500);
+		ct.addName("Gon");
+		ct.addName("Coil Car");		
+		
+		// Create locations used
+		Location loc1;
+		loc1 = lmanager.newLocation("Old Westford");
+		loc1.setTrainDirections(DIRECTION_ALL);	
+		loc1.addTypeName("Flat Car");
+		loc1.addTypeName("Boxcar");
+		loc1.addTypeName("Gon");
+		loc1.addTypeName("Coil Car");
+		
+		Location loc2;
+		loc2 = lmanager.newLocation("Old Chelmsford");
+		loc2.setTrainDirections(DIRECTION_ALL);	
+		loc2.addTypeName("Flat Car");
+		loc2.addTypeName("Boxcar");
+		loc2.addTypeName("Gon");
+		loc2.addTypeName("Coil Car");
+		
+		Location loc3;
+		loc3 = lmanager.newLocation("Old Bedford");
+		loc3.setTrainDirections(DIRECTION_ALL);	
+		loc3.addTypeName("Flat Car");
+		loc3.addTypeName("Boxcar");
+		loc3.addTypeName("Gon");
+		loc3.addTypeName("Coil Car");
+		
+		Track loc1trk1;
+		loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
+		loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
+		loc1trk1.setLength(900);
+		loc1trk1.addTypeName("Flat Car");
+		loc1trk1.addTypeName("Boxcar");
+		loc1trk1.addTypeName("Gon");
+		loc1trk1.addTypeName("Coil Car");
+		
+		Track loc1trk2;
+		loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
+		loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
+		loc1trk2.setLength(500);
+		loc1trk2.addTypeName("Flat Car");
+		loc1trk2.addTypeName("Boxcar");
+		loc1trk2.addTypeName("Gon");
+		
+		Track loc2trk1;
+		loc2trk1 = loc2.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
+		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
+		loc2trk1.setLength(900);
+		loc2trk1.addTypeName("Flat Car");
+		loc2trk1.addTypeName("Boxcar");
+		loc2trk1.addTypeName("Gon");
 
-	// test location Xml create support
+		Track loc2trk2;
+		loc2trk2 = loc2.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
+		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
+		loc2trk2.setLength(900);
+		loc2trk2.addTypeName("Flat Car");
+		loc2trk2.addTypeName("Boxcar");
+		loc2trk2.addTypeName("Gon");
+		loc2trk2.addTypeName("Coil Car");
+		
+		Track loc2trk3;
+		loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
+		loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
+		loc2trk3.setLength(900);
+		loc2trk3.addTypeName("Flat Car");
+		loc2trk3.addTypeName("Boxcar");
+		
+		Track loc2trk4;
+		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
+		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
+		loc2trk4.setLength(900);
+		loc2trk4.addTypeName("Flat Car");
+		loc2trk4.addTypeName("Boxcar");
+		loc2trk4.addTypeName("Coil Car");
+		
+		loc2trk3.setMoves(20);	// bias interchange tracks
+		loc2trk4.setMoves(20);
+		
+		Track loc3trk1;
+		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.YARD);
+		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
+		loc3trk1.setLength(900);
+		loc3trk1.addTypeName("Flat Car");
+		loc3trk1.addTypeName("Boxcar");
+		loc3trk1.addTypeName("Gon");
+		loc3trk1.addTypeName("Coil Car");
+		
+		// Create route with 3 location
+		Route rte1;
+		rte1 = rmanager.newRoute("Route 1 East");
+		RouteLocation r1l1 = rte1.addLocation(loc1);
+		r1l1.setTrainDirection(RouteLocation.EAST);
+		r1l1.setMaxCarMoves(4);
+		RouteLocation r1l2 = rte1.addLocation(loc2);
+		r1l2.setTrainDirection(RouteLocation.EAST);
+		r1l2.setMaxCarMoves(3);
+		RouteLocation r1l3 = rte1.addLocation(loc3);
+		r1l3.setTrainDirection(RouteLocation.EAST);
+		r1l3.setMaxCarMoves(3);
+		
+		// Create route with 3 location
+		Route rte2;
+		rte2 = rmanager.newRoute("Route 2 East");
+		RouteLocation r2l1 = rte2.addLocation(loc1);
+		r2l1.setTrainDirection(RouteLocation.EAST);
+		r2l1.setMaxCarMoves(2);
+		RouteLocation r2l2 = rte2.addLocation(loc2);
+		r2l2.setTrainDirection(RouteLocation.EAST);
+		r2l2.setMaxCarMoves(6);
+		RouteLocation r2l3 = rte2.addLocation(loc3);
+		r2l3.setTrainDirection(RouteLocation.EAST);
+		r2l3.setMaxCarMoves(6);
+		
+		// Create trains
+		Train train1;
+		train1 = tmanager.newTrain("Train 1 Old Westford to Old Bedford");
+		train1.setRoute(rte1);
+		train1.addTypeName("Boxcar");
+		train1.addTypeName("Flat Car");
+		train1.addTypeName("Gon");
+		train1.addTypeName("Coil Car");
+		
+		Train train2;
+		train2 = tmanager.newTrain("Train 2 Old Westford to Old Bedford");
+		train2.setRoute(rte1);
+		train2.addTypeName("Boxcar");
+		train2.addTypeName("Flat Car");
+		train2.addTypeName("Gon");
+		train2.addTypeName("Coil Car");
+		
+		Train train3;
+		train3 = tmanager.newTrain("Train 3 Old Westford to Old Bedford");
+		train3.setRoute(rte1);
+		train3.addTypeName("Boxcar");
+		train3.addTypeName("Flat Car");
+		train3.addTypeName("Gon");
+		train3.addTypeName("Coil Car");
+		
+		// Set up 7 box cars and 2 flat cars
+		Car c1 = new Car("BM", "Q1");
+		c1.setType("Gon");
+		c1.setLength("90");
+		c1.setMoves(9);
+		c1.setLoad("L");
+		cmanager.register(c1);
+
+		Car c2 = new Car("UP", "Q2");
+		c2.setType("Boxcar");
+		c2.setLength("80");
+		c2.setMoves(8);		
+		cmanager.register(c2);
+
+		Car c3 = new Car("XP", "Q3");
+		c3.setType("Flat Car");
+		c3.setLength("70");
+		c3.setMoves(7);						
+		cmanager.register(c3);
+
+		Car c4 = new Car("PU", "Q4");
+		c4.setType("Boxcar");
+		c4.setLength("60");
+		c4.setMoves(6);			
+		cmanager.register(c4);
+
+		Car c5 = new Car("UP", "Q5");
+		c5.setType("Gon");
+		c5.setLength("50");
+		c5.setMoves(5);	
+		c5.setLoad("L");
+		cmanager.register(c5);
+
+		Car c6 = new Car("CP", "Q6");
+		c6.setType("Boxcar");
+		c6.setLength("40");
+		c6.setMoves(4);	
+		c6.setLoad("L");
+		cmanager.register(c6);
+		
+		Car c7 = new Car("UP", "Q7");
+		c7.setType("Boxcar");
+		c7.setLength("50");
+		c7.setMoves(3);	
+		cmanager.register(c7);
+		
+		Car c8 = new Car("XP", "Q8");
+		c8.setType("Gon");
+		c8.setLength("60");
+		c8.setMoves(2);			
+		cmanager.register(c8);
+		
+		Car c9 = new Car("XP", "Q9");
+		c9.setType("Flat Car");
+		c9.setLength("90");
+		c9.setMoves(1);
+		c9.setLoad("L");
+		cmanager.register(c9);
+		
+		Car c10 = new Car("CP", "Q10");
+		c10.setType("Coil Car");
+		c10.setLength("40");
+		c10.setLoad("L");
+		cmanager.register(c10);
+		
+		Car c11 = new Car("CP", "Q11");
+		c11.setType("Coil Car");
+		c11.setLength("40");
+		c11.setLoad("Coils");
+		cmanager.register(c11);
+		
+		Car c12 = new Car("CP", "Q12");
+		c12.setType("Coil Car");
+		c12.setLength("40");
+		c12.setMoves(1);
+		cmanager.register(c12);
+		
+		// place the cars in the yards
+		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		
+		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk2));	
+		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk2));
+		
+		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c12", Car.OKAY, c12.setLocation(loc1, loc1trk1));
+		
+		train1.build(false);
+		train2.build(false);
+		
+		// now check to where cars are going to be delivered
+		Assert.assertEquals("c9 destination", "Chelmsford Interchange 1", c9.getDestinationTrackName());
+		Assert.assertEquals("c10 destination", "Bedford Yard 1", c10.getDestinationTrackName());
+		Assert.assertEquals("c11 destination", "Chelmsford Interchange 2", c11.getDestinationTrackName());
+		Assert.assertEquals("c12 destination", "Bedford Yard 1", c12.getDestinationTrackName());
+		
+		Assert.assertEquals("c5 destination", "Chelmsford Interchange 2", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination", "Bedford Yard 1", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination", "Chelmsford Interchange 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination", "Bedford Yard 1", c8.getDestinationTrackName());
+		
+		// now check which trains
+		Assert.assertEquals("c9 train", train1, c9.getTrain());
+		Assert.assertEquals("c10 train", train1, c10.getTrain());
+		Assert.assertEquals("c11 train", train1, c11.getTrain());
+		Assert.assertEquals("c12 train", train1, c12.getTrain());
+		
+		Assert.assertEquals("c5 train", train2, c5.getTrain());
+		Assert.assertEquals("c6 train", train2, c6.getTrain());
+		Assert.assertEquals("c7 train", train2, c7.getTrain());
+		Assert.assertEquals("c8 train", train2, c8.getTrain());
+		
+		// try restricting interchange 1 to train1 and interchange 2 to train2
+		
+		loc2trk1.setDropOption(Track.TRAINS);
+		loc2trk1.addDropId(train1.getId());
+		loc2trk2.setDropOption(Track.TRAINS);
+		loc2trk2.addDropId(train2.getId());
+		
+		train1.build(false);
+		train2.build(false);
+		
+		// now check to where cars are going to be delivered
+		Assert.assertEquals("c9 destination 2", "Chelmsford Interchange 1", c9.getDestinationTrackName());
+		Assert.assertEquals("c10 destination 2", "Bedford Yard 1", c10.getDestinationTrackName());
+		Assert.assertEquals("c11 destination 2", "Bedford Yard 1", c11.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 2", "Chelmsford Freight 4", c12.getDestinationTrackName());
+
+		Assert.assertEquals("c4 destination 2", "Chelmsford Interchange 2", c4.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 2", "Bedford Yard 1", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 2", "Chelmsford Interchange 2", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 2", "Bedford Yard 1", c8.getDestinationTrackName());
+
+		// now check which trains
+		Assert.assertEquals("c9 train", train1, c9.getTrain());
+		Assert.assertEquals("c10 train", train1, c10.getTrain());
+		Assert.assertEquals("c11 train", train1, c11.getTrain());
+		Assert.assertEquals("c12 train", train1, c12.getTrain());
+		
+		Assert.assertEquals("c4 train", train2, c4.getTrain());
+		Assert.assertEquals("c6 train", train2, c6.getTrain());
+		Assert.assertEquals("c7 train", train2, c7.getTrain());
+		Assert.assertEquals("c8 train", train2, c8.getTrain());
+
+		// move and terminate
+		train1.move();
+		train1.move();
+		train1.move();
+		train2.move();
+		train2.move();
+		train2.move();
+		
+		r1l1.setMaxCarMoves(2);
+		r1l2.setMaxCarMoves(6);
+		r1l3.setMaxCarMoves(6);
+		train3.build(false);	// note that train3 uses rte1, should not pickup cars at interchange
+		
+		Assert.assertEquals("c1 destination 3", "", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 3", "Chelmsford Yard 3", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 3", "", c4.getDestinationTrackName());
+		Assert.assertEquals("c5 destination 3", "Bedford Yard 1", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 3", "", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 3", "", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 3", "", c8.getDestinationTrackName());
+		Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 3", "Bedford Yard 1", c12.getDestinationTrackName());
+		
+		// Change the route to 2, should be able to pickup c4, c7, c9
+		train3.reset();
+		train3.setRoute(rte2);
+		train3.build(false);
+		
+		Assert.assertEquals("c1 destination 4", "", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 4", "Chelmsford Yard 3", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 4", "", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 4", "Bedford Yard 1", c4.getDestinationTrackName());
+		Assert.assertEquals("c5 destination 4", "Bedford Yard 1", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 4", "", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 4", "Bedford Yard 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 4", "", c8.getDestinationTrackName());
+		Assert.assertEquals("c9 destination 4", "Bedford Yard 1", c9.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 4", "Bedford Yard 1", c12.getDestinationTrackName());
+
+		// Change back to route to 1, should be able to pickup c4, c7
+		train3.reset();
+		train3.setRoute(rte1);
+		loc2trk2.setPickupOption(Track.TRAINS);
+		loc2trk2.addPickupId(train3.getId());
+		train3.build(false);
+		
+		Assert.assertEquals("c1 destination 5", "", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 5", "", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 5", "Chelmsford Freight 4", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 5", "Bedford Yard 1", c4.getDestinationTrackName());
+		Assert.assertEquals("c5 destination 5", "Bedford Yard 1", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 5", "", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 5", "Bedford Yard 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 5", "", c8.getDestinationTrackName());
+		Assert.assertEquals("c9 destination 5", "", c9.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 5", "Bedford Yard 1", c12.getDestinationTrackName());
+
+		// Change back to route to 1, should be able to pickup c4, c7, and c9
+		train3.reset();
+		train3.setRoute(rte1);
+		loc2trk1.setPickupOption(Track.ROUTES);
+		loc2trk1.addPickupId(rte1.getId());
+		train3.build(false);
+		
+		Assert.assertEquals("c1 destination 6", "Bedford Yard 1", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 6", "Chelmsford Yard 3", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 6", "", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 6", "Bedford Yard 1", c4.getDestinationTrackName());
+		Assert.assertEquals("c5 destination 6", "", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 6", "", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 6", "Bedford Yard 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 6", "", c8.getDestinationTrackName());
+		Assert.assertEquals("c9 destination 6", "Bedford Yard 1", c9.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 6", "Bedford Yard 1", c12.getDestinationTrackName());
+
+		// now allow train 3 to drop
+		train3.reset();
+		loc2trk1.setDropOption(Track.ROUTES);
+		loc2trk1.addDropId(rte1.getId());
+		train3.build(false);
+		
+		Assert.assertEquals("c1 destination 7", "", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 7", "", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 7", "Chelmsford Interchange 1", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 7", "Bedford Yard 1", c4.getDestinationTrackName());
+		Assert.assertEquals("c5 destination 7", "Bedford Yard 1", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 7", "", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 7", "Bedford Yard 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 7", "", c8.getDestinationTrackName());
+		Assert.assertEquals("c9 destination 7", "Bedford Yard 1", c9.getDestinationTrackName());
+		Assert.assertEquals("c12 destination 7", "Bedford Yard 1", c12.getDestinationTrackName());
+
+		train3.reset();
+		
+	}
+
+	// test location Xml create suppor
 	public void testXMLCreate() throws Exception {
 
 		TrainManager manager = TrainManager.instance();
