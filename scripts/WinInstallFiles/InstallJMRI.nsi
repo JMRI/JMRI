@@ -19,7 +19,7 @@
 ; - Compilation instructions
 ; -------------------------------------------------------------------------
 ; - For the default setting of "SRCDIR", place this file in directory
-; - 'Distribution\Windows' prior to building the distribution .exe file.
+; - 'Distribution\Windows\JMRI' prior to building the distribution .exe file.
 ; -
 ; - To build the resulting .exe file use one of:
 ; -   makensis.exe  (command-line)
@@ -101,7 +101,7 @@
 !define INST_VER  "0.1.2.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 #!define SRCDIR    "Z:\JMRI"                     ; Path to head of sources
-!define SRCDIR    "JMRI"                        ; Path to head of sources
+!define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
 
 ; -------------------------------------------------------------------------
@@ -174,7 +174,7 @@ AutoCloseWindow False ; do not automatically close when finished
 ; -------------------------------------------------------------------------
 Name "${APP} ${JMRI_VER}"
 Caption "${APP} ${JMRI_VER} Setup"
-OutFile "${PNAME}.exe"
+OutFile "../../${PNAME}.exe"
 
 ; -------------------------------------------------------------------------
 ; - Interface Settings

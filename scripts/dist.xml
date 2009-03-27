@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.36 $ -->
+<!-- Revision $Revision: 1.37 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -45,14 +45,15 @@
 
     <antcall target="x-rel-base-build" />
     <antcall target="x-rel-create-windows" />
+    <antcall target="x-rel-installer-windows" />
     <antcall target="x-rel-create-osx" />
-    <antcall target="x-rel-create-linux" />
     <antcall target="x-rel-installer-osx" />
+    <antcall target="x-rel-create-linux" />
     <antcall target="x-rel-installer-linux" />
 
-	<echo message="**************************"/>
-	<echo message="build the Windows .exe now"/>
-	<echo message="**************************"/>
+	<echo message="*******************************"/>
+	<echo message=" Step 1 done - OK to do step 2 "/>
+	<echo message="*******************************"/>
 
  </target>
 
@@ -260,7 +261,7 @@
     <!-- using NSIS tools -->
     <echo message="create Windows installer"/>
     <exec executable="/opt/local/bin/makensis" dir="Windows/JMRI">
-        <arg line="InstallJMRI.nsi"/>
+        <arg line="-V2 InstallJMRI.nsi"/>
     </exec>
 </target>
 
