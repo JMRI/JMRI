@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.34 2009-03-27 05:31:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.35 2009-03-27 21:05:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.5.2 release
       </h2>
 
-	<p>Date: MMM DD, 2009</p>
+	<p>Date: March DD, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.5.2 of JMRI/DecoderPro is available for download.
 
@@ -47,9 +47,10 @@ It contains
 many new features, including:
 
 <ul>
-	<LI>
-	<LI>
-	<LI>
+	<LI>The new DecoderPro manual (in the program help pages)
+	<LI>Many new and improved decoder definitions for DecoderPro
+	<LI>Improved startup and install procedures on Windows
+	<LI>Improvements to Logix, Routes and other tools
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -79,6 +80,10 @@ want to move back to a previous version.
 <p>
 There have been extensive changes to the way JMRI installs and starts on Windows.
 If you have custom shortcuts, you may have to revisit them.
+
+<p>
+The downloads are significantly larger due to more text and images
+in the help pages, especially the updated manual.
 
 <h3>Warnings from older versions:</h3>
 
