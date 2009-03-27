@@ -36,7 +36,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -98,7 +98,11 @@ import jmri.AbstractTurnout;
          // schedule SWREQ for closed/thrown off
          meterTimer.schedule(new java.util.TimerTask(){
             public void run() {
-                sendSetOffMessage();
+                try {
+                    sendSetOffMessage();
+                } catch (Exception e) {
+                    log.error("Exception occured while sending delayed off to turnout: "+e);
+                }
             }
          }, METERINTERVAL);
      }
