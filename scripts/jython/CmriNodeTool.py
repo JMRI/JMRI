@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 ##
 
 import jmri
@@ -17,13 +17,14 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
     nodeAddrList = []
     checkYList = []
     scriptFrame = None
+    maxNodeAddr = 128
 
     def init(self) :
         print "init()"
         i = 0
-        while i < 12 :
+        while i < maxNodeAddr :
             x = (i * 1000) + 1
-            txt = "CS" + x.toString()
+            txt = "CT" + x.toString()
             print "looking for node " + i.toString() + " using name " + txt
             node = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName(txt)
             if (node != None) :
@@ -91,7 +92,7 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
 # create one of these
 print "Creating CMRI Node Tool"
 a = CmriNodeTool()
-print "Calling init() for CMRI Node Tool"
-a.init()
-print "Calling setup() for CMRI Node Tool"
+#print "Calling init() for CMRI Node Tool"
+#a.init()
+#print "Calling setup() for CMRI Node Tool"
 a.setup()
