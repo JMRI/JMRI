@@ -50,6 +50,7 @@
 	    </UL>
 	<li>Development Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri2.5.2.shtml">JMRI 2.5.2</a>
 	    <LI><A href="../releasenotes/jmri2.5.1.shtml">JMRI 2.5.1</a>
 	    <LI><A href="../releasenotes/jmri2.3.8.shtml">JMRI 2.3.8</a>
 	    <LI><A href="../releasenotes/jmri2.3.7.shtml">JMRI 2.3.7</a>
@@ -95,7 +96,7 @@
 	    </UL>
 	<li>(Tentative) Next Version</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri2.5.2.shtml">JMRI 2.5.2</a>
+	    <LI><A href="../releasenotes/jmri2.5.3.shtml">JMRI 2.5.3</a>
         </ul>
 	</ul>
 
