@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.37 2009-03-28 03:44:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.38 2009-03-28 19:28:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -101,7 +101,7 @@ are using a Linux computer.
 Windows desktop shortcuts have been restructured to make them more reliable.
 If you have custom shortcuts (ones you made), you may have to update them.
 The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
-will not be effected by this change.
+will not be affected by this change.
 
 
 <h3>Download links:</h3>
@@ -303,7 +303,7 @@ Ken Cameron provided an example script for turning CMRI node polling on and off.
 
 <p>
 Fixed a bug in C/MRI error handling that would cause the wrong node to be reset
-if several polls were missed.  (This only effected C/MRI, not other hardware types)
+if several polls were missed.  (This only affected C/MRI, not other hardware types)
 
 <p>
 Matt Harris added scrolling options to the panel editor and layout editor

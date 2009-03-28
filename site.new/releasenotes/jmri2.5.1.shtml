@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.1.shtml,v 1.18 2009-03-12 17:12:00 matthewharris Exp $ -->
+<!-- $Id: jmri2.5.1.shtml,v 1.19 2009-03-28 19:28:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -99,7 +99,7 @@ are using a Linux computer.
 Windows desktop shortcuts have been restructured to make them more reliable.
 If you have custom shortcuts (ones you made), you may have to update them.
 The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
-will not be effected by this change.
+will not be affected by this change.
 
 <h3>Download links:</h3>
 
@@ -129,7 +129,7 @@ Update Throttle
 to enter a new frame title and not have it appear.
 
 <p>
-Several technical updates were made. These shouldn't effect users, but
+Several technical updates were made. These shouldn't affect users, but
 things don't always go perfectly...
 <ul>
 <li>Standard build for debugging now uses Java 1.5, builds Java 1.5 classes.
@@ -168,7 +168,7 @@ Fixed a problem when importing a decoder definition for the first time.
 
 <p>
 Updated the port-selection in the preferences to only show serial ports.
-This will mostly effect Windows machines, where the "LPT1:" choice would
+This will mostly affect Windows machines, where the "LPT1:" choice would
 occasionally be shown whether or not it would work.
 
 <p>

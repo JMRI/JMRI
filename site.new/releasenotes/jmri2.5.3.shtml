@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.2 2009-03-27 05:31:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.3 2009-03-28 19:28:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,8 +69,26 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+(None yet)
 
 <h3>Warnings from older versions:</h3>
+
+Starting in JMRI 2.5.2, Logix support has a lot of
+new capabilities, but panel files that use these capabilities
+can't be read by previous versions of the program. 
+Please keep backup copies of your panel files in case you
+want to move back to a previous version.
+
+<p>
+Starting in JMRI 2.5.2, 
+there have been extensive changes to the way JMRI installs and starts on Windows.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be affected by this change.
+
+<p>
+The downloads are significantly larger due to more text and images
+in the help pages, especially the updated manual.
 
 <p>JMRI now requires Java 1.5 or later.
 If you are using an older version of Java, please
@@ -79,15 +97,9 @@ To see JMRI's future plans for this and other compatibility issues, please see t
 <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
 
 <p>
-The way you drag things in the Layout Editor has changed if you
+Starting in JMRI 2.5.1,
+the way you drag things in the Layout Editor has changed if you
 are using a Linux computer. 
-
-<p>
-Windows desktop shortcuts have been restructured to make them more reliable.
-If you have custom shortcuts (ones you made), you may have to update them.
-The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
-will not be effected by this change.
-
 
 
 <h3>Download links:</h3>
@@ -106,6 +118,11 @@ will not be effected by this change.
 
 
 <h3>Changes since test version 2.5.2:</h3>
+
+Simon Ginsburg has updated the German translation.
+
+<p>
+Various improvements to help screens
 
 
 <!--#include virtual="/Footer" -->
