@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.86 $)
+distribution.  ($Revision: 1.87 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -160,7 +160,7 @@ change that (temporarily) for a production release
 	Check DecoderPro for no startup errors, right version
 
     Ant will do the various builds, construct the distribution
-    directories, and finally construct the Linux and MacOS X
+    directories, and finally construct the Linux, MacOS X and Windows
     distribution files.
 	
 	
@@ -170,7 +170,9 @@ change that (temporarily) for a production release
 ** and getting feedback from jmri-developers
 
 
-( ) Upload the MacOS X and Linux files
+( ) Test Windows installer on a VM
+
+( ) Upload the Linux, Mac OS X and Windows files
 
     ant -f dist.xml -Drelease=Release-2-5-2 -Dnumber=2.5.2 -Duser.name=jacobsen release2
 
@@ -191,34 +193,7 @@ change that (temporarily) for a production release
     
     echo put JMRI.2.4.dmg | sftp jacobsen@frs.sf.net:uploads
     echo put JMRI.2.4.tgz | sftp jacobsen@frs.sf.net:uploads
-
-( ) Test Windows:
-    
-    ant -f dist.xml -Drelease=Release-2-5-2 -Dnumber=2.5.2 x-rel-installer-windows
-
-( ) Any time after release1 is complete, start building the Windows installer.
-	
-	Using VMware Fusion, make sure you have the Z disk available and that it
-	contains the JMRI folder. (If not, check the "shared folders" and 
-	"networking settings"; see Control menu)
-	
-	Launch Installer Vise from the last build file.
-	
-	Click "File" -> "Update archive"; Check changes make sense.
-	
-	If there are new _top_level_ files (e.g. *.bat), 
-	    they have to be added to IV
-
-	Click the "test archive" button (right one of the pair)
-	
-	Name the installer JMRI.2.4.exe
-	
-	After the installer runs, run DecoderPro from desktop icon and check.
-	
-	In IV, "Save as..." the VCT file as the new name
-	
-	Drag-copy .exe to Mac Distributions directory; name should be OK
-	Drag-copy .vct to same place
+    echo put JMRI.2.4.exe | sftp jacobsen@frs.sf.net:uploads
 
 
 ( ) Any time after release1 is complete, create and upload the JavaDocs
@@ -228,10 +203,6 @@ change that (temporarily) for a production release
 	
 	Manual form:
 	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-5-2/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
-
-( ) When ready to upload the Windows release:
-	
-	ant -f dist.xml -Drelease=Release-2-5-2 -Dnumber=2.5.2 -Duser.name=jacobsen release4
 		
 ( ) Format the release note page, change date, etc
 
@@ -273,25 +244,28 @@ The complete list of changes is in the release note at http://jmri.sf.net/releas
 ( ) Update the web site front page and downloads page
     		
 ( ) If the decoder definitions have changed, make a .zip file and send to:
-    Hans Tanner:  hans.tanner@complexitymanager.com
     Graham Plowman: gppsoftware@gppsoftware.com
 
-( ) Commit site and update on server
+( ) Create the start of a release note for the next version
+
+( ) Commit site
 	
 ( ) File copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
+( ) Wait for update on JMRI web server
+
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.4 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 2.5.2 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
     You'll get a moderation message via email; handle it.
 
-( ) News item from JMRI sourceforge page
+( ) News item from JMRI sourceforge page, Summary tab
 
-	Title is of the form "JMRI 2.4 test version is available";
+	Title is of the form "JMRI 2.5.2 test version is available";
 	text is pretty much directly taken from the release note
 
 ( ) If a production version, update the SF automatic download pages
@@ -319,23 +293,4 @@ The complete list of changes is in the release note at http://jmri.sf.net/releas
 ( ) Commit back any changes made to this doc
 
 ( ) Take a break!
-
-=========================================
-
-Old notes follow
-
-
-( ) Create MacOS X DMG
-   
-   (this step is automatic in the release1 target, please ignore)
-   
-    rm temp.dmg
-    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.2.3" temp.dmg
-    open temp.dmg
-    (copy MacOSX/JMRI folder to DMG using finder)
-    (cd /Volumes/JMRI(tab) ; ln -s /Applications .)
-    ln -s /Applications .
-    cd (back to Distributions)
-    (eject)
-    hdiutil convert temp.dmg -format UDZO -o JMRI.1.2.3.dmg
 

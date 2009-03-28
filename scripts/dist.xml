@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.37 $ -->
+<!-- Revision $Revision: 1.38 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -51,9 +51,9 @@
     <antcall target="x-rel-create-linux" />
     <antcall target="x-rel-installer-linux" />
 
-	<echo message="*******************************"/>
-	<echo message=" Step 1 done - OK to do step 2 "/>
-	<echo message="*******************************"/>
+	<echo message="***************************************************"/>
+	<echo message=" Step 1 done - Three build files should be present "/>
+	<echo message="***************************************************"/>
 
  </target>
 
@@ -331,6 +331,13 @@
         todir="${user.name}@frs.sourceforge.net:uploads" >
       <fileset dir="." includes="JMRI.${number}.dmg" />
     </scp>
+	<echo message="upload Windows file"/>
+    <scp sftp="true" 
+        keyfile="${user.home}/.ssh/id_dsa"
+        password="${password}"
+        todir="${user.name}@frs.sourceforge.net:uploads" >
+      <fileset dir="." includes="JMRI.${number}.exe" />
+    </scp>
 </target>
 
  <target name="release3" depends=""
@@ -340,17 +347,6 @@
  	<echo message="upload XSLT decoder files"/>
     <ant antfile="build.xml" dir="${release}/xml/XSLT" target="xslt" inheritAll="false"/>
     <ant antfile="build.xml" dir="${release}/xml/XSLT" target="upload" inheritAll="false"/>
- </target>
-
- <target name="release4" depends=""
- 					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
-	<echo message="upload Windows file"/>
-    <scp sftp="true" 
-        keyfile="${user.home}/.ssh/id_dsa"
-        password="${password}"
-        todir="${user.name}@frs.sourceforge.net:uploads" >
-      <fileset dir="." includes="JMRI.${number}.exe" />
-    </scp>
  </target>
 
 </project>
