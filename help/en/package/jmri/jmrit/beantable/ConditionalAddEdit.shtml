@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.9 2009-03-24 18:01:03 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.10 2009-03-28 15:53:53 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -94,6 +94,28 @@ clicking <B>Check State Variables</B> (or <B>Update Conditional</B> at
 the bottom of the window) so that the program is notified that you have
 finished your entry. Otherwise your entry may not take effect, and an
 error may be reported unnecessarily.</B></P>
+
+<p>
+At first, the Conditional will test for the "AND" of all the 
+variables.  It will be true when they are all true, after taking the
+"NOT" negations into account.
+Using the "Logic Operator" box below the list of variables, you can
+change that to "OR" or "Mixed".  "OR" means the conditional will be
+true if any of the variables are true, after accounting for the negations.
+Selecting "Mixed" will let you enter a logical expression in a new 
+text box.  
+In this expression, 
+each variable is referred to by number, e.g. R1, R2, R3
+for the 1st three variables, you can use the operators "and", "or" 
+and "not" in addition to parentheses.
+Some examples:
+<pre>
+   R1 and R2
+   
+   R1 or (R2 and R3)
+   
+   (R2 and R3) or (R3 and R1)
+</pre>
 
 <P>The action section of the Edit Conditional window provides for
 specifying the actions to be taken when a Conditional is
