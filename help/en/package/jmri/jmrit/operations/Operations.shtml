@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.38 2009-03-27 17:41:02 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.39 2009-03-28 23:00:27 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -243,7 +243,12 @@ railroad.
 <img src="images/Locations.jpg">
 <P>
 To add a location, press the "Add" button located on the
-bottom of the "Locations" panel. A new panel should appear. In the "Add
+bottom of the "Locations" panel. A new panel should appear. 
+<P>
+<img src="images/EditLocation.jpg">
+<P>
+
+In the "Add
 Location" panel, enter the name of the location in box across from
 "Name". The location name must be unique; the program will not allow two
 locations with identical names. Now press the "Add Location" button at
@@ -340,6 +345,8 @@ you can create a schedule that will do exactly that. To create a
 schedule press the "Edit" button next to "Optional Schedule" pull down 
 menu on the "Edit Siding Track" panel. Pressing the
 "Edit" button should create the "Add Schedule" panel.
+<P>
+<img src="images/EditSchedule.jpg">
 
 <P>Enter a name for your schedule and press the "Add Schedule"
 button on the bottom of the panel. Multiple sidings can use the same
@@ -539,12 +546,18 @@ of the "Edit Car" panel.
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
-the bottom of the "Tools->Operations->Cars" panel. Then select the road
+the bottom of the "Tools->Operations->Cars" panel. 
+
+<P>
+<img src="images/EditCar.jpg">
+<P>
+
+Then select the road
 for the car. If the desired road doesn't exist, press the "Edit" button
 across from the road select menu box. This will allow you to add a new
 road or delete any that you don't need.
 
-<H3>Car Number</H3>
+<H3>Road Number</H3>
 
 Now enter the car's number in the text box. The program requires a
 unique road name and road number for each car. If you have cars with
@@ -782,23 +795,25 @@ menu.
 A route is a list of locations that a train will visit. Later you can
 decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
-"Tools->Operations->Routes". 
+"Tools->Operations->Routes".
 
-<P>
-<img src="images/Routes.jpg">
-<P>
-Then press the "Add" button located at the
-bottom of the page. Enter the route name. Each route must have unique
-name. Then press the "Add Route" button located at the bottom of the
-panel. Now select the location the train will depart by selecting the
-location in the menu box located at the left bottom side of the panel.
-Press "Add Location". Now build your route by selecting the next
-location the train will visit, select all locations that the train will
-pass through even if the train will not work the location. This way your
-train's engineer will know when reading his manifest the towns he will
-be traveling through. Each time you add a location to the route, the
-table shows the order in which the train will visit. You can move a
-location up or down in the sequence if needed.
+<P><img src="images/Routes.jpg">
+
+<P>Then press the "Add" button located at the bottom of the page.
+
+<P><img src="images/EditRoute.jpg">
+
+<P>Enter the route name. Each route must have unique name. Then
+press the "Add Route" button located at the bottom of the panel. Now
+select the location the train will depart by selecting the location in
+the menu box located at the left bottom side of the panel. Press "Add
+Location". Now build your route by selecting the next location the train
+will visit, select all locations that the train will pass through even
+if the train will not work the location. This way your train's engineer
+will know when reading his manifest the towns he will be traveling
+through. Each time you add a location to the route, the table shows the
+order in which the train will visit. You can move a location up or down
+in the sequence if needed.
 
 <H3>Route Train Direction, Moves, Drops, Pickups, Train Length,
 Grade, X and Y</H3>
@@ -843,7 +858,11 @@ train by selecting "Tools->Operations->Trains" from the top level menu.
 <P>
 <img src="images/Trains.jpg">
 <P>
-Press the "Add" button to create a train. Enter the train's name and
+Press the "Add" button to create a train. 
+<P>
+<img src="images/EditTrain.jpg">
+<P>
+Enter the train's name and
 optional description, and then press the "Add Train" button. Both will
 show up on the train's manifest. The train's name will also show up on
 the train icon, so short names work best. Then select the route that
