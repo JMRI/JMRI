@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LogixAddEdit.shtml,v 1.4 2009-03-24 18:01:03 jacobsen Exp $ -->
+<!-- $Id: LogixAddEdit.shtml,v 1.5 2009-03-28 16:31:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,7 +43,10 @@
 	system name and user name of the Logix are displayed at the top. The user name 
 	may be changed by entering/modifying the text in the User Name field. Next is a 
 	table of Conditionals belonging to the Logix. To add a new Conditional, click 
-	the <b>New Conditional</b> button under the Conditionals table.  This will 
+	the <b>New Conditional</b> button under the Conditionals table.  
+	(See also the 
+	<a href="ConditionalAddEdit.shtml">seperate help page on adding/editing Conditionals</a>)
+	This will 
 	create a new Conditional (a new row in the Conditionals table),
 	and open the Edit Conditional window allowing the logical expression and
 	actions of the new Conditional to be defined.  An existing Conditional may be 

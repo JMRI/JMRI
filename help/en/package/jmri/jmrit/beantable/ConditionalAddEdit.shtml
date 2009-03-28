@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.10 2009-03-28 15:53:53 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.11 2009-03-28 16:31:51 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -27,7 +27,8 @@
 <P>The Edit Conditional window is where logical expressions are set
 up and where actions are specified. The Edit Conditional window is
 displayed when a Conditional is created, or when the <B>Edit</B> button
-of a Conditional is pressed in the Edit Logix window. The Edit
+of a Conditional is pressed in the 
+<a href="LogixAddEdit.shtml">Edit Logix window</a>. The Edit
 Conditional window displays the system name and user name of the
 Conditional at the top. The system name is automatically set by the
 program and cannot be changed. The user name may be edited by
