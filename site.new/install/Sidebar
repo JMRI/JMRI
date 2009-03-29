@@ -7,7 +7,7 @@
  <div id="side">
     <h2>Install Guides</h2>
 	<UL>
-	<LI><A href="../install/Windows.html">Windows</a>
+	<LI><A href="../install/WindowsNew.html">Windows</a>
 	<LI><A href="../install/MacOSX.html">MacOS X</a>
 	<LI><A href="../install/Linux.html">Linux</a>
 	<LI><A href="../install/Debug.shtml">Debugging an installation</a>
