@@ -48,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -279,7 +279,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	for (int i=0; i<Setup.getEngineSize()+1; i++){
     		numEnginesBox.addItem(Integer.toString(i));
     	}
-    	numEnginesBox.addItem(Train.AUTO);
+    	numEnginesBox.addItem(Train.AUTO+" ");	// pad out Auto
     	numEnginesBox.setMinimumSize(new Dimension(100,25));
     	addItem (trainReq, textEngine, 1, 1);
     	addItem (trainReq, numEnginesBox, 2, 1);
@@ -569,7 +569,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void saveNewTrain(){
-		if (!checkName())
+		if (!checkName(rb.getString("add")))
 			return;
 		Train train = manager.newTrain(trainNameTextField.getText());
 		_train = train;
@@ -583,7 +583,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void saveTrain (){
-		if (!checkName())
+		if (!checkName(rb.getString("save")))
+			return;
+		if (!checkModel())
 			return;
 		if(numEnginesBox.getSelectedItem().equals(Train.AUTO) && !_train.getNumberEngines().equals(Train.AUTO)){
 			JOptionPane.showMessageDialog(this,
@@ -615,17 +617,31 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	 * 
 	 * @return true if name is less than 26 characters
 	 */
-	private boolean checkName(){
+	private boolean checkName(String operation){
 		if (trainNameTextField.getText().trim().equals(""))
 				return false;
 		if (trainNameTextField.getText().length() > 25){
 			log.error("Train name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
-					rb.getString("TrainNameLess26"), rb.getString("CanNotAdd"),
+					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {operation}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
+	}
+	
+	private boolean checkModel(){
+		String model = (String)modelEngineBox.getSelectedItem();
+		if (numEnginesBox.getSelectedItem().equals("0") || model.equals(""))
+			return true;
+		String type = EngineModels.instance().getModelType(model);
+		if(_train.acceptsTypeName(type))
+			return true;
+		JOptionPane.showMessageDialog(this,
+				MessageFormat.format(rb.getString("TrainModelService"), new Object[] {model, type}), MessageFormat.format(rb.getString("CanNot"),
+						new Object[] {rb.getString("save")}),
+				JOptionPane.ERROR_MESSAGE);
+		return false;
 	}
 	
 	private void reportTrainExists(String s){
@@ -651,6 +667,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		deleteTrainButton.setEnabled(enabled);
 		numEnginesBox.setEnabled(enabled);
 		enableCheckboxes(enabled);
+		noneRadioButton.setEnabled(enabled);
+		fredRadioButton.setEnabled(enabled);
+		cabooseRadioButton.setEnabled(enabled);
 
 		// the inverse!
 		addTrainButton.setEnabled(!enabled);

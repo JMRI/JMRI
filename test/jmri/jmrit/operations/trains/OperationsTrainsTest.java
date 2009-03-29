@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -114,9 +114,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Constant NUMBERCARS_CHANGED_PROPERTY", "numberCarsMoves", Train.NUMBERCARS_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant STATUS_CHANGED_PROPERTY", "status", Train.STATUS_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant DEPARTURETIME_CHANGED_PROPERTY", "departureTime", Train.DEPARTURETIME_CHANGED_PROPERTY);
-
-//		Comment out test that relies upon a typo in the properties until that gets fixed
-//		Assert.assertEquals("Train Constant AUTO", "Auto", t1.AUTO);
+		
+		Assert.assertEquals("Train Constant AUTO", "Auto", Train.AUTO);
 	}
 
 	// test TrainIcon attributes

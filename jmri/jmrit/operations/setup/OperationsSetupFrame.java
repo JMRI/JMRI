@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -31,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -215,6 +216,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// row 1
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		JPanel panel = new JPanel();
+		JScrollPane panelPane = new JScrollPane(panel);
 		panel.setLayout(new GridBagLayout());
 		addItem (panel, textRailroadName, 0, 1);
 		addItemWidth (panel, railroadNameTextField, 3, 1, 1);
@@ -327,6 +329,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
+		JScrollPane pIconPane = new JScrollPane(pIcon);
 		pIcon.setLayout(new GridBagLayout());
 		pIcon.setBorder(border);
 		addItem (pIcon, textPanel, 0, 1);
@@ -368,10 +371,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem(pControl, backupButton, 1, 9);
 		addItem(pControl, saveButton, 3, 9);
 		
-		getContentPane().add(panel);
+		getContentPane().add(panelPane);
 		getContentPane().add(options);
 		getContentPane().add(pPrinter);
-		getContentPane().add(pIcon);
+		getContentPane().add(pIconPane);
 		getContentPane().add(pControl);
 
 		// setup buttons
