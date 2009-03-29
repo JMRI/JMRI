@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -128,16 +128,18 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		textLength.setVisible(true);
 		textWeight.setText(rb.getString("Weight"));
 		textWeight.setVisible(true);
-		weightTextField.setToolTipText(rb.getString("carWeightOz"));
+		weightTextField.setToolTipText(rb.getString("TipCarWeightOz"));
 		textWeightTons.setText(rb.getString("WeightTons"));
 		textWeightTons.setVisible(true);
-		weightTonsTextField.setToolTipText(rb.getString("carWeightTons"));
+		weightTonsTextField.setToolTipText(rb.getString("TipCarWeightTons"));
 		autoCheckBox.setText(rb.getString("Auto"));
 		autoCheckBox.setSelected(true);
+		autoCheckBox.setToolTipText(rb.getString("TipCarAutoCalculate"));
 		cabooseCheckBox.setText(rb.getString("Caboose"));
 		cabooseCheckBox.setSelected(false);
 		fredCheckBox.setText(rb.getString("Fred"));
 		fredCheckBox.setSelected(false);
+		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
 		hazardousCheckBox.setText(rb.getString("Hazardous"));
 		hazardousCheckBox.setSelected(false);
 		textLocation.setText(rb.getString("Location"));
@@ -166,13 +168,13 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		editLengthButton.setText(rb.getString("Edit"));
 		editLengthButton.setVisible(true);
 		fillWeightButton.setText(rb.getString("Calculate"));
-		fillWeightButton.setToolTipText(rb.getString("calculateCarWeight"));
+		fillWeightButton.setToolTipText(rb.getString("TipCalculateCarWeight"));
 		fillWeightButton.setVisible(true);
 		editLoadButton.setText(rb.getString("Edit"));
 		editLoadButton.setVisible(true);
 		editKernelButton.setText(rb.getString("Edit"));
 		editKernelButton.setVisible(true);
-		builtTextField.setToolTipText(rb.getString("buildDateTip"));
+		builtTextField.setToolTipText(rb.getString("TipBuildDate"));
 		editOwnerButton.setText(rb.getString("Edit"));
 		editOwnerButton.setVisible(true);
 		deleteButton.setText(rb.getString("Delete"));
