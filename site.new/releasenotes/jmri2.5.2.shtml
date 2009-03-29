@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.2.shtml,v 1.38 2009-03-28 19:28:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.2.shtml,v 1.39 2009-03-29 08:24:25 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,7 +49,7 @@ many new features, including:
 <ul>
 	<LI>The new DecoderPro manual (in the program help pages)
 	<LI>Many new and improved decoder definitions for DecoderPro
-	<LI>Improved startup and install procedures on Windows
+	<LI>Improved startup and <a href="/install/WindowsNew.shtml">install procedures</a> on Windows
 	<LI>Improvements to Logix, Routes and other tools
 </ul>
 along with lots of other changes.  See the complete list below.
@@ -79,6 +79,7 @@ want to move back to a previous version.
 
 <p>
 There have been extensive changes to the way JMRI installs and starts on Windows.
+(See the <a href="/install/WindowsNew.shtml">updated installation documentation</a> for details).
 If you have custom shortcuts, you may have to revisit them.
 
 <p>
