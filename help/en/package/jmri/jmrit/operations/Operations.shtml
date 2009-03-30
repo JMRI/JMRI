@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.39 2009-03-28 23:00:27 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.40 2009-03-30 16:24:22 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -91,7 +91,7 @@ allow you to enter your railroad name, the directions your train's
 travel, the scale that you are using, printer and icon controls, and the
 ability to create backups and restore files for operations.
 <P>
-<img src="images/Settings.jpg">
+<img src="images/Settings.png">
 
 <H3>Railroad Name</H3>
 
@@ -240,12 +240,12 @@ places where trains need to work cars. Select
 railroad. 
 
 <P>
-<img src="images/Locations.jpg">
+<img src="images/Locations.png">
 <P>
 To add a location, press the "Add" button located on the
 bottom of the "Locations" panel. A new panel should appear. 
 <P>
-<img src="images/EditLocation.jpg">
+<img src="images/EditLocation.png">
 <P>
 
 In the "Add
@@ -346,7 +346,7 @@ schedule press the "Edit" button next to "Optional Schedule" pull down
 menu on the "Edit Siding Track" panel. Pressing the
 "Edit" button should create the "Add Schedule" panel.
 <P>
-<img src="images/EditSchedule.jpg">
+<img src="images/EditSchedule.png">
 
 <P>Enter a name for your schedule and press the "Add Schedule"
 button on the bottom of the panel. Multiple sidings can use the same
@@ -493,7 +493,7 @@ kernel will fit. Note that the program also includes space for the car's
 couplers when calculating the length of a kernel.
 
 <P>
-<img src="images/Cars.jpg">
+<img src="images/Cars.png">
 <P>
 
 <H3>Importing Cars from a File</H3>
@@ -549,7 +549,7 @@ To manually add a car to your roster, press the "Add" button located at
 the bottom of the "Tools->Operations->Cars" panel. 
 
 <P>
-<img src="images/EditCar.jpg">
+<img src="images/EditCar.png">
 <P>
 
 Then select the road
@@ -680,7 +680,7 @@ stored at the various locations on your layout. Some of default engine
 types are electric, diesel, gas turbine, and steam.
 
 <P>
-<img src="images/Engines.jpg">
+<img src="images/Engines.png">
 <P>
 
 <H3>Import Engines</H3>
@@ -797,11 +797,11 @@ decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
 "Tools->Operations->Routes".
 
-<P><img src="images/Routes.jpg">
+<P><img src="images/Routes.png">
 
 <P>Then press the "Add" button located at the bottom of the page.
 
-<P><img src="images/EditRoute.jpg">
+<P><img src="images/EditRoute.png">
 
 <P>Enter the route name. Each route must have unique name. Then
 press the "Add Route" button located at the bottom of the panel. Now
@@ -856,11 +856,11 @@ want to copy. If you want the route reversed check the "Invert" box.
 Now that we've created our routes we need trains to move cars! Create a
 train by selecting "Tools->Operations->Trains" from the top level menu.
 <P>
-<img src="images/Trains.jpg">
+<img src="images/Trains.png">
 <P>
 Press the "Add" button to create a train. 
 <P>
-<img src="images/EditTrain.jpg">
+<img src="images/EditTrain.png">
 <P>
 Enter the train's name and
 optional description, and then press the "Add Train" button. Both will
