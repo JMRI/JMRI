@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.40 2009-03-30 16:24:22 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.41 2009-03-30 17:45:12 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -954,6 +954,9 @@ to very detailed. See the Settings section <A HREF="#BuildReportDetails">Build
 Report Details</A> for more information on how to change the build report
 detail level.
 
+<P>
+<img src="images/BuildReport.png">
+
 <H3>Printing Manifests</H3>
 
 After building a train, the "Build" button will become "Print". Pressing
@@ -963,6 +966,9 @@ in the build column and then press the "Print" button found at the
 bottom of the trains panel. The program will then print manifests for
 all of the selected trains. 
 
+<P>
+<img src="images/Manifest.png">
+
 <A NAME="SwitchList"></A>
 <H3>Switch Lists</H3>
 
@@ -971,6 +977,9 @@ given location. A menu will appear that allows you to select which
 locations to preview or print. Once you've determined which locations
 you want to print or preview, press the "Save" button to keep your
 selections.
+
+<P>
+<img src="images/SwitchList.png">
 
 <H3>Moving Trains</H3>
 
