@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a LogFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LogAction extends AbstractAction {
 
@@ -25,7 +25,7 @@ public class LogAction extends AbstractAction {
             f.initComponents();
         }
         catch (Exception ex) {
-            log.error("Exception: "+ex.toString());
+            log.error("Exception in startup", ex);
         }
         f.setVisible(true);
     }
