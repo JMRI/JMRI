@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.78 $
+ * @version     $Revision: 1.79 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -328,10 +328,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             } catch (java.lang.NoClassDefFoundError ee) {
                 log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
                 log.debug("classversion="+System.getProperty("java.class.version","<unknown>"));
-                log.error("Help classes not found, help system omitted");
+                log.error("Help classes not found, help system omitted", ee);
                 return;
             } catch (java.lang.Exception e2) {
-                log.error("HelpSet "+helpsetName+" not found, help system omitted");
+                log.error("HelpSet "+helpsetName+" not found, help system omitted", e2);
                 return;
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
