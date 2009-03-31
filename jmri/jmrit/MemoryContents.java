@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class MemoryContents {
 
@@ -53,11 +53,11 @@ public class MemoryContents {
     int currentPage = 0;
     
     // store machine comment lines
-    ArrayList lines = new ArrayList(10);
+    ArrayList<String> lines = new ArrayList<String>(10);
 
     public String getComment(String c) {
         for (int i = 0; i<lines.size(); i++) {
-            String t = (String)lines.get(i);
+            String t = lines.get(i);
             if (t.startsWith("! "+c)) {
                 int f = t.indexOf(": ");
                 if (f<0) return null;
@@ -122,7 +122,7 @@ public class MemoryContents {
                     log.error("Unknown line type: "+s);
                 }
             }
-        } catch (Exception e) { log.error("Exception reading file: "+e);}
+        } catch (Exception e) { log.error("Exception reading file",e);}
 
     }
            
@@ -191,8 +191,10 @@ public class MemoryContents {
         }
         try {
         return pageArray[currentPage][location % PAGESIZE] != DEFAULT; 
-        } catch (Exception e) { log.error("error in locationInUse "+currentPage+" "+location+" "+e);return false;}
-        
+        } catch (Exception e) { 
+            log.error("error in locationInUse "+currentPage+" "+location, e);
+            return false;
+        }
     }
     
     public int getLocation(int location) { 
@@ -203,7 +205,10 @@ public class MemoryContents {
         }
         try {
         return pageArray[currentPage][location % PAGESIZE]; 
-        } catch (Exception e) { log.error("error in getLocation "+currentPage+" "+location+" "+e);return 0;}
+        } catch (Exception e) {
+            log.error("error in getLocation "+currentPage+" "+location,e);
+            return 0;
+        }
     }
         
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryContents.class.getName());
