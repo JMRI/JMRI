@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.2 2008-11-30 18:18:38 jacobsen Exp $ -->
+<!-- $Id: JVMCapabilities.shtml,v 1.3 2009-03-31 21:48:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -69,6 +69,9 @@ including the needed JVM and library support.
 <tr><td>Enums</td>          <td>1.5</td>    <td>1.5</td></tr>
 <tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
 <tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
+<tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
+<tr><td>Browser integration</td><td>1.6</td>    <td>1.6</td></tr>
+
 
 </table>
 (* indicates that a compatibility library is used in the early version)
@@ -84,8 +87,9 @@ many will be using an older one.
 <tr><th>OS and platform</th><th>Last JRE</th></tr>
 <tr><td>Windows Vista</td><td>1.6</td></tr>
 <tr><td>Windows XP</td><td>1.6</td></tr>
-<tr><td>MacOS X 10.4 and later</td><td>1.5</td></tr>
-<tr><td>Linux</td><td>1.5</td></tr>
+<tr><td>MacOS X 10.4 and later</td><td>1.6</td></tr>
+<tr><td>MacOS X 10.3</td><td>1.5</td></tr>
+<tr><td>Linux</td><td>1.5 (?)</td></tr>
 <tr><td>Windows 98 (2nd Ed)</td><td>1.5-11</td></tr>
 <tr><td>Windows 98</td><td>1.4.2_14</td></tr>
 <tr><td>MacOS X 10.3</td><td>1.4</td></tr>
