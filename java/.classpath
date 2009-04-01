@@ -17,5 +17,9 @@
 	<classpathentry kind="lib" path="lib/Serialio.jar"/>
 	<classpathentry kind="lib" path="lib/vecmath.jar"/>
 	<classpathentry kind="lib" path="lib/servlet.jar"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/ExternalLinkContentViewerUI.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

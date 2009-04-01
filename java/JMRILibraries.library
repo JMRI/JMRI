@@ -15,6 +15,10 @@
     <path>[lib/MRJAdapter.jar]</path>
     <path>[lib/jinput.jar]</path>
     <path>[lib/vecmath.jar]</path>
+    <path>[lib/activation.jar]</path>
+    <path>[lib/mailapi.jar]</path>
+    <path>[lib/smtp.jar]</path>
+    <path>[lib/ExternalLinkContentViewerUI]</path>
     <path>src/resources</path>
   </class>
 </library>
