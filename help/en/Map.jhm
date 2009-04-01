@@ -206,6 +206,8 @@
 
 <mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.mailreport.Report" url="package/jmri/jmrit/mailreport/Report.shtml"/>
+
 <mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EnginesSet" url="package/jmri/jmrit/operations/Operations.shtml#EnginesSet"/>
