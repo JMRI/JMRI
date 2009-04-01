@@ -17,7 +17,7 @@ jhall.jar
  version 2.03
  
 log4j.jar
- version 1.1.3
+ version 1.2.15
 
 MRJAdapter.jar
 
@@ -58,5 +58,21 @@ libusb-jar (ch.ntb.usb.jar)
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
+JavaMail 1.4.1
+  mailapi.jar
+  smtp.jar
+
+JavaBeans Activation Framework 1.1.1 (needed by JavaMail until JRE 1.6, which contains) 
+  activation.jar
+
+ExternalLinkContentViewerUI.jar
+  made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
+  now being carried in this jar file instead of source until we migrate to Java 1.6
+  
+
+
 Older:
+
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
+
+
