@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.87 $)
+distribution.  ($Revision: 1.88 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -169,7 +169,6 @@ change that (temporarily) for a production release
 ** Consider making the files available for testing from the main site,
 ** and getting feedback from jmri-developers
 
-
 ( ) Test Windows installer on a VM
 
 ( ) Upload the Linux, Mac OS X and Windows files
@@ -208,6 +207,19 @@ change that (temporarily) for a production release
 
 ( ) Complete all the above before continuing
 
+
+////////////////
+// in the future, consider using sf-upload to create the 
+// SF.net release structures:  http://sf-upload.sourceforge.net/
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.2 test version for Windows" -f JMRI.2.5.2.exe -type ".exe (32-bit Windows)" -noupload
+
+    (also use -nf notesfile.txt  -cf changefile.txt)
+    
+    (prod package is 33771)
+    (have to have a ~/.sfuploadrc file)
+    
+////////////////
+ 
 ( ) Login to SourceForge web using Firefox
 
 	Go to the project home page, login, then admin page
