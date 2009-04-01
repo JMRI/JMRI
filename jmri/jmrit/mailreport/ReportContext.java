@@ -1,57 +1,78 @@
-// ReportContextAction.java
+// ReportContext.java
 
-package apps;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
+package jmri.jmrit.mailreport;
 
 import java.awt.*;
 import javax.swing.*;
 import jmri.util.JmriInsets;
+import apps.Apps;
+
 
 /**
- * Swing action to display the JMRI context for the user
+ * Provide the JMRI context info 
  *
- * @author	Bob Jacobsen    Copyright (C) 2007
+ * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.1 $
  */
-public class ReportContextAction extends AbstractAction {
+public class ReportContext {
 
-    public ReportContextAction() { super();}
-
-    javax.swing.JTextArea pane;
+    String report = "";
     
-    public void actionPerformed(ActionEvent ev) {
-
-		JFrame frame = new jmri.util.JmriJFrame(){};  // JmriJFrame to ensure fits on screen
-		
-        pane = new javax.swing.JTextArea();
-        pane.append("\n"); // add a little space at top
-        pane.setEditable(false);
- 
-        JScrollPane  scroll = new JScrollPane(pane);
-        frame.getContentPane().add(scroll);
+    public String getReport() {
         
-        jmri.jmrit.mailreport.ReportContext r = new jmri.jmrit.mailreport.ReportContext();
-        addString(r.getReport());
+        addString("JMRI Version: "+jmri.Version.name()+"  ");	 
+
+        addProperty("java.version");
+
+        addString("Connection one: "+Apps.getConnection1()+"  ");
+        addString("Connection two: "+Apps.getConnection2()+"  ");
+        addString("Connection three: "+Apps.getConnection3()+"  ");
+        addString("Connection four: "+Apps.getConnection4()+"  ");
+
+        String prefs = jmri.jmrit.XmlFile.prefsDir();
+        addString("Preferences directory: "+prefs+"  ");
         
-        pane.append("\n"); // add a little space at bottom
+        String prog = System.getProperty("user.dir");
+        addString("Program directory: "+prog+"  ");
 
-		frame.pack();
+        addProperty("java.vendor");
+        addProperty("java.home");
 
-        // start scrolled to top
-        JScrollBar b = scroll.getVerticalScrollBar();
-        b.setValue(b.getMaximum());
+        addProperty("java.vm.version");
+        addProperty("java.vm.vendor");
+        addProperty("java.vm.name");
 
-        // show
-		frame.setVisible(true);
+        addProperty("java.specification.version");
+        addProperty("java.specification.vendor");
+        addProperty("java.specification.name");
+
+        addProperty("java.class.version");
+        addProperty("java.class.path");
+        addProperty("java.library.path");
+
+        addProperty("java.compiler");
+        addProperty("java.ext.dirs");
+        		
+        addProperty("os.name");
+        addProperty("os.arch");
+        addProperty("os.version");
+
+        addProperty("user.name");
+        addProperty("user.home");
+        addProperty("user.dir");
+        addProperty("jmri.log.path");
+        addProperty("python.home");
+
+        addScreenSize();
+        
+        return report;
 	
 	}
 		
 	void addString(String val) {
-        pane.append(val+"\n");	    
+        report = report + val+"\n";	    
     }
 	void addProperty(String prop) {
         addString(prop+": "+System.getProperty(prop)+"  ");	    
@@ -128,4 +149,4 @@ public class ReportContextAction extends AbstractAction {
     }
 }
 
-/* @(#)ReportContextAction.java */
+/* @(#)ReportContext.java */
