@@ -22,7 +22,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class HelpUtil {
@@ -54,6 +54,7 @@ public class HelpUtil {
             item = new JMenuItem(rb.getString("MenuItemHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
+            helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
         }
         return helpMenu;
     }
