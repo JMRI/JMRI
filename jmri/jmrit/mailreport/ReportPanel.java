@@ -11,7 +11,7 @@ import javax.swing.*;
  * User interface for sending a problem report via email
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ReportPanel extends JPanel {
 
@@ -59,6 +59,8 @@ public class ReportPanel extends JPanel {
         p1.setLayout(new FlowLayout());
         l = new JLabel(rb.getString("LabelDescription"));
         p1.add(l);
+        descField.setLineWrap(true);
+        descField.setWrapStyleWord(true);
         p1.add(descField);
         add(p1);
 

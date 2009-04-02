@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a ReportFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ReportAction extends AbstractAction {
 
@@ -18,7 +18,7 @@ public class ReportAction extends AbstractAction {
     }
 
     public ReportAction() { 
-        this(java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle").getString("Title"));
+        this(java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle").getString("Name"));
     }
 
     public void actionPerformed(ActionEvent e) {
