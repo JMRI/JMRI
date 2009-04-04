@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -309,7 +309,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			setSize(450, getHeight()+20);
 		else
 			setSize(getWidth()+50, getHeight()+20);
-		setLocation(500, 300);
+		setLocation(400, 200);
 		setVisible(true);	
 	}
 

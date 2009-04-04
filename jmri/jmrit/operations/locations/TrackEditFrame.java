@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -160,9 +160,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(panelButtons, addTrackButton, 1, y);
 		addItem(panelButtons, saveTrackButton, 2, y);
 		
+		JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
+		
 		getContentPane().add(p1);
 		getContentPane().add(panelTrainDir);
-		getContentPane().add(panelCheckBoxes);
+		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(panelRoadNames);
 		
 		// add optional panels
@@ -197,8 +199,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and location for display
 		pack();
-		setSize(getWidth(), getHeight()+25); // add some room for menu
-		setLocation(500, 200);
+		setSize(getWidth()+25, getHeight()+25); // add some room for menu
+		setLocation(300, 200);
 		setVisible(true);	
 	}
 	
@@ -631,6 +633,5 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(TrackEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());
 }

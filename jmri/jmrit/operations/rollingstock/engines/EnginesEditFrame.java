@@ -23,7 +23,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -271,7 +271,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			setSize(450, getHeight()+50);
 		else
 			setSize(getWidth()+50, getHeight()+50);
-		setLocation(500, 300);
+		setLocation(400, 200);
 		setVisible(true);	
 	}
 
