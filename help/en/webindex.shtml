@@ -686,6 +686,12 @@
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Files </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>
@@ -1162,13 +1168,25 @@
 
   
 <li>
-<a href="html/doc/Technical/XmlView.shtml">Viewing Files </a>
+<a href="html/doc/Technical/XmlView.shtml">Technical Information </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Panel Files </a>
 <ul></ul>
 </li>
 
  
 </ul>
 </li>
+ 
+<li>
+<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor </a>
+<ul></ul>
+</li>
+
 
 </ul>
 <!--#include virtual="/Footer" -->

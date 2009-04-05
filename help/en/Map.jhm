@@ -502,6 +502,8 @@
 
 <mapID target="TemplateBar" url="TemplateBar.shtml"/>
 
+<mapID target="html.apps.PanelPro.ShowPanel" url="html/apps/PanelPro/ShowPanel.shtml"/>
+
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_glossary" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary"/>
 
 <mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml"/>
