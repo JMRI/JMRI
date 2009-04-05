@@ -225,6 +225,8 @@
 
   <indexitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
+  <indexitem text="Viewing Files " target="html.apps.PanelPro.ShowPanel"/>
+
  </indexitem>
  <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
 
@@ -381,7 +383,11 @@
  <indexitem text="XML " target="html.apps.DecoderPro.IntroXML">
   <indexitem text="Editors " target="html.doc.Technical.XmlEditors"/>
 
-  <indexitem text="Viewing Files " target="html.doc.Technical.XmlView"/>
+  <indexitem text="Technical Information " target="html.doc.Technical.XmlView"/>
+
+  <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
+ <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
+
 </index>

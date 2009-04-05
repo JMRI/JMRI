@@ -145,6 +145,8 @@
 
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
+  <tocitem text="Viewing Files " target="html.apps.PanelPro.ShowPanel"/>
+
  </tocitem>
  <tocitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
   <tocitem text="Introduction " target="package.jmri.jmrit.dispatcher.Dispatcher">
@@ -452,9 +454,11 @@
 
   </tocitem>
   <tocitem text="XML Information " target="html.apps.DecoderPro.IntroXML">
-   <tocitem text="Viewing XML files " target="html.doc.Technical.XmlView"/>
+   <tocitem text="Technical Info " target="html.doc.Technical.XmlView"/>
 
    <tocitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
+
+   <tocitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
   </tocitem>
  </tocitem>
