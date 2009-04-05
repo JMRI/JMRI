@@ -17,7 +17,7 @@ import java.util.List;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class FollowerPanel extends BasePanel {
 
@@ -119,6 +119,6 @@ public class FollowerPanel extends BasePanel {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FollowerPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FollowerPanel.class.getName());
 
 }

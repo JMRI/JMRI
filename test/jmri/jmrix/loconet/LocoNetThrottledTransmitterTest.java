@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LocoNetThrottledTransmitterTest extends TestCase {
 
@@ -179,7 +179,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottledTransmitterTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetThrottledTransmitterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

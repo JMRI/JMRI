@@ -21,7 +21,7 @@ import java.lang.Integer;
 /**
  * Frame for controlling JInput access to USN
  * @author	 Bob Jacobsen   Copyright (C) 2008
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision: 1.3 $
  */
 public class TreeFrame extends jmri.util.JmriJFrame {
 
@@ -46,7 +46,7 @@ public class TreeFrame extends jmri.util.JmriJFrame {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TreeFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TreeFrame.class.getName());
 	
 }
 

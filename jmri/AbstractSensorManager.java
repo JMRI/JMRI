@@ -5,7 +5,7 @@ package jmri;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -102,7 +102,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 	 */
 	public void updateAll() { };
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
 }
 
 /* @(#)AbstractSensorManager.java */

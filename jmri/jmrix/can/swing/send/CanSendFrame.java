@@ -28,7 +28,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -280,6 +280,6 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
     
     // private data
     private CanInterface tc = null;
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanSendFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendFrame.class.getName());
 
 }

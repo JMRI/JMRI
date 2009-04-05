@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {
@@ -76,5 +76,5 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlConfigAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlConfigAction.class.getName());
 }

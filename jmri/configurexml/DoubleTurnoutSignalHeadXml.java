@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DoubleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -89,5 +89,5 @@ public class DoubleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXM
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DoubleTurnoutSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
 }

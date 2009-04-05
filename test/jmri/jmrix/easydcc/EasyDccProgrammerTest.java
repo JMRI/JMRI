@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 
 package jmri.jmrix.easydcc;
@@ -229,7 +229,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccProgrammerTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccProgrammerTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

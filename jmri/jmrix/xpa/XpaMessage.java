@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class XpaMessage {
 
@@ -178,7 +178,7 @@ public class XpaMessage {
 
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMessage.class.getName());
 
 }
 

@@ -18,7 +18,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -156,7 +156,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 	
 		       
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockValueFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockValueFile.class.getName());
 
 }
 	

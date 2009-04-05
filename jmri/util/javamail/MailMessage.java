@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * 
  */
 
@@ -220,5 +220,5 @@ public class MailMessage {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MailMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MailMessage.class.getName());
 }

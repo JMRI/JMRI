@@ -12,7 +12,7 @@ package jmri.jmrit.dispatcher;
  *		TrainInfoFile.java and dispatcher-traininfo.DTD as well as this module.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class TrainInfo {
 
@@ -70,7 +70,7 @@ public class TrainInfo {
      */
 
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrainInfo.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainInfo.class.getName());
 }
 
 /* @(#)TrainInfo.java */

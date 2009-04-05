@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -120,5 +120,5 @@ public class Model {
         return _instance;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Model.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Model.class.getName());
 }

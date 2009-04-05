@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.14 $
+ * @version	    $Revision: 1.15 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -643,6 +643,6 @@ public class LoaderPane extends javax.swing.JPanel {
 
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoaderPane.class.getName());
 
 }

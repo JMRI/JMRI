@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     
@@ -137,5 +137,5 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         nodeArray[numNodes] = null;
     }
 
-    private static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRNodeTrafficController.class.getName());
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRNodeTrafficController.class.getName());
 }

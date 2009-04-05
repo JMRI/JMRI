@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -464,7 +464,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTrafficController.class.getName());
 }
 
 /* @(#)AcelaTrafficController.java */

@@ -14,7 +14,7 @@ import javax.swing.tree.*;
  * Common base for all the SDF macro editors.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 public abstract class SdfMacroEditor extends JPanel {
@@ -101,7 +101,7 @@ public abstract class SdfMacroEditor extends JPanel {
             return null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfMacroEditor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfMacroEditor.class.getName());
 
 }
 /* @(#)SdfMacroEditor.java */

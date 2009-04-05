@@ -10,7 +10,7 @@ import jmri.jmrix.mrc.MrcTrafficController;
 /**
  * Frame displaying (and logging) MRC command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListener {
 
@@ -37,6 +37,6 @@ public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListe
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MrcMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcMonFrame.class.getName());
 
 }

@@ -52,7 +52,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.64 $
+ * @version    $Revision: 1.65 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -755,7 +755,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.64 $
+     * @version    $Revision: 1.65 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1018,6 +1018,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ControlPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());
 }
 

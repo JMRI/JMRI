@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */
@@ -179,6 +179,6 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NewLocoSelPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NewLocoSelPane.class.getName());
 
 }

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class InternalTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -31,6 +31,6 @@ public class InternalTurnoutManagerXml extends jmri.configurexml.AbstractTurnout
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InternalTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalTurnoutManagerXml.class.getName());
 
 }

@@ -24,7 +24,7 @@ import javax.swing.tree.DefaultTreeModel;
  * CVS directories, or files whose name starts with a "."
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CatalogTreeModel extends DefaultTreeModel {
     public CatalogTreeModel() {
@@ -119,6 +119,6 @@ public class CatalogTreeModel extends DefaultTreeModel {
     static final String resourceRoot = "resources";
     static final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CatalogTreeModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeModel.class.getName());
 }
 

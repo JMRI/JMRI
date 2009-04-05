@@ -10,7 +10,7 @@ import java.util.*;
  * debugging tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {
@@ -43,7 +43,7 @@ public class DebugMenu extends JMenu {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebugMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugMenu.class.getName());
 }
 
 

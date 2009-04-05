@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.63 $
+ * @version         $Revision: 1.64 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -920,7 +920,7 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRTrafficController.class.getName());
 }
 
 

@@ -39,11 +39,11 @@ public class Log4JFixture extends java.lang.Object {
                 org.apache.log4j.BasicConfigurator.configure(a);
                 
                 // only log warnings and above
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.WARN);
+                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
             }
 		}
 	}
 
-  	static org.apache.log4j.Category log = null;
+  	static org.apache.log4j.Logger log = null;
 
 }

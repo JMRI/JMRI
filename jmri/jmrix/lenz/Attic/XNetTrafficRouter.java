@@ -13,7 +13,7 @@ package jmri.jmrix.lenz;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.5 $
+ * @version 		$Revision: 2.6 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -93,7 +93,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 	        lastSender=null;
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficRouter.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficRouter.class.getName());
 }
 
 

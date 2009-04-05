@@ -46,7 +46,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -1080,5 +1080,5 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     private boolean _decimal;
     private CbusEventFilterFrame _filterFrame;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusConsoleFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusConsoleFrame.class.getName());
 }

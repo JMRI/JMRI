@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -69,7 +69,7 @@ public class SystemsMenu extends JMenu {
         if (j!=null) add(j);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SystemsMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemsMenu.class.getName());
 }
 
 

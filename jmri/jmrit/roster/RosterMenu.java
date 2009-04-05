@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -118,6 +118,6 @@ public class RosterMenu extends JMenu {
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterMenu.class.getName());
 
 }

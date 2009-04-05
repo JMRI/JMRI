@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -183,7 +183,7 @@ public class SprogReply {
        private boolean _isBoot = false;
        private boolean unsolicited;
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogReply.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogReply.class.getName());
 
 }
 

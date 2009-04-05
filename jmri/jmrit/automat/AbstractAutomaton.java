@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -827,7 +827,7 @@ public class AbstractAutomaton implements Runnable {
         }
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractAutomaton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAutomaton.class.getName());
 }
 
 /* @(#)AbstractAutomaton.java */

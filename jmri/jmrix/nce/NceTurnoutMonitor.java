@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -423,8 +423,8 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceTurnoutMonitor.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(NceTurnoutMonitor.class.getName());
 
 }
 /* @(#)NceTurnoutMonitor.java */

@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class PositionablePoint
@@ -260,6 +260,6 @@ public class PositionablePoint
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionablePoint.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePoint.class.getName());
 
 }

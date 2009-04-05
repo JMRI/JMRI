@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -225,6 +225,6 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI101Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI101Frame.class.getName());
 
 }

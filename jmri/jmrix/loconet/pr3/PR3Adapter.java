@@ -15,7 +15,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -188,5 +188,5 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
     static private PR3Adapter m2Instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PR3Adapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR3Adapter.class.getName());
 }

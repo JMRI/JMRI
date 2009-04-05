@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for oak tree serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -76,7 +76,7 @@ public class SerialTurnout extends AbstractTurnout {
         tNode.setOutputBit(tBit, closed);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

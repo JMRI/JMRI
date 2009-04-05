@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -98,6 +98,6 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 	if (log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInitilizationManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetInitilizationManager.class.getName());
     
 }

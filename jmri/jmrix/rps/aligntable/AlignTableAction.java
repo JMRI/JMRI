@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
  * Note that we only allow one of these right now.
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AlignTableAction extends AbstractAction {
 
@@ -41,7 +41,7 @@ public class AlignTableAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlignTableAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlignTableAction.class.getName());
 }
 
 

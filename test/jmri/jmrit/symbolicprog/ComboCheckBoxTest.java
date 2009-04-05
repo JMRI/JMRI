@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
 
 /**
  * @author			Bob Jacobsen Copyright 2005
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class ComboCheckBoxTest extends TestCase {
 
@@ -121,6 +121,6 @@ public class ComboCheckBoxTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBoxTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboCheckBoxTest.class.getName());
 
 }

@@ -33,7 +33,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -294,6 +294,6 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractBoardProgFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgFrame.class.getName());
 
 }

@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -102,7 +102,7 @@ public class XNetLightManager extends AbstractLightManager {
     }
     static XNetLightManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManager.class.getName());
 
 }
 

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.PerformFilePanel
  */
 public class PerformFilePanelXml implements XmlAdapter {
@@ -54,6 +54,6 @@ public class PerformFilePanelXml implements XmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PerformFilePanelXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PerformFilePanelXml.class.getName());
 
 }

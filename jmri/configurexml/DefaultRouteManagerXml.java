@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class DefaultRouteManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -459,5 +459,5 @@ public class DefaultRouteManagerXml extends AbstractNamedBeanManagerConfigXML {
         InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRouteManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRouteManagerXml.class.getName());
 }

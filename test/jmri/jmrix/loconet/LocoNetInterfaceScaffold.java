@@ -67,7 +67,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 		return listeners.size();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetInterfaceScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetInterfaceScaffold.class.getName());
 
 }
 

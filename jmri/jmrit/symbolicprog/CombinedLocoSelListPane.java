@@ -36,7 +36,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -287,6 +287,6 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     ListSelectionListener mMfgListener;
 
 
-        static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelListPane.class.getName());
+        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelListPane.class.getName());
 
 }

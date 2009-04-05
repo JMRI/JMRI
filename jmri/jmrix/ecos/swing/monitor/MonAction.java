@@ -31,7 +31,7 @@ public class MonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonAction.class.getName());
 
 }
 

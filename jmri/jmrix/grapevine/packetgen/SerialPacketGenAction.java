@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenAction extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class SerialPacketGenAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialPacketGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialPacketGenAction.class.getName());
 }
 
 

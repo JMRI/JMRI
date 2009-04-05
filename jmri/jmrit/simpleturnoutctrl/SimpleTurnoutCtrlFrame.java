@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -410,7 +410,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     Turnout turnout = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTurnoutCtrlFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutCtrlFrame.class.getName());
 
     String newState = "";
 }

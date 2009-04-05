@@ -19,7 +19,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LevelXing objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LevelXingXml implements XmlAdapter {
 
@@ -172,5 +172,5 @@ public class LevelXingXml implements XmlAdapter {
 		p.xingList.add(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LevelXingXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXingXml.class.getName());
 }

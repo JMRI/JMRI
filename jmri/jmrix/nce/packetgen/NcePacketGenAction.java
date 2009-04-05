@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NcePacketGenFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001
- * @version		$Revision: 1.5 $	
+ * @version		$Revision: 1.6 $	
  */
 
 public class NcePacketGenAction extends AbstractAction {
@@ -28,7 +28,7 @@ public class NcePacketGenAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePacketGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenAction.class.getName());
 }
 
 

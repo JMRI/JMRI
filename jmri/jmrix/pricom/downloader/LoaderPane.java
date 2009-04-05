@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.13 $
+ * @version	    $Revision: 1.14 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -647,6 +647,6 @@ public class LoaderPane extends javax.swing.JPanel {
         return buffer;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoaderPane.class.getName());
 
 }

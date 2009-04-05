@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LnLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
 
@@ -36,5 +36,5 @@ public class LnLightManagerXml extends jmri.configurexml.AbstractLightManagerCon
         loadLights(lights);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnLightManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLightManagerXml.class.getName());
 }

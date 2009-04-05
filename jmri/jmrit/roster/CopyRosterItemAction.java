@@ -28,7 +28,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -85,7 +85,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CopyRosterItemAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CopyRosterItemAction.class.getName());
 
     /**
      * Main entry point to run as standalone tool. This doesn't work

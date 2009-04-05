@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -337,5 +337,5 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
 	StringBuffer linesBuffer = new StringBuffer();
 	static private int MAX_LINES = 500 ;
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMonFrame.class.getName());
 }

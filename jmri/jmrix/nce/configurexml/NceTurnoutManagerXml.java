@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class NceTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -34,5 +34,5 @@ public class NceTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManag
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManagerXml.class.getName());
 }

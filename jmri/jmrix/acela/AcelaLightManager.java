@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -126,7 +126,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
     static AcelaLightManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLightManager.class.getName());
 }
 
 /* @(#)AcelaLightManager.java */

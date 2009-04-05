@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005, 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -66,5 +66,5 @@ public class XmlFileValidateAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFileValidateAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileValidateAction.class.getName());
 }

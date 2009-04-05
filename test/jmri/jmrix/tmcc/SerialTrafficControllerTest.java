@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -213,6 +213,6 @@ public class SerialTrafficControllerTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControllerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficControllerTest.class.getName());
 
 }

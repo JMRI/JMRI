@@ -18,6 +18,6 @@ class EasyDccListenerScaffold implements EasyDccListener {
 	EasyDccReply rcvdReply;
 	EasyDccMessage rcvdMsg;
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccListenerScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccListenerScaffold.class.getName());
 
 }

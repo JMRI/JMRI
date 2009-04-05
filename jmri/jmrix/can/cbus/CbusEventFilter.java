@@ -10,7 +10,7 @@ import java.awt.Color;
  * Class to implement filtering of CBUS events.
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CbusEventFilter {
     
@@ -92,5 +92,5 @@ public class CbusEventFilter {
     private int _type;
     private Color _color;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusEventFilter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventFilter.class.getName());
 }

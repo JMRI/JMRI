@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -328,6 +328,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
  	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(RouteEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(RouteEditFrame.class.getName());
 }

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultLogixManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -181,5 +181,5 @@ public class DefaultLogixManagerXml extends AbstractNamedBeanManagerConfigXML {
         InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultLogixManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogixManagerXml.class.getName());
 }

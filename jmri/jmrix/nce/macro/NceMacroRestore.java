@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 
@@ -286,6 +286,6 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceMacroRestore.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceMacroRestore.class.getName());
 }

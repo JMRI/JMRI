@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 
@@ -259,6 +259,6 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceConsistBackup.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceConsistBackup.class.getName());
 }

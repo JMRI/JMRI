@@ -12,7 +12,7 @@ import jmri.jmrix.srcp.SRCPTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SRCPTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -36,5 +36,5 @@ public class SRCPTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMana
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTurnoutManagerXml.class.getName());
 }

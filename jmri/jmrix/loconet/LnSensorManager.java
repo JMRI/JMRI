@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
@@ -99,7 +99,7 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
 	
 	private boolean busy = false;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManager.class.getName());
 
 }
 

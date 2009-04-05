@@ -78,7 +78,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ActiveTrain {
 
@@ -363,7 +363,7 @@ public class ActiveTrain {
 		pcs.removePropertyChangeListener(l);
 		}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveTrain.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveTrain.class.getName());
 }
 
 /* @(#)ActiveTrain.java */

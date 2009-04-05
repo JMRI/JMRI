@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -442,7 +442,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogMessage.class.getName());
 
 }
 

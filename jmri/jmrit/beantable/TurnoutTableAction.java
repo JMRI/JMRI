@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.57 $
+ * @version     $Revision: 1.58 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -682,7 +682,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     private boolean noWarn = false;
     
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableAction.class.getName());
 }
 
 /* @(#)TurnoutTableAction.java */

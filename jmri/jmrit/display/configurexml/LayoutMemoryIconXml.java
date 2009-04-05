@@ -20,7 +20,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -162,5 +162,5 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutMemoryIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutMemoryIconXml.class.getName());
 }

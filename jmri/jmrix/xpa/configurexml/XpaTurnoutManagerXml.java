@@ -11,7 +11,7 @@ import jmri.jmrix.xpa.XpaTurnoutManager;
  * provides a load method here.
  *
  * @author Paul Bender Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XpaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class XpaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManag
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaTurnoutManagerXml.class.getName());
 }

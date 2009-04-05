@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.9 $
+ * @version               $Revision: 2.10 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
@@ -248,6 +248,6 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
            }
      }
 
-        static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetConsistManager.class.getName());
+        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsistManager.class.getName());
 
 }

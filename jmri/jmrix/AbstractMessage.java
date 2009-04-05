@@ -8,7 +8,7 @@ import jmri.util.StringUtil;
  * Add description of class here.
  *
  * @author Bob Jacobsen  Copyright 2007, 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public abstract class AbstractMessage implements Message {
     
@@ -56,6 +56,6 @@ public abstract class AbstractMessage implements Message {
     // contents (private)
     protected int _nDataChars = 0;
 
-    private static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMessage.class.getName());
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMessage.class.getName());
 
 }

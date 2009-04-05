@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -553,7 +553,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessage.class.getName());
 
 }
 

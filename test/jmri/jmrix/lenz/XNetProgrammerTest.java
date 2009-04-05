@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -133,6 +133,6 @@ public class XNetProgrammerTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetProgrammerTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetProgrammerTest.class.getName());
 
 }

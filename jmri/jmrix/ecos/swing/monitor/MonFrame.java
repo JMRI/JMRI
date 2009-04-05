@@ -7,7 +7,7 @@ import jmri.jmrix.ecos.*;
 /** 
  * Frame displaying (and logging) ECOS command messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class MonFrame extends jmri.jmrix.AbstractMonFrame implements EcosListener {
@@ -50,6 +50,6 @@ public class MonFrame extends jmri.jmrix.AbstractMonFrame implements EcosListene
         }
 	}
 	
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonFrame.class.getName());
 
 }

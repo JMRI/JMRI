@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision: 1.3 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -538,7 +538,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 												rb.getString("HeadingSystemName"),
 												rb.getString("HeadingUserName")};
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ListFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListFrame.class.getName());
 	
 }
 

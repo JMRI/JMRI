@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -633,6 +633,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(OperationsSetupFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(OperationsSetupFrame.class.getName());
 }

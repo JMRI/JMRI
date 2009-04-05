@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -275,6 +275,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
     
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SchedulesTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchedulesTableModel.class.getName());
 }
 

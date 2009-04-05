@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -183,7 +183,7 @@ public class SensorTableAction extends AbstractTableAction {
         InstanceManager.sensorManagerInstance().newSensor(sysName.getText().toUpperCase(), user);
     }
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
 }
 
 

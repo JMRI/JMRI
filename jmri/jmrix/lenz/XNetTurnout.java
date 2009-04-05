@@ -99,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.16 $
+ * @version			$Revision: 2.17 $
  */
 
 package jmri.jmrix.lenz;
@@ -651,7 +651,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int mNumber;   // XPressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnout.class.getName());
 
 }
 

@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -128,6 +128,6 @@ public class XmlFileTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFileTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileTest.class.getName());
 
 }

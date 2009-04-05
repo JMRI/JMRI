@@ -7,7 +7,7 @@ import java.util.*;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Kernel {
 	
@@ -150,6 +150,6 @@ public class Kernel {
 	}
 
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(Kernel.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Kernel.class.getName());
 }

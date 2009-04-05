@@ -11,7 +11,7 @@ import jmri.jmrix.can.TrafficController;
  * Frame displaying (and logging) CAN frames
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanListener {
@@ -49,6 +49,6 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanList
         nextLine("R: "+formatted+"\n", l.toString());
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorFrame.class.getName());
 
 }

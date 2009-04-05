@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 
 
@@ -333,5 +333,5 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     com.csvreader.CsvReader measurementInput = null;
     final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebuggerFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebuggerFrame.class.getName());
 }

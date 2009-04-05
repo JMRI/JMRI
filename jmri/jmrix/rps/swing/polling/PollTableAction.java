@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * We only permit one, because notification is not entirely right yet.
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class PollTableAction 			extends AbstractAction {
 
@@ -39,7 +39,7 @@ public class PollTableAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollTableAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollTableAction.class.getName());
 
 }
 

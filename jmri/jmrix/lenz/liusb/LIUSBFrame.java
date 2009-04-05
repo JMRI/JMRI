@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LIUSB interface
  * @author			Paul Bender   Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LIUSBFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -48,6 +48,6 @@ public class LIUSBFrame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LIUSBFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBFrame.class.getName());
 
 }

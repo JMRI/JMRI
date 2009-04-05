@@ -17,7 +17,7 @@ import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapt
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -34,6 +34,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConnectionConfigXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

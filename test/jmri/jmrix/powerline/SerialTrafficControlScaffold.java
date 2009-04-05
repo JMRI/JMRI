@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SerialTrafficControlScaffold extends jmri.jmrix.powerline.cm11.SpecificTrafficController {
@@ -54,6 +54,6 @@ public class SerialTrafficControlScaffold extends jmri.jmrix.powerline.cm11.Spec
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

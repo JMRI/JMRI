@@ -18,7 +18,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class LoadXmlThrottleAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle
@@ -113,14 +113,14 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.17 $
+	 * @version $Revision: 1.18 $
 	 */
 	class ThrottlePrefs extends XmlFile {
 
 	}
 
 	// initialize logging
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(LoadXmlThrottleAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(LoadXmlThrottleAction.class.getName());
 
 }

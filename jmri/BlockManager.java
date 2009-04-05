@@ -25,7 +25,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -89,7 +89,7 @@ public class BlockManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManager.class.getName());
 }
 
 /* @(#)BlockManager.java */

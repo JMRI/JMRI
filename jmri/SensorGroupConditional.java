@@ -72,5 +72,5 @@ public class SensorGroupConditional extends DefaultConditional
 	}
 
 
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorGroupConditional.class.getName());
+static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupConditional.class.getName());
 }

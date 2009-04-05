@@ -36,7 +36,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -299,7 +299,7 @@ import jmri.AbstractTurnout;
      static public int METERINTERVAL = 150;
      static java.util.Timer meterTimer = new java.util.Timer(true);
      
-     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnout.class.getName());
+     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnout.class.getName());
 
  }
 

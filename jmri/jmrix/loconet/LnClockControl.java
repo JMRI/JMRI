@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -300,7 +300,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		}
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnClockControl.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnClockControl.class.getName());
 }
 
 /* @(#)LnClockControl.java */

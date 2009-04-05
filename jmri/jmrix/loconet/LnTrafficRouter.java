@@ -13,7 +13,7 @@ package jmri.jmrix.loconet;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -87,7 +87,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
         return false;
     }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficRouter.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTrafficRouter.class.getName());
 }
 
 

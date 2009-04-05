@@ -23,6 +23,6 @@ public class ComboOnRadioButton extends ComboRadioButtons {
 	}
 
 	// initialize logging	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboOnRadioButton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboOnRadioButton.class.getName());
 
 }

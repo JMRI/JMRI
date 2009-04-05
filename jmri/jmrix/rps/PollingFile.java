@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class PollingFile extends XmlFile {
 
@@ -145,5 +145,5 @@ public class PollingFile extends XmlFile {
     }
     
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollingFile.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollingFile.class.getName());
 }

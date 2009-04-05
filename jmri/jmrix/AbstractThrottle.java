@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -820,6 +820,6 @@ abstract public class AbstractThrottle implements DccThrottle {
 
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottle.class.getName());
 
 }

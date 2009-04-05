@@ -31,7 +31,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
@@ -265,7 +265,7 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IBLnPacketizer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IBLnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

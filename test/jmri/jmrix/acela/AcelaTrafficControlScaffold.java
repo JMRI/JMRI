@@ -60,6 +60,6 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTrafficControlScaffold.class.getName());
 
 }

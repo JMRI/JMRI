@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.57 $
+ * @version     $Revision: 1.58 $
  */
 public class DecoderPro extends Apps {
 
@@ -135,7 +135,7 @@ public class DecoderPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderPro.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro.class.getName());
 }
 
 

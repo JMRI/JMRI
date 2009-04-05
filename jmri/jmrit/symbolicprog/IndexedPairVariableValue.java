@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.8 $
+ * @version  $Revision: 1.9 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -494,7 +494,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.8 $
+     * @version     $Revision: 1.9 $
      */
     public class VarTextField extends JTextField {
 
@@ -558,6 +558,6 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IndexedPairVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedPairVariableValue.class.getName());
 
 }

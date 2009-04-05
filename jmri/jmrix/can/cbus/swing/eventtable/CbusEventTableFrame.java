@@ -30,7 +30,7 @@ import javax.swing.*;
  *
  * @author	Andrew Crosland          (C) 2009
  *
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CbusEventTableFrame extends jmri.util.JmriJFrame {
     
@@ -202,5 +202,5 @@ public class CbusEventTableFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusEventTableFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTableFrame.class.getName());
 }

@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -245,6 +245,6 @@ public class RouteManagerXml extends XmlFile {
     }
     private static String OperationsFileName = "OperationsRouteRoster.xml";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RouteManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteManagerXml.class.getName());
 
 }

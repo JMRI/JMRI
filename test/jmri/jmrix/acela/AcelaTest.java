@@ -38,5 +38,5 @@ public class AcelaTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTest.class.getName());
 }

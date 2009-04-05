@@ -19,7 +19,7 @@ import jmri.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class JythonSiglet extends Siglet {
     Object interp;
@@ -113,7 +113,7 @@ public class JythonSiglet extends Siglet {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JythonSiglet.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JythonSiglet.class.getName());
 
 }
 

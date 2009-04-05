@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -495,7 +495,7 @@ public class SimpleTimebase implements Timebase {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTimebase.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebase.class.getName());
 
 }
 

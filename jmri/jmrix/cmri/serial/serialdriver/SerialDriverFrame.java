@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect C/MRI serial
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
@@ -37,6 +37,6 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverFrame.class.getName());
 
 }

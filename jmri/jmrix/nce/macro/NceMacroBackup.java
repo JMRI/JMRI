@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 
@@ -293,6 +293,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceMacroBackup.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceMacroBackup.class.getName());
 }

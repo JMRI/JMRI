@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller  Copyright (C) 2005
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class PrintAction  extends AbstractAction {
 
@@ -52,5 +52,5 @@ public class PrintAction  extends AbstractAction {
         writer.close();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintAction.class.getName());
 }

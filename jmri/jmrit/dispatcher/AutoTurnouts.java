@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class AutoTurnouts {
@@ -219,7 +219,7 @@ public class AutoTurnouts {
 	}
 	
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AutoTurnouts.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTurnouts.class.getName());
 }
 
 /* @(#)AutoTurnouts.java */

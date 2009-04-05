@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -904,7 +904,7 @@ public class BlockBossLogic extends Siglet {
         return b;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogic.class.getName());
 }
 
 /* @(#)BlockBossLogic.java */

@@ -21,7 +21,7 @@ import jmri.Turnout;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -108,7 +108,7 @@ public class SampleAutomaton extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SampleAutomaton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SampleAutomaton.class.getName());
 
 }
 

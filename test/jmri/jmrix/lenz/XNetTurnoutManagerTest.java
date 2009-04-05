@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 2.3 $
+ * @version         $Revision: 2.4 $
  */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -122,6 +122,6 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManagerTest.class.getName());
 
 }

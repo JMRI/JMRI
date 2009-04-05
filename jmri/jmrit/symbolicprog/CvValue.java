@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -582,6 +582,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvValue.class.getName());
 
 }

@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
@@ -134,6 +134,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePowerManagerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePowerManagerTest.class.getName());
 
 }

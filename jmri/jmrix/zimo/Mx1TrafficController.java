@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -94,7 +94,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      */
     public Mx1CommandStation getCommandStation() { return mCommandStation; }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1TrafficController.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1TrafficController.class.getName());
 }
 
 

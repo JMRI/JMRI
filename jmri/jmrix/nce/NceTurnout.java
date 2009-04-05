@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -236,7 +236,7 @@ public class NceTurnout extends AbstractTurnout {
     
     
  
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnout.class.getName());
 }
 
 /* @(#)NceTurnout.java */

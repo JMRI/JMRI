@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 
@@ -84,6 +84,6 @@ public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
     // The minimal setup for log4J
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLightManagerTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManagerTest.class.getName());
 
 }

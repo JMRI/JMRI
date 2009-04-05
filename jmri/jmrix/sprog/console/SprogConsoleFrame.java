@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * Frame for Sprog Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -544,6 +544,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogConsoleFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogConsoleFrame.class.getName());
     
 }

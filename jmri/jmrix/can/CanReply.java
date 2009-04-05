@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -153,7 +153,7 @@ public class CanReply extends AbstractMRReply {
     private boolean _isExtended;
     private boolean _isRtr;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanMessage.class.getName());
 }
 
 /* @(#)CanReply.java */

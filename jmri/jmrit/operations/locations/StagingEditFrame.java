@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -72,6 +72,6 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		super.saveTrack(track);
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(StagingEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(StagingEditFrame.class.getName());
 }

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.3.1
  */
 public class CbusSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
@@ -38,5 +38,5 @@ public class CbusSensorManagerXml extends jmri.configurexml.AbstractSensorManage
 		mgr.updateAll();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusSensorManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusSensorManagerXml.class.getName());
 }

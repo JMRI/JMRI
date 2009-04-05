@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class LocoTools extends Apps {
 
@@ -75,7 +75,7 @@ public class LocoTools extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoTools.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoTools.class.getName());
 }
 
 

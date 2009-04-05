@@ -37,7 +37,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LevelXing 
@@ -636,6 +636,6 @@ public class LevelXing
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LevelXing.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXing.class.getName());
 
 }

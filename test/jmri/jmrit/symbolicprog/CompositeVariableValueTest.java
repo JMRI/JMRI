@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -308,7 +308,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( CompositeVariableValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

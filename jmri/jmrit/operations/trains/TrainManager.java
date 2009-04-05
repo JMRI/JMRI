@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -434,7 +434,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrainManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManager.class.getName());
 
 }
 

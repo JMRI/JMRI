@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * This routine will remove all cars from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -37,6 +37,6 @@ public class DeleteCarRosterAction extends AbstractAction {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(DeleteCarRosterAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(DeleteCarRosterAction.class.getName());
 }

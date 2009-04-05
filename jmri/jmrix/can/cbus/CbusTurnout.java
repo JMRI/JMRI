@@ -10,7 +10,7 @@ import jmri.jmrix.can.*;
  * Turnout for CBUS connections.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CbusTurnout extends jmri.AbstractTurnout 
                     implements CanListener {
@@ -101,7 +101,7 @@ public class CbusTurnout extends jmri.AbstractTurnout
     
 	protected void turnoutPushbuttonLockout(boolean locked) {}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusTurnout.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusTurnout.class.getName());
 }
 
 /* @(#)CbusTurnout.java */

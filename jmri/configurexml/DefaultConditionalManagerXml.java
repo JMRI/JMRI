@@ -18,7 +18,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -329,5 +329,5 @@ public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfig
         InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultConditionalManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditionalManagerXml.class.getName());
 }

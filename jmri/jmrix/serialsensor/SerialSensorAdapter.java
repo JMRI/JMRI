@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -234,6 +234,6 @@ public class SerialSensorAdapter extends AbstractPortController
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSensorAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorAdapter.class.getName());
 
 }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -475,7 +475,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.13 $
+     * @version     $Revision: 1.14 $
      */
     public class VarTextField extends JTextField {
 
@@ -537,5 +537,5 @@ public class IndexedVariableValue extends VariableValue
    }
 
    // initialize logging
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IndexedVariableValue.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedVariableValue.class.getName());
 }

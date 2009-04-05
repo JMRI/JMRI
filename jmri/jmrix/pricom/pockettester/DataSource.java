@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -369,7 +369,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSource.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DataSource.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager;
  * provides a load method here.
  *
  * @author Paul Bender Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class EliteXNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -35,6 +35,6 @@ public class EliteXNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnou
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetTurnoutManagerXml.class.getName());
 
 }

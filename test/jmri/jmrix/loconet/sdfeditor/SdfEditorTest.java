@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor package.
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SdfEditorTest extends TestCase {
 
@@ -32,6 +32,6 @@ public class SdfEditorTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfEditorTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfEditorTest.class.getName());
 
 }

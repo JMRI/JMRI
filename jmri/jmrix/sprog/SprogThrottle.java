@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -139,6 +139,6 @@ public class SprogThrottle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogThrottle.class.getName());
 
 }

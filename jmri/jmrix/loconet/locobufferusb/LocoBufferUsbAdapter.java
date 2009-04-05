@@ -10,7 +10,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new LocoBuffer-USB
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
@@ -82,5 +82,5 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     }
     static private LocoBufferUsbAdapter m2Instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferUsbAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferUsbAdapter.class.getName());
 }

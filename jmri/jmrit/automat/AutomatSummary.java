@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class AutomatSummary  {
 
@@ -142,7 +142,7 @@ public class AutomatSummary  {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AutomatSummary.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutomatSummary.class.getName());
 }
 
 /* @(#)AutomatSummary.java */

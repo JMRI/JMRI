@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManager
         loadSensors(sensors);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceSensorManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManagerXml.class.getName());
 }

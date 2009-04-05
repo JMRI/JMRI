@@ -23,7 +23,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -621,6 +621,6 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(EnginesEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(EnginesEditFrame.class.getName());
 }

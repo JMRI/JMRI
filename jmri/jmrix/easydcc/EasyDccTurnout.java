@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -101,7 +101,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnout.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTurnout.class.getName());
 
 }
 

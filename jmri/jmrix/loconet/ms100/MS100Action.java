@@ -29,7 +29,7 @@ public class MS100Action 			extends AbstractAction {
 		f.setVisible(true);	
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Action.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Action.class.getName());
 
 }
 

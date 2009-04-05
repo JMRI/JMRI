@@ -21,7 +21,7 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame
@@ -287,6 +287,6 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         openButton     = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOFrame.class.getName());
 
 }

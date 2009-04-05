@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",
@@ -250,5 +250,5 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ResetTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ResetTableModel.class.getName());
 }

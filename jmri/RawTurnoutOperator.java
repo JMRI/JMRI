@@ -52,5 +52,5 @@ public class RawTurnoutOperator extends TurnoutOperator {
 		} catch (TurnoutOperatorException e) { };
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RawTurnoutOperator.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperator.class.getName());
 }

@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -191,7 +191,7 @@ l);
             }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetLight.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLight.class.getName());
 }
 
 /* @(#)XNetLight.java */

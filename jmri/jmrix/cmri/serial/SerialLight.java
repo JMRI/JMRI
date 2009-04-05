@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractNode;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -85,7 +85,7 @@ public class SerialLight extends AbstractLight {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

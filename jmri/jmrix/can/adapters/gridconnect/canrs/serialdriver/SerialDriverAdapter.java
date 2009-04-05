@@ -12,7 +12,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  * <P>
  *
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
@@ -22,6 +22,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     }
     static SerialDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

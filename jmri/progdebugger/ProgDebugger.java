@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.25 $
+ * @version         $Revision: 1.26 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -220,7 +220,7 @@ public class ProgDebugger implements Programmer  {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgDebugger.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgDebugger.class.getName());
 }
 
 /* @(#)ProgDebugger.java */

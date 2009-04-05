@@ -20,7 +20,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
@@ -163,5 +163,5 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
   static ServerFrame self ;
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( ServerFrame.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( ServerFrame.class.getName());
 }

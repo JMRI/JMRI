@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -212,5 +212,5 @@ public class MultiSensorIconFrame extends JmriJFrame {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MultiSensorIconFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIconFrame.class.getName());
 }

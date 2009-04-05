@@ -13,7 +13,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
@@ -245,7 +245,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         return _controller;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiProgrammer.class.getName());
 
 }
 

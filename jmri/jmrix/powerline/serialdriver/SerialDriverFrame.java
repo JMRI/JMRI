@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect SECSI
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
@@ -38,6 +38,6 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverFrame.class.getName());
 
 }

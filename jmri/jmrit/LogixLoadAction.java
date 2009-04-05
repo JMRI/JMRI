@@ -13,7 +13,7 @@ import javax.swing.*;
  * Provide an action to allow Logixs to be loaded disabled when panel file is loaded
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LogixLoadAction extends AbstractAction {
 
@@ -36,5 +36,5 @@ public class LogixLoadAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LogixLoadAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogixLoadAction.class.getName());
 }

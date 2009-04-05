@@ -21,7 +21,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -95,7 +95,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
     }
 
     static private boolean toldYouOnce = false;
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriLocalEntityResolver.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriLocalEntityResolver.class.getName());
 
 }
  

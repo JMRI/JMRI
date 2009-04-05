@@ -32,7 +32,7 @@ import net.java.games.input.*;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TreePanel extends JPanel {
     public TreePanel() {
@@ -285,6 +285,6 @@ public class TreePanel extends JPanel {
 
     JTree dTree;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TreePanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TreePanel.class.getName());
 }
 

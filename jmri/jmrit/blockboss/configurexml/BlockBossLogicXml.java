@@ -25,7 +25,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -200,6 +200,6 @@ public class BlockBossLogicXml implements XmlAdapter {
         log.error("load(Element, Object) called unexpectedly");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogicXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogicXml.class.getName());
 
 }

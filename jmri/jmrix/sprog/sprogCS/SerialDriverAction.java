@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialDriverFrame object
  *
  * @author			Andrew Crosland    Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAction extends AbstractAction  {
 
@@ -28,7 +28,7 @@ public class SerialDriverAction extends AbstractAction  {
 		f.setVisible(true);
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAction.class.getName());
 
 }
 

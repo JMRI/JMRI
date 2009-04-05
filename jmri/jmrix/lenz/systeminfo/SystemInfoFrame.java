@@ -21,7 +21,7 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -203,6 +203,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SystemInfoFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemInfoFrame.class.getName());
 
 }

@@ -40,7 +40,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -384,5 +384,5 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         clear();
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorGroupFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupFrame.class.getName());
 }

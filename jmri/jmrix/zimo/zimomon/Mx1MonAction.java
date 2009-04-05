@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  *       		Mx1MonFrame object.
  *
  * @author		Bob Jacobsen    Copyright (C) 2002
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  *
  * Adapted by Sip Bosch for use with MX-1
  *
@@ -33,7 +33,7 @@ public class Mx1MonAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1MonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1MonAction.class.getName());
 
 }
 

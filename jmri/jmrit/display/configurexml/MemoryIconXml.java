@@ -15,7 +15,7 @@ import java.awt.Color;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -128,5 +128,5 @@ public class MemoryIconXml extends PositionableLabelXml {
             
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconXml.class.getName());
 }

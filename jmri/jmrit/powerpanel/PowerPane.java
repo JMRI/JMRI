@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
@@ -113,6 +113,6 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
     }
 
     PowerManager p = null;
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PowerPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PowerPane.class.getName());
 
 }

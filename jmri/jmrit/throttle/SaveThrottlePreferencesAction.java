@@ -23,7 +23,7 @@ import org.jdom.output.XMLOutputter;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SaveThrottlePreferencesAction extends AbstractAction {
 
@@ -116,7 +116,7 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 
 
 	// initialize logging
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(SaveThrottlePreferencesAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(SaveThrottlePreferencesAction.class.getName());
 
 }

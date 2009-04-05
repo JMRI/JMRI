@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -110,5 +110,5 @@ public class RecreateRosterAction extends AbstractAction {
     }
 
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RecreateRosterAction.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RecreateRosterAction.class.getName());
 }

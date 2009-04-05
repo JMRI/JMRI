@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -286,5 +286,5 @@ public class Block extends jmri.AbstractNamedBean {
         setState(OCCUPIED);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Block.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Block.class.getName());
 }

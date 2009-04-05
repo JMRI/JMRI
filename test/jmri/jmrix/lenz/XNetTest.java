@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class XNetTest extends TestCase {
 
@@ -41,6 +41,6 @@ public class XNetTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTest.class.getName());
 
 }

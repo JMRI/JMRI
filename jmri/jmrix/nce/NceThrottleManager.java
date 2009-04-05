@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * NCE implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 
@@ -52,6 +52,6 @@ public class NceThrottleManager extends AbstractThrottleManager {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
         }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottleManager.class.getName());
 
 }

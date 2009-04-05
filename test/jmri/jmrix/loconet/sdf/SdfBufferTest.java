@@ -13,7 +13,7 @@ import java.io.*;
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
  * 
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SdfBufferTest extends TestCase {
 
@@ -111,6 +111,6 @@ public class SdfBufferTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBufferTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfBufferTest.class.getName());
 
 }

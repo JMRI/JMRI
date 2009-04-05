@@ -11,7 +11,7 @@ package jmri.jmrix.ecos;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -200,7 +200,7 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EcosMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMessage.class.getName());
 }
 
 /* @(#)EcosMessage.java */

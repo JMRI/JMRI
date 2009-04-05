@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -33,6 +33,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConnectionConfigXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

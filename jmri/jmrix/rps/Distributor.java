@@ -9,7 +9,7 @@ import java.util.Vector;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  *
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Distributor {
 
@@ -105,7 +105,7 @@ public class Distributor {
     final private Vector readingListeners = new Vector();
     final private Vector measurementListeners = new Vector();
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Distributor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Distributor.class.getName());
 
     /**
      * Forward the Reading from the Swing thread

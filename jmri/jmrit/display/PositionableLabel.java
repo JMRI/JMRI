@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class PositionableLabel extends JLabel
@@ -523,6 +523,6 @@ public class PositionableLabel extends JLabel
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionableLabel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
 
 }

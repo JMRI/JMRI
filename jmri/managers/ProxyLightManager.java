@@ -13,7 +13,7 @@ import jmri.LightManager;
  * Based on ProxySensorManager
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
@@ -217,7 +217,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyLightManager.class.getName());
 }
 
 /* @(#)ProxyLightManager.java */

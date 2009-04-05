@@ -11,7 +11,7 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  * Frame displaying (and logging) serial command messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -42,6 +42,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine("R: "+l.format()+"\n", l.toString());
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
 
 }

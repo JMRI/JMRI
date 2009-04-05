@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ImportEngines extends Thread {
 	
@@ -304,7 +304,7 @@ public class ImportEngines extends Thread {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ImportEngines.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(ImportEngines.class.getName());
 }
 

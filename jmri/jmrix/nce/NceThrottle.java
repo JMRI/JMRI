@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -335,6 +335,6 @@ public class NceThrottle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottle.class.getName());
 
 }

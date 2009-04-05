@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -237,5 +237,5 @@ public class FnMapPanel extends JPanel {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FnMapPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FnMapPanel.class.getName());
 }

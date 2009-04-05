@@ -372,7 +372,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.
-      getInstance(SprogHexFile.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger
+  .getLogger(SprogHexFile.class.getName());
 
 }

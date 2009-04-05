@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public abstract class MonitorAction extends AbstractAction  {
 
@@ -38,7 +38,7 @@ public abstract class MonitorAction extends AbstractAction  {
 
     abstract void connect(DataListener l);
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorAction.class.getName());
 
 }
 

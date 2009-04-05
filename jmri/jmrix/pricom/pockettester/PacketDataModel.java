@@ -16,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -260,6 +260,6 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         return s.substring(23, s.length()-1);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketDataModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketDataModel.class.getName());
 
 }

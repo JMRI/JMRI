@@ -10,7 +10,7 @@ package jmri.jmrix.sprog;
  * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 abstract public class ActiveFlag {
 
@@ -22,7 +22,7 @@ abstract public class ActiveFlag {
         return flag;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveFlag.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveFlag.class.getName());
 
 }
 

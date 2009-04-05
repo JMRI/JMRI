@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -166,5 +166,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottleManager.class.getName());
 }

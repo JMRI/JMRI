@@ -22,7 +22,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.37 $
+ * @version   $Revision: 1.38 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -856,6 +856,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableTableModel.class.getName());
 
 }

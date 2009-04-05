@@ -227,7 +227,7 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class NceUSB  {
 	
@@ -286,7 +286,7 @@ public class NceUSB  {
      */
 	static public int getUsbSystem() {return usbSystem;}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceUSB.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceUSB.class.getName());
 
 }
 

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -401,7 +401,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Car.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Car.class.getName());
 
 }

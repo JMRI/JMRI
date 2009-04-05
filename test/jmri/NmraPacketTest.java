@@ -240,6 +240,6 @@ public class NmraPacketTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacketTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NmraPacketTest.class.getName());
 
 }

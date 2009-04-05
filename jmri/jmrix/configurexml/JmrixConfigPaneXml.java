@@ -20,7 +20,7 @@ import org.jdom.Element;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -106,6 +106,6 @@ public class JmrixConfigPaneXml implements XmlAdapter {
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GuiLafConfigPaneXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPaneXml.class.getName());
 
 }

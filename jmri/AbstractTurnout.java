@@ -25,7 +25,7 @@ package jmri;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -642,8 +642,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		super.dispose();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(AbstractTurnout.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(AbstractTurnout.class.getName());
 }
 
 /* @(#)AbstractTurnout.java */

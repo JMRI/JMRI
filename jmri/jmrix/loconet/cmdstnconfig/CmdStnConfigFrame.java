@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -304,7 +304,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
   private LnTrafficController tc = null;
 
   // initialize logging
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( CmdStnConfigFrame.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CmdStnConfigFrame.class.getName());
 
   public static void main(String args[]) {
 

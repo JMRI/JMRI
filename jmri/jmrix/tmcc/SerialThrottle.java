@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * over 100 are considered long addresses. 
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialThrottle extends AbstractThrottle
 {
@@ -164,6 +164,6 @@ public class SerialThrottle extends AbstractThrottle
 
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialThrottle.class.getName());
 
 }

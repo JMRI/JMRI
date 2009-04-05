@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -281,6 +281,6 @@ public class DecoderFile extends XmlFile {
     static public String fileLocation = "decoders"+File.separator;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderFile.class.getName());
 
 }

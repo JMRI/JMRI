@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.9 $
+ * @version         $Revision: 2.10 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -129,7 +129,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensor.class.getName());
 
 }
 

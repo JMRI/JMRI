@@ -15,7 +15,7 @@ import java.util.Vector;
  *
  * Description:
  * @author			Bob Jacobsen Copyright 2005
- * @version    $Revision: 1.10 $
+ * @version    $Revision: 1.11 $
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -275,7 +275,7 @@ public class VariableTableModelTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModelTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableTableModelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

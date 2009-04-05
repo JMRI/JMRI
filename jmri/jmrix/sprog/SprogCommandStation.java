@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * Implement CommandStation for SPROG communications.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SprogCommandStation implements CommandStation {
 
@@ -47,7 +47,7 @@ public class SprogCommandStation implements CommandStation {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogCommandStation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCommandStation.class.getName());
 }
 
 /* @(#)SprogCommandStation.java */

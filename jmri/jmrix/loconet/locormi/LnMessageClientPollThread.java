@@ -5,11 +5,11 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 class LnMessageClientPollThread extends Thread{
     LnMessageClient parent = null ;
-   	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClientPollThread.class.getName());
+   	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClientPollThread.class.getName());
 
     LnMessageClientPollThread( LnMessageClient lnParent ){
         parent = lnParent ;

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -251,7 +251,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficController.class.getName());
 }
 
 

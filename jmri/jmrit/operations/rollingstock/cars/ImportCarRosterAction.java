@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
 /**
  * Starts the ImportCars thread
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -26,6 +26,6 @@ public class ImportCarRosterAction extends AbstractAction {
 		mb.start();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ImportCarRosterAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(ImportCarRosterAction.class.getName());
 }

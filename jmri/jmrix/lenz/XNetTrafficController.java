@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.12 $
+ * @version 		$Revision: 2.13 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -214,7 +214,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      */
     public LenzCommandStation getCommandStation() { return mCommandStation; }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficController.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficController.class.getName());
 }
 
 

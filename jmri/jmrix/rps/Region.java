@@ -19,7 +19,7 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Region {
     
@@ -107,7 +107,7 @@ public class Region {
     
     Point3d[] points;
     
-    private final static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Region.class.getName());
+    private final static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Region.class.getName());
 }
 
 /* @(#)Region.java */

@@ -7,7 +7,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
@@ -31,7 +31,7 @@ public class EliteAction 			extends AbstractAction {
 		f.setVisible(true);
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteAction.class.getName());
 
 }
 

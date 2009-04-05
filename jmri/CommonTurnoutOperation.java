@@ -7,7 +7,7 @@ package jmri;
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  * @author John Harper
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
@@ -75,5 +75,5 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 		}
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CommonTurnoutOperation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommonTurnoutOperation.class.getName());
 }

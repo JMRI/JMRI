@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -131,7 +131,7 @@ public class TrafficController implements jmri.CommandStation {
     protected OutputStream ostream = null;
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());
 }
 
 

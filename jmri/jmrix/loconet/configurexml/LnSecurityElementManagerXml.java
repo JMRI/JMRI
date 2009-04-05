@@ -15,7 +15,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -233,6 +233,6 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSecurityElementManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSecurityElementManagerXml.class.getName());
 
 }

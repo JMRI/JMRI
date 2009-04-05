@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public class SdfBuffer {
@@ -109,7 +109,7 @@ public class SdfBuffer {
     // byte[] representation
     byte[] buffer;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBuffer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfBuffer.class.getName());
 
 }
 

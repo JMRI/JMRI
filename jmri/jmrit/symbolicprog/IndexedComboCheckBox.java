@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JCheckBox for indexed CVs
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class IndexedComboCheckBox extends JCheckBox {
 
@@ -80,5 +80,5 @@ public class IndexedComboCheckBox extends JCheckBox {
     }
 
         // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IndexedComboCheckBox.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedComboCheckBox.class.getName());
 }

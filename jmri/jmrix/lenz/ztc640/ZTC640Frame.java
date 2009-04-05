@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via ZTC640 interface
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ZTC640Frame extends jmri.jmrix.SerialPortFrame {
 
@@ -48,6 +48,6 @@ public class ZTC640Frame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ZTC640Frame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640Frame.class.getName());
 
 }

@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * standard, but is used as an expedient here.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SRCPThrottle extends AbstractThrottle
 {
@@ -178,6 +178,6 @@ public class SRCPThrottle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottle.class.getName());
 
 }

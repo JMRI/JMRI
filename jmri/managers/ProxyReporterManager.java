@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -132,7 +132,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyReporterManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyReporterManager.class.getName());
 }
 
 /* @(#)ProxyReporterManager.java */

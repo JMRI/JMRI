@@ -15,7 +15,7 @@ import apps.Apps;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LoadDemoAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
@@ -53,8 +53,8 @@ public class LoadDemoAction extends AbstractAction {
 			
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(LoadDemoAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(LoadDemoAction.class.getName());
 }
 
 /* @(#)RouteCopyAction.java */

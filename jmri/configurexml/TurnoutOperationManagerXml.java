@@ -65,5 +65,5 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     	return elem;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperationManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationManagerXml.class.getName());
 }

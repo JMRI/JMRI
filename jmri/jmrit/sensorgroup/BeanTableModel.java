@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public abstract class BeanTableModel extends AbstractTableModel {
@@ -65,7 +65,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
             return null;
         }
     }
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BeanTableModel.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableModel.class.getName());
 }
 
 

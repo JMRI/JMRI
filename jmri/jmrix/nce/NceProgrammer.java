@@ -15,7 +15,7 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -272,7 +272,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         return _controller;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceProgrammer.class.getName());
 
 }
 

@@ -19,7 +19,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -298,6 +298,6 @@ location.
 
        
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistFile.class.getName());
 
 }

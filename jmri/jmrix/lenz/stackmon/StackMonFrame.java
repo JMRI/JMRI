@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -314,7 +314,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // Register for logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StackMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StackMonFrame.class.getName());
 
 }
 

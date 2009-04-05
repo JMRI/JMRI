@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonModelXml implements XmlAdapter {
@@ -78,6 +78,6 @@ public class CreateButtonModelXml implements XmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CreateButtonModelXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CreateButtonModelXml.class.getName());
 
 }

@@ -9,7 +9,7 @@ package jmri.jmrix.zimo;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *
@@ -153,7 +153,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
         }
       }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1CommandStation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1CommandStation.class.getName());
 
 }
 

@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -1259,6 +1259,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	}
 
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SignalHeadTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadTableAction.class.getName());
 }
 /* @(#)SignalHeadTableAction.java */

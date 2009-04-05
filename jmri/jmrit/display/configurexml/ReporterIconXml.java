@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -87,5 +87,5 @@ public class ReporterIconXml extends PositionableLabelXml {
         p.putLabel(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ReporterIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterIconXml.class.getName());
 }

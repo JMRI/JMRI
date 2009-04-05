@@ -17,7 +17,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -416,6 +416,6 @@ public class PaneProgPaneTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgPaneTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgPaneTest.class.getName());
 
 }

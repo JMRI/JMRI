@@ -13,7 +13,7 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public abstract class AbstractServlet implements Servlet {
@@ -119,5 +119,5 @@ public abstract class AbstractServlet implements Servlet {
         return(Integer.parseInt(tok.nextToken()));
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractServlet.class.getName()); 
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractServlet.class.getName()); 
 }

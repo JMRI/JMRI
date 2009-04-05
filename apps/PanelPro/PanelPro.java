@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class PanelPro extends Apps {
 
@@ -109,7 +109,7 @@ public class PanelPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelPro.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelPro.class.getName());
 }
 
 

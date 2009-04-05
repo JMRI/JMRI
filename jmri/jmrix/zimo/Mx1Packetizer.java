@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -266,7 +266,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
 	}
 
-      	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1Packetizer.class.getName());
+      	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Packetizer.class.getName());
 }
 
 

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class PrintDecoderListAction  extends AbstractAction {
 
@@ -110,5 +110,5 @@ public class PrintDecoderListAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintDecoderListAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintDecoderListAction.class.getName());
 }

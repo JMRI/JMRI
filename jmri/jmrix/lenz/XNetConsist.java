@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.13 $
+ * @version                     $Revision: 2.14 $
  */
 
 package jmri.jmrix.lenz;
@@ -483,6 +483,6 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
         XNetTrafficController.instance().sendXNetMessage(msg,this);
     }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetConsist.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsist.class.getName());
 
 }

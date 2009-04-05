@@ -15,7 +15,7 @@ import org.jdom.*;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -105,6 +105,6 @@ public class NameCheckAction extends AbstractAction {
     
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NameCheckAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NameCheckAction.class.getName());
     
 }

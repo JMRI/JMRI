@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.XNetThrottleManager;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2008
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  */
 
 public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager implements ThrottleManager
@@ -33,6 +33,6 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
      }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetThrottleManager.class.getName());
 }
 

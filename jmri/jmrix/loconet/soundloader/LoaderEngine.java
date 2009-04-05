@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.7 $
+ * @version	    $Revision: 1.8 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -328,6 +328,6 @@ public class LoaderEngine {
     public void dispose() {
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderEngine.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoaderEngine.class.getName());
 
 }

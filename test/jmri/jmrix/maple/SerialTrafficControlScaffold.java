@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 	public SerialTrafficControlScaffold() {
@@ -53,6 +53,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

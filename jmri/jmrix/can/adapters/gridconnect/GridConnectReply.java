@@ -12,7 +12,7 @@ import jmri.jmrix.can.CanReply;
  * 
  * @author                      Andrew Crosland Copyright (C) 2008
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -146,7 +146,7 @@ public class GridConnectReply extends AbstractMRReply {
         return (byte)b;
     }
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GridConnectReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GridConnectReply.class.getName());
 }
 
 /* @(#)GridConnectReply.java */

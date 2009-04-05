@@ -53,6 +53,6 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 		return cmdListeners.size();
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTrafficControlScaffold.class.getName());
 
 }

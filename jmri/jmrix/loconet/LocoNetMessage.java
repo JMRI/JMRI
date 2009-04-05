@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.LnConstants;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -318,7 +318,7 @@ public class LocoNetMessage implements Serializable {
 		static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetMessage.class.getName());
 
 }
 

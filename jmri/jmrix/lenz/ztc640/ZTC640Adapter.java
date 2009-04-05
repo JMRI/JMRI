@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -295,7 +295,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
     }
     static ZTC640Adapter mInstance = null;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ZTC640Adapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640Adapter.class.getName());
 
 }
 

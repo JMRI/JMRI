@@ -14,7 +14,7 @@ import java.util.List;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -121,7 +121,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     static java.util.Hashtable throttleTable = new java.util.Hashtable();
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsBlock.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsBlock.class.getName());
 
 }
 

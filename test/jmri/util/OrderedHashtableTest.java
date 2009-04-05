@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -120,6 +120,6 @@ public class OrderedHashtableTest extends TestCase {
 	    protected void turnoutPushbuttonLockout(boolean locked) {}
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OrderedHashtableTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OrderedHashtableTest.class.getName());
 
 }

@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a XnTcp
  *
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.xntcp;
@@ -29,7 +29,7 @@ public class XnTcpAction 			extends AbstractAction {
 		f.setVisible(true);
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XnTcpAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpAction.class.getName());
 
 }
 

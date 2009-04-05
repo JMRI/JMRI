@@ -14,7 +14,7 @@ import java.util.Vector;
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class HexVariableValueTest extends VariableValueTest {
 
@@ -67,6 +67,6 @@ public class HexVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( HexVariableValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( HexVariableValueTest.class.getName());
 
 }

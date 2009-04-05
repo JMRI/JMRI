@@ -18,7 +18,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -107,6 +107,6 @@ public class NetworkDriverAdapter extends EasyDccPortController {
         return null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NetworkDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
 
 }

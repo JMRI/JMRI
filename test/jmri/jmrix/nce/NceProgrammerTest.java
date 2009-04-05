@@ -16,7 +16,7 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.9 $
+ * @version          $Revision: 1.10 $
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -317,6 +317,6 @@ public class NceProgrammerTest extends TestCase {
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceProgrammerTest.class.getName());
 
 }

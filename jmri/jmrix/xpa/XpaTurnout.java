@@ -10,7 +10,7 @@ import jmri.Turnout;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class XpaTurnout extends AbstractTurnout {
 
@@ -55,7 +55,7 @@ public class XpaTurnout extends AbstractTurnout {
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton PT"+_number);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaTurnout.class.getName());
 
 }
 

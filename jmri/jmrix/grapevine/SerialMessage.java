@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -244,7 +244,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     
     static String colorAsString(int color) { return colors[color]; }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

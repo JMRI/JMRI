@@ -474,6 +474,6 @@ public class ConditionalVariable {
         return super.toString()+" '"+_name+"' type= "+getTypeString()+ ", oper= "+getOpernString()+", not= "+_not;
     }
 
-	static final org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ConditionalVariable.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+		.getLogger(ConditionalVariable.class.getName());
 }

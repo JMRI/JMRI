@@ -16,7 +16,7 @@ import java.util.regex.*;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -218,6 +218,6 @@ public class ProgCheckAction extends AbstractAction {
     
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgCheckAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgCheckAction.class.getName());
     
 }

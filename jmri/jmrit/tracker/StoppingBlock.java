@@ -27,7 +27,7 @@ import jmri.Throttle;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class StoppingBlock {
     
@@ -151,5 +151,5 @@ public class StoppingBlock {
     float slow = 0.3f;
     float fast = 0.6f;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoppingBlock.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoppingBlock.class.getName());
 }

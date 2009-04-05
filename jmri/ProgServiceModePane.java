@@ -33,7 +33,7 @@ import javax.swing.BoxLayout;
  * for more details.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -270,5 +270,5 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgServiceModePane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgServiceModePane.class.getName());
 }

@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class Message extends AbstractMRMessage {
     
@@ -136,7 +136,7 @@ public class Message extends AbstractMRMessage {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Message.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Message.class.getName());
 }
 
 /* @(#)Message.java */

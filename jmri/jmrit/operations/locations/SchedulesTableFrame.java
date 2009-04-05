@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -126,6 +126,6 @@ public class SchedulesTableFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(SchedulesTableFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(SchedulesTableFrame.class.getName());
 }

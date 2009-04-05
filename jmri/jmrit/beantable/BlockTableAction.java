@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -286,7 +286,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
     private boolean noWarn = false;
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

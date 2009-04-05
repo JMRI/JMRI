@@ -35,7 +35,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  */
 
 
@@ -526,5 +526,5 @@ public class Engine implements ReadingListener {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Engine.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Engine.class.getName());
 }

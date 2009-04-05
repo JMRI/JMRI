@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LnSensorTest extends TestCase {
 
@@ -91,7 +91,7 @@ public class LnSensorTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

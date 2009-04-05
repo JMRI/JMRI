@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -107,7 +107,7 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
     }
     static XNetTurnoutManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManager.class.getName());
 
 }
 

@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -287,5 +287,5 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsTrackingPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsTrackingPanel.class.getName());
 }

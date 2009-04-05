@@ -36,7 +36,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PacketPro extends Apps {
 
@@ -66,7 +66,7 @@ public class PacketPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketPro.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketPro.class.getName());
 }
 
 

@@ -13,7 +13,7 @@ import jmri.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -102,7 +102,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         Model.instance().removeRegion(region);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsReporter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporter.class.getName());
  }
 
 /* @(#)AbstractReporter.java */

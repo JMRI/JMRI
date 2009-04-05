@@ -20,7 +20,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
@@ -186,5 +186,5 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
             contents[j]=0x3FFF;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Se8AlmImplementation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Se8AlmImplementation.class.getName());
 }

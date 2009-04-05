@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -119,5 +119,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManagerConfigXML.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

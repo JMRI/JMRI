@@ -20,7 +20,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutTurnoutXml implements XmlAdapter {
 
@@ -262,5 +262,5 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		p.turnoutList.add(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutTurnoutXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnoutXml.class.getName());
 }

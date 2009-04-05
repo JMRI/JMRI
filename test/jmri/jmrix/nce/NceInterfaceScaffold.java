@@ -9,7 +9,7 @@ import java.util.Vector;
  * Stands in for the NceTrafficController class
  * 
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
     class NceInterfaceScaffold extends NceTrafficController {
         public NceInterfaceScaffold() {
@@ -57,6 +57,6 @@ import java.util.Vector;
         }
 
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceInterfaceScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceInterfaceScaffold.class.getName());
 
 }

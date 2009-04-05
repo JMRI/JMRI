@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -598,6 +598,6 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }      
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LV102InternalFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LV102InternalFrame.class.getName());
 
 }

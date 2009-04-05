@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  *  frame containing a Pr3SelectPane object.
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Pr3SelectAction extends AbstractAction {
 
@@ -41,7 +41,7 @@ public class Pr3SelectAction extends AbstractAction {
         f.setVisible(true);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr3SelectAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr3SelectAction.class.getName());
 }
 
 

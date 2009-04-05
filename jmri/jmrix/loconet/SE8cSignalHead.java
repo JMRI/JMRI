@@ -24,7 +24,7 @@ import jmri.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -213,7 +213,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == mNumber+1;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SE8cSignalHead.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8cSignalHead.class.getName());
     
 }
 

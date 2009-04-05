@@ -22,7 +22,7 @@ import jmri.NamedBean;
  * lists; this will cause a recursive invocation when the output changes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class Siglet extends AbstractAutomaton {
 
@@ -71,7 +71,7 @@ public class Siglet extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Siglet.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Siglet.class.getName());
 }
 
 /* @(#)Siglet.java */

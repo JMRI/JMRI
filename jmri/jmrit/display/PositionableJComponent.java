@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -253,5 +253,5 @@ abstract class PositionableJComponent extends JComponent
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionableJComponent.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJComponent.class.getName());
 }

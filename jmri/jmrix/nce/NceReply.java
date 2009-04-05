@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -87,7 +87,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     	}
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceReply.class.getName());
 
 }
 

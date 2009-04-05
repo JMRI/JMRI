@@ -13,7 +13,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -391,7 +391,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // abstract class has no main entry point, test suite
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

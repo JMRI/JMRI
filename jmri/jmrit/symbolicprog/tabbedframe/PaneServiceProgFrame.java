@@ -16,7 +16,7 @@ import org.jdom.Element;
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2002, 2008
- * @version	   $Revision: 1.9 $
+ * @version	   $Revision: 1.10 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
                          implements java.beans.PropertyChangeListener  {
@@ -114,7 +114,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneServiceProgFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneServiceProgFrame.class.getName());
 
 }
 

@@ -13,7 +13,7 @@ import java.util.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SensorGroup {
 
@@ -91,6 +91,6 @@ public class SensorGroup {
     }
 
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorGroup.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroup.class.getName());
 
 }

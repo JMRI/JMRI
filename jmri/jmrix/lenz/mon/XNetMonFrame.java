@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2007
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.23 $
+ * @version         $Revision: 2.24 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -984,6 +984,6 @@ import jmri.jmrix.lenz.XNetConstants;
 		return(text);
         }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMonFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMonFrame.class.getName());
 
 }

@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -116,7 +116,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceOpsModeProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceOpsModeProgrammer.class.getName());
 
 }
 

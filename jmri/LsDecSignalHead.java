@@ -185,6 +185,6 @@ public class LsDecSignalHead extends DefaultSignalHead {
     public void setFlashGreenState(int i) {mFlashGreenState = i;}
     public void setDarkState(int i) {mDarkState = i;}
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LsDecSignalHead.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LsDecSignalHead.class.getName());
     
 }

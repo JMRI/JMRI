@@ -20,5 +20,5 @@ public class NoFeedbackTurnoutOperationConfig extends CommonTurnoutOperationConf
 		super(op);
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NoFeedbackTurnoutOperationConfig.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperationConfig.class.getName());
 }

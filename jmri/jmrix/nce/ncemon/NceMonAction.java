@@ -31,7 +31,7 @@ public class NceMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonAction.class.getName());
 
 }
 

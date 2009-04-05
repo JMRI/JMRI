@@ -95,7 +95,7 @@ public class ImportRosterEngines extends Thread {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ImportRosterEngines.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(ImportRosterEngines.class.getName());
 }
 

@@ -10,7 +10,7 @@ import javax.swing.JComboBox;
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RouteTableActionTest extends TestCase {
 
@@ -45,5 +45,5 @@ public class RouteTableActionTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RouteTableActionTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableActionTest.class.getName());
 }

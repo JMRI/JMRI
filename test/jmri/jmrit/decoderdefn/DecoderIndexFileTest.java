@@ -14,7 +14,7 @@ import java.util.List;
  * Tests for DecoderIndexFile class
  *
  * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class DecoderIndexFileTest extends TestCase {
 
@@ -259,6 +259,6 @@ public class DecoderIndexFileTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    // static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFileTest.class.getName());
+    // static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexFileTest.class.getName());
 
 }

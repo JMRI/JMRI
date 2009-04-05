@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -852,7 +852,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         activate();
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogic.class.getName());
 }
 
 /* @(#)BlockBossFrame.java */

@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -492,6 +492,6 @@ public class DecoderIndexFile extends XmlFile {
 
     static final protected String decoderIndexFileName = "decoderIndex.xml";
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFile.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexFile.class.getName());
 
 }

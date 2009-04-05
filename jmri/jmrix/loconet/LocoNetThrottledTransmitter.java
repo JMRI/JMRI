@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * accuracy that's needed here.
  * 
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
@@ -164,7 +164,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottledTransmitter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetThrottledTransmitter.class.getName());
 
 }
 

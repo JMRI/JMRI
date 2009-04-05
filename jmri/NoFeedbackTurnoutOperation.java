@@ -7,7 +7,7 @@ package jmri;
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback
  * @author John Harper
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
@@ -67,5 +67,5 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 	}
 	
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NoFeedbackTurnoutOperation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperation.class.getName());
 }

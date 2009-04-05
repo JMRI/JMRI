@@ -17,7 +17,7 @@ import org.jdom.Element;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -137,6 +137,6 @@ public class LayoutSensorIconXml implements XmlAdapter {
         p.putSensor(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutSensorIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSensorIconXml.class.getName());
 
 }

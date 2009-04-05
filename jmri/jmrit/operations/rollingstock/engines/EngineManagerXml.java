@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -293,6 +293,6 @@ public class EngineManagerXml extends XmlFile {
     }
     private static String OperationsFileName = "OperationsEngineRoster.xml";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EngineManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineManagerXml.class.getName());
 
 }

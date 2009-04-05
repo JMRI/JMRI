@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.20 $
+ * @version $Revision: 2.21 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -436,7 +436,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		return _controller;
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetProgrammer.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetProgrammer.class.getName());
 
 }
 

@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for TMCC serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -60,7 +60,7 @@ public class SerialTurnout extends AbstractTurnout {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 public class ConnectionStatus {
 
@@ -117,5 +117,5 @@ public class ConnectionStatus {
         pcs.removePropertyChangeListener(l);
     }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConnectionStatus.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionStatus.class.getName());
 }

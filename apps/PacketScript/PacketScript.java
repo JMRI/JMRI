@@ -34,7 +34,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PacketScript extends Apps {
 
@@ -73,7 +73,7 @@ public class PacketScript extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketScript.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketScript.class.getName());
 }
 
 

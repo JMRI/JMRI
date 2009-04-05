@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class OperationsMenu extends JMenu {
     public OperationsMenu(String name) {
@@ -39,7 +39,7 @@ public class OperationsMenu extends JMenu {
             
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OperationsMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsMenu.class.getName());
 }
 
 

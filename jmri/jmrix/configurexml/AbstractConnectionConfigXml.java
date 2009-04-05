@@ -11,7 +11,7 @@ import org.jdom.Attribute;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -124,6 +124,6 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConnectionConfigXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfigXml.class.getName());
 
 }

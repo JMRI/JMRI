@@ -71,5 +71,5 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		myOp.setMaxTries(newMaxTries);
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CommonTurnoutOperationConfig.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommonTurnoutOperationConfig.class.getName());
 }

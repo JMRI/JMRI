@@ -12,7 +12,7 @@ package jmri.jmrix.tmcc;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -76,7 +76,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return (getElement(1)&0xFF)*256+(getElement(2)&0xFF);
     }
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

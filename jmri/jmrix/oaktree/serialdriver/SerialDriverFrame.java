@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect Oak Tree 
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
@@ -37,6 +37,6 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverFrame.class.getName());
 
 }

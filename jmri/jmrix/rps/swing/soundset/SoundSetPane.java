@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for control of the sound speed for the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 
@@ -175,5 +175,5 @@ public class SoundSetPane extends JPanel
         // don't have to do anything
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SoundSetPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundSetPane.class.getName());
 }

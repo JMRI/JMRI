@@ -21,7 +21,7 @@ import javax.sound.*;
  *
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SoundUtil  {
 
@@ -104,5 +104,5 @@ public class SoundUtil  {
         return abAudioData;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SoundUtil.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundUtil.class.getName());
 }

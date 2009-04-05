@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -447,7 +447,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         }
       }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleLightCtrlFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightCtrlFrame.class.getName());
 }
 
 

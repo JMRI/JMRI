@@ -36,5 +36,5 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
 		return null;
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTurnoutOperationXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperationXml.class.getName());
 }

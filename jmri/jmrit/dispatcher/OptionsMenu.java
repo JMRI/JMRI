@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -284,7 +284,7 @@ public class OptionsMenu extends JMenu {
 		layoutScaleBox.setSelectedIndex(dispatcher.getScale()-1);
 	}
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OptionsMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OptionsMenu.class.getName());
 }
 
 /* @(#)OptionsMenu.java */

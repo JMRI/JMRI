@@ -21,7 +21,7 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.6 $
+ * @version 		$Revision: 2.7 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -77,7 +77,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	}
      }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetPacketizer.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetPacketizer.class.getName());
 }
 
 /* @(#)XNetPacketizer.java */

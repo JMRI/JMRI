@@ -40,7 +40,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -396,6 +396,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelTreePane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelTreePane.class.getName());
 
 }

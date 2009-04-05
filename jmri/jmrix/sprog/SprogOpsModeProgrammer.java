@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  *
  * @see             jmri.Programmer
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer  {
 
@@ -92,7 +92,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogOpsModeProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogOpsModeProgrammer.class.getName());
 
 }
 

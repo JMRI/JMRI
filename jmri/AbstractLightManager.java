@@ -8,7 +8,7 @@ package jmri;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -195,7 +195,7 @@ public abstract class AbstractLightManager extends AbstractManager
         return "";
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManager.class.getName());
 }
 
 /* @(#)AbstractLightManager.java */

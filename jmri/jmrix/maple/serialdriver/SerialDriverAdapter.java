@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the maple.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -288,6 +288,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

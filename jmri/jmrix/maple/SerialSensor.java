@@ -8,7 +8,7 @@ import jmri.AbstractSensor;
  * Extend jmri.AbstractSensor for serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -33,7 +33,7 @@ public class SerialSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensor.class.getName());
 
 }
 

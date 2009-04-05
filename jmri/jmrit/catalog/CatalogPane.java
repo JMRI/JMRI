@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
@@ -187,6 +187,6 @@ public class CatalogPane extends JPanel {
         frame.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CatalogPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogPane.class.getName());
 }
 

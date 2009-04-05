@@ -17,7 +17,7 @@ import jmri.Reporter;
  * <P>
  * Description:		Implement Reporter manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class LnReporterManager extends jmri.AbstractReporterManager implements LocoNetListener {
@@ -68,7 +68,7 @@ public class LnReporterManager extends jmri.AbstractReporterManager implements L
     }
     static LnReporterManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnReporterManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterManager.class.getName());
 }
 
 /* @(#)LnReporterManager.java */

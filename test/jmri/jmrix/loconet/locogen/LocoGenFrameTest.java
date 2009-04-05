@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.*;
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenFrame class
  * @author   Bob Jacobsen Copyright 2001, 2003
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 public class LocoGenFrameTest extends TestCase {
 
@@ -60,6 +60,6 @@ public class LocoGenFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoGenFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoGenFrameTest.class.getName());
 
 }

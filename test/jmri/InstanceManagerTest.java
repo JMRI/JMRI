@@ -11,7 +11,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -126,6 +126,6 @@ public class InstanceManagerTest extends TestCase {
         };
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManagerTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManagerTest.class.getName());
 
 }

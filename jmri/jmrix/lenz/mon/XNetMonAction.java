@@ -6,7 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @author			Paul Bender     Copyright (C) 2008
- * @version         $Revision: 2.3 $
+ * @version         $Revision: 2.4 $
  */
 
 package jmri.jmrix.lenz.mon;
@@ -36,7 +36,7 @@ public class XNetMonAction extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMonAction.class.getName());
 
 }
 

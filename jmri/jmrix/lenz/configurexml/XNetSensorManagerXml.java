@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetSensorManager;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class XNetSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -35,6 +35,6 @@ public class XNetSensorManagerXml extends jmri.configurexml.AbstractSensorManage
         loadSensors(sensors);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManagerXml.class.getName());
 
 }

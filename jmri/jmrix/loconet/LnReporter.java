@@ -30,7 +30,7 @@ import jmri.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -132,7 +132,7 @@ import jmri.AbstractReporter;
          // the "+ 1" in the following converts to throttle-visible numbering
          return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
      }
-     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnReporter.class.getName());
+     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporter.class.getName());
 
  }
 

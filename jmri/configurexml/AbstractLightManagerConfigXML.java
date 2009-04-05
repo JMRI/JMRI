@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -217,5 +217,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractLightManagerConfigXML.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManagerConfigXML.class.getName());
 }

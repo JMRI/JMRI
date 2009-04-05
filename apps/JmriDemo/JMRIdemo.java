@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.66 $
+ * @version     $Revision: 1.67 $
  */
 public class JMRIdemo extends Apps {
 
@@ -79,7 +79,7 @@ public class JMRIdemo extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIdemo.class.getName());
 }
 
 

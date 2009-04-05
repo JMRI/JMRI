@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -110,7 +110,7 @@ public class LnSensorAddressTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorAddressTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorAddressTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

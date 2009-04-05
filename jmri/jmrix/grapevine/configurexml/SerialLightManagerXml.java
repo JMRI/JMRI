@@ -15,7 +15,7 @@ import jmri.jmrix.grapevine.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
 
@@ -38,5 +38,5 @@ public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManage
         loadLights(lights);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLightManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManagerXml.class.getName());
 }

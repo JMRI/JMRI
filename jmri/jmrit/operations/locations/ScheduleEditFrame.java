@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -334,6 +334,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
  	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ScheduleEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(ScheduleEditFrame.class.getName());
 }

@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class PositionFile extends XmlFile {
 
@@ -306,5 +306,5 @@ public class PositionFile extends XmlFile {
     }
     
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionFile.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
 }

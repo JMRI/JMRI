@@ -55,7 +55,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -2114,6 +2114,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		+" "+ shortHandConvertDTD(cre.getLoco6Direction());
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceConsistEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceConsistEditFrame.class.getName());
 }

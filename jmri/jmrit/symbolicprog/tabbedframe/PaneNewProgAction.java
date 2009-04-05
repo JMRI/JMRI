@@ -33,7 +33,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PaneNewProgAction extends AbstractAction {
 
@@ -95,7 +95,7 @@ public class PaneNewProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgAction.class.getName());
 
 }
 

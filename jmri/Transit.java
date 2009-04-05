@@ -48,7 +48,7 @@ import java.util.List;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -358,7 +358,7 @@ public class Transit extends AbstractNamedBean
 		return true;
 	}											
 	    
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Transit.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Transit.class.getName());
 	
 }
 

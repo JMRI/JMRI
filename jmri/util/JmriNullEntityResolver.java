@@ -10,7 +10,7 @@ import java.util.Iterator;
  * bypass verification.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -25,7 +25,7 @@ public class JmriNullEntityResolver implements EntityResolver {
         return new InputSource(new java.io.StringReader(""));
     }
 
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriNullEntityResolver.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriNullEntityResolver.class.getName());
 
 }
  

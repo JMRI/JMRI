@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -334,6 +334,6 @@ public class StringUtilTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StringUtilTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StringUtilTest.class.getName());
 
 }

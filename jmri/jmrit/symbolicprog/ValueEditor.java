@@ -30,7 +30,7 @@ import javax.swing.table.TableCellEditor;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
     
@@ -152,5 +152,5 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ValueEditor.class.getName());
 }

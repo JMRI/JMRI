@@ -5,7 +5,7 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz.packetgen;
@@ -37,7 +37,7 @@ public class PacketGenAction 			extends AbstractAction {
 		// connect to the TrafficController
 		f.connect(XNetTrafficController.instance());
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenAction.class.getName());
 }
 
 

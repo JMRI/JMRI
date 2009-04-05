@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -423,6 +423,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EditorTableDataModel.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorTableDataModel.class.getName());
 
 }

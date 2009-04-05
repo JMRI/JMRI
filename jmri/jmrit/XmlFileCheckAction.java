@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, without doing a DTD validation.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005, 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileValidateAction
  */
@@ -66,5 +66,5 @@ public class XmlFileCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFileCheckAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileCheckAction.class.getName());
 }

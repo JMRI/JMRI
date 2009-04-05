@@ -16,7 +16,7 @@ import jmri.jmrix.oaktree.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -466,6 +466,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return (addr);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
 
 }

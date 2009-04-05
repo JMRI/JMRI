@@ -63,7 +63,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -762,6 +762,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedTableVarValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedTableVarValue.class.getName());
 
 }

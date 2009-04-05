@@ -16,7 +16,7 @@ import java.util.Vector;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.23 $
+     * @version         $Revision: 1.24 $
      */
     public class VarComboBox extends JComboBox {
 
@@ -372,6 +372,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnumVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EnumVariableValue.class.getName());
 
 }

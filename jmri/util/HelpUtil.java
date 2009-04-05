@@ -22,7 +22,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class HelpUtil {
@@ -126,5 +126,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
 
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HelpUtil.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HelpUtil.class.getName());
 }

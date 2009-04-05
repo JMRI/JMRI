@@ -138,6 +138,6 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
     // The minimal setup for log4J
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccPowerManagerTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccPowerManagerTest.class.getName());
 	
 }

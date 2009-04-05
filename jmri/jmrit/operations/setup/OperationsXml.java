@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -124,6 +124,6 @@ public class OperationsXml extends XmlFile {
 	}
 	private static String OperationsFileName = "Operations.xml";
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OperationsXml.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsXml.class.getName());
 
 }

@@ -21,7 +21,7 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
@@ -128,5 +128,5 @@ public class CbusEventFilterFrame extends JmriJFrame {
 //    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusEventFilterFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventFilterFrame.class.getName());
 }

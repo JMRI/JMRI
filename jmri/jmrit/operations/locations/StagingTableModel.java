@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class StagingTableModel extends TrackTableModel {
 
@@ -64,6 +64,6 @@ public class StagingTableModel extends TrackTableModel {
     	}
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StagingTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StagingTableModel.class.getName());
 }
 

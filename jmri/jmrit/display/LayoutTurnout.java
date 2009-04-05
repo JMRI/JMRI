@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutTurnout
@@ -1461,6 +1461,6 @@ public class LayoutTurnout
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnout.class.getName());
 
 }

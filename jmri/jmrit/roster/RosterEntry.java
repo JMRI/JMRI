@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -648,6 +648,6 @@ public class RosterEntry {
     static private String _defaultOwner = "";
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntry.class.getName());
 
 }

@@ -66,7 +66,7 @@ public class XmlConfig extends XmlFile
             org.apache.log4j.PropertyConfigurator.configure(logFile);
         } else {
             org.apache.log4j.BasicConfigurator.configure();
-            org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
+            org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
         }
     }
     catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
@@ -87,5 +87,5 @@ public class XmlConfig extends XmlFile
   }
 
   // initialize logging
-  static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlConfig.class.getName());
+  static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlConfig.class.getName());
 }

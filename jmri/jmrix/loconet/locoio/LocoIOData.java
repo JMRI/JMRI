@@ -734,5 +734,5 @@ public class LocoIOData
         v2  = null;
         lim = null;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOData.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOData.class.getName());
 }

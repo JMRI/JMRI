@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -134,6 +134,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyLoco.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IdentifyLoco.class.getName());
 
 }

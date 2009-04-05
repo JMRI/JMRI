@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -124,6 +124,6 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutTest.class.getName());
 
 }

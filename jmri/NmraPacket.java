@@ -49,7 +49,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 public class NmraPacket {
 
@@ -936,7 +936,7 @@ public class NmraPacket {
      */
 
     private NmraPacket() {}
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NmraPacket.class.getName());
 }
 
 

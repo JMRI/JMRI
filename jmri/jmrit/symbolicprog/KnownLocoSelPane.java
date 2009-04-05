@@ -26,7 +26,7 @@ import java.util.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -152,6 +152,6 @@ public class KnownLocoSelPane extends LocoSelPane  {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(KnownLocoSelPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(KnownLocoSelPane.class.getName());
 
 }

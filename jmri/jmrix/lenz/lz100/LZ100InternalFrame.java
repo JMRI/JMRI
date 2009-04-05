@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -288,6 +288,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LZ100Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZ100Frame.class.getName());
 
 }

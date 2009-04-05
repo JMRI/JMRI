@@ -46,7 +46,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -1454,6 +1454,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		}
 	}
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DispatcherFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DispatcherFrame.class.getName());
 
 }

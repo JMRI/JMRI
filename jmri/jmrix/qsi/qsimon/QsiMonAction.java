@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			QsiMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class QsiMonAction 			extends AbstractAction {
@@ -35,7 +35,7 @@ public class QsiMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMonAction.class.getName());
 
 }
 

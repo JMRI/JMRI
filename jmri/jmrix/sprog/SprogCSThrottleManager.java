@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * SPROG Command Station implementation of a ThrottleManager.
  * <P>
  * @author	    Andrew Crosland  Copyright (C) 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
 
@@ -55,6 +55,6 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
         return (num>=100);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogCSThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSThrottleManager.class.getName());
 
 }

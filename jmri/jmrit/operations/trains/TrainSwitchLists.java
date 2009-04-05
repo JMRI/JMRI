@@ -143,6 +143,6 @@ public class TrainSwitchLists extends TrainCommon {
 		Train.printReport(buildFile, "Switch List " + location.getName(), preview, Setup.getFontName(), false);
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(TrainSwitchLists.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(TrainSwitchLists.class.getName());
 }

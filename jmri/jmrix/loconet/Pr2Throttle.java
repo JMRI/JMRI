@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Pr2Throttle extends AbstractThrottle {
     private int addr;
@@ -186,6 +186,6 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr2Throttle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr2Throttle.class.getName());
 
 }

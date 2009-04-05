@@ -31,7 +31,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrackSegment 
@@ -461,6 +461,6 @@ public class TrackSegment
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrackSegment.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());
 
 }

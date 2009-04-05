@@ -15,7 +15,7 @@ import java.io.*;
  * Panel for load/store of RPS setup
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -100,5 +100,5 @@ public class LoadStorePanel extends javax.swing.JPanel {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadStorePanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadStorePanel.class.getName());
 }

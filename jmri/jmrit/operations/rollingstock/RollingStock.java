@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -695,7 +695,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(RollingStock.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(RollingStock.class.getName());
 
 }

@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LocoNetMessageTest extends TestCase {
 
@@ -137,6 +137,6 @@ public class LocoNetMessageTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetMessageTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetMessageTest.class.getName());
 
 }

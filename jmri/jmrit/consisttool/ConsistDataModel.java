@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of consist information.
  * 
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
@@ -137,6 +137,6 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 	      }
         }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistDataModel.class.getName());	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistDataModel.class.getName());	
 
 }

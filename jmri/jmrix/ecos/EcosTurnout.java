@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
@@ -161,7 +161,7 @@ public class EcosTurnout extends AbstractTurnout
 
     
  
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EcosTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnout.class.getName());
 }
 
 /* @(#)EcosTurnout.java */

@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -2017,6 +2017,6 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
     }
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RouteTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -201,6 +201,6 @@ public class ConstantValue extends VariableValue {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConstantValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConstantValue.class.getName());
 
 }

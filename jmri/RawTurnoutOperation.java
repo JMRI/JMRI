@@ -9,7 +9,7 @@ package jmri;
  * to the turnout.
  * This class is based on the NoTurnoutOperation class.
  * @author Paul Bender 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 
@@ -71,5 +71,5 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
 	}
 	
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RawTurnoutOperation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperation.class.getName());
 }

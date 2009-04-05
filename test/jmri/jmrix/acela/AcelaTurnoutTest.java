@@ -141,6 +141,6 @@ public class AcelaTurnoutTest extends jmri.AbstractTurnoutTest {
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnoutTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnoutTest.class.getName());
 
 }

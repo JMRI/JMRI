@@ -10,7 +10,7 @@ package jmri;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -917,7 +917,7 @@ public class DefaultRoute extends AbstractNamedBean
         log.warn("Unexpected call to setState in DefaultRoute.");
         return;
     }    
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRoute.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRoute.class.getName());
     
     
 }
@@ -1007,7 +1007,7 @@ class SetRouteThread extends Thread {
 	}
 	
 	private DefaultRoute r;
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SetRouteThread.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SetRouteThread.class.getName());
 }
 
 /* @(#)DefaultRoute.java */

@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutSignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutSignalHeadIconXml implements XmlAdapter {
 
@@ -185,6 +185,6 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
         p.putSignal(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutSignalHeadIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSignalHeadIconXml.class.getName());
 
 }

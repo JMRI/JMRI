@@ -10,7 +10,7 @@ import jmri.util.StringUtil;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
@@ -145,7 +145,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset+3,s.charAt(3));
         return;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRMessage.class.getName());
 
     public String toString() {
         String s = "";

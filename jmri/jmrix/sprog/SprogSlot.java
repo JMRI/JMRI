@@ -12,7 +12,7 @@ import java.util.Vector;
  * changes in values will result in notification.
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
  public class SprogSlot {
 
@@ -169,7 +169,7 @@ import java.util.Vector;
       return payload[0];
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogSlot.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlot.class.getName());
 }
 
 

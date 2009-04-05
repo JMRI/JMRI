@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -656,7 +656,7 @@ public class Setup {
     
 
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Setup.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Setup.class.getName());
 
 }
 

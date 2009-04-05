@@ -7,7 +7,7 @@ import java.util.Vector;
 /** 
  * Stands in for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NceTrafficControlScaffold extends NceTrafficController {
 	public NceTrafficControlScaffold() {
@@ -53,6 +53,6 @@ public class NceTrafficControlScaffold extends NceTrafficController {
 		return cmdListeners.size();
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficControlScaffold.class.getName());
 
 }

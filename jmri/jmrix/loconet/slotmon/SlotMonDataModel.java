@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -501,6 +501,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotMonDataModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlotMonDataModel.class.getName());
 
 }

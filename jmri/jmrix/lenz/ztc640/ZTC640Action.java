@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a ZTC640
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz.ztc640;
@@ -29,7 +29,7 @@ public class ZTC640Action 			extends AbstractAction {
 		f.setVisible(true);
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ZTC640Action.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640Action.class.getName());
 
 }
 

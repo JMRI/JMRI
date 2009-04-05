@@ -17,7 +17,7 @@ import org.jdom.*;
  * Install decoder definition from URL
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends AbstractAction {
@@ -152,5 +152,5 @@ public class InstallDecoderURLAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstallDecoderURLAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallDecoderURLAction.class.getName());
 }

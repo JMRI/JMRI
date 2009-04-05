@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class HexVariableValue extends DecVariableValue {
 
@@ -57,6 +57,6 @@ public class HexVariableValue extends DecVariableValue {
         }
 
         // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HexVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HexVariableValue.class.getName());
 
 }

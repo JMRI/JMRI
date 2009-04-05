@@ -10,7 +10,7 @@ package jmri.jmrix.mrc;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MrcMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -213,7 +213,7 @@ public class MrcMessage extends jmri.jmrix.AbstractMRMessage {
 
     static protected int LONG_TIMEOUT=180000;  // e.g. for programming options
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MrcMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcMessage.class.getName());
 
 }
 

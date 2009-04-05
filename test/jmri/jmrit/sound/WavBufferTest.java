@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Note:  This makes noise!
  *
  * @author	    Bob Jacobsen  Copyright 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class WavBufferTest extends TestCase {
 
@@ -90,6 +90,6 @@ public class WavBufferTest extends TestCase {
     0x31,0x30, 0x20,0x70, 0x61,0x73, 0x73,0x69, 0x6e,0x67, 0x20,0x63, 0x61,0x70, 0x74,0x75,
     0x72,0x65, 0x00,0x00 
     };
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(WavBufferTest.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBufferTest.class.getName());
 
 }

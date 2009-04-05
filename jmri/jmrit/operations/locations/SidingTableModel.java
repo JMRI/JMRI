@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of sidings used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class SidingTableModel extends TrackTableModel {
 
@@ -64,6 +64,6 @@ public class SidingTableModel extends TrackTableModel {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SidingTableModel.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SidingTableModel.class.getName());
 }
 

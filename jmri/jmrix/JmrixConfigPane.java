@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.48 $
+ * @version	$Revision: 1.49 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -193,6 +193,6 @@ public class JmrixConfigPane extends JPanel {
     
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmrixConfigPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
 }
 

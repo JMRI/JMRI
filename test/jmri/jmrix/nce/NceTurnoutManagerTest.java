@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 
 package jmri.jmrix.nce;
@@ -63,6 +63,6 @@ public class NceTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutManagerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManagerTest.class.getName());
 
 }

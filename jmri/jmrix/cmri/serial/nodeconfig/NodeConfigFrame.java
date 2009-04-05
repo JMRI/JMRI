@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -1055,6 +1055,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
 
 }

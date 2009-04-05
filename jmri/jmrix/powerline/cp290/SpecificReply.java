@@ -11,7 +11,7 @@ import jmri.jmrix.powerline.cp290.Constants;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -120,7 +120,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         return "Recv[" + getNumDataElements() + "]: " + test + "\n";
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificReply.class.getName());
 
 }
 

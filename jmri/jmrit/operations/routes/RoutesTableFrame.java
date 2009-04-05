@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
@@ -125,6 +125,6 @@ public class RoutesTableFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(RoutesTableFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(RoutesTableFrame.class.getName());
 }

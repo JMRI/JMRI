@@ -14,7 +14,7 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.8 $
+ * @version        $Revision: 2.9 $
 */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -159,7 +159,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetOpsModeProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetOpsModeProgrammer.class.getName());
 
 }
 

@@ -7,7 +7,7 @@ import javax.swing.*;
 /* Represents a JComboBox as a JPanel containing just the "off" button
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ComboOffRadioButton extends ComboRadioButtons {
 
@@ -23,6 +23,6 @@ public class ComboOffRadioButton extends ComboRadioButtons {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboOffRadioButton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboOffRadioButton.class.getName());
 
 }

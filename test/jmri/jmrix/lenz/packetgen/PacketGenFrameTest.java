@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  * @author			Bob Jacobsen   Copyright (c) 2001, 2002
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class PacketGenFrameTest extends TestCase {
 
@@ -61,6 +61,6 @@ public class PacketGenFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketGenFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenFrameTest.class.getName());
 
 }

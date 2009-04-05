@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * to execute.  The user can cancel this dialog skipping any resets
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class FactoryResetAction extends AbstractAction {
 
@@ -50,5 +50,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FactoryResetAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FactoryResetAction.class.getName());
 }

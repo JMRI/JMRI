@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -217,7 +217,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificLight.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificLight.class.getName());
 }
 
 /* @(#)SpecificLight.java */

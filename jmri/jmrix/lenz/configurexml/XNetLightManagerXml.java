@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class XNetLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
 
@@ -36,5 +36,5 @@ public class XNetLightManagerXml extends jmri.configurexml.AbstractLightManagerC
         loadLights(lights);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetLightManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManagerXml.class.getName());
 }

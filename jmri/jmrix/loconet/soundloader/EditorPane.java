@@ -20,7 +20,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Pane for editing Digitrax SPJ files
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class EditorPane extends javax.swing.JPanel {
 
@@ -90,6 +90,6 @@ public class EditorPane extends javax.swing.JPanel {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EditorPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorPane.class.getName());
 
 }

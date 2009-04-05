@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionModelXml implements XmlAdapter {
@@ -70,6 +70,6 @@ public class PerformActionModelXml implements XmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PerformActionModelXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PerformActionModelXml.class.getName());
 
 }

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetMessageTest extends TestCase {
 
@@ -92,6 +92,6 @@ public class XNetMessageTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMessageTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessageTest.class.getName());
 
 }

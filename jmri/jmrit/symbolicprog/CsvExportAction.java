@@ -11,7 +11,7 @@ import javax.swing.*;
  * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CsvExportAction  extends AbstractAction {
 
@@ -65,5 +65,5 @@ public class CsvExportAction  extends AbstractAction {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CsvExportAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CsvExportAction.class.getName());
 }

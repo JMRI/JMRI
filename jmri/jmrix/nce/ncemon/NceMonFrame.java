@@ -53,6 +53,6 @@ public class NceMonFrame extends jmri.jmrix.AbstractMonFrame implements NceListe
         }
 	}
 	
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonFrame.class.getName());
 
 }

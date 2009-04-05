@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -124,6 +124,6 @@ public class MemoryFrameAction extends AbstractAction {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryFrameAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryFrameAction.class.getName());
 
 }

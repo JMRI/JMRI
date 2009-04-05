@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.li100.LI100Adapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 2.0 $
+ * @version $Revision: 2.1 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -33,6 +33,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConnectionConfigXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

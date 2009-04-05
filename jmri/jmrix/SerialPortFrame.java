@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 
@@ -109,6 +109,6 @@ abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 // Data members
 	protected SerialPortAdapter adapter = null;
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialPortFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialPortFrame.class.getName());
 
 }

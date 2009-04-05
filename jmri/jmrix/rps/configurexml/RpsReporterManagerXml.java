@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.3.1
  */
 public class RpsReporterManagerXml extends jmri.configurexml.AbstractReporterManagerConfigXML {
@@ -36,5 +36,5 @@ public class RpsReporterManagerXml extends jmri.configurexml.AbstractReporterMan
         loadReporters(reporters);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsReporterManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporterManagerXml.class.getName());
 }

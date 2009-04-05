@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MrcTrafficController extends AbstractMRTrafficController
 	implements MrcInterface {
@@ -99,7 +99,7 @@ public class MrcTrafficController extends AbstractMRTrafficController
         return true;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MrcTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcTrafficController.class.getName());
 }
 
 

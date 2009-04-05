@@ -14,7 +14,7 @@ import java.util.Enumeration;
  * They are displayed in lexical order by human-readable name.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -104,7 +104,7 @@ public abstract class AbstractActionModel {
     static private Class[] classes = null;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractActionModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractActionModel.class.getName());
 
 }
 

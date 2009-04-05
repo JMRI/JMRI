@@ -27,7 +27,7 @@ import java.util.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -320,6 +320,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntryPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryPane.class.getName());
 
 }

@@ -14,7 +14,7 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -371,7 +371,7 @@ public class AcelaAddress {
 		return ("");
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaAddress.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaAddress.class.getName());
 }
 
 /* @(#)AcelaAddress.java */

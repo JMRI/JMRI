@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -92,5 +92,5 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     public DccLocoAddress getActiveAddress() { return activeAddress; }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnPr2ThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPr2ThrottleManager.class.getName());
 }

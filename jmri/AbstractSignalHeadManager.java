@@ -14,7 +14,7 @@ package jmri;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -43,7 +43,7 @@ public class AbstractSignalHeadManager extends AbstractManager
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSignalHeadManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSignalHeadManager.class.getName());
 }
 
 /* @(#)AbstractSignalHeadManager.java */

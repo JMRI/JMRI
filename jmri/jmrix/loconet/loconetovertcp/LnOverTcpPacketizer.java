@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.10 $
+ * @version 		$Revision: 1.11 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -235,7 +235,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
       }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnOverTcpPacketizer.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnOverTcpPacketizer.class.getName());
 }
 
 /* @(#)LnOverTcpPacketizer.java */

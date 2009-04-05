@@ -26,7 +26,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LnSensorAddress {
 
@@ -187,7 +187,7 @@ public class LnSensorAddress {
         return "LS"+(asInt()/16)+letter+digit;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorAddress.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorAddress.class.getName());
 
 }
 

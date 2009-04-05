@@ -8,7 +8,7 @@ import jmri.Memory;
  * Tracks train into memory object
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class MemoryTracker  {
 
@@ -43,5 +43,5 @@ public class MemoryTracker  {
     Memory m;
     Block block;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryTracker.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTracker.class.getName());
 }

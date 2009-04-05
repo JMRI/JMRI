@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutReporterIcon objects.
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
 
@@ -87,5 +87,5 @@ public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
         p.putLabel(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutReporterIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutReporterIconXml.class.getName());
 }

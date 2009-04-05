@@ -23,7 +23,7 @@ import java.io.*;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Dave Duchamp (LayoutEditor version);
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutCoordinateEdit extends JmriJFrame 
@@ -248,6 +248,6 @@ public class LayoutCoordinateEdit extends JmriJFrame
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(LayoutCoordinateEdit.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(LayoutCoordinateEdit.class.getName());
 }

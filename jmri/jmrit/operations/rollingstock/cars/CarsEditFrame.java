@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -736,6 +736,6 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(CarsEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarsEditFrame.class.getName());
 }

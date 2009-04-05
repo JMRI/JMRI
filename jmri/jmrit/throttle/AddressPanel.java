@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -455,7 +455,7 @@ public class AddressPanel extends JInternalFrame {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(AddressPanel.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(AddressPanel.class.getName());
 
 }

@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for SECSI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -81,7 +81,7 @@ public class SerialTurnout extends AbstractTurnout {
         tNode.setOutputBit(tBit, closed);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

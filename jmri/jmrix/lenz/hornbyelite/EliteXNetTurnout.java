@@ -6,7 +6,7 @@
  *                      See XNetTurnout for further documentation.
  * </P>
  * @author			Paul Bender Copyright (C) 2008 
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
@@ -22,7 +22,7 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
                             // 1 on the Elite.
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetTurnout.class.getName());
 
 }
 

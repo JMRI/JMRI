@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -102,5 +102,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractReporterManagerConfigXML.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManagerConfigXML.class.getName());
 }

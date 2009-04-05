@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * SRCP implementation of the CommandStation interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2007, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SRCPCommandStation implements CommandStation {
 
@@ -53,7 +53,7 @@ public class SRCPCommandStation implements CommandStation {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPCommandStation.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPCommandStation.class.getName());
 
 }
 

@@ -11,7 +11,7 @@ import jmri.jmrix.can.*;
  * Turnouts must be manually created.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
@@ -30,7 +30,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             return new CbusTurnout(systemName);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusTurnoutManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusTurnoutManager.class.getName());
 }
 
 /* @(#)CbusTurnoutManager.java */

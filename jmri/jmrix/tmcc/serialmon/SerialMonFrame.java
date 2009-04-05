@@ -10,7 +10,7 @@ import jmri.jmrix.tmcc.SerialTrafficController;
 /**
  * Frame displaying (and logging) TMCC serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -160,6 +160,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
 
 }

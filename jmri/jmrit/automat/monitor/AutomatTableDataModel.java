@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -182,6 +182,6 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
 		AutomatSummary.instance().removePropertyChangeListener(this);
     }
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AutomatTableDataModel.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutomatTableDataModel.class.getName());
 
 }

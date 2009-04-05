@@ -26,7 +26,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -215,6 +215,6 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox setdefault          = new JCheckBox("Restore factory default, including address");  // opsw 20
     JCheckBox exercise            = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SE8Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8Frame.class.getName());
 
 }

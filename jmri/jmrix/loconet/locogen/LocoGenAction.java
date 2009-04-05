@@ -35,7 +35,7 @@ public class LocoGenAction 			extends AbstractAction {
         // connect to the LnTrafficController
         f.connect(LnTrafficController.instance());
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoGenAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoGenAction.class.getName());
 }
 
 

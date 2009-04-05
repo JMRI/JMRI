@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * @see jmri.InstanceManager
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  */
 
@@ -477,5 +477,5 @@ public class LayoutSignalHeadIcon extends LayoutPositionableLabel implements jav
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutSignalHeadIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSignalHeadIcon.class.getName());
 }

@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a ReportFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class ReportAction extends AbstractAction {
 
@@ -31,7 +31,7 @@ public class ReportAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ReportFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReportFrame.class.getName());
 }
 
 /* @(#)ReportAction.java */

@@ -19,7 +19,7 @@ import jmri.jmrix.can.TrafficController;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author			Bob Jacobsen  Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -222,7 +222,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
         return controller;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusProgrammer.class.getName());
 
 }
 

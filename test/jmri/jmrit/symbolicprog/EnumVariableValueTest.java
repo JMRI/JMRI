@@ -15,7 +15,7 @@ import java.util.Vector;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
@@ -177,6 +177,6 @@ public class EnumVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( EnumVariableValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( EnumVariableValueTest.class.getName());
 
 }

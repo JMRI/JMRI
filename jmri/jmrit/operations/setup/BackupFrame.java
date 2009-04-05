@@ -16,7 +16,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for backing up operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class BackupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -109,6 +109,6 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(BackupFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(BackupFrame.class.getName());
 }

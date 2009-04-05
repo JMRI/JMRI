@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CarLoads implements java.beans.PropertyChangeListener {
 	
@@ -248,7 +248,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarLoads.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarLoads.class.getName());
 
 }
 

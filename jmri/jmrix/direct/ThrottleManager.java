@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * sends the first group of function packets.
  *
  * @author	    Bob Jacobsen  Copyright (C) 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
@@ -61,6 +61,6 @@ public class ThrottleManager extends AbstractThrottleManager {
 		currentThrottle = null;
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleManager.class.getName());
 
 }

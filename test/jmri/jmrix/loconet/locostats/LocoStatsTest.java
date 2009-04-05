@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locostats package.
  * @author	Bob Jacobsen Copyright 2001, 2003, 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LocoStatsTest extends TestCase {
 
@@ -30,6 +30,6 @@ public class LocoStatsTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoStatsTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsTest.class.getName());
 
 }

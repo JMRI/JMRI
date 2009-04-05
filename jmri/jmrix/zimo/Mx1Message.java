@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *
@@ -49,7 +49,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     // create messages of a particular form
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1Message.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Message.class.getName());
 
 }
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -399,6 +399,6 @@ public class AppConfigPanel extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AppConfigPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppConfigPanel.class.getName());
 
 }

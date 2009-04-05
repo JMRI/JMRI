@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -329,6 +329,6 @@ public class CarManagerXml extends XmlFile {
     }
     private static String OperationsFileName = "OperationsCarRoster.xml";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManagerXml.class.getName());
 
 }

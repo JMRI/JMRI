@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -157,7 +157,7 @@ public class ProxySensorManager extends AbstractProxyManager
 	public void updateAll() {  };
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxySensorManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxySensorManager.class.getName());
 }
 
 /* @(#)ProxySensorManager.java */

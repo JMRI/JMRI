@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -5655,5 +5655,5 @@ public class LayoutEditor extends JmriJFrame {
 	}
 	
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutEditor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
 }

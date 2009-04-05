@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractNode;
  *              KL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialAddress {
 
@@ -568,7 +568,7 @@ public class SerialAddress {
 		return ("");
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAddress.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

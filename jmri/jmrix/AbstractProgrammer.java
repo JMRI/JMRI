@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -130,7 +130,7 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractProgrammer.class.getName());
 
 }
 

@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class FileUtil {
@@ -79,5 +79,5 @@ public class FileUtil {
     }
 
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FileUtil.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileUtil.class.getName());
 }

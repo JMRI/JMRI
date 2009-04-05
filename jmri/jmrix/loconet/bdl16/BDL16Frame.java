@@ -22,7 +22,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -172,6 +172,6 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox antichatsens          = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
     JCheckBox setdefault            = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BDL16Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BDL16Frame.class.getName());
 
 }

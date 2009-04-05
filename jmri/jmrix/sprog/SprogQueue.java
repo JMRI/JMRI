@@ -8,7 +8,7 @@ import jmri.jmrix.sprog.SprogSlot;
  * DCC Command Station Queue for use with soft command station implementations.
  *
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class SprogQueue {
@@ -163,7 +163,7 @@ public class SprogQueue {
       return (-1);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogQueue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogQueue.class.getName());
 
 }
 

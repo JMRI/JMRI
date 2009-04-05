@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -317,5 +317,5 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutMemoryIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutMemoryIcon.class.getName());
 }

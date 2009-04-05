@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -302,7 +302,7 @@ public class SprogUpdateFrame
       timer.start();
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.
-      getInstance(SprogUpdateFrame.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger
+  .getLogger(SprogUpdateFrame.class.getName());
 
 }

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			XpaConfigureFrame object
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class XpaConfigureAction  extends AbstractAction {
 
@@ -27,7 +27,7 @@ public class XpaConfigureAction  extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaConfigureAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaConfigureAction.class.getName());
 }
 
 

@@ -35,7 +35,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrit.roster.ImportRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -91,7 +91,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ExportRosterItemAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExportRosterItemAction.class.getName());
 
     /**
      * Main entry point to run as standalone tool. This doesn't work

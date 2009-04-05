@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -32,6 +32,6 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		saveTrackButton.setText(rb.getString("SaveYard"));
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(YardEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(YardEditFrame.class.getName());
 }

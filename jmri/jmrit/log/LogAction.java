@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a LogFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LogAction extends AbstractAction {
 
@@ -29,7 +29,7 @@ public class LogAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LogAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogAction.class.getName());
 }
 
 /* @(#)LogAction.java */

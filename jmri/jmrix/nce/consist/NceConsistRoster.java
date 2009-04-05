@@ -42,7 +42,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -428,6 +428,6 @@ public class NceConsistRoster extends XmlFile {
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistRoster.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistRoster.class.getName());
 
 }

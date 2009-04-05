@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class EditorPaneTest extends TestCase {
 
@@ -40,7 +40,7 @@ public class EditorPaneTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EditorPaneTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorPaneTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

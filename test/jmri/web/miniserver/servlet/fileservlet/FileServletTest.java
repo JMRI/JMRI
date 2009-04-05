@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * Tests for the FileServlet class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class FileServletTest extends TestCase {
 
@@ -107,7 +107,7 @@ public class FileServletTest extends TestCase {
         return suite;
     }
 
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FileServletTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileServletTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

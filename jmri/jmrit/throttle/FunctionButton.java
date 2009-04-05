@@ -365,5 +365,5 @@ public class FunctionButton extends JToggleButton implements ActionListener
             log.error("DataConverstionException in setXml: "+ex);
         }
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FunctionButton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionButton.class.getName());
 }

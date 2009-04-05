@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -307,7 +307,7 @@ int gps3()						{// GPS Position Solver
     x0 = x2;  y0 = y2;  z0 = z2			;}//  GPS Position = x0, y0, z0
   return 0					;
 }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash1_0Algorithm.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Ash1_0Algorithm.class.getName());
 
     /**
      * Internal class to handle return value.

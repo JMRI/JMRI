@@ -9,7 +9,7 @@ package jmri.jmrix.pricom.pockettester;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DataSourceAction extends jmri.util.JmriJFrameAction  {
 
@@ -28,7 +28,7 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction  {
       */
     public String getName() { return "jmri.jmrix.pricom.pockettester.DataSource"; }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSourceAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DataSourceAction.class.getName());
 
 }
 

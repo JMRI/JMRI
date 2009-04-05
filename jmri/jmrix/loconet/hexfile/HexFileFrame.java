@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.24 $
+ * @version                     $Revision: 1.25 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -193,6 +193,6 @@ public class HexFileFrame extends JmriJFrame {
     private Thread sinkThread;
     private LnHexFilePort port = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HexFileFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HexFileFrame.class.getName());
 
 }

@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	
@@ -134,5 +134,5 @@ public class PrintEngineRosterAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintEngineRosterAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintEngineRosterAction.class.getName());
 }

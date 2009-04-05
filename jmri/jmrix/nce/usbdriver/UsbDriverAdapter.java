@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -213,6 +213,6 @@ public class UsbDriverAdapter extends NcePortController {
     }
     static UsbDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(UsbDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbDriverAdapter.class.getName());
 
 }

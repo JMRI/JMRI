@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -365,6 +365,6 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(EnginesSetFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(EnginesSetFrame.class.getName());
 }

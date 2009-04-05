@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -45,6 +45,6 @@ public class ThrottleCreationAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleCreationAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleCreationAction.class.getName());
 
 }

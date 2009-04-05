@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class EngineModels implements java.beans.PropertyChangeListener {
 	
@@ -200,7 +200,7 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EngineModels.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineModels.class.getName());
 
 }
 

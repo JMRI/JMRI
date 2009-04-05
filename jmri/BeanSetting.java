@@ -13,7 +13,7 @@ package jmri;
  * change, because it's a function of the current bean setting(s).
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class BeanSetting  {
 
@@ -35,5 +35,5 @@ public class BeanSetting  {
     private NamedBean _bean;
     private int _setting;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BeanSetting.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanSetting.class.getName());
 }

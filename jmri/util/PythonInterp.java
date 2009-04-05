@@ -21,7 +21,7 @@ import java.io.*;
  * on Windows machines where it might normally appear in a filename.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PythonInterp {
 
@@ -181,7 +181,7 @@ public class PythonInterp {
     static String defaultContextFile = "jython/jmri_defaults.py";
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PythonInterp.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PythonInterp.class.getName());
 
 }
 

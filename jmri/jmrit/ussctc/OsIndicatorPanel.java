@@ -17,7 +17,7 @@ import java.util.List;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class OsIndicatorPanel extends BasePanel {
 
@@ -113,6 +113,6 @@ public class OsIndicatorPanel extends BasePanel {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OsIndicatorPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorPanel.class.getName());
 
 }

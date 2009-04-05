@@ -24,7 +24,7 @@ package jmri.jmrix.tmcc;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -275,7 +275,7 @@ public class SerialAddress {
         return nName;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAddress.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

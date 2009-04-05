@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  * 
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BlockManagerXmlTest extends TestCase {
 
@@ -70,7 +70,7 @@ public class BlockManagerXmlTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockManagerXmlTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXmlTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

@@ -11,7 +11,7 @@ package jmri.jmrix;
  * needed.  The length is given by the largest index written so far.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -152,7 +152,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // contents (private)
     private boolean unsolicited;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRReply.class.getName());
 
 }
 

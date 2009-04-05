@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -169,6 +169,6 @@ public class SimpleTimebaseXml implements XmlAdapter {
         log.error("load(Element, Object) called unexpectedly");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTimebaseXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebaseXml.class.getName());
 
 }

@@ -10,7 +10,7 @@ import javax.swing.*;
  * Swing action to get SPROG frimware version
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class SprogVersionAction extends AbstractAction {
@@ -28,7 +28,7 @@ public class SprogVersionAction extends AbstractAction {
 //        f.setVisible(true);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogVersionAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogVersionAction.class.getName());
     
 }
 

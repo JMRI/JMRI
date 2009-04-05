@@ -10,7 +10,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -132,5 +132,5 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
     static private PR2Adapter m2Instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PR2Adapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR2Adapter.class.getName());
 }

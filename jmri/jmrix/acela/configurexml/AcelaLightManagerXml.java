@@ -13,7 +13,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  * <P>
  * @author      Dave Duchamp Copyright (c) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on Loconet example, modified to establish Acela support. 
@@ -39,7 +39,7 @@ public class AcelaLightManagerXml extends jmri.configurexml.AbstractLightManager
         loadLights(lights);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaLightManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLightManagerXml.class.getName());
 }
 
 /* @(#)AcelaLightManagerXml.java */

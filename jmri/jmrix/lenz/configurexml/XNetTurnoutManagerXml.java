@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -35,6 +35,6 @@ public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMana
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManagerXml.class.getName());
 
 }

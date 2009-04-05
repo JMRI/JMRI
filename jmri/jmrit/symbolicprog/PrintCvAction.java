@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003, 2005
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class PrintCvAction  extends AbstractAction {
 
@@ -157,5 +157,5 @@ public class PrintCvAction  extends AbstractAction {
         writer.close();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintCvAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintCvAction.class.getName());
 }

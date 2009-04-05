@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
@@ -175,6 +175,6 @@ public class PollDataModel extends AbstractTableModel
         Distributor.instance().removeMeasurementListener(this);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PollDataModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollDataModel.class.getName());
 
 }

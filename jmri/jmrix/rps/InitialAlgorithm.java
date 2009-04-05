@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class InitialAlgorithm implements Calculator {
 
@@ -278,7 +278,7 @@ boolean gps()						{// GPS Position Solver
   return true					;//     r0 = range offset (rel)
 }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InitialAlgorithm.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InitialAlgorithm.class.getName());
 
 }
 

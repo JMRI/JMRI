@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "DTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class SRCPTurnoutManager extends jmri.AbstractTurnoutManager {
@@ -36,7 +36,7 @@ public class SRCPTurnoutManager extends jmri.AbstractTurnoutManager {
     }
     static SRCPTurnoutManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPTurnoutManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTurnoutManager.class.getName());
 
 }
 

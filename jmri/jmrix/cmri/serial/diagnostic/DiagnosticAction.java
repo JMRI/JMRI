@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class DiagnosticAction 	extends AbstractAction {
 
@@ -31,7 +31,7 @@ public class DiagnosticAction 	extends AbstractAction {
         f.setVisible(true);
     }
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DiagnosticAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DiagnosticAction.class.getName());
 }
 
 /* @(#)DiagnosticAction.java */

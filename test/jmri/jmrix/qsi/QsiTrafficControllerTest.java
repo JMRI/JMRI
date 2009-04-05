@@ -213,7 +213,7 @@ public class QsiTrafficControllerTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiTrafficControllerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiTrafficControllerTest.class.getName());
 
 
 }

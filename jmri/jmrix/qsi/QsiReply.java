@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -145,7 +145,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     // contents (private)
     private boolean _isBoot = false;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiReply.class.getName());
 }
 
 /* @(#)QsiReply.java */

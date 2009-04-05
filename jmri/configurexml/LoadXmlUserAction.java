@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
@@ -34,6 +34,6 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadXmlUserAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlUserAction.class.getName());
 
 }

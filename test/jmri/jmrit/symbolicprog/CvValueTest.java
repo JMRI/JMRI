@@ -15,7 +15,7 @@ import java.util.Vector;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class CvValueTest extends TestCase {
 
@@ -172,7 +172,7 @@ public class CvValueTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

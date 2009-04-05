@@ -45,7 +45,7 @@ import jmri.Turnout;
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author			David Duchamp Copyright (C) 2004, 2007
  * @author			Dan Boudreau Copyright (C) 2007
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -258,7 +258,7 @@ public class SerialTurnout extends AbstractTurnout {
 		}
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * get two JFrame objects.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 abstract public class AbstractFrameAction extends AbstractAction {
@@ -37,7 +37,7 @@ abstract public class AbstractFrameAction extends AbstractAction {
             log.error("Error starting JFrame "+className+": "+ex);
         }
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractFrameAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractFrameAction.class.getName());
 
 }
 /* @(#)AbstractFrameAction.java */

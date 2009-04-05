@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -480,7 +480,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetReply.class.getName());
 
 }
 

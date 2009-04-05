@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
@@ -267,7 +267,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractCanTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractCanTrafficController.class.getName());
 
 }
 

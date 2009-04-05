@@ -24,7 +24,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -385,7 +385,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogSlotManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlotManager.class.getName());
 }
 
 

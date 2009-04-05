@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class OsIndicatorTest extends TestCase {
 
@@ -33,6 +33,6 @@ public class OsIndicatorTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OsIndicatorTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorTest.class.getName());
 
 }

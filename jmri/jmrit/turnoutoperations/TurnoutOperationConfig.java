@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TurnoutOperationConfig extends JPanel {
 
@@ -58,5 +58,5 @@ public class TurnoutOperationConfig extends JPanel {
 		}
 		return config;
 	}
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperationConfig.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationConfig.class.getName());
 }

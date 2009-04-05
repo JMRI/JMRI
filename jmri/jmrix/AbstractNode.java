@@ -10,7 +10,7 @@ import jmri.jmrix.grapevine.*;
  * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public abstract class AbstractNode {
     
@@ -98,5 +98,5 @@ public abstract class AbstractNode {
 
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
     
-    private static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractNode.class.getName());
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNode.class.getName());
 }

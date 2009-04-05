@@ -10,7 +10,7 @@ import javax.sound.sampled.*;
  * Wrap a byte array to provide WAV file functionality
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class WavBuffer {
@@ -141,5 +141,5 @@ public class WavBuffer {
         return buffer;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(WavBuffer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBuffer.class.getName());
 }

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * ConsistToolFrame object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
  public class ConsistToolAction extends AbstractAction {
 
@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 		f.setVisible(true);
 
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistToolAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolAction.class.getName());
 }
 
 

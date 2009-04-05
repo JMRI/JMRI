@@ -19,7 +19,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutBlockManagerXml implements XmlAdapter {
 
@@ -176,5 +176,5 @@ public class LayoutBlockManagerXml implements XmlAdapter {
         InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutBlockManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManagerXml.class.getName());
 }

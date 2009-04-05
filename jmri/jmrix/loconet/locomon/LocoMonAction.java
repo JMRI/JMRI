@@ -35,7 +35,7 @@ public class LocoMonAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoMonAction.class.getName());
 
 }
 

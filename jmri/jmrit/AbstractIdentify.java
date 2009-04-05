@@ -9,7 +9,7 @@ package jmri.jmrit;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -161,6 +161,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractIdentify.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractIdentify.class.getName());
 
 }

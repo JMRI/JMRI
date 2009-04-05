@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via XnTcp interface and comm port
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 Frame by Bob Jacobsen, Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XnTcpFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -48,6 +48,6 @@ public class XnTcpFrame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XnTcpFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpFrame.class.getName());
 
 }

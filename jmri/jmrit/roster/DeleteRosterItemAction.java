@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -115,7 +115,7 @@ public class DeleteRosterItemAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DeleteRosterItemAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DeleteRosterItemAction.class.getName());
 
     /**
      * Main entry point to run as standalone tool. This doesn't work

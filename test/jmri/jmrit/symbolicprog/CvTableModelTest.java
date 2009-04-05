@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CvTableModelTest extends TestCase {
 
@@ -36,6 +36,6 @@ public class CvTableModelTest extends TestCase {
         return suite;
     }
 
-    // static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvTableModelTest.class.getName());
+    // static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvTableModelTest.class.getName());
 
 }

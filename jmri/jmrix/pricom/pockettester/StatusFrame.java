@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -152,6 +152,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StatusFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StatusFrame.class.getName());
 
 }

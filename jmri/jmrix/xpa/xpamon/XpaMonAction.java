@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			xpaMonFrame object
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class XpaMonAction 			extends AbstractAction {
@@ -30,7 +30,7 @@ public class XpaMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMonAction.class.getName());
 
 }
 

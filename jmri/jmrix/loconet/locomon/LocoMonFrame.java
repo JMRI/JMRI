@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.*;
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
 
@@ -47,5 +47,5 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoMonFrame.class.getName());
 }

@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
@@ -59,6 +59,6 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LZ100Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZ100Frame.class.getName());
 
 }

@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class Engine extends RollingStock {
 	
@@ -210,7 +210,7 @@ public class Engine extends RollingStock {
 		return e;
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(Engine.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Engine.class.getName());
 
 }

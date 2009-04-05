@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -396,6 +396,6 @@ public class LayoutEditorXml implements XmlAdapter {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutEditorXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorXml.class.getName());
 
 }

@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -219,6 +219,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			updateLocationCheckboxes();
 	}
  	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(TrainSwitchListEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(TrainSwitchListEditFrame.class.getName());
 }

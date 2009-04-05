@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *  SimpleClockFrame object
  *
  * @author			Dave Duchamp    Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
  
 public class SimpleClockAction extends AbstractAction {
@@ -30,7 +30,7 @@ public class SimpleClockAction extends AbstractAction {
         f.setVisible(true);
      }
      
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleClockAction.class.getName());
 }
 
 /* @(#)SimpleClockAction.java */

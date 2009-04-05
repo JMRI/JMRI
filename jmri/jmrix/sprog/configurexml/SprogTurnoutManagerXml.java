@@ -11,7 +11,7 @@ import jmri.jmrix.sprog.SprogTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMan
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnoutManagerXml.class.getName());
 }

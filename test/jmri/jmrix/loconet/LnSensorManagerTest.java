@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
@@ -123,7 +123,7 @@ public class LnSensorManagerTest extends TestCase  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManagerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

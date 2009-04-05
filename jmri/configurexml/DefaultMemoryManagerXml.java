@@ -9,7 +9,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -39,5 +39,5 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultMemoryManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultMemoryManagerXml.class.getName());
 }

@@ -11,7 +11,7 @@ import javax.swing.*;
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class Sprogv4UpdateAction 	extends SprogUpdateAction {
@@ -38,7 +38,7 @@ public class Sprogv4UpdateAction 	extends SprogUpdateAction {
       }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Sprogv4UpdateAction.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Sprogv4UpdateAction.class.getName());
 
 }
 

@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -223,5 +223,5 @@ public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
 	    }
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SectionManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManagerXml.class.getName());
 }

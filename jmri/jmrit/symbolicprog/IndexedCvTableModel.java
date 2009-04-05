@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -562,5 +562,5 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         _status = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IndexedCvTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedCvTableModel.class.getName());
 }

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
                  implements java.beans.PropertyChangeListener  {
@@ -66,7 +66,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneOpsProgFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneOpsProgFrame.class.getName());
 
 }
 

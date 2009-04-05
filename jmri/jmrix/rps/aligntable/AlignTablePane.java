@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -360,6 +360,6 @@ public class AlignTablePane extends javax.swing.JPanel {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlignTablePane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlignTablePane.class.getName());
 
 }

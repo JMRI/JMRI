@@ -27,7 +27,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -287,8 +287,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		pcs.removePropertyChangeListener(l);
 	}
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(CarLoadEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarLoadEditFrame.class.getName());
 }
 
 final class CarLoadAttributeAction extends AbstractAction {	
@@ -303,6 +303,6 @@ final class CarLoadAttributeAction extends AbstractAction {
     	log.debug("Show attribute quanity");
     	clef.toggleShowQuanity();
     }
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(CarAttributeEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarAttributeEditFrame.class.getName());
 }

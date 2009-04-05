@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PacketGenAction extends AbstractAction {
 
@@ -32,7 +32,7 @@ public class PacketGenAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenAction.class.getName());
 }
 
 

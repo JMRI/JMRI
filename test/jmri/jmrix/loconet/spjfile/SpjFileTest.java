@@ -9,7 +9,7 @@ import jmri.jmrit.Sound;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SpjFileTest extends TestCase {
 
@@ -80,6 +80,6 @@ public class SpjFileTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpjFileTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpjFileTest.class.getName());
 
 }

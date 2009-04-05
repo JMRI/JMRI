@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -989,7 +989,7 @@ public class DefaultLogix extends AbstractNamedBean
         return;
     }
 	
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultLogix.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogix.class.getName());
 }
 
 /* @(#)DefaultLogix.java */

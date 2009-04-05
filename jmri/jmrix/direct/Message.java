@@ -9,7 +9,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -142,7 +142,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Message.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Message.class.getName());
 
 }
 

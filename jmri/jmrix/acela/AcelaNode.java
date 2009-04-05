@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -1116,7 +1116,7 @@ public class AcelaNode extends AbstractNode {
         }
         timeout = 0;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaNode.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaNode.class.getName());
 }
 
 /* @(#)AcelaNode.java */

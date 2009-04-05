@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			StatusFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2008
- * @version		$Revision: 1.1 $	
+ * @version		$Revision: 1.2 $	
  */
 
 public class StatusFrameAction extends AbstractAction {
@@ -28,7 +28,7 @@ public class StatusFrameAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StatusFrameAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StatusFrameAction.class.getName());
 }
 
 

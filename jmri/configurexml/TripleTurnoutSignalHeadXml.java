@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TripleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -91,5 +91,5 @@ public class TripleTurnoutSignalHeadXml extends AbstractNamedBeanManagerConfigXM
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TripleTurnoutSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TripleTurnoutSignalHeadXml.class.getName());
 }

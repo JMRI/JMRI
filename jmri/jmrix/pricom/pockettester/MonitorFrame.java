@@ -8,7 +8,7 @@ package jmri.jmrix.pricom.pockettester;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
@@ -47,7 +47,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
         setTitle(title());
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorFrame.class.getName());
 
 
 }

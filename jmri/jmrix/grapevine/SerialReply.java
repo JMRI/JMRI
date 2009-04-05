@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -99,7 +99,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return SerialMessage.staticFormat(b1, b2, b3, b4);
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialReply.class.getName());
 
 }
 

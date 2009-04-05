@@ -13,7 +13,7 @@ import java.util.List;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -92,7 +92,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CrrInit.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CrrInit.class.getName());
 
 }
 

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			MonitorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MonitorAction 			extends AbstractAction {
 
@@ -33,7 +33,7 @@ public class MonitorAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorAction.class.getName());
 
 }
 

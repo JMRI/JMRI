@@ -29,7 +29,7 @@ import javax.swing.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2003
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.1.5
  */
 public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
@@ -261,5 +261,5 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
 
     JButton updateButton = new JButton("Update");
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoStatsFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsFrame.class.getName());
 }

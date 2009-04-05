@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -306,6 +306,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // table = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogSlotMonDataModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlotMonDataModel.class.getName());
 
 }

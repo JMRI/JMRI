@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
@@ -49,6 +49,6 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadXmlConfigAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlConfigAction.class.getName());
 
 }

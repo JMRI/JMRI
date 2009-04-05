@@ -19,7 +19,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
  * @author	Bob Jacobsen, Copyright 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class FnMapPanelTest extends TestCase {
 
@@ -70,7 +70,7 @@ public class FnMapPanelTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FnMapPanelTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FnMapPanelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

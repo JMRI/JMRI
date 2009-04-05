@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -188,5 +188,5 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
         log.debug("No loco connection, can't process click");
      }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
 }

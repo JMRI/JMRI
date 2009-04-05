@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -164,7 +164,7 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
     }
     static LnHexFilePort mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFilePort.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFilePort.class.getName());
 }
 
 /* @(#)LnHexFilePort.java */

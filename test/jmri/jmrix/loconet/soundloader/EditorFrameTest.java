@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class EditorFrameTest extends TestCase {
 
@@ -48,7 +48,7 @@ public class EditorFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EditorFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorFrameTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

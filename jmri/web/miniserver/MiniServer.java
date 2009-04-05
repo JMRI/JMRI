@@ -30,7 +30,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -147,5 +147,5 @@ public class MiniServer extends NetworkServer {
     public int getPort() {
         return port;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MiniServer.class.getName());    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MiniServer.class.getName());    
 }

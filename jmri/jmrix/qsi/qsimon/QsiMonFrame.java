@@ -10,7 +10,7 @@ import jmri.jmrix.qsi.QsiTrafficController;
 /**
  * Frame displaying (and logging) QSI command messages
  * @author			Bob Jacobsen   Copyright (C) 2007, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
@@ -78,6 +78,6 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
 		nextLine(text+"\n", l.toString());
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMonFrame.class.getName());
 
 }

@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.32 $
+ * @version  $Revision: 1.33 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -319,6 +319,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public CvValue[] usesCVs();
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableValue.class.getName());
 
 }

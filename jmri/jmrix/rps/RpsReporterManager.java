@@ -9,7 +9,7 @@ import jmri.AbstractReporterManager;
  * RPS implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class RpsReporterManager extends AbstractReporterManager {
@@ -30,7 +30,7 @@ public class RpsReporterManager extends AbstractReporterManager {
     
     static RpsReporterManager _instance = null;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsReporterManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporterManager.class.getName());
 
     static { // class initialization
         // now want a ReporterManager always, not just when RPS is created

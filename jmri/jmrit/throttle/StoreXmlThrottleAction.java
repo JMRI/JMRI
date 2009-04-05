@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -90,7 +90,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
 	}
 
 	// initialize logging
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(StoreXmlThrottleAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(StoreXmlThrottleAction.class.getName());
 
 }

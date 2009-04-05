@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, adapt to use for Maple 2008
  *
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -281,7 +281,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return len;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficController.class.getName());
 }
 
 /* @(#)SerialTrafficController.java */

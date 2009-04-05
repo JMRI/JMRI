@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.44 $
+ * @version    $Revision: 1.45 $
  */
 /**
  * @author DSM
@@ -695,7 +695,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     	}
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
     
 }
 

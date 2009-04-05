@@ -84,7 +84,7 @@ package jmri.jmrix.direct;
  * </pre>
  *
  * @author	 Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.8 $
+ * @version  $Revision: 1.9 $
  *
  */
 
@@ -438,7 +438,7 @@ public class MakePacket {
     }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(
       MakePacket.class.getName());
 }
 

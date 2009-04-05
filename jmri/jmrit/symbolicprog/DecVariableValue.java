@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -330,6 +330,6 @@ public class DecVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecVariableValue.class.getName());
 
 }

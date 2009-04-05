@@ -8,7 +8,7 @@ package jmri.jmrix;
  *
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -98,5 +98,5 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     public String handlePortBusy(javax.comm.PortInUseException p,
                             String portName,
-                            org.apache.log4j.Category log);
+                            org.apache.log4j.Logger log);
 }

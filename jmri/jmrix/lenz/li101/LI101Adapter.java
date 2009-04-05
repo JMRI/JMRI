@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI101 on an attached serial comm port.
  * Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 
 public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -296,6 +296,6 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
     }
     static LI101Adapter mInstance = null;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI101Adapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI101Adapter.class.getName());
     
 }

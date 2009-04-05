@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -133,6 +133,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FunctionLabelPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionLabelPane.class.getName());
 
 }

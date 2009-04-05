@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -245,5 +245,5 @@ public class PrintLocationsAction  extends AbstractAction {
    		return s;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintLocationsAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintLocationsAction.class.getName());
 }

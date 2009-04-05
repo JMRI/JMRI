@@ -16,7 +16,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class AlmImplementation implements LocoNetListener {
@@ -174,5 +174,5 @@ public class AlmImplementation implements LocoNetListener {
         for (int i=0; i<length; i++) contents[i]=0x3FFF;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlmImplementation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlmImplementation.class.getName());
 }

@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see jmri.jmrit.XmlFile
  */
 public class CheckProgrammerNames extends TestCase {
@@ -103,6 +103,6 @@ public class CheckProgrammerNames extends TestCase {
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CheckProgrammerNames.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CheckProgrammerNames.class.getName());
     
 }

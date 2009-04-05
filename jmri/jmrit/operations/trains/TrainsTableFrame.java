@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -326,6 +326,6 @@ public class TrainsTableFrame extends OperationsFrame {
         super.dispose();
     }
       
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(TrainsTableFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(TrainsTableFrame.class.getName());
 }

@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.sensorgroup package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SensorGroupTest extends TestCase {
 
@@ -39,6 +39,6 @@ public class SensorGroupTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorGroupTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupTest.class.getName());
 
 }

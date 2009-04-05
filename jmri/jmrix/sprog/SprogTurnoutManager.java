@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 
@@ -35,7 +35,7 @@ public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
     }
     static SprogTurnoutManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnoutManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnoutManager.class.getName());
 
 }
 

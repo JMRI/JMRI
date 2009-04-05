@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * we define a local subclass here for the tests.
  *
  * @author			Bob Jacobsen  Copyright 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class AbstractIdentifyTest extends TestCase {
 
@@ -165,6 +165,6 @@ public class AbstractIdentifyTest extends TestCase {
 		return suite;
 	}
 
-	// static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractIdentifyTest.class.getName());
+	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractIdentifyTest.class.getName());
 
 }

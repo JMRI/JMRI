@@ -61,7 +61,7 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
@@ -370,7 +370,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
         double x, y, z, t, vs;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash2_2Algorithm.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Ash2_2Algorithm.class.getName());
 }
 
 /* @(#)Ash2_2Algorithm.java */

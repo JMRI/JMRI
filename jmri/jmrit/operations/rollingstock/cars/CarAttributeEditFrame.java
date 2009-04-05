@@ -25,7 +25,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -410,8 +410,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		pcs.firePropertyChange(p, old, n);
 	}
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(CarAttributeEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarAttributeEditFrame.class.getName());
 }
 
 final class CarAttributeAction extends AbstractAction {	
@@ -426,6 +426,6 @@ final class CarAttributeAction extends AbstractAction {
     	log.debug("Show attribute quanity");
     	caef.toggleShowQuanity();
     }
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(CarAttributeEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarAttributeEditFrame.class.getName());
 }

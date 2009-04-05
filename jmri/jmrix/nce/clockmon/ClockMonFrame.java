@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -1711,6 +1711,6 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         super.dispose();
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ClockMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonFrame.class.getName());
     
 }

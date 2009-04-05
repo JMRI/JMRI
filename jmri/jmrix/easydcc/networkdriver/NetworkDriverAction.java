@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NetworkDriverFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NetworkDriverAction extends AbstractAction  {
 
@@ -28,7 +28,7 @@ public class NetworkDriverAction extends AbstractAction  {
         f.setVisible(true);
     };
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NetworkDriverAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAction.class.getName());
 
 }
 

@@ -15,7 +15,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.3.1
  */
 public class ConfigToolFrame extends jmri.util.JmriJFrame {
@@ -54,5 +54,5 @@ public class ConfigToolFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConfigToolFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigToolFrame.class.getName());
 }

@@ -36,7 +36,7 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 
 public class LocoIOTableModel
@@ -240,5 +240,5 @@ public class LocoIOTableModel
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModel.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOTableModel.class.getName());
 }

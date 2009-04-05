@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -765,7 +765,7 @@ public class LayoutBlockManager extends AbstractManager {
 	public void turnOffWarning() {warnConnectivity = false;}
 	
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutBlockManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManager.class.getName());
 }
 
 /* @(#)LayoutBlockManager.java */

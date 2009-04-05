@@ -13,7 +13,7 @@ import jmri.SignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialSignalHead extends DefaultSignalHead {
 
@@ -115,7 +115,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSignalHead.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSignalHead.class.getName());
 }
 
 /* @(#)SerialSignalHead.java */

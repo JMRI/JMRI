@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.7 $
+ * @version	 $Revision: 1.8 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -538,7 +538,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 												rb.getString("HeadingSystemName"),
 												rb.getString("HeadingUserName")};
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ListFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListFrame.class.getName());
 	
 }
 

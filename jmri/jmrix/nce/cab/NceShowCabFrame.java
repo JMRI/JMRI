@@ -119,7 +119,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -478,6 +478,6 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 		});
 	}
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceShowCabFrame.class.getName());	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabFrame.class.getName());	
 }
 

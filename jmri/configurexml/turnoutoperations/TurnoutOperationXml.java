@@ -100,5 +100,5 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
     	}
     	return adapter;
     }
-static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperationXml.class.getName());
+static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationXml.class.getName());
 }

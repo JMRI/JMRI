@@ -14,7 +14,7 @@ package jmri.jmrit.decoderdefn;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane
@@ -114,6 +114,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyDecoder.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IdentifyDecoder.class.getName());
 
 }

@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register an AcelaPacketGenFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -34,7 +34,7 @@ public class AcelaPacketGenAction extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaPacketGenAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaPacketGenAction.class.getName());
 }
 
 /* @(#)AcelaPacketGenAction.java */

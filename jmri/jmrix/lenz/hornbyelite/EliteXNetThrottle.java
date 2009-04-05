@@ -17,7 +17,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
@@ -164,6 +164,6 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
     }
 
     // register for notification
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetThrottle.class.getName());
 }
 

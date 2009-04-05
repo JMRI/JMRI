@@ -47,7 +47,7 @@ import jmri.Path;
  *		panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutConnectivity {
 	
@@ -128,7 +128,7 @@ public class LayoutConnectivity {
 	public int getXoverBoundaryType() {return xoverBoundaryType;}
 	public PositionablePoint getAnchor() {return anchor;}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutConnectivity.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutConnectivity.class.getName());
 
 }	
 		

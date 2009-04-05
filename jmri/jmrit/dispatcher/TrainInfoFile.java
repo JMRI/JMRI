@@ -36,7 +36,7 @@ import org.jdom.Attribute;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -257,7 +257,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
     }
 
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrainInfoFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainInfoFile.class.getName());
 }
 
 /* @(#)TrainInfoFile.java */

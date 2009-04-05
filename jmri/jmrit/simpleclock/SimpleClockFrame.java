@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -612,7 +612,7 @@ public class SimpleClockFrame extends JmriJFrame
         super.windowClosing(e);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleClockFrame.class.getName());
 }
 
 /* @(#)SimpleClockFrame.java */

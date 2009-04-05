@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutTurntable
@@ -555,6 +555,6 @@ public class LayoutTurntable
 		}
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutTurntable.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurntable.class.getName());
 
 }

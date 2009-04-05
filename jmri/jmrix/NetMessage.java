@@ -16,7 +16,7 @@ import java.io.Serializable;
  * They may not appear at all...
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public abstract class NetMessage implements Serializable {
@@ -92,7 +92,7 @@ public abstract class NetMessage implements Serializable {
 	private int mOpCode = 0;
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NetMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetMessage.class.getName());
 
 }
 

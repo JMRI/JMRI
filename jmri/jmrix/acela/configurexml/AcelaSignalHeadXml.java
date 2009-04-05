@@ -86,5 +86,5 @@ public class AcelaSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSignalHeadXml.class.getName());
 }

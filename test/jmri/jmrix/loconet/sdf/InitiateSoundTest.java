@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class InitiateSoundTest extends TestCase {
 
@@ -37,6 +37,6 @@ public class InitiateSoundTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InitiateSoundTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InitiateSoundTest.class.getName());
 
 }

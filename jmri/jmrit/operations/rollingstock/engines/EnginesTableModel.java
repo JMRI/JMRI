@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -341,6 +341,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnginesTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EnginesTableModel.class.getName());
 }
 

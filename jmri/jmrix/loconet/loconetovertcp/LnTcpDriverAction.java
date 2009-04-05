@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * LnTcpDriverFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LnTcpDriverAction extends AbstractAction  {
 
@@ -28,7 +28,7 @@ public class LnTcpDriverAction extends AbstractAction  {
         f.setVisible(true);
     };
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTcpDriverAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTcpDriverAction.class.getName());
 
 }
 

@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CarOwners implements java.beans.PropertyChangeListener {
 	
@@ -103,7 +103,7 @@ public class CarOwners implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarOwners.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarOwners.class.getName());
 
 }
 

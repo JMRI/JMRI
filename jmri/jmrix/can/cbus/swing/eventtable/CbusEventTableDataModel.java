@@ -23,7 +23,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -476,5 +476,5 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private String _saveFileName = null;
     private boolean _saved = false;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusEventTableDataModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTableDataModel.class.getName());
 }

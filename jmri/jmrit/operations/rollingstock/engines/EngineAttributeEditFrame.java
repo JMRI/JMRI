@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -339,6 +339,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		pcs.firePropertyChange(p, old, n);
 	}
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(EngineAttributeEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(EngineAttributeEditFrame.class.getName());
 }

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf package.
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SdfTest extends TestCase {
 
@@ -31,6 +31,6 @@ public class SdfTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfTest.class.getName());
 
 }

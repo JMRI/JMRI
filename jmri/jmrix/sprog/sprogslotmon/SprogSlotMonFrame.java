@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -159,6 +159,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
       super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogSlotMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlotMonFrame.class.getName());
 
   }

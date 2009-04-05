@@ -21,7 +21,7 @@ import jmri.InstanceManager;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -63,7 +63,7 @@ public class FacelessApp {
                 org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
+                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
@@ -110,7 +110,7 @@ public class FacelessApp {
 	}
 	
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FacelessApp.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FacelessApp.class.getName());
 }
 
 

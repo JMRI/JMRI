@@ -12,7 +12,7 @@ import java.util.Properties;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 public class Server{
@@ -218,5 +218,5 @@ public class Server{
     }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Server.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Server.class.getName());
 }

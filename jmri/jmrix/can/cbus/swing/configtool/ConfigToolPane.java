@@ -19,7 +19,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {
@@ -99,7 +99,7 @@ public class ConfigToolPane extends JPanel implements CanListener {
         TrafficController.instance().removeCanListener(this);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConfigToolPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigToolPane.class.getName());
 
     /** 
      * Class to build one NamedBean

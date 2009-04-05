@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class Pr3SelectPane extends javax.swing.JPanel implements LocoNetListener {
 
@@ -97,6 +97,6 @@ public class Pr3SelectPane extends javax.swing.JPanel implements LocoNetListener
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr3SelectPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr3SelectPane.class.getName());
 
 }

@@ -15,7 +15,7 @@ import java.io.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class NetworkServer {
@@ -109,5 +109,5 @@ public class NetworkServer {
   protected void setPort(int port) {
     this.port = port;
   }
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NetworkServer.class.getName());    
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkServer.class.getName());    
 }

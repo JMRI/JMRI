@@ -17,7 +17,7 @@ import javax.swing.*;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
@@ -229,6 +229,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SendPacketAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SendPacketAction.class.getName());
 
 }

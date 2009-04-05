@@ -12,7 +12,7 @@ import jmri.jmrix.maple.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SerialSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class SerialSensorManagerXml extends jmri.configurexml.AbstractSensorMana
         loadSensors(sensors);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSensorManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManagerXml.class.getName());
 }

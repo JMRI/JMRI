@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
  * an underlying variable; we return one of these in DecValVariable.getRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
@@ -59,6 +59,6 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVarSlider.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecVarSlider.class.getName());
 
 }

@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -132,6 +132,6 @@ public class LocationsTableFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(LocationsTableFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(LocationsTableFrame.class.getName());
 }

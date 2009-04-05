@@ -16,7 +16,7 @@ import java.util.List;
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class BasePanel extends JPanel implements Constants {
 
@@ -77,6 +77,6 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BasePanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BasePanel.class.getName());
 
 }

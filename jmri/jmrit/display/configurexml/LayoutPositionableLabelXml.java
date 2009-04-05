@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -205,6 +205,6 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         }
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutPositionableLabelXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutPositionableLabelXml.class.getName());
 
 }

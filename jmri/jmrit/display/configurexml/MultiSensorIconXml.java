@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -168,6 +168,6 @@ public class MultiSensorIconXml implements XmlAdapter {
 			le.putMultiSensor(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MultiSensorIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIconXml.class.getName());
 
 }

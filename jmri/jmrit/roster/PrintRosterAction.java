@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
@@ -68,5 +68,5 @@ public class PrintRosterAction  extends AbstractAction {
         writer.close();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintRosterAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRosterAction.class.getName());
 }

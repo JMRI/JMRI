@@ -159,5 +159,5 @@ public class TurnoutOperationFrame extends JDialog {
 		}
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperationFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationFrame.class.getName());
 }

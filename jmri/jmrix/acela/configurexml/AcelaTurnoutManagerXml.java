@@ -12,7 +12,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AcelaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class AcelaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMan
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnoutManagerXml.class.getName());
 }

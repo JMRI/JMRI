@@ -30,7 +30,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -114,7 +114,7 @@ public class SectionManager extends AbstractManager
     }
 	
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SectionManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManager.class.getName());
 }
 
 /* @(#)SectionManager.java */

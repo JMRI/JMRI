@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.12 $
+ * @version 		$Revision: 1.13 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -130,7 +130,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
     protected int transmittedMsgCount = 0;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTrafficController.class.getName());
 }
 
 

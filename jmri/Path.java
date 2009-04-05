@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Path  {
 
@@ -189,5 +189,5 @@ public class Path  {
     private int _toBlockDirection;
     private int _fromBlockDirection;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Path.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Path.class.getName());
 }

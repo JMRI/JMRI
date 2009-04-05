@@ -7,7 +7,7 @@ package jmri;
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
@@ -57,5 +57,5 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
 	}
 	
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTurnoutOperation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperation.class.getName());
 }

@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -149,7 +149,7 @@ public class MemoryTableAction extends AbstractTableAction {
     }
     private boolean noWarn = false;
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTableAction.class.getName());
 }
 
 /* @(#)MemoryTableAction.java */

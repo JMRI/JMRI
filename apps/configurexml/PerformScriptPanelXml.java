@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptPanelXml implements XmlAdapter {
@@ -54,6 +54,6 @@ public class PerformScriptPanelXml implements XmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PerformScriptPanelXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PerformScriptPanelXml.class.getName());
 
 }

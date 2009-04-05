@@ -6,7 +6,7 @@ package jmri.jmrix.acela;
  * Contains the data payload of a Acela reply packet
  *
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -34,7 +34,7 @@ public class AcelaReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaReply.class.getName());
 }
 
 /* @(#)AcelaReply.java */

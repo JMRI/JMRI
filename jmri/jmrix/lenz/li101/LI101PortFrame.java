@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LI101 interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 public class LI101PortFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -48,6 +48,6 @@ public class LI101PortFrame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI101Frame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI101Frame.class.getName());
 
 }

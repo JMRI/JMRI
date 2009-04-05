@@ -47,7 +47,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.39 $
+ * @version	$Revision: 1.40 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -545,6 +545,6 @@ public class Roster extends XmlFile {
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());
 
 }

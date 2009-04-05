@@ -12,7 +12,7 @@ import jmri.*;
  *
  * Description:	    tests for the SerialTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -63,6 +63,6 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManagerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

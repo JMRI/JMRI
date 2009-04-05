@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * Tests for the XmlFile class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class ActiveSystemFlagTest extends TestCase {
 
@@ -44,6 +44,6 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveSystemFlagTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveSystemFlagTest.class.getName());
 
 }

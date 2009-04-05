@@ -12,7 +12,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 
@@ -110,6 +110,6 @@ public class ProgOpsModePane extends javax.swing.JPanel {
     public void dispose() {
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgOpsModePane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgOpsModePane.class.getName());
 
 }

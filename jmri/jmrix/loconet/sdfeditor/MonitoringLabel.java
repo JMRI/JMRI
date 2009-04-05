@@ -9,7 +9,7 @@ import java.awt.FlowLayout;
  * parameter messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class MonitoringLabel extends javax.swing.JLabel implements java.beans.PropertyChangeListener {
 
@@ -23,6 +23,6 @@ public class MonitoringLabel extends javax.swing.JLabel implements java.beans.Pr
         setText(evt.getNewValue().toString());
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitoringLabel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitoringLabel.class.getName());
 
 }

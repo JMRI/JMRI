@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.LnConstants;
 /**
  * Tests for the LocoStatsFrame class
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LocoStatsFrameTest extends TestCase {
 
@@ -97,5 +97,5 @@ public class LocoStatsFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoStatsFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsFrameTest.class.getName());
 }

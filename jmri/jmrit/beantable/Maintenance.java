@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class Maintenance
@@ -1306,7 +1306,7 @@ public class Maintenance
         dialog.setVisible(true);
     }
 
-	static final org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Maintenance.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(Maintenance.class.getName());
 }
 

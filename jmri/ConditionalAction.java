@@ -422,6 +422,6 @@ public class ConditionalAction {
 //                  ")  type= "+getTypeString(t));
         return "";
     }
-	static final org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ConditionalAction.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(ConditionalAction.class.getName());
 }

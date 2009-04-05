@@ -24,7 +24,7 @@ import javax.swing.*;
  * items (Dave Duchamp 2007-2008).
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
 
@@ -110,6 +110,6 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
 
     JButton readButton = new JButton("Read");
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ClockMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonFrame.class.getName());
 
 }

@@ -14,7 +14,7 @@ import jmri.jmrix.zimo.Mx1Message;
 
  * @author			Bob Jacobsen   Copyright (C) 2002
 
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
 
  *
 
@@ -89,7 +89,7 @@ import jmri.jmrix.zimo.Mx1Message;
 
 
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1MonFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1MonFrame.class.getName());
 
 
 

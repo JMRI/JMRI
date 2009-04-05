@@ -21,7 +21,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -118,7 +118,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SampleAutomaton3.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SampleAutomaton3.class.getName());
 
 }
 

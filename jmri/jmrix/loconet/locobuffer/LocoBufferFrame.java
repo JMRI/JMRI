@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect LocoNet via LocoBuffer interface and comm port
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -49,6 +49,6 @@ public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferFrame.class.getName());
 
 }

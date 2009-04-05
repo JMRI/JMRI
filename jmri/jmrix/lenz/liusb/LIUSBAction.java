@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a LIUSB
  *
  * @author			Paul Bender    Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.liusb;
@@ -29,7 +29,7 @@ public class LIUSBAction 			extends AbstractAction {
 		f.setVisible(true);
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LIUSBAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBAction.class.getName());
 
 }
 

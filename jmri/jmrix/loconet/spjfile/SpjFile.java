@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 
 public class SpjFile {
@@ -611,7 +611,7 @@ public class SpjFile {
         }
     }
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpjFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpjFile.class.getName());
 
 }
 

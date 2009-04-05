@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a CbusConsoleFrame object
  *
  * @author			Andrew Crosland    Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CbusConsoleAction extends AbstractAction {
 
@@ -27,7 +27,7 @@ public class CbusConsoleAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusConsoleAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusConsoleAction.class.getName());
 }
 
 

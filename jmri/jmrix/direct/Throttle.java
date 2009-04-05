@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Throttle extends AbstractThrottle
 {
@@ -138,6 +138,6 @@ public class Throttle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Throttle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Throttle.class.getName());
 
 }

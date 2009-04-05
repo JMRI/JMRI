@@ -26,7 +26,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1024,7 +1024,7 @@ public class DefaultConditional extends AbstractNamedBean
 	}
 
 	
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultConditional.class.getName());
+static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */

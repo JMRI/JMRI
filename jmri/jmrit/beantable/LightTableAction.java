@@ -37,7 +37,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -1123,6 +1123,6 @@ public class LightTableAction extends AbstractTableAction {
     }
     
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LightTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightTableAction.class.getName());
 }
 /* @(#)LightTableAction.java */

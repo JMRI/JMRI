@@ -16,7 +16,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Reading {
 
@@ -97,7 +97,7 @@ public class Reading {
      */
     public Object getRawData() {return rawData;}
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Reading.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Reading.class.getName());
 
     Object rawData;
 }

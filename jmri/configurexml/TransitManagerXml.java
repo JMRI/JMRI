@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TransitManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -160,5 +160,5 @@ public class TransitManagerXml extends AbstractNamedBeanManagerConfigXML {
 	    }
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TransitManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitManagerXml.class.getName());
 }

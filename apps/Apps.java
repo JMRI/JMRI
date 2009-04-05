@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.80 $
+ * @version     $Revision: 1.81 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -655,7 +655,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.WARN);
+                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
@@ -729,7 +729,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     static public String startupInfo(String program) {
     	log.info(ignore);
-        Enumeration e = org.apache.log4j.Category.getRoot().getAllAppenders();
+        Enumeration e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
         while ( e.hasMoreElements() ) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
             if ( a instanceof org.apache.log4j.RollingFileAppender ) {
@@ -754,7 +754,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     static protected String ignore ="****** Ignore messages above this line *******";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Apps.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps.class.getName());
     
 }
 

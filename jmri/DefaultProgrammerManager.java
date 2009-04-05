@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -99,6 +99,6 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return isAddressedModePossible();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultProgrammerManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultProgrammerManager.class.getName());
 }
 /* @(#)DefaultProgrammerManager.java */

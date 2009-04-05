@@ -10,7 +10,7 @@ package jmri.jmrix.maple;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -48,7 +48,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialReply.class.getName());
 
 }
 

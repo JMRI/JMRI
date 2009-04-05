@@ -38,7 +38,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -774,7 +774,7 @@ public class SecurityElement implements LocoNetListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SecurityElement.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SecurityElement.class.getName());
 
 }
 

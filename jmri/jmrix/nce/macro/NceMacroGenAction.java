@@ -28,7 +28,7 @@ public class NceMacroGenAction  extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMacroGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMacroGenAction.class.getName());
 }
 
 

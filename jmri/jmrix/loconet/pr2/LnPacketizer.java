@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.pr2;
  * Differs only in handling PR2's non-echo
  *
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  *
  */
 public class LnPacketizer extends jmri.jmrix.loconet.LnPacketizer {
@@ -24,7 +24,7 @@ public class LnPacketizer extends jmri.jmrix.loconet.LnPacketizer {
     	debug = log.isDebugEnabled();
    	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnPacketizer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

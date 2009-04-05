@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
  */
 public abstract class XmlFile {
 
@@ -443,7 +443,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.38 2008-11-17 04:03:12 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.39 2009-04-05 15:41:01 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -569,6 +569,6 @@ public abstract class XmlFile {
     static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
 
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFile.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFile.class.getName());
 
 }

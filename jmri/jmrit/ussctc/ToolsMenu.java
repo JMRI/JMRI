@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Tools" menu containing the USS CTC tools
  *
  * @author	Bob Jacobsen   Copyright 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -31,7 +31,7 @@ public class ToolsMenu extends JMenu {
 
     static java.util.ResourceBundle rb = null;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ToolsMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToolsMenu.class.getName());
 }
 
 

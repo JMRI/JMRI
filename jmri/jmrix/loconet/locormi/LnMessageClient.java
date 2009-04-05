@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -141,5 +141,5 @@ public class LnMessageClient extends LnTrafficRouter {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClient.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClient.class.getName());
 }

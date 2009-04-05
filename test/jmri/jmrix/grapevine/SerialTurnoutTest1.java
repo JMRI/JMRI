@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * middle bank.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 
@@ -54,6 +54,6 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutTest1.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutTest1.class.getName());
 
 }

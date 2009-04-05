@@ -11,7 +11,7 @@ import jmri.jmrix.grapevine.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -34,5 +34,5 @@ public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMa
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerXml.class.getName());
 }

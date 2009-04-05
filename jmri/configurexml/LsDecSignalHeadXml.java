@@ -29,7 +29,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LsDecSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -139,5 +139,5 @@ public class LsDecSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LsDecSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LsDecSignalHeadXml.class.getName());
 }

@@ -16,7 +16,7 @@ import javax.swing.*;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class DccLocoAddressSelectorTest extends TestCase {
@@ -151,6 +151,6 @@ public class DccLocoAddressSelectorTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccLocoAddressSelectorTest.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelectorTest.class.getName());
 
 }

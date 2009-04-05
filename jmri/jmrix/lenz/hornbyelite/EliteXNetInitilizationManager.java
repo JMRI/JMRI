@@ -11,7 +11,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -35,6 +35,6 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
 	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetInitilizationManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetInitilizationManager.class.getName());
 
 }

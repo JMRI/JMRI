@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame displaying (and logging) Sprog command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
@@ -37,6 +37,6 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogMonFrame.class.getName());
 
 }

@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.SerialPortController;
 /**
  * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
@@ -209,6 +209,6 @@ public class SpecificTrafficControllerTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificTrafficControllerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficControllerTest.class.getName());
 
 }

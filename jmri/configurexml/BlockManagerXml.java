@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @since 2.1.2
  *
  */
@@ -269,5 +269,5 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXml.class.getName());
 }

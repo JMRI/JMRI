@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -367,7 +367,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(RouteLocation.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(RouteLocation.class.getName());
 
 }

@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -364,7 +364,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Schedule.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Schedule.class.getName());
 
 }

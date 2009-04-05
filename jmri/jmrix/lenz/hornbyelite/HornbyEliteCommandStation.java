@@ -10,7 +10,7 @@ package jmri.jmrix.lenz.hornbyelite;
  * from a Lenz command station.
  *
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -27,7 +27,7 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /*
      * We need to register for logging
      */
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HornbyEliteCommandStation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HornbyEliteCommandStation.class.getName());
     
 }
 

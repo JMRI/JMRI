@@ -16,7 +16,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -296,7 +296,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return _controller;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogProgrammer.class.getName());
 
 }
 

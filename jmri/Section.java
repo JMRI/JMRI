@@ -84,7 +84,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -698,7 +698,7 @@ public class Section extends AbstractNamedBean
 	}
 		
 						
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Section.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Section.class.getName());
 	
 }
 

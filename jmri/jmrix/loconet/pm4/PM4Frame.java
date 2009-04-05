@@ -23,7 +23,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -205,6 +205,6 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4  = new JCheckBox();
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PM4Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PM4Frame.class.getName());
 
 }

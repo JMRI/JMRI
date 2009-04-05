@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class CbusAddress {
 
@@ -194,7 +194,7 @@ public class CbusAddress {
         return retval;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusAddress.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusAddress.class.getName());
 
 }
 

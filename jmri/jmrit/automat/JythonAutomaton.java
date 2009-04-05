@@ -12,7 +12,7 @@ import jmri.InstanceManager;
  * read the code, the "non-reflection" statements are in the comments
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class JythonAutomaton extends AbstractAutomaton {
     Object interp;
@@ -97,7 +97,7 @@ public class JythonAutomaton extends AbstractAutomaton {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JythonAutomaton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JythonAutomaton.class.getName());
 
 }
 

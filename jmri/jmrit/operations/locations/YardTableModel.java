@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of yards used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class YardTableModel extends TrackTableModel {
 
@@ -64,6 +64,6 @@ public class YardTableModel extends TrackTableModel {
     	}
     }
   
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(YardTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(YardTableModel.class.getName());
 }
 

@@ -31,7 +31,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class CornwallRR extends Apps {
 
@@ -99,7 +99,7 @@ public class CornwallRR extends Apps {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CornwallRR.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CornwallRR.class.getName());
 }
 
 

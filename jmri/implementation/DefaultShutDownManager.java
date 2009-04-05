@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * logging.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
@@ -89,7 +89,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     
     ArrayList tasks = new ArrayList();
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultShutDownManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultShutDownManager.class.getName());
 }
 
 /* @(#)DefaultShutDownManager.java */

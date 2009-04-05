@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class InstallTest extends Apps {
 
@@ -126,7 +126,7 @@ public class InstallTest extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstallTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallTest.class.getName());
 }
 
 

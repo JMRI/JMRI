@@ -6,7 +6,7 @@ package jmri.jmrix.mrc;
  * Carries the reply to an MrcMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class MrcReply extends jmri.jmrix.AbstractMRReply {
 
@@ -60,7 +60,7 @@ public class MrcReply extends jmri.jmrix.AbstractMRReply {
 		return val;
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MrcReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcReply.class.getName());
 
 }
 

@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * suite for the package, but also contains some tests for the ProgDebugger class.
  *
  * @author		Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class ProgDebuggerTest extends TestCase {
 
@@ -67,6 +67,6 @@ public class ProgDebuggerTest extends TestCase {
         return suite;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgDebuggerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgDebuggerTest.class.getName());
     
 }

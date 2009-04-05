@@ -20,5 +20,5 @@ public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
 		super(op);
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTurnoutOperationConfig.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperationConfig.class.getName());
 }

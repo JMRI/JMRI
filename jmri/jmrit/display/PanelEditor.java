@@ -50,7 +50,7 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @version $Revision: 1.94 $
+ * @version $Revision: 1.95 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1507,5 +1507,5 @@ public class PanelEditor extends JmriJFrame {
      }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());
 }

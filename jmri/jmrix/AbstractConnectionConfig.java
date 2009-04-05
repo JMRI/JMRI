@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -197,7 +197,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         checkInitDone();
     }
 
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConnectionConfig.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
 
 }
 

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -160,5 +160,5 @@ public class TrainIcon extends LocoIcon {
     }
     
  
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
 }

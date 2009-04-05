@@ -31,7 +31,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  */
 public class InstanceManager {
 
@@ -360,7 +360,7 @@ public class InstanceManager {
 
 
 	private MemoryManager memoryManager = null;
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
 }
 
 /* @(#)InstanceManager.java */

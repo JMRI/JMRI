@@ -34,7 +34,7 @@ public class AlmBrowserAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AlmBrowserAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlmBrowserAction.class.getName());
 
 }
 

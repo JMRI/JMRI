@@ -21,7 +21,7 @@ import jmri.jmrix.nce.NcePortController;
 /**
  * JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen Copyright 2003, 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class NceTrafficControllerTest extends TestCase {
 
@@ -247,6 +247,6 @@ public class NceTrafficControllerTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficControllerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficControllerTest.class.getName());
 
 }

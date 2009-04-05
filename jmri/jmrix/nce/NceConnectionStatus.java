@@ -19,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * 
  */
 
@@ -313,8 +313,8 @@ public class NceConnectionStatus implements NceListener {
 			log.warn("wrong number of read bytes for revision check");
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceConnectionStatus.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceConnectionStatus.class.getName());
 
 }
 /* @(#)NceConnectionStatus.java */

@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AllocationRequest {
 
@@ -90,7 +90,7 @@ public class AllocationRequest {
 		mActiveTrain = null;
     }
 			    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AllocationRequest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocationRequest.class.getName());
 }
 
 /* @(#)AllocationRequest.java */

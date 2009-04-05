@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NodeTableFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeTableAction extends AbstractAction {
 
@@ -31,7 +31,7 @@ public class NodeTableAction extends AbstractAction {
         f.setLocation(100,30);
         f.setVisible(true);
     }
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeTableAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeTableAction.class.getName());
 }
 
 

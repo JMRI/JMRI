@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * flip the sign of Z coordinates to keep this bias working for us.
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {
@@ -548,5 +548,5 @@ public class AlignmentPanel extends javax.swing.JPanel
         double s1, s2, s3, s4, s5, s6;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsTrackingPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsTrackingPanel.class.getName());
 }

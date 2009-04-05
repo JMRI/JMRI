@@ -13,7 +13,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 
@@ -297,6 +297,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( SplitVariableValueTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( SplitVariableValueTest.class.getName());
 
 }

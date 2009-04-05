@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -377,6 +377,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CarsTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsTableModel.class.getName());
 }
 

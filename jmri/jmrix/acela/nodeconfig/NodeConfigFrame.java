@@ -16,7 +16,7 @@ import jmri.jmrix.acela.AcelaNode;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -2025,5 +2025,5 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
   
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
 }

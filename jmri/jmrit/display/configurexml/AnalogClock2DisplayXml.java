@@ -10,7 +10,7 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AnalogClock2DisplayXml
     implements XmlAdapter {
@@ -99,6 +99,6 @@ public class AnalogClock2DisplayXml
 		}
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.
-        getInstance(AnalogClock2DisplayXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+    .getLogger(AnalogClock2DisplayXml.class.getName());
 }

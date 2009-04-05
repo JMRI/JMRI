@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -120,5 +120,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMemoryManagerConfigXML.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

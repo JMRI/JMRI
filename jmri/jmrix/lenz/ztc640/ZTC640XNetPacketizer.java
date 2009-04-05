@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
  * 0xFF bytes that appear prior to some messages.
  *
  * @author		Paul Bender  Copyright (C) 2006
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {
@@ -58,7 +58,7 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
 	   log.debug("Accepted Message: " + msg.toString());
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ZTC640XNetPacketizer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640XNetPacketizer.class.getName());
 }
 
 /* @(#)ZTC640XNetPacketizer.java */

@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  * 
  * @author Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
 	implements SRCPInterface {
@@ -102,7 +102,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         else return false;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTrafficController.class.getName());
 }
 
 

@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -134,7 +134,7 @@ public class SecurityElementIcon extends JPanel
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SecurityElementIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SecurityElementIcon.class.getName());
 
     // below here is copied from PositionableLabel
     /**

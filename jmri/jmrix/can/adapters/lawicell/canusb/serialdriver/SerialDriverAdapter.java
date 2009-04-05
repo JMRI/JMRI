@@ -11,7 +11,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  *
  * @author			Andrew Crosland Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter 
         extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter 
@@ -40,6 +40,6 @@ public class SerialDriverAdapter
     }
     static SerialDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

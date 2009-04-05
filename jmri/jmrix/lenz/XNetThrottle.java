@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2007
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.20 $
+ * @version    $Revision: 2.21 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1246,6 +1246,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     
     // register for notification
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottle.class.getName());
 }
 

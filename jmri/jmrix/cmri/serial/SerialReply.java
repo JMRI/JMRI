@@ -10,7 +10,7 @@ package jmri.jmrix.cmri.serial;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -45,7 +45,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialReply.class.getName());
 
 }
 

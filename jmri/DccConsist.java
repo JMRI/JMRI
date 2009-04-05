@@ -347,6 +347,6 @@ public class DccConsist implements Consist, ProgListener{
 		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.OPERATION_SUCCESS);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccConsist.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccConsist.class.getName());
 
 }

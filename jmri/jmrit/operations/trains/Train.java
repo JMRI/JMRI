@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.42 $
+ * @version             $Revision: 1.43 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1221,7 +1221,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Train.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Train.class.getName());
 
 }

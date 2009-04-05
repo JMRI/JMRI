@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class LocoNetSlot {
 
@@ -411,7 +411,7 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetSlot.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetSlot.class.getName());
 }
 
 

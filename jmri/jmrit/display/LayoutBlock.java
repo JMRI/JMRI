@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -852,6 +852,6 @@ public class LayoutBlock extends AbstractNamedBean
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutBlock.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlock.class.getName());
 
 }

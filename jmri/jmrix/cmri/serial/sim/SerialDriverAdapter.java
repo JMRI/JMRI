@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -296,6 +296,6 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
     }
     static SerialDriverAdapter mInstance;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

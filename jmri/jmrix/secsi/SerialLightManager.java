@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -97,7 +97,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
     static SerialLightManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManager.class.getName());
 
 }
 

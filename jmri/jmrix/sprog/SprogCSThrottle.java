@@ -18,7 +18,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -127,6 +127,6 @@ public class SprogCSThrottle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogCSThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSThrottle.class.getName());
 
 }

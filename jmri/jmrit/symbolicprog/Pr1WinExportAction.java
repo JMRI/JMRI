@@ -14,7 +14,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class Pr1WinExportAction  extends AbstractAction {
 
@@ -86,5 +86,5 @@ public class Pr1WinExportAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1ExportAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1ExportAction.class.getName());
 }

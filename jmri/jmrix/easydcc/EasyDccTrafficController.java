@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
 	implements EasyDccInterface {
@@ -107,7 +107,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         else return true;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTrafficController.class.getName());
 }
 
 

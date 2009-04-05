@@ -252,5 +252,5 @@ public abstract class TurnoutOperation implements Comparable {
 		return (mode & feedbackModes) != 0;
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperation.class.getName());
 }

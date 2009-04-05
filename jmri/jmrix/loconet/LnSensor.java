@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -117,7 +117,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensor.class.getName());
 
 }
 

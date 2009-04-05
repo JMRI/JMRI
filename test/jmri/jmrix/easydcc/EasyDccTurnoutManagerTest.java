@@ -62,6 +62,6 @@ public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnoutManagerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTurnoutManagerTest.class.getName());
 
 }

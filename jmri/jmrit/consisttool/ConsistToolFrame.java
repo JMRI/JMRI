@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.23 $
+ * @version              $Revision: 1.24 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -582,6 +582,6 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
             }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistToolFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolFrame.class.getName());
 
 }

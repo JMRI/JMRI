@@ -82,5 +82,5 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
         }
     }
 
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriSimplePropertyListener.class.getName());
+static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSimplePropertyListener.class.getName());
 }

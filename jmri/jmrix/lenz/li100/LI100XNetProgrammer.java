@@ -28,7 +28,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.4 $
+ * @version $Revision: 2.5 $
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -320,7 +320,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     	synchronized public void message(XNetMessage l) {
     	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100XNetProgrammer.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetProgrammer.class.getName());
 
 }
 

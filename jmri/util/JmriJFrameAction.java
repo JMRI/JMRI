@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  * this cuts the loader dependency on the loaded class.
  *
  * @author		Bob Jacobsen Copyright (C) 2007
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class JmriJFrameAction extends AbstractAction {
@@ -44,7 +44,7 @@ public class JmriJFrameAction extends AbstractAction {
         }
      }
      
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriJFrameAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriJFrameAction.class.getName());
 }
 
 /* @(#)JmriJFrameAction.java */

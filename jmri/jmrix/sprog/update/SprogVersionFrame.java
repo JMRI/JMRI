@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -141,7 +141,7 @@ public class SprogVersionFrame
 //        timer.start();
 //    }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.
-            getInstance(SprogVersionFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+    .getLogger(SprogVersionFrame.class.getName());
     
 }

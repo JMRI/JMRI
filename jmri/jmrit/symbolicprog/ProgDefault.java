@@ -18,7 +18,7 @@ import java.io.*;
  * more information.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ProgDefault {
 
@@ -74,6 +74,6 @@ public class ProgDefault {
 		defaultProgFile = null;
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgDefault.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgDefault.class.getName());
 
 }

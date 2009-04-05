@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  *
  * @author	Dave Duchamp   Copyright (C) 2007
  * @author	Bob Jacobsen   Copyright (C) 2008 
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NewPanelAction extends AbstractAction {
 
@@ -53,6 +53,6 @@ public class NewPanelAction extends AbstractAction {
 		    new PanelEditorAction().actionPerformed(null);
 		}
 	}
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NewPanelAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NewPanelAction.class.getName());
 
 }

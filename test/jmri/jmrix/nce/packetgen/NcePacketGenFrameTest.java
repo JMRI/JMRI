@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenFrame class
  * @author	Bob Jacobsen
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class NcePacketGenFrameTest extends TestCase {
 
@@ -55,6 +55,6 @@ public class NcePacketGenFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePacketGenFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenFrameTest.class.getName());
 
 }

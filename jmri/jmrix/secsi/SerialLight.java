@@ -13,7 +13,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -83,7 +83,7 @@ public class SerialLight extends AbstractLight {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

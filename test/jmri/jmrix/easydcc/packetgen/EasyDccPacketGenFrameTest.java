@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.packetgen.EasyDccPacketGenFrame class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.easydcc.packetgen;
@@ -36,6 +36,6 @@ public class EasyDccPacketGenFrameTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccPacketGenFrameTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccPacketGenFrameTest.class.getName());
 
 }

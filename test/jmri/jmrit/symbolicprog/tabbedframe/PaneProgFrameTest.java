@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -154,7 +154,7 @@ public class PaneProgFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgFrameTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

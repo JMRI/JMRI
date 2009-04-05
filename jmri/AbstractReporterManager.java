@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -84,7 +84,7 @@ public abstract class AbstractReporterManager extends AbstractManager
      */
     abstract protected Reporter createNewReporter(String systemName, String userName);
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractReporterManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManager.class.getName());
 }
 
 /* @(#)AbstractReporterManager.java */

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet package.
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class LocoNetTest extends TestCase {
 
@@ -53,6 +53,6 @@ public class LocoNetTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetTest.class.getName());
 
 }

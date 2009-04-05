@@ -9,7 +9,7 @@ package jmri.jmrix.ecos;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {
 
@@ -106,7 +106,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     	}
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EcosReply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReply.class.getName());
 
 }
 

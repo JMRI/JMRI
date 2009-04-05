@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
@@ -139,7 +139,7 @@ public class GridConnectMessage extends AbstractMRMessage {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GridConnectMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GridConnectMessage.class.getName());
 }
 
 /* @(#)GridConnectMessage.java */

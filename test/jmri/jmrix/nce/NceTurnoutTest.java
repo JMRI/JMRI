@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 package jmri.jmrix.nce;
@@ -56,6 +56,6 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutTest.class.getName());
 
 }

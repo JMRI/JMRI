@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class Reply extends AbstractMRReply {
     
@@ -137,7 +137,7 @@ public class Reply extends AbstractMRReply {
         return (byte)b;
     }
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Reply.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Reply.class.getName());
 }
 
 /* @(#)Reply.java */

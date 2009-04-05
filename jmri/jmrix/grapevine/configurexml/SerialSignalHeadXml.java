@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -66,5 +66,5 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSignalHeadXml.class.getName());
 }

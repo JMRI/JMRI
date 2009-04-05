@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -543,7 +543,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      */
     static public int getCommandOptions() { return commandOptions; }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMessage.class.getName());
 
 }
 

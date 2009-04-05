@@ -16,7 +16,7 @@ import javax.swing.*;
  * utility for the LV102 power station
  *
  * @author			Paul Bender  Copyright (C) 2003,2005
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
@@ -65,6 +65,6 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LZV100Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZV100Frame.class.getName());
 
 }

@@ -8,7 +8,7 @@ package jmri;
  * This can be useful e.g. as part of a more complex signal calculation.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class VirtualSignalHead extends DefaultSignalHead {
 
@@ -31,7 +31,7 @@ public class VirtualSignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VirtualSignalHead.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VirtualSignalHead.class.getName());
 }
 
 /* @(#)VirtualSignalHead.java */

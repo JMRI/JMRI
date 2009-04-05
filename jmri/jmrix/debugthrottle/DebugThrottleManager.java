@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * Implementation of a ThrottleManager for debugging.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2003, 2005
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
@@ -48,7 +48,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     public boolean addressTypeUnique() { return false; }
             
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebugThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottleManager.class.getName());
 
 
 }

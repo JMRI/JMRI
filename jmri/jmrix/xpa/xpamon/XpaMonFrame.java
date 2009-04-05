@@ -9,7 +9,7 @@ import jmri.jmrix.xpa.XpaTrafficController;
 /**
  * Frame displaying (and logging) Xpa+Modem command messages
  * @author			Paul Bender   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListener {
 
@@ -36,6 +36,6 @@ public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListe
 		nextLine("Recieved: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMonFrame.class.getName());
 
 }

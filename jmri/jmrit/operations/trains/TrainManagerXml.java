@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -369,6 +369,6 @@ public class TrainManagerXml extends XmlFile {
     }
     private static String OperationsFileName = "OperationsTrainRoster.xml";
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrainManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManagerXml.class.getName());
 
 }

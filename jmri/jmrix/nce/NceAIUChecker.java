@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionStatus;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * 
  */
 
@@ -78,8 +78,8 @@ public class NceAIUChecker implements NceListener {
 			log.warn("wrong number of read bytes for revision check");
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceAIUChecker.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(NceAIUChecker.class.getName());
 
 }
 /* @(#)NceAIUChecker.java */

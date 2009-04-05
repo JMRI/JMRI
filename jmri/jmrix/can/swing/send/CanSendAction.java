@@ -11,7 +11,7 @@ import jmri.jmrix.can.TrafficController;
  * Create and register a tool to send CAN frames.
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class CanSendAction extends AbstractAction {
 
@@ -32,7 +32,7 @@ public class CanSendAction extends AbstractAction {
         // connect to the CanInterface
         f.connect(TrafficController.instance());
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanSendAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendAction.class.getName());
 }
 
 

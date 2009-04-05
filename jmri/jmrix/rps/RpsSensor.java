@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -116,7 +116,7 @@ public class RpsSensor extends AbstractSensor
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsSensor.class.getName());
 
 }
 

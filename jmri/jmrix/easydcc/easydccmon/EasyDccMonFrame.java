@@ -10,7 +10,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame displaying (and logging) EasyDcc command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
@@ -37,6 +37,6 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMonFrame.class.getName());
 
 }

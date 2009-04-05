@@ -23,7 +23,7 @@ import javax.comm.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -315,7 +315,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
          else return false;
        }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiTrafficController.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiTrafficController.class.getName());
 }
 
 

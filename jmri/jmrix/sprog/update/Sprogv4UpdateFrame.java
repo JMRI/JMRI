@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -360,7 +360,7 @@ public class Sprogv4UpdateFrame
     }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.
-      getInstance(Sprogv4UpdateFrame.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger
+  .getLogger(Sprogv4UpdateFrame.class.getName());
 
 }

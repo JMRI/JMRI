@@ -6,7 +6,7 @@ package jmri.jmrix.loconet;
  * Extend the Automat support to include convenient access to LocoNet messages.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 abstract public class LocoNetAutomaton extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -17,7 +17,7 @@ abstract public class LocoNetAutomaton extends jmri.jmrit.automat.AbstractAutoma
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetAutomaton.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetAutomaton.class.getName());
 }
 
 /* @(#)LocoNetAutomaton.java */

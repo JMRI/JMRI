@@ -17,7 +17,7 @@ import java.beans.PropertyChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener
@@ -87,7 +87,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTableModel.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableModel.class.getName());
 
 }
 /* @(#)SensorTableModel.java */

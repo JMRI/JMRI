@@ -119,6 +119,6 @@ public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutManagerTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutManagerTest.class.getName());
 
 }

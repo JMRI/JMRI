@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.4 $
+ * @version                     $Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
@@ -291,6 +291,6 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	  if(log.isDebugEnabled()) log.debug("reply received unexpectedly: " +r.toString());
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccConsist.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccConsist.class.getName());
 
 }

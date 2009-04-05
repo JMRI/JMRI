@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Sound  {
 
@@ -157,5 +157,5 @@ public class Sound  {
         boolean getSigned() { return (getSampleSizeInBits()>8); }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Sound.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Sound.class.getName());
 }

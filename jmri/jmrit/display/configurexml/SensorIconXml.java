@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -132,6 +132,6 @@ public class SensorIconXml implements XmlAdapter {
         p.putSensor(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorIconXml.class.getName());
 
 }

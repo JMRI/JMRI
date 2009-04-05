@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle XML configuration for LocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LocoAddressXml implements XmlAdapter {
 
@@ -46,5 +46,5 @@ public class LocoAddressXml implements XmlAdapter {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccLocoAddressXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressXml.class.getName());
 }

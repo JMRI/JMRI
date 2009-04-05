@@ -6,7 +6,7 @@ import jmri.jmrit.operations.setup.Control;
  * Represents a car type to be scheduled for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -190,7 +190,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(ScheduleItem.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(ScheduleItem.class.getName());
 
 }

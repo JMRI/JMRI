@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.37 $
+ * @version             $Revision: 1.38 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1218,7 +1218,7 @@ public class TrainBuilder extends TrainCommon{
 		fileOut.close();
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(TrainBuilder.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(TrainBuilder.class.getName());
 
 }

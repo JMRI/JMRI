@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Andrew Crosland           (C) 2009
  *
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class CbusEventTableAction extends AbstractAction {
@@ -31,7 +31,7 @@ public class CbusEventTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CbusEventTableFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTableFrame.class.getName());
 }
 
 

@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  *
  *
  * @author John Plocher    Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LocoIOAction
        extends AbstractAction {
@@ -27,6 +27,6 @@ public class LocoIOAction
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOAction.class.getName());
 
 }

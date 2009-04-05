@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintTrainAction  extends AbstractAction {
 	
@@ -96,5 +96,5 @@ public class PrintTrainAction  extends AbstractAction {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintTrainAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainAction.class.getName());
 }

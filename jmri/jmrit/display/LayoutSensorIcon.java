@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -316,5 +316,5 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutSensorIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSensorIcon.class.getName());
 }

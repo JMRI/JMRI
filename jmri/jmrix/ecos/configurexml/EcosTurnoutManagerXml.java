@@ -11,7 +11,7 @@ import jmri.jmrix.ecos.EcosTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class EcosTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -34,5 +34,5 @@ public class EcosTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMana
         loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EcosTurnoutManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnoutManagerXml.class.getName());
 }

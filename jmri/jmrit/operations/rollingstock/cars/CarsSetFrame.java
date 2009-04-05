@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -370,6 +370,6 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(CarsSetFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarsSetFrame.class.getName());
 }

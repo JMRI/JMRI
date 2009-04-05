@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * LnHexFileFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LnHexFileAction 			extends AbstractAction {
 
@@ -32,7 +32,7 @@ public class LnHexFileAction 			extends AbstractAction {
 
     };
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFileAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFileAction.class.getName());
 
 }
 

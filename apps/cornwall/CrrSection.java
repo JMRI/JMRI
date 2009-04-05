@@ -11,7 +11,7 @@ import jmri.*;
  * update process.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -256,7 +256,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static Turnout[] si = null;
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CrrSection.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CrrSection.class.getName());
 
 }
 

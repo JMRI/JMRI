@@ -3,7 +3,7 @@
  *
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.oaktree;
@@ -54,6 +54,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControlScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

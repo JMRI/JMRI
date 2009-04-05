@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -138,5 +138,5 @@ public class LocoIconXml extends PositionableLabelXml {
 			le.putLocoIcon(l);
      }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIconXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());
 }

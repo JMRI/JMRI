@@ -10,7 +10,7 @@ import javax.swing.*;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -169,6 +169,6 @@ public class DccAddressPanel extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccAddressPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccAddressPanel.class.getName());
 
 }

@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
@@ -44,6 +44,6 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadStoreBaseAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadStoreBaseAction.class.getName());
 
 }

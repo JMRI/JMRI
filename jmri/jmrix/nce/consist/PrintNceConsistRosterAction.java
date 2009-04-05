@@ -20,7 +20,7 @@ import java.util.List;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintNceConsistRosterAction  extends AbstractAction {
 
@@ -69,5 +69,5 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
         writer.close();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PrintNceConsistRosterAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintNceConsistRosterAction.class.getName());
 }

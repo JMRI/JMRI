@@ -59,6 +59,6 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
     // The minimal setup for log4J
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
  	
- 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnoutTest.class.getName());
+ 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTurnoutTest.class.getName());
 
 }

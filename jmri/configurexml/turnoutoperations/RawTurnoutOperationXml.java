@@ -35,5 +35,5 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
 		return null;
 	}
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RawTurnoutOperationXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperationXml.class.getName());
 }

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -292,7 +292,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
             log.warn("incorrect sensor message: "+r.toString());
         }
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceSensorManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManager.class.getName());
 }
 
 /* @(#)NceSensorManager.java */

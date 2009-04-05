@@ -16,7 +16,7 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see NceConsistRosterEntry
  * @see NceConsistRoster
  */
@@ -108,6 +108,6 @@ public class NceConsistRosterMenu extends JMenu {
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistRosterMenu.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistRosterMenu.class.getName());
 
 }

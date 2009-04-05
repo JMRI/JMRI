@@ -21,7 +21,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -186,6 +186,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GcSerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GcSerialDriverAdapter.class.getName());
 
 }

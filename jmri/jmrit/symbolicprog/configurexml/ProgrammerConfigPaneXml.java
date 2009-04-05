@@ -22,7 +22,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ProgrammerConfigPaneXml implements XmlAdapter {
 
@@ -74,6 +74,6 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
         log.warn("unexpected call of 2nd load form");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgrammerConfigPaneXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgrammerConfigPaneXml.class.getName());
 
 }

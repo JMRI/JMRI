@@ -16,7 +16,7 @@ import org.jdom.*;
  * Install decoder definition from local file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
@@ -55,6 +55,6 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstallDecoderFileAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallDecoderFileAction.class.getName());
     
 }

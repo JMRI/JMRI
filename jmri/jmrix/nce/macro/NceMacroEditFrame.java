@@ -66,7 +66,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -1165,6 +1165,6 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     }
     
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMacroEditFrame.class.getName());	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMacroEditFrame.class.getName());	
 }
 

@@ -16,7 +16,7 @@ import javax.swing.Timer;
  *	systems with no hardware fast clock.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultClockControl implements ClockControl {
 
@@ -104,7 +104,7 @@ public class DefaultClockControl implements ClockControl {
 	public void initializeHardwareClock(double rate, Date now, boolean getTime) {return;}
 
 	
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultClockControl.class.getName());
+static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultClockControl.class.getName());
 }
 
 /* @(#)DefaultClockControl.java */

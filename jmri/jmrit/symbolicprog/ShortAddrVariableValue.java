@@ -22,7 +22,7 @@ import java.util.Vector;
  * so that the DP values are forced to be the correct ones.
  * 
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -99,6 +99,6 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ShortAddrVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ShortAddrVariableValue.class.getName());
 
 }

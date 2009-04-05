@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutEditorTools 
@@ -6913,5 +6913,5 @@ public class LayoutEditorTools
 	}
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutEditorTools.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorTools.class.getName());
 }

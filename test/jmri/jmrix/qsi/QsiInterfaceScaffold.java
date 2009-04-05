@@ -19,6 +19,6 @@ class QsiInterfaceScaffold implements QsiListener {
 	QsiReply rcvdReply;
 	QsiMessage rcvdMsg;
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiInterfaceScaffold.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiInterfaceScaffold.class.getName());
 
 }

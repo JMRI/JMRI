@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -112,7 +112,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneOpsProgAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneOpsProgAction.class.getName());
 
 }
 

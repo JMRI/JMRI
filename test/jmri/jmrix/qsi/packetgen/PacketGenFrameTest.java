@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.qsi.packetgen;
@@ -36,6 +36,6 @@ public class PacketGenFrameTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketGenFrameTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenFrameTest.class.getName());
 
 }

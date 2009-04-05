@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
@@ -113,6 +113,6 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GuiLafConfigPaneXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPaneXml.class.getName());
 
 }

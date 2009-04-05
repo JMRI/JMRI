@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -386,7 +386,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedometerFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedometerFrame.class.getName());
 }
 
 

@@ -10,7 +10,7 @@ import jmri.jmrix.acela.AcelaTrafficController;
 /**
  * Frame displaying (and logging) Acela command messages
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -42,7 +42,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaMonFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaMonFrame.class.getName());
 }
 
 /* @(#)AcelaMonFrame.java */

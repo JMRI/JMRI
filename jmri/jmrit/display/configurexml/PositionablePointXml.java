@@ -18,7 +18,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PositionablePointXml implements XmlAdapter {
 
@@ -111,5 +111,5 @@ public class PositionablePointXml implements XmlAdapter {
 		p.pointList.add(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionablePointXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePointXml.class.getName());
 }

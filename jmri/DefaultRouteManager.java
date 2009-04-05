@@ -8,7 +8,7 @@ package jmri;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -83,7 +83,7 @@ public class DefaultRouteManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRouteManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRouteManager.class.getName());
 }
 
 /* @(#)DefaultRouteManager.java */

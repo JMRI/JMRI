@@ -390,7 +390,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.43 $
+	 * @version $Revision: 1.44 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -574,5 +574,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FunctionPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionPanel.class.getName());
 }

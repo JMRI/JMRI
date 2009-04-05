@@ -15,7 +15,7 @@ import jmri.jmrix.rps.Reading;
  * Action to export the incoming raw data to a CSV-format file
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @since 2.3.1
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {
@@ -93,5 +93,5 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         str.println(r.getValue(r.getNValues()-1));
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CsvExportAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CsvExportAction.class.getName());
 }

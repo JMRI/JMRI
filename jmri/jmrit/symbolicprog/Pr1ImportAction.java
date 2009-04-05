@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  * Action to import the CV values from a PR1WIN/PR1DOS data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class Pr1ImportAction  extends AbstractAction {
@@ -56,5 +56,5 @@ public class Pr1ImportAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1ImportAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1ImportAction.class.getName());
 }

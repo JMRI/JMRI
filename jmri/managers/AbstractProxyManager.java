@@ -19,7 +19,7 @@ import jmri.util.SystemNameComparator;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -128,7 +128,7 @@ public class AbstractProxyManager implements Manager {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractProxyManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractProxyManager.class.getName());
 }
 
 /* @(#)AbstractProxyManager.java */

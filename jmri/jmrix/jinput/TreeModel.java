@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -234,6 +234,6 @@ public class TreeModel extends DefaultTreeModel {
         pcs.removePropertyChangeListener(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TreeModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TreeModel.class.getName());
 }
 

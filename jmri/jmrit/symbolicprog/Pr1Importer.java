@@ -27,10 +27,10 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class Pr1Importer {
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
   private static final String VERSION_KEY = "Version" ;
   private static final String CV_PREFIX = "CV" ;
   private static final int    CV_INDEX_OFFSET = 2 ;

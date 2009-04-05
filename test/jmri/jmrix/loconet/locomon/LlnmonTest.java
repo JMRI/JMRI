@@ -16,7 +16,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -88,6 +88,6 @@ public class LlnmonTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LlnmonTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LlnmonTest.class.getName());
 
 }

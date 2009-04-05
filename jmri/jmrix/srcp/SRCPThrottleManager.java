@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005, 2008
  * @author Modified by Kelly Loyd
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {
 
@@ -63,6 +63,6 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
         }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottleManager.class.getName());
 
 }

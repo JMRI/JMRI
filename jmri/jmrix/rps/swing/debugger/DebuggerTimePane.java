@@ -16,7 +16,7 @@ import java.io.*;
  * as the RPS hardware number.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 
@@ -120,5 +120,5 @@ public class DebuggerTimePane extends JPanel
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebuggerTimePane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebuggerTimePane.class.getName());
 }

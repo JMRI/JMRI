@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
@@ -300,7 +300,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 	}
 
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaTrafficController.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaTrafficController.class.getName());
 }
 
 

@@ -8,7 +8,7 @@ import jmri.AbstractSensor;
  * Extend jmri.AbstractSensor for Acela systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based heavily on CMRI serial example.
@@ -34,7 +34,7 @@ public class AcelaSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSensor.class.getName());
 }
 
 /* @(#)AcelaSensor.java */

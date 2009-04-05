@@ -21,7 +21,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -221,5 +221,5 @@ public class FileServlet extends AbstractServlet {
     }
     
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FileServlet.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileServlet.class.getName());
 }

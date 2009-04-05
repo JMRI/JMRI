@@ -26,7 +26,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Paul Bender      Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -335,7 +335,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     	synchronized public void message(XNetMessage l) {
     	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteXNetProgrammer.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetProgrammer.class.getName());
 
 }
 

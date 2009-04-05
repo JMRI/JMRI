@@ -33,7 +33,7 @@ import jmri.util.table.ButtonRenderer;
  
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -287,6 +287,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeTableFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeTableFrame.class.getName());
 
 }

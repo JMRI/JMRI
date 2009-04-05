@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -194,7 +194,7 @@ public abstract class SdfMacro implements SdfConstants {
     }
      
     
-    private static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfMacro.class.getName());
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfMacro.class.getName());
 
 }
 /* @(#)SdfMacro.java */

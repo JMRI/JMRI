@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -279,7 +279,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
             }
         }
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1Programmer.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Programmer.class.getName());
 
 }
 

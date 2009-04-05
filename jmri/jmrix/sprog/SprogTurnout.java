@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
@@ -101,7 +101,7 @@ public class SprogTurnout extends AbstractTurnout {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnout.class.getName());
 
 }
 

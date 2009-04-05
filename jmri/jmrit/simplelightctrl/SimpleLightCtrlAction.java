@@ -37,7 +37,7 @@ public class SimpleLightCtrlAction 			extends AbstractAction {
 		f.setVisible(true);
 
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleLightCtrlAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightCtrlAction.class.getName());
 }
 
 

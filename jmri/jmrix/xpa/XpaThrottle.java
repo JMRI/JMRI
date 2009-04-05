@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author  Paul Bender  Copyright (C) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class XpaThrottle extends AbstractThrottle {
 
@@ -209,6 +209,6 @@ public class XpaThrottle extends AbstractThrottle {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaThrottle.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaThrottle.class.getName());
 
 }

@@ -29,7 +29,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -118,7 +118,7 @@ public class TransitManager extends AbstractManager
         return (_instance);
     }
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TransitManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitManager.class.getName());
 }
 
 

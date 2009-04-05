@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 
@@ -34,7 +34,7 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
     }
     static NceTurnoutManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManager.class.getName());
 }
 
 /* @(#)NceTurnoutManager.java */

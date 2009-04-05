@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *       			EasyDccMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EasyDccMonAction 			extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class EasyDccMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMonAction.class.getName());
 
 }
 

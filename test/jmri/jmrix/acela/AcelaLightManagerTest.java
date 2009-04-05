@@ -68,6 +68,6 @@ public class AcelaLightManagerTest extends jmri.AbstractLightMgrTest  {
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaLightManagerTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLightManagerTest.class.getName());
 
 }

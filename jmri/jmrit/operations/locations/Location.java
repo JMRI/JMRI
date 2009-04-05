@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -626,7 +626,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Location.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(Location.class.getName());
 
 }

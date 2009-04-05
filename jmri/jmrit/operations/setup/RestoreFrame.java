@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -137,6 +137,6 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(RestoreFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(RestoreFrame.class.getName());
 }

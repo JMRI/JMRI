@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.4 $
+ * @version               $Revision: 1.5 $
  */
 
 
@@ -142,6 +142,6 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
            }
      }
 
-        static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccConsistManager.class.getName());
+        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccConsistManager.class.getName());
 
 }

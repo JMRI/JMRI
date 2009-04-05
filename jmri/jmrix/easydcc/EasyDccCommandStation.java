@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * EasyDcc implementation of the CommandStation interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class EasyDccCommandStation implements CommandStation {
 
@@ -53,7 +53,7 @@ public class EasyDccCommandStation implements CommandStation {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccCommandStation.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccCommandStation.class.getName());
 
 }
 

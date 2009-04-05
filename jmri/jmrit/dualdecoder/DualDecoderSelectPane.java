@@ -11,7 +11,7 @@ import jmri.*;
 /**
  * Pane for selecting an active decoder from multiple ones in a loco
  * @author   Bob Jacobsen   Copyright (C) 2003
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
@@ -296,6 +296,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DualDecoderSelectPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DualDecoderSelectPane.class.getName());
 
 }

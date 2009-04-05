@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -879,7 +879,7 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 	}
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TransitTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitTableAction.class.getName());
 }
 
 /* @(#)TransitTableAction.java */

@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -364,7 +364,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.21 $
+     * @version     $Revision: 1.22 $
      */
     public class VarTextField extends JTextField {
 
@@ -426,6 +426,6 @@ public class SplitVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SplitVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SplitVariableValue.class.getName());
 
 }

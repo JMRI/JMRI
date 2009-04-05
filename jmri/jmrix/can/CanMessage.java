@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -164,7 +164,7 @@ public class CanMessage extends AbstractMRMessage {
     private boolean _isExtended;
     private boolean _isRtr;
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CanMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanMessage.class.getName());
 }
 
 /* @(#)CanMessage.java */

@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
@@ -183,7 +183,7 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 }
 
 /* @(#)SerialDriverAdapter.java */

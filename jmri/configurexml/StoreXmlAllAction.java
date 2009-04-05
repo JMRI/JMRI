@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {
@@ -34,5 +34,5 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlAllAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlAllAction.class.getName());
 }

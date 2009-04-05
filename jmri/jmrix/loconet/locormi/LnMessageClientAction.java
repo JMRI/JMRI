@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author  Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 
 public class LnMessageClientAction extends AbstractAction
 {
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClientAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClientAction.class.getName());
 
   public LnMessageClientAction( String s )
   {

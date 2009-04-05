@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -232,7 +232,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
     /*
      * We need to register for logging
      */
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LenzCommandStation.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LenzCommandStation.class.getName());
     
 }
 

@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	
@@ -114,7 +114,7 @@ public class EngineLengths implements java.beans.PropertyChangeListener {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EngineLengths.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineLengths.class.getName());
 
 }
 

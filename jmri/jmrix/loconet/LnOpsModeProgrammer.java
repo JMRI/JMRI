@@ -11,7 +11,7 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
@@ -78,7 +78,7 @@ public class LnOpsModeProgrammer implements Programmer  {
         return mSlotMgr.decodeErrorCode(i);
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnOpsModeProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnOpsModeProgrammer.class.getName());
 
 }
 

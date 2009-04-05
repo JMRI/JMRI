@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -55,6 +55,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutTest.class.getName());
+	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutTest.class.getName());
 
 }

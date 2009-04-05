@@ -16,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -59,7 +59,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      */
     public boolean isAddressedModePossible() {return true;}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebugProgrammerManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugProgrammerManager.class.getName());
 }
 
 

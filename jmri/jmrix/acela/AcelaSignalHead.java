@@ -107,7 +107,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
     String tSystemName; // System Name of this signal head
     int addr;         // output address
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AcelaSignalHead.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSignalHead.class.getName());
 }
 
 /* @(#)AcelaSignalHead.java */

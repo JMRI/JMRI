@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -90,5 +90,5 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SE8cSignalHeadXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8cSignalHeadXml.class.getName());
 }

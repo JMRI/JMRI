@@ -3,7 +3,7 @@
  *
  * Description:		Frame displaying (and logging) RPS messages
  * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 package jmri.jmrix.rps.rpsmon;
@@ -43,5 +43,5 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         nextLine(m.toString()+"\n", raw);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsMonFrame.class.getName());
 }

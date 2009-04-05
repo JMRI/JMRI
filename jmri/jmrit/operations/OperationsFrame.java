@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -140,6 +140,6 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		log.debug("combo box action not overridden");
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-	.getInstance(OperationsFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(OperationsFrame.class.getName());
 }

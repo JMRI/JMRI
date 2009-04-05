@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -84,7 +84,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
      */
     abstract protected Memory createNewMemory(String systemName, String userName);
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMemoryManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryManager.class.getName());
 }
 
 /* @(#)AbstractMemoryManager.java */

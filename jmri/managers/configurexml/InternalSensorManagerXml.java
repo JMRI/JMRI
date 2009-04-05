@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -31,5 +31,5 @@ public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorMa
         loadSensors(sensors);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InternalSensorManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalSensorManagerXml.class.getName());
 }

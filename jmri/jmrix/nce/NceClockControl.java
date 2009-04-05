@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -521,7 +521,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceClockControl.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceClockControl.class.getName());
 }
 
 /* @(#)LnClockControl.java */

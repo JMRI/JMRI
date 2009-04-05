@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.LnReporterManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LnReporterManagerXml extends jmri.configurexml.AbstractReporterManagerConfigXML {
 
@@ -35,6 +35,6 @@ public class LnReporterManagerXml extends jmri.configurexml.AbstractReporterMana
         loadReporters(reporters);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnReporterManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterManagerXml.class.getName());
 
 }

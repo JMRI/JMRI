@@ -18,7 +18,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -309,6 +309,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = null;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvTableModel.class.getName());
 }
 

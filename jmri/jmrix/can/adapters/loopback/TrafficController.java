@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractMRListener;
  * Traffic controller for loopback CAN simulation.
  *
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     
@@ -138,7 +138,7 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
         return true;
     }
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());
 }
 
 

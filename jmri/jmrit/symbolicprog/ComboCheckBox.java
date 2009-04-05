@@ -78,6 +78,6 @@ public class ComboCheckBox extends JCheckBox {
 	}
 	
 	// initialize logging	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBox.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboCheckBox.class.getName());
 
 }

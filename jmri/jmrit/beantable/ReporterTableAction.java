@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -149,7 +149,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
     private boolean noWarn = false;
 
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ReporterTableAction.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterTableAction.class.getName());
 }
 
 /* @(#)ReporterTableAction.java */

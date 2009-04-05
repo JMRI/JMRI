@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author Dave Duchamp  Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutReporterIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -152,5 +152,5 @@ public class LayoutReporterIcon extends LayoutPositionableLabel implements java.
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutReporterIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutReporterIcon.class.getName());
 }

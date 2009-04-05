@@ -17,7 +17,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -340,7 +340,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 
        private boolean unsolicited;
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTrafficController.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTrafficController.class.getName());
 }
 
 

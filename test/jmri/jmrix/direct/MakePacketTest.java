@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MakePacketTest class
  * @author		Bob Jacobsen  Copyright 2004
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class MakePacketTest extends TestCase {
     
@@ -213,7 +213,7 @@ public class MakePacketTest extends TestCase {
         TestSuite suite = new TestSuite(MakePacketTest.class);
         return suite;
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MakePacketTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MakePacketTest.class.getName());
     
 }
 

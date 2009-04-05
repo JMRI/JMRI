@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -143,7 +143,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return true;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificTrafficController.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());
 }
 
 

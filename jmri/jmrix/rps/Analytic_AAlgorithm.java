@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
@@ -305,7 +305,7 @@ public double sub(double[][] A, int r, int c) {
         double x, y, z, t, vs;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Analytic_AAlgorithm.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
 /* @(#)Analytic_AAlgorithm.java */

@@ -18,7 +18,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -454,6 +454,6 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SymbolicProgFrame.class.getName());
 
 }

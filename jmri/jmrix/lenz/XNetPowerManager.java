@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz;
@@ -136,7 +136,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
 
 	// Initialize logging information
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetPowerManager.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetPowerManager.class.getName());
 
 }
 

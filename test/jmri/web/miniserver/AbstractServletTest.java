@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
  * Tests for the AbstractService class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class AbstractServletTest extends TestCase {
 
@@ -74,7 +74,7 @@ public class AbstractServletTest extends TestCase {
         return suite;
     }
 
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractServletTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractServletTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

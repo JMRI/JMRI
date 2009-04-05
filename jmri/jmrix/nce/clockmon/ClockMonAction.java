@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceUSB;
  * Create and register a NceClockMonitorFrame object.
  *
  * @author			Ken Cameron    Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  * based on LocoNet.ClockMonAction by Bob Jacobsen Copyright (C) 2003
  */
@@ -48,7 +48,7 @@ public class ClockMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ClockMonAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonAction.class.getName());
 
 }
 

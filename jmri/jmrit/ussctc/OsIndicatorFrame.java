@@ -13,7 +13,7 @@ import javax.swing.*;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 
@@ -33,6 +33,6 @@ public class OsIndicatorFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(OsIndicatorFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorFrame.class.getName());
 
 }

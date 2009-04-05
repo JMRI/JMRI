@@ -24,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -187,6 +187,6 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EditorPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorPane.class.getName());
 
 }

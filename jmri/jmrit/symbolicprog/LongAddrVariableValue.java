@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -367,6 +367,6 @@ public class LongAddrVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LongAddrVariableValue.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LongAddrVariableValue.class.getName());
 
 }

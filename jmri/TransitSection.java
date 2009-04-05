@@ -25,7 +25,7 @@ package jmri;
  *	dependent on order of items in the panel file.
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TransitSection {
 
@@ -121,7 +121,7 @@ public class TransitSection {
 	public boolean isAlternate() { return mAlternate; }
 	public void setAlternate( boolean alt )	{ mAlternate = alt; }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TransitSection.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSection.class.getName());
 }
 
 /* @(#)TransitSection.java */

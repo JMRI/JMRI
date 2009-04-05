@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -388,7 +388,7 @@ int gps3()						{// GPS Position Solver
 
 // ******************
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Ash1_1Algorithm.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Ash1_1Algorithm.class.getName());
 
     /**
      * Internal class to handle return value.

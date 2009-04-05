@@ -51,7 +51,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -460,6 +460,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelPane.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelPane.class.getName());
 
 }

@@ -10,7 +10,7 @@ import javax.swing.*;
  * Swing action to create and register a SendPacketFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SendPacketAction extends AbstractAction {
 
@@ -36,7 +36,7 @@ public class SendPacketAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SendPacketAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SendPacketAction.class.getName());
 }
 
 /* @(#)SendPacketAction.java */

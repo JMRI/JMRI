@@ -23,7 +23,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -102,7 +102,7 @@ public class RunJythonScript extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RunJythonScript.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RunJythonScript.class.getName());
 
 }
 

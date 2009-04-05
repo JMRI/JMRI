@@ -31,7 +31,7 @@ public class SerialPacketGenAction 			extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialPacketGenAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialPacketGenAction.class.getName());
 }
 
 

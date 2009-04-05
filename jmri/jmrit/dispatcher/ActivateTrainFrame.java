@@ -39,7 +39,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 
@@ -683,7 +683,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		return found;
 	}
    
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActivateTrainFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActivateTrainFrame.class.getName());
 }
 	
 			

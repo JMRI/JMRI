@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -456,7 +456,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePacketMonitorFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketMonitorFrame.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

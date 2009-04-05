@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.20 $
+ * @version 		$Revision: 1.21 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -520,7 +520,7 @@ public class LnPacketizer extends LnTrafficController {
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnPacketizer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

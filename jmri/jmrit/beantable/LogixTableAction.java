@@ -70,7 +70,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -4302,7 +4302,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-	static final org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(LogixTableAction.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(LogixTableAction.class.getName());
 }
 /* @(#)LogixTableAction.java */

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  * @author		Giorgio Terdina Copyright (C) 2008, based on LIUSB packetizer by Paul Bender, Copyright (C) 2005
- * @version 	$Revision: 1.1 $
+ * @version 	$Revision: 1.2 $
  *
  */
 public class XnTcpXNetPacketizer extends XNetPacketizer {
@@ -73,7 +73,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     }
 
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XnTcpXNetPacketizer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpXNetPacketizer.class.getName());
 }
 
 /* @(#)XnTcpXNetPacketizer.java */

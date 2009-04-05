@@ -8,7 +8,7 @@ import javax.vecmath.Point3d;
  * Some helpful implementations and values for Calculators.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public abstract class AbstractCalculator implements Calculator {
 
@@ -66,7 +66,7 @@ public abstract class AbstractCalculator implements Calculator {
         }
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractCalculator.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractCalculator.class.getName());
 
 }
 

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SoundSetFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SoundSetAction extends AbstractAction {
 
@@ -33,7 +33,7 @@ public class SoundSetAction extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SoundSetAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundSetAction.class.getName());
 
 }
 

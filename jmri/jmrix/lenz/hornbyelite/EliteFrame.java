@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  * Frame to control and connect XPressNet via Elite interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author			Paul Bender    Copyright (C) 2003,2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class EliteFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -50,6 +50,6 @@ public class EliteFrame extends jmri.jmrix.SerialPortFrame {
 		}
 	}
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EliteFrame.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteFrame.class.getName());
 
 }

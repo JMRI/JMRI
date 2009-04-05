@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottleManager;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.7 $
+ * @version    $Revision: 2.8 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
@@ -81,7 +81,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
 		jmri.DccThrottle.SpeedStepMode14 );
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottleManager.class.getName());
 
 }
 

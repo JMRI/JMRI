@@ -24,7 +24,7 @@ import jmri.util.SystemType;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -42,7 +42,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
      */
     public String handlePortBusy(javax.comm.PortInUseException p,
                             String portName,
-                            org.apache.log4j.Category log) {
+                            org.apache.log4j.Logger log) {
 				log.error(portName+" port is in use: "+p.getMessage());
                 JOptionPane.showMessageDialog(null, "Port is in use",
                                                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -55,7 +55,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
      */
     public String handlePortNotFound(javax.comm.NoSuchPortException p,
                             String portName,
-                            org.apache.log4j.Category log) {
+                            org.apache.log4j.Logger log) {
 				log.error("Serial port "+portName+" not found");
                 JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
                                                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -225,6 +225,6 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         return mOpt2;
     }
 
-    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractPortController.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
 
 }

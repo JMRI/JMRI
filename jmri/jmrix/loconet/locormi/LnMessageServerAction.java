@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
  * use the LocoNet connection on this machine.
  * Copyright:    Copyright (c) 2002
  * @author      Alex Shepherd
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LnMessageServerAction extends AbstractAction {
 
@@ -30,5 +30,5 @@ public class LnMessageServerAction extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServerAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageServerAction.class.getName());
 }

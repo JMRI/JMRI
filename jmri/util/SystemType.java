@@ -7,7 +7,7 @@ package jmri.util;
  * of operating system is in use.
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class SystemType {
@@ -68,5 +68,5 @@ public class SystemType {
     }
     
     // initialize logging
-    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SystemType.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemType.class.getName());
 }

@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that AIU is polled.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NceAIU {
 
@@ -99,7 +99,7 @@ public class NceAIU {
         return sensorArray[index];
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceAIU.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceAIU.class.getName());
 }
 
 /* @(#)NceAIU.java */

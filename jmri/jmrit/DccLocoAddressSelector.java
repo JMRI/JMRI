@@ -31,7 +31,7 @@ import java.awt.event.ComponentEvent;
  * where you might be configuring a loco to run somewhere else.
  *
  * @author     Bob Jacobsen   Copyright (C) 2005
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 public class DccLocoAddressSelector extends JPanel
 {
@@ -273,5 +273,5 @@ public class DccLocoAddressSelector extends JPanel
     
     static ResourceBundle rb = null;
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccLocoAddressSelector.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelector.class.getName());
 }

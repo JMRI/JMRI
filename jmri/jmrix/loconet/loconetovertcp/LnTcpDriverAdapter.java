@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -102,6 +102,6 @@ public class LnTcpDriverAdapter extends LnPortController {
     public String[] getCommandStationNames() { return commandStationNames; }
     public String   getCurrentCommandStation() { return commandStationName; }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTcpDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTcpDriverAdapter.class.getName());
 
 }

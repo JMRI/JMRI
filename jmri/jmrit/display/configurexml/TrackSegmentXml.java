@@ -18,7 +18,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
@@ -102,5 +102,5 @@ public class TrackSegmentXml implements XmlAdapter {
 		p.trackList.add(l);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrackSegmentXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegmentXml.class.getName());
 }

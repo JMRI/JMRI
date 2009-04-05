@@ -37,7 +37,7 @@ public class NceMacroEditAction  extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMacroEditAction.class.getName());
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMacroEditAction.class.getName());
 }
 
 

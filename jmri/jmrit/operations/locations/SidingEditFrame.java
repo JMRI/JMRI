@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -161,6 +161,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.propertyChange(e);
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(SidingEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(SidingEditFrame.class.getName());
 }

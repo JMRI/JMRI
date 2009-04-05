@@ -70,7 +70,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.19 $
+  * @version     $Revision: 1.20 $
   */
 
 public class NceBinaryCommand {
@@ -425,7 +425,7 @@ public class NceBinaryCommand {
 	}
 	
 	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceBinaryCommand.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */
 

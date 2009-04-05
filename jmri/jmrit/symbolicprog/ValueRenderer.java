@@ -34,5 +34,5 @@ public class ValueRenderer implements TableCellRenderer {
 			return new JLabel("Unknown value type!");
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ValueEditor.class.getName());
 }

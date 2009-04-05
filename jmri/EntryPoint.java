@@ -17,7 +17,7 @@ package jmri;
  *  an Entry Point is loaded from a configuration file.
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EntryPoint {
 
@@ -111,7 +111,7 @@ public class EntryPoint {
 	public String getFromBlockDirection() { return mFromBlockDirection; }
 	
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EntryPoint.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EntryPoint.class.getName());
 }
 
 /* @(#)EntryPoint.java */

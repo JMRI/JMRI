@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class MemoryContents {
 
@@ -211,7 +211,7 @@ public class MemoryContents {
         }
     }
         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryContents.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryContents.class.getName());
 }
 
 /* @(#)MemoryContents.java */

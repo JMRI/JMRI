@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -501,6 +501,6 @@ public class LayoutPositionableLabel extends JLabel
         return active;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutPositionableLabel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutPositionableLabel.class.getName());
 
 }

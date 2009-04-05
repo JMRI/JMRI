@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LnLightManager extends AbstractLightManager {
 
@@ -101,7 +101,7 @@ public class LnLightManager extends AbstractLightManager {
     }
     static LnLightManager _instance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLightManager.class.getName());
 
 }
 

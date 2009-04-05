@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
 
@@ -102,7 +102,7 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SRCPOpsModeProgrammer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPOpsModeProgrammer.class.getName());
 
 }
 

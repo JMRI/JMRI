@@ -35,7 +35,7 @@ public class RpsMonAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsMonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsMonAction.class.getName());
 
 }
 

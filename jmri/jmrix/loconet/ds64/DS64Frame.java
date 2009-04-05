@@ -22,7 +22,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -174,6 +174,6 @@ public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox opsw20    = new JCheckBox("OpSw 20: Output 4 is crossing gate");
     JCheckBox opsw21    = new JCheckBox("OpSw 21: Send turnout sensor messages (general sensor messages if off)");
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DS64Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DS64Frame.class.getName());
 
 }

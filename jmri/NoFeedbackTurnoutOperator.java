@@ -41,5 +41,5 @@ public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 		} catch (TurnoutOperatorException e) { };
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NoFeedbackTurnoutOperator.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperator.class.getName());
 }

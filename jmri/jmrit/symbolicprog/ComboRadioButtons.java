@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -130,6 +130,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboRadioButtons.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboRadioButtons.class.getName());
 
 }

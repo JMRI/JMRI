@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class Backup extends XmlFile {
 
@@ -198,6 +198,6 @@ public class Backup extends XmlFile {
 		return date;
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(Backup.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(Backup.class.getName());
 }

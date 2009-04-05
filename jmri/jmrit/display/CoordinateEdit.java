@@ -18,7 +18,7 @@ import java.io.*;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -238,6 +238,6 @@ public class CoordinateEdit extends JmriJFrame {
 		}
 	}
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(CoordinateEdit.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CoordinateEdit.class.getName());
 }

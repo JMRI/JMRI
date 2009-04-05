@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -163,7 +163,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log
-        = org.apache.log4j.Category.getInstance(AbstractRosterItemAction.class.getName());
+    static org.apache.log4j.Logger log
+        = org.apache.log4j.Logger.getLogger(AbstractRosterItemAction.class.getName());
 
 }

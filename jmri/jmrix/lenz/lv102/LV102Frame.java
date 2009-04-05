@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * The actual utility is defined in {@link LV102InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
@@ -60,6 +60,6 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LV102Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LV102Frame.class.getName());
 
 }

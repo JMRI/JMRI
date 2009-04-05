@@ -15,7 +15,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class RosterConfigPaneXml implements XmlAdapter {
 
@@ -66,6 +66,6 @@ public class RosterConfigPaneXml implements XmlAdapter {
             Roster.setFileLocation(element.getAttribute("directory").getValue());
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterConfigPaneXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterConfigPaneXml.class.getName());
 
 }

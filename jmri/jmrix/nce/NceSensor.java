@@ -8,7 +8,7 @@ import jmri.AbstractSensor;
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class NceSensor extends AbstractSensor {
 
@@ -31,7 +31,7 @@ public class NceSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceSensor.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensor.class.getName());
 
 }
 

@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
@@ -204,5 +204,5 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
     }
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ClientRxHandler.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClientRxHandler.class.getName());
 }

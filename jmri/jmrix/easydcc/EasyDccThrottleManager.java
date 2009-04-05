@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kelly Loyd
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
@@ -71,6 +71,6 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
         }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccThrottleManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccThrottleManager.class.getName());
 
 }

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class SprogUpdateAction 	extends AbstractAction {
@@ -21,7 +21,7 @@ public class SprogUpdateAction 	extends AbstractAction {
   public void actionPerformed(ActionEvent e) {
   }
 
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogUpdateAction.class.getName());
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogUpdateAction.class.getName());
 
 }
 

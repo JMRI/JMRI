@@ -14,7 +14,7 @@ package jmri;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -136,7 +136,7 @@ public class DefaultLogixManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultLogixManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogixManager.class.getName());
 }
 
 /* @(#)DefaultLogixManager.java */

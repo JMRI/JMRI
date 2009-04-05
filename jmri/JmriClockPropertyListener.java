@@ -116,6 +116,6 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener
             }
         }
     }
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriClockPropertyListener.class.getName());
+static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriClockPropertyListener.class.getName());
 }
 

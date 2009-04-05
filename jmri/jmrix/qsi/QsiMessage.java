@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -394,7 +394,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return s;
     }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiMessage.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMessage.class.getName());
     
 }
 

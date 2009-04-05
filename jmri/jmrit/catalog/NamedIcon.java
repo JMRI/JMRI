@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -173,6 +173,6 @@ public class NamedIcon extends ImageIcon {
         return myImage;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NamedIcon.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedIcon.class.getName());
 
 }

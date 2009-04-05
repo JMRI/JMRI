@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -341,5 +341,5 @@ public class JmriJFrameServlet implements Servlet {
         tok.nextToken();
         return(Integer.parseInt(tok.nextToken()));
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriJFrameServlet.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriJFrameServlet.class.getName());
 }

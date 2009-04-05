@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RpsSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -35,5 +35,5 @@ public class RpsSensorManagerXml extends jmri.configurexml.AbstractSensorManager
         loadSensors(sensors);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsSensorManagerXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsSensorManagerXml.class.getName());
 }
