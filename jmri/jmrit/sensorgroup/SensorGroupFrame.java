@@ -40,7 +40,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -200,6 +200,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     void addPressed() {
         deleteGroup(false);
         String group = _nameField.getText();
+        if (group == null || group.length()==0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                            "Please enter a name for this group.", "Error",
+					        javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Logix logix = getSystemLogix();
         logix.deActivateLogix();
         String cSystemName = ConditionalSystemPrefix+group.toUpperCase();
