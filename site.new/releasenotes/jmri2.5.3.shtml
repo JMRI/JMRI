@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.5 2009-04-01 23:59:45 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.6 2009-04-06 23:52:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,7 +69,15 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None yet)
+JMRI 2.5.3 uses a new version of the Log4J library, and 
+several additional libraries.  If you've written your own
+Java code using JMRI, or have your own startup scripts, you
+might have to make some changes to adapt to these new libraries.
+If you don't get messages about missing or deprecated methods,
+you don't have to worry about this.
+
+<p>
+
 
 <h3>Warnings from older versions:</h3>
 
@@ -145,10 +153,24 @@ you need more information, you can
 (from the Help menu)
 that contains information about your JMRI and Java versions, configuration, error messages, etc.
 Developers can then look at that to get the information they need to help find a solution.
+This feature is still in development, and might not work with all
+email systems yet.
 
 <p>
 The Log4J library used by JMRI has been updated to the current version.
 This won't change the user experience, but helps us handle errors in a cleaner way.
+Dan Boudreau did 1300+ updates using this!
+
+<p>
+Pete Cressman improved error handling in the sensor group GUI.
+
+<p>
+More help files.  Also, some help pages were reformatted to be more readable,
+and image files were reformatted to save some space.
+
+<p>
+Fixed a problem that was making some buttons disappear when editing
+Digitrax SPJ sound projects.
 
 <!--#include virtual="/Footer" -->
 
