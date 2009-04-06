@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class ReportContext {
 
@@ -59,6 +59,10 @@ public class ReportContext {
         addProperty("os.arch");
         addProperty("os.version");
 
+        addProperty("python.home");
+        addProperty("python.path");
+        addProperty("python.startup");
+        
         addProperty("user.name");
         addProperty("user.home");
         addProperty("user.dir");
