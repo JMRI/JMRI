@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -281,19 +281,32 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             int width = getPreferredWidth(i);
             table.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        table.sizeColumnsToFit(-1);
+        //table.sizeColumnsToFit(-1);
 
         // have the value column hold a button
-        setColumnToHoldButton(table, PLAYBUTTONCOL, configureButton(PLAYBUTTONCOL));
-        setColumnToHoldButton(table, REPLACEBUTTONCOL, configureButton(REPLACEBUTTONCOL));
+        setColumnToHoldButton(table, PLAYBUTTONCOL, largestWidthButton(PLAYBUTTONCOL));
+        setColumnToHoldButton(table, REPLACEBUTTONCOL, largestWidthButton(REPLACEBUTTONCOL));
     }
 
-    public JButton configureButton(int col) {
-        JButton b = new JButton((String)getValueAt(1, col));
+    public JButton largestWidthButton(int col) {
+        JButton retval = new JButton("TTTT");
+        if (col == PLAYBUTTONCOL) {
+            retval = checkLabelWidth(retval, "ButtonPlay");
+            retval = checkLabelWidth(retval, "ButtonView");
+        } else if (col == REPLACEBUTTONCOL) {
+            retval = checkLabelWidth(retval, "ButtonEdit");
+            retval = checkLabelWidth(retval, "ButtonReplace");
+        }
+        return retval; 
+    }
+    private JButton checkLabelWidth(JButton now, String name) {
+        JButton b = new JButton(res.getString(name));
         b.validate();
-        return b;
+        if (b.getPreferredSize().width > now.getPreferredSize().width)
+            return b;
+        else 
+            return now;
     }
-
     /**
      * Service method to setup a column so that it will hold a
      * button for it's values
@@ -310,8 +323,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 		table.setDefaultEditor(JButton.class,buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         table.setRowHeight(sample.getPreferredSize().height);
-        // table.getColumnModel().getColumn(column)
-		//	.setPreferredWidth(sample.getPreferredSize().width);
+        table.getColumnModel().getColumn(column)
+		    .setPreferredWidth(sample.getPreferredSize().width+30);
     }
 
     synchronized public void dispose() {
