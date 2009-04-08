@@ -2,11 +2,13 @@
 
 package jmri.jmrix.loconet.sdf;
 
+import jmri.util.StringUtil;
+
 /**
  * Implement the PLAY macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
 public class Play extends SdfMacro {
@@ -31,16 +33,50 @@ public class Play extends SdfMacro {
     
     int byte1, byte2;
     
-    String handleVal() {
+    public String handleVal() {
         return ""+handle;
     }
     
-    String brkVal() {
-        return decodeFlags(brk, loopCodes, loopMasks, loopNames);
+    public void setHandle(int val) {
+        this.handle = val;
+        this.byte2 = (this.byte2&0xC0)|(val&0x3f);
     }
     
-    String wavebrkFlagsVal() {
+    public String brkVal() {
+        return decodeState(brk, loopCodes, loopNames);
+    }
+    
+    public void setBrk(String name) {
+        int val = jmri.util.StringUtil.getStateFromName(name, loopCodes, loopNames);
+        if (val == -1) val = 0; // no match found is defaulted to zero
+        setBrk(val);
+    }
+    public void setBrk(int n) {
+        // argument is 0 - 31
+        this.byte1 = (this.byte1&0xF8)|((n>>2)&0x7);
+        this.byte2 = (this.byte2&0x3F)|((n<<6)&0xC0);
+        this.brk = ((byte1&0x7)<<2)+((byte2&0xC0)>>6) ;
+    }
+
+    public String wavebrkFlagsVal() {
         return decodeFlags(wavebrkFlags, wavebrkCodes, wavebrkMasks, wavebrkNames);
+    }
+    
+    public int getWaveBrkFlags() {
+        return this.wavebrkFlags>>3;
+    }
+    
+    // doesn't handle case of GLOBAL+INVERT!
+    public void setWaveBrkFlags(String name) {
+        int val = StringUtil.getStateFromName(name, wavebrkCodes, wavebrkNames);
+        if (val == -1) val = 0;  // no match found is defaulted to zero
+        setWaveBrkFlags(val>>3);
+    }
+    
+    public void setWaveBrkFlags(int n) {
+        // argument is 0,1,2,3
+        this.byte1 = (this.byte1&0xE7)|((n<<3)&0x18);
+        this.wavebrkFlags = byte1&0x18;
     }
     
     public int length() { return 2;}
