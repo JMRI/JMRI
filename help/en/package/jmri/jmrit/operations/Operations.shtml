@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.41 2009-03-30 17:45:12 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.42 2009-04-08 19:47:36 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -690,7 +690,7 @@ database, you can import the engines into the program. To get your
 engines from your JMRI roster, select "Import from JMRI roster" from the
 Tools->Operations->Engines->Tools menu. Only engines that don't exist
 will be added to the programs engine roster. This way you can use this
-tool anytime you add engines to your JMRI engine roster. The JMRI engine
+tool any time you add engines to your JMRI engine roster. The JMRI engine
 roster doesn't have the length field, so a default length is entered for
 you. You should correct the engine length if you want the program to
 correctly calculate your train lengths.
@@ -846,7 +846,7 @@ routes is also created each time the "Save Route" button is pressed.
 <A NAME="CopyRoute"></A>
 <H3>Copy Route</H3>
 
-In the Route frame select "Tools->Copy Route" to make a copy of your
+In the Route window select "Tools->Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
 want to copy. If you want the route reversed check the "Invert" box. 
 
@@ -936,7 +936,7 @@ train is built. If you want to review how the train was built, select
 the "Build Reports" before pressing the "Print" button for the desired
 train. If the "Preview Manifest" checkbox is selected, the program will
 generate the build report and manifest and present them in preview
-frames. If you want to build several trains without having to press
+windows. If you want to build several trains without having to press
 individual buttons for each train, select the trains that you want built
 and press the "Build" button found at the bottom of the trains panel.
 The program will then build manifests for all of the selected trains. 
@@ -945,10 +945,10 @@ The program will then build manifests for all of the selected trains.
 <H2>Problems Building Trains</H2>
 
 If you have a problem building a train you can select the "Build
-Reports" checkbox at the bottom of the train frame. When a build fails
+Reports" checkbox at the bottom of the train window. When a build fails
 for any reason and the "Build Reports" checkbox is selected, the program
 will send a report to your printer if the "Preview Manifests" isn't
-selected; or to a preview frame if the "Preview Manifest" is selected.
+selected; or to a preview window if the "Preview Manifest" is selected.
 The build report can print out different levels of detail, from minimal
 to very detailed. See the Settings section <A HREF="#BuildReportDetails">Build
 Report Details</A> for more information on how to change the build report
@@ -1053,6 +1053,19 @@ didn't run during this session could run the during the next session.
 for each train to track the actual movement of the trains during your
 session. As long as the trains on your layout match the locations in the
 program you can build a new train.
+
+<H2>Operation Windows</H2>
+
+Some of the operation windows can be resized and placed to your liking.
+Pressing the save button will store the size and location for the
+following operation windows:
+
+<ul>
+<li>Settings</li>
+<li>Edit Location</li>
+<li>Trains</li>
+<li>Edit Trains</li>
+</ul>
 
 <P>The end of operations help.</P>
 
