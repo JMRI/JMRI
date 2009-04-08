@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -605,6 +605,73 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	return out;
     }
 
+    /**
+     * Sort by when car was built
+     * @return list of car ids ordered by car built date
+     */
+    public List<String> getCarsByBuiltList() {
+    	// first get by type list
+    	List<String> sortById = getCarsByIdList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String carBuilt = "";
+    	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		carAdded = false;
+    		c = getCarById (sortById.get(i));
+    		carBuilt = c.getBuilt();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById (out.get(j));
+    			String outCarBuilt = c.getBuilt();
+    			if (carBuilt.compareToIgnoreCase(outCarBuilt)<0){
+    				out.add(j, sortById.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
+    /**
+     * Sort by car owner
+     * @return list of car ids ordered by car owner
+     */
+    public List<String> getCarsByOwnerList() {
+    	// first get by type list
+    	List<String> sortById = getCarsByIdList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String carOwner = "";
+    	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		carAdded = false;
+    		c = getCarById (sortById.get(i));
+    		carOwner = c.getOwner();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById (out.get(j));
+    			String outCarOwner = c.getOwner();
+    			if (carOwner.compareToIgnoreCase(outCarOwner)<0){
+    				out.add(j, sortById.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
    
     /**
 	 * Return a list available cars (no assigned train or cars already assigned

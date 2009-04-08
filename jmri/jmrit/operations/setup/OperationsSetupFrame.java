@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -394,7 +394,14 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// set frame size and location for display
 		pack();
-		setSize(getWidth()+30, getHeight()+50);
+		if (Setup.getOperationsSetupFrameSize()!= null){
+			setSize(Setup.getOperationsSetupFrameSize());
+		} else {
+			setSize(getWidth()+30, getHeight()+50);
+		}
+		if (Setup.getOperationsSetupFramePosition()!= null){
+			setLocation(Setup.getOperationsSetupFramePosition());
+		}	
 		setVisible(true);
 	}
 	
@@ -522,6 +529,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			if (scaleG.isSelected())
 				Setup.setScale(Setup.G_SCALE);
 			Setup.setRailroadName(railroadNameTextField.getText());
+			// save panel size and position
+			Setup.setOperationsSetupFrame(this);
 			OperationsXml.instance().writeOperationsFile();
 		}
 	}

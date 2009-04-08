@@ -4,14 +4,17 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.XmlFile;
+
 import org.jdom.Element;
 
 
@@ -132,7 +135,23 @@ public class Setup {
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
+	// Setup frame attributes
+	protected static OperationsSetupFrame _operationsSetupFrame = null;
+	protected static Dimension _operationsSetupFrameDimension = null;
+	protected static Point _operationsSetupFramePosition = null;
 	
+	public static void setOperationsSetupFrame(OperationsSetupFrame frame){
+		_operationsSetupFrame = frame;
+	}
+
+	public static Dimension getOperationsSetupFrameSize(){
+		return _operationsSetupFrameDimension;
+	}
+
+	public static Point getOperationsSetupFramePosition(){
+		return _operationsSetupFramePosition;
+	}
+
 	public static boolean isMainMenuEnabled(){
 		OperationsXml.instance(); // load file
 		return mainMenuEnabled;
@@ -523,6 +542,26 @@ public class Setup {
     	values.setAttribute("west", getTrainIconColorWest());
     	values.setAttribute("local", getTrainIconColorLocal());
     	values.setAttribute("terminate", getTrainIconColorTerminate());
+    	
+    	Element options;
+    	e.addContent(options = new Element("options"));
+    	options.addContent(values = new Element("setupFrameOptions"));
+        Dimension size = getOperationsSetupFrameSize();
+        Point posn = getOperationsSetupFramePosition();
+        if (_operationsSetupFrame != null){
+        	size = _operationsSetupFrame.getSize();
+        	posn = _operationsSetupFrame.getLocation();
+        	_operationsSetupFrameDimension = size;
+        	_operationsSetupFramePosition = posn;
+        }
+        if (posn != null){
+        	values.setAttribute("x", ""+posn.x);
+        	values.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	values.setAttribute("height", ""+size.height);
+        	values.setAttribute("width", ""+size.width); 
+        }
     	return e;
     }
     
@@ -652,9 +691,22 @@ public class Setup {
            	if (log.isDebugEnabled()) log.debug("terminate color: "+color);
            	Setup.setTrainIconColorTerminate(color);
         }
+        Element frameOptions;
+        if ((frameOptions = operations.getChild("options").getChild("setupFrameOptions"))!= null){
+        	try {
+        		int x = frameOptions.getAttribute("x").getIntValue();
+        		int y = frameOptions.getAttribute("y").getIntValue();
+        		int height = frameOptions.getAttribute("height").getIntValue();
+        		int width = frameOptions.getAttribute("width").getIntValue();
+        		_operationsSetupFrameDimension = new Dimension(width, height);
+        		_operationsSetupFramePosition = new Point(x,y);
+        	} catch ( org.jdom.DataConversionException ee) {
+        		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
+        	} catch ( NullPointerException ne) {
+        		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
+        	}
+        }
     }
-    
-
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Setup.class.getName());
 

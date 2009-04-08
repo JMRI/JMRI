@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.routes;
 
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -188,7 +189,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// set frame size and route for display
 		pack();
 		if((getWidth()<900)) setSize(900, getHeight());
-		setSize(getWidth(), 600);
+		setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
 	}
 	

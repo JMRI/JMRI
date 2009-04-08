@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -170,12 +170,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
     
     boolean focusLef = false;
-    LocationsEditFrame lef = null;
+    LocationEditFrame lef = null;
     private void editLocation (int row){
     	log.debug("Edit location");
     	if (lef != null)
     		lef.dispose();
-    	lef = new LocationsEditFrame();
+    	lef = new LocationEditFrame();
     	Location loc = manager.getLocationById((String)sysList.get(row));
      	lef.setTitle(rb.getString("TitleLocationEdit"));
     	lef.initComponents(loc);

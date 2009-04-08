@@ -13,8 +13,16 @@ public class Control {
 	public static final boolean showProperty = false;
 	public static final boolean showInstance = false;
 	
-	// Maximum panel size
+	// Maximum panel width
 	public static final int panelWidth = 1025;
+	
+	// Default panel height
+	public static final int panelHeight = 500;
+	
+	// Default panel edit locations
+	public static final int panelX = 0;
+	public static final int panelY = 0;
+	
 	
 	// Train build parameters
 	public static final boolean fullTrainOnly = false;

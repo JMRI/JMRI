@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -200,7 +200,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// set frame size and location for display
 		pack();
 		setSize(getWidth()+25, getHeight()+25); // add some room for menu
-		setLocation(300, 200);
+		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);	
 	}
 	

@@ -25,7 +25,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -162,38 +162,38 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 
 	private void deleteItemFromCombobox (String deleteItem){
-		if(_comboboxName == CarsEditFrame.ROAD){
+		if(_comboboxName == CarEditFrame.ROAD){
 			// update train and locations
 			CarRoads.instance().replaceName(deleteItem, null);
 		}
-		if(_comboboxName == CarsEditFrame.TYPE){
+		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == CarsEditFrame.COLOR){
+		if(_comboboxName == CarEditFrame.COLOR){
 			CarColors.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == CarsEditFrame.LENGTH){
+		if(_comboboxName == CarEditFrame.LENGTH){
 			CarLengths.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == CarsEditFrame.OWNER){
+		if(_comboboxName == CarEditFrame.OWNER){
 			CarOwners.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == CarsEditFrame.KERNEL){
+		if(_comboboxName == CarEditFrame.KERNEL){
 			manager.deleteKernel(deleteItem);
 		}
 	}
 	
 	private void addItemToCombobox (String addItem){
-		if(_comboboxName == CarsEditFrame.ROAD){
+		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().addName(addItem);
 		}
-		if(_comboboxName == CarsEditFrame.TYPE){
+		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().addName(addItem);
 		}
-		if(_comboboxName == CarsEditFrame.COLOR){
+		if(_comboboxName == CarEditFrame.COLOR){
 			CarColors.instance().addName(addItem);
 		}
-		if(_comboboxName == CarsEditFrame.LENGTH){
+		if(_comboboxName == CarEditFrame.LENGTH){
 			// convert from inches to feet if needed
 			if (addItem.endsWith("\"")){
 				addItem = addItem.substring(0, addItem.length()-1);
@@ -240,10 +240,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			CarLengths.instance().addName(addItem);
 			comboBox.setSelectedItem(addItem);
 		}
-		if(_comboboxName == CarsEditFrame.KERNEL){
+		if(_comboboxName == CarEditFrame.KERNEL){
 			manager.newKernel(addItem);
 		}
-		if(_comboboxName == CarsEditFrame.OWNER){
+		if(_comboboxName == CarEditFrame.OWNER){
 			CarOwners.instance().addName(addItem);
 		}
 	}
@@ -253,27 +253,27 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		for (int i=0; i<cars.size(); i++){
 			Car car = manager.getCarById(cars.get(i));
 
-			if(_comboboxName == CarsEditFrame.ROAD){
+			if(_comboboxName == CarEditFrame.ROAD){
 				if (car.getRoad().equals(oldItem))
 					car.setRoad(newItem);
 			}
-			if(_comboboxName == CarsEditFrame.TYPE){
+			if(_comboboxName == CarEditFrame.TYPE){
 				if (car.getType().equals(oldItem))
 					car.setType(newItem);
 			}
-			if(_comboboxName == CarsEditFrame.COLOR){
+			if(_comboboxName == CarEditFrame.COLOR){
 				if (car.getColor().equals(oldItem))
 					car.setColor(newItem);
 			}
-			if(_comboboxName == CarsEditFrame.LENGTH){
+			if(_comboboxName == CarEditFrame.LENGTH){
 				if (car.getLength().equals(oldItem))
 					car.setLength(newItem);
 			}
-			if(_comboboxName == CarsEditFrame.OWNER){
+			if(_comboboxName == CarEditFrame.OWNER){
 				if (car.getOwner().equals(oldItem))
 					car.setOwner(newItem);
 			}
-			if(_comboboxName == CarsEditFrame.KERNEL){
+			if(_comboboxName == CarEditFrame.KERNEL){
 				if (car.getKernelName().equals(oldItem)){
 					Kernel kernel = manager.newKernel(newItem);
 					car.setKernel(kernel);
@@ -281,36 +281,36 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			}
 		}
 		//	now adjust locations and trains
-		if(_comboboxName == CarsEditFrame.TYPE){
+		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().replaceName(oldItem, newItem);
 		}
-		if(_comboboxName == CarsEditFrame.ROAD){
+		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().replaceName(oldItem, newItem);
 		}
 	}
 	
 	private void loadCombobox(){ 
-		if(_comboboxName == CarsEditFrame.ROAD){
+		if(_comboboxName == CarEditFrame.ROAD){
 			comboBox = CarRoads.instance().getComboBox();
 			CarRoads.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == CarsEditFrame.TYPE){
+		if(_comboboxName == CarEditFrame.TYPE){
 			comboBox = CarTypes.instance().getComboBox();
 			CarTypes.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == CarsEditFrame.COLOR){
+		if(_comboboxName == CarEditFrame.COLOR){
 			comboBox = CarColors.instance().getComboBox();
 			CarColors.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == CarsEditFrame.LENGTH){
+		if(_comboboxName == CarEditFrame.LENGTH){
 			comboBox = CarLengths.instance().getComboBox();
 			CarLengths.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == CarsEditFrame.OWNER){
+		if(_comboboxName == CarEditFrame.OWNER){
 			comboBox = CarOwners.instance().getComboBox();
 			CarOwners.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == CarsEditFrame.KERNEL){
+		if(_comboboxName == CarEditFrame.KERNEL){
 			comboBox = manager.getKernelComboBox();
 		}
 	}
@@ -334,27 +334,27 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		for (int i=0; i<cars.size(); i++){
 			Car car = manager.getCarById(cars.get(i));
 
-			if(_comboboxName == CarsEditFrame.ROAD){
+			if(_comboboxName == CarEditFrame.ROAD){
 				if (car.getRoad().equals(item))
 					number++;
 			}
-			if(_comboboxName == CarsEditFrame.TYPE){
+			if(_comboboxName == CarEditFrame.TYPE){
 				if (car.getType().equals(item))
 					number++;
 			}
-			if(_comboboxName == CarsEditFrame.COLOR){
+			if(_comboboxName == CarEditFrame.COLOR){
 				if (car.getColor().equals(item))
 					number++;
 			}
-			if(_comboboxName == CarsEditFrame.LENGTH){
+			if(_comboboxName == CarEditFrame.LENGTH){
 				if (car.getLength().equals(item))
 					number++;
 			}
-			if(_comboboxName == CarsEditFrame.OWNER){
+			if(_comboboxName == CarEditFrame.OWNER){
 				if (car.getOwner().equals(item))
 					number++;
 			}
-			if(_comboboxName == CarsEditFrame.KERNEL){
+			if(_comboboxName == CarEditFrame.KERNEL){
 				if (car.getKernelName().equals(item))
 					number++;
 			}

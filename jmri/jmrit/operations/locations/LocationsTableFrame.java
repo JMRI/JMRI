@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -120,7 +120,7 @@ public class LocationsTableFrame extends OperationsFrame {
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("location button actived");
 		if (ae.getSource() == addButton){
-			LocationsEditFrame f = new LocationsEditFrame();
+			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);
 			f.setTitle("Add Location");
 			f.setVisible(true);

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -47,6 +47,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
     
     private boolean showColor = true;
+    private static final int SHOWMOVES = 0;
+    private static final int SHOWBUILT = 1;
+    private static final int SHOWOWNER = 2;
+    private int showMoveCol = SHOWMOVES;
 
     public CarsTableModel() {
         super();
@@ -64,6 +68,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBYKERNEL = 8;
     public final int SORTBYLOAD = 9;
     public final int SORTBYCOLOR = 10;
+    public final int SORTBYBUILT = 11;
+    public final int SORTBYOWNER = 12;
     
     private int _sort = SORTBYNUMBER;
     
@@ -78,6 +84,21 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	else if (sort == SORTBYLOAD && showColor){
     		showColor = false;
     		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+       	else if (sort == SORTBYMOVES){
+    		showMoveCol = SHOWMOVES;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+       	else if (sort == SORTBYBUILT){
+    		showMoveCol = SHOWBUILT;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else if (sort == SORTBYOWNER){
+    		showMoveCol = SHOWOWNER;
+       		fireTableStructureChanged();
     		initTable(_table);
     	}
     	else
@@ -150,6 +171,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getCarsByLoadList();
 		else if (_sort == SORTBYCOLOR)
 			list = manager.getCarsByColorList();
+		else if (_sort == SORTBYOWNER)
+			list = manager.getCarsByOwnerList();
+		else if (_sort == SORTBYBUILT)
+			list = manager.getCarsByBuiltList();
 		else
 			list = manager.getCarsByNumberList();
 		return list;
@@ -206,7 +231,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         case LOCATIONCOLUMN: return rb.getString("Location");
         case DESTINATIONCOLUMN: return rb.getString("Destination");
         case TRAINCOLUMN: return rb.getString("Train");
-        case MOVESCOLUMN: return rb.getString("Moves");
+        case MOVESCOLUMN: {
+        	if (showMoveCol == SHOWBUILT)
+        		return rb.getString("Built");
+        	else if (showMoveCol == SHOWOWNER)
+        		return rb.getString("Owner");
+        	else
+        		return rb.getString("Moves");
+        }
         case SETCOLUMN: return rb.getString("Location");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
@@ -294,7 +326,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	return s;
         }
         case TRAINCOLUMN: return c.getTrain();
-        case MOVESCOLUMN: return Integer.toString(c.getMoves());
+        case MOVESCOLUMN: {
+           	if (showMoveCol == SHOWBUILT)
+        		return c.getBuilt();
+        	else if (showMoveCol == SHOWOWNER)
+        		return c.getOwner();
+        	else
+        		return Integer.toString(c.getMoves());
+        }
         case SETCOLUMN: return rb.getString("Set");
         case EDITCOLUMN: return rb.getString("Edit");
  
@@ -304,8 +343,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     
     boolean focusCef = false;
     boolean focusCsf = false;
-    CarsEditFrame cef = null;
-    CarsSetFrame csf = null;
+    CarEditFrame cef = null;
+    CarSetFrame csf = null;
     
     public void setValueAt(Object value, int row, int col) {
 		String carId = sysList.get(row);
@@ -315,7 +354,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	log.debug("Set car location");
            	if (csf != null)
            		csf.dispose();
-       		csf = new CarsSetFrame();
+       		csf = new CarSetFrame();
     		csf.initComponents();
 	    	csf.loadCar(car);
 	    	csf.setTitle(rb.getString("TitleCarSet"));
@@ -327,7 +366,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	log.debug("Edit car");
         	if (cef != null)
         		cef.dispose();
-    		cef = new CarsEditFrame();
+    		cef = new CarEditFrame();
     		cef.initComponents();
 	    	cef.loadCar(car);
 	    	cef.setTitle(rb.getString("TitleCarEdit"));

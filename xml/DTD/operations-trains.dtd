@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.6 2008-11-21 20:03:26 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.7 2009-04-08 19:58:09 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -15,8 +15,9 @@
 
 <!ELEMENT operations-config (trains | options)*>
 
-<!ELEMENT options (trainOptions)>
+<!ELEMENT options (trainOptions | trainEditOptions)*>
 <!ELEMENT trainOptions EMPTY>
+<!ELEMENT trainEditOptions EMPTY>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -25,6 +26,11 @@
 <!ATTLIST trainOptions height			CDATA #IMPLIED>
 <!ATTLIST trainOptions width			CDATA #IMPLIED>
 <!ATTLIST trainOptions sortBy			CDATA #IMPLIED>
+
+<!ATTLIST trainEditOptions x				CDATA #IMPLIED>
+<!ATTLIST trainEditOptions y				CDATA #IMPLIED>
+<!ATTLIST trainEditOptions height			CDATA #IMPLIED>
+<!ATTLIST trainEditOptions width			CDATA #IMPLIED>
 
 <!ELEMENT trains (train)*>
 

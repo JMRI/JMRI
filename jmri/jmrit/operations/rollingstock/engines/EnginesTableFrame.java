@@ -3,7 +3,7 @@
  package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -15,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -25,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -38,12 +39,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	// labels
 	javax.swing.JLabel numEngines = new javax.swing.JLabel();
 	javax.swing.JLabel textEngines = new javax.swing.JLabel();
-	javax.swing.JLabel textSort = new javax.swing.JLabel();
-	javax.swing.JLabel textSep1 = new javax.swing.JLabel();
+	javax.swing.JLabel textSort = new javax.swing.JLabel(rb.getString("SortBy"));
+	javax.swing.JLabel textSep1 = new javax.swing.JLabel("          ");
 	javax.swing.JLabel textSep2 = new javax.swing.JLabel();
 	
-	// radio buttons
-	
+	// radio buttons	
     javax.swing.JRadioButton sortByNumber = new javax.swing.JRadioButton(rb.getString("Number"));
     javax.swing.JRadioButton sortByRoad = new javax.swing.JRadioButton(rb.getString("Road"));
     javax.swing.JRadioButton sortByModel = new javax.swing.JRadioButton(rb.getString("Model"));
@@ -52,11 +52,13 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     javax.swing.JRadioButton sortByDestination = new javax.swing.JRadioButton(rb.getString("Destination"));
     javax.swing.JRadioButton sortByTrain = new javax.swing.JRadioButton(rb.getString("Train"));
     javax.swing.JRadioButton sortByMoves = new javax.swing.JRadioButton(rb.getString("Moves"));
+    JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
+    JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
-	javax.swing.JButton findButton = new javax.swing.JButton();
+	javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("Add"));
+	javax.swing.JButton findButton = new javax.swing.JButton(rb.getString("Find"));
 	
 	javax.swing.JTextField findEngineTextBox = new javax.swing.JTextField(6);
 
@@ -70,54 +72,60 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	enginesPane = new JScrollPane(enginesTable);
     	enginesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
        	enginesModel.initTable(enginesTable);
-     	getContentPane().add(enginesPane);
      	
-     	// Set up the control panel
-    	JPanel controlPanel = new JPanel();
-	  	JScrollPane controlPane = new JScrollPane(controlPanel);
-    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    	controlPanel.setLayout(new FlowLayout());
-    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
-    	numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
+       	// load the number of engines and listen for changes
+     	numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
     	EngineManager.instance().addPropertyChangeListener(this);
     	textEngines.setText(rb.getString("engines"));
-    	controlPanel.add(numEngines);
-    	controlPanel.add(textEngines);
-       	textSep1.setText("          ");
-    	controlPanel.add(textSep1);
-    	
-    	textSort.setText(rb.getString("SortBy"));
-    	controlPanel.add(textSort);
-    	controlPanel.add(sortByNumber);
-    	sortByNumber.setSelected(true);
-    	controlPanel.add(sortByRoad);
-    	controlPanel.add(sortByModel);
-    	controlPanel.add(sortByConsist);
-    	controlPanel.add(sortByLocation);
-    	controlPanel.add(sortByDestination);
-    	controlPanel.add(sortByTrain);
-    	controlPanel.add(sortByMoves);
-    	textSep2.setText("          ");
-    	controlPanel.add(textSep2);
 
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
-		controlPanel.add (addButton);
-		
-		findButton.setText(rb.getString("Find"));
+    	// Set up the control panel
+    	
+    	//row 1
+    	JPanel cp1 = new JPanel();
+    	
+    	cp1.add(textSort);
+    	cp1.add(sortByNumber);
+    	cp1.add(sortByRoad);
+    	cp1.add(sortByModel);
+    	cp1.add(sortByConsist);
+    	cp1.add(sortByLocation);
+    	cp1.add(sortByDestination);
+    	cp1.add(sortByTrain);
+    	cp1.add(sortByMoves);
+       	cp1.add(sortByBuilt);
+    	cp1.add(sortByOwner);
+
+       	// row 2
+    	JPanel cp2 = new JPanel();
 		findButton.setToolTipText(rb.getString("findEngine"));
-		findButton.setVisible(true);
 		findEngineTextBox.setToolTipText(rb.getString("findEngine"));
-		controlPanel.add (findButton);
-		controlPanel.add (findEngineTextBox);
+		
+    	cp2.add(numEngines);
+    	cp2.add(textEngines);
+    	cp2.add(textSep1); 	
+		cp2.add (addButton);
+		cp2.add (findButton);
+		cp2.add (findEngineTextBox);
 				
+		// place controls in scroll pane
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridBagLayout());
+		addItem(controlPanel, cp1, 0, 0 );
+		addItem(controlPanel, cp2, 0, 1);
+		
+	    JScrollPane controlPane = new JScrollPane(controlPanel);
+	    // make sure panel doesn't get too short
+	    controlPane.setMinimumSize(new Dimension(50,90));
+	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		
+    	getContentPane().add(enginesPane);
 	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
 		addButtonAction(addButton);
 		addButtonAction(findButton);
 		
+	   	sortByNumber.setSelected(true);
 		addRadioButtonAction (sortByNumber);
 		addRadioButtonAction (sortByRoad);
 		addRadioButtonAction (sortByModel);
@@ -126,6 +134,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		addRadioButtonAction (sortByDestination);
 		addRadioButtonAction (sortByTrain);
 		addRadioButtonAction (sortByMoves);
+		addRadioButtonAction (sortByBuilt);
+		addRadioButtonAction (sortByOwner);
 		
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -135,6 +145,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		group.add(sortByDestination);
 		group.add(sortByTrain);
 		group.add(sortByMoves);
+		group.add(sortByBuilt);
+		group.add(sortByOwner);
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -176,13 +188,19 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		if (ae.getSource() == sortByMoves){
 			enginesModel.setSort(enginesModel.SORTBYMOVES);
 		}
+		if (ae.getSource() == sortByBuilt){
+			enginesModel.setSort(enginesModel.SORTBYBUILT);
+		}
+		if (ae.getSource() == sortByOwner){
+			enginesModel.setSort(enginesModel.SORTBYOWNER);
+		}
 	}
 	
 	public List<String> getSortByList(){
 		return enginesModel.getSelectedEngineList();
 	}
     
-	EnginesEditFrame f = null;
+	EngineEditFrame f = null;
 	
 	// add or find button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -203,7 +221,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		if (ae.getSource() == addButton){
 			if (f != null)
 				f.dispose();
-			f = new EnginesEditFrame();
+			f = new EngineEditFrame();
 			f.initComponents();
 			f.setTitle(rb.getString("TitleEngineAdd"));
 			f.setVisible(true);

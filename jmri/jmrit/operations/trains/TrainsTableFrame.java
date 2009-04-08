@@ -2,9 +2,9 @@
 
 package jmri.jmrit.operations.trains;
  
-import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +15,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
@@ -22,15 +25,13 @@ import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.Control;
-
 
 /**
  * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -54,26 +55,26 @@ public class TrainsTableFrame extends OperationsFrame {
 	JScrollPane trainsPane;
 	
 	// labels
-	javax.swing.JLabel textSort = new javax.swing.JLabel();
-	javax.swing.JLabel textSep1 = new javax.swing.JLabel();
-	javax.swing.JLabel textSep2 = new javax.swing.JLabel();
+	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSep1 = new JLabel("          ");
+	JLabel textSep2 = new JLabel();
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(NAME);
-    javax.swing.JRadioButton sortByTime = new javax.swing.JRadioButton(TIME);
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(ID);
+    JRadioButton sortByName = new JRadioButton(NAME);
+    JRadioButton sortByTime = new JRadioButton(TIME);
+    JRadioButton sortById = new JRadioButton(ID);
      
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
-	javax.swing.JButton buildButton = new javax.swing.JButton();
-	javax.swing.JButton printButton = new javax.swing.JButton();
-	javax.swing.JButton printSwitchButton = new javax.swing.JButton();
-	javax.swing.JButton terminateButton = new javax.swing.JButton();
-	javax.swing.JButton saveButton = new javax.swing.JButton();
+	JButton addButton = new JButton(rb.getString("Add"));
+	JButton buildButton = new JButton(rb.getString("Build"));
+	JButton printButton = new JButton(rb.getString("Print"));
+	JButton printSwitchButton = new JButton(rb.getString("SwitchLists"));
+	JButton terminateButton = new JButton(rb.getString("Terminate"));
+	JButton saveButton = new JButton(rb.getString("SaveBuilds"));
 	
 	// check boxes
-	javax.swing.JCheckBox buildReportBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox printPreviewBox = new javax.swing.JCheckBox();
+	javax.swing.JCheckBox buildReportBox = new javax.swing.JCheckBox(rb.getString("BuildReport"));
+	javax.swing.JCheckBox printPreviewBox = new javax.swing.JCheckBox(rb.getString("PrintPreview"));
 
     public TrainsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
@@ -97,7 +98,7 @@ public class TrainsTableFrame extends OperationsFrame {
             jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);
         }
         
-        // general GUI config
+        // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
@@ -105,65 +106,48 @@ public class TrainsTableFrame extends OperationsFrame {
     	trainsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     	trainsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	trainsModel.initTable(trainsTable, this);
-     	getContentPane().add(trainsPane);
-     	     	
-     	// Set up the control panel
-    	JPanel controlPanel = new JPanel();
-    	JScrollPane controlPane = new JScrollPane(controlPanel);
-    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    	controlPanel.setLayout(new FlowLayout());
-    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
-    	controlPane.setMaximumSize(new Dimension(Control.panelWidth,100));
      	
-    	textSort.setText(rb.getString("SortBy"));
-    	controlPanel.add(textSort);
-    	controlPanel.add(sortByName);
-    	sortByName.setSelected(true);
-    	controlPanel.add(sortByTime);
-    	controlPanel.add(sortById);
-    	ButtonGroup sortGroup = new ButtonGroup();
-    	sortGroup.add(sortByName);
-    	sortGroup.add(sortByTime);
-    	sortGroup.add(sortById);
+    	// Set up the control panel
     	
-    	textSep1.setText("          ");
-    	controlPanel.add(textSep1);
+    	//row 1
+    	JPanel cp1 = new JPanel();
+    	cp1.add(textSort);
+    	cp1.add(sortByName);
+    	cp1.add(sortByTime);
+    	cp1.add(sortById);
+    	cp1.add(textSep1);
+    	cp1.add(buildReportBox);
+    	cp1.add(printPreviewBox);
     	
-    	buildReportBox.setText(rb.getString("BuildReport"));
-    	buildReportBox.setSelected(trainManager.getBuildReport());
-    	controlPanel.add(buildReportBox);
-    	printPreviewBox.setText(rb.getString("PrintPreview"));
-    	printPreviewBox.setSelected(trainManager.getPrintPreview());
-    	controlPanel.add(printPreviewBox);
-    	textSep2.setText("          ");
-    	controlPanel.add(textSep2);
-
-    	addButton.setText(rb.getString("Add"));
+    	//row 2
+    	//tool tips
     	addButton.setToolTipText(rb.getString("AddTrain"));
-		addButton.setVisible(true);
-		buildButton.setText(rb.getString("Build"));
 		buildButton.setToolTipText(rb.getString("BuildSelected"));
-		buildButton.setVisible(true);
-		printButton.setText(rb.getString("Print"));
 		printButton.setToolTipText(rb.getString("PrintSelected"));
-		printButton.setVisible(true);
-		printSwitchButton.setText(rb.getString("SwitchLists"));
 		printSwitchButton.setToolTipText(rb.getString("PreviewPrintSwitchLists"));
-		printSwitchButton.setVisible(true);
-		terminateButton.setText(rb.getString("Terminate"));
 		terminateButton.setToolTipText(rb.getString("TerminateSelected"));
-		terminateButton.setVisible(true);
-		saveButton.setText(rb.getString("SaveBuilds"));
 		saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
-		saveButton.setVisible(true);
-		controlPanel.add (addButton);
-		controlPanel.add (buildButton);
-		controlPanel.add (printButton);
-		controlPanel.add (printSwitchButton);
-		controlPanel.add (terminateButton);
-		controlPanel.add (saveButton);
+
+    	JPanel cp2 = new JPanel();
+		cp2.add (addButton);
+		cp2.add (buildButton);
+		cp2.add (printButton);
+		cp2.add (printSwitchButton);
+		cp2.add (terminateButton);
+		cp2.add (saveButton);
 		
+		// place controls in scroll pane
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridBagLayout());
+		addItem(controlPanel, cp1, 0, 0 );
+		addItem(controlPanel, cp2, 0, 1);
+		
+	    JScrollPane controlPane = new JScrollPane(controlPanel);
+	    // make sure panel doesn't get too short
+	    controlPane.setMinimumSize(new Dimension(50,90));
+	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		
+    	getContentPane().add(trainsPane);
 	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
@@ -174,10 +158,17 @@ public class TrainsTableFrame extends OperationsFrame {
 		addButtonAction(terminateButton);
 		addButtonAction(saveButton);
 		
+	   	ButtonGroup sortGroup = new ButtonGroup();
+    	sortGroup.add(sortByName);
+    	sortGroup.add(sortByTime);
+    	sortGroup.add(sortById);
+    	sortByName.setSelected(true);
 		addRadioButtonAction(sortByName);
 		addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortById);
 		
+    	buildReportBox.setSelected(trainManager.getBuildReport());
+    	printPreviewBox.setSelected(trainManager.getPrintPreview());
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
     	
@@ -214,7 +205,7 @@ public class TrainsTableFrame extends OperationsFrame {
  
 	// add, build, print, switch lists, terminate, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("train button actived");
+//		log.debug("train button activated");
 		if (ae.getSource() == addButton){
 			TrainEditFrame f = new TrainEditFrame();
 			f.setTitle(rb.getString("TitleTrainAdd"));
@@ -315,7 +306,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
 		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
 		trainManagerXml.writeOperationsTrainFile();			//Need to save train status
-		locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track loc 
+		locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track location 
 		routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
 		setModifiedFlag(false);
 	}

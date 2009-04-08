@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -83,7 +83,7 @@ public class PrintLocationsAction  extends AbstractAction {
         		Location location = manager.getLocationById((String)locations.get(i));
         		String name = location.getName();
         		// pad out the location name
-        		for (int j=name.length(); j < LocationsEditFrame.MAX_NAME_LENGTH; j++) {
+        		for (int j=name.length(); j < LocationEditFrame.MAX_NAME_LENGTH; j++) {
         			name += " ";
         		}
          		s = name + " \t  " + Integer.toString(location.getLength()) + "\t"

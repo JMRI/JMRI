@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -475,6 +475,73 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	return out;
     }
 
+    /**
+     * Sort by engine owner
+     * @return list of engine ids ordered by owner name
+     */
+    public List<String> getEnginesByOwnerList() {
+       	// first get by id list
+    	List<String> sortById = getEnginesByIdList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String engineOwner = "";
+    	boolean engineAdded = false;
+    	Engine engine;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		engineAdded = false;
+    		engine = getEngineById (sortById.get(i));
+    		engineOwner = engine.getOwner();
+    		for (int j=0; j<out.size(); j++ ){
+    			engine = getEngineById (out.get(j));
+    			String outEngineOwner = engine.getOwner();
+    			if (engineOwner.compareToIgnoreCase(outEngineOwner)<0){
+    				out.add(j, sortById.get(i));
+    				engineAdded = true;
+    				break;
+    			}
+    		}
+    		if (!engineAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
+    /**
+     * Sort by engine built date
+     * @return list of engine ids ordered by built date
+     */
+    public List<String> getEnginesByBuiltList() {
+       	// first get by id list
+    	List<String> sortById = getEnginesByIdList();
+
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String engineBuilt = "";
+    	boolean engineAdded = false;
+    	Engine engine;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		engineAdded = false;
+    		engine = getEngineById (sortById.get(i));
+    		engineBuilt = engine.getBuilt();
+    		for (int j=0; j<out.size(); j++ ){
+    			engine = getEngineById (out.get(j));
+    			String outEngineBuilt = engine.getBuilt();
+    			if (engineBuilt.compareToIgnoreCase(outEngineBuilt)<0){
+    				out.add(j, sortById.get(i));
+    				engineAdded = true;
+    				break;
+    			}
+    		}
+    		if (!engineAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
    
     /**
 	 * return a list available engines (no assigned train) on a route, engines are

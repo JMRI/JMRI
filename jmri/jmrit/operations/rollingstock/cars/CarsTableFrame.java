@@ -3,7 +3,7 @@
  package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -38,14 +38,12 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 
 	CarsTableModel carsModel = new CarsTableModel();
 	JTable carsTable = new JTable(carsModel);
-	JScrollPane carsPane;
-	
+		
 	// labels
 	JLabel numCars = new JLabel();
-	JLabel textCars = new JLabel();
-	JLabel textSort = new JLabel();
-	JLabel textSep1 = new JLabel();
-	JLabel textSep2 = new JLabel();
+	JLabel textCars = new JLabel(rb.getString("cars"));
+	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSep1 = new JLabel("      ");
 	
 	// radio buttons
 	
@@ -59,75 +57,80 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
     JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
     JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
+    JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
+    JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
-	JButton addButton = new JButton();
-	JButton findButton = new JButton();
+	JButton addButton = new JButton(rb.getString("Add"));
+	JButton findButton = new JButton(rb.getString("Find"));
 	
 	JTextField findCarTextBox = new JTextField(6);
 
     public CarsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString("TitleCarsTable"));
-        // general GUI config
+        // general GUI configuration
 
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
-    	// Set up the jtable in a Scroll Pane..
-    	carsPane = new JScrollPane(carsTable);
+    	// Set up the table in a Scroll Pane..
+        JScrollPane carsPane = new JScrollPane(carsTable);
     	carsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
        	carsModel.initTable(carsTable);
-     	getContentPane().add(carsPane);
      	
-     	// Set up the control panel
-    	JPanel controlPanel = new JPanel();
-    	JScrollPane controlPane = new JScrollPane(controlPanel);
-    	controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    	controlPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    	controlPanel.setLayout(new FlowLayout());
-    	controlPanel.setPreferredSize(new Dimension(Control.panelWidth-50,90));
+    	// load the number of cars and listen for changes
     	numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
     	CarManager.instance().addPropertyChangeListener(this);
-    	textCars.setText(rb.getString("cars"));
-    	controlPanel.add(numCars);
-    	controlPanel.add(textCars);
-       	textSep1.setText("          ");
-    	controlPanel.add(textSep1);
     	
-    	textSort.setText(rb.getString("SortBy"));
-    	controlPanel.add(textSort);
-    	controlPanel.add(sortByNumber);
-    	sortByNumber.setSelected(true);
-    	controlPanel.add(sortByRoad);
-    	controlPanel.add(sortByType);
-    	controlPanel.add(sortByColor);
-    	controlPanel.add(sortByLoad);
-    	controlPanel.add(sortByKernel);
-    	controlPanel.add(sortByLocation);
-    	controlPanel.add(sortByDestination);
-    	controlPanel.add(sortByTrain);
-    	controlPanel.add(sortByMoves);
-    	textSep2.setText("          ");
-    	controlPanel.add(textSep2);
-
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
-		controlPanel.add (addButton);
-		
-		findButton.setText(rb.getString("Find"));
+    	// Set up the control panel
+    	
+    	//row 1
+    	JPanel cp1 = new JPanel();
+    	cp1.add(textSort);
+    	cp1.add(sortByNumber);
+    	cp1.add(sortByRoad);
+    	cp1.add(sortByType);
+    	cp1.add(sortByColor);
+    	cp1.add(sortByLoad);
+    	cp1.add(sortByKernel);
+    	cp1.add(sortByLocation);
+    	cp1.add(sortByDestination);
+    	cp1.add(sortByTrain);
+    	cp1.add(sortByMoves);
+    	cp1.add(sortByBuilt);
+    	cp1.add(sortByOwner);
+    	
+    	// row 2
+    	JPanel cp2 = new JPanel();
 		findButton.setToolTipText(rb.getString("findCar"));
-		findButton.setVisible(true);
 		findCarTextBox.setToolTipText(rb.getString("findCar"));
-		controlPanel.add (findButton);
-		controlPanel.add (findCarTextBox);
-		//controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 		
+    	cp2.add(numCars);
+    	cp2.add(textCars); 
+    	cp2.add(textSep1);
+		cp2.add(addButton);	
+		cp2.add(findButton);
+		cp2.add(findCarTextBox);	
+		
+		// place controls in scroll pane
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridBagLayout());
+		addItem(controlPanel, cp1, 0, 0 );
+		addItem(controlPanel, cp2, 0, 1);
+		
+	    JScrollPane controlPane = new JScrollPane(controlPanel);
+	    // make sure panel doesn't get too short
+	    controlPane.setMinimumSize(new Dimension(50,90));
+	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		
+    	getContentPane().add(carsPane);
 	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
 		addButtonAction(addButton);
 		addButtonAction(findButton);
 		
+    	sortByNumber.setSelected(true);
 		addRadioButtonAction (sortByNumber);
 		addRadioButtonAction (sortByRoad);
 		addRadioButtonAction (sortByType);
@@ -138,6 +141,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		addRadioButtonAction (sortByDestination);
 		addRadioButtonAction (sortByTrain);
 		addRadioButtonAction (sortByMoves);
+		addRadioButtonAction (sortByBuilt);
+		addRadioButtonAction (sortByOwner);
 		
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -149,6 +154,8 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		group.add(sortByDestination);
 		group.add(sortByTrain);
 		group.add(sortByMoves);
+		group.add(sortByBuilt);
+		group.add(sortByOwner);
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -195,17 +202,23 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		if (ae.getSource() == sortByMoves){
 			carsModel.setSort(carsModel.SORTBYMOVES);
 		}
+		if (ae.getSource() == sortByBuilt){
+			carsModel.setSort(carsModel.SORTBYBUILT);
+		}
+		if (ae.getSource() == sortByOwner){
+			carsModel.setSort(carsModel.SORTBYOWNER);
+		}
 	}
 	
 	public List<String> getSortByList(){
 		return carsModel.getSelectedCarList();
 	}
     
-	CarsEditFrame f = null;
+	CarEditFrame f = null;
 	
 	// add or find button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("car button actived");
+//		log.debug("car button activated");
 		if (ae.getSource() == findButton){
 			int rowindex = carsModel.findCarByRoadNumber(findCarTextBox.getText());
 			if (rowindex < 0){
@@ -220,7 +233,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		if (ae.getSource() == addButton){
 			if (f != null)
 				f.dispose();
-			f = new CarsEditFrame();
+			f = new CarEditFrame();
 			f.initComponents();
 			f.setTitle(rb.getString("TitleCarAdd"));
 			f.setVisible(true);

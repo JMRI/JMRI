@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 import java.awt.*;
 import javax.swing.*;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -187,7 +188,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		// set frame size and schedule for display
 		pack();
-		setSize(900, 600);
+		setSize(900, Control.panelHeight);
 		setVisible(true);
 	}
 	

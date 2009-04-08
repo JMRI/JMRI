@@ -1,4 +1,4 @@
-// EnginesSetFrame.java
+// EngineSetFrame.java
 
 package jmri.jmrit.operations.rollingstock.engines;
 
@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -24,10 +25,10 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.1 $
  */
 
-public class EnginesSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
@@ -65,7 +66,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 	javax.swing.JComboBox trackDestinationBox = new javax.swing.JComboBox(); 
 	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
 		
-	public EnginesSetFrame() {
+	public EngineSetFrame() {
 		super();
 	}
 
@@ -143,7 +144,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 			setSize(450, getHeight()+20);
 		else
 			setSize (getWidth()+50, getHeight()+20);
-		setLocation(500, 500);
+		setLocation(Control.panelX, Control.panelY);
 // 		setAlwaysOnTop(true);	// this blows up in Java 1.4 
 		setVisible(true);
 	}
@@ -182,7 +183,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (locationBox.getSelectedItem().equals("")){
 					trackLocationBox.removeAllItems();
 				}else{
-					log.debug("EnginesSetFrame sees location: "+ locationBox.getSelectedItem());
+					log.debug("EngineSetFrame sees location: "+ locationBox.getSelectedItem());
 					Location l = (Location)locationBox.getSelectedItem();
 					l.updateComboBox(trackLocationBox);
 				}
@@ -193,7 +194,7 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 				if (destinationBox.getSelectedItem().equals("")){
 					trackDestinationBox.removeAllItems();
 				}else{
-					log.debug("EnginesSetFrame sees destination: "+ destinationBox.getSelectedItem());
+					log.debug("EngineSetFrame sees destination: "+ destinationBox.getSelectedItem());
 					Location l = (Location)destinationBox.getSelectedItem();
 					l.updateComboBox(trackDestinationBox);
 				}
@@ -359,12 +360,12 @@ public class EnginesSetFrame extends OperationsFrame implements java.beans.Prope
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("EnginesSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		log.debug ("EngineSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(EnginesSetFrame.class.getName());
+	.getLogger(EngineSetFrame.class.getName());
 }

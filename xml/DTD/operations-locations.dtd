@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a location roster -->
-<!-- $Id: operations-locations.dtd,v 1.7 2009-02-03 21:17:35 dan_boudreau Exp $ -->
+<!-- $Id: operations-locations.dtd,v 1.8 2009-04-08 19:58:08 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,7 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (locations | schedules)*>
+<!ELEMENT operations-config (options | locations | schedules)*>
+
+<!ELEMENT options (locationEditOptions)*>
+<!ELEMENT locationEditOptions EMPTY>
 
 <!ELEMENT locations (location)*>
 <!ELEMENT location (track)*>
@@ -62,4 +65,9 @@
 <!ATTLIST item sequenceId		CDATA #IMPLIED>
 <!ATTLIST item count			CDATA #IMPLIED>
 <!ATTLIST item comment			CDATA #IMPLIED>
+
+<!ATTLIST locationEditOptions x		CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions y		CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions height	CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions width	CDATA #IMPLIED> 
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
+
+import org.jdom.Element;
 
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
@@ -22,10 +26,15 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
+	
+	// Edit Location frame attributes
+	protected LocationEditFrame _locationEditFrame = null;
+	protected Dimension _editFrameDimension = null;
+	protected Point _editFramePosition = null;
     
 	public LocationManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -50,7 +59,18 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
- 
+	public void setLocationEditFrame(LocationEditFrame frame){
+		_locationEditFrame = frame;
+	}
+
+	public Dimension getLocationEditFrameSize(){
+		return _editFrameDimension;
+	}
+
+	public Point getLocationEditFramePosition(){
+		return _editFramePosition;
+	}
+
     public void dispose() {
     	CarTypes.instance().removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
@@ -272,7 +292,56 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
 	}
-	
+
+	public void options (org.jdom.Element values) {
+		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+		// get Train Edit attributes
+		Element e = values.getChild("locationEditOptions");
+		if (e != null){
+			try {
+				int x = e.getAttribute("x").getIntValue();
+				int y = e.getAttribute("y").getIntValue();
+				int height = e.getAttribute("height").getIntValue();
+				int width = e.getAttribute("width").getIntValue();
+				_editFrameDimension = new Dimension(width, height);
+				_editFramePosition = new Point(x,y);
+			} catch ( org.jdom.DataConversionException ee) {
+				log.debug("Did not find train edit frame attributes");
+			} catch ( NullPointerException ne) {
+				log.debug("Did not find train edit frame attributes");
+			}
+		}
+	}
+
+	   /**
+     * Create an XML element to represent this Entry. This member has to remain synchronized with the
+     * detailed DTD in operations-locations.dtd.
+     * @return Contents in a JDOM Element
+     */
+    public org.jdom.Element store() {
+    	Element values = new Element("options");
+        // now save Location Edit frame size and position
+        Element e = new org.jdom.Element("locationEditOptions");
+        Dimension size = getLocationEditFrameSize();
+        Point posn = getLocationEditFramePosition();
+        if (_locationEditFrame != null){
+        	size = _locationEditFrame.getSize();
+        	posn = _locationEditFrame.getLocation();
+        	_editFrameDimension = size;
+        	_editFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        values.addContent(e);
+        return values;
+    }
+    
 	/**
 	 * Check for car type and road name replacements. Also check for engine type
 	 * repleacement.

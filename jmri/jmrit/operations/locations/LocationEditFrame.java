@@ -1,4 +1,4 @@
-// LocationsEditFrame.java
+// LocationEditFrame.java
 
 package jmri.jmrit.operations.locations;
 
@@ -23,10 +23,10 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.1 $
  */
 
-public class LocationsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
@@ -53,47 +53,48 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	JPanel directionPanel = new JPanel();
 
 	// labels
-	JLabel textName = new JLabel();
-	JLabel textLength = new JLabel();
-	JLabel textTrain = new JLabel();
-	JLabel textLoc = new JLabel();
-	JLabel textType = new JLabel();
-	JLabel textOptional = new JLabel();
-	JLabel textComment = new JLabel();
+	JLabel textName = new JLabel(rb.getString("Name"));
+	JLabel textLength = new JLabel(rb.getString("Length"));
+	JLabel textTrain = new JLabel(rb.getString("Train"));
+	JLabel textLoc = new JLabel(rb.getString("Ops"));
+	JLabel textType = new JLabel(rb.getString("Types"));
+	JLabel textOptional = new JLabel("-------------------------------- Optional ------------------------------------");
+	JLabel textComment = new JLabel(rb.getString("Comment"));
 
 	// major buttons
-	JButton clearButton = new JButton();
-	JButton setButton = new JButton();
-	JButton saveLocationButton = new JButton();
-	JButton deleteLocationButton = new JButton();
-	JButton addLocationButton = new JButton();
-	JButton addYardButton = new JButton();
-	JButton addSidingButton = new JButton();
-	JButton addInterchangeButton = new JButton();
-	JButton addStagingButton = new JButton();
+	JButton clearButton = new JButton(rb.getString("Clear"));
+	JButton setButton = new JButton(rb.getString("Select"));
+	JButton saveLocationButton = new JButton(rb.getString("SaveLocation"));
+	JButton deleteLocationButton = new JButton(rb.getString("DeleteLocation"));
+	JButton addLocationButton = new JButton(rb.getString("AddLocation"));
+	JButton addYardButton = new JButton(rb.getString("AddYard"));
+	JButton addSidingButton = new JButton(rb.getString("AddSiding"));
+	JButton addInterchangeButton = new JButton(rb.getString("AddInterchange"));
+	JButton addStagingButton = new JButton(rb.getString("AddStaging"));
 	
 
 	// check boxes
 	JCheckBox checkBox;
-	JCheckBox northCheckBox = new JCheckBox();
-	JCheckBox southCheckBox = new JCheckBox();
-	JCheckBox eastCheckBox = new JCheckBox();
-	JCheckBox westCheckBox = new JCheckBox();
+	JCheckBox northCheckBox = new JCheckBox(rb.getString("North"));
+	JCheckBox southCheckBox = new JCheckBox(rb.getString("South"));
+	JCheckBox eastCheckBox = new JCheckBox(rb.getString("East"));
+	JCheckBox westCheckBox = new JCheckBox(rb.getString("West"));
 	
 	
 	// radio buttons
     JRadioButton stageRadioButton = new JRadioButton(rb.getString("Staging"));
     JRadioButton interchangeRadioButton = new JRadioButton(rb.getString("Interchange"));
-    JRadioButton normalRadioButton = new JRadioButton(rb.getString("Yards&Sidings"));
+    JRadioButton yardRadioButton = new JRadioButton(rb.getString("Yards"));
+    JRadioButton sidingRadioButton = new JRadioButton(rb.getString("Sidings"));
         
 	// text field
 	JTextField locationNameTextField = new JTextField(20);
 	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
+	JLabel space1 = new JLabel("     ");
+	JLabel space2 = new JLabel("     ");
+	JLabel space3 = new JLabel("     ");
 	
 	// combo boxes
 
@@ -102,7 +103,7 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
-	public LocationsEditFrame() {
+	public LocationEditFrame() {
 		super();
 	}
 
@@ -112,52 +113,6 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		// load managers
 		manager = LocationManager.instance();
 		managerXml = LocationManagerXml.instance();
-		
-		// the following code sets the frame's initial state
-		
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
-		textTrain.setText(rb.getString("Train"));
-		textTrain.setVisible(true);
-		northCheckBox.setText(rb.getString("North"));
-		southCheckBox.setText(rb.getString("South"));
-		eastCheckBox.setText(rb.getString("East"));
-		westCheckBox.setText(rb.getString("West"));
-
-		textLength.setText(rb.getString("Length"));
-		textLength.setVisible(true);
-		textLoc.setText(rb.getString("Ops"));
-		textType.setText(rb.getString("Types"));
-		textType.setVisible(true);
-		
-		textOptional.setText("-------------------------------- Optional ------------------------------------");
-		textOptional.setVisible(true);
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		space1.setText("     ");
-		space1.setVisible(true);
-		space2.setText("     ");
-		space2.setVisible(true);
-
-		clearButton.setText(rb.getString("Clear"));
-		clearButton.setVisible(true);
-		setButton.setText(rb.getString("Select"));
-		setButton.setVisible(true);
-
-		deleteLocationButton.setText(rb.getString("DeleteLocation"));
-		deleteLocationButton.setVisible(true);
-		addLocationButton.setText(rb.getString("AddLocation"));
-		addLocationButton.setVisible(true);
-		saveLocationButton.setText(rb.getString("SaveLocation"));
-		saveLocationButton.setVisible(true);
-		addYardButton.setText(rb.getString("AddYard"));
-		addYardButton.setVisible(true);
-		addSidingButton.setText(rb.getString("AddSiding"));
-		addSidingButton.setVisible(true);
-		addInterchangeButton.setText(rb.getString("AddInterchange"));
-		addInterchangeButton.setVisible(true);
-		addStagingButton.setText(rb.getString("AddStaging"));
-		addStagingButton.setVisible(true);
 		
 	   	// Set up the jtable in a Scroll Pane..
     	typePane = new JScrollPane(panelCheckBoxes);
@@ -185,15 +140,22 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	      	sidingModel.initTable(sidingTable, location);
 	      	interchangeModel.initTable(interchangeTable, location);
 	      	stagingModel.initTable(stagingTable, location);
-			if (_location.getLocationOps() == _location.NORMAL)
-				normalRadioButton.setSelected(true);
-			else
+			if (_location.getLocationOps() == _location.NORMAL){
+				if (sidingModel.getRowCount()>0)
+					sidingRadioButton.setSelected(true);
+				else if (yardModel.getRowCount()>0)
+					yardRadioButton.setSelected(true);
+				else if (interchangeModel.getRowCount()>0)
+					interchangeRadioButton.setSelected(true);
+				else
+					sidingRadioButton.setSelected(true);
+			}else{
 				stageRadioButton.setSelected(true);
-				
+			}
 			setTrainDirectionBoxes();
 		} else {
 			enableButtons(false);
-			normalRadioButton.setSelected(true);
+			sidingRadioButton.setSelected(true);
 		}
 		
 		setVisibleLocations();
@@ -240,11 +202,13 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		// row 9
 		JPanel p = new JPanel();
 		ButtonGroup opsGroup = new ButtonGroup();
-		opsGroup.add(normalRadioButton);
+		opsGroup.add(sidingRadioButton);
+		opsGroup.add(yardRadioButton);
 		opsGroup.add(interchangeRadioButton);
 		opsGroup.add(stageRadioButton);
 		p.add(textLoc);
-		p.add(normalRadioButton);
+		p.add(sidingRadioButton);
+		p.add(yardRadioButton);
 		p.add(interchangeRadioButton);
 		p.add(stageRadioButton);
 		addItemWidth(p3, p, 3, 0, ++y);
@@ -292,7 +256,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		addButtonAction(addInterchangeButton);
 		addButtonAction(addStagingButton);
 		
-		addRadioButtonAction(normalRadioButton);
+		addRadioButtonAction(sidingRadioButton);
+		addRadioButtonAction(yardRadioButton);
 		addRadioButtonAction(interchangeRadioButton);
 		addRadioButtonAction(stageRadioButton);
 		
@@ -317,8 +282,15 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		
 		// set frame size and location for display
 		pack();
-		if((getWidth()<670)) setSize(670, getHeight());
-		setSize(getWidth(), 700);
+		if (manager.getLocationEditFrameSize()!= null){
+			setSize(manager.getLocationEditFrameSize());
+		} else {
+			if((getWidth()<670)) setSize(670, getHeight());
+			setSize(getWidth(), 700);
+		}
+		if (manager.getLocationEditFramePosition()!= null){
+			setLocation(manager.getLocationEditFramePosition());
+		}
 		setVisible(true);
 	}
 	
@@ -426,13 +398,14 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		_location.setName(locationNameTextField.getText());
 		_location.setComment(commentTextField.getText());
 
-		if (normalRadioButton.isSelected() || interchangeRadioButton.isSelected()){
+		if (sidingRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
 			_location.setLocationOps(_location.NORMAL);
 		}
 		if (stageRadioButton.isSelected()){
 			_location.setLocationOps(_location.STAGING);
 		}
-
+		// save frame size and position
+		manager.setLocationEditFrame(this);
 		// save location file
 		managerXml.writeOperationsLocationFile();
 		// save car file in case location name changed
@@ -483,7 +456,8 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		// the inverse!
 		addLocationButton.setEnabled(!enabled);
 		// enable radio buttons
-		normalRadioButton.setEnabled(enabled);
+		sidingRadioButton.setEnabled(enabled);
+		yardRadioButton.setEnabled(enabled);
 		interchangeRadioButton.setEnabled(enabled);
 		stageRadioButton.setEnabled(enabled);
 		//
@@ -500,26 +474,28 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 		addInterchangeButton.setVisible(interchangeRadioButton.isSelected());
 		stagingPane.setVisible(stageRadioButton.isSelected());
 		addStagingButton.setVisible(stageRadioButton.isSelected());
-		yardPane.setVisible(normalRadioButton.isSelected());
-		addYardButton.setVisible(normalRadioButton.isSelected());
-		sidingPane.setVisible(normalRadioButton.isSelected());
-		addSidingButton.setVisible(normalRadioButton.isSelected());
+		yardPane.setVisible(yardRadioButton.isSelected());
+		addYardButton.setVisible(yardRadioButton.isSelected());
+		sidingPane.setVisible(sidingRadioButton.isSelected());
+		addSidingButton.setVisible(sidingRadioButton.isSelected());
 	}
 	
 	private void setEnabledLocations(){
 		log.debug("set radio button");
-		if (yardModel.getRowCount()>0 || sidingModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
+		if (sidingModel.getRowCount()>0 || yardModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
 			stageRadioButton.setEnabled(false);
 			if(stageRadioButton.isSelected())
-				normalRadioButton.setSelected(true);
+				sidingRadioButton.setSelected(true);
 		}
 		else if (stagingModel.getRowCount()>0){
 			stageRadioButton.setSelected(true);
-			normalRadioButton.setEnabled(false);
+			sidingRadioButton.setEnabled(false);
+			yardRadioButton.setEnabled(false);
 			interchangeRadioButton.setEnabled(false);
 		} 
 		else {
-			normalRadioButton.setEnabled(true);
+			sidingRadioButton.setEnabled(true);
+			yardRadioButton.setEnabled(true);
 			interchangeRadioButton.setEnabled(true);
 			stageRadioButton.setEnabled(true);
 		}
@@ -655,5 +631,5 @@ public class LocationsEditFrame extends OperationsFrame implements java.beans.Pr
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(LocationsEditFrame.class.getName());
+	.getLogger(LocationEditFrame.class.getName());
 }

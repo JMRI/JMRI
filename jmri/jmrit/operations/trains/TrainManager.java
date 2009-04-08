@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -22,16 +24,23 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
+	// Train frame attributes
+	protected String _sortBy = "";
 	protected boolean _buildReport = false;
 	protected boolean _printPreview = false;	// when true, preview train manifest
 	protected TrainsTableFrame _trainFrame = null;
-	protected Dimension _frameDimension = new Dimension(Control.panelWidth,600);
+	protected Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	protected Point _framePosition = new Point();
-	protected String _sortBy = "";
+	// Edit Train frame attributes
+	protected TrainEditFrame _trainEditFrame = null;
+	protected Dimension _editFrameDimension = null;
+	protected Point _editFramePosition = null;
+	
+	
     
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -77,8 +86,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	_printPreview = preview;
     }
     
-    public void setTrainFrame(TrainsTableFrame trainFrame){
-    	_trainFrame = trainFrame;
+    public void setTrainFrame(TrainsTableFrame frame){
+    	_trainFrame = frame;
     }
     
     public Dimension getTrainFrameSize(){
@@ -95,6 +104,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
    
     public void setTrainFrameSortBy(String sortBy){
     	_sortBy = sortBy;
+    }
+    
+    public void setTrainEditFrame(TrainEditFrame frame){
+    	_trainEditFrame = frame;
+    }
+    
+    public Dimension getTrainEditFrameSize(){
+    	return _editFrameDimension;
+    }
+    
+    public Point getTrainEditFramePosition(){
+    	return _editFramePosition;
     }
 	
 	public void dispose() {
@@ -355,43 +376,63 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
     public int numEntries() { return _trainHashTable.size(); }
     
-    public void options (org.jdom.Element e) {
-        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+    public void options (org.jdom.Element values) {
+        if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+        Element e = values.getChild("trainOptions");
         org.jdom.Attribute a;
+        if ((a = e.getAttribute("sortBy")) != null)
+        	_sortBy = a.getValue();
  		if ((a = e.getAttribute("buildReport")) != null)
 			_buildReport = a.getValue().equals("true");
  		if ((a = e.getAttribute("printPreview")) != null)
 			_printPreview = a.getValue().equals("true");
         int x = 0;
         int y = 0;
-        int height = 400;
+        int height = Control.panelHeight;
         int width = Control.panelWidth;
         try {
             x = e.getAttribute("x").getIntValue();
             y = e.getAttribute("y").getIntValue();
             height = e.getAttribute("height").getIntValue();
             width = e.getAttribute("width").getIntValue();
+            _frameDimension = new Dimension(width, height);
+            _framePosition = new Point(x,y);
         } catch ( org.jdom.DataConversionException ee) {
             log.debug("Did not find train frame attributes");
         } catch ( NullPointerException ne) {
         	log.debug("Did not find train frame attributes");
         }
-        _frameDimension = new Dimension(width, height);
-        _framePosition = new Point(x,y);
-        if ((a = e.getAttribute("sortBy")) != null)
-        	_sortBy = a.getValue();
+        // get Train Edit attributes
+        e = values.getChild("trainEditOptions");
+        if (e != null){
+            try {
+                x = e.getAttribute("x").getIntValue();
+                y = e.getAttribute("y").getIntValue();
+                height = e.getAttribute("height").getIntValue();
+                width = e.getAttribute("width").getIntValue();
+                _editFrameDimension = new Dimension(width, height);
+                _editFramePosition = new Point(x,y);
+            } catch ( org.jdom.DataConversionException ee) {
+                log.debug("Did not find train edit frame attributes");
+            } catch ( NullPointerException ne) {
+            	log.debug("Did not find train edit frame attributes");
+            }
+        }
     }
 
     
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml.
+     * detailed DTD in operations-trains.dtd.
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
+    	Element values = new Element("options");
         org.jdom.Element e = new org.jdom.Element("trainOptions");
+        e.setAttribute("sortBy", getTrainFrameSortBy());
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
         e.setAttribute("printPreview", getPrintPreview()?"true":"false");
+        // get previous Train frame size and position
         Dimension size = getTrainFrameSize();
         Point posn = getTrainFramePosition();
         if (_trainFrame != null){
@@ -403,14 +444,33 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("x", ""+posn.x);
         e.setAttribute("y", ""+posn.y);
         e.setAttribute("height", ""+size.height);
-        e.setAttribute("width", ""+size.width);
-        e.setAttribute("sortBy", getTrainFrameSortBy());
-        return e;
+        e.setAttribute("width", ""+size.width); 
+        values.addContent(e);
+        // now save Train Edit frame size and position
+        e = new org.jdom.Element("trainEditOptions");
+        size = getTrainEditFrameSize();
+        posn = getTrainEditFramePosition();
+        if (_trainEditFrame != null){
+        	size = _trainEditFrame.getSize();
+        	posn = _trainEditFrame.getLocation();
+        	_editFrameDimension = size;
+        	_editFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        values.addContent(e);
+        return values;
     }
     
 	/**
 	 * Check for car type and road name replacements. Also check for engine type
-	 * repleacement.
+	 * replacement.
 	 * 
 	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {

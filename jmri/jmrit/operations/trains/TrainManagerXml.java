@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -98,12 +98,9 @@ public class TrainManagerXml extends XmlFile {
 	        //All Comments and Decoder Comment line feeds have been changed to processor directives
 
 
-	        // add top-level elements
+	        // add top-level elements      
+	        root.addContent(manager.store());
 	        Element values;
-	        
-	        root.addContent(values = new Element("options"));
-	        values.addContent(manager.store());
-
 	        root.addContent(values = new Element("trains"));
 	        // add entries
 	        for (int i=0; i<trainList.size(); i++) {
@@ -186,7 +183,7 @@ public class TrainManagerXml extends XmlFile {
     	if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
     	if (root.getChild("options") != null) {
-    		Element e = root.getChild("options").getChild("trainOptions");
+    		Element e = root.getChild("options");
     		manager.options(e);
     	}
 

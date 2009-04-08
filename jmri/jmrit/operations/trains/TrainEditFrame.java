@@ -48,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -73,33 +73,33 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane locationsPane;
 
 	// labels
-	JLabel textName = new JLabel();
-	JLabel textDescription = new JLabel();
-	JLabel textDepartTime = new JLabel();
-	JLabel textRoute = new JLabel();
-	JLabel textCarType = new JLabel();
-	JLabel textEngineType = new JLabel();
-	JLabel textModel = new JLabel();
-	JLabel textRoad = new JLabel();
-	JLabel textRoad2 = new JLabel();
-	JLabel textRoad3 = new JLabel();
-	JLabel textEngine = new JLabel();
-	JLabel textStops = new JLabel();
-	JLabel textTrainRequires = new JLabel();
+	JLabel textName = new JLabel(rb.getString("Name"));
+	JLabel textDescription = new JLabel(rb.getString("Description"));
+	JLabel textDepartTime = new JLabel(rb.getString("DepartTime"));
+	JLabel textRoute = new JLabel(rb.getString("Route"));
+	JLabel textCarType = new JLabel(rb.getString("TypesCar"));
+	JLabel textEngineType = new JLabel(rb.getString("TypesEngine"));
+	JLabel textModel = new JLabel(rb.getString("Model"));
+	JLabel textRoad = new JLabel(rb.getString("RoadsTrain"));
+	JLabel textRoad2 = new JLabel(rb.getString("Road"));
+	JLabel textRoad3 = new JLabel(rb.getString("Road"));
+	JLabel textEngine = new JLabel(rb.getString("Engines"));
+	JLabel textStops = new JLabel("       "+rb.getString("Stops"));
+	JLabel textTrainRequires = new JLabel(rb.getString("TrainRequires"));
 	JLabel textCars = new JLabel();
-	JLabel textComment = new JLabel();
+	JLabel textComment = new JLabel(rb.getString("Comment"));
 
 	// major buttons
-	JButton editButton = new JButton();
-	JButton clearButton = new JButton();
-	JButton setButton = new JButton();
-	JButton addRoadButton = new JButton();
-	JButton deleteRoadButton = new JButton();
+	JButton editButton = new JButton(rb.getString("Edit"));
+	JButton clearButton = new JButton(rb.getString("Clear"));
+	JButton setButton = new JButton(rb.getString("Select"));
+	JButton addRoadButton = new JButton(rb.getString("AddRoad"));
+	JButton deleteRoadButton = new JButton(rb.getString("DeleteRoad"));
 	JButton JLabel = new JButton();
-	JButton resetButton = new JButton();
-	JButton saveTrainButton = new JButton();
-	JButton deleteTrainButton = new JButton();
-	JButton addTrainButton = new JButton();
+	JButton resetButton = new JButton(rb.getString("ClearCars"));
+	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
+	JButton deleteTrainButton = new JButton(rb.getString("DeleteTrain"));
+	JButton addTrainButton = new JButton(rb.getString("AddTrain"));
 
 	// check boxes
 
@@ -157,55 +157,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		manager = TrainManager.instance();
 		managerXml = TrainManagerXml.instance();
 		routeManager = RouteManager.instance();
-		
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
-		textDescription.setText(rb.getString("Description"));
-		textDescription.setVisible(true);
-		textDepartTime.setText(rb.getString("DepartTime"));
-		textDepartTime.setVisible(true);
-		textRoute.setText(rb.getString("Route"));
-		textRoute.setVisible(true);
-		textRoad.setText(rb.getString("RoadsTrain"));
-		textRoad.setVisible(true);
-		textRoad2.setText(rb.getString("Road"));
-		textRoad2.setVisible(true);
-		textRoad3.setText(rb.getString("Road"));
-		textRoad3.setVisible(true);
-		textModel.setText(rb.getString("Model"));
-		textModel.setVisible(true);
-		textEngine.setText(rb.getString("Engines"));
-		textEngine.setVisible(true);
-		editButton.setText(rb.getString("Edit"));
-		clearButton.setVisible(true);
-		textStops.setText("       "+rb.getString("Stops"));
-		textStops.setVisible(true);
-		textCars.setVisible(true);
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		textCarType.setText(rb.getString("TypesCar"));
-		textCarType.setVisible(true);
-		textEngineType.setText(rb.getString("TypesEngine"));
-		textEngineType.setVisible(true);
-		resetButton.setText(rb.getString("ClearCars"));
-		resetButton.setVisible(true);
-		addRoadButton.setText(rb.getString("AddRoad"));
-		addRoadButton.setVisible(true);
-		deleteRoadButton.setText(rb.getString("DeleteRoad"));
-		deleteRoadButton.setVisible(true);
-		textTrainRequires.setText(rb.getString("TrainRequires"));
-		textTrainRequires.setVisible(true);
-		clearButton.setText(rb.getString("Clear"));
-		clearButton.setVisible(true);
-		setButton.setText(rb.getString("Select"));
-		setButton.setVisible(true);
-
-		deleteTrainButton.setText(rb.getString("DeleteTrain"));
-		deleteTrainButton.setVisible(true);
-		addTrainButton.setText(rb.getString("AddTrain"));
-		addTrainButton.setVisible(true);
-		saveTrainButton.setText(rb.getString("SaveTrain"));
-		saveTrainButton.setVisible(true);
 	
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
@@ -400,12 +351,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		updateCarTypeCheckboxes();
 		updateEngineTypeCheckboxes();
 		updateRoadNames();
-		updateNumberCars();
+		//not currently showing how many cars assigned to this train
+		//updateNumberCars();
 		updateCabooseRoadComboBox();
 		updateEngineRoadComboBox();
 		
 		// set frame size and train for display
-		packFrame();
+		// packFrame is done in updateLocationCheckboxes() above
+		// packFrame();
 		
 		// setup combobox
 		addComboBoxAction(numEnginesBox);
@@ -607,6 +560,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train.setName(trainNameTextField.getText());
 		_train.setDescription(trainDescriptionTextField.getText());
 		_train.setComment(commentTextField.getText());
+		// save frame size and location
+		manager.setTrainEditFrame(this);
 
 		// save train file
 		managerXml.writeOperationsTrainFile();
@@ -932,9 +887,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
     
     private void packFrame(){
+    	setVisible(false);
  		pack();
-		if (getHeight() < 700)
+		if (manager.getTrainEditFrameSize()!= null){
+			setSize(manager.getTrainEditFrameSize());
+		} else if (getHeight() < 700)
 			setSize(getWidth(), getHeight()+ 50);
+		if (manager.getTrainEditFramePosition()!= null){
+			setLocation(manager.getTrainEditFramePosition());
+		}	
 		setVisible(true);
     }
 	

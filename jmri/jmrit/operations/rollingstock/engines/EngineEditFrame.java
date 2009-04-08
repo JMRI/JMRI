@@ -1,4 +1,4 @@
-//EnginesEditFrame.java
+//EngineEditFrame.java
 
 package jmri.jmrit.operations.rollingstock.engines;
 
@@ -17,16 +17,17 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.1 $
  */
 
-public class EnginesEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
@@ -105,7 +106,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	public static final String CONSIST = rb.getString("Consist");
 	public static final String DISPOSE = "dispose" ;
 
-	public EnginesEditFrame() {
+	public EngineEditFrame() {
 		super();
 	}
 
@@ -271,7 +272,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 			setSize(450, getHeight()+50);
 		else
 			setSize(getWidth()+50, getHeight()+50);
-		setLocation(400, 200);
+		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);	
 	}
 
@@ -580,7 +581,7 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("EnginesEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		log.debug ("EngineEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)
@@ -622,5 +623,5 @@ public class EnginesEditFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(EnginesEditFrame.class.getName());
+	.getLogger(EngineEditFrame.class.getName());
 }

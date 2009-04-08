@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -140,37 +140,37 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	}
 
 	private void deleteItemFromCombobox (String deleteItem){
-		if(_comboboxName == EnginesEditFrame.ROAD){
+		if(_comboboxName == EngineEditFrame.ROAD){
 			CarRoads.instance().replaceName(deleteItem, null);
 		}
-		if(_comboboxName == EnginesEditFrame.MODEL){
+		if(_comboboxName == EngineEditFrame.MODEL){
 			EngineModels.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == EnginesEditFrame.TYPE){
+		if(_comboboxName == EngineEditFrame.TYPE){
 			EngineTypes.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == EnginesEditFrame.LENGTH){
+		if(_comboboxName == EngineEditFrame.LENGTH){
 			EngineLengths.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == EnginesEditFrame.OWNER){
+		if(_comboboxName == EngineEditFrame.OWNER){
 			CarOwners.instance().deleteName(deleteItem);
 		}
-		if(_comboboxName == EnginesEditFrame.CONSIST){
+		if(_comboboxName == EngineEditFrame.CONSIST){
 			manager.deleteConsist(deleteItem);
 		}
 	}
 	
 	private void addItemToCombobox (String addItem){
-		if(_comboboxName == EnginesEditFrame.ROAD){
+		if(_comboboxName == EngineEditFrame.ROAD){
 			CarRoads.instance().addName(addItem);
 		}
-		if(_comboboxName == EnginesEditFrame.MODEL){
+		if(_comboboxName == EngineEditFrame.MODEL){
 			EngineModels.instance().addName(addItem);
 		}
-		if(_comboboxName == EnginesEditFrame.TYPE){
+		if(_comboboxName == EngineEditFrame.TYPE){
 			EngineTypes.instance().addName(addItem);
 		}
-		if(_comboboxName == EnginesEditFrame.LENGTH){
+		if(_comboboxName == EngineEditFrame.LENGTH){
 			// convert from inches to feet if needed
 			if (addItem.endsWith("\"")){
 				addItem = addItem.substring(0, addItem.length()-1);
@@ -217,10 +217,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			EngineLengths.instance().addName(addItem);
 			comboBox.setSelectedItem(addItem);
 		}
-		if(_comboboxName == EnginesEditFrame.CONSIST){
+		if(_comboboxName == EngineEditFrame.CONSIST){
 			manager.newConsist(addItem);
 		}
-		if(_comboboxName == EnginesEditFrame.OWNER){
+		if(_comboboxName == EngineEditFrame.OWNER){
 			CarOwners.instance().addName(addItem);
 		}
 	}
@@ -230,27 +230,27 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = manager.getEngineById(engines.get(i));
 
-			if(_comboboxName == EnginesEditFrame.ROAD){
+			if(_comboboxName == EngineEditFrame.ROAD){
 				if (engine.getRoad().equals(oldItem))
 					engine.setRoad(newItem);
 			}
-			if(_comboboxName == EnginesEditFrame.MODEL){
+			if(_comboboxName == EngineEditFrame.MODEL){
 				if (engine.getModel().equals(oldItem))
 					engine.setModel(newItem);
 			}
-			if(_comboboxName == EnginesEditFrame.TYPE){
+			if(_comboboxName == EngineEditFrame.TYPE){
 				if (engine.getType().equals(oldItem))
 					engine.setType(newItem);
 			}
-			if(_comboboxName == EnginesEditFrame.LENGTH){
+			if(_comboboxName == EngineEditFrame.LENGTH){
 				if (engine.getLength().equals(oldItem))
 					engine.setLength(newItem);
 			}
-			if(_comboboxName == EnginesEditFrame.OWNER){
+			if(_comboboxName == EngineEditFrame.OWNER){
 				if (engine.getOwner().equals(oldItem))
 					engine.setOwner(newItem);
 			}
-			if(_comboboxName == EnginesEditFrame.CONSIST){
+			if(_comboboxName == EngineEditFrame.CONSIST){
 				if (engine.getConsist() != null && engine.getConsistName().equals(oldItem)){
 					Consist consist = manager.newConsist(newItem);
 					engine.setConsist(consist);
@@ -258,36 +258,36 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			}
 		}
 		//	now adjust locations and trains
-		if(_comboboxName == EnginesEditFrame.TYPE){
+		if(_comboboxName == EngineEditFrame.TYPE){
 			EngineTypes.instance().replaceName(oldItem, newItem);
 		}
-		if(_comboboxName == EnginesEditFrame.ROAD){
+		if(_comboboxName == EngineEditFrame.ROAD){
 			CarRoads.instance().replaceName(oldItem, newItem);
 		}
 	}
 	
 	private void loadCombobox(){ 
-		if(_comboboxName == EnginesEditFrame.ROAD){
+		if(_comboboxName == EngineEditFrame.ROAD){
 			comboBox = CarRoads.instance().getComboBox();
 			CarRoads.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == EnginesEditFrame.MODEL){
+		if(_comboboxName == EngineEditFrame.MODEL){
 			comboBox = EngineModels.instance().getComboBox();
 			EngineModels.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == EnginesEditFrame.TYPE){
+		if(_comboboxName == EngineEditFrame.TYPE){
 			comboBox = EngineTypes.instance().getComboBox();
 			EngineTypes.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == EnginesEditFrame.LENGTH){
+		if(_comboboxName == EngineEditFrame.LENGTH){
 			comboBox = EngineLengths.instance().getComboBox();
 			EngineLengths.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == EnginesEditFrame.OWNER){
+		if(_comboboxName == EngineEditFrame.OWNER){
 			comboBox = CarOwners.instance().getComboBox();
 			CarOwners.instance().addPropertyChangeListener(this);
 		}
-		if(_comboboxName == EnginesEditFrame.CONSIST){
+		if(_comboboxName == EngineEditFrame.CONSIST){
 			comboBox = manager.getConsistComboBox();
 			manager.addPropertyChangeListener(this);
 		}

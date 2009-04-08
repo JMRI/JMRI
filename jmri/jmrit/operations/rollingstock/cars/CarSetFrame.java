@@ -1,4 +1,4 @@
-// CarsSetFrame.java
+// CarSetFrame.java
 
 package jmri.jmrit.operations.rollingstock.cars;
 
@@ -17,6 +17,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -26,10 +27,10 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.1 $
  */
 
-public class CarsSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
@@ -67,7 +68,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 	JComboBox trackDestinationBox = new JComboBox(); 
 	JComboBox trainBox = TrainManager.instance().getComboBox();
 		
-	public CarsSetFrame() {
+	public CarSetFrame() {
 		super();
 	}
 
@@ -145,7 +146,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 			setSize(450, getHeight()+20);
 		else
 			setSize (getWidth()+50, getHeight()+20);
-		setLocation(500, 500);
+		setLocation(Control.panelX, Control.panelY);
 // 		setAlwaysOnTop(true);	// this blows up in Java 1.4 
 		setVisible(true);
 	}
@@ -184,7 +185,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (locationBox.getSelectedItem().equals("")){
 					trackLocationBox.removeAllItems();
 				}else{
-					log.debug("CarsSetFrame sees location: "+ locationBox.getSelectedItem());
+					log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
 					Location l = (Location)locationBox.getSelectedItem();
 					l.updateComboBox(trackLocationBox);
 				}
@@ -195,7 +196,7 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 				if (destinationBox.getSelectedItem().equals("")){
 					trackDestinationBox.removeAllItems();
 				}else{
-					log.debug("CarsSetFrame sees destination: "+ destinationBox.getSelectedItem());
+					log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
 					Location l = (Location)destinationBox.getSelectedItem();
 					l.updateComboBox(trackDestinationBox);
 				}
@@ -364,12 +365,12 @@ public class CarsSetFrame extends OperationsFrame implements java.beans.Property
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("CarsSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		log.debug ("CarSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(CarsSetFrame.class.getName());
+	.getLogger(CarSetFrame.class.getName());
 }

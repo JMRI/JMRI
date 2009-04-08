@@ -1,4 +1,4 @@
-//CarsEditFrame.java
+//CarEditFrame.java
 
 package jmri.jmrit.operations.rollingstock.cars;
 
@@ -26,10 +26,10 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.1 $
  */
 
-public class CarsEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
@@ -108,7 +108,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	public static final String KERNEL = rb.getString("Kernel");
 	public static final String DISPOSE = "dispose" ;
 
-	public CarsEditFrame() {
+	public CarEditFrame() {
 		super();
 	}
 
@@ -309,7 +309,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 			setSize(450, getHeight()+20);
 		else
 			setSize(getWidth()+50, getHeight()+20);
-		setLocation(400, 200);
+		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);	
 	}
 
@@ -685,7 +685,7 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if(Control.showProperty && log.isDebugEnabled()) 
-			log.debug ("CarsEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
+			log.debug ("CarEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
@@ -737,5 +737,5 @@ public class CarsEditFrame extends OperationsFrame implements java.beans.Propert
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(CarsEditFrame.class.getName());
+	.getLogger(CarEditFrame.class.getName());
 }

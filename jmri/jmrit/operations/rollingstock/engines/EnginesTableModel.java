@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -43,6 +43,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int EDITCOLUMN = 11;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
+    
+    private static final int SHOWMOVES = 0;
+    private static final int SHOWBUILT = 1;
+    private static final int SHOWOWNER = 2;
+    private int showMoveCol = SHOWMOVES;
 
     public EnginesTableModel() {
         super();
@@ -58,13 +63,31 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public final int SORTBYTRAIN = 6;
     public final int SORTBYMOVES = 7;
     public final int SORTBYCONSIST = 8;
+    public final int SORTBYBUILT = 9;
+    public final int SORTBYOWNER = 10;
     
     private int _sort = SORTBYNUMBER;
     
     public void setSort (int sort){
     	_sort = sort;
         updateList();
-        fireTableDataChanged();
+      	if (sort == SORTBYMOVES){
+    		showMoveCol = SHOWMOVES;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+       	else if (sort == SORTBYBUILT){
+    		showMoveCol = SHOWBUILT;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else if (sort == SORTBYOWNER){
+    		showMoveCol = SHOWOWNER;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else
+    		fireTableDataChanged();
     }
     
     String _roadNumber = "";
@@ -129,6 +152,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			list = manager.getEnginesByMovesList();
 		else if (_sort == SORTBYCONSIST)
 			list = manager.getEnginesByConsistList();
+		else if (_sort == SORTBYOWNER)
+			list = manager.getEnginesByOwnerList();
+		else if (_sort == SORTBYBUILT)
+			list = manager.getEnginesByBuiltList();
 		else
 			list = manager.getEnginesByNumberList();
 		return list;
@@ -136,7 +163,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
 	List<String> sysList = null;
     
+	JTable _table;
+	
 	void initTable(JTable table) {
+		_table = table;
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -177,7 +207,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case LOCATIONCOLUMN: return rb.getString("Location");
         case DESTINATIONCOLUMN: return rb.getString("Destination");
         case TRAINCOLUMN: return rb.getString("Train");
-        case MOVESCOLUMN: return rb.getString("Moves");
+        case MOVESCOLUMN: {
+        	if (showMoveCol == SHOWBUILT)
+        		return rb.getString("Built");
+        	else if (showMoveCol == SHOWOWNER)
+        		return rb.getString("Owner");
+        	else
+        		return rb.getString("Moves");
+        }
         case SETCOLUMN: return rb.getString("Location");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
@@ -252,7 +289,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	return s;
         }
         case TRAINCOLUMN: return engine.getTrain();
-        case MOVESCOLUMN: return Integer.toString(engine.getMoves());
+        case MOVESCOLUMN: {
+           	if (showMoveCol == SHOWBUILT)
+        		return engine.getBuilt();
+        	else if (showMoveCol == SHOWOWNER)
+        		return engine.getOwner();
+        	else
+        		return Integer.toString(engine.getMoves());
+        }
         case SETCOLUMN: return rb.getString("Set");
         case EDITCOLUMN: return rb.getString("Edit");
  
@@ -262,8 +306,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     boolean focusEef = false;
     boolean focusEsf = false;
-    EnginesEditFrame eef = null;
-    EnginesSetFrame esf = null;
+    EngineEditFrame eef = null;
+    EngineSetFrame esf = null;
     
     public void setValueAt(Object value, int row, int col) {
 		String engineId = sysList.get(row);
@@ -274,7 +318,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
            	if (esf != null){
            		esf.dispose();
         	}
-       		esf = new EnginesSetFrame();
+       		esf = new EngineSetFrame();
     		esf.initComponents();
 	    	esf.loadEngine(engine);
 	    	esf.setTitle(rb.getString("TitleEngineSet"));
@@ -287,7 +331,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	if (eef != null){
         		eef.dispose();
         	}
-    		eef = new EnginesEditFrame();
+    		eef = new EngineEditFrame();
     		eef.initComponents();
 	    	eef.loadEngine(engine);
 	    	eef.setTitle(rb.getString("TitleEngineEdit"));

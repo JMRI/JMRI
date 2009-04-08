@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -118,8 +118,8 @@ public class LocationManagerXml extends XmlFile {
 	        //All Comments line feeds have been changed to processor directives
 
 	        // add top-level elements
+	        root.addContent(manager.store());
 	        Element values;
-
 	        root.addContent(values = new Element("locations"));
 	        // add entries
 	        for (int i=0; i<locationList.size(); i++) {
@@ -225,6 +225,10 @@ public class LocationManagerXml extends XmlFile {
     	if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
     	LocationManager manager = LocationManager.instance();
+    	if (root.getChild("options") != null) {
+    		Element e = root.getChild("options");
+    		manager.options(e);
+    	}
 
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("locations") != null) {
