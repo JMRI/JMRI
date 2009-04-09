@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -692,7 +692,8 @@ public class Setup {
            	Setup.setTrainIconColorTerminate(color);
         }
         Element frameOptions;
-        if ((frameOptions = operations.getChild("options").getChild("setupFrameOptions"))!= null){
+        if ((operations.getChild("options")!= null)
+        		&& (frameOptions = operations.getChild("options").getChild("setupFrameOptions"))!= null){
         	try {
         		int x = frameOptions.getAttribute("x").getIntValue();
         		int y = frameOptions.getAttribute("y").getIntValue();
