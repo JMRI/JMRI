@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.6 2009-04-06 23:52:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.7 2009-04-10 08:08:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -170,7 +170,20 @@ and image files were reformatted to save some space.
 
 <p>
 Fixed a problem that was making some buttons disappear when editing
-Digitrax SPJ sound projects.
+Digitrax SPJ sound projects. Fixed a problem when editing the SDF
+control sequence in SPJ projects that used certain looping options.
+Added more editing capabilities for SDF instructions.
+
+<p>
+Dan Boudreau updated the operations feature to 
+allow users to place and resize the Settings, Edit Location, Trains, and Edit Trains windows.
+
+<p>
+We have again changed the references to the XLST transform in 
+newly written panel files, trying to get the 
+<a href="http://jmri.org/help/en/html/apps/PanelPro/ShowPanel.shtml">browser display</a> to work by default.
+
+<p>
 
 <!--#include virtual="/Footer" -->
 
