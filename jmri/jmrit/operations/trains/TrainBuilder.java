@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.38 $
+ * @version             $Revision: 1.39 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -668,7 +668,7 @@ public class TrainBuilder extends TrainCommon{
 													}
 													// car's current track is the test track or car can't be dropped
 													if(!status.equals(c.OKAY)){
-														addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +testTrack.getName()+") because of "+status);
+														addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") load ("+c.getLoad()+") to track (" +testTrack.getName()+") because of "+status);
 													}
 												}
 											// all cars in this train go to one staging track
@@ -1052,6 +1052,11 @@ public class TrainBuilder extends TrainCommon{
 	}
 
 	private boolean checkPickUpTrainDirection (PrintWriter file, RollingStock rs, RouteLocation rl){
+		// check that car or engine is located on a track
+		if (rs.getTrack() == null){
+			addLine(file, THREE, "Rolling stock ("+rs.getId()+") does not have a track assignment");
+			return false;
+		}
 		if (routeList.size() == 1) // ignore local train direction
 			return true;
 		if ((rl.getTrainDirection() & rs.getLocation().getTrainDirections() & rs.getTrack().getTrainDirections()) >0)

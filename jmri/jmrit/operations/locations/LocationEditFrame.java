@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -72,14 +72,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JButton addInterchangeButton = new JButton(rb.getString("AddInterchange"));
 	JButton addStagingButton = new JButton(rb.getString("AddStaging"));
 	
-
 	// check boxes
 	JCheckBox checkBox;
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("North"));
 	JCheckBox southCheckBox = new JCheckBox(rb.getString("South"));
 	JCheckBox eastCheckBox = new JCheckBox(rb.getString("East"));
 	JCheckBox westCheckBox = new JCheckBox(rb.getString("West"));
-	
 	
 	// radio buttons
     JRadioButton stageRadioButton = new JRadioButton(rb.getString("Staging"));
@@ -117,8 +115,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	   	// Set up the jtable in a Scroll Pane..
     	typePane = new JScrollPane(panelCheckBoxes);
     	typePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	Dimension minimumSize = new Dimension (typePane.getWidth(), 160);
-    	typePane.setMinimumSize(minimumSize);
+    	//typePane.setMinimumSize(new Dimension (typePane.getWidth(), 100));
     	
     	yardPane = new JScrollPane(yardTable);
     	yardPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -187,12 +184,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 5
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
 		updateCheckboxes();
-		
-	   	// row 6
-		JPanel p2 = new JPanel();
-    	p2.setLayout(new GridBagLayout());
-    	addItem(p2, clearButton, 0, 0);
-    	addItem(p2, setButton, 1, 0);
 
 		// row 8
     	JPanel p3 = new JPanel();
@@ -233,7 +224,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		getContentPane().add(p1);
 		getContentPane().add(directionPanel);
 		getContentPane().add(typePane);
-		getContentPane().add(p2);
 		getContentPane().add(p3);
        	getContentPane().add(yardPane);
        	getContentPane().add(addYardButton);
@@ -529,6 +519,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addItemWidth(panelCheckBoxes, textType, 3, 1, y++);
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
+    	addItem(panelCheckBoxes, clearButton, 1, ++y);
+    	addItem(panelCheckBoxes, setButton, 4, y);
 		Border border = BorderFactory.createEtchedBorder();
 		panelCheckBoxes.setBorder(border);
 		panelCheckBoxes.revalidate();

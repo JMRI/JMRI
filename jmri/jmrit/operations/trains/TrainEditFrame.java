@@ -48,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -359,6 +359,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// set frame size and train for display
 		// packFrame is done in updateLocationCheckboxes() above
 		// packFrame();
+		// place frame
+		if (manager.getTrainEditFramePosition()!= null){
+			setLocation(manager.getTrainEditFramePosition());
+		}	
 		
 		// setup combobox
 		addComboBoxAction(numEnginesBox);
@@ -893,9 +897,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			setSize(manager.getTrainEditFrameSize());
 		} else if (getHeight() < 700)
 			setSize(getWidth(), getHeight()+ 50);
-		if (manager.getTrainEditFramePosition()!= null){
-			setLocation(manager.getTrainEditFramePosition());
-		}	
 		setVisible(true);
     }
 	
