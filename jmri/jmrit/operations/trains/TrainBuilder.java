@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.39 $
+ * @version             $Revision: 1.40 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -507,7 +507,7 @@ public class TrainBuilder extends TrainCommon{
 				success = false;
 				reqNumOfMoves = rl.getMaxCarMoves()-rl.getCarMoves();
 				int saveReqMoves = reqNumOfMoves;
-				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") requests " +reqNumOfMoves+ " moves");
+				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") requests " +reqNumOfMoves+ "/" +rl.getMaxCarMoves()+ " moves" );
 				if (reqNumOfMoves <= 0)
 					success = true;
 				while (reqNumOfMoves > 0){
@@ -740,6 +740,8 @@ public class TrainBuilder extends TrainCommon{
 					}
 					// could not find enough cars
 					reqNumOfMoves = 0;
+					// don't use this location again
+					rl.setCarMoves(rl.getMaxCarMoves());
 				}
 				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
