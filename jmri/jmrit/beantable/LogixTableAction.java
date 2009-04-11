@@ -39,6 +39,8 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
@@ -70,7 +72,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -115,12 +117,9 @@ public class LogixTableAction extends AbstractTableAction {
 	void createModel() {
 		m = new BeanTableDataModel() {
 			// overlay the state column with the edit column
-			static public final int ENABLECOL = 2;
-			static public final int EDITCOL = NUMCOLUMN;
+			static public final int ENABLECOL = VALUECOL;
+			static public final int EDITCOL = DELETECOL;
 			protected String enabledString = rb.getString("ColumnHeadEnabled");
-			public int getColumnCount() {
-				return NUMCOLUMN + 1;
-			}
 
 			public String getColumnName(int col) {
 				if (col == EDITCOL)
@@ -133,7 +132,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 			public Class getColumnClass(int col) {
 				if (col == EDITCOL)
-					return JButton.class;
+					return String.class;
 				if (col == ENABLECOL)
 					return Boolean.class;
 				else
@@ -143,11 +142,11 @@ public class LogixTableAction extends AbstractTableAction {
 			public int getPreferredWidth(int col) {
 				// override default value for SystemName and UserName columns
 				if (col == SYSNAMECOL)
-					return new JTextField(9).getPreferredSize().width;
+					return new JTextField(12).getPreferredSize().width;
 				if (col == USERNAMECOL)
 					return new JTextField(17).getPreferredSize().width;
 				if (col == EDITCOL)
-					return new JTextField(6).getPreferredSize().width;
+					return new JTextField(12).getPreferredSize().width;
 				if (col == ENABLECOL)
 					return new JTextField(5).getPreferredSize().width;
 				else
@@ -165,7 +164,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 			public Object getValueAt(int row, int col) {
 				if (col == EDITCOL) {
-					return rb.getString("ButtonEdit");
+					return rbx.getString("ButtonSelect");
 				} else if (col == ENABLECOL) {
 					return new Boolean(
 							((Logix) getBySystemName((String) getValueAt(row,
@@ -178,7 +177,16 @@ public class LogixTableAction extends AbstractTableAction {
 				if (col == EDITCOL) {
 					// set up to edit
 					String sName = (String) getValueAt(row, SYSNAMECOL);
-					editPressed(sName);
+                    if ( rbx.getString("ButtonEdit").equals((String)value) ) {
+                        editPressed(sName);
+                    } else if (rbx.getString("ButtonCopy").equals((String)value) ) {
+                        copyPressed(sName);
+//                    } else if ( rbx.getString("ButtonMove").equals((String)value) ) {
+//                        movePressed(sName);
+                    } else if ( rbx.getString("ButtonDelete").equals((String)value) ) {
+                        deletePressed(sName);
+                    } else
+                        log.debug("Logix table setValueAt column "+EDITCOL+" = "+value);
 				} else if (col == ENABLECOL) {
 					// alternate
 					Logix x = (Logix) getBySystemName((String) getValueAt(row,
@@ -221,6 +229,27 @@ public class LogixTableAction extends AbstractTableAction {
 				return InstanceManager.logixManagerInstance().getByUserName(
 						name);
 			}
+
+            public void configureTable(JTable table) {
+                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                super.configureTable(table);
+            }
+
+            /**
+            * Replace delete button with comboBox
+            */
+            void configDeleteColumn(JTable table) {
+                JComboBox editCombo = new JComboBox();
+                editCombo.addItem(rbx.getString("ButtonSelect"));
+                editCombo.addItem(rbx.getString("ButtonEdit"));
+                editCombo.addItem(rbx.getString("ButtonCopy"));
+                editCombo.addItem(rbx.getString("ButtonDelete"));
+                TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
+                col.setCellEditor(new DefaultCellEditor(editCombo));
+            }
+
 
 			// Not needed - here for interface compatibility
 			public void clickOn(NamedBean t) {
@@ -320,13 +349,14 @@ public class LogixTableAction extends AbstractTableAction {
 
 	// Add Logix Variables
 	JmriJFrame addLogixFrame = null;
-	JTextField systemName = new JTextField(10);
-	JTextField addUserName = new JTextField(10);
+	JTextField _systemName = new JTextField(10);
+	JTextField _addUserName = new JTextField(10);
     JTextField _devNameField;
 
 	// Edit Logix Variables
 	JmriJFrame editLogixFrame = null;
 	boolean inEditMode = false;
+	boolean inCopyMode = false;
 	boolean _inReorderMode = false;
 	int _nextInOrder = 0;
 	JTextField editUserName = new JTextField(20);
@@ -391,99 +421,6 @@ public class LogixTableAction extends AbstractTableAction {
     private ConditionalAction _curAction;
     private int _curActionRowNumber;
 
-	// *********** Methods for Add Logix Window ********************
-
-	/**
-	 * Responds to the Add button in Logix table Creates and/or initializes the
-	 * Add Logix window
-	 */
-	void addPressed(ActionEvent e) {
-		// possible change
-		_showReminder = true;
-		if (inEditMode) {
-			// cancel Edit and reactivate the edited Logix
-			donePressed(null);
-		}
-		// make an Add Logix Frame
-		if (addLogixFrame == null) {
-			addLogixFrame = new JmriJFrame(rbx.getString("TitleAddLogix"));
-			addLogixFrame.addHelpMenu(
-					"package.jmri.jmrit.beantable.LogixAddEdit", true);
-			addLogixFrame.setLocation(50, 30);
-			Container contentPane = addLogixFrame.getContentPane();
-			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-			JPanel panel1 = new JPanel();
-			panel1.setLayout(new FlowLayout());
-			JLabel systemNameLabel = new JLabel(rbx.getString("LogixSystemName"));
-			panel1.add(systemNameLabel);
-			panel1.add(systemName);
-			systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
-			contentPane.add(panel1);
-			JPanel panel2 = new JPanel();
-			panel2.setLayout(new FlowLayout());
-			JLabel userNameLabel = new JLabel(rbx.getString("LogixUserName"));
-			panel2.add(userNameLabel);
-			panel2.add(addUserName);
-			addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
-			contentPane.add(panel2);
-			// set up message
-			JPanel panel3 = new JPanel();
-			panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-			JPanel panel31 = new JPanel();
-			panel31.setLayout(new FlowLayout());
-			JLabel message1 = new JLabel(rbx.getString("AddLogixMessage1"));
-			panel31.add(message1);
-			JPanel panel32 = new JPanel();
-			JLabel message2 = new JLabel(rbx.getString("AddLogixMessage2"));
-			panel32.add(message2);
-			panel3.add(panel31);
-			panel3.add(panel32);
-			contentPane.add(panel3);
-			// set up create and cancel buttons
-			JPanel panel5 = new JPanel();
-			panel5.setLayout(new FlowLayout());
-			// Create Logix
-            JButton create = new JButton(rbx.getString("CreateLogixButton"));
-			panel5.add(create);
-			create.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					createPressed(e);
-				}
-			});
-			create.setToolTipText(rbx.getString("LogixCreateButtonHint"));
-			// Cancel
-            JButton cancel = new JButton(rbx.getString("CancelButton")); 
-			panel5.add(cancel);
-			cancel.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cancelAddPressed(e);
-				}
-			});
-			cancel.setToolTipText(rbx.getString("CancelLogixButtonHint"));
-			contentPane.add(panel5);
-		}
-
-		addLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				cancelAddPressed(null);
-			}
-		});
-		addLogixFrame.pack();
-		addLogixFrame.setVisible(true);
-	}
-
-	/**
-	 * Responds to the Cancel button in Add Logix window Note: Also get there if
-	 * the user closes the Add Logix window
-	 */
-	void cancelAddPressed(ActionEvent e) {
-		addLogixFrame.setVisible(false);
-		addLogixFrame.dispose();
-		addLogixFrame = null;
-		f.setVisible(true);
-	}
-
-
     void findEmptyPressed(ActionEvent e) {
         Maintenance.findEmptyPressed(f);
     }
@@ -495,22 +432,249 @@ public class LogixTableAction extends AbstractTableAction {
     void deviceReportPressed(ActionEvent e) {
         Maintenance.deviceReportPressed(_devNameField.getText(), f);
     }
+
+	// *********** Methods for Add Logix Window ********************
+
 	/**
-	 * Responds to the Create Logix button in Add Logix window
+	 * Responds to the Add button in Logix table Creates and/or initializes the
+	 * Add Logix window
 	 */
-	void createPressed(ActionEvent e) {
+	void addPressed(ActionEvent e) {
 		// possible change
+        if (!checkFlags(null)) {
+            return;
+        }
 		_showReminder = true;
-		String sName = systemName.getText().toUpperCase();
-		String uName = addUserName.getText().trim();
+		// make an Add Logix Frame
+		if (addLogixFrame == null) {
+            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage");
+			// Create Logix
+            JButton create = new JButton(rbx.getString("CreateLogixButton"));
+			panel5.add(create);
+			create.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					createPressed(e);
+				}
+			});
+			create.setToolTipText(rbx.getString("LogixCreateButtonHint"));
+        }
+		addLogixFrame.pack();
+		addLogixFrame.setVisible(true);
+	}
+
+    /**
+    *  shared method for window to create or copy Logix
+    * Returns the button panel
+    */
+    JPanel makeAddLogixFrame(String titleId, String messageId) {
+        addLogixFrame = new JmriJFrame(rbx.getString(titleId));
+        addLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.beantable.LogixAddEdit", true);
+        addLogixFrame.setLocation(50, 30);
+        Container contentPane = addLogixFrame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout());
+        JLabel systemNameLabel = new JLabel(rbx.getString("LogixSystemName"));
+        panel1.add(systemNameLabel);
+        panel1.add(_systemName);
+        _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
+        contentPane.add(panel1);
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new FlowLayout());
+        JLabel userNameLabel = new JLabel(rbx.getString("LogixUserName"));
+        panel2.add(userNameLabel);
+        panel2.add(_addUserName);
+        _addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
+        contentPane.add(panel2);
+        // set up message
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
+        JPanel panel31 = new JPanel();
+        panel31.setLayout(new FlowLayout());
+        JLabel message1 = new JLabel(rbx.getString(messageId+"1"));
+        panel31.add(message1);
+        JPanel panel32 = new JPanel();
+        JLabel message2 = new JLabel(rbx.getString(messageId+"2"));
+        panel32.add(message2);
+        panel3.add(panel31);
+        panel3.add(panel32);
+        contentPane.add(panel3);
+
+        // set up create and cancel buttons
+        JPanel panel5 = new JPanel();
+        panel5.setLayout(new FlowLayout());
+        // Cancel
+        JButton cancel = new JButton(rbx.getString("CancelButton")); 
+        panel5.add(cancel);
+        cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cancelAddPressed(e);
+            }
+        });
+        cancel.setToolTipText(rbx.getString("CancelLogixButtonHint"));
+
+        addLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                cancelAddPressed(null);
+            }
+        });
+        contentPane.add(panel5);
+        return panel5;
+    }
+
+	/**
+	 * Responds to the Cancel button in Add Logix window Note: Also get there if
+	 * the user closes the Add Logix window
+	 */
+	void cancelAddPressed(ActionEvent e) {
+		addLogixFrame.setVisible(false);
+		addLogixFrame.dispose();
+		addLogixFrame = null;
+        inCopyMode = false;
+		f.setVisible(true);
+	}
+
+    void copyPressed(String sName) {
+        if (!checkFlags(sName)) {
+            return;
+        }
+        // Use separate Thread so window is created on top
+        Thread t = new Thread() {
+                public void run() {
+                    Thread.yield();
+                    JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
+                    // Create Logix
+                    JButton create = new JButton(rbx.getString("ButtonCopy"));
+                    panel5.add(create);
+                    create.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            copyLogixPressed(e);
+                        }
+                    });
+                    addLogixFrame.pack();
+                    addLogixFrame.setVisible(true);
+                    }
+                };
+        log.debug("copyPressed Thread started for " + sName);
+        t.start();
+        inCopyMode = true;
+        _logixSysName = sName;
+    }
+
+    String _logixSysName;
+
+	void copyLogixPressed(ActionEvent e) {
+		String uName = _addUserName.getText().trim();
+        if (!checkLogixSysName()) {
+            return;
+        }
+		String sName = _systemName.getText().toUpperCase().trim();
+		// check if a Logix with this name already exists
+        boolean createLogix = true;
+		Logix targetLogix = _logixManager.getBySystemName(sName);
+        if (targetLogix != null) {
+            int result = JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
+                                                rbx.getString("ConfirmLogixDuplicate"),  
+                                                new Object[] {sName, _logixSysName}),
+                                                rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION,
+                                                JOptionPane.QUESTION_MESSAGE);
+            if (JOptionPane.NO_OPTION == result) {
+                return;
+            }
+            createLogix = false;
+            String userName = targetLogix.getUserName();
+            if (userName.length() > 0) {
+                _addUserName.setText(userName);
+                uName = userName;
+            }
+        } else if (!checkLogixUserName(uName)) {
+            return;
+        }
+        if (createLogix) {
+            // Create the new Logix
+            targetLogix = _logixManager.createNewLogix(sName, uName);
+            if (targetLogix == null) {
+                // should never get here unless there is an assignment conflict
+                log.error("Failure to create Logix with System Name: " + sName);
+                return;
+            }
+        } else {
+            targetLogix.setUserName(uName);
+        }
+        Logix srcLogic = _logixManager.getBySystemName(_logixSysName);
+        for (int i=0; i<srcLogic.getNumConditionals(); i++) {
+            String cSysName = srcLogic.getConditionalByNumberOrder(i);
+            copyConditionalToLogix(cSysName, srcLogic, targetLogix);
+        }
+        cancelAddPressed(null);
+    }
+
+    void copyConditionalToLogix(String cSysName, Logix srcLogix, Logix targetLogix) {
+        Conditional cOld = _conditionalManager.getBySystemName(cSysName);
+        if (cOld == null) {
+            log.error("Failure to find Conditional with System Name: " + cSysName);
+            return;
+        }
+        String cOldSysName = cOld.getSystemName();
+        String cOldUserName = cOld.getUserName();
+
+		// make system name for new conditional
+		int num = targetLogix.getNumConditionals()+1;
+		String cNewSysName = targetLogix.getSystemName() + "C" + Integer.toString(num);
+		// add to Logix at the end of the calculate order
+        String cNewUserName = java.text.MessageFormat.format(rbx.getString("CopyOf"), cOldUserName);
+        if (cOldUserName.length() == 0){
+            cNewUserName += "C"+Integer.toString(num);
+        }
+        do {
+            cNewUserName = JOptionPane.showInputDialog(f, java.text.MessageFormat.format(
+                                                    rbx.getString("NameConditionalCopy"), new Object[] {
+                                                    cOldUserName, cOldSysName, _logixSysName, 
+                                                    targetLogix.getUserName(), targetLogix.getSystemName()}),
+                                                    cNewUserName);
+            if (cNewUserName == null || cNewUserName.length()==0) {
+                return;
+            }
+        } while (!checkConditionalUserName(cNewUserName, targetLogix) );
+
+		Conditional cNew = _conditionalManager.createNewConditional(cNewSysName, cNewUserName);
+		if (cNew == null) {
+			// should never get here unless there is an assignment conflict
+			log.error("Failure to create Conditional with System Name: \""
+					+ cNewSysName+"\" and User Name: \""+ cNewUserName+"\"");
+			return;
+		}
+        cNew.setLogicType(cOld.getLogicType(), cOld.getAntecedentExpression());
+        cNew.setStateVariables(cOld.getCopyOfStateVariables());
+        cNew.setAction(cOld.getCopyOfActions());
+		targetLogix.addConditional(cNewSysName, -1);
+    }
+
+    boolean checkLogixUserName(String uName) {
+		// check if a Logix with the same user name exists
+		if (uName.length() > 0) {
+			Logix x = _logixManager.getByUserName(uName);
+			if (x != null) {
+				// Logix with this user name already exists
+				javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
+						.getString("Error3"), rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+        return true;
+    }
+
+    boolean checkLogixSysName() {
 		// check validity of Logix system name
-		if ((sName.equals(" ")) || (sName.length() < 1)) {
+		String sName = _systemName.getText().toUpperCase().trim();
+		if ( (sName.length() < 1)) {
 			// Entered system name is blank or too short
-			log.error("Logix system name is invalid: " + sName);
 			javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
 					.getString("Error8"), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if ((sName.length() < 2) || (sName.charAt(0) != 'I')
 				|| (sName.charAt(1) != 'X')) {
@@ -518,29 +682,68 @@ public class LogixTableAction extends AbstractTableAction {
 			String s = sName;
 			sName = "IX" + s;
 		}
-		systemName.setText(sName);
+		_systemName.setText(sName);
+        return true;
+    }
+
+    boolean checkFlags(String sName) {
+		if (inEditMode) {
+			// Already editing a Logix, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+					java.text.MessageFormat.format(rbx.getString("Error32"),
+					new Object[] { _curLogix.getSystemName() }), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (inCopyMode) {
+			// Already editing a Logix, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+					java.text.MessageFormat.format(rbx.getString("Error31"),
+					new Object[] { _logixSysName }), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+        if (sName != null) {
+            // check if a Logix with this name exists
+            Logix x = _logixManager.getBySystemName(sName);
+            if (x == null) {
+                // Logix does not exist, so cannot be edited
+                log.error("No Logix with system name: " + sName);
+                javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
+                        .getString("Error5"), rbx.getString("ErrorTitle"),
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                if (editLogixFrame != null) {
+                    editLogixFrame.setVisible(false);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+	/**
+	 * Responds to the Create Logix button in Add Logix window
+	 */
+	void createPressed(ActionEvent e) {
+		// possible change
+		_showReminder = true;
+		String uName = _addUserName.getText().trim();
+        if (!checkLogixSysName()) {
+            return;
+        }
+		String sName = _systemName.getText().toUpperCase().trim();
 		// check if a Logix with this name already exists
 		Logix x = _logixManager.getBySystemName(sName);
 		if (x != null) {
 			// Logix already exists
-			log.error("Duplicate Logix system name entered: " + sName);
 			javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
 					.getString("Error1"), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		// check if a Logix with the same user name exists
-		if (uName.length() > 0) {
-			x = _logixManager.getByUserName(uName);
-			if (x != null) {
-				// Logix with this user name already exists
-				log.error("Duplicate Logix user name entered: " + uName);
-				javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
-						.getString("Error3"), rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-		}
+        if (!checkLogixUserName(uName)) {
+            return;
+        }
 		// Create the new Logix
 		_curLogix = _logixManager.createNewLogix(sName, uName);
 		if (_curLogix == null) {
@@ -549,9 +752,7 @@ public class LogixTableAction extends AbstractTableAction {
 			return;
 		}
 		numConditionals = 0;
-		addLogixFrame.setVisible(false);
-		addLogixFrame.dispose();
-		addLogixFrame = null;
+        cancelAddPressed(null);
 		// create the Edit Logix Window
         makeEditLogixWindow();
 	}
@@ -562,33 +763,12 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Edit button pressed in Logix table
 	 */
 	void editPressed(String sName) {
-		if (inEditMode) {
-			// Already editing a Logix, ask for completion of that edit
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					java.text.MessageFormat.format(rbx.getString("Error32"),
-							new Object[] { _curLogix.getSystemName() }), rbx
-							.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		// check if a Logix with this name exists
-		Logix x = _logixManager.getBySystemName(sName);
-		if (x == null) {
-			// Logix does not exist, so cannot be edited
-			log.error("No Logix with system name: " + sName);
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-					.getString("Error5"), rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			if (editLogixFrame != null) {
-				editLogixFrame.setVisible(false);
-			}
-			return;
-		}
+        if (!checkFlags(sName)) {
+            return;
+        }
 		// Logix was found, initialize for edit
-		_curLogix = x;
+		_curLogix =  _logixManager.getBySystemName(sName);
 		numConditionals = _curLogix.getNumConditionals();
-		// deactivate this Logix
-		_curLogix.deActivateLogix();
 		// create the Edit Logix Window
         // Use separate Thread so window is created on top
         Thread t = new Thread() {
@@ -597,6 +777,7 @@ public class LogixTableAction extends AbstractTableAction {
                     makeEditLogixWindow();
                     }
                 };
+        log.debug("editPressed Thread started for " + sName);
         t.start();
 	}
 
@@ -604,6 +785,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * creates and/or initializes the Edit Logix window
 	 */
 	void makeEditLogixWindow() {
+        log.debug("makeEditLogixWindow ");
 		editUserName.setText(_curLogix.getUserName());
 		// clear conditional table if needed
 		if (conditionalTableModel != null) {
@@ -646,9 +828,8 @@ public class LogixTableAction extends AbstractTableAction {
 			conditionalTableModel = new ConditionalTableModel();
 			JTable conditionalTable = new JTable(conditionalTableModel);
 			conditionalTable.setRowSelectionAllowed(false);
-			conditionalTable
-					.setPreferredScrollableViewportSize(new java.awt.Dimension(
-							530, 250));
+			conditionalTable.setPreferredScrollableViewportSize(
+							new java.awt.Dimension(530, 450));
 			TableColumnModel conditionalColumnModel = conditionalTable
 					.getColumnModel();
 			TableColumn sNameColumn = conditionalColumnModel
@@ -668,6 +849,7 @@ public class LogixTableAction extends AbstractTableAction {
 			stateColumn.setMaxWidth(100);
 			TableColumn buttonColumn = conditionalColumnModel
 					.getColumn(ConditionalTableModel.BUTTON_COLUMN);
+
 			// install button renderer and editor
 			ButtonRenderer buttonRenderer = new ButtonRenderer();
 			conditionalTable.setDefaultRenderer(JButton.class, buttonRenderer);
@@ -677,6 +859,7 @@ public class LogixTableAction extends AbstractTableAction {
 			conditionalTable.setRowHeight(testButton.getPreferredSize().height);
 			buttonColumn.setMinWidth(testButton.getPreferredSize().width);
 			buttonColumn.setResizable(false);
+
 			JScrollPane conditionalTableScrollPane = new JScrollPane(
 					conditionalTable);
 			pct.add(conditionalTableScrollPane, BorderLayout.CENTER);
@@ -748,8 +931,6 @@ public class LogixTableAction extends AbstractTableAction {
 
         editLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        // if in Edit mode, complete the Edit and reactivate
-                        // the Logix
                         showSaveReminder();
                         if (inEditMode) {
                             donePressed(null);
@@ -913,16 +1094,6 @@ public class LogixTableAction extends AbstractTableAction {
 
         } */
         // complete update and activate Logix
-        try {
-            _curLogix.activateLogix();
-        } catch (NumberFormatException nfe) {
-            log.error("NumberFormatException on activation of Logix \""+uName+"\" "+nfe);
-            //nfe.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-                    rbx.getString("Error4")+nfe.toString()+rbx.getString("Error7"),
-                    rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         finishDone();
 	}  /* donePressed */
 
@@ -935,6 +1106,26 @@ public class LogixTableAction extends AbstractTableAction {
 		// bring Logix Table to front
 		f.setVisible(true);
     }
+
+	/**
+	 * Responds to the Delete combo selection Logix window
+	 */
+	void deletePressed(String sName) {
+        if (!checkFlags(sName)) {
+            return;
+        }
+        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
+                                                rbx.getString("ConfirmLogixDelete"), sName),
+                                                rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION,
+                                                JOptionPane.QUESTION_MESSAGE) )
+        {
+            Logix x = _logixManager.getBySystemName(sName);
+            if (x != null) {
+                _logixManager.deleteLogix(x);
+            }
+        }
+		f.setVisible(true);
+	}
 
 	/**
 	 * Responds to the Delete button in the Edit Logix window
@@ -970,18 +1161,16 @@ public class LogixTableAction extends AbstractTableAction {
         }
 		// make system name for new conditional
 		int num = _curLogix.getNumConditionals()+1;
-		Conditional c = null;
-        String cName = null;
-		while (c == null) {
+		String cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
+		_curConditional = _conditionalManager.createNewConditional(cName, "");
+		if (_curConditional == null) {
 			// should never get here unless there is an assignment conflict
-            cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
-            c = _conditionalManager.createNewConditional(cName, "");
-            num++;
-			log.error("Failure to create Conditional with System Name: " + cName);
+			log.error("Failure to create Conditional with System Name: "
+					+ cName);
+			return;
 		}
 		// add to Logix at the end of the calculate order
 		_curLogix.addConditional(cName, -1);
-		_curConditional = c;
 		conditionalTableModel.fireTableRowsInserted(numConditionals, numConditionals);
 		conditionalRowNumber = numConditionals;
 		numConditionals++;
@@ -1035,7 +1224,23 @@ public class LogixTableAction extends AbstractTableAction {
 		return false;
 	}
 
-/*********************** Edit Conditional Window and Mwthods********************/
+    boolean checkConditionalUserName(String uName, Logix logix) {
+        if ((uName != null) && (!(uName.equals("")))) {
+            Conditional p = _conditionalManager.getByUserName(logix, uName);
+            if (p != null) {
+                // Conditional with this user name already exists
+                log.error("Failure to update Conditional with Duplicate User Name: "
+                                + uName);
+                javax.swing.JOptionPane.showMessageDialog(
+                        editConditionalFrame, rbx.getString("Error10"), rbx
+                                .getString("ErrorTitle"),
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+/*********************** Edit Conditional Window and Methods********************/
 
 	/**
 	 * Creates and/or initializes the Edit Conditional window Note: you can get
@@ -1043,13 +1248,14 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Edit button in the Conditional table of the Edit Logix window.
 	 */
 	void makeEditConditionalWindow() {
-
+		// deactivate this Logix
+		_curLogix.deActivateLogix();
 		conditionalUserName.setText(_curConditional.getUserName());
 		if (editConditionalFrame == null) {
 			editConditionalFrame = new JmriJFrame(rbx.getString("TitleEditConditional"));
 			editConditionalFrame.addHelpMenu(
 					"package.jmri.jmrit.beantable.ConditionalAddEdit", true);
-			editConditionalFrame.setLocation(50, 40);
+			//editConditionalFrame.setLocation(50, 5);
 			Container contentPane = editConditionalFrame.getContentPane();
 			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel();
@@ -1105,8 +1311,10 @@ public class LogixTableAction extends AbstractTableAction {
 			// initialize table of state variables
 			_variableTableModel = new VariableTableModel();
 			JTable variableTable = new JTable(_variableTableModel);
+			variableTable.setRowHeight(_notOperatorBox.getPreferredSize().height);
 			variableTable.setRowSelectionAllowed(false);
-			variableTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 150));
+            int rowHeight = variableTable.getRowHeight();
+			variableTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 7*rowHeight));
 
 			TableColumnModel variableColumnModel = variableTable.getColumnModel();
 
@@ -1121,7 +1329,6 @@ public class LogixTableAction extends AbstractTableAction {
             
 			TableColumn notColumn = variableColumnModel.getColumn(VariableTableModel.NOT_COLUMN);
 			notColumn.setCellEditor(new DefaultCellEditor(_notOperatorBox));
-			variableTable.setRowHeight(_notOperatorBox.getPreferredSize().height);
 			notColumn.setMaxWidth(_notOperatorBox.getPreferredSize().width - 5);
 			notColumn.setResizable(false);
             
@@ -1147,13 +1354,12 @@ public class LogixTableAction extends AbstractTableAction {
 			variableTable.setDefaultEditor(JButton.class, buttonEditor);
 			JButton testButton = new JButton("XXXXX");
 			variableTable.setRowHeight(testButton.getPreferredSize().height);
-;			editColumn.setMinWidth(testButton.getPreferredSize().width);
+			editColumn.setMinWidth(testButton.getPreferredSize().width);
 			editColumn.setResizable(false);
 
 			TableColumn deleteColumn = variableColumnModel.getColumn(VariableTableModel.DELETE_COLUMN);
             // ButtonRenderer and TableCellEditor already set
-			variableTable.setRowHeight(testButton.getPreferredSize().height);
-;			deleteColumn.setMinWidth(testButton.getPreferredSize().width);
+			deleteColumn.setMinWidth(testButton.getPreferredSize().width);
 			deleteColumn.setResizable(false);
 			// add a scroll pane
 			JScrollPane variableTableScrollPane = new JScrollPane(variableTable);
@@ -1219,7 +1425,8 @@ public class LogixTableAction extends AbstractTableAction {
 			_actionTableModel = new ActionTableModel();
 			JTable actionTable = new JTable(_actionTableModel);
 			actionTable.setRowSelectionAllowed(false);
-			actionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 150));
+			actionTable.setRowHeight(testButton.getPreferredSize().height);
+			actionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 7*rowHeight));
 			JPanel actionPanel = new JPanel();
 			actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
 			JPanel actionTitle = new JPanel();
@@ -1240,7 +1447,6 @@ public class LogixTableAction extends AbstractTableAction {
 			actionTable.setDefaultRenderer(JButton.class, buttonRenderer);
 			TableCellEditor editButEditor = new ButtonEditor(new JButton());
 			actionTable.setDefaultEditor(JButton.class, editButEditor);
-			actionTable.setRowHeight(testButton.getPreferredSize().height);
 			actionEditColumn.setMinWidth(testButton.getPreferredSize().width);
 			actionEditColumn.setResizable(false);
 
@@ -1311,7 +1517,7 @@ public class LogixTableAction extends AbstractTableAction {
 			panel5.add(deleteConditional);
 			deleteConditional.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					deleteConditionalPressed(e);
+					deleteConditionalPressed(null);
 				}
 			});
 			deleteConditional.setToolTipText(rbx.getString("DeleteConditionalButtonHint"));
@@ -1484,18 +1690,8 @@ public class LogixTableAction extends AbstractTableAction {
         String uName = conditionalUserName.getText().trim();
         if (!(uName.equals(c.getUserName()))) {
             // user name has changed - check if already in use
-            if ((uName != null) && (!(uName.equals("")))) {
-                Conditional p = _conditionalManager.getByUserName(_curLogix, uName);
-                if (p != null) {
-                    // Conditional with this user name already exists
-                    log.error("Failure to update Conditional with Duplicate User Name: "
-                                    + uName);
-                    javax.swing.JOptionPane.showMessageDialog(
-                            editConditionalFrame, rbx.getString("Error10"), rbx
-                                    .getString("ErrorTitle"),
-                            javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            if (!checkConditionalUserName(uName, _curLogix)) {
+                return;
             }
             // user name is unique or blank, change it
             c.setUserName(uName);
@@ -1571,8 +1767,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button in the Edit Conditional frame Also
-     * activated if the user dismisses the Edit Conditional window.
+     * Responds to the Cancel button in the Edit Conditional frame
+     * Does the cleanup from deleteConditionalPressed, updateConditionalPressed
+     * and editConditionalFrame window closer.
      */
     void cancelConditionalPressed(ActionEvent e) {
         if (_editActionFrame != null) {
@@ -1581,6 +1778,16 @@ public class LogixTableAction extends AbstractTableAction {
         if (_editVariableFrame != null) {
             cleanUpVariable();
             }
+        try {
+            _curLogix.activateLogix();
+        } catch (NumberFormatException nfe) {
+            log.error("NumberFormatException on activation of Logix "+nfe);
+            //nfe.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+                    rbx.getString("Error4")+nfe.toString()+rbx.getString("Error7"),
+                    rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         inEditConditionalMode = false;
         editConditionalFrame.setVisible(false);
         editConditionalFrame.dispose();
@@ -1592,9 +1799,12 @@ public class LogixTableAction extends AbstractTableAction {
      * Responds to the Delete Conditional Button in the Edit Conditional window
      */
 
-    void deleteConditionalPressed(ActionEvent e) {
+    void deleteConditionalPressed(String sName) {
         // delete this Conditional - this is done by the parent Logix
-        String sName = _curConditional.getSystemName();
+        if (sName == null)
+        {
+            sName = _curConditional.getSystemName();
+        }
         if (sName == null) {
             log.error("Unable to delete Conditional, null system name");
             return;
@@ -2343,7 +2553,9 @@ public class LogixTableAction extends AbstractTableAction {
         int actionType = action.getType();
         if (actionType == Conditional.ACTION_PLAY_SOUND) {
             if (sndFileChooser == null) {
-                sndFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources"+java.io.File.separator+"sounds");
+                sndFileChooser = new JFileChooser(System.getProperty("user.dir")+
+                                                  java.io.File.separator+"resources"+
+                                                  java.io.File.separator+"sounds");
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");
                 filt.addExtension("wav");
                 sndFileChooser.setFileFilter(filt);
@@ -2351,7 +2563,8 @@ public class LogixTableAction extends AbstractTableAction {
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.ACTION_RUN_SCRIPT) {
             if (scriptFileChooser == null) {
-                scriptFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
+                scriptFileChooser = new JFileChooser(System.getProperty("user.dir")+
+                                                     java.io.File.separator+"jython");
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
                 filt.addExtension("py");
                 scriptFileChooser.setFileFilter(filt);
@@ -3569,7 +3782,7 @@ public class LogixTableAction extends AbstractTableAction {
 	/**
 	 * Formats time to hh:mm given integer hour and minute
 	 */
-	String formatTime(int hour, int minute) {
+	public static String formatTime(int hour, int minute) {
 		String s = "";
 		String t = Integer.toString(hour);
 		if (t.length() == 2) {
@@ -3813,9 +4026,10 @@ public class LogixTableAction extends AbstractTableAction {
 					return Integer.toString(rx + 1);
 			case SNAME_COLUMN:
 				return _curLogix.getConditionalByNumberOrder(rx);
-			case UNAME_COLUMN: //
-				return _conditionalManager.getBySystemName(
-						_curLogix.getConditionalByNumberOrder(rx)).getUserName();
+                case UNAME_COLUMN:
+                    //log.debug("ConditionalTableModel: "+_curLogix.getConditionalByNumberOrder(rx));
+				    return _conditionalManager.getBySystemName(
+						        _curLogix.getConditionalByNumberOrder(rx)).getUserName();
                 case STATE_COLUMN:
                     Conditional c = _conditionalManager.getBySystemName(
 						_curLogix.getConditionalByNumberOrder(rx));
@@ -4006,48 +4220,7 @@ public class LogixTableAction extends AbstractTableAction {
                         return rbx.getString("LogicNOT");
                     break;
                 case DESCRIPTION_COLUMN:
-                    String str = rbx.getString("Test") + " ";
-                    String name = ", " + variable.getName();
-                    String set = rbx.getString("For") + " ";
-                    String type = variable.getTypeString();
-                    switch (variable.getType()) {
-                        case Conditional.TYPE_NONE:
-                            return type;
-                        case Conditional.TYPE_SENSOR_ACTIVE:
-                        case Conditional.TYPE_SENSOR_INACTIVE:
-                            return str = str + rbx.getString("Sensor") + name + set + type;
-                        case Conditional.TYPE_TURNOUT_THROWN:
-                        case Conditional.TYPE_TURNOUT_CLOSED:
-                            return str = str + rbx.getString("Turnout") + name + set + type;
-                        case Conditional.TYPE_CONDITIONAL_TRUE:
-                        case Conditional.TYPE_CONDITIONAL_FALSE:
-                            System.out.println("name= "+ name+ " getConditionalUserName(name)= "+getConditionalUserName(name));
-                            name = getConditionalUserName(variable.getName());
-                            return str = str + rbx.getString("Conditional")+", "+ name + set + type;
-                        case Conditional.TYPE_LIGHT_ON:
-                        case Conditional.TYPE_LIGHT_OFF:
-                            return str = str + rbx.getString("Light") + name + set + type;
-                        case Conditional.TYPE_MEMORY_EQUALS:
-                            return str = str + rbx.getString("Memory")+name+set+type+" "+variable.getDataString();
-                        case Conditional.TYPE_FAST_CLOCK_RANGE:
-                            int begin = variable.getNum1();
-                            int end = variable.getNum2();
-                            return str = str + rbx.getString("FastClock")+set+type
-                                + " "+java.text.MessageFormat.format(rbx.getString("fromTo"),
-                                                                     formatTime(begin / 60, begin - ((begin / 60) * 60)),
-                                                                     formatTime(end / 60, end - ((end / 60) * 60)));
-                        case Conditional.TYPE_SIGNAL_HEAD_RED:
-                        case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                        case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                        case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                        case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                        case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                            return str = rbx.getString("SignalHead")+", "+name+", "+type;
-                    }
-                    return str;
+                    return variable.toString();
                 case STATE_COLUMN:
                     switch (variable.getState()) {
                         case Conditional.TRUE:
@@ -4175,93 +4348,7 @@ public class LogixTableAction extends AbstractTableAction {
 			switch (col) {
                 case DESCRIPTION_COLUMN:
                     ConditionalAction action = (ConditionalAction)_actionList.get(row);
-                    int type =action.getType();
-                    String str = action.getOptionString()+", "+ action.getTypeString();
-                    String name = action.getDeviceName();
-                    if (name.length() > 0) {
-                        switch (type) {
-                            case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-                            case Conditional.ACTION_SET_SIGNAL_HELD:
-                            case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-                            case Conditional.ACTION_SET_SIGNAL_DARK:
-                            case Conditional.ACTION_SET_SIGNAL_LIT:
-                            case Conditional.ACTION_TRIGGER_ROUTE:
-                            case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-                            case Conditional.ACTION_SET_MEMORY:
-                            case Conditional.ACTION_ENABLE_LOGIX:
-                            case Conditional.ACTION_DISABLE_LOGIX:
-                            case Conditional.ACTION_COPY_MEMORY:
-                            case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                                str = str + ", " + name;
-                                break;
-                            case Conditional.ACTION_SET_SENSOR:
-                            case Conditional.ACTION_SET_TURNOUT:
-                            case Conditional.ACTION_SET_LIGHT:
-                            case Conditional.ACTION_LOCK_TURNOUT:
-                            case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-                            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                            case Conditional.ACTION_DELAYED_TURNOUT:
-                            case Conditional.ACTION_DELAYED_SENSOR:
-                                str = str + ", " + name + " " + rbx.getString("to")
-                                      + " " + action.getActionDataString();
-                                break;
-                        }
-                    }
-                    String data = action.getActionString();
-                    if (data.length() > 0)
-                    {
-                        switch (type)
-                        {
-                            case Conditional.ACTION_SET_MEMORY:
-                            case Conditional.ACTION_COPY_MEMORY:
-                                str = str + " " + rbx.getString("to")+ " " + data + ".";
-                                break;
-                            case Conditional.ACTION_PLAY_SOUND:
-                            case Conditional.ACTION_RUN_SCRIPT:
-                                str = str + " " + rbx.getString("FromFile")+ " "+ data+ ".";
-                                break;
-                            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                            case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                                str = str + " " + rbx.getString("to")+ " "+ data+ ".";
-                                break;
-                            case Conditional.ACTION_DELAYED_TURNOUT:
-                            case Conditional.ACTION_DELAYED_SENSOR:
-                                str = str + rbx.getString("After") + " ";
-                                try {
-                                    int t = Integer.parseInt(data);
-                                    str = str + data + " " + rbx.getString("Seconds")+ ".";
-                                } catch (NumberFormatException nfe) { 
-                                    str = str + data + " " + rbx.getString("ValueInMemory")
-                                         + " " + rbx.getString("Seconds") + ".";
-                                }
-                                break;
-                            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                            case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                                try {
-                                    int t = Integer.parseInt(data);
-                                    str = str + " " + rbx.getString("to")+ " "+ data + ".";
-                                } catch (NumberFormatException nfe) { 
-                                    str = str + " " + rbx.getString("to") + " " + data + " "
-                                        + rbx.getString("ValueInMemory") + ".";
-                                }
-                                break;
-                        }
-                    }
-                    int time = action.getActionData();
-                    switch (type)
-                    {
-                        case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                        case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                            str = str + " " + rbx.getString("to")+ " " + time + ".";
-                            break;
-                        case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-                            str = str + " " +rbx.getString("to")+ " " +
-                                  formatTime(time / 60, time - ((time / 60) * 60));
-                            break;
-                    }
-					return str;
+                    return action.toString();
                 case EDIT_COLUMN:
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:

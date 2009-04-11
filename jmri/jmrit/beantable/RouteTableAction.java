@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -152,6 +152,11 @@ public class RouteTableAction extends AbstractTableAction {
                         }
                     WindowMaker t = new WindowMaker(row);
 					t.start();
+                    /*
+                    addPressed(null);
+                    _systemName.setText((String)getValueAt(row, SYSNAMECOL));
+                    editPressed(null); // don't really want to stop Route w/o user action
+                    */
     			}
     			else if (col==ENABLECOL) {
                     // alternate
@@ -468,8 +473,7 @@ public class RouteTableAction extends AbstractTableAction {
                 tmodel.setSortingStatus(RouteSensorModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
             } catch (ClassCastException e3) {}  // if not a sortable table model
             routeSensorTable.setRowSelectionAllowed(false);
-            routeSensorTable.setPreferredScrollableViewportSize(new 
-                                                            java.awt.Dimension(480,80));
+            routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,80));
             JComboBox stateSCombo = new JComboBox();
    			stateSCombo.addItem(SET_TO_ACTIVE);
 			stateSCombo.addItem(SET_TO_INACTIVE);
@@ -709,8 +713,8 @@ public class RouteTableAction extends AbstractTableAction {
             });
         // display the window
         addFrame.setVisible(true);
-        _routeTurnoutModel.fireTableDataChanged();
-        _routeSensorModel.fireTableDataChanged();
+        //_routeTurnoutModel.fireTableDataChanged();
+        //_routeSensorModel.fireTableDataChanged();
     }   // addPressed
 
     /**
@@ -738,25 +742,9 @@ public class RouteTableAction extends AbstractTableAction {
         if (!checkNewNamesOK()) {
             return;
         }
-        // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
-        String uName = _userName.getText();
-        Route g = curRoute;
-        initializeIncludedList();
-        // Create the new Route
-        g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName,uName);
-        if (g==null) {
-            // should never get here
-            log.error("Unknown failure to create Route with System Name: "+sName);
-            return;
-        }
         updatePressed(e, true);
-        // Provide feedback to user
-        status1.setText("New Route created: "+sName+", "+uName+", "+_includedTurnoutList.size()
-                        +" Turnouts, "+_includedSensorList.size()+" Sensors");
         status2.setText(editInst);
         // activate the route
-        g.activateRoute();
     }
 
     boolean checkNewNamesOK() {
@@ -802,8 +790,8 @@ public class RouteTableAction extends AbstractTableAction {
         if (g==null) {
             // should never get here
             log.error("Unknown failure to create Route with System Name: "+sName);
-;
         }
+        g.deActivateRoute();
         return g;
     }
 
@@ -1074,7 +1062,6 @@ public class RouteTableAction extends AbstractTableAction {
 		// set up additional delay
 		timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
         // begin with showing all Turnouts   
-        cancelIncludedOnly();
         // set up buttons and notes
         status1.setText(updateInst);
         status2.setText(cancelInst);
@@ -1098,7 +1085,7 @@ public class RouteTableAction extends AbstractTableAction {
         InstanceManager.routeManagerInstance().deleteRoute(curRoute);
 
         curRoute = null;
-        finishUpdate(null, true);
+        finishUpdate();
     }
 
     /**
@@ -1127,20 +1114,18 @@ public class RouteTableAction extends AbstractTableAction {
         g.setOutputScriptName(scriptFile.getText());
         g.setOutputSoundName(soundFile.getText());
         // add control Sensors and a control Turnout if entered in the window
-        setControlInformation(g);
-        
-        finishUpdate(uName, newRoute);
+        setControlInformation(g);        
         curRoute = g;
+        finishUpdate();
+        status1.setText((newRoute ? "New Route created: ":"Route updated: ")
+                        +uName+", "+ _includedTurnoutList.size()
+                        +" Turnouts, "+_includedSensorList.size()+" Sensors");
     }
 
-    void finishUpdate(String userName, boolean newRoute) {
+    void finishUpdate() {
         // move to show all turnouts if not there
         cancelIncludedOnly();
-        // Provide feedback to user
-        if (!newRoute) {
-            status1.setText("Route updated: "+userName+", "+ _includedTurnoutList.size()
-                            +" Turnouts, "+_includedSensorList.size()+" Sensors");
-        }
+        // Provide feedback to user 
         // switch GUI back to selection mode
         status2.setText(editInst);
         status2.setVisible(true);
@@ -1151,6 +1136,7 @@ public class RouteTableAction extends AbstractTableAction {
         editButton.setVisible(true);
         createButton.setVisible(true);
         fixedSystemName.setVisible(false);
+        clearPage();
         _systemName.setVisible(true);
         // reactivate the Route
         routeDirty = true;
@@ -1161,15 +1147,47 @@ public class RouteTableAction extends AbstractTableAction {
         }
     }
 
+    void clearPage() {
+        _systemName.setVisible(true);
+        _systemName.setText("");
+        _userName.setText("");
+        sensor1.setText("");
+        sensor2.setText("");
+        sensor3.setText("");
+        cTurnout.setText("");
+        cLockTurnout.setText("");
+        turnoutsAlignedSensor.setText("");
+        soundFile.setText("");
+        scriptFile.setText("");
+        for (int i=_turnoutList.size()-1; i>=0; i--) { 
+            _turnoutList.get(i).setIncluded(false);
+        }
+        for (int i=_sensorList.size()-1; i>=0; i--) {
+            _sensorList.get(i).setIncluded(false);
+        }
+    }
+
+
 /////////////////////// Export to Logix ////////////////////////////
     /**
      * Responds to the Update button - update to Logix
      */
     void exportPressed(ActionEvent e) {
-        Route g = checkNamesOK();
+        curRoute = checkNamesOK();
         String sName = _systemName.getText().toUpperCase();
+        if (sName.length()==0) {
+            sName = fixedSystemName.getText(); 
+        }
         String uName = _userName.getText();
-        Logix logix = getRouteLogix();
+        String logixSystemName = LOGIX_SYS_NAME+sName;
+        Logix logix = InstanceManager.logixManagerInstance().getBySystemName(logixSystemName);
+        if (logix == null) {
+            logix = InstanceManager.logixManagerInstance().createNewLogix(logixSystemName, uName);
+            if (logix == null) {
+                log.error("Failed to create Logix "+logixSystemName+", "+uName);
+                return;
+            }
+        }
         logix.deActivateLogix();
         initializeIncludedList();
         
@@ -1204,324 +1222,156 @@ public class RouteTableAction extends AbstractTableAction {
             actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                   Conditional.ACTION_PLAY_SOUND, "", -1, file));
         }
-        log.debug("actionList.size()= "+actionList.size()+" _includedSensorList.size()= "+_includedSensorList.size()
-                  +" _includedTurnoutList.size()= "+_includedTurnoutList.size());
 
-        ///// Construct actions for true from the 'single change' controls ////////
-        ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+        ///// Construct 'AND' clause from 'VETO' controls ////////
+        ArrayList <ConditionalVariable> vetoList = new ArrayList<ConditionalVariable>();
 
-        int numVars = 0;
-        String orClause = null;
         String andClause = null;
-        ConditionalVariable cVar = makeCtrlSensorVar(sensor1, sensor1mode, false);
+        ConditionalVariable cVar = makeCtrlSensorVar(sensor1, sensor1mode, true, false);
         if (cVar != null) {
-            variableList.add(cVar);
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                orClause = "R1"; 
-            } else {
-                andClause = "R1";
-            }
-            cVar.setOpern(Conditional.OPERATOR_NONE);
+            vetoList.add(cVar);
         }
-        cVar = makeCtrlSensorVar(sensor2, sensor2mode, false);
+        cVar = makeCtrlSensorVar(sensor2, sensor2mode, true, false);
         if (cVar != null) {
-            variableList.add(cVar);
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause +=" OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
+            vetoList.add(cVar);
         }
-        cVar = makeCtrlSensorVar(sensor3, sensor3mode, false);
+        cVar = makeCtrlSensorVar(sensor3, sensor3mode, true, false);
         if (cVar != null) {
-            variableList.add(cVar);
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause += " OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
+            vetoList.add(cVar);
         }
-        cVar = makeCtrlTurnoutVar(cTurnout, cTurnoutStateBox, false);
+        cVar = makeCtrlTurnoutVar(cTurnout, cTurnoutStateBox, true, false);
         if (cVar != null) {
-            variableList.add(cVar);
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause += " OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
+            vetoList.add(cVar);
         }
-        // remove old Conditionals for action on 'single change'
-        String cSystemName = CONDITIONAL_SYS_PREFIX+"T"+hashCode(sName);
-        String cUserName = CONDITIONAL_USER_PREFIX+uName+CONDITIONAL_USER_ON_TRUE;
-        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
-        if (c != null) {
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
+
+        // remove old Conditionals for actions (ver 2.5.2 only -remove a bad idea)
+        char[] ch = sName.toCharArray();
+        int hash= 0;
+        for (int i=0; i<ch.length; i++) {
+            hash += ch[i];
         }
-        String antecedent = "(";
-        if (orClause != null) {
-            antecedent += orClause+")";
-            if (andClause != null) {
-                antecedent += " AND ("+andClause+")";
-            }
-        } else {
-            if (andClause != null) {
-                antecedent += andClause+")";
-            }
-        }
-        // add new Conditionals for action on 'single change'
-        if (antecedent.length()>2) {
-            c = new DefaultConditional(cSystemName, cUserName);
-            InstanceManager.conditionalManagerInstance().register(c);
-            c.setStateVariables(variableList);
-            c.setLogicType(Conditional.MIXED, antecedent);
-            c.setAction(actionList);
-            logix.addConditional(cSystemName, 0);
-        }
-        log.debug("actionList.size()= "+actionList.size()+" _includedSensorList.size()= "+_includedSensorList.size()
-                  +" _includedTurnoutList.size()= "+_includedTurnoutList.size());
+        String cSystemName = CONDITIONAL_SYS_PREFIX+"T"+hash;
+        removeConditionals(cSystemName, logix);
+        cSystemName = CONDITIONAL_SYS_PREFIX+"F"+hash;
+        removeConditionals(cSystemName, logix);
+        cSystemName = CONDITIONAL_SYS_PREFIX+"A"+hash;
+        removeConditionals(cSystemName, logix);
+        cSystemName = CONDITIONAL_SYS_PREFIX+"L"+hash;
+        removeConditionals(cSystemName, logix);
+
+        int n=0;
+        do {
+            n++;
+            cSystemName = logixSystemName+n+"A";
+        } while (removeConditionals(cSystemName, logix));
+        n = 0;
+        do {
+            n++;
+            cSystemName = logixSystemName+n+"T";
+        } while (removeConditionals(cSystemName, logix));
+        cSystemName = logixSystemName+"L";
+        removeConditionals(cSystemName, logix);
+
+        String cUserName = null;
+
+        ///////////////// Make Trigger Conditionals //////////////////////
+        ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
+
+        int numConds = 1;
+        numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false, 
+                                         actionList, vetoList, logix, logixSystemName, uName); 
+        numConds = makeSensorConditional(sensor2, sensor2mode, numConds, false, 
+                                         actionList, vetoList, logix, logixSystemName, uName); 
+        numConds = makeSensorConditional(sensor3, sensor3mode, numConds, false, 
+                                         actionList, vetoList, logix, logixSystemName, uName); 
+        numConds = makeTurnoutConditional(cTurnout, cTurnoutStateBox, numConds, false, 
+                                          actionList, vetoList, logix, logixSystemName, uName); 
 
         ////// Construct actions for false from the 'any change' controls ////////////
-        variableList = new ArrayList<ConditionalVariable>();
+        numConds = makeSensorConditional(sensor1, sensor1mode, numConds, true, actionList, vetoList, 
+                                         logix, logixSystemName, uName); 
+        numConds = makeSensorConditional(sensor2, sensor2mode, numConds, true, actionList, vetoList, 
+                                         logix, logixSystemName, uName); 
+        numConds = makeSensorConditional(sensor3, sensor3mode, numConds, true, actionList, vetoList, 
+                                         logix, logixSystemName, uName); 
+        numConds = makeTurnoutConditional(cTurnout, cTurnoutStateBox, numConds, true, actionList, 
+                                          vetoList, logix, logixSystemName, uName); 
 
-        numVars = 0;
-        orClause = null;
-        andClause = null;
-        boolean needFalseConditional = false;
-        cVar = makeCtrlSensorVar(sensor1, sensor1mode, true);
-        if (cVar != null) {
-            variableList.add(cVar);
-            if (cVar.doTriggerActions())  {
-                needFalseConditional = true;
-            }
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                orClause = "R1"; 
-            } else {
-                andClause = "R1";
-            }
-            cVar.setOpern(Conditional.OPERATOR_NONE);
-        }
-        cVar = makeCtrlSensorVar(sensor2, sensor2mode, true);
-        if (cVar != null) {
-            variableList.add(cVar);
-            if (cVar.doTriggerActions())  {
-                needFalseConditional = true;
-            }
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause += " OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
-        }
-        cVar = makeCtrlSensorVar(sensor3, sensor3mode, true);
-        if (cVar != null) {
-            variableList.add(cVar);
-            if (cVar.doTriggerActions())  {
-                needFalseConditional = true;
-            }
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause += " OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
-        }
-        cVar = makeCtrlTurnoutVar(cTurnout, cTurnoutStateBox, true);
-        if (cVar != null) {
-            variableList.add(cVar);
-            if (cVar.doTriggerActions())  {
-                needFalseConditional = true;
-            }
-            numVars++;
-            if (cVar.getOpern() == Conditional.OPERATOR_OR) {
-                if (orClause==null) {
-                    orClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    orClause += " OR R"+numVars;
-                }
-            } else {
-                if (andClause==null) {
-                    andClause = "R"+numVars; 
-                    cVar.setOpern(Conditional.OPERATOR_NONE);
-                } else {
-                    andClause += " AND R"+numVars;
-                }
-            }
-        }
-        // remove old Conditionals for action on 'change to false'
-        c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
-        cSystemName = CONDITIONAL_SYS_PREFIX+"F"+hashCode(sName);
-        cUserName = CONDITIONAL_USER_PREFIX+uName+CONDITIONAL_USER_ON_FALSE;
-        c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
-        if (c != null) {
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
-        }
-        if (needFalseConditional) {
-            antecedent = "(";
-            if (orClause != null) {
-                antecedent += orClause+")";
-                if (andClause != null) {
-                    antecedent += " AND ("+andClause+")";
-                }
-            } else {
-                if (andClause != null) {
-                    antecedent += andClause+")";
-                }
-            }
-            // modify actions to also occur on false (any change)
-            for (int i=0; i<actionList.size(); i++) {
-                actionList.get(i).setOption(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE);
-            }
-            // add new Conditionals for action on 'any change'
-            c = new DefaultConditional(cSystemName, cUserName);
-            InstanceManager.conditionalManagerInstance().register(c);
-            c.setStateVariables(variableList);
-            c.setLogicType(Conditional.MIXED, antecedent);
-            c.setAction(actionList);
-            logix.addConditional(cSystemName, 0);
-
-        }
-        // Remove old Align Conditional
-        cSystemName = CONDITIONAL_SYS_PREFIX+"A"+hashCode(sName);
-        cUserName = CONDITIONAL_USER_PREFIX+uName+CONDITIONAL_USER_ALIGN;
-        c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
-        if (c != null) {
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
-        }
 	    ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         String sensorSystemName = turnoutsAlignedSensor.getText();
         if (sensorSystemName.length() > 0) {
-            variableList = new ArrayList<ConditionalVariable>();
-            for (int i=0; i<_includedTurnoutList.size(); i++) {
-                RouteTurnout rTurnout = _includedTurnoutList.get(i);
-                String name = rTurnout.getUserName();
-                if (name == null || name.length() == 0) {
-                     name = rTurnout.getSysName();
-                }
-                // exclude toggled outputs
-                switch (rTurnout.getState()) {
-                    case Turnout.CLOSED:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
-                                                   Conditional.TYPE_TURNOUT_CLOSED, name, true));
-                        break;
-                    case Turnout.THROWN:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
-                                                   Conditional.TYPE_TURNOUT_THROWN, name, true));
-                        break;
-                }
+            // verify name (logix doesn't use "provideXXX") 
+            Sensor s = InstanceManager.sensorManagerInstance().getByUserName(sensorSystemName);
+            if (s == null) {
+                sensorSystemName = sensorSystemName.toUpperCase();
+                s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
             }
-            actionList = new ArrayList<ConditionalAction>();
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
-                                  Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE, 
-                                  Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
+            if (s != null) {
+                cSystemName = logixSystemName+"1A";
+                cUserName = sensorSystemName+"A "+uName;
+                ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+                for (int i=0; i<_includedTurnoutList.size(); i++) {
+                    RouteTurnout rTurnout = _includedTurnoutList.get(i);
+                    String name = rTurnout.getUserName();
+                    if (name == null || name.length() == 0) {
+                         name = rTurnout.getSysName();
+                    }
+                    // exclude toggled outputs
+                    switch (rTurnout.getState()) {
+                        case Turnout.CLOSED:
+                            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                                       Conditional.TYPE_TURNOUT_CLOSED, name, true));
+                            break;
+                        case Turnout.THROWN:
+                            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                                       Conditional.TYPE_TURNOUT_THROWN, name, true));
+                            break;
+                    }
+                }
+                actionList = new ArrayList<ConditionalAction>();
+                actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
+                                      Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
+                actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE, 
+                                      Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
 
-            c = new DefaultConditional(cSystemName, cUserName);
-            InstanceManager.conditionalManagerInstance().register(c);
-            c.setStateVariables(variableList);
-            c.setLogicType(Conditional.ALL_AND, "");
-            c.setAction(actionList);
-            logix.addConditional(cSystemName, 0);
-        }
-
-        // remove old Conditional for action on 'locks'
-        cSystemName = CONDITIONAL_SYS_PREFIX+"L"+hashCode(sName);
-        cUserName = CONDITIONAL_USER_PREFIX+uName+CONDITIONAL_USER_LOCK;
-        c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
-        if (c != null) {
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
+                Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c.setStateVariables(variableList);
+                c.setLogicType(Conditional.ALL_AND, "");
+                c.setAction(actionList);
+                logix.addConditional(cSystemName, 0);
+                c.calculate(true, null);
+            }
         }
 
 	    ///////////////// Set lock turnout information if there is any //////////////////////////
         String turnoutLockSystemName = cLockTurnout.getText();
         if (turnoutLockSystemName.length() > 0) {
-
-            variableList = new ArrayList<ConditionalVariable>();
-            String devName = cTurnout.getText();
-            int mode = turnoutModeFromBox(cTurnoutStateBox);
-            int type = Conditional.TYPE_TURNOUT_CLOSED;
-            if (mode == Route.ONTHROWN) {
-                type = Conditional.TYPE_TURNOUT_THROWN;
+            // verify name (logix doesn't use "provideXXX") 
+            Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(turnoutLockSystemName);
+            if (t == null) {
+                turnoutLockSystemName = turnoutLockSystemName.toUpperCase();
+                t = InstanceManager.turnoutManagerInstance().getBySystemName(turnoutLockSystemName);
             }
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
-                                                     type, turnoutLockSystemName, true));
-
-            actionList = new ArrayList<ConditionalAction>();
-            int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-            type = Turnout.LOCKED;
-            if (mode == Route.ONCHANGE) {
-                option = Conditional.ACTION_OPTION_ON_CHANGE;
-                type = Route.TOGGLE;
-            }
-            for (int i=0; i<_includedTurnoutList.size(); i++) {
-                RouteTurnout rTurnout = _includedTurnoutList.get(i);
-                String name = rTurnout.getUserName();
-                if (name == null || name.length() == 0) {
-                     name = rTurnout.getSysName();
+            if (t != null) {
+                cSystemName = logixSystemName+"1L";
+                cUserName = turnoutLockSystemName+"L "+uName;
+                ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+                String devName = cTurnout.getText();
+                int mode = turnoutModeFromBox(cTurnoutStateBox);
+                int type = Conditional.TYPE_TURNOUT_CLOSED;
+                if (mode == Route.ONTHROWN) {
+                    type = Conditional.TYPE_TURNOUT_THROWN;
                 }
-                actionList.add(new ConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
-                                                     name, type, ""));
-            }
-            if (mode != Route.ONCHANGE) {
-                // add non-toggle actions on
-                option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
-                type = Turnout.UNLOCKED;
+                variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+                                                         type, turnoutLockSystemName, true));
+
+                actionList = new ArrayList<ConditionalAction>();
+                int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+                type = Turnout.LOCKED;
+                if (mode == Route.ONCHANGE) {
+                    option = Conditional.ACTION_OPTION_ON_CHANGE;
+                    type = Route.TOGGLE;
+                }
                 for (int i=0; i<_includedTurnoutList.size(); i++) {
                     RouteTurnout rTurnout = _includedTurnoutList.get(i);
                     String name = rTurnout.getUserName();
@@ -1531,146 +1381,244 @@ public class RouteTableAction extends AbstractTableAction {
                     actionList.add(new ConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
                                                          name, type, ""));
                 }
-            }
+                if (mode != Route.ONCHANGE) {
+                    // add non-toggle actions on
+                    option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
+                    type = Turnout.UNLOCKED;
+                    for (int i=0; i<_includedTurnoutList.size(); i++) {
+                        RouteTurnout rTurnout = _includedTurnoutList.get(i);
+                        String name = rTurnout.getUserName();
+                        if (name == null || name.length() == 0) {
+                             name = rTurnout.getSysName();
+                        }
+                        actionList.add(new ConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                                                             name, type, ""));
+                    }
+                }
 
-           // add new Conditionals for action on 'locks'
-            c = new DefaultConditional(cSystemName, cUserName);
-            InstanceManager.conditionalManagerInstance().register(c);
-            c.setStateVariables(variableList);
-            c.setLogicType(Conditional.MIXED, "");
-            c.setAction(actionList);
-            logix.addConditional(cSystemName, 0);
+               // add new Conditionals for action on 'locks'
+                Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c.setStateVariables(variableList);
+                c.setLogicType(Conditional.ALL_AND, "");
+                c.setAction(actionList);
+                logix.addConditional(cSystemName, 0);
+                c.calculate(true, null);
+            }
         }
-        
+        logix.activateLogix();
         if (curRoute != null) {
             jmri.InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+            curRoute = null;
         }
         status1.setText("Route \""+uName+"\" exported to Logix: "+ _includedTurnoutList.size()
                         +" Turnouts, "+_includedSensorList.size()+" Sensors");
-        finishUpdate(uName, false);
+        finishUpdate();
     }
 
-    public int hashCode(String name) {
-        char[] ch = name.toCharArray();
-        int hCode= 0;
-        for (int i=0; i<ch.length; i++)
-        {
-            hCode += ch[i];
+    boolean removeConditionals(String cSystemName, Logix logix) {
+        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
+        if (c != null) {
+            logix.deleteConditional(cSystemName);
+            InstanceManager.conditionalManagerInstance().deleteConditional(c);
+            return true;
         }
-        return hCode;
+        return false;
     }
 
-    Logix getRouteLogix() {
-        Logix logix = InstanceManager.logixManagerInstance().getBySystemName(LOGIX_SYS_NAME);
-        if (logix == null) {
-            logix = InstanceManager.logixManagerInstance().createNewLogix(LOGIX_SYS_NAME, LOGIX_USER_NAME);
-            if (logix == null) {
-                log.error("Failed to create Logix "+LOGIX_SYS_NAME+", "+LOGIX_USER_NAME);
+    int makeSensorConditional(JTextField nameText, JComboBox sensorbox, int numConds, 
+                        boolean onChange, ArrayList<ConditionalAction>actionList,
+                        ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
+    {
+        ConditionalVariable cVar = makeCtrlSensorVar(nameText, sensorbox, false, onChange);
+        if (cVar != null) {
+            ArrayList <ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
+            varList.add(cVar);
+            for ( int i=0; i<vetoList.size(); i++) {
+                varList.add(cloneVariable(vetoList.get(i)));
             }
+            String cSystemName = prefix+numConds+"T";
+            String cUserName = nameText.getText()+numConds+"C "+uName;
+            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            c.setStateVariables(varList);
+            int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+            c.setAction(cloneActionList(actionList, option));
+            c.setLogicType(Conditional.ALL_AND, "");
+            logix.addConditional(cSystemName, 0);
+            c.calculate(true, null);
+            numConds++;
         }
-        return logix;
+        return numConds;
     }
 
-    ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox, boolean onChange) {
+    int makeTurnoutConditional(JTextField nameText, JComboBox box, int numConds, 
+                        boolean onChange, ArrayList<ConditionalAction>actionList,
+                        ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
+    {
+        ConditionalVariable cVar = makeCtrlTurnoutVar(nameText, box, false, onChange);
+        if (cVar != null) {
+            ArrayList <ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
+            varList.add(cVar);
+            for ( int i=0; i<vetoList.size(); i++) {
+                varList.add(cloneVariable(vetoList.get(i)));
+            }
+            String cSystemName = prefix+numConds+"T";
+            String cUserName = nameText.getText()+numConds+"C "+uName;
+            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            c.setStateVariables(varList);
+            int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+            c.setAction(cloneActionList(actionList, option));
+            c.setLogicType(Conditional.ALL_AND, "");
+            logix.addConditional(cSystemName, 0);
+            c.calculate(true, null);
+            numConds++;
+        }
+        return numConds;
+    }
+
+    ConditionalVariable cloneVariable(ConditionalVariable v) {
+        return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
+    }
+
+    ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
+        ArrayList <ConditionalAction> list = new ArrayList <ConditionalAction> ();
+		for (int i = 0; i<actionList.size(); i++) {
+            ConditionalAction action = actionList.get(i);
+            ConditionalAction clone = new ConditionalAction();
+            clone.setType(action.getType());
+            clone.setOption(option);
+            clone.setDeviceName(action.getDeviceName());
+            clone.setActionData(action.getActionData());
+            clone.setActionString(action.getActionString());
+            list.add(clone);
+		}
+        return list;
+    }
+
+    ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox,
+                                           boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
         if (devName.length() == 0) {
             return null;
         }
-        int mode = sensorModeFromBox(sensorbox);
-        boolean trigger = true;
         if (devName != null && devName.length()>0) {
-            int oper = 0;
+            // verify name (logix doesn't use "provideXXX") 
+            Sensor s = InstanceManager.sensorManagerInstance().getByUserName(devName);
+            if (s == null) {
+                devName = devName.toUpperCase();
+                s = InstanceManager.sensorManagerInstance().getBySystemName(devName);
+                if (s == null) {
+                    return null;
+                }
+            }
+            int oper = Conditional.OPERATOR_AND;
+            int mode = sensorModeFromBox(sensorbox);
+            boolean trigger = true;
+            boolean negated = false;
             int type = 0;
             switch (mode) {
                 case Route.ONACTIVE:    // route fires if sensor goes active
-                    oper = Conditional.OPERATOR_OR;
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                    if (onChange) {
-                        trigger = false;
+                    if (makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_SENSOR_ACTIVE;
                     break;
                 case Route.ONINACTIVE:  // route fires if sensor goes inactive
-                    oper = Conditional.OPERATOR_OR;
+                    if (makeVeto || onChange){
+                        return null;
+                    }
                     type = Conditional.TYPE_SENSOR_INACTIVE;
-                    if (onChange) {
-                        trigger = false;
-                    }
                     break;
-                case Route.ONCHANGE:    // route fires if sensor goes active or inactive
-                    oper = Conditional.OPERATOR_OR;
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                     break;
-                case Route.VETOACTIVE:  // sensor must be active for route to fire
-                    oper = Conditional.OPERATOR_AND;
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                    if (onChange) {
-                        trigger = false;
+                case Route.ONCHANGE:  // route fires if sensor goes active or inactive 
+                    if (makeVeto || !onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_SENSOR_ACTIVE;
+                    break;
+                case Route.VETOACTIVE:  // sensor must be active for route to fire
+                    if (!makeVeto || onChange){
+                        return null;
+                    }
+                    type = Conditional.TYPE_SENSOR_ACTIVE;
+                    negated = true;
+                    trigger = false;
                     break;
                 case Route.VETOINACTIVE:
-                    oper = Conditional.OPERATOR_AND;
-                    type = Conditional.TYPE_SENSOR_INACTIVE;
-                    if (onChange) {
-                        trigger = false;
+                    if (!makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_SENSOR_INACTIVE;
+                    negated = true;
+                    trigger = false;
                     break;
                 default:
                     log.error("Control Sensor "+devName+" has bad mode= "+mode);
                     return null;
             }
-            return new ConditionalVariable(false, oper, type, devName, trigger);
+            return new ConditionalVariable(negated, oper, type, devName, trigger);
         }
         return null;
     }
 
-    ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box, boolean onChange) {
+    ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box,
+                                            boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
         if (devName.length() == 0) {
             return null;
         }
-        int mode = turnoutModeFromBox(box);
-        int oper = 0;
-        int type = 0;
-        boolean trigger = true;
         if (devName != null && devName.length()>0) {
+            Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(devName);
+            if (t == null) {
+                devName = devName.toUpperCase();
+                t = InstanceManager.turnoutManagerInstance().getBySystemName(devName);
+                if (t == null) {
+                    return null;
+                }
+            }
+            int mode = turnoutModeFromBox(box);
+            int oper = Conditional.OPERATOR_AND;;
+            int type = 0;
+            boolean negated = false;
+            boolean trigger = true;
             switch (mode) {
                 case Route.ONCLOSED:    // route fires if turnout goes closed
-                    oper = Conditional.OPERATOR_OR;
-                    type = Conditional.TYPE_TURNOUT_CLOSED;
-                    if (onChange) {
-                        trigger = false;
+                    if (makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_TURNOUT_CLOSED;
                     break;
                 case Route.ONTHROWN:  // route fires if turnout goes thrown
-                    oper = Conditional.OPERATOR_OR;
-                    type = Conditional.TYPE_TURNOUT_THROWN;
-                    if (onChange) {
-                        trigger = false;
+                    if (makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_TURNOUT_THROWN;
                     break;
                 case Route.ONCHANGE:    // route fires if turnout goes active or inactive
-                    oper = Conditional.OPERATOR_OR;
-                    type = Conditional.TYPE_TURNOUT_THROWN;
+                    if (makeVeto || !onChange){
+                        return null;
+                    }
+                    type = Conditional.TYPE_TURNOUT_CLOSED;
                     break;
                 case Route.VETOCLOSED:  // turnout must be closed for route to fire
-                    oper = Conditional.OPERATOR_AND;
-                    type = Conditional.TYPE_TURNOUT_CLOSED;
-                    if (onChange) {
-                        trigger = false;
+                    if (!makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_TURNOUT_CLOSED;
+                    trigger = false;
+                    negated = true;
                     break;
                 case Route.VETOTHROWN:  // turnout must be thrown for route to fire
-                    oper = Conditional.OPERATOR_AND;
-                    type = Conditional.TYPE_TURNOUT_THROWN;
-                    if (onChange) {
-                        trigger = false;
+                    if (!makeVeto || onChange){
+                        return null;
                     }
+                    type = Conditional.TYPE_TURNOUT_THROWN;
+                    trigger = false;
+                    negated = true;
                     break;
                 default:
                     log.error("Control Turnout "+devName+" has bad mode= "+mode);
                     return null;
             }
-            return new ConditionalVariable(false, oper, type, devName, trigger);
+            return new ConditionalVariable(negated, oper, type, devName, trigger);
         }
         return null;
     }
@@ -1689,22 +1637,10 @@ public class RouteTableAction extends AbstractTableAction {
         if (editMode) {
             status1.setText(createInst);
             status2.setText(editInst);
-            status2.setVisible(true);
-            deleteButton.setVisible(false);
-            cancelButton.setVisible(false);
-            updateButton.setVisible(false);
-            exportButton.setVisible(false);
-            editButton.setVisible(true);
-            createButton.setVisible(true);
-            fixedSystemName.setVisible(false);
-            _systemName.setVisible(true);
-            // reactivate the Route
-            curRoute.activateRoute();
+            finishUpdate();
             // get out of edit mode
             editMode = false;
             curRoute = null;
-            // move to show all turnouts if not there
-            cancelIncludedOnly();
         }
     }
     
@@ -1731,30 +1667,6 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
 
-        public int getColumnCount () {return 4;}
-
-        public boolean isCellEditable(int r,int c) {
-            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
-        }
-
-        public abstract void propertyChange(java.beans.PropertyChangeEvent e);
-
-        public static final int SNAME_COLUMN = 0;
-        public static final int UNAME_COLUMN = 1;
-        public static final int INCLUDE_COLUMN = 2;
-        public static final int STATE_COLUMN = 3;
-
-    }
-
-    /**
-     * Table model for selecting Turnouts and Turnout State
-     */
-    class RouteTurnoutModel extends RouteOutputModel
-    {
-        RouteTurnoutModel() {
-            InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
-        }
-
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -1766,9 +1678,29 @@ public class RouteTableAction extends AbstractTableAction {
             InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
-        public String getColumnName(int c) {
-            return COLUMN_NAMES[c];
+        public String getColumnName(int c) {return COLUMN_NAMES[c];}
+
+        public int getColumnCount () {return 4;}
+
+        public boolean isCellEditable(int r,int c) {
+            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
         }
+
+        public static final int SNAME_COLUMN = 0;
+        public static final int UNAME_COLUMN = 1;
+        public static final int INCLUDE_COLUMN = 2;
+        public static final int STATE_COLUMN = 3;
+    }
+
+    /**
+     * Table model for selecting Turnouts and Turnout State
+     */
+    class RouteTurnoutModel extends RouteOutputModel
+    {
+        RouteTurnoutModel() {
+            InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
+        }
+
         public int getRowCount () {
             if (showAll)
                 return _turnoutList.size();
@@ -1824,19 +1756,6 @@ public class RouteTableAction extends AbstractTableAction {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
-                // a new NamedBean is available in the manager
-                fireTableDataChanged();
-            }
-        }
-
-        public void dispose() {
-            InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
-        }
-
-        public String getColumnName(int c) {return COLUMN_NAMES[c];}
-
         public int getRowCount () {
             if (showAll)
                 return _sensorList.size();
@@ -1888,13 +1807,7 @@ public class RouteTableAction extends AbstractTableAction {
     private boolean showAll = true;   // false indicates show only included Turnouts
 
     public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String LOGIX_USER_NAME = "Route Logix";
     public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME+"C";
-    public final static String CONDITIONAL_USER_PREFIX = "Route ";
-    public final static String CONDITIONAL_USER_ON_TRUE = " On True";
-    public final static String CONDITIONAL_USER_ON_FALSE = " On false";
-    public final static String CONDITIONAL_USER_LOCK = " Locks";
-    public final static String CONDITIONAL_USER_ALIGN = " Align";
     private static int ROW_HEIGHT;
 
     private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
@@ -1922,8 +1835,7 @@ public class RouteTableAction extends AbstractTableAction {
     private static String[] lockTurnoutInputModes = new String[]{"On "+InstanceManager.turnoutManagerInstance().getClosedText(),
                                             "On "+InstanceManager.turnoutManagerInstance().getThrownText(),
                                             "On Change"};
-    private static int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};
-    
+    private static int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};    
 
     private ArrayList <RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList <RouteTurnout> _includedTurnoutList; 
