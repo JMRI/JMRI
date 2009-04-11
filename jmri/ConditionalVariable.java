@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.jmrit.beantable.LogixTableAction;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -468,10 +469,43 @@ public class ConditionalVariable {
         return ("");
     }
 
-    /** Debug Utility
-    */
     public String toString() {
-        return super.toString()+" '"+_name+"' type= "+getTypeString()+ ", oper= "+getOpernString()+", not= "+_not;
+        String set = rbx.getString("For") + " ";
+        String type = getTypeString();
+        switch (_type) {
+            case Conditional.TYPE_NONE:
+                return type;
+            case Conditional.TYPE_SENSOR_ACTIVE:
+            case Conditional.TYPE_SENSOR_INACTIVE:
+                return rbx.getString("Sensor") + ", " + _name + set + type;
+            case Conditional.TYPE_TURNOUT_THROWN:
+            case Conditional.TYPE_TURNOUT_CLOSED:
+                return rbx.getString("Turnout") + ", " + _name + set + type;
+            case Conditional.TYPE_CONDITIONAL_TRUE:
+            case Conditional.TYPE_CONDITIONAL_FALSE:
+                return rbx.getString("Conditional")+", "+ _name + set + type;
+            case Conditional.TYPE_LIGHT_ON:
+            case Conditional.TYPE_LIGHT_OFF:
+                return rbx.getString("Light") + ", " + _name + set + type;
+            case Conditional.TYPE_MEMORY_EQUALS:
+                return rbx.getString("Memory")+ ", "+_name+set+type+" "+getDataString();
+            case Conditional.TYPE_FAST_CLOCK_RANGE:
+                return rbx.getString("FastClock")+set+type
+                    + " "+java.text.MessageFormat.format(rbx.getString("fromTo"),
+                          LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
+                          LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60)));
+            case Conditional.TYPE_SIGNAL_HEAD_RED:
+            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_DARK:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+            case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                return rbx.getString("SignalHead")+", "+_name+", "+type;
+        }
+        return rbx.getString("Test");
     }
 
 	static final org.apache.log4j.Logger log = org.apache.log4j.Logger

@@ -2,6 +2,7 @@ package jmri;
 
 import jmri.jmrit.Sound;
 import jmri.Timebase;
+import jmri.jmrit.beantable.LogixTableAction;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -422,6 +423,93 @@ public class ConditionalAction {
 //                  ")  type= "+getTypeString(t));
         return "";
     }
+
+    public String toString() {
+        String str = getOptionString()+", "+ getTypeString();
+        if (_deviceName.length() > 0) {
+            switch (_type) {
+                case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+                case Conditional.ACTION_SET_SIGNAL_HELD:
+                case Conditional.ACTION_CLEAR_SIGNAL_HELD:
+                case Conditional.ACTION_SET_SIGNAL_DARK:
+                case Conditional.ACTION_SET_SIGNAL_LIT:
+                case Conditional.ACTION_TRIGGER_ROUTE:
+                case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+                case Conditional.ACTION_SET_MEMORY:
+                case Conditional.ACTION_ENABLE_LOGIX:
+                case Conditional.ACTION_DISABLE_LOGIX:
+                case Conditional.ACTION_COPY_MEMORY:
+                case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                    str = str + ", " + _deviceName;
+                    break;
+                case Conditional.ACTION_SET_SENSOR:
+                case Conditional.ACTION_SET_TURNOUT:
+                case Conditional.ACTION_SET_LIGHT:
+                case Conditional.ACTION_LOCK_TURNOUT:
+                case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                case Conditional.ACTION_DELAYED_TURNOUT:
+                case Conditional.ACTION_DELAYED_SENSOR:
+                    str = str + ", " + _deviceName + " " + rbx.getString("to")
+                          + " " + getActionDataString();
+                    break;
+            }
+        }
+        if (_actionString.length() > 0)
+        {
+            switch (_type)
+            {
+                case Conditional.ACTION_SET_MEMORY:
+                case Conditional.ACTION_COPY_MEMORY:
+                    str = str + " " + rbx.getString("to")+ " " + _actionString + ".";
+                    break;
+                case Conditional.ACTION_PLAY_SOUND:
+                case Conditional.ACTION_RUN_SCRIPT:
+                    str = str + " " + rbx.getString("FromFile")+ " "+ _actionString+ ".";
+                    break;
+                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                    str = str + " " + rbx.getString("to")+ " "+ _actionString+ ".";
+                    break;
+                case Conditional.ACTION_DELAYED_TURNOUT:
+                case Conditional.ACTION_DELAYED_SENSOR:
+                    str = str + rbx.getString("After") + " ";
+                    try {
+                        int t = Integer.parseInt(_actionString);
+                        str = str + _actionString + " " + rbx.getString("Seconds")+ ".";
+                    } catch (NumberFormatException nfe) { 
+                        str = str + _actionString + " " + rbx.getString("ValueInMemory")
+                             + " " + rbx.getString("Seconds") + ".";
+                    }
+                    break;
+                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                    try {
+                        int t = Integer.parseInt(_actionString);
+                        str = str + " " + rbx.getString("to")+ " "+ _actionString + ".";
+                    } catch (NumberFormatException nfe) { 
+                        str = str + " " + rbx.getString("to") + " " + _actionString + " "
+                            + rbx.getString("ValueInMemory") + ".";
+                    }
+                    break;
+            }
+        }
+        switch (_type)
+        {
+            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                str = str + " " + rbx.getString("to")+ " " + _actionData + ".";
+                break;
+            case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+                str = str + " " +rbx.getString("to")+ " " +
+                      LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
+                break;
+        }
+        return str;
+    }
+
 	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(ConditionalAction.class.getName());
 }
