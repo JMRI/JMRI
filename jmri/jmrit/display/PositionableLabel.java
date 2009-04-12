@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class PositionableLabel extends JLabel
@@ -184,20 +184,8 @@ public class PositionableLabel extends JLabel
         if (!getEditable()) return;
         ours = this;
         if (icon) {
-            popup = new JPopupMenu();
-            
-            // add x and y coordinates
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getText();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-				
-			}
+            popup = new JPopupMenu();                                    
+            checkLocationEditable(popup, getText());
              
             popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
@@ -219,17 +207,7 @@ public class PositionableLabel extends JLabel
         } else if (text) {
             popup = new JPopupMenu();
             
-            // add x and y coordinates
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getText();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
+            checkLocationEditable(popup, getText());
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -310,18 +288,33 @@ public class PositionableLabel extends JLabel
           }, Font.BOLD));
          return styleMenu;     
     }
-    
+
+    protected void checkLocationEditable(JPopupMenu popup,  String name) {    
+		if (getViewCoordinates()) {
+			popup.add("x= " + this.getX());
+			popup.add("y= " + this.getY());
+			popup.add("level= " + this.getDisplayLevel().intValue());
+			popup.add(new PopupAction(name));
+		}
+    }
+
+    class PopupAction extends AbstractAction {
+        String name;
+        PopupAction(String n) {
+            super("Set Location");
+            name = n;
+        }
+        public void actionPerformed(ActionEvent e) {
+            displayCoordinateEdit(name);
+        }
+    }
+
     public void displayCoordinateEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
 		CoordinateEdit f = new CoordinateEdit();
 		f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-		try {
-			f.initComponents(this, name);
-			}
-		catch (Exception ex) {
-			log.error("Exception: "+ex.toString());
-			}
+		f.initComponents(this, name);
 		f.setVisible(true);	
 	}
  

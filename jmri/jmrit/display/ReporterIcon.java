@@ -12,7 +12,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -78,36 +78,24 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-//        if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            
-            // add x and y coordinates
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getNameString();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
+        popup = new JPopupMenu();
+        popup.add(new JMenuItem(getNameString()));
 
-            popup.add(makeFontSizeMenu());
+        checkLocationEditable(popup, getNameString());
 
-            popup.add(makeFontStyleMenu());
+        popup.add(makeFontSizeMenu());
 
-            popup.add(makeFontColorMenu());
+        popup.add(makeFontStyleMenu());
 
-            popup.add(new AbstractAction("Remove") {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
+        popup.add(makeFontColorMenu());
 
- //       } // end creation of pop-up menu
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

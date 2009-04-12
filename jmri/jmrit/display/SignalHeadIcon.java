@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -199,115 +199,105 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
- //       if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getNameString();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        green.setRotation(green.getRotation()+1, ours);
-                        red.setRotation(red.getRotation()+1, ours);
-                        yellow.setRotation(yellow.getRotation()+1, ours);
-                        if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
-                        if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
-                        if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
-                        if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
-                        if (held !=null) held.setRotation(held.getRotation()+1, ours);
-                        displayState(headState());
-                    }
-                });
+        popup = new JPopupMenu();
+        popup.add(new JMenuItem(getNameString()));
 
-            addDisableMenuEntry(popup);
-            
-            // add menu to select action on click
-            JMenu clickMenu = new JMenu("When clicked");
-            clickButtonGroup = new ButtonGroup();
-            JRadioButtonMenuItem r;
-            r = new JRadioButtonMenuItem("change aspect");
-            r.addActionListener(new ActionListener() {
-                final int desired = 0;
-                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-            });
-            clickButtonGroup.add(r);
-            if (clickMode == 0)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            r = new JRadioButtonMenuItem("alternate lit");
-            r.addActionListener(new ActionListener() {
-                final int desired = 1;
-                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-            });
-            clickButtonGroup.add(r);
-            if (clickMode == 1)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            r = new JRadioButtonMenuItem("alternate held");
-            r.addActionListener(new ActionListener() {
-                final int desired = 2;
-                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-            });
-            clickButtonGroup.add(r);
-            if (clickMode == 2)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            popup.add(clickMenu);
-            
-            
-            // add menu to select handling of lit parameter
-            JMenu litMenu = new JMenu("When not lit");
-            litButtonGroup = new ButtonGroup();
-            r = new JRadioButtonMenuItem(" show appearance");
-            r.addActionListener(new ActionListener() {
-                final boolean desired = false;
-                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
-            });
-            litButtonGroup.add(r);
-            if (!litMode)  r.setSelected(true);
-            else r.setSelected(false);
-            litMenu.add(r);
-            r = new JRadioButtonMenuItem(" show dark icon");
-            r.addActionListener(new ActionListener() {
-                final boolean desired = true;
-                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
-            });
-            litButtonGroup.add(r);
-            if (litMode)  r.setSelected(true);
-            else r.setSelected(false);
-            litMenu.add(r);
-            popup.add(litMenu);
-            
-            
-            popup.add(new AbstractAction("Remove") {
+        checkLocationEditable(popup, getNameString());
+
+        if (icon) popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
+                    green.setRotation(green.getRotation()+1, ours);
+                    red.setRotation(red.getRotation()+1, ours);
+                    yellow.setRotation(yellow.getRotation()+1, ours);
+                    if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
+                    if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
+                    if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+                    if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
+                    if (held !=null) held.setRotation(held.getRotation()+1, ours);
+                    displayState(headState());
                 }
             });
 
-            popup.add(new AbstractAction("Edit Logic...") {
-                public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                    String name;
-                    if (mHead.getUserName()==null || mHead.getUserName().equals(""))
-                        name = mHead.getSystemName();
-                    else
-                        name = mHead.getUserName();
-                    f.setTitle("Signal logic for"+name);
-                    f.setSignal(name);
-                    f.setVisible(true);
-                }
-            });
- //       } // end creation of pop-up menu
+        addDisableMenuEntry(popup);
+
+        // add menu to select action on click
+        JMenu clickMenu = new JMenu("When clicked");
+        clickButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem r;
+        r = new JRadioButtonMenuItem("change aspect");
+        r.addActionListener(new ActionListener() {
+            final int desired = 0;
+            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+        });
+        clickButtonGroup.add(r);
+        if (clickMode == 0)  r.setSelected(true);
+        else r.setSelected(false);
+        clickMenu.add(r);
+        r = new JRadioButtonMenuItem("alternate lit");
+        r.addActionListener(new ActionListener() {
+            final int desired = 1;
+            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+        });
+        clickButtonGroup.add(r);
+        if (clickMode == 1)  r.setSelected(true);
+        else r.setSelected(false);
+        clickMenu.add(r);
+        r = new JRadioButtonMenuItem("alternate held");
+        r.addActionListener(new ActionListener() {
+            final int desired = 2;
+            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+        });
+        clickButtonGroup.add(r);
+        if (clickMode == 2)  r.setSelected(true);
+        else r.setSelected(false);
+        clickMenu.add(r);
+        popup.add(clickMenu);
+
+
+        // add menu to select handling of lit parameter
+        JMenu litMenu = new JMenu("When not lit");
+        litButtonGroup = new ButtonGroup();
+        r = new JRadioButtonMenuItem(" show appearance");
+        r.addActionListener(new ActionListener() {
+            final boolean desired = false;
+            public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+        });
+        litButtonGroup.add(r);
+        if (!litMode)  r.setSelected(true);
+        else r.setSelected(false);
+        litMenu.add(r);
+        r = new JRadioButtonMenuItem(" show dark icon");
+        r.addActionListener(new ActionListener() {
+            final boolean desired = true;
+            public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+        });
+        litButtonGroup.add(r);
+        if (litMode)  r.setSelected(true);
+        else r.setSelected(false);
+        litMenu.add(r);
+        popup.add(litMenu);
+
+
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
+        popup.add(new AbstractAction("Edit Logic...") {
+            public void actionPerformed(ActionEvent e) {
+                jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
+                String name;
+                if (mHead.getUserName()==null || mHead.getUserName().equals(""))
+                    name = mHead.getSystemName();
+                else
+                    name = mHead.getUserName();
+                f.setTitle("Signal logic for"+name);
+                f.setSignal(name);
+                f.setVisible(true);
+            }
+        });
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

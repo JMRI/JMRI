@@ -16,7 +16,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -133,50 +133,39 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
- //       if (popup==null) {
-            popup = new JPopupMenu();
-            
-            popup.add(new JMenuItem(getNameString()));
-            
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getNameString();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
- 
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        active.setRotation(active.getRotation()+1, ours);
-                        inactive.setRotation(inactive.getRotation()+1, ours);
-                        unknown.setRotation(unknown.getRotation()+1, ours);
-                        inconsistent.setRotation(inconsistent.getRotation()+1, ours);
-                        displayState(sensorState());
-                    }
-                });
+        popup = new JPopupMenu();
 
-            addDisableMenuEntry(popup);
-            
-            momentaryItem = new JCheckBoxMenuItem("Momentary");
-            popup.add(momentaryItem);
-    		momentaryItem.setSelected (getMomentary());
-            momentaryItem.addActionListener(new ActionListener(){
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setMomentary(momentaryItem.isSelected());
+        popup.add(new JMenuItem(getNameString()));
+
+        checkLocationEditable(popup, getNameString());
+
+        if (icon) popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    active.setRotation(active.getRotation()+1, ours);
+                    inactive.setRotation(inactive.getRotation()+1, ours);
+                    unknown.setRotation(unknown.getRotation()+1, ours);
+                    inconsistent.setRotation(inconsistent.getRotation()+1, ours);
+                    displayState(sensorState());
                 }
             });
-            
-            popup.add(new AbstractAction("Remove") {
-                    public void actionPerformed(ActionEvent e) {
-                        remove();
-                        dispose();
-                    }
-                });
-  //      }  // end creation of popup menu
+
+        addDisableMenuEntry(popup);
+
+        momentaryItem = new JCheckBoxMenuItem("Momentary");
+        popup.add(momentaryItem);
+        momentaryItem.setSelected (getMomentary());
+        momentaryItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setMomentary(momentaryItem.isSelected());
+            }
+        });
+
+        popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

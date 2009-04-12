@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -146,44 +146,33 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
- //       if (popup==null) {
-            popup = new JPopupMenu();
-            
-            popup.add(new JMenuItem(getNameString()));
-            
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-				popup.add(new AbstractAction("Set x & y") {
-	                public void actionPerformed(ActionEvent e) {
-	                	String name = getNameString();
-	                	displayCoordinateEdit(name);
-	                }
-				});
-			}
-			
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        for (int i = 0; i<entries.size(); i++) {
-                            NamedIcon icon = ((Entry)entries.get(i)).icon;
-                            icon.setRotation(icon.getRotation()+1, ours);
-                        }
-                        inactive.setRotation(inactive.getRotation()+1, ours);
-                        unknown.setRotation(unknown.getRotation()+1, ours);
-                        inconsistent.setRotation(inconsistent.getRotation()+1, ours);
-                        displayState();
-                    }
-                });
+        popup = new JPopupMenu();
 
-            addDisableMenuEntry(popup);
-            
-            popup.add(new AbstractAction("Remove") {
-                    public void actionPerformed(ActionEvent e) {
-                        remove();
-                        dispose();
+        popup.add(new JMenuItem(getNameString()));
+
+        checkLocationEditable(popup, getNameString());
+
+        if (icon) popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    for (int i = 0; i<entries.size(); i++) {
+                        NamedIcon icon = ((Entry)entries.get(i)).icon;
+                        icon.setRotation(icon.getRotation()+1, ours);
                     }
-                });
- //       }  // end creation of popup menu
+                    inactive.setRotation(inactive.getRotation()+1, ours);
+                    unknown.setRotation(unknown.getRotation()+1, ours);
+                    inconsistent.setRotation(inconsistent.getRotation()+1, ours);
+                    displayState();
+                }
+            });
+
+        addDisableMenuEntry(popup);
+
+        popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
