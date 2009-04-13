@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 ##
 # A ActionListener is used to get timeout events.
 #
@@ -89,7 +89,7 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
             self.delayTimer.setInitialDelay(self.offTimeout)
             self.delayTimer.start()
         else :
-            self.timeoutOnToOff(None)
+            self.timeoutOnToOff()
         return
 
     def changeOffToOn(self) :
@@ -99,7 +99,7 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
             self.delayTimer.setInitialDelay(self.onTimeout)
             self.delayTimer.start()
         else :
-            self.timeoutOffToOn(None)
+            self.timeoutOffToOn()
         return
 
     def resetSensors(self, newState) :
