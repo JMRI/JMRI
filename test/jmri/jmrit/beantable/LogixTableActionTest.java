@@ -99,13 +99,16 @@ public class LogixTableActionTest extends TestCase {
         _logixTable.donePressed(null);
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
         _logixTable.m.setValueAt((Object)rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
-        Thread.currentThread().yield(); 
-        _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
         Thread.currentThread().yield();
+        _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
+        try {
+            Thread.currentThread().sleep(500); 
+        } catch (InterruptedException ie) { /* ignore */  }
         _logixTable.conditionalUserName.setText("FirstConditional");
         assertEquals( 
                 _logixTable._curConditional.getCopyOfStateVariables().size(), Conditional.NUM_STATE_VARIABLE_TYPES);
         assertEquals(_logixTable._curConditional.getCopyOfActions().size(), Conditional.NUM_ACTION_TYPES-3);
+        Thread.currentThread().yield();
         _logixTable.updateConditionalPressed(null);
         _logixTable.calculatePressed(null);
     }
