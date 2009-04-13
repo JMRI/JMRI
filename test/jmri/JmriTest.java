@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class JmriTest extends TestCase {
 
@@ -32,8 +32,6 @@ public class JmriTest extends TestCase {
 		suite.addTest(jmri.LightTest.suite());
 		suite.addTest(jmri.BlockTest.suite());
 		suite.addTest(jmri.RouteTest.suite());
-		suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
-		suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
 		suite.addTest(jmri.BlockManagerTest.suite());
 		suite.addTest(jmri.BeanSettingTest.suite());
 		suite.addTest(jmri.PathTest.suite());
