@@ -1,7 +1,6 @@
 package jmri.util;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
 /**
  * Intermediate implementation of TestCase that
@@ -9,10 +8,10 @@ import junit.framework.TestCase;
  * temporarily
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
  
-public class ThreadedTestCase extends TestCase {
+public class ThreadedTestCase extends InitializingTestCase {
 
     public ThreadedTestCase(String s) { super(s); }
     
