@@ -17,23 +17,9 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
-public class BlockBossLogicTest extends TestCase {
-
-	synchronized void releaseThread() {
-		try {
-		    int priority = Thread.currentThread().getPriority(); 
-		    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-		    Thread.yield();
-		    Thread.sleep(200);
-		    Thread.currentThread().setPriority(priority);
-			super.wait(100);
-		}
-		catch (InterruptedException e) {
-		    Assert.fail("failed due to InterruptedException");
-		}
-	}
+public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 	
 	// test creation
 	public void testCreate() {
@@ -185,12 +171,13 @@ public class BlockBossLogicTest extends TestCase {
             }
         };
         
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
+        // reset InstanceManager
+        resetInstanceManager();
+        initInternalSensorManager();
+        initInternalTurnoutManager();
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
         t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
         s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
         s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
         s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
