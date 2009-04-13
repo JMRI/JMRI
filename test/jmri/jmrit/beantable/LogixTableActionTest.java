@@ -50,6 +50,8 @@ public class LogixTableActionTest extends TestCase {
     private static LogixTableAction _logixTable;
 
     public void testCreateLogix() {
+        new Exception("trace").printStackTrace();
+        
         _logixTable.actionPerformed(null);
         _logixTable.addPressed(null);
         _logixTable._addUserName.setText("TestLogix");    
@@ -133,7 +135,6 @@ public class LogixTableActionTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() { 
-        System.out.println("setUp called");
         apps.tests.Log4JFixture.setUp(); 
         _logixTable = new LogixTableAction();
         assertNotNull("LogixTableAction is null!", _logixTable);        // test has begun
