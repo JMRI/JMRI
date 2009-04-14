@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.73 $
+ * @version   $Revision: 1.74 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -451,7 +451,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         try {
             decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
-        } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
+        } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename(), e); }
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
@@ -505,7 +505,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             
         }
         catch (Exception e) {
-            log.error("exception reading programmer file: "+filename+" exception: "+e);
+            log.error("exception reading programmer file: "+filename, e);
             // provide traceback too
             e.printStackTrace();
         }
@@ -1075,7 +1075,7 @@ abstract public class PaneProgFrame extends JmriJFrame
            w.write(s, 0, s.length());
          }
          catch (IOException e) {
-           log.error("Error printing Info Section: " + e);
+           log.error("Error printing Info Section",e);
          }
 
         for (int i=0; i<paneList.size(); i++) {
@@ -1244,7 +1244,6 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     public static void setShowEmptyPanes(boolean yes) {
         showEmptyPanes = yes;
-        // new Exception().printStackTrace();
     }
     public static boolean getShowEmptyPanes() {
         return showEmptyPanes;
