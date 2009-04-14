@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.42 $
+ * @version			$Revision: 1.43 $
  */
 public class Llnmon {
 
@@ -1326,8 +1326,11 @@ public class Llnmon {
                 String message;
                 if (l.getElement(0)==0xEE) message = "Write extended slot: ";
                 else message = "Read extended slot (Write reply): ";
-                
-                return message;
+                message += "slot "+l.getElement(3);
+                message += " stat "+l.getElement(4);
+                message += " addr "+(l.getElement(6)*128+l.getElement(5));
+                message += " speed "+l.getElement(8);
+                return message+"\n";
             } else return "0XE6/0xEE message with unexpected length "+l.getElement(1)+"\n";
             
         case 0xE5:
