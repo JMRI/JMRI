@@ -194,6 +194,8 @@
 
 <mapID target="manual.Main_XpressNet" url="manual/Main_XpressNet.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.LRouteTable_Turnout lock feature" url="package/jmri/jmrit/beantable/LRouteTable.shtml#Turnout lock feature"/>
+
 <mapID target="html.doc.Technical.Threads" url="html/doc/Technical/Threads.shtml"/>
 
 <mapID target="manual.Comp_PrintData_c" url="manual/Comp_PrintData_c.shtml"/>
@@ -451,6 +453,8 @@
 <mapID target="html.tools.throttle.ThrottleChapter2_StructWin" url="html/tools/throttle/ThrottleChapter2.shtml#StructWin"/>
 
 <mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.LRouteAddEdit_Turnout lock feature" url="package/jmri/jmrit/beantable/LRouteAddEdit.shtml#Turnout lock feature"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
 
@@ -944,6 +948,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.LRouteAddEdit" url="package/jmri/jmrit/beantable/LRouteAddEdit.shtml"/>
+
 <mapID target="manual.Main_Debug_logMessage" url="manual/Main_Debug.shtml#logMessage"/>
 
 <mapID target="html.web.FrameServlet" url="html/web/FrameServlet.shtml"/>
@@ -1183,6 +1189,8 @@
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 
 <mapID target="package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.LRouteTable" url="package/jmri/jmrit/beantable/LRouteTable.shtml"/>
 
 <mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml"/>
 
