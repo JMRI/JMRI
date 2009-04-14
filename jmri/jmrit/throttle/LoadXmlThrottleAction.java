@@ -18,7 +18,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class LoadXmlThrottleAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle
@@ -78,7 +78,11 @@ public class LoadXmlThrottleAction extends AbstractAction {
 						.requestAllThrottleFramesDestroyed();
 			}
 		}
-		loadThrottles(fileChooser.getSelectedFile());
+		try {
+		    loadThrottles(fileChooser.getSelectedFile());
+	    } catch (java.io.IOException e1) {
+	        log.warn("Exception while reading file", e1);
+	    }
 	}
 
 	/**
@@ -87,7 +91,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 *
 	 * @param  f  The XML file containing throttles.
 	 */
-	public boolean loadThrottles(java.io.File f) {
+	public boolean loadThrottles(java.io.File f) throws java.io.IOException {
 		try {
 			ThrottlePrefs prefs = new ThrottlePrefs();
 			Element root = prefs.rootFromFile(f);
@@ -100,10 +104,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 			}
 
 		} catch (org.jdom.JDOMException ex) {
-			log.warn("Loading Throttles exception:" + ex);
-			return false;
-		} catch (java.io.IOException ex) {
-			log.warn("Loading Throttles exception:" + ex);
+			log.warn("Loading Throttles exception",ex);
 			return false;
 		}
 		return true;
@@ -113,7 +114,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.18 $
+	 * @version $Revision: 1.19 $
 	 */
 	class ThrottlePrefs extends XmlFile {
 
