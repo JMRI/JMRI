@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.39 $
+ * @version	$Revision: 1.40 $
  */
 public abstract class XmlFile {
 
@@ -39,9 +39,20 @@ public abstract class XmlFile {
      * Define root part of URL for 
      * XSLT style page processing instructions.
      *<p>
-     * See the <A HREF="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlUsage.shtml#xslt">XSLT versioning discussion</a>
+     * See the <A HREF="http://jmri.org/help/en/html/doc/Technical/XmlUsage.shtml#xslt">XSLT versioning discussion</a>.
+     *<p>
+     *Things that have been tried here:
+     *<dl>
+     *<dt>/xml/XSLT/
+     *<dd>(Note leading slash) Works if there's a copy of the xml directory at the root of
+     * whatever served the XML file, e.g. the JMRI web site or a local computer running a server.
+     * Doesn't work for e.g. yahoo groups files.
+     *<dt>xml/XSLT/
+     *<dd>Local reference, works for files at root level of e.g. the JMRI web server, and 
+     *also for local files in the JMRI install directory
+     *</dl>
      */
-    static final public String xsltLocation = "/xml/XSLT/";
+    static public String xsltLocation = "http://www.jmri.org/xml/XSLT/";
     
     /**
      * Read the contents of an XML file from its filename.  
@@ -443,7 +454,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.39 2009-04-05 15:41:01 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.40 2009-04-14 15:19:14 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
