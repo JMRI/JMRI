@@ -24,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.10 $
+ * @version	    $Revision: 1.11 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -106,12 +106,12 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         p.add(new JSeparator());
         
         p.add(explanation);
+        explanation.setEditable(false);
         explanation.setContentType("text/html");
         explanation.setMinimumSize(new Dimension(600,200));
         explanation.setPreferredSize(new Dimension(600,200));
         explanation.setMaximumSize(new Dimension(600,200));
-        explanation.setBackground(instruction.getBackground());
-        explanation.setEditable(false);
+        explanation.setBackground(new JLabel().getBackground());
         
         p.add(new JSeparator());
         
@@ -125,13 +125,15 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     JEditorPane explanation = new JEditorPane();
     
     JComponent newInstructionPane() {
-        JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
-        instruction.setText("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
-        p.add(instruction, BorderLayout.WEST);
-        p.setMaximumSize(instruction.getPreferredSize());
+        instruction.setLineWrap(true);
+        instruction.setWrapStyleWord(true);
         instruction.setText("Select an instruction in the tree to the left");
-        return p;
+        instruction.setEditable(false);
+        instruction.setMinimumSize(new Dimension(600,80));
+        instruction.setPreferredSize(new Dimension(600,80));
+        instruction.setMaximumSize(new Dimension(600,80));
+        instruction.setBackground(new JLabel().getBackground());
+        return instruction;
     }
     
     JPanel detailed = new JPanel(); // panel that contains the specific editors
