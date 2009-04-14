@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.7 2009-04-10 08:08:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.8 2009-04-14 19:16:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -77,7 +77,7 @@ If you don't get messages about missing or deprecated methods,
 you don't have to worry about this.
 
 <p>
-
+The XSLT location was moved back to the web.
 
 <h3>Warnings from older versions:</h3>
 
@@ -184,6 +184,22 @@ newly written panel files, trying to get the
 <a href="http://jmri.org/help/en/html/apps/PanelPro/ShowPanel.shtml">browser display</a> to work by default.
 
 <p>
+The LocoNet Monitor now displays information on several more messages.
+
+<p>
+Pete Cressman added tests for Logix, which resulted in several
+updates to the JUnit test structure.
+
+<p>
+The XSLT location was moved back to the web.
+
+<p>
+The Digitrax SDF editor can better handle complicated sound instructions.
+
+<p>
+A problem with decoder definitions requiring 28 functions was fixed. 
+For earlier versions, the workaround is to claim that the decoder has only 27 functions.
+
 
 <!--#include virtual="/Footer" -->
 
