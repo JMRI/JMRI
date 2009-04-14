@@ -9,11 +9,15 @@ import java.awt.FlowLayout;
  * parameter messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
-public class MonitoringLabel extends javax.swing.JLabel implements java.beans.PropertyChangeListener {
+public class MonitoringLabel extends javax.swing.JTextArea implements java.beans.PropertyChangeListener {
 
     public MonitoringLabel() {
+        super();
+    }
+    public MonitoringLabel(int row, int col) {
+        super(row, col);
     }
 
     /**
