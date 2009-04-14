@@ -8,7 +8,7 @@ import junit.framework.Assert;
  * temporarily
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
  
 public class ThreadedTestCase extends InitializingTestCase {
@@ -35,6 +35,16 @@ public class ThreadedTestCase extends InitializingTestCase {
 		}
 	}
 
+    public synchronized void waitSwingClear() {
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(new Runnable(){ 
+                public void run() {}
+            });
+        } catch (Exception e) {
+		    Assert.fail("failed due to exception during deferral: "+e);
+        }
+    }
+    
 	public synchronized void releaseThread() {
 	    releaseThread(DEFAULTDELAY);
     }
