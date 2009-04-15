@@ -13,7 +13,6 @@ import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -84,7 +83,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     void createModel() {
         // store the terminology
         closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-        thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+        thrownText = InstanceManager.turnoutManagerInstance().getThrownText();   
         
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
@@ -194,10 +193,20 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }else {
                         	c.setSelectedItem (noneText);
                         }
+                        c.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e) {
+                            	comboBoxAction(e);
+                            }
+                        });
                         return c;
                     } else if (col == LOCKDECCOL || (col==xLOCKDECCOL && !showFeedback)) {
                         JComboBox c = new JComboBox(t.getValidDecoderNames());
                         c.setSelectedItem (t.getDecoderName());
+                        c.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e) {
+                            	comboBoxAction(e);
+                            }
+                        });
                         return c;
                     } else if (col==KNOWNCOL && showFeedback) {
                         if (t.getKnownState()==Turnout.CLOSED) return closedText;
@@ -207,6 +216,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     } else if (col==MODECOL && showFeedback) {
                         JComboBox c = new JComboBox(t.getValidFeedbackNames());
                         c.setSelectedItem(t.getFeedbackModeName());
+                        c.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e) {
+                            	comboBoxAction(e);
+                            }
+                        });
                         return c;
                     } else if (col==SENSOR1COL) {
                         Sensor s = t.getFirstSensor();
@@ -294,7 +308,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else ((Turnout)t).setCommandedState(Turnout.CLOSED);
                 }
                 
+                JTable table;
                 public void configureTable(JTable table) {
+                	this.table = table;
                     table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                     table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                     table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
@@ -310,6 +326,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else return super.matchPropertyName(e);
                 }
                 
+                public void comboBoxAction(ActionEvent e){
+                	if(log.isDebugEnabled()) log.debug("Combobox change");
+                	table.getCellEditor().stopCellEditing();
+                }
+               
             };  // end of custom data model
     }
     
@@ -420,8 +441,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     public static void updateAutomationBox(Turnout t, JComboBox cb) {
     	TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
     	cb.removeAllItems();
-    	Vector strings = new Vector(20);
-    	Vector defStrings = new Vector(20);
+    	Vector<String> strings = new Vector<String>(20);
+    	Vector<String> defStrings = new Vector<String>(20);
     	if(log.isDebugEnabled()) log.debug("start "+ops.length);
     	for (int i=0; i<ops.length; ++i) {
     	    if(log.isDebugEnabled()) log.debug("isDef "+ops[i].isDefinitive()+
