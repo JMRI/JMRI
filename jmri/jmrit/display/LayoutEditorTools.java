@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LayoutEditorTools 
@@ -1321,6 +1321,7 @@ public class LayoutEditorTools
 		logic.start();
 		logic = null;
 	}
+
 	/*
 	 * Returns the signal head at the end of the block "track" is assigned to.
 	 *		"track" is the Track Segment leaving "object".
@@ -1600,7 +1601,7 @@ public class LayoutEditorTools
 			else return true;
 		}
 		// track is not vertical or horizontal, assume horizontal
-		log.error ("Track is not vertical or horizontal at anchor");
+//		log.error ("Track is not vertical or horizontal at anchor");
 		if (delX>0.0) return false;
 		return true;
 	}
@@ -5536,7 +5537,7 @@ public class LayoutEditorTools
 					SignalHead head) {
 		String turnoutName = nearTurnout.getTurnout().getSystemName();
 		String namer = turnoutName+"_T_"+head.getSystemName();
-		if (!continuing) namer = namer+"_C_"+head.getSystemName();
+		if (!continuing) namer = turnoutName+"_C_"+head.getSystemName();
 		String sensorName = "IS"+namer;
 		String logixName = "IX"+namer;
 		Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -5562,7 +5563,7 @@ public class LayoutEditorTools
 			if (!continuing) type = Conditional.TYPE_TURNOUT_CLOSED;
             ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
             variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
-                                                 type, sensorName, true));
+                                                 type, turnoutName, true));
             c.setStateVariables(variableList);
             ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
             actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
