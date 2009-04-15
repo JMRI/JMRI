@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LRouteTable.shtml,v 1.1 2009-04-14 15:50:31 jacobsen Exp $ -->
+<!-- $Id: LRouteTable.shtml,v 1.2 2009-04-15 01:21:47 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
-<TITLE>JMRI: Route Table Help</TITLE>
+<TITLE>JMRI: LRoute Table Help</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Route Table">
+<META NAME="keywords" CONTENT="JMRI help LRoute Table">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -23,97 +23,59 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Route Table</H1>
+<H1>The LRoute Table</H1>
 
-<P>A route consists of one or more turnouts or sensors that you
-would like to control. Before creating a route, you should first add
-some turnouts or sensors by using either the turnout table or sensor
-table. These tables can be found under the main menu "Tools -> Tables".
+<P>An LRoute is a more generalized version of a Route implemented as a Logix.
+It is intended for use in situations where additional triggers or actions are
+desired beyond the capabilities of Routes.  It can be used as a starting point for
+creating new Logix.  The LRoute table provides pick lists of Sensors, Turnouts, 
+Lights and Signalheads from which output actions and trigger conditions can be 
+choosen.</p>
 
-<P>Once you have some turnouts or sensors to manage use the "Add"
-button in the lower left hand corner of the route table to create a new
-route.
+<P>Once you have some turnouts, sensors, signalheads and/or lights to manage, use 
+the <b>Add</b> button in the lower left hand corner of the LRoute Table to
+create a new logix route.  After you have created a logix route, you may add additional 
+capabilities by editing it from the Logix Table.</p>
 
-<H2>Route Table Columns</H2>
+<p>The Logix that implements the l-route has its system name prefixed with "RTX".
+All Logix with this prefix are displayed in the LRoute Table.  Please note that an
+"RTX" Logix that has had capabilities added with 
+Logix editing may not be able to display
+these addtional capabilities for LRoute editing.  Once Logix editing is done to an
+l-route, it is recommended that further editing be done from the Logix Table.</p>
+
+<H2>LRoute Table Columns</H2>
 
 <DL>
 	<DT>System Name</DT>
 	<DD>The System Name cannot be changed once entered into the table.
-	The "Add" button located in the lower left corner of the table allows
-	you to add a new route to the table.</DD>
+	The <b>Add,/b> button located in the lower left corner of the table allows
+	you to add a new l-route to the table.</DD>
 
 	<DT>User Name</DT>
 	<DD>You can directly enter or change the "User Name" for an
-	existing route.</DD>
-
-	<DT>Set</DT>
-	<DD>Pushing the "Set" button will trigger an existing route.</DD>
-
-	<DT>Delete</DT>
-	<DD>Pushing the "Delete" button will remove the route from the
-	table. 
-	<p>
-	Note that this doesn't remove the route from any files you've
-	saved that contain it.  If you load one of those files, perhaps
-	when you restart the program, the route will reappear.
-	You should use one of the "Store to file" options in the "File"
-	menu to save new versions of any files that contain this route.
-	</DD>
-
+	existing logix route.</DD>
 
 	<DT>Enabled</DT>
-	<DD>To disable a route from triggering, uncheck the "Enabled" box
-	for the route. Enabled is not saved and will be restored when a panel
-	is loaded at startup.</DD>
-
-	<DT>Locked</DT>
-	<DD>When checked the route is locked. This means that turnouts
-	included in the route
-	that can be locked by JMRI will not respond to commands from cabs or
-	pushbuttons to change. For more information see the
-	    <A HREF="TurnoutTable.shtml#Lock Mode">Lock Mode section</A> 
-	    on the
-	    <A HREF="TurnoutTable.shtml">Turnout Table page</A> 
-        and the 
-        <A HREF="#Turnout lock feature">section on the turnout lock feature</A>
-	    below.</DD>
-
+	<DD>To disable a l-route from triggering, uncheck the "Enabled" box
+	for the route. This sets its Logix to a disabled state.  The l-route can
+        be enabled or disabled from either the LRoute Table or the Logix Table.</DD>
+        
 	<DT>Edit</DT>
-	<DD>Push this button to edit the route. For more information see <A
-		HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
+	<DD>Push this button to edit the l-route. For more information see <A
+		HREF="LRouteAddEdit.shtml">Adding/Editing LRoutes</A>.</DD>
 </DL>
 
-<H3>Route Table Controls</H3>
+<H3>LRoute Table Controls</H3>
 
-There is also a button at the bottom of the Route Table
+There is a button at the bottom of the LRoute Table
 
 <DL>	
 	<DT>Add</DT>
-	<DD>Push this button to add a new route. For more information see
-	<A HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
+	<DD>Push this button to add a new logix route. For more information see
+	<A HREF="LRouteAddEdit.shtml">Adding/Editing LRoutes</A>.</DD>
 </DL>
 
-<H2><A NAME="Turnout lock feature">Turnout lock feature</A></H2>
-
-<P>The turnout lock feature allows you to selectively disable
-accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. JMRI
-disables pushbuttons by sending pushbutton disable commands to the
-turnout decoders when the route is locked, and enables the pushbuttons
-when the route is unlocked. When locking a turnout from cab commands,
-the JMRI program will monitor the turnout's accessory address and if it
-detects a change command from a cab, will cancel the command immediately
-by sending out the opposite command to the turnout. All turnouts that
-are being monitored by the JMRI program and are included in the route
-will be locked.</P>
-<P>To help you select a set of turnouts to lock or unlock, a route
-can be locked or unlocked. In the route edit window, an optional lock
-control turnout is available. You can use the lock control turnout to
-enable or disable the route lock function from a panel turnout icon, a
-layout turnout or a phantom turnout. A phantom turnout is a turnout that
-can be accessed by your cab but doesn't actually exist on your layout.</P>
-<P>For more information on how to set turnouts to be lockable,
-please see the <A HREF="TurnoutTable.shtml#Turnout%20lock%20feature">Turnout
-Table page</A>.</P>
 
 <!--#include virtual="/Footer" -->
 </BODY>
