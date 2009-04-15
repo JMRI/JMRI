@@ -792,11 +792,11 @@ public class LRouteTableAction extends AbstractTableAction {
      * Cancels edit mode
      */
     void cancelEdit() {
-		Logix logix = checkNamesOK();
-        if (logix != null) {
-            logix.activateLogix();
-        }
         if (_editMode) {
+            Logix logix = checkNamesOK();
+            if (logix != null) {
+                logix.activateLogix();
+            }
             _status1.setText(rbx.getString("createInst"));
             _status2.setText(rbx.getString("editInst"));
             _status2.setVisible(true);
@@ -809,10 +809,11 @@ public class LRouteTableAction extends AbstractTableAction {
             _systemName.setVisible(true);
             // get out of edit mode
             _editMode = false;
-            clearPage();
             // move to show all turnouts if not there
             cancelIncludedOnly();
-            _addFrame.setVisible(false);
+        }
+        if (_addFrame != null) {
+            clearPage();
         }
     }
     
@@ -831,7 +832,7 @@ public class LRouteTableAction extends AbstractTableAction {
         if (_addFrame==null) {
             buildLists();
             _addFrame = new JmriJFrame(rbx.getString("AddTitle"));
-            _addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
+            _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100,30);
 
             JTabbedPane tabbedPane = new JTabbedPane();
@@ -1867,7 +1868,6 @@ public class LRouteTableAction extends AbstractTableAction {
         routeDirty = true;
         // get out of edit mode
         _editMode = false;
-        _addFrame.setVisible(false);
     }
 
     void clearPage() {
@@ -1888,6 +1888,7 @@ public class LRouteTableAction extends AbstractTableAction {
         _newRouteType = true;
         _newRouteButton.doClick();
         _lockCheckBox.setSelected(_lock);
+        _addFrame.setVisible(false);
     }
 
     /** 
