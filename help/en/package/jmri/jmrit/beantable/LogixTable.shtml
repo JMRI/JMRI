@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LogixTable.shtml,v 1.4 2009-03-28 16:31:51 jacobsen Exp $ -->
+<!-- $Id: LogixTable.shtml,v 1.5 2009-04-15 01:26:05 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,10 +33,16 @@
 	part of the Conditional specifies what action is to be taken if the state of 
 	the logical expression changes.</p>
 	<p> The Logix Table lists all currently defined Logixs by their system name 
-	and user name. The last column of the table provides an easy way to edit a 
-	Logix and its Conditionals. Simply clicking the <b>Edit</b> button for a Logix, 
-	will bring up the Edit Logix window. The Edit Logix window also provides for 
-	deleting a Logix.</p>
+	and user name. The last column of the table provides three things you can do 
+        with a Logix; Edit it, Duplicate it, or Delete it.  Simply clicking <b>Select</b>
+        will drop down a menu with the choices: <b>Edit</b>, <b>Copy</b>, <b>Delete</b>
+        Selecting <b>Edit</b> will bring up the Edit Logix window which provides away 
+        to edit a Logix and its Conditionals.  See <a href="LogixAddEdit.shtml">the 
+        help page on adding Logix</a> for more information
+        on creating and editing Logix Conditionals.  Selecting <b>Copy</b>
+        will bring up windows that allow you to make a new copy of Logix and its 
+        Conditionals or to copy its Conditionals into an existing Logix.  Selecting 
+        <b>Delete</b> will delete the Logix and its Conditionals.</p>
 	<p>The <b>Enabled</b> column allows you to enable (checked) or disable 
 	(unchecked) a Logix. A Logix does not have a state as many JMRI entities do.  
 	A Logix does have the capability of being "enabled" or "disabled". When a Logix 
