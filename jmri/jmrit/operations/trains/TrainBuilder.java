@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.40 $
+ * @version             $Revision: 1.41 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -152,8 +152,8 @@ public class TrainBuilder extends TrainCommon{
 			else if(train.skipsLocation(rl.getId())){
 				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") is skipped by train "+train.getName());
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
-			// skip if a location doesn't allow drops or pickups
 			}
+			// skip if a location doesn't allow drops or pickups
 			else if(!rl.canDrop() && !rl.canPickup()){
 				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") does not allow drops or pickups");
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
@@ -330,10 +330,10 @@ public class TrainBuilder extends TrainCommon{
 
 		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCars"),new Object[]{Integer.toString(carList.size()), train.getName()}));
 
-		// adjust carlist to only have cars from one staging track
+		// adjust car list to only have cars from one staging track
 		if (departStageTrack != null){
 			// Make sure that all cars in staging are moved
-			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberCars());  // neg number moves more cars
+			train.getTrainDepartsRouteLocation().setCarMoves(train.getTrainDepartsRouteLocation().getMaxCarMoves()-departStageTrack.getNumberCars());  // negative number moves more cars
 			int numCarsFromStaging = 0; 
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getCarById(carList.get(carIndex));
@@ -369,16 +369,16 @@ public class TrainBuilder extends TrainCommon{
 					continue;
 				}
 			}
-			if (this.equals(c.getTrain())){
+			if (train.equals(c.getTrain())){
 				addLine(fileOut, THREE, "Car (" +c.getId()+ ") already assigned to this train");
 			}
 			// does car have a destination that is part of this train's route?
 			if (c.getDestination() != null) {
 				addLine(fileOut, THREE, "Car (" + c.getId()+ ") has assigned destination (" +c.getDestination().getName()+ ")");
-				RouteLocation rld = train.getRoute().getLocationByName(c.getDestination().getName());
+				RouteLocation rld = train.getRoute().getLastLocationByName(c.getDestination().getName());
 				if (rld == null){
 					addLine(fileOut, THREE, "Exclude car (" + c.getId()+ ") destination (" +c.getDestination().getName()+ ") not part of this train's route (" +train.getRoute().getName() +")");
-					// is this car departing staging?
+					// build failure if car departing staging
 					if (c.getLocationName().equals(departLocation.getName()) && departStageTrack != null){
 						buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarNotPartRoute"),
 								new Object[]{c.getId()}));
@@ -522,28 +522,41 @@ public class TrainBuilder extends TrainCommon{
 							// does car have a destination?
 							if (c.getDestination() != null) {
 								addLine(fileOut, THREE, "Car (" + c.getId()+ ") at location (" +c.getLocation()+ ") has assigned destination (" +c.getDestination()+ ")");
-								RouteLocation rld = train.getRoute().getLocationByName(c.getDestination().getName());
+								RouteLocation rld = train.getRoute().getLastLocationByName(c.getDestination().getName());
 								if (rld == null){
 									addLine(fileOut, THREE, "Car (" + c.getId()+ ") destination not part of route (" +train.getRoute().getName() +")");
 								} else {
-									if (c.getRouteLocation() != null){ 
-										addLine(fileOut, THREE, "Car (" + c.getId()+ ") already assigned to this train");
+									if (c.getRouteLocation() != null){
+										// this should not occur if train was reset before a build!
+										addLine(fileOut, THREE, "Car (" + c.getId()+ ") was assigned to this train");
 									} 
+									// now go through the route and try and find a location with
+									// the correct destination name
 									boolean carAdded = false;
-									// are drops allows at this location?
-									if (!rld.canDrop()){
-										addLine(fileOut, THREE, "Route ("+train.getRoute().getName()+") does not allow drops at location ("+rld.getName()+")");
-									} else if (rld.getCarMoves() < rld.getMaxCarMoves()){  
-										carAdded = addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getDestinationTrack());
-										// done with this location?
-										if (carAdded && success)
-											break;	//yes
-									} else {
-										addLine(fileOut, THREE, "No available moves for destination ("+rld.getName()+")");
+									int locCount = 0;
+									for (int k = locationIndex; k<routeList.size(); k++){
+										rld = train.getRoute().getLocationById(routeList.get(k));
+										if (rld.getName().equals(c.getDestinationName())){
+											locCount++;
+											// are drops allows at this location?
+											if (!rld.canDrop()){
+												addLine(fileOut, THREE, "Route ("+train.getRoute().getName()+") does not allow drops at location ("+rld.getName()+") stop "+locCount);
+											} else if (rld.getCarMoves() < rld.getMaxCarMoves()){  
+												carAdded = addCarToTrain(fileOut, c, rl, rld, c.getDestination(), c.getDestinationTrack());
+												// done?
+												if (carAdded)
+													break;	//yes
+												else
+													addLine(fileOut, THREE, "Car (" + c.getId()+ ") can not be dropped to track (" + c.getDestinationTrack() + ") stop "+locCount);
+											} else {
+												addLine(fileOut, THREE, "No available moves for destination ("+rld.getName()+") stop "+locCount);
+											}		
+										}
 									}
-									if (!carAdded)
-										addLine(fileOut, THREE, "Car (" + c.getId()+ ") can not be dropped to track (" + c.getDestinationTrack() + ")");
-									// is this car departing staging?
+									// done with this location?
+									if (carAdded && success)
+										break;	//yes
+									// build failure if car departing staging
 									if (!carAdded && c.getLocationName().equals(departLocation.getName()) && departStageTrack != null){
 										buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 												new Object[]{c.getId()}));
@@ -1009,7 +1022,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			numberCars++;		// bump number of cars moved by this train
 			moves++;			// bump number of car pickup moves for the location
-			reqNumOfMoves--; 	// dec number of moves left for the location
+			reqNumOfMoves--; 	// decrement number of moves left for the location
 			if(reqNumOfMoves <= 0)
 				success = true;	// done with this location!
 			carList.remove(car.getId());

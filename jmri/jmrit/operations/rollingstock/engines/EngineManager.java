@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -578,7 +578,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	for (int i = 0; i < enginesSortByNum.size(); i++) {
     		engineAdded = false;
     		engine = getEngineById(enginesSortByNum.get(i));
-    		RouteLocation rl = route.getLocationByName(engine.getLocationName());
+    		RouteLocation rl = route.getLastLocationByName(engine.getLocationName());
     		// get engines that don't have an assigned train, or the assigned train is this one 
     		if (rl != null && rl != destination && (engine.getTrain() == null || train.equals(engine.getTrain()))){
     			// sort by engine moves

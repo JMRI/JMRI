@@ -48,7 +48,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -230,8 +230,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	for (int i=0; i<Setup.getEngineSize()+1; i++){
     		numEnginesBox.addItem(Integer.toString(i));
     	}
-    	numEnginesBox.addItem(Train.AUTO+" ");	// pad out Auto
-    	numEnginesBox.setMinimumSize(new Dimension(100,25));
+    	numEnginesBox.addItem(Train.AUTO);
+    	numEnginesBox.setMinimumSize(new Dimension(50,20));
     	addItem (trainReq, textEngine, 1, 1);
     	addItem (trainReq, numEnginesBox, 2, 1);
     	addItem (trainReq, textModel, 3, 1);

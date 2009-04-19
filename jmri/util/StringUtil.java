@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class StringUtil {
@@ -262,6 +262,27 @@ public class StringUtil {
         // no Java sort, so ugly bubble sort
         bubblesortUpper(values);
     }
+    
+    /**
+     * Sort String[] representing numbers, in ascending order.
+     * @param values
+     * @throws NumberFormatException
+     */
+    static public void numberSort(String[] values) throws NumberFormatException {
+    	for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
+    		for (int j=values.length-2; j>=i; j--) {
+    			// check that the jth value is larger than j+1th,
+    			// else swap
+    			if (Integer.parseInt(values[j])>Integer.parseInt(values[j+1])) {
+    				// swap
+    				String temp = values[j];
+    				values[j] = values[j+1];
+    				values[j+1] = temp;
+    			}
+    		}
+    	}
+    }
+        
     
     /**
      * Join a collection of strings, separated by a delimiter

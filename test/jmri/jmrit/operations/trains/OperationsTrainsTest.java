@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -205,7 +205,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train New Route Terminates Name", "TESTNEWROUTETERMNAME", train1.getTrainTerminatesName());
 
 		RouteLocation rl1test;
-		rl1test= rnew.getLocationByName("TESTNEWROUTECURRNAME");
+		rl1test= rnew.getLastLocationByName("TESTNEWROUTECURRNAME");
 		train1.setCurrentLocation(rl1test);
 		Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", train1.getCurrentLocationName());
 		rl1test= train1.getCurrentLocation();

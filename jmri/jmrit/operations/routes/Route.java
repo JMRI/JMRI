@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -168,7 +168,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	 * @param name
 	 * @return route location
 	 */
-    public RouteLocation getLocationByName(String name) {
+    public RouteLocation getLastLocationByName(String name) {
     	List<String> routeSequenceList = getLocationsBySequenceList();
     	RouteLocation rl;
     	

@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -203,13 +203,13 @@ public class OperationsRoutesTest extends TestCase {
 
 		RouteLocation rl1test;
 
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME1");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME1");
 		Assert.assertEquals("Add Location 1", "TESTLOCATIONNAME1", rl1test.getName());
 
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME2");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME2");
 		Assert.assertEquals("Add Location 2", "TESTLOCATIONNAME2", rl1test.getName());
 
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME3");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME3");
 		Assert.assertEquals("Add Location 3", "TESTLOCATIONNAME3", rl1test.getName());
 
 		//  Check that locations are in the expected order
@@ -234,7 +234,7 @@ public class OperationsRoutesTest extends TestCase {
 		Location l4 = new Location("TESTLOCATIONID4", "TESTLOCATIONNAME4");
 		rladd = r1.addLocation(l4,2);
 
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME4");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME4");
 		Assert.assertEquals("Add Location 4", "TESTLOCATIONNAME4", rl1test.getName());
 
 		list = r1.getLocationsBySequenceList();
@@ -259,7 +259,7 @@ public class OperationsRoutesTest extends TestCase {
 		}
 
 		//  Move up the third location and check that locations are in the expected order
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME3");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME3");
 		r1.moveLocationUp(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
@@ -283,7 +283,7 @@ public class OperationsRoutesTest extends TestCase {
 		}
 
 		//  Move down the first location down 2 and check that locations are in the expected order
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME1");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME1");
 		r1.moveLocationDown(rl1test);
 		r1.moveLocationDown(rl1test);
 		list = r1.getLocationsBySequenceList();
@@ -308,7 +308,7 @@ public class OperationsRoutesTest extends TestCase {
 		}
 
 		//  Delete the third location and check that locations are in the expected order
-		rl1test= r1.getLocationByName("TESTLOCATIONNAME3");
+		rl1test= r1.getLastLocationByName("TESTLOCATIONNAME3");
 		r1.deleteLocation(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
@@ -533,35 +533,35 @@ public class OperationsRoutesTest extends TestCase {
                 manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
 */                
 /*
-		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 1").setSwitchList(true);
-		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 1").addTypeName("Coal");
-		manager.getLocationByName("Test Location 1").addTypeName("Engine");
-		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 2").setSwitchList(true);
-		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 2").addTypeName("Coal");
-		manager.getLocationByName("Test Location 2").addTypeName("Engine");
-		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 3").setSwitchList(true);
-		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 3").addTypeName("Coal");
-		manager.getLocationByName("Test Location 3").addTypeName("Engine");
-		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+		manager.getLastLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
+		manager.getLastLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLastLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLastLocationByName("Test Location 1").addTypeName("Baggage");
+		manager.getLastLocationByName("Test Location 1").addTypeName("BoxCar");
+		manager.getLastLocationByName("Test Location 1").addTypeName("Caboose");
+		manager.getLastLocationByName("Test Location 1").addTypeName("Coal");
+		manager.getLastLocationByName("Test Location 1").addTypeName("Engine");
+		manager.getLastLocationByName("Test Location 1").addTypeName("Hopper");
+                manager.getLastLocationByName("Test Location 2").setComment("Test Location 2 Comment");
+		manager.getLastLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
+		manager.getLastLocationByName("Test Location 2").setSwitchList(true);
+		manager.getLastLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLastLocationByName("Test Location 2").addTypeName("Baggage");
+		manager.getLastLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLastLocationByName("Test Location 2").addTypeName("Caboose");
+		manager.getLastLocationByName("Test Location 2").addTypeName("Coal");
+		manager.getLastLocationByName("Test Location 2").addTypeName("Engine");
+		manager.getLastLocationByName("Test Location 2").addTypeName("Hopper");
+                manager.getLastLocationByName("Test Location 3").setComment("Test Location 3 Comment");
+		manager.getLastLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLastLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLastLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLastLocationByName("Test Location 3").addTypeName("Baggage");
+		manager.getLastLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLastLocationByName("Test Location 3").addTypeName("Caboose");
+		manager.getLastLocationByName("Test Location 3").addTypeName("Coal");
+		manager.getLastLocationByName("Test Location 3").addTypeName("Engine");
+		manager.getLastLocationByName("Test Location 3").addTypeName("Hopper");
 */
 /*                
                 locationList = manager.getLocationsByIdList();

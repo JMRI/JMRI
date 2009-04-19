@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class EngineLengths implements java.beans.PropertyChangeListener {
 	
@@ -67,7 +67,11 @@ public class EngineLengths implements java.beans.PropertyChangeListener {
     
     public void setNames(String[] lengths){
     	if (lengths.length == 0) return;
-    	jmri.util.StringUtil.sort(lengths);
+    	try{
+    		jmri.util.StringUtil.numberSort(lengths);
+    	} catch (NumberFormatException e){
+    		log.error("Engine lengths not numeric");
+    	}
  		for (int i=0; i<lengths.length; i++)
  			if (!list.contains(lengths[i]))
  				list.add(lengths[i]);
@@ -104,7 +108,7 @@ public class EngineLengths implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < lengths.length; i++)
 			box.addItem(lengths[i]);
     }
-        
+    
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);

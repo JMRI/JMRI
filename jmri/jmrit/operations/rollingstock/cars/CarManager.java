@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -708,7 +708,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
      	Car car;
      	for (int i = 0; i < carsSortByMoves.size(); i++) {
     		car = getCarById(carsSortByMoves.get(i));
-    		RouteLocation rl = route.getLocationByName(car.getLocationName());
+    		RouteLocation rl = route.getLastLocationByName(car.getLocationName());
     		// get cars that don't have an assigned train, or the assigned train is this one 
     		if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))){
     			out.add(carsSortByMoves.get(i));
