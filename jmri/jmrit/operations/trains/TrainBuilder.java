@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.41 $
+ * @version             $Revision: 1.42 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -460,7 +460,7 @@ public class TrainBuilder extends TrainCommon{
 									} 
 									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +destTrack.getName()+") because of "+status);
 								}
-								if (!foundCaboose || !foundFred)
+								if (!foundCaboose && !foundFred)
 									addLine(fileOut, THREE, "Could not find a destination for ("+c.getId()+")");
 							} else {
 								// terminate into staging
@@ -477,8 +477,9 @@ public class TrainBuilder extends TrainCommon{
 							}
 						}
 					}
-				} // caboose or FRED not at departure location so remove from list
-				if(!foundCaboose || !foundFred) {
+				} 
+				// caboose or FRED not at departure location so remove from list
+				if((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)) {
 					addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+ ") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
