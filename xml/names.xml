@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.17 2009-02-15 06:23:36 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.18 2009-04-20 05:51:41 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -253,6 +253,10 @@
 		<definition item="EMF Droop Config" />
 		<definition item="EMF Control Reference" />
 		<definition item="Load Control" />
+        <definition item="EMF Option 1"/>
+        <definition item="EMF Option 2"/>
+        <definition item="EMF Option 3"/>
+        <definition item="EMF Option 4"/>
 
 		
 	</definitiongroup>
@@ -268,6 +272,10 @@
 		<definition item="Global lighting option 2"/>
 		<definition item="Global lighting option 3"/>
 		<definition item="Global lighting option 4"/>
+		<definition item="Global lighting option 5"/>
+		<definition item="Global lighting option 6"/>
+		<definition item="Global lighting option 7"/>
+		<definition item="Global lighting option 8"/>
 
 		<!-- Configuring what each function does: -->
 		<!-- There are three variables per function.  "Effect generated" -->
@@ -331,6 +339,26 @@
 		<definition item="Function 8 behavior"/>
 		<definition item="Function 8 options"/>
 
+		<definition item="Function 9 effect generated"/>
+		<definition item="Function 10 effect generated"/>
+		<definition item="Function 11 effect generated"/>
+		<definition item="Function 12 effect generated"/>
+		<definition item="Function 13 effect generated"/>
+		<definition item="Function 14 effect generated"/>
+		<definition item="Function 15 effect generated"/>
+		<definition item="Function 16 effect generated"/>
+		<definition item="Function 17 effect generated"/>
+		<definition item="Function 18 effect generated"/>
+		<definition item="Function 19 effect generated"/>
+		<definition item="Function 20 effect generated"/>
+		<definition item="Function 21 effect generated"/>
+		<definition item="Function 22 effect generated"/>
+		<definition item="Function 23 effect generated"/>
+		<definition item="Function 24 effect generated"/>
+		<definition item="Function 25 effect generated"/>
+		<definition item="Function 26 effect generated"/>
+		<definition item="Function 27 effect generated"/>
+		<definition item="Function 28 effect generated"/>
 
 		<!-- Configuring what each output does: -->
 		<!-- There are three variables per output.  "Effect generated" -->
@@ -369,6 +397,8 @@
 		<definition item="Output 8 behavior"/>
 		<definition item="Output 8 options"/>
 
+		<definition item="Output 9 effect generated"/>
+		<definition item="Output 10 effect generated"/>
 
 	</definitiongroup>
 
@@ -700,6 +730,16 @@
 		<definition item="Sound Setting 28" />
 		<definition item="Sound Setting 29" />
 		<definition item="Sound Setting 30" />
+		<definition item="Sound Setting 31" />
+		<definition item="Sound Setting 32" />
+		<definition item="Sound Setting 33" />
+		<definition item="Sound Setting 34" />
+		<definition item="Sound Setting 35" />
+		<definition item="Sound Setting 36" />
+		<definition item="Sound Setting 37" />
+		<definition item="Sound Setting 38" />
+		<definition item="Sound Setting 39" />
+		<definition item="Sound Setting 40" />
 		
 		<!-- Global sound options -->
 		<definition item="Sound Option 1" />
@@ -718,6 +758,30 @@
 		<definition item="Sound Option 14" />
 		<definition item="Sound Option 15" />
 		<definition item="Sound Option 16" />
+		<definition item="Sound Option 17" />
+		<definition item="Sound Option 18" />
+		<definition item="Sound Option 19" />
+		<definition item="Sound Option 20" />
+		<definition item="Sound Option 21" />
+		<definition item="Sound Option 22" />
+		<definition item="Sound Option 23" />
+		<definition item="Sound Option 24" />
+		<definition item="Sound Option 25" />
+		<definition item="Sound Option 26" />
+		<definition item="Sound Option 27" />
+		<definition item="Sound Option 28" />
+		<definition item="Sound Option 29" />
+		<definition item="Sound Option 30" />
+		<definition item="Sound Option 31" />
+		<definition item="Sound Option 32" />
+		<definition item="Sound Option 33" />
+		<definition item="Sound Option 34" />
+		<definition item="Sound Option 35" />
+		<definition item="Sound Option 36" />
+		<definition item="Sound Option 37" />
+		<definition item="Sound Option 38" />
+		<definition item="Sound Option 39" />
+		<definition item="Sound Option 40" />
 
 	</definitiongroup>
 

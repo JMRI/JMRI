@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.27 2009-02-15 00:15:12 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.28 2009-04-20 05:51:41 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -80,6 +80,10 @@
                 <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config"/>
                 <display item="EMF Droop Config" tooltip="EMF Droop Config"/>
                 <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off"/>
+                <display item="EMF Option 1"/>
+                <display item="EMF Option 2"/>
+                <display item="EMF Option 3"/>
+                <display item="EMF Option 4"/>
             </column>
         </pane>
         <pane name="Basic Speed Control">
@@ -175,6 +179,10 @@
                 <display item="Global lighting option 2"/>
                 <display item="Global lighting option 3"/>
                 <display item="Global lighting option 4"/>
+                <display item="Global lighting option 5"/>
+                <display item="Global lighting option 6"/>
+                <display item="Global lighting option 7"/>
+                <display item="Global lighting option 8"/>
                 <label label=" "/>
                 <label label=" "/>
                 <display item="Function F0F effect generated"/>
@@ -232,6 +240,30 @@
                 <display item="Function 8 effect generated"/>
                 <display item="Function 8 behavior"/>
                 <display item="Function 8 options"/>
+                <label label=" "/>
+                <display item="Function 9 effect generated"/>
+                <label label=" "/>
+                <display item="Function 10 effect generated"/>
+            </column>
+            <column>
+                <display item="Function 11 effect generated"/>
+                <display item="Function 12 effect generated"/>
+                <display item="Function 13 effect generated"/>
+                <display item="Function 14 effect generated"/>
+                <display item="Function 15 effect generated"/>
+                <display item="Function 16 effect generated"/>
+                <display item="Function 17 effect generated"/>
+                <display item="Function 18 effect generated"/>
+                <display item="Function 19 effect generated"/>
+                <display item="Function 20 effect generated"/>
+                <display item="Function 21 effect generated"/>
+                <display item="Function 22 effect generated"/>
+                <display item="Function 23 effect generated"/>
+                <display item="Function 24 effect generated"/>
+                <display item="Function 25 effect generated"/>
+                <display item="Function 26 effect generated"/>
+                <display item="Function 27 effect generated"/>
+                <display item="Function 28 effect generated"/>
             </column>
             <column>
                 <label label=" "/>
@@ -266,6 +298,10 @@
                 <display item="Output 8 effect generated"/>
                 <display item="Output 8 behavior"/>
                 <display item="Output 8 options"/>
+                <label label=" "/>
+                <display item="Output 9 effect generated"/>
+                <label label=" "/>
+                <display item="Output 10 effect generated"/>
             </column>
         </pane>
         <pane name="Analog Controls">
@@ -455,6 +491,33 @@
                 <display item="Sound Option 14"/>
                 <display item="Sound Option 15"/>
                 <display item="Sound Option 16"/>
+                <label label=" "/>
+                <display item="Sound Option 17"/>
+                <display item="Sound Option 18"/>
+                <display item="Sound Option 19"/>
+                <display item="Sound Option 20"/>
+                <display item="Sound Option 21"/>
+                <display item="Sound Option 22"/>
+                <display item="Sound Option 23"/>
+                <display item="Sound Option 24"/>
+                <label label=" "/>
+                <display item="Sound Option 25"/>
+                <display item="Sound Option 26"/>
+                <display item="Sound Option 27"/>
+                <display item="Sound Option 28"/>
+                <display item="Sound Option 29"/>
+                <display item="Sound Option 30"/>
+                <display item="Sound Option 31"/>
+                <display item="Sound Option 32"/>
+                <label label=" "/>
+                <display item="Sound Option 33"/>
+                <display item="Sound Option 34"/>
+                <display item="Sound Option 35"/>
+                <display item="Sound Option 36"/>
+                <display item="Sound Option 37"/>
+                <display item="Sound Option 38"/>
+                <display item="Sound Option 39"/>
+                <display item="Sound Option 40"/>
             </column>
             <column>
                 <display item="Sound Group 1 Control" format="checkbox"/>
@@ -739,7 +802,71 @@
                     </row>
                 </column>
             </row>
-        </pane>
+             <row>
+                <column>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 31" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 31" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 32" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 32" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 33" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 33" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 34" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 34" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 35" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 35" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 36" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 36" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 37" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 37" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 38" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 38" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 39" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 39" layout="above" format="hslider"/>
+                    </row>
+                    <label label=" "/>
+                    <row>
+                        <display item="Sound Setting 40" layout="above" label=""/>
+                        <label label=" "/>
+                        <display item="Sound Setting 40" layout="above" format="hslider"/>
+                    </row>
+                </column>
+            </row>
+       </pane>
         <pane name="CVs">
             <column>
                 <cvtable/>
