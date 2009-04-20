@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.6 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.7 2009-04-20 06:39:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -77,8 +77,9 @@ runs a specific test or test suite.
 <a name="nightly">
 <h2>Nightly Builds</h2></a>
 
-
-Every night about 1:45AM Pacific time, the "nightlybuild.csh" script from a 
+Every night about 1:45AM Pacific time
+(and sometimes more often), 
+the "nightlybuild.csh" script from a 
 normal checkout is run.  This
 
 <OL>
@@ -102,7 +103,6 @@ to see past logs.
 <a name="write">
 <h2>Writing Tests</h2></a>
 
-
 By convention, we have a "test" class shadowing 
 (almost) every real class.  
 The "test" directory contains a tree of package
@@ -119,7 +119,7 @@ There are additional classes which are used to
 group the test classes for a particular package
 into JUnit test suites.
 
-<h3>Writing Additional Tests</h3>
+<h3>Writing Additional Tests for an Existing Class</h3>
 
 To write additional tests for a class with existing tests,
 first locate the test class. (If one doesn't exist, see the 
@@ -143,7 +143,9 @@ don't forget to put an entry in the enclosing package's test suite)
 (Needs info here: basically, copy some other package, and
 don't forget to put an entry in the enclosing package's test suite)
 
-<h3>Handling Log4J Output From Tests</h3>
+<h3>Key Metaphors</h3>
+
+<h4>Handling Log4J Output From Tests</h4>
 
 JMRI uses 
 <A HREF="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
@@ -179,8 +181,14 @@ and teardown() code to ensure that log4j is properly initiated, and that
 the custom appender is told when a test is beginning and ending.
 <CODE><PRE>
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 </PRE></code>
 <LI>When a test is deliberately invoking a message, it should then
 use the check to see that the message was created.  
@@ -197,24 +205,97 @@ It will be a JUnit error if a log.warn(...) or log.error(...) message is
 produced that isn't matched to a JUnitAppender.assertWarnMessage(...) call.
 </OL>
 
-<h3>Key Metaphors</h3>
-
 <h4>Resetting the InstanceManager</h4>
 
-The InstanceManager is persistant from test to test.
-In many cases, this is not an issue, so we don't insist that it be cleared
-after every test.
-But if you are going to reference the InstanceManager, you should
+If you are testing code that is going to reference the InstanceManager, 
+you should
 clear and reset it to ensure you get reproducible results.
+<p>
+Your <code>setUp()</code> implementation should start with:
 <code><pre>
-    jmri.InstanceManager i = new jmri.InstanceManager(){
-        protected void init() {
-            super.init();
-            root = this;
-        }
-    };
+    super.setUp();
+    JUnitUtil.resetInstanceManager();
+    JUnitUtil.initInternalTurnoutManager();
+    JUnitUtil.initInternalLightManager();
+    JUnitUtil.initInternalSensorManager();
 </pre></code>
-This can go in the test class setup() method for convenience.
+(You can omit the initialization managers you don't need)
+<p>
+Your <code>tearDown()</code> should end with:
+<code><pre>
+    JUnitUtil.resetInstanceManager();
+    super.tearDown();
+</pre></code>
+
+<h4>Running Listeners</h4>
+
+JMRI is a multi-threaded application. Listeners for
+JMRI objects are notified on various threads.
+Sometimes you have to wait for that to take place.
+To do that, after you invoke a something that will notifylisteners, 
+but before you check the results, 
+do
+<code><pre>
+    JUnitUtil.releaseThread(this);
+</pre></code>
+This uses a nominal delay, suitable for almost all uses.
+If you're doing a lot of notifications, or some complex
+calculation in the listeners, you can instead do
+<code><pre>
+    JUnitUtil.releaseThread(this, 200);
+</pre></code>
+where the argument is the number of extra milliseconds to let other threads work.
+Don't make this longer than really needed, though, because
+you colleagues will have to wait that long every time they run the tests.
+<p>
+Note that this should <b>not</b> be used to synchronize with
+Swing threads.  See the next section for that.
+
+<h4>Testing Swing Code</h4>
+
+AWT and Swing code runs on a separate thread from JUnit tests.
+Once a Swing or AWT object has been displayed (via
+<code>show()</code> or <code>setVisible(true)</code>),
+it cannot be reliably accessed from the JUnit thread.  Even using
+the listener delay technique described above isn't reliable.
+
+<p>
+For the simplest possible test, displaying a window 
+for manual interaction, it's OK to create and invoke a Swing
+object from a JUnit test.  Just don't try to interact with it once
+it's been displayed!
+
+<p>
+For more complicated testing, we're starting to use
+<a href="http://jfcunit.sourceforge.net/">JFCUnit</a>.
+
+<p>
+For a very simple example of the use of JFCUnit, see the
+<a href="http://jmri.cvs.sourceforge.net/viewvc/jmri/test/jmri/util/SwingTestCaseTest.java?view=markup">test/jmri/util/SwingTestCaseTest.java</a> file.
+
+<h3>Issues</h3>
+
+JUnit uses a custom classloader, which can cause problems finding
+singletons and starting Swing.  If you get the error
+about not being able to find or load a class, suspect that
+adding the missing class to 
+the test/junit/runner/excluded.properties file would fix it.
+<p>
+As a test you can try setting the "-noloading" option in the
+<code>main</code> of whichever test class you're having trouble with:
+<code><pre>
+static public void main(String[] args) {
+    String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
+    junit.swingui.TestRunner.main(testCaseName);
+}
+</pre></code>
+
+<p>
+The right long-term fix is to have all classes with loader
+issues included in the 
+<code>test/junit/runner/excluded.properties</code>
+file. JUnit uses those properties to decide how to handle loading
+and reloading of classes.
 
 <!--#include virtual="/Footer" -->
 
