@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.20 2009-03-25 05:23:32 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.21 2009-04-20 00:37:49 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -692,6 +692,14 @@ value="<xsl:value-of select="@dataString"/>"
 
 </xsl:template>
 
+<xsl:template match="LayoutEditor">
+<h3>Layout Panel: <xsl:value-of select="@name"/></h3>
+
+    <!-- index through individal panel elements -->
+    <xsl:apply-templates/>
+
+</xsl:template>
+
 <xsl:template match="signalheadicon">
 Signalhead Icon <xsl:value-of select="@signalhead"/><br/>
 </xsl:template>
@@ -707,5 +715,31 @@ Sensor Icon <xsl:value-of select="@sensor"/><br/>
 <xsl:template match="positionablelabel">
 Positionable Label <xsl:value-of select="@icon"/><br/>
 </xsl:template>
+
+<xsl:template match="layoutturnout">
+Layout Turnout ident="<xsl:value-of select="@ident"/>", 
+turnoutname="<xsl:value-of select="@turnoutname"/>",
+blockname="<xsl:value-of select="@blockname"/>"<br/>
+</xsl:template>
+
+<xsl:template match="tracksegment">
+Track segment ident="<xsl:value-of select="@ident"/>": 
+connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
+connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
+<br/>
+</xsl:template>
+
+<xsl:template match="positionablepoint">
+Positionable point ident="<xsl:value-of select="@ident"/>"
+connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@text"/>);
+connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@text"/>)
+<br/>
+</xsl:template>
+
+<xsl:template match="locoicon">
+Loco icon "<xsl:value-of select="@text"/>"<br/>
+
+</xsl:template>
+
 
 </xsl:stylesheet>
