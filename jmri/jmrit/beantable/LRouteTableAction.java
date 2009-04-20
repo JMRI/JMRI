@@ -101,7 +101,6 @@ public class LRouteTableAction extends AbstractTableAction {
      */
 	void createModel() {
 		m = new LBeanTableDataModel();
-        System.out.println("createModel called");
     }
 
     class LBeanTableDataModel extends BeanTableDataModel 
@@ -913,6 +912,8 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
             });
             createButton.setToolTipText(rbx.getString("CreateHint"));
+            createButton.setName("CreateButton");
+
             // Edit Route button 
             pb.add(editButton);
             editButton.addActionListener(new ActionListener() {
@@ -937,6 +938,8 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
             });
             updateButton.setToolTipText(rbx.getString("UpdateHint"));
+            updateButton.setName("UpdateButton");
+
             // Cancel button  
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
@@ -945,6 +948,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
             });
             cancelButton.setToolTipText(rbx.getString("CancelHint"));
+            cancelButton.setName("CancelButton");
             
             // Show the initial buttons, and hide the others
             cancelButton.setVisible(true);
