@@ -39,8 +39,18 @@ jython.jar
  
 junit.jar
  version 3.8.2
+ Used for testing only, not at runtime
  from <junit.org>
 
+jfcunit.jar
+  version 2.08 
+  Used for testing only, not at runtime
+  from <http://jfcunit.sourceforge.net>
+
+jakarta-regexp-1.5.jar
+  (needed for jfcunit)
+  Used for testing only, not at runtime
+  
 jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
   from <https://jinput.dev.java.net/>
   2008-01-09 combined binaries (most recent as of 3/20/2008)
