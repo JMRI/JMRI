@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.40 $ -->
+<!-- Revision $Revision: 1.41 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -47,6 +47,7 @@
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
   <property name="doctarget" value="doc"/>
+  <property name="pythonhome" value="/Users/jake/jython2.2.1"/>
   
   <path id="project.class.path">
     <pathelement location=".." />
@@ -61,7 +62,6 @@
     <pathelement location="../lib/jdom.jar" />
     <pathelement location="../lib/jhall.jar" />
     <pathelement location="../lib/jinput.jar" />
-    <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
     <pathelement location="../lib/log4j.jar" />
     <pathelement location="../lib/servlet.jar" />
@@ -71,6 +71,9 @@
     <pathelement location="../lib/smtp.jar" />
     <pathelement location="../lib/ExternalLinkContentViewerUI.jar" />
     <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
+    <pathelement location="../lib/junit.jar" />
+    <pathelement location="../lib/jfcunit.jar" />
+    <pathelement location="../lib/jakarta-regexp-1.5.jar" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
@@ -128,7 +131,7 @@
            memorymaximumsize="256m"
            deprecation="${deprecation}"
            debug="yes" >
-       <!-- <compilerarg value="-Xlint:unchecked" /> -->
+       <!-- <compilerarg value="-Xlint:{fallthrough, path, finally, -unchecked, -serial, deprecated}"/> -->
        <classpath refid="project.class.path"    />
     </javac>
   </target>
