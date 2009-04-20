@@ -21,5 +21,7 @@
 	<classpathentry kind="lib" path="lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/ExternalLinkContentViewerUI.jar"/>
+	<classpathentry kind="lib" path="/lib/jakarta-regexp-1.5.jar"/>
+	<classpathentry kind="lib" path="/lib/jfcunit.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
