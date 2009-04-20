@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -193,7 +193,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		addDisableMenuEntry(popup);
 
 		// add tristate option if turnout has feedback
-		if (turnout.getFeedbackMode() != Turnout.DIRECT) {
+		if (turnout != null && turnout.getFeedbackMode() != Turnout.DIRECT) {
 			addTristateEntry(popup);
 		}
 
