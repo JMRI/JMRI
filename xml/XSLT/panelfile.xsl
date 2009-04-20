@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.21 2009-04-20 00:37:49 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.22 2009-04-20 14:16:09 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -547,10 +547,10 @@ value="<xsl:value-of select="@dataString"/>"
             Unknown
         </xsl:when>
         <xsl:when test='@data = 2'>
-            Inactive
+            Active
         </xsl:when>
         <xsl:when test='@data = 4'>
-            Active
+            Inactive
         </xsl:when>
         <xsl:when test='@data = 8'>
             Inconsistent
@@ -566,17 +566,17 @@ value="<xsl:value-of select="@dataString"/>"
             Unknown
         </xsl:when>
         <xsl:when test='@data = 2'>
-            Inactive
+            Active
         </xsl:when>
         <xsl:when test='@data = 4'>
-            Active
+            Inactive
         </xsl:when>
         <xsl:when test='@data = 8'>
             Inconsistent
         </xsl:when>
         <xsl:otherwise>(<xsl:value-of select="@data"/>)</xsl:otherwise>
     </xsl:choose>
-    after <xsl:value-of select="@delay"/> millisecond(s)
+    after <xsl:value-of select="@delay"/> second(s)
   </xsl:when>
   <xsl:when test="( @type = 11 )" >
     Set Light "<xsl:value-of select="@systemName"/>" 
