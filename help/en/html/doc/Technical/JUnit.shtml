@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.7 2009-04-20 06:39:47 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.8 2009-04-20 06:55:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -266,13 +266,31 @@ object from a JUnit test.  Just don't try to interact with it once
 it's been displayed!
 
 <p>
-For more complicated testing, we're starting to use
+For many tests, you'll both make testing reliable and improve the structure 
+of your code by separating the GUI (Swing) code from the JMRI logic and
+communications.  This lets you check the logic code separately, but invoking
+those methods and checking the state them update.
+
+<p>
+For more complicated GUI testing, we're starting to use
 <a href="http://jfcunit.sourceforge.net/">JFCUnit</a>.
 
 <p>
 For a very simple example of the use of JFCUnit, see the
 <a href="http://jmri.cvs.sourceforge.net/viewvc/jmri/test/jmri/util/SwingTestCaseTest.java?view=markup">test/jmri/util/SwingTestCaseTest.java</a> file.
 
+<p>
+To use JFCUnit, you first inherit your class From
+<code>SwingTestCase</code> instead of <code>TestCase</code>.
+This is enough to get basic operation of Swing tests; the base class 
+pauses the test thread until Swing (actually, the AWT event mechanism)
+has completed all processing after every Swing call in the test.
+(For this reason, the tests will run much slower if you're e.g. moving the
+mouse cursor around while they're running)
+
+<p>
+For more complex GUI testing, you can invoke various aspects of the interface
+and check internal state using test code.
 <h3>Issues</h3>
 
 JUnit uses a custom classloader, which can cause problems finding
