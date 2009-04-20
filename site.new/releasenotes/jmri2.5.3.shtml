@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.9 2009-04-20 00:38:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.10 2009-04-20 06:56:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -209,6 +209,13 @@ Pete Cressman added "Change level" to the popup menus on Panel Editor icons.
 <p>
 Ken Cameron fixed a problem in the DebounceSensor sample script.
 
+<p>
+Jon Miller provided info for the new BLI Paragon steam and
+diesel decoder definitions.  Note that these require
+features that are only present in JMRI 2.5.3.
+
+<p>
+Our internal testing now uses JFCUnit for GUI testing, in additiont to JUnit.
 
 <!--#include virtual="/Footer" -->
 
