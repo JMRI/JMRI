@@ -11,48 +11,35 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Tests for the jmri.util.SwingTestCase class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SwingTestCaseTest extends SwingTestCase {
 
-    public void testCheckBoxClosing() {
-        // create a little GUI
-        JFrame f = new JFrame("testCheckBoxClosing");
+    /**
+     * Simple test of creating a Swing frame with a checkbox, 
+     * checking the box, and seeing that the check changed its state.
+     * <p>
+     * In this case, the frame is left open after the test
+     * completes because this is the JMRI default.
+     */
+    public void testCheckBox() {
+        // create a little GUI with a single check box
+        JFrame f = new JFrame("SwingTextCaseTest");
         JCheckBox b = new JCheckBox("Check");
         b.setName("Check");
         f.add(b);
         f.setVisible(true);
-        // find the check box
+        
+        // find the check box and confirm not yet checked
         NamedComponentFinder finder = new NamedComponentFinder(JCheckBox.class, "Check" );
         JCheckBox testBox = ( JCheckBox ) finder.find( f, 0);
         Assert.assertNotNull(testBox);
         Assert.assertTrue(!testBox.isSelected());
-        // check it
+        
+        // set the check in the box by clicking it
         getHelper().enterClickAndLeave( new MouseEventData( this, testBox ) );
         // test for selected
         Assert.assertTrue(testBox.isSelected());
-    }
-    
-    public void testCheckBoxOpen() {
-        // create a little GUI
-        JFrame f = new JFrame("testCheckBoxOpen");
-        JCheckBox b = new JCheckBox("Check");
-        b.setName("Check");
-        f.add(b);
-        f.setVisible(true);
-        // find the check box
-        NamedComponentFinder finder = new NamedComponentFinder(JCheckBox.class, "Check" );
-        JCheckBox testBox = ( JCheckBox ) finder.find( f, 0);
-        Assert.assertNotNull(testBox);
-        Assert.assertTrue(!testBox.isSelected());
-        // check it
-        getHelper().enterClickAndLeave( new MouseEventData( this, testBox ) );
-        // test for selected
-        Assert.assertTrue(testBox.isSelected());
-        
-        // request this window be left open
-        getHelper().addSystemWindow("testCheckBoxOpen");
-        
     }
     
 	// from here down is testing infrastructure
