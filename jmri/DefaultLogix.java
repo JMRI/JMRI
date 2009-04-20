@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -630,7 +630,7 @@ public class DefaultLogix extends AbstractNamedBean
 	 * Creates a listener of the required type and starts it
 	 */
     private void startListener(JmriSimplePropertyListener listener) {
-        String msg = null;
+        String msg = "(unknown type number "+listener.getType()+")";
 		switch (listener.getType()) {
 			case LISTENER_TYPE_SENSOR:
 				Sensor s = InstanceManager.sensorManagerInstance().
@@ -685,7 +685,7 @@ public class DefaultLogix extends AbstractNamedBean
 					break;
 				}
 				m.addPropertyChangeListener (listener);
-				break;
+				return;
             case LISTENER_TYPE_FASTCLOCK:
                 Timebase tb = InstanceManager.timebaseInstance();
 				tb.addMinuteChangeListener (listener);
