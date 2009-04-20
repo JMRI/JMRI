@@ -16,7 +16,7 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
-
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for the jmri.jmrit.beantable.LogixTableAction class
@@ -27,10 +27,10 @@ import jmri.Turnout;
  * 
  * @author	Pete Cressman  Copyright 2009
  */
-public class LogixTableActionTest extends TestCase {
+public class LogixTableActionTest extends jmri.util.SwingTestCase {
 
     String[] _varNames = new String[] {"is1", "Sensor2", "it1", "Turnout1", "C1", "C2",
-                                       "cl1", "Light2", "IMemory1", "FastClock", "Signal1", "Signal2",
+                                       "il1", "Light2", "IMemory1", "FastClock", "Signal1", "Signal2",
                                        "Signal3", "Signal4", "Signal5", "Signal6", "Signal7", "Signal8", 
                                        "Signal9"};
 
@@ -41,7 +41,7 @@ public class LogixTableActionTest extends TestCase {
                                         "IMemory11", "Light15", "Light16"};
 
     String[] _strData = new String[] {"", "",  "",  "", "", "", "", "", "10", "9:30", "IMemory5", "", "", 
-                                       "SoundFile.wav", "jython\\Sensor-sound.py", "13", "", "15", "",
+                                       "SoundFile.wav", "jython/Sensor-sound.py", "13", "", "15", "",
                                         "22", "", "3:30", "", "", "IMemory19", "50", "100"};
 
 	static final ResourceBundle rbx = ResourceBundle
@@ -49,9 +49,7 @@ public class LogixTableActionTest extends TestCase {
 
     private static LogixTableAction _logixTable;
 
-    public void testCreateLogix() {
-        new Exception("trace").printStackTrace();
-        
+    public void testCreateLogix() throws Exception {
         _logixTable.actionPerformed(null);
         _logixTable.addPressed(null);
         _logixTable._addUserName.setText("TestLogix");    
@@ -65,14 +63,12 @@ public class LogixTableActionTest extends TestCase {
         _logixTable.conditionalUserName.setText("TestConditional");
         _logixTable.updateConditionalPressed(null);
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
-        Thread.currentThread().yield();     // allow event thread to draw window 
         _logixTable.addVariablePressed(null);
         _logixTable.cancelEditVariablePressed();
         for (int i=0; i<Conditional.NUM_STATE_VARIABLE_TYPES; i++)
         {
             _logixTable.addVariablePressed(null);
             _logixTable._variableTypeBox.setSelectedIndex(i);
-            Thread.currentThread().yield();     // allow time for selection to repaint window 
             _logixTable._variableNameField.setText(_varNames[i]);
             _logixTable._variableData1Field.setText(_strData[i]);
             _logixTable._variableData2Field.setText("11");
@@ -84,7 +80,6 @@ public class LogixTableActionTest extends TestCase {
         {
             _logixTable.addActionPressed(null);
             _logixTable._actionTypeBox.setSelectedIndex(i+1);
-            Thread.currentThread().yield(); 
             _logixTable._actionOptionBox.setSelectedIndex(i%3);
             _logixTable._actionNameField.setText(_actNames[i]);
             _logixTable._actionTurnoutSetBox.setSelectedIndex(i%3);
@@ -99,19 +94,16 @@ public class LogixTableActionTest extends TestCase {
         Assert.assertEquals(_logixTable._curLogix.getNumConditionals(),1);
 
         _logixTable.donePressed(null);
+
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
         _logixTable.m.setValueAt((Object)rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
-        Thread.currentThread().yield();
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
-        try {
-            Thread.currentThread().sleep(500); 
-        } catch (InterruptedException ie) { /* ignore */  }
         _logixTable.conditionalUserName.setText("FirstConditional");
         assertEquals( 
                 _logixTable._curConditional.getCopyOfStateVariables().size(), Conditional.NUM_STATE_VARIABLE_TYPES);
         assertEquals(_logixTable._curConditional.getCopyOfActions().size(), Conditional.NUM_ACTION_TYPES-3);
-        Thread.currentThread().yield();
-        _logixTable.updateConditionalPressed(null);
+        //_logixTable.updateConditionalPressed(null);
+
         _logixTable.calculatePressed(null);
     }
 
@@ -129,26 +121,32 @@ public class LogixTableActionTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LogixTableActionTest.class);
+        Test suite = new TestSuite(LogixTableActionTest.class);
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { 
+    protected void setUp() throws Exception { 
         apps.tests.Log4JFixture.setUp(); 
+
+        super.setUp();
+
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+
         _logixTable = new LogixTableAction();
         assertNotNull("LogixTableAction is null!", _logixTable);        // test has begun
         _logixTable._suppressReminder = true;
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        InstanceManager.setLightManager(new jmri.jmrix.cmri.serial.SerialLightManager());
+
         for (int i=1; i<20; i++)
         {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS"+i, "Sensor"+i);
             assertNotNull(i+"th Sensor is null!", s);
             Turnout t = InstanceManager.turnoutManagerInstance().newTurnout("IT"+i, "Turnout"+i);
             assertNotNull(i+"th Turnout is null!", t);
-            Light l = InstanceManager.lightManagerInstance().newLight("CL"+(i), "Light"+i);
+            Light l = InstanceManager.lightManagerInstance().newLight("IL"+(i), "Light"+i);
             assertNotNull(i+"th Light is null!", l);
             Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional("C"+i, "Conditional"+i);
             assertNotNull(i+"th Conditional is null!", c);
@@ -162,7 +160,11 @@ public class LogixTableActionTest extends TestCase {
             InstanceManager.routeManagerInstance().register(r);
         }
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() throws Exception { 
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogixTableActionTest.class.getName());
 }
