@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.8 2009-04-14 19:16:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.9 2009-04-20 00:38:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -199,6 +199,15 @@ The Digitrax SDF editor can better handle complicated sound instructions.
 <p>
 A problem with decoder definitions requiring 28 functions was fixed. 
 For earlier versions, the workaround is to claim that the decoder has only 27 functions.
+
+<p>
+Pete Cressman arranged for edit windows to open in front of tables.
+
+<p>
+Pete Cressman added "Change level" to the popup menus on Panel Editor icons.
+
+<p>
+Ken Cameron fixed a problem in the DebounceSensor sample script.
 
 
 <!--#include virtual="/Footer" -->
