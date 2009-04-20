@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
-<!-- $Id: 0NMRA.xml,v 1.9 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.10 2009-04-20 03:45:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -116,6 +116,10 @@
 				<enumChoice choice="on"/>
 				</enumVal></variable>
 			
+        <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
+            <decVal/>
+            </variable>
+
 		<variable label="Extended Address" CV="17"
 						item="Long Address" >
 			<longAddressVal/></variable>
