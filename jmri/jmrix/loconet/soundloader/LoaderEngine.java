@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.8 $
+ * @version	    $Revision: 1.9 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -147,7 +147,7 @@ public class LoaderEngine {
      * doesn't back up.
      */
     void throttleOutbound(LocoNetMessage m) throws DelayException {
-        protectedWait(15);  // minimum wait to clear
+        protectedWait(50);  // minimum wait to clear
         
         // wait up to 1 sec in 10mSec chunks for isXmtBusy to clear
         for (int i=1; i<100; i++) {
@@ -257,11 +257,14 @@ public class LoaderEngine {
      * @param length Total length of the WAV data to load
      */
      LocoNetMessage getStartDataMessage(int type, int handle, int length) {
-        
         int pagecount = length/SENDPAGESIZE;
         int remainder = length - pagecount*SENDPAGESIZE;
         if (remainder != 0) pagecount++;
         
+        if (log.isDebugEnabled())
+            log.debug("getStartDataMessage: "+type+","+handle+","+length+";"
+                        +pagecount+","+remainder);
+
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD3,(type|CMD_START), handle, pagecount&0x7F, 
                                     (pagecount/128), 0});
         m.setParity();
