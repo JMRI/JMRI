@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007, 2009 All rights reserved -->
-<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml,v 1.2 2009-04-20 05:51:08 jacobsen Exp $ -->
+<!-- $Id: BLI_Blueline_Paragon2_Steam.xml,v 1.1 2009-04-20 05:51:08 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,29 +18,29 @@
 <decoder-config>
         <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
         
-        <!-- Version 1 New file from 1.03 manual and BLI_Blueline_diesel v5 -->
+        <!-- Version 1 New file from 0.4 manual and BLI_Blueline_diesel v5 -->
         
         <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
         
 <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
-        <model model="Diesel" numOuts="3" numFns="27" connector="9pin" >
-            <versionCV lowVersionID="0" highVersionID="31"/>
+        <model model="Steam" numOuts="3" numFns="27" connector="9pin" >
+            <versionCV lowVersionID="32" highVersionID="63"/>
             <output name="1" label="headlight"/>              
             <output name="2" label="rearlight"/>              
             </model>                                           
         <functionlabels>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Horn 1</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
           <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Blower</functionlabel>
-          <functionlabel num="5" lockable="true">Rev Up</functionlabel>
-          <functionlabel num="6" lockable="true">Rev Dn</functionlabel>
-          <functionlabel num="7" lockable="true">L1 Effect</functionlabel>
-          <functionlabel num="8" lockable="true">Master Volume</functionlabel>
+          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
           <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
-          <functionlabel num="10" lockable="true">Radiator Cooling Fan</functionlabel>
-          <functionlabel num="11" lockable="true">Air Release and Fill</functionlabel>
+          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
           <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
           <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
           <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
@@ -235,21 +235,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -273,21 +274,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -311,21 +313,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -349,21 +352,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -387,21 +391,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -425,21 +430,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -463,21 +469,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -501,21 +508,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -539,21 +547,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -577,21 +586,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -615,21 +625,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -653,21 +664,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -691,21 +703,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -729,21 +742,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -767,21 +781,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -805,21 +820,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -843,21 +859,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -881,21 +898,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -919,21 +937,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -957,21 +976,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -995,21 +1015,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1033,21 +1054,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1071,21 +1093,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1109,21 +1132,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1147,21 +1171,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1185,21 +1210,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1223,21 +1249,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1261,21 +1288,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1299,21 +1327,22 @@
                 <enumChoice choice="Bell Sound"/>
                 <enumChoice choice="Horn Sound"/>
                 <enumChoice choice="Couple/Uncouple Sound"/>
-                <enumChoice choice="Compressor/Grid Blower Sound"/>
-                <enumChoice choice="Diesel Ramp Up"/>
-                <enumChoice choice="Diesel Ramp Down/Start Diesel Sound"/>
+                <enumChoice choice="Air Pump sound"/>
+                <enumChoice choice="Blow Down/Chuff Increase"/>
+                <enumChoice choice="Water Fill/Chuff Increase/Startup"/>
                 <enumChoice choice="L1 Function"/>
                 <enumChoice choice="Mute/Volume Control"/>
                 <enumChoice choice="Startup/Shutdown Sounds"/>
-                <enumChoice choice="Cooling Fan Sound"/>
-                <enumChoice choice="Air Fill/Air Release Sound"/>
+                <enumChoice choice="Shoveling Coal Sound"/>
+                <enumChoice choice="Water Injector Sound"/>
                 <enumChoice choice="Brake Set/Release/Squeal Sound"/>
-                <enumChoice choice="Fuel Fill Sound"/>
-                <enumChoice choice="Spit Valve Sound"/>
+                <enumChoice choice="Steam Cock"/>
+                <enumChoice choice="Pop-Off Sound"/>
                 <enumChoice choice="Wheel Flange Sound"/>
                 <enumChoice choice="Coupler Slack/Couple Sound "/>
                 <enumChoice choice="Brake Squeal Sound"/>
                 <enumChoice choice="Horn2 Toggle"/>
+                <enumChoice choice="Smoke Control"/>
                 <enumChoice choice="Horn Grade Crossing Sound" value="30"/>
                 <enumChoice choice="Play Macro" value="40"/>
                 <enumChoice choice="Record Macro"/>
@@ -1396,7 +1425,7 @@
             <decVal/>
         </variable>
 
-        <variable label="Horn Volume" CV="135" default="128" 
+        <variable label="Whistle Volume" CV="135" default="128" 
             item="Sound Setting 4">
             <decVal/>
         </variable>
@@ -1406,12 +1435,12 @@
             <decVal/>
         </variable>
 
-        <variable label="Diesel Volume" CV="137" default="128" 
+        <variable label="Steam Volume" CV="137" default="128" 
             item="Sound Setting 6">
             <decVal/>
         </variable>
 
-        <variable label="Horn2 Volume" CV="138" default="128" 
+        <variable label="Whistle/Horn2 Volume" CV="138" default="128" 
             item="Sound Setting 7">
             <decVal/>
         </variable>
@@ -1436,17 +1465,17 @@
             <decVal/>
         </variable>
 
-        <variable label="Compressor Volume" CV="143" default="128" 
+        <variable label="Air Pump Volume" CV="143" default="128" 
             item="Sound Setting 12">
             <decVal/>
         </variable>
 
-        <variable label="Manual Air Release Volume" CV="144" default="128" 
+        <variable label="Blow Down Volume" CV="144" default="128" 
             item="Sound Setting 13">
             <decVal/>
         </variable>
 
-        <variable label="Air Filling Volume" CV="145" default="128" 
+        <variable label="Steam Cock Volume" CV="145" default="128" 
             item="Sound Setting 14">
             <decVal/>
         </variable>
@@ -1461,17 +1490,17 @@
             <decVal/>
         </variable>
 
-        <variable label="Spit Valve Volume" CV="148" default="128" 
+        <variable label="Pop Off Valve Volume" CV="148" default="128" 
             item="Sound Setting 17">
             <decVal/>
         </variable>
 
-        <variable label="Radiator Cooling Volume" CV="149" default="128" 
+        <variable label="Blower Volume" CV="149" default="128" 
             item="Sound Setting 18">
             <decVal/>
         </variable>
 
-        <variable label="Grid Blower Volume" CV="150" default="128" 
+        <variable label="Dynamo Volume" CV="150" default="128" 
             item="Sound Setting 19">
             <decVal/>
         </variable>
@@ -1481,23 +1510,38 @@
             <decVal/>
         </variable>
 
-        <variable label="Fuel Fill Volume" CV="152" default="128" 
+        <variable label="Shovel/Auger Volume" CV="152" default="128" 
             item="Sound Setting 21">
             <decVal/>
         </variable>
 
-        <variable label="Passenger/Freight Volume" CV="153" default="128" 
+        <variable label="Water Fill Volume" CV="153" default="128" 
             item="Sound Setting 22">
             <decVal/>
         </variable>
 
-        <variable label="Maintenance/Radio Chatter Volume" CV="155" default="128" 
+        <variable label="Injector Volume" CV="154" default="100" 
             item="Sound Setting 23">
             <decVal/>
         </variable>
 
-        <variable label="City/Farm/Industrial/Lumber Volume" CV="156" default="128" 
+        <variable label="Chuff/Steam Cock Chuffs Volume" CV="155" default="128" 
             item="Sound Setting 24">
+            <decVal/>
+        </variable>
+
+        <variable label="Passenger/Freight Volume" CV="156" default="128" 
+            item="Sound Setting 25">
+            <decVal/>
+        </variable>
+
+        <variable label="Maintenance/Radio Chatter Volume" CV="157" default="128" 
+            item="Sound Setting 26">
+            <decVal/>
+        </variable>
+
+        <variable label="City/Farm/Industrial/Lumber Volume" CV="158" default="128" 
+            item="Sound Setting 27">
             <decVal/>
         </variable>
 
@@ -1580,7 +1624,7 @@
             <decVal/>
         </variable>
 
-        <variable label="Horn Fade" CV="181" default="1" 
+        <variable label="Horn Fade In" CV="181" default="1" 
             item="Sound Group 3 Option 4">
             <decVal/>
         </variable>
@@ -1616,6 +1660,11 @@
             <decVal/>
         </variable>
 
+        <variable label="Motor Load Chuff Power Filter" CV="189" default="12" 
+            item="Sound Group 2 Option 1">
+            <decVal/>
+        </variable>
+
         <variable label="Analog Sound Setup" CV="190" default="0"
         	tooltip="Stores analog saved voltage to:" >
             <enumVal>
@@ -1635,39 +1684,48 @@
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 1 Voltage" CV="193" default="105">
+        <variable label="Articulated Chuff Type" CV="193" default="105" 
+            item="Sound Setting 28">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 2 Voltage" CV="194" default="120">
+        <variable label="Articulated Chuff Offset" CV="194" default="17"
+            item="Sound Setting 29">
+            <decVal max="25"/>
+        </variable>
+
+        <variable label="Articulated Chuff Timer" CV="195" default="20"
+            item="Sound Setting 30">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 3 Voltage" CV="195" default="130">
+        <variable label="Steam Cock Chuffs Event Count " CV="196" default="2"
+            item="Sound Setting 31">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 4 Voltage" CV="196" default="160">
+        <variable label="Rod Knock Chuffs Event Count" CV="197" default="2"
+            item="Sound Setting 32">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 5 Voltage" CV="197" default="210">
+        <variable label="Rod Knock Volume" CV="198" default="90"
+            item="Sound Setting 33">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 6 Voltage" CV="198" default="225">
+        <variable label="Chuff Magnitude Increase Volume" CV="199" default="200"
+            item="Sound Setting 34">
             <decVal max="255"/>
         </variable>
 
-        <variable label="Analog Rev Level 7 Voltage" CV="199" default="240">
+        <variable label="DCC Throttle Magnitude Increase" CV="200" default="0"
+            item="Sound Setting 35">
             <decVal max="255"/>
         </variable>
 
-        <variable label="DC Rev Level Motor Power Scalar" CV="200" default="150">
-            <decVal max="255"/>
-        </variable>
-
-        <variable label="N Gauge Rev Level Motor Power Scalar" CV="201" default="4">
+        <variable label="DCC Throttle Magnitude Decrease" CV="201" default="0"
+            item="Sound Setting 36">
             <decVal max="255"/>
         </variable>
 
@@ -2069,60 +2127,6 @@
             <display item="Analog Brake Release Voltage" layout="above" label=""/>
             <label label=" "/>
             <display item="Analog Brake Release Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 1 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 1 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 2 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 2 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 3 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 3 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 4 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 4 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 5 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 5 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 6 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 6 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="Analog Rev Level 7 Voltage" layout="above" label=""/>
-            <label label=" "/>
-            <display item="Analog Rev Level 7 Voltage" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="DC Rev Level Motor Power Scalar" layout="above" label=""/>
-            <label label=" "/>
-            <display item="DC Rev Level Motor Power Scalar" layout="above" format="hslider"/>
-        </row>
-        <label label=" "/>
-        <row>
-            <display item="N Gauge Rev Level Motor Power Scalar" layout="above" label=""/>
-            <label label=" "/>
-            <display item="N Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
         </row>
     </column>
     <column>
