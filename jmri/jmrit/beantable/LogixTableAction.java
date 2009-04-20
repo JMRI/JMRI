@@ -72,7 +72,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -166,9 +166,11 @@ public class LogixTableAction extends AbstractTableAction {
 				if (col == EDITCOL) {
 					return rbx.getString("ButtonSelect");
 				} else if (col == ENABLECOL) {
+				    Logix logix = (Logix) getBySystemName((String) getValueAt(row,
+									SYSNAMECOL));
+			        if (logix == null) return null;
 					return new Boolean(
-							((Logix) getBySystemName((String) getValueAt(row,
-									SYSNAMECOL))).getEnabled());
+							logix.getEnabled());
 				} else
 					return super.getValueAt(row, col);
 			}
@@ -4026,21 +4028,24 @@ public class LogixTableAction extends AbstractTableAction {
 					return Integer.toString(rx + 1);
 			case SNAME_COLUMN:
 				return _curLogix.getConditionalByNumberOrder(rx);
-                case UNAME_COLUMN:
+            case UNAME_COLUMN: {
                     //log.debug("ConditionalTableModel: "+_curLogix.getConditionalByNumberOrder(rx));
-				    return _conditionalManager.getBySystemName(
-						        _curLogix.getConditionalByNumberOrder(rx)).getUserName();
-                case STATE_COLUMN:
                     Conditional c = _conditionalManager.getBySystemName(
-						_curLogix.getConditionalByNumberOrder(rx));
-                    if (c != null) {
-                        int curState = c.getState();
-                        if (curState == Conditional.TRUE)
-                            return rbx.getString("True");
-                        if (curState == Conditional.FALSE)
-                            return rbx.getString("False");
-                    }
-				return rbx.getString("Unknown");
+                        _curLogix.getConditionalByNumberOrder(rx));
+                    if (c!=null) return c.getUserName();
+                    else return "";
+                }
+            case STATE_COLUMN:
+                Conditional c = _conditionalManager.getBySystemName(
+                    _curLogix.getConditionalByNumberOrder(rx));
+                if (c != null) {
+                    int curState = c.getState();
+                    if (curState == Conditional.TRUE)
+                        return rbx.getString("True");
+                    if (curState == Conditional.FALSE)
+                        return rbx.getString("False");
+                }
+                return rbx.getString("Unknown");
 			default:
 				return rbx.getString("Unknown");
 			}
