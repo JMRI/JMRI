@@ -7,6 +7,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
+
 import jmri.InstanceManager;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.InternalSensorManager;
@@ -17,9 +19,9 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
-public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
+public class BlockBossLogicTest extends TestCase {
 	
 	// test creation
 	public void testCreate() {
@@ -36,15 +38,15 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("yellow sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -60,15 +62,15 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -84,15 +86,15 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -108,15 +110,15 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -128,7 +130,7 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		p.setMode(BlockBossLogic.SINGLEBLOCK);
 		p.start();
 		
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("missing signal is green", SignalHead.GREEN, h1.getAppearance());
 		p.stop();
 	}
@@ -140,7 +142,7 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
 		p.setLimitSpeed1(true);
 		p.start();
 		
-		releaseThread();  // release control
+		JUnitUtil.releaseThread(this);  // release control
 		Assert.assertEquals("missing signal is green, show yellow", SignalHead.YELLOW, h1.getAppearance());
 		p.stop();
 	}
@@ -172,9 +174,10 @@ public class BlockBossLogicTest extends jmri.util.ThreadedTestCase {
         };
         
         // reset InstanceManager
-        resetInstanceManager();
-        initInternalSensorManager();
-        initInternalTurnoutManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
         t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
