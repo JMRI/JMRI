@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.7 2008-09-25 00:44:22 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.8 2009-04-20 06:06:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -142,7 +142,7 @@ the file to a form which can be used to submit updates.
 <P>
 To ease this, JMRI writes a line like<br/>
 <pre>
-&lt;?xml-stylesheet href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
+&lt;?xml-stylesheet href="http://jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
 </pre>
 at the start of each file. 
 When the browser encounters this, it loads the stylesheet from the main JMRI web server
@@ -151,7 +151,7 @@ and uses it to transform the XML file into HTML, which it then displays.
 <h4>Use without Internet Access</h4>
 
 If you don't have a web connection, or want to use a local copy 
-of the spreadsheet for some reason, just
+of the stylesheet for some reason, just
 change the href URL.  For example, href="panelfile.xsl" would reference a local file 
 in the same location as the file being viewed.
 <p>
@@ -161,6 +161,7 @@ Normally, security requires that pages loaded from remote
 locations (e.g. servers, not the local computer) are not allowed to reference
 local resources (e.g. local files).  This prevents malicious pages
 from accessing your local secrets.  
+<p>
 On the other hand, there's no problem with a local page referencing
 a remote page; that happens all the time.   Unfortunately, the current
 (December 2007) versions of FireFox have this backwards, allowing remote
@@ -170,7 +171,7 @@ remote formatting information, and prevents the page from displaying.
 Use the solution described above for the case of no access:  Put 
 a copy of the stylesheet in the same directory as the 
 file you want to display, and then edit the xml-stylesheet line to point
-to that directly.
+to that directly. Alternately, try another browser, such as Safari.
 
 <h2>Standards and Future Work</h2>
 
