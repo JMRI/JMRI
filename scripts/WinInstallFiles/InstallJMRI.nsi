@@ -50,6 +50,15 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.3.0
+; - Removed the 'skipping' of program location and start menu selection
+; - screens in all installation variants.
+; - Renamed the 'Custom' installer
+; - Enabled the install location to be read from the stored location in the
+; - registry so that an upgrade will use that location, as opposed to the
+; - default when installing.
+; - General clean-up of obsolete code.
+; -------------------------------------------------------------------------
 ; - Version 0.1.2.0
 ; - Modified offline JRE installer for Windows 98 and ME to look for a JRE
 ; - installer in the JRE_98ME sub-directory. This allows for a single CD to
@@ -98,9 +107,8 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.5.2"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.2.0"                     ; Installer version
+!define INST_VER  "0.1.3.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
-#!define SRCDIR    "Z:\JMRI"                     ; Path to head of sources
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
 
@@ -117,7 +125,6 @@ Var SMFOLDER ; holds the returned Start Menu Folder
 Var JREINSTALLER ; holds the path to the location of the JRE installer
 Var OFFLINEINSTALL ; a flag determining if this is an offline install
 Var JREINSTALLCOUNT ; a counter holding times around the JRE install loop
-Var CUSTOMINSTALL ; a flag determining if user has selected custom install
 Var REMOVEOLDINSTALL ; a flag to determine if old installer to be removed
 
 ; -------------------------------------------------------------------------
@@ -157,7 +164,6 @@ SetCompressor /SOLID /FINAL lzma
 ; - Includes
 ; -------------------------------------------------------------------------
 !include "MultiUser.nsh" ; MultiUser installation
-#!include "MUI2.nsh" ; Modern UI 2.0 (already included by MultiUser.nsh)
 !include "WordFunc.nsh" ; add header for word manipulation
 !insertmacro VersionCompare ; add function to compare versions
 
@@ -180,9 +186,9 @@ OutFile "../../${PNAME}.exe"
 ; - Interface Settings
 ; -------------------------------------------------------------------------
 !ifdef ICON
-    !define MUI_ICON "${ICON}"
+  !define MUI_ICON "${ICON}"
 !else
-    !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
+  !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !endif
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 !define MUI_ABORTWARNING
@@ -209,15 +215,11 @@ OutFile "../../${PNAME}.exe"
 ; -------------------------------------------------------------------------
 !define MUI_TEXT_WELCOME_INFO_TEXT "This wizard will guide you through the installation of $(^NameDA).$\r$\n$\r$\nIt is recommended that you close all other applications before starting Setup. This will make it possible to update relevant system files without having to reboot your computer.$\r$\n$\r$\n$(^NameDA) requires Java Runtime Environment ${JRE_VER} or later installed on your computer. During installation, this wizard will check for Java.$\r$\n$\r$\n$_CLICK"
 !insertmacro MUI_PAGE_WELCOME
-#!insertmacro MUI_PAGE_LICENSE "${SRCDIR}\COPYING" ; removed licence page
 Page custom nsDialogRemoveOldJMRI RemoveOldJMRI
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
-!define MUI_PAGE_CUSTOMFUNCTION_PRE .onSelChange
 !insertmacro MUI_PAGE_COMPONENTS
-!define MUI_PAGE_CUSTOMFUNCTION_PRE PagePre
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE DirectoryLeave
 !insertmacro MUI_PAGE_DIRECTORY
-!define MUI_PAGE_CUSTOMFUNCTION_PRE PagePre
 !insertmacro MUI_PAGE_STARTMENU JMRIStartMenu $SMFOLDER
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -229,7 +231,6 @@ Page custom nsDialogRemoveOldJMRI RemoveOldJMRI
 
 InstType "Typical"
 InstType "Full"
-InstType "/CUSTOMSTRING=Custom (select to choose program folder)"
 ; -------------------------------------------------------------------------
 ; - Languages
 ; -------------------------------------------------------------------------
@@ -604,74 +605,6 @@ Function un.onInit
 
 FunctionEnd
 
-Function .onSelChange
-; -------------------------------------------------------------------------
-; - Change 'Next >' button for Typical install
-; -------------------------------------------------------------------------
-
-  ; -- Save variables to the stack
-  Push $0
-  Push $1
-
-  ; -- Get pointer to the 'Next >' button
-  GetDlgItem $1 $HWNDPARENT 1
-
-  ; -- Check selected install type:
-  ; -- As built-in function GetCurInstType doesn't quite work as needed,
-  ; -- use WinAPI CB_GETCURSEL message to retrieve selected combobox item.
-  ; -- For first time round, this won't have been set so assume 'Typical'.
-  ; --  0 (Typical)
-  ; --  1 (Full)
-  ; --  2 (Custom)
-  StrCmp $mui.ComponentsPage.InstTypes "" NotCustomInstall
-  SendMessage $mui.ComponentsPage.InstTypes ${CB_GETCURSEL} 0 0 $0
-  StrCmp $0 2 CustomInstall NotCustomInstall
-  
-  NotCustomInstall:
-    StrCpy $CUSTOMINSTALL 0
-    ; -- Change button text to 'Install'
-    SendMessage $1 ${WM_SETTEXT} 0 `STR:$(^InstallBtn)`
-    ; -- Reset installation directory
-    ; -- (it might have been changed in 'Custom')
-    StrCpy $INSTDIR "$PROGRAMFILES\JMRI"
-
-    Goto Done
-
-  CustomInstall:
-    StrCpy $CUSTOMINSTALL 1
-    ; -- Change button text to 'Next >'
-    SendMessage $1 ${WM_SETTEXT} 0 `STR:$(^NextBtn)`
-
-  Done:
-    ; -- Restore variables from the stack
-    Pop $1
-    Pop $0
-
-FunctionEnd
-
-Function PagePre
-; -------------------------------------------------------------------------
-; - Suppresses the page in a Typical install
-; -------------------------------------------------------------------------
-
-  ; -- Save variables to the stack
-  Push $0
-  
-  ; -- Check selected install type:
-  StrCmp $CUSTOMINSTALL 1 NoSuppress Suppress
-
-  Suppress:
-    ; -- Restore variables from the stack
-    Pop $0
-    ; -- Suppress display of this page
-    Abort
-
-  NoSuppress:
-    ; -- Restore variables from the stack
-    Pop $0
-
-FunctionEnd
-
 Function DirectoryLeave
 ; -------------------------------------------------------------------------
 ; - Check that the user has chosen a valid location
@@ -825,27 +758,27 @@ Function CheckInternetConnection
   DetailPrint "Checking Internet Connection Status..."
   System::Call 'wininet.dll::InternetGetConnectedState(*l .r2, i 0) i.r0'
   StrCmp $0 "1" 0 +3
-  StrCpy $0 "online"
-  Goto +2
+    StrCpy $0 "online"
+    Goto +2
   StrCpy $0 "offline"
   IntOp $1 $2 & ${INTERNET_CONNECTION_CONFIGURED}
   StrCmp $1 ${INTERNET_CONNECTION_CONFIGURED} 0 +2
-  DetailPrint "System has a valid Internet configuration, but it may not be connected"
+    DetailPrint "System has a valid Internet configuration, but it may not be connected"
   IntOp $1 $2 & ${INTERNET_CONNECTION_LAN}
   StrCmp $1 ${INTERNET_CONNECTION_LAN} 0 +2
-  DetailPrint "System uses a local area network to connect to the Internet"
+    DetailPrint "System uses a local area network to connect to the Internet"
   IntOp $1 $2 & ${INTERNET_CONNECTION_MODEM}
   StrCmp $1 ${INTERNET_CONNECTION_MODEM} 0 +2
-  DetailPrint "System uses a modem to connect to the Internet"
+    DetailPrint "System uses a modem to connect to the Internet"
   IntOp $1 $2 & ${INTERNET_CONNECTION_PROXY}
   StrCmp $1 ${INTERNET_CONNECTION_PROXY} 0 +2
-  DetailPrint "System uses a proxy server to connect to the Internet"
+    DetailPrint "System uses a proxy server to connect to the Internet"
   IntOp $1 $2 & ${INTERNET_RAS_INSTALLED}
   StrCmp $1 ${INTERNET_RAS_INSTALLED} 0 +2
-  DetailPrint "System has RAS installed"
+    DetailPrint "System has RAS installed"
   IntOp $1 $2 & ${INTERNET_CONNECTION_OFFLINE}
   StrCmp $1 ${INTERNET_CONNECTION_OFFLINE} 0 +2
-  DetailPrint "System is in offline mode"
+    DetailPrint "System is in offline mode"
   
   DetailPrint "...done. Internet Connection is $0"
 
@@ -879,21 +812,24 @@ Function nsDialogRemoveOldJMRI
   StrCmp $0 "" Done
   
   CheckOld:
-  ; -- If we get to here, then an old JMRI installation exists
-  ; -- default to uninstall and backup
-  StrCpy $REMOVEOLDJMRI.BACKUPONLY 0
-  StrCpy $2 "This previous installation should be removed.$\r$\nThis wizard will backup any existing roster files and settings."
-  StrCpy $3 "Remove old ${APP} installation and backup existing files"
+    ; -- If we get to here, then an old JMRI installation exists
+    ; -- default to uninstall and backup
+    StrCpy $REMOVEOLDJMRI.BACKUPONLY 0
+    StrCpy $2 "This previous installation should be removed.$\r$\nThis wizard will backup any existing roster files and settings."
+    StrCpy $3 "Remove old ${APP} installation and backup existing files"
 
-  ; -- Now check if installed via old InstallVise installer
-  ; -- by checking if the 'DisplayVersion' registry key exists
-  ; -- (this key is not created by the old installer)
-  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
-  StrCmp $0 "" 0 Backup
-  ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
-  StrCmp $0 "" Remove Backup
+    ; -- Now check if installed via old InstallVise installer
+    ; -- by checking if the 'DisplayVersion' registry key exists
+    ; -- (this key is not created by the old installer)
+    ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
+    StrCmp $0 "" 0 Backup
+    ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
+    StrCmp $0 "" Remove Backup
   
   Backup:
+    ; -- If we get to here, we've been previously installed by the new installer
+    ; -- so, we can read the install location and prompt for backup
+    ReadRegStr $INSTDIR SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
     StrCpy $REMOVEOLDJMRI.BACKUPONLY 1
     StrCpy $2 "This wizard will backup any existing roster files and settings."
     StrCpy $3 "Backup existing files"
@@ -1018,8 +954,8 @@ Function RemoveOldJMRI
   Quit
 
   Done:
-  ; -- Restore variables from the stack
-  Pop $0
+    ; -- Restore variables from the stack
+    Pop $0
 
 FunctionEnd
 
