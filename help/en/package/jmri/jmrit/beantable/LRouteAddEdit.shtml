@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LRouteAddEdit.shtml,v 1.2 2009-04-15 01:21:47 pete_cressman Exp $ -->
+<!-- $Id: LRouteAddEdit.shtml,v 1.3 2009-04-22 06:36:56 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing LRoutes</TITLE>
@@ -74,25 +74,28 @@ device you want to use to control in the l-route.  Then choose the state you wan
 device to use for triggering the l-route from the drop down menu in the <b>Trigger 
 State</b> column.</p>
 
-<p>Devices selected with "non-veto" states are grouped as an "OR" clause.  Devices
+<p>Devices selected with "non-veto" states are grouped as an "OR" clause.  Triggers
 selected with a "veto" state are grouped as an "AND" clause.  That is, when any 
 "non-veto" state becomes true, the l-route is able to trigger.  However, if any of the
 "veto" states is true, the l-route will not trigger.</p>
 
 <p>On Tab 1, the Logix Route Type <b>New</b> will put the above logic into a single
-Logix Conditional.  If the <b>Old</b> option is selected, each devices with a
+Logix Conditional.  If the <b>Old</b> option is selected, each trigger with a
 "non-veto" state is put into a separate Conditional.  The behavior for this
 option is the 
 l-route will trigger whenever one of these device states becomes true - even when
-the logical expression as a whole is already true.   The other difference with the
-<b>Old</b> option is that the "veto" variables are not enabled for triggering. 
+the logical expression as a whole is already true. (i.e. the action is repeated, even
+another trigger has already caused the action to complete.)   The other difference is when
+the <b>Old</b> option is specified, the "veto" variables are not enabled for triggering.
+This means the actions are not triggered when the vetoes are removed.  Use the <b>new</b>
+option if you want actions to be triggered when the vetoes are removed.  
 In summary, the <b>Old</b> option emulates a standard Route and the <b>New</b> 
-option is a standard Logix Conditional.  Variations on these behaviors can be 
-tuned with further editing in the Logix Table.
+option has the behavior of a standard Logix Conditional.  Variations on these behaviors  
+can be tuned with further editing in the Logix Table.
 
-<p>Also note that control variables selected with "On Change" states need a separate
+<p>Note that control variables selected with "On Change" states need a separate
 Logix Conditional in order for the l-route actions to trigger on every change of state
-of these variables.
+of these variables.  
 
 <p>The radio buttons allow you to limit the display of devices to only those you
 have selected.</p>
