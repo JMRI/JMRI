@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.10 2009-04-20 06:56:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.11 2009-04-22 02:43:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -205,9 +205,27 @@ Pete Cressman arranged for edit windows to open in front of tables.
 
 <p>
 Pete Cressman added "Change level" to the popup menus on Panel Editor icons.
+'Set x & y' was changed to 'Set Location', whose dialog window now also allows setting the display level of the icon.
 
 <p>
 Ken Cameron fixed a problem in the DebounceSensor sample script.
+
+<p>
+Pete Cressman made some updates to Logix. 
+A copy Logix  and Conditional  function was added by 
+    turning the 'Edit Logix' button into a drop down 'Select' menu list for 
+    'Edit', 'Copy', or 'Delete' operations.
+    Edit and Delete act as before.
+    Copy allows a duplicate Logix to be created or it can copy Conditionals into an existing Logix.
+Also, a 'Toggle' option is added for Conditional actions that have only two action settings.
+The Logix behavior after an 'Export to Logix'  function in the Edit Route 
+window now  more closely matches the behavior of regular Routes.
+
+Pete Cressman added an 'LRoutes Table' that uses pick lists for Sensors, Turnouts, Lights and 
+Signals to make Logix(es) similar to Routes, 
+but somewhat more generalized in that an unlimited number of items can be included for 
+both input and output, and Lights and Signals are also included.
+
 
 <p>
 Jon Miller provided info for the new BLI Paragon steam and
@@ -215,7 +233,7 @@ diesel decoder definitions.  Note that these require
 features that are only present in JMRI 2.5.3.
 
 <p>
-Our internal testing now uses JFCUnit for GUI testing, in additiont to JUnit.
+Our internal testing now uses JFCUnit for GUI testing, in addition to JUnit.
 
 <!--#include virtual="/Footer" -->
 
