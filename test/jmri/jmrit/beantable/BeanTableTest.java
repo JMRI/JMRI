@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  * @author	Bob Jacobsen  Copyright 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class BeanTableTest extends TestCase {
 
@@ -29,17 +29,17 @@ public class BeanTableTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {BeanTableTest.class.getName()};
+        String[] testCaseName = {"-noloading", BeanTableTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(BeanTableTest.class);
+		suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
+		//suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
         suite.addTest(RouteTableActionTest.suite());
         suite.addTest(BlockTableActionTest.suite());
-		//suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
-		//suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
         return suite;
     }
     
@@ -47,6 +47,4 @@ public class BeanTableTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableTest.class.getName());
-
 }
