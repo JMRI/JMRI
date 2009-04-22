@@ -50,6 +50,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.4.0
+; - For a post-2.5.2 upgrade, defaulted the backup of preference and roster
+; - files to be selected and also made this optional. Current behaviour
+; - remains unchanged for a pre-2.5.2 upgrade (i.e. uninstallation with
+; - backup is mandatory and must be explicitly selected by the user)
+; -------------------------------------------------------------------------
 ; - Version 0.1.3.0
 ; - Removed the 'skipping' of program location and start menu selection
 ; - screens in all installation variants.
@@ -107,7 +113,7 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.5.3"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.3.0"                     ; Installer version
+!define INST_VER  "0.1.4.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -863,6 +869,9 @@ Function nsDialogRemoveOldJMRI
     ${NSD_CreateCheckBox} 0u 100u 100% 8u "$3"
     Pop $REMOVEOLDJMRI.CHECKBOX
     ${NSD_OnClick} $REMOVEOLDJMRI.CHECKBOX RemoveOldJMRICheckboxChange
+    ; -- If this is a backup only install, select the checkbox
+    StrCmp $REMOVEOLDJMRI.BACKUPONLY "0" +2
+      ${NSD_SetState} $REMOVEOLDJMRI.CHECKBOX ${BST_CHECKED}
 
     Call RemoveOldJMRICheckboxChange
 
@@ -894,8 +903,14 @@ Function RemoveOldJMRICheckboxChange
   
   ; -- Get current state
   ${NSD_GetState} $REMOVEOLDJMRI.CHECKBOX $1
-  StrCmp $1 ${BST_CHECKED} Enable
   StrCpy $REMOVEOLDINSTALL $1
+
+  ; -- Check to see if this is a backup only install which means that we
+  ; -- don't need to disable the 'Next >' button
+  StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done
+
+  ; -- If we get here, we need to consider disabling the 'Next >' button
+  StrCmp $1 ${BST_CHECKED} Enable
 
   EnableWindow $0 0
   Goto Done
@@ -921,7 +936,7 @@ Function RemoveOldJMRI
   ; -- Save variables to the stack
   Push $0
 
-  StrCmp $REMOVEOLDINSTALL ${BST_CHECKED} Done
+  StrCmp $REMOVEOLDINSTALL ${BST_UNCHECKED} Done
 
   ; -- Get pointer to the 'Next >' button
   GetDlgItem $0 $HWNDPARENT 1
