@@ -5,6 +5,8 @@ package jmri.jmrit.beantable;
 
 import junit.framework.*;
 
+import jmri.util.*;
+
 import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
@@ -22,7 +24,7 @@ import jmri.Turnout;
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  * @author	Pete Cressman  Copyright 2009
  */
-public class LRouteTableActionTest extends TestCase {
+public class LRouteTableActionTest extends SwingTestCase {
 
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
@@ -70,16 +72,18 @@ public class LRouteTableActionTest extends TestCase {
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
         _lRouteTable = new LRouteTableAction("LRoute");
-        InstanceManager.setSensorManager(new InternalSensorManager());
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        InstanceManager.setLightManager(new jmri.jmrix.cmri.serial.SerialLightManager());
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        
         for (int i=1; i<20; i++)
         {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS"+i, "Sensor"+i);
             assertNotNull("Sensor is null!", s);
             Turnout t = InstanceManager.turnoutManagerInstance().newTurnout("IT"+i, "Turnout"+i);
             assertNotNull("Turnout is null!", t);
-            Light l = InstanceManager.lightManagerInstance().newLight("CL"+(i), "Light"+i);
+            Light l = InstanceManager.lightManagerInstance().newLight("IL"+(i), "Light"+i);
             assertNotNull(i+"th Light is null!", l);
             Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(
                                                         "Conditional"+i, "Conditional"+i);
