@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.12 2009-04-22 15:12:44 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.13 2009-04-22 16:05:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -157,6 +157,9 @@ This feature is still in development, and might not work with all
 email systems yet.
 
 <p>
+David Duchamp fixed a problem with Block initialization at startup.
+
+<p>
 The Log4J library used by JMRI has been updated to the current version.
 This won't change the user experience, but helps us handle errors in a cleaner way.
 Dan Boudreau did 1300+ updates using this!
@@ -202,6 +205,9 @@ For earlier versions, the workaround is to claim that the decoder has only 27 fu
 
 <p>
 Pete Cressman arranged for edit windows to open in front of tables.
+
+<p>
+David Duchamp fixed a problem in how the Layout Editor creates signal Logix.
 
 <p>
 Matt Harris updated the Windows installer to fix a bug when reinstalling or uninstalling from
