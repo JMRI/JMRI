@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
+<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.5.1 on Wed Mar 25 21:57:24 PDT 2009 $Id: decoderIndex.xml,v 1.138 2009-03-26 04:58:32 jacobsen Exp $-->
-  <decoderIndex version="160">
+  <!--Written by JMRI version 2.5.3 on Tue Apr 21 19:09:52 PDT 2009 $Id: decoderIndex.xml,v 1.139 2009-04-22 02:11:55 jacobsen Exp $-->
+  <decoderIndex version="162">
     <mfgList nmraListDate="2009-01-15" updated="2009-02-18">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -122,6 +122,74 @@
       </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_VO1000.xml">
         <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_Paragon2_Diesel.xml">
+        <model model="Diesel" numOuts="3" numFns="27" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="0" highVersionID="31" />
+          <output name="1" label="headlight" connection="unspecified" />
+          <output name="2" label="rearlight" connection="unspecified" />
+        </model>
+        <functionlabels>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn 1</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Rev Up</functionlabel>
+          <functionlabel num="6" lockable="true">Rev Dn</functionlabel>
+          <functionlabel num="7" lockable="true">L1 Effect</functionlabel>
+          <functionlabel num="8" lockable="true">Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Radiator Cooling Fan</functionlabel>
+          <functionlabel num="11" lockable="true">Air Release and Fill</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_Paragon2_Steam.xml">
+        <model model="Steam" numOuts="3" numFns="27" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="32" highVersionID="63" />
+          <output name="1" label="headlight" connection="unspecified" />
+          <output name="2" label="rearlight" connection="unspecified" />
+        </model>
+        <functionlabels>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+        </functionlabels>
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_diesel.xml">
         <model model="Diesel" numOuts="3" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
@@ -775,6 +843,14 @@
       </family>
       <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
         <model model="DS54" lowVersionID="65" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Bachmann 336-553" mfg="Electronic Solutions Ulm GmbH" type="locomotive" file="ESU_Bachman_3_function.xml">
+        <model model="EZ Command 3 function decoder" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="4" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
+          <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
+          <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
+        </model>
       </family>
       <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_LokPilot2.0.xml">
         <model model="LokPilot 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
