@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -262,8 +262,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     public void configureOption1(String value) {}
 
-    protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
-    protected int [] validSpeedValues = new int[]{9600, 19200, 57600};
+    protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "28,800 baud", "57,600 baud", "115,200 baud" };
+    protected int [] validSpeedValues = new int[]{9600, 19200, 28800, 57600, 115200};
     protected String selectedSpeed=validSpeeds[0];
 
     /**
