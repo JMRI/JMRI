@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.11 2009-04-22 02:43:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.12 2009-04-22 15:12:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -204,6 +204,11 @@ For earlier versions, the workaround is to claim that the decoder has only 27 fu
 Pete Cressman arranged for edit windows to open in front of tables.
 
 <p>
+Matt Harris updated the Windows installer to fix a bug when reinstalling or uninstalling from
+a non-default location, and to make the selections for program location and start menu setup
+visible in all installation types.
+
+<p>
 Pete Cressman added "Change level" to the popup menus on Panel Editor icons.
 'Set x & y' was changed to 'Set Location', whose dialog window now also allows setting the display level of the icon.
 
@@ -234,6 +239,12 @@ features that are only present in JMRI 2.5.3.
 
 <p>
 Our internal testing now uses JFCUnit for GUI testing, in addition to JUnit.
+
+<P>
+JMRI now allows you to select any of the baud rates supported by C/MRI
+hardware, including 115,200 bits per second.  Note that not all 
+installations (software/hardware/wiring) can operate at this speed, but some
+can, so we provide the option.
 
 <!--#include virtual="/Footer" -->
 
