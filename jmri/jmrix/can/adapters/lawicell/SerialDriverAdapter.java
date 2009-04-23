@@ -19,7 +19,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -114,10 +114,10 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         log.debug("Connecting port");
         TrafficController.instance().connectPort(this);
     
-        // send a request for version information
+        // send a request for version information, set 125kbps, open channel
         log.debug("send version request");
         jmri.jmrix.can.CanMessage m = 
-            new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '5', 13, 'O', 13});
+            new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13});
         m.setTranslated(true);
         TrafficController.instance().sendCanMessage(m, null);
 
