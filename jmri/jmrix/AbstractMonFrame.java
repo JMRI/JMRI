@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -323,7 +323,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     }
 
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText(), "");
+        nextLine(entryField.getText()+"\n", "");
     }
     
     public synchronized String getFrameText() {
