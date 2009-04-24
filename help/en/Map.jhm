@@ -194,8 +194,6 @@
 
 <mapID target="manual.Main_XpressNet" url="manual/Main_XpressNet.shtml"/>
 
-<mapID target="package.jmri.jmrit.beantable.LRouteTable_Turnout lock feature" url="package/jmri/jmrit/beantable/LRouteTable.shtml#Turnout lock feature"/>
-
 <mapID target="html.doc.Technical.Threads" url="html/doc/Technical/Threads.shtml"/>
 
 <mapID target="manual.Comp_PrintData_c" url="manual/Comp_PrintData_c.shtml"/>
@@ -453,8 +451,6 @@
 <mapID target="html.tools.throttle.ThrottleChapter2_StructWin" url="html/tools/throttle/ThrottleChapter2.shtml#StructWin"/>
 
 <mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml"/>
-
-<mapID target="package.jmri.jmrit.beantable.LRouteAddEdit_Turnout lock feature" url="package/jmri/jmrit/beantable/LRouteAddEdit.shtml#Turnout lock feature"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
 
