@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-3.dtd,v 1.1 2009-03-26 22:01:40 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-5-3.dtd,v 1.2 2009-04-24 23:13:55 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.5.3 development.  Do not modify it       -->
 <!-- after version 2.5.3 is released.  For more information,                -->
@@ -155,7 +155,8 @@
 
   <!ELEMENT memory (comment?) >
     <!ATTLIST memory systemName	CDATA #REQUIRED>  <!-- defines system type -->
-    <!ATTLIST memory userName		CDATA #IMPLIED>
+    <!ATTLIST memory userName	CDATA #IMPLIED>
+    <!ATTLIST memory value		CDATA #IMPLIED>
 
 <!ELEMENT timebase EMPTY>
   <!ATTLIST timebase class		CDATA #REQUIRED>
