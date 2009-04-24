@@ -1,5 +1,6 @@
 # runtime target - top level project runtime contents
 runtime -a xml lib resources help jython web
+
 # jython target moves it from the scripts part of repository to top level
 jython -d jython scripts/jython
 
@@ -19,7 +20,8 @@ netbeans -a runtime java-contents netbeansfiles
 eclipse -a runtime java-contents
 
 # check target - The Java 1.1.8 libraries and needed build files
-# use 'all' or 'ant' target with this
+#     Use 'all' target with this
+#     This target no longer useful since JMRI moved to requiring Java 1.5
 check -a check1 check2 check3 lib118
 check1 -d java scripts check.xml
 check2 -d java scripts synchlist.csh
@@ -313,11 +315,6 @@ jmri/web/miniserver/servlet/fileservlet/FileServletPaths.properties \
 jmri/web/miniserver/servlet/fileservlet/FileServletTypes.properties \
 jmri/web/servlet/frameimage/JmriJFrameServlet.properties \
         
-
-# we're still missing a CodeWarrior target
-# and due to repository mismatches (cant checkout two files from different
-# CVS directories to a single location) we cant load the default.lcf file
-
 # Three different line formats are valid:
 #	key	-a    aliases...
 #	key [options] directory
