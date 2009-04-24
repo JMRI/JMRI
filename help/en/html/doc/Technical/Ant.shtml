@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Ant.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: Ant.shtml,v 1.2 2009-04-24 15:53:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -37,18 +37,19 @@ download at
 <A HREF="http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>. 
 Install it, then:
 <UL>
-<LI>Create a "project" directory.
-<LI>In the project directory, do a CVS checkout of the "ant" 
-module from our repository. This will create a "java" subdirectory 
+<LI>Create a directory to contain your project.
+<LI>In that project directory, do a 
+<a href="http://jmri.org/help/en/html/doc/Technical/getcode.shtml">CVS checkout</a> of the "all" 
+module from our repository. 
+This will create a "java" subdirectory 
 where Ant will run, and load it with source, tests and resources.
-It will also create and populate directories for xml and libraries in the 
+It will also create and populate directories for xml, libraries, etc in the 
 project directory.
-<LI>Change to the newly created java subdirectory. To compile, type "ant compile"; 
-to create a .jar file, type "ant dist". Note that you don't have to create the
-.jar file to run the program.
+<LI>Change to the newly created java subdirectory. To compile, type "ant debug". 
 <LI>To run the program, type "ant decoderpro" or "ant jmridemo", and sit back to watch it go.
 <LI>To run the test suite, type "ant alltest".
 <LI>To build a jmri.jar file, type "ant dist".
+Note that you don't have to create the jmri.jar file to run the program.
 </ul>
 
 <!--#include virtual="/Footer" -->
