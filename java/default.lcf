@@ -1,6 +1,6 @@
-# Default log4j configuration file for the JMRI project.
+# Default log4j configuration file for JMRI project development.
 
-# Output is sent to system.out, generally a console window.
+# Output is sent to system.err, generally a console window.
 # The output info consists of relative time, priority, thread name,
 # category name, nested diagnostic context, the and the message in
 # that order.
@@ -11,19 +11,22 @@
 # Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
 
 # The root category is set to log priority INFO and above
-# to the console (A1). We define, but don't activeate, output
+# to the console (A1). We also define, but don't activate, output
 # to rolling log files (T).
 
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
-# priority. in which case the priority is inherited from the
+# priority, in which case the priority is inherited from the
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
 log4j.rootCategory= INFO, A1
 
-# A1 is set to be a ConsoleAppender which outputs to System.out. 
+# A1 is set to be a ConsoleAppender which outputs to System.err. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+# A1 writes to system.err to synchronize with e.g. exception traces
+log4j.appender.A1.target=System.err
 
 # A1 uses PatternLayout to control the format of the log messages
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
