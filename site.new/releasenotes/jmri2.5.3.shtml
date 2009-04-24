@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.13 2009-04-22 16:05:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.14 2009-04-24 23:55:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -41,14 +41,18 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the first in a new series of test versions.
+<p>This is the third in a new series of test versions. We expect this series
+to end in a production release in late June 2009.
 
 It contains 
 many new features, including:
 
-
 <ul>
-	<LI>
+<li>Improved Logix Conditionals, better Logix and Route compatibility, 
+	and a new form of "<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes</a>".
+<li>Many new and improved decoder definitions, including ones for the new BLI Paragon locomotives
+<li>Improvements to the editor for Digitrax sound projects
+<li>
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -78,6 +82,12 @@ you don't have to worry about this.
 
 <p>
 The XSLT location was moved back to the web.
+
+<p>
+There is a problem with the CBUS support when using 
+GridConnect style adapters.  If this describes your 
+situation, you should stay with an earlier version (probably
+JMRI 2.5.1) until a later version lists this as fixed.
 
 <h3>Warnings from older versions:</h3>
 
@@ -162,7 +172,7 @@ David Duchamp fixed a problem with Block initialization at startup.
 <p>
 The Log4J library used by JMRI has been updated to the current version.
 This won't change the user experience, but helps us handle errors in a cleaner way.
-Dan Boudreau did 1300+ updates using this!
+Dan Boudreau did 1300+ updates to use this!
 
 <p>
 Pete Cressman improved error handling in the sensor group GUI.
@@ -232,11 +242,11 @@ Also, a 'Toggle' option is added for Conditional actions that have only two acti
 The Logix behavior after an 'Export to Logix'  function in the Edit Route 
 window now  more closely matches the behavior of regular Routes.
 
+<p>
 Pete Cressman added an 'LRoutes Table' that uses pick lists for Sensors, Turnouts, Lights and 
 Signals to make Logix(es) similar to Routes, 
 but somewhat more generalized in that an unlimited number of items can be included for 
 both input and output, and Lights and Signals are also included.
-
 
 <p>
 Jon Miller provided info for the new BLI Paragon steam and
@@ -251,6 +261,10 @@ JMRI now allows you to select any of the baud rates supported by C/MRI
 hardware, including 115,200 bits per second.  Note that not all 
 installations (software/hardware/wiring) can operate at this speed, but some
 can, so we provide the option.
+
+<p>
+Team Digital updated the decoder definition for their SIC24AD to allow ops-mode
+(on the main) programming.
 
 <!--#include virtual="/Footer" -->
 
