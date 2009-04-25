@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.3.shtml,v 1.14 2009-04-24 23:55:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.3.shtml,v 1.15 2009-04-25 15:48:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.5.3 release
       </h2>
 
-	<p>Date: MMM DD, 2009</p>
+	<p>Date: April 25, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.5.3 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -52,7 +54,6 @@ many new features, including:
 	and a new form of "<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes</a>".
 <li>Many new and improved decoder definitions, including ones for the new BLI Paragon locomotives
 <li>Improvements to the editor for Digitrax sound projects
-<li>
 </ul>
 along with lots of other changes.  See the complete list below.
 
