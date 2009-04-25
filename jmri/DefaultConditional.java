@@ -26,7 +26,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -185,13 +185,13 @@ public class DefaultConditional extends AbstractNamedBean
                     result = dp.result;
                 } catch ( NumberFormatException nfe) {
                     result = false;
-                    log.error("parseCalculation error " + nfe);
+                    log.error("parseCalculation error antecedent= "+_antecedent+ ", ex= " + nfe);
                 } catch ( IndexOutOfBoundsException ioob) {
                     result = false;
-                    log.error("parseCalculation error " + ioob);
+                    log.error("parseCalculation error antecedent= "+_antecedent+ ", ex= " + ioob);
                 }  catch ( JmriException je) {
                     result = false;
-                    log.error("parseCalculation error " + je);
+                    log.error("parseCalculation error antecedent= "+_antecedent+ ", ex= " + je);
                 }
                 break;
         }
@@ -305,7 +305,7 @@ public class DefaultConditional extends AbstractNamedBean
     * internal negation of a variable is washed.
     */
     DataPair parseCalculate(String s, ArrayList <ConditionalVariable> variableList) 
-            throws NumberFormatException, IndexOutOfBoundsException, JmriException
+            throws JmriException
     {
         BitSet argsUsed = new BitSet(_variableList.size());
         DataPair dp = null;
