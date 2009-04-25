@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LRouteTable.shtml,v 1.2 2009-04-15 01:21:47 pete_cressman Exp $ -->
+<!-- $Id: LRouteTable.shtml,v 1.3 2009-04-25 01:49:04 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: LRoute Table Help</TITLE>
@@ -49,7 +49,7 @@ l-route, it is recommended that further editing be done from the Logix Table.</p
 <DL>
 	<DT>System Name</DT>
 	<DD>The System Name cannot be changed once entered into the table.
-	The <b>Add,/b> button located in the lower left corner of the table allows
+	The <b>Add</b> button located in the lower left corner of the table allows
 	you to add a new l-route to the table.</DD>
 
 	<DT>User Name</DT>
