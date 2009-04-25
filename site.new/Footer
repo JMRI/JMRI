@@ -17,4 +17,18 @@
        <BR/>Site hosted by: <BR/>
 <a href="http://sourceforge.net/projects/jmri"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
     </div>
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+piwik_action_name = '';
+piwik_idsite = 1;
+piwik_url = pkBaseURL + "piwik.php";
+piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+</script>
+<object><noscript><p><img src="http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
+<!-- End Piwik Tag -->
+
 <!-- /Footer -->
