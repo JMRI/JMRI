@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class GridConnectMessageTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class GridConnectMessageTest extends TestCase {
         m.setElement(3, 0x78);
         
         GridConnectMessage g = new GridConnectMessage(m);
-        Assert.assertEquals("standard format 2 byte", ":S123N12345678;", g.toString());
+        Assert.assertEquals("standard format 2 byte", ":S2460N12345678;", g.toString());
     }
     
     // :XF00DN;
