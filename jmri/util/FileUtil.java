@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class FileUtil {
@@ -33,7 +33,9 @@ public class FileUtil {
      */
     static public String getUrlViaUri(File file) {
         try {
-            return file.toURI().toURL().toString();
+            String retval = file.toURI().toURL().toString();
+            if (log.isDebugEnabled()) log.debug("getUrlViaUri: \""+retval+"\"");
+            return retval;
         } catch (NoSuchMethodError e2) {  // File.toURI first available in Java 1.4
             try {
                 return file.toURL().toString();
@@ -47,8 +49,8 @@ public class FileUtil {
                 return "file:"+file.getAbsolutePath()+File.separator;
             }
         } catch (Throwable e) {
-            if (log.isDebugEnabled()) log.debug(" Exception 2: "+e);
-                return "file:"+file.getAbsolutePath()+File.separator;
+            log.warn("getUrlViaUri falling back due to exception",e);
+            return "file:"+file.getAbsolutePath()+File.separator;
         }
     }
 
@@ -66,14 +68,16 @@ public class FileUtil {
      */
     static public String getUrl(File file) {
         try {
-            return file.toURL().toString();
+            String retval = file.toURL().toString();
+            if (log.isDebugEnabled()) log.debug("getUrl: \""+retval+"\"");
+            return retval;
         } catch (NoSuchMethodError e3) {  // File.toURL not in 1.1.8
             if (file.isDirectory())
                 return "file:"+file.getAbsolutePath()+File.separator;
             else
                 return "file:"+file.getAbsolutePath();
         } catch (Throwable e) {
-            if (log.isDebugEnabled()) log.debug(" Exception 1: "+e);
+            log.warn("getUrl falling back due to exception",e);
             return "file:"+file.getAbsolutePath()+File.separator;
         }
     }
