@@ -18,15 +18,14 @@ import jmri.jmrix.can.CanMessage;
  * Strict Gridconnect protocol allows a variable number of header characters,
  * e.g., a header value of 0x123 could be encoded as S123 rather than S0123 or
  * X00000123. We choose a fixed number, either 4 or 8 bytes when sending
- * GridConnectMessages. Additionally, the 11 byte standard header is left
- * justified so that the two bytes map directly to the SIDH and SIDL registers
- * in a Microchip PIC CAN controller.
+ * GridConnectMessages to keep MERG CAN-RS/USB adapters happy. At this time, the
+ * MERG adapter ignores the header as it has a default value in EEPROM
  * N or R indicates a normal or remote frame, in position 6 or 10
  * d0 - d7 are the (up to) 8 data bytes
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
@@ -107,10 +106,10 @@ public class GridConnectMessage extends AbstractMRMessage {
         } else {
             if (log.isDebugEnabled()) log.debug("Standard header is "+header);
             // 11 header bits are left justified
-            setHexDigit((header>>7)&0xF, 2);
-            setHexDigit((header>>3)&0xF, 3);
-            setHexDigit((header<<1)&0xE, 4);
-            setHexDigit(              0, 5);
+            setHexDigit( 0, 2);
+            setHexDigit((header>>8)&0xF, 3);
+            setHexDigit((header>>4)&0xF, 4);
+            setHexDigit( header&0xF, 5);
         }
     }
 
