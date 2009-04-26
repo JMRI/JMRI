@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppStructure.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: AppStructure.shtml,v 1.2 2009-04-26 18:53:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -27,9 +27,9 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
 
-	    <H1>JMRI: Application Structure</H1>
+<H1>JMRI: Application Structure</H1>
 
 The JmriDemo program is just an example, but it's meant to be a good one.
 <P>
@@ -49,6 +49,10 @@ lots of different layout types, jmri.InstanceManager satisfies these requests.
 More information on how things (e.g. objects representing items on the layout)
 are named 
 <A HREF="Names.shtml">is available on a separate page</a>.
+
+<p>
+See also the page on the 
+<a href="IntroStructure.shtml">JMRI library structure</a>.
 
 <!--#include virtual="/Footer" -->
 
