@@ -5,14 +5,15 @@ package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 
 /**
- * Implements SerialPortAdapter for the CAN-USB.
+ * Implements SerialPortAdapter for GridConnect adapters.
  * <P>
  * This connects a CAN-USB CAN adapter via a serial com port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
  *
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @author			Bob Jacobsen Copyright (C) 2009
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 

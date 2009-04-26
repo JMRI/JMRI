@@ -1,6 +1,6 @@
-// GridConnectMessageTest.java
+// MergMessageTest.java
 
-package jmri.jmrix.can.adapters.gridconnect;
+package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
 
@@ -10,12 +10,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectMessage class
+ * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.1 $
  */
-public class GridConnectMessageTest extends TestCase {
+public class MergMessageTest extends TestCase {
 
     // :S123N12345678;
     public void testOne() {
@@ -30,8 +30,8 @@ public class GridConnectMessageTest extends TestCase {
         m.setElement(2, 0x56);
         m.setElement(3, 0x78);
         
-        GridConnectMessage g = new GridConnectMessage(m);
-        Assert.assertEquals("standard format 2 byte", ":S123N12345678;", g.toString());
+        MergMessage g = new MergMessage(m);
+        Assert.assertEquals("standard format 2 byte", ":S0123N12345678;", g.toString());
     }
     
     // :XF00DN;
@@ -43,7 +43,7 @@ public class GridConnectMessageTest extends TestCase {
         m.setHeader(0xF00D);
         m.setNumDataElements(0);
         
-        GridConnectMessage g = new GridConnectMessage(m);
+        MergMessage g = new MergMessage(m);
         Assert.assertEquals("standard format 2 byte", ":X0000F00DN;", g.toString());
     }
 
@@ -59,27 +59,27 @@ public class GridConnectMessageTest extends TestCase {
         m.setElement(2, 0x56);
         m.setElement(3, 0x78);
         
-        GridConnectMessage g = new GridConnectMessage(m);
+        MergMessage g = new MergMessage(m);
         Assert.assertEquals("standard format 2 byte", ":X00000123R12345678;", g.toString());
     }
 
     // from here down is testing infrastructure
 
-    public GridConnectMessageTest(String s) {
+    public MergMessageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", GridConnectMessageTest.class.getName()};
+        String[] testCaseName = {"-noloading", MergMessageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(GridConnectMessageTest.class);
+        TestSuite suite = new TestSuite(MergMessageTest.class);
         return suite;
     }
 
