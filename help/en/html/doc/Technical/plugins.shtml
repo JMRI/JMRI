@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: plugins.shtml,v 1.4 2008-03-08 19:13:55 jacobsen Exp $ -->
+<!-- $Id: plugins.shtml,v 1.5 2009-04-26 18:44:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -38,7 +38,7 @@ could use to build their own applications.  Although some people do that, more
 use the existing applications such as DecoderPro, PanelPro, LocoTools and
 JmriDemo.  We want to make this more flexible by providing a way to extend
 those programs without having to rebuild them from scratch.  This note describes
-mechanisms for that which will be included in JMRI version 1.4.0
+mechanisms for that which will is included in JMRI 2.4 and later.
 
 <OL>
 
@@ -46,21 +46,17 @@ mechanisms for that which will be included in JMRI version 1.4.0
 <P>
 DecoderPro et al are run via a java command which sets the CLASSPATH and
 various options.  How that's actually done varies with the platform:  csh
-scripts on Unix, bat files on Windows, application bundles on MacOS X, etc.
+scripts on Unix, a 
+<a href="StartUpScripts.shtml#windows">launcher application</a>
+on Windows, application bundles on MacOS X, etc.
 <P>
-To make it easy to add plug-ins, these include the files "jmriplugins.jar"
-and "lib/jmriplugins.jar" in their CLASSPATH.  
+To make it easy to add plug-ins, these include all .jar files in the 
+application directory, and in its "lib/" subdirectory, in the CLASSPATH.
 <P>
-If you use that name for the jar file including your code, it will automatically
+If you create a jar file including your code, it will automatically
 be found. You can also put your classes in the "classes" directory of the
 startup directory, which is searched first.
-<P>
-If some other jar file is necessary, you'll have to edit the startup as needed.
 <p>
-Starting with JMRI 2.1.4, the Linux and MacOS X startups 
-will include early in the CLASSPATH
-any .jar file that's found in the JMRI distribution directory.
-Files in the lib/ subdirectory are added at the end of the CLASSPATH.
 For more information, see the 
 <a href="StartUpScripts.shtml">page on startup scripts</a>.
 
@@ -68,8 +64,8 @@ For more information, see the
 <P>
 Note that you can directly replace any of the files in the jmri.jar distribution
 with your own versions by putting them in a jar file that's searched first.  
-For example, including a modified version of a .properties file in the 
-jmriplugins.jar file would allow you to include customized versions of menu 
+For example, including a modified version of a .properties file 
+would allow you to include customized versions of menu 
 strings.  This can also be done with a .class file, for example changing 
 the order of menu items by replacing the DecoderPro class.
 
@@ -99,6 +95,25 @@ to add new formats.
 
 </OL>
 
+<h2>Other Mechanisms</h2>
+
+It's also possible to customize your version of JMRI using 
+scripts, and by using the 
+<a href="../../../package/apps/AppConfigPanel.shtml">advanced preferences</a>.
+
+<p>
+Scripts can locate and access any open window, for example.
+The
+<a href="http://jmri.org/jython/AddButton.py">AddButton.py</a> 
+sample script is an example of adding a script button to the main window.
+The
+<a href="http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a> 
+sample script shows how how to modify the main window to remove the ops-mode
+programming button.
+The
+<a href="http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a> 
+sample script is an even more advanced example that 
+changes the appearance of items on panel screens.
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
