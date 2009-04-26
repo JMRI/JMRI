@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class CanMessageTest extends CanMRCommonTest {
 
@@ -74,14 +74,6 @@ public class CanMessageTest extends CanMRCommonTest {
         
     }
     
-    public void testIdAccessors() {
-        CanMessage m = new CanMessage();
-        
-        m.setCbusId(0x03);
-        Assert.assertTrue("Id 0x03", m.getCbusId() == 0x03);
-        Assert.assertTrue("Header 0x03", m.getHeader() == 0x03);
-    }
-    
     public void testRtrBit() {
         CanMessage m = new CanMessage();
         Assert.assertTrue("not rtr at start", !m.isRtr());
@@ -100,27 +92,6 @@ public class CanMessageTest extends CanMRCommonTest {
         Assert.assertTrue("std at end", !m.isExtended());
     }
     
-    public void testPriAccessors() {
-        CanMessage m = new CanMessage();
-        m.setHeader(0);
-        
-        m.setCbusPri(0x00);
-        Assert.assertTrue("Pri 0x00", m.getCbusPri() == 0x00);
-        Assert.assertEquals("Header 0x000", 0x000, m.getHeader());
-
-        m.setCbusPri(0x01);
-        Assert.assertTrue("Pri 0x01", m.getCbusPri() == 0x01);
-        Assert.assertEquals("Header 0x020", 0x200, m.getHeader());
-
-        m.setCbusPri(0x03);
-        Assert.assertTrue("Pri 0x03", m.getCbusPri() == 0x03);
-        Assert.assertEquals("Header 0x060", 0x600, m.getHeader());
-
-        m.setCbusPri(0x01);
-        Assert.assertTrue("Pri 0x01 2nd", m.getCbusPri() == 0x01);
-        Assert.assertEquals("Header 0x020", 0x200, m.getHeader());
-    }
-
     public void testDataElements() {
         CanMessage m = new CanMessage();
 
