@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -86,24 +86,6 @@ public class CanReply extends AbstractMRReply {
         } else return false;
     }
     
-    /**
-     * The following is really CBUS. 
-     * It should be refactored to a separate CBUS place,
-     * and also combined with the CanMessage version
-     */
-    public String toAddress() {
-        if (getElement(0) == 0x90) {
-            // + form
-            return "+n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
-        } else if (getElement(0) == 0x91) {
-            // - form
-            return "-n"+(getElement(1)*256+getElement(2))+"e"+(getElement(3)*256+getElement(4));
-        } else {
-            // hex form
-            return "x"+toString().replaceAll(" ","");
-        }      
-    }
-    
     protected int skipPrefix(int index) { return index; }
     
     // accessors to the bulk data
@@ -131,23 +113,6 @@ public class CanReply extends AbstractMRReply {
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
     
-    // CBUS format header
-    public int getId() { return getHeader()&0x7f; }
-    public void setId(int id) { 
-        if ( (id& ~0x7f) != 0 ) 
-            throw new IllegalArgumentException("invalid ID value: "+id);
-        int update = getHeader();
-        setHeader( (update&~0x07f) | id);
-    }
-    
-    public int getCbusPri() { return (getHeader()>>9)&0x03; }
-    public void setCbusPri(int pri) { 
-        if ( (pri& ~0x03) != 0 ) 
-            throw new IllegalArgumentException("invalid CBUS Pri value: "+pri);
-        int update = getHeader();
-        setHeader( (update&~0x600) | (pri << 9));
-    }
-
     // contents (private)
     private int _header;
     private boolean _isExtended;

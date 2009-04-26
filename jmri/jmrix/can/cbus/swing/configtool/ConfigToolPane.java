@@ -4,6 +4,7 @@ package jmri.jmrix.can.cbus.swing.configtool;
 
 import jmri.InstanceManager;
 import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.util.StringUtil;
 
 import java.util.ResourceBundle;
@@ -19,7 +20,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {
@@ -172,22 +173,22 @@ public class ConfigToolPane extends JPanel implements CanListener {
         
         public void reply(jmri.jmrix.can.CanReply m) {
             if (b1.isSelected()) {
-                f1.setText(m.toAddress());
+                f1.setText(CbusMessage.toAddress(m));
                 b1.setSelected(false);
             }
             if (b2.isSelected()) {
-                f2.setText(m.toAddress());
+                f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
             }
         }
     
         public void message(jmri.jmrix.can.CanMessage m) {
             if (b1.isSelected()) {
-                f1.setText(m.toAddress());
+                f1.setText(CbusMessage.toAddress(m));
                 b1.setSelected(false);
             }
             if (b2.isSelected()) {
-                f2.setText(m.toAddress());
+                f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
             }
         }
@@ -213,14 +214,14 @@ public class ConfigToolPane extends JPanel implements CanListener {
         boolean waiting() { return capture.isSelected(); }
         public void reply(jmri.jmrix.can.CanReply m) {
             if (capture.isSelected()) {
-                event.setText(m.toAddress());
+                event.setText(CbusMessage.toAddress(m));
                 capture.setSelected(false);
             }
         }
     
         public void message(jmri.jmrix.can.CanMessage m) {
             if (capture.isSelected()) {
-                event.setText(m.toAddress());
+                event.setText(CbusMessage.toAddress(m));
                 capture.setSelected(false);
             }
         }

@@ -40,13 +40,14 @@ import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusEventFilter;
 import jmri.jmrix.can.cbus.CbusEventFilterFrame;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 
 /**
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -877,7 +878,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if (nn == -1) return;
         ev = parseBinDecHexByte(evField.getText(), 65536, _decimal, "CBUS Console", "Invalid Event");
         if (ev == -1) return;
-        m.setCbusPri(CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         if (onButton.isSelected()) {
             m.setElement(0, CbusConstants.CBUS_ACON);
         } else {
@@ -913,8 +914,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public synchronized void message(CanMessage m) {  // receive a message and log it
         nextLine("sent: "+m.toString()+"\n",
-                "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+m.toAddress()+"]\n",
-                "Dyn Pri:"+m.getCbusPri()/4+" Min Pri:"+(m.getCbusPri()&3),
+                "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+CbusMessage.toAddress(m)+"]\n",
+                "Dyn Pri:"+CbusMessage.getPri(m)/4+" Min Pri:"+CbusMessage.getPri(m),
                 (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
     }
@@ -923,11 +924,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         int i;
         // Capture most recent received packet
         if (_decimal) {
-            lastDynPriField.setText(Integer.toString(r.getCbusPri()/4));
-            lastMinPriField.setText(Integer.toString(r.getCbusPri()&3));
+            lastDynPriField.setText(Integer.toString(CbusMessage.getPri(r)/4));
+            lastMinPriField.setText(Integer.toString(CbusMessage.getPri(r)&3));
         } else {
-            lastDynPriField.setText(Integer.toHexString(r.getCbusPri()/4));
-            lastMinPriField.setText(Integer.toHexString(r.getCbusPri()%3));
+            lastDynPriField.setText(Integer.toHexString(CbusMessage.getPri(r)/4));
+            lastMinPriField.setText(Integer.toHexString(CbusMessage.getPri(r)&3));
         }
         // Pay attention to data length in op-code
         for(i=0; i<(r.getElement(0)>>5)+1; i++){
@@ -938,8 +939,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             }
         }
         nextLine("rcvd: "+r.toString()+"\n",
-                "ID:"+r.getId()+" "+(r.isRtr() ? "R " : "N ")+decode(r)+" ["+r.toAddress()+"]\n",
-                "Dyn Pri:"+r.getCbusPri()/4+" Min Pri:"+(r.getCbusPri()&3),
+                "ID:"+CbusMessage.getId(r)+" "+(r.isRtr() ? "R " : "N ")+decode(r)+" ["+CbusMessage.toAddress(r)+"]\n",
+                "Dyn Pri:"+CbusMessage.getPri(r)/4+" Min Pri:"+(CbusMessage.getPri(r)&3),
                 (_filterFrame != null) ? _filterFrame.filter(r) : -1);
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
