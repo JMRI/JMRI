@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.lawicell.Message class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class MessageTest extends TestCase {
 
@@ -64,6 +64,26 @@ public class MessageTest extends TestCase {
         Assert.assertEquals("standard format 2 byte", "T00000123412345678\r", g.toString());
     }
 
+    // T0000F00D0
+    public void testFour() {
+        
+        CanMessage m = new CanMessage();
+        m.setExtended(true);
+        m.setRtr(false);
+        m.setHeader(0xF00D);
+        m.setNumDataElements(8);
+        m.setElement(0, 0x78);
+        m.setElement(1, 0x78);
+        m.setElement(2, 0x78);
+        m.setElement(3, 0x78);
+        m.setElement(4, 0x78);
+        m.setElement(5, 0x78);
+        m.setElement(6, 0x78);
+        m.setElement(7, 0x78);
+        
+        Message g = new Message(m);
+        Assert.assertEquals("standard format 2 byte", "T0000F00D87878787878787878\r", g.toString());
+    }
     // from here down is testing infrastructure
 
     public MessageTest(String s) {

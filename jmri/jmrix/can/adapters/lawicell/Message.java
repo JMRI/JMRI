@@ -13,20 +13,20 @@ import jmri.jmrix.can.CanMessage;
  *      tiiildd...[CR]
  *      Tiiiiiiiildd...[CR]
  * The t or T indicates a standard or extended CAN frame
- * iiiiiiii is the two byte header
+ * iiiiiiii is the header as hex digits
  * l is the number of bytes of data
  * dd are the (up to) 8 data bytes
  * <P>
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class Message extends AbstractMRMessage {
-    
+    static final int MAXLEN = 27;
     public Message() {
-        _nDataChars = 24;
-        _dataChars = new int[24];
+        _nDataChars = MAXLEN;
+        _dataChars = new int[_nDataChars];
     }
 
     public Message(CanMessage m) {
@@ -57,14 +57,14 @@ public class Message extends AbstractMRMessage {
     
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
-    public void setNumDataElements(int n) { _nDataChars = (n <= 24) ? n : 24;}
+    public void setNumDataElements(int n) { _nDataChars = (n <= MAXLEN) ? n : MAXLEN;}
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
       _dataChars[n] = v;
     }
 
     public void setData(int [] d) {
-        int len = (d.length <=24) ? d.length : 24;
+        int len = (d.length <=MAXLEN) ? d.length : MAXLEN;
         for (int i = 0; i < len; i++) {
             _dataChars[i] = d[i];
         }
