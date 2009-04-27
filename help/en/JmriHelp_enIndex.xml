@@ -138,6 +138,8 @@
  </indexitem>
  <indexitem text="InstallTest " target="package.apps.InstallTest.InstallTest"/>
 
+ <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
+
  <indexitem text="LDT signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Light " target="html.tools.Lights">
@@ -333,6 +335,8 @@
 
   <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
+  <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+
   <indexitem text="Memory Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
@@ -388,6 +392,4 @@
   <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
- <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
-
 </index>
