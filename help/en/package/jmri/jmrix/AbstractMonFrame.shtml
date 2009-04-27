@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AbstractMonFrame.shtml,v 1.3 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: AbstractMonFrame.shtml,v 1.4 2009-04-27 19:37:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -50,6 +50,14 @@ display all traffic on the link.
   <dd>Normally, the program just displays the data from the communication link.
   If you'd like each message to be preceeded by the time it was sent or
   received, check this box.
+  </dd>
+<dt>Add message</dt>
+  <dd>If you want to insert a message into the captured information,
+  e.g. to make a note about what you're about to do,
+  you can type it into the text field next to the "Add Message"
+  button and then click that button.  This is particularly 
+  useful when you're logging to a file (see below)
+  and want to make a note for later about what's happening.
   </dd>
 </dl>
 
