@@ -10,7 +10,7 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ConfigurationManager {
 
@@ -49,4 +49,4 @@ public class ConfigurationManager {
 
 }
 
-/* @(#)ActiveFlag.java */
+/* @(#)ConfigurationManager.java */
