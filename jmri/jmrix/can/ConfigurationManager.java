@@ -10,7 +10,7 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class ConfigurationManager {
 
@@ -39,8 +39,7 @@ public class ConfigurationManager {
 
         } if (options[2].equals(option)) {
             // "Test - do not use"
-            // This is just vanilla CAN with nothing additional right now
-            jmri.jmrix.can.ActiveFlag.setActive();
+            jmri.jmrix.can.nmranet.ActiveFlag.setActive();
 
         } else {
             // just ignore.  null often used during reconfig process

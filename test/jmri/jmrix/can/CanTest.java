@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class CanTest extends TestCase {
 
@@ -37,6 +37,7 @@ public class CanTest extends TestCase {
         suite.addTest(jmri.jmrix.can.CanReplyTest.suite());
         suite.addTest(jmri.jmrix.can.swing.monitor.MonitorTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusTest.suite());
+        suite.addTest(jmri.jmrix.can.nmranet.NmraNetTest.suite());
         suite.addTest(jmri.jmrix.can.adapters.AdapterTest.suite());
         return suite;
     }
