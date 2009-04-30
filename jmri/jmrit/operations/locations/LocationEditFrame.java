@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -55,7 +55,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	// labels
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textLength = new JLabel(rb.getString("Length"));
-	JLabel textTrain = new JLabel(rb.getString("Train"));
+	JLabel textTrain = new JLabel(rb.getString("TrainLocation"));
 	JLabel textLoc = new JLabel(rb.getString("Ops"));
 	JLabel textType = new JLabel(rb.getString("Types"));
 	JLabel textOptional = new JLabel("-------------------------------- Optional ------------------------------------");

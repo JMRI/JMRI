@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -140,7 +140,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange("trainDirection", Integer.toString(old), Integer.toString(direction));
+			firePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	public int getTrainDirections(){

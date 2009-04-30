@@ -2,6 +2,10 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,7 +19,7 @@ import java.util.ResourceBundle;
 
 
 /**
- * Action to print a summary of the Roster contents
+ * Action to print a summary of the Location Roster contents
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
@@ -23,12 +27,14 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
+	private boolean detailed = true;
 	String newLine = "\n";
+	String formFeed = "\f";
 	LocationManager manager = LocationManager.instance();
 	public static final int MAX_NAME_LENGTH = 25;
 
@@ -48,12 +54,10 @@ public class PrintLocationsAction  extends AbstractAction {
      */
     boolean isPreview;
     LocationsTableFrame panel;
-    
+    HardcopyWriter writer;
 
     public void actionPerformed(ActionEvent e) {
-
-        // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
+        // obtain a HardcopyWriter
         try {
             writer = new HardcopyWriter(mFrame, rb.getString("TitleLocationsTable"), 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
@@ -224,11 +228,55 @@ public class PrintLocationsAction  extends AbstractAction {
         			}
         		}
         	}
+        	// user requesting detailed report?
+        	if (detailed){
+        		s = formFeed + newLine + rb.getString("DetailedReport") + newLine;
+        		writer.write(s, 0, s.length());
+            	for (int i=0; i<locations.size(); i++){
+            		Location location = manager.getLocationById((String)locations.get(i));
+            		String name = location.getName();
+            		// services train direction
+            		int dir = location.getTrainDirections();
+            		s = newLine + name + getDirection(dir);     		
+            		writer.write(s, 0, s.length());
+            		// services car and engine types
+            		s = getLocationTypes(location);
+            		writer.write(s, 0, s.length());
+            		
+               		List yards = location.getTracksByNameList(Track.YARD);
+            		if (yards.size()>0){
+            			s = "   " + rb.getString("YardName")	+ newLine;
+            			writer.write(s, 0, s.length());
+            			printTrackInfo(location, yards);
+            		}
+            		
+              		List sidings = location.getTracksByNameList(Track.SIDING);
+            		if (sidings.size()>0){
+            			s = "    " + rb.getString("SidingName")	+ newLine;
+            			writer.write(s, 0, s.length());
+              			printTrackInfo(location, sidings);
+            		}
+            		
+               		List interchanges = location.getTracksByNameList(Track.INTERCHANGE);
+            		if (interchanges.size()>0){
+            			s = "    " + rb.getString("InterchangeName")	+ newLine;
+            			writer.write(s, 0, s.length());
+             			printTrackInfo(location, interchanges);
+            		}
+            		
+               		List stagings = location.getTracksByNameList(Track.STAGING);
+            		if (stagings.size()>0){
+            			s = "    " + rb.getString("StagingName")	+ newLine;
+            			writer.write(s, 0, s.length());
+             			printTrackInfo(location, stagings);
+            		}
+            	}
+        	}
         	
         	// and force completion of the printing
         	writer.close();
         } catch (IOException we) {
-        	log.error("Error printing ConsistRosterEntry: " + e);
+        	log.error("Error printing PrintLocationAction: " + we);
         }
     }
     
@@ -244,6 +292,132 @@ public class PrintLocationsAction  extends AbstractAction {
 		+ newLine;
    		return s;
     }
+    
+    private String getDirection(int dir){
+   		if ((Setup.getTrainDirection() & dir) == 0){
+   			return " " + rb.getString("LocalOnly") + newLine;
+   		}
+   		String 	direction = " " + rb.getString("ServicedByTrain")+ " ";
+		if ((Setup.getTrainDirection() & dir & Location.NORTH)>0)
+			direction = direction + rb.getString("North") + " ";
+		if ((Setup.getTrainDirection() & dir & Location.SOUTH)>0)
+			direction = direction + rb.getString("South") + " ";
+		if ((Setup.getTrainDirection() & dir & Location.EAST)>0)
+			direction = direction + rb.getString("East") + " ";
+		if ((Setup.getTrainDirection() & dir & Location.WEST)>0)
+			direction = direction + rb.getString("West") + " ";
+		direction = direction + newLine;
+		return direction;
+    }
+    
+	private void printTrackInfo(Location location, List tracks){
+		for (int k=0; k<tracks.size(); k++){
+			Track track = location.getTrackById((String)tracks.get(k));
+			String name = track.getName();
+			try {
+				String s = "\t" +name + getDirection(track.getTrainDirections());
+				writer.write(s, 0, s.length());
+				s = getTrackTypes(track);
+				writer.write(s, 0, s.length());
+				s = getTrackRoads(track);
+				writer.write(s, 0, s.length());
+			} catch (IOException we) {
+				log.error("Error printing PrintLocationAction: " + we);
+			}
+		}
+	}
+	
+	private int characters = 60;
+	private String getLocationTypes(Location location){
+		String t = "\t\t" + rb.getString("TypesServiced") + newLine + "\t\t";
+		int charCount = 0;
+		int typeCount = 0;
+		String[] cTypes = CarTypes.instance().getNames();	
+		for (int i =0; i<cTypes.length; i++){
+			if(location.acceptsTypeName(cTypes[i])){
+				t = t + cTypes[i] + ", ";
+				typeCount++;
+				charCount += cTypes[i].length() +2;
+				if(charCount > characters){
+					t = t + newLine + "\t\t";
+					charCount = 0;
+				}
+			}
+		}
+		String[] eTypes = EngineTypes.instance().getNames();
+		for (int i =0; i<eTypes.length; i++){
+			if (location.acceptsTypeName(eTypes[i])){
+				t = t + eTypes[i] + ", ";
+				typeCount++;
+				charCount += eTypes[i].length() +2;
+				if(charCount > characters){
+					t = t + newLine + "\t\t";
+					charCount = 0;
+				}
+			}
+		}
+		// does this location accept all types?
+		if (typeCount == cTypes.length + eTypes.length )
+			t = "\t\t" + rb.getString("LocationAcceptsAllTypes");
+		t = t + newLine;
+		return t;
+	}
+	
+	private String getTrackTypes(Track track){
+		String t = "\t\t" + rb.getString("TypesServicedTrack") + newLine + "\t\t";
+		int charCount = 0;
+		int typeCount = 0;
+		String[] cTypes = CarTypes.instance().getNames();	
+		for (int i =0; i<cTypes.length; i++){
+			if(track.acceptsTypeName(cTypes[i])){
+				t = t + cTypes[i] + ", ";
+				typeCount++;
+				charCount += cTypes[i].length() +2;
+				if(charCount > characters){
+					t = t + newLine + "\t\t";
+					charCount = 0;
+				}
+			}
+		}
+		String[] eTypes = EngineTypes.instance().getNames();
+		for (int i=0; i<eTypes.length; i++){
+			if (track.acceptsTypeName(eTypes[i])){
+				t = t + eTypes[i] + ", ";
+				typeCount++;
+				charCount += eTypes[i].length() +2;
+				if( charCount > characters){
+					t = t + newLine + "\t\t";
+					charCount = 0;
+				}
+			}
+		}
+		// does this track accept all types?
+		if (typeCount == cTypes.length + eTypes.length )
+			t = "\t\t" + rb.getString("TrackAcceptsAllTypes");
+		t = t + newLine;
+		return t;
+	}
+	
+	private String getTrackRoads(Track track){
+		if (track.getRoadOption().equals(Track.ALLROADS)){
+			return "\t\t" + rb.getString("AcceptsAllRoads") + newLine;
+		}
+		String r = "\t\t" + rb.getString("RoadsServicedTrack") + newLine + "\t" + "\t";
+		int charCount = 0;
+		String[] roads = CarRoads.instance().getNames();	
+		for (int i=0; i<roads.length; i++){
+			if (track.acceptsRoadName(roads[i])){
+				r = r + roads[i] +", ";
+				charCount += roads[i].length() +2;
+				if( charCount > characters){
+					r = r + newLine + "\t\t";
+					charCount = 0;
+				}
+			}
+		}
+		r = r + newLine;
+		return r;
+	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintLocationsAction.class.getName());
 }
