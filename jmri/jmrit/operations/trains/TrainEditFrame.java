@@ -30,6 +30,7 @@ import javax.swing.border.Border;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -48,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -861,8 +862,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				locationCheckBoxes.add(checkBox);
 				checkBox.setText(rl.toString());
 				checkBox.setName(rl.getId());
+
+				Location loc = LocationManager.instance().getLocationByName(rl.getName());
+				// need to listen for name and direction changes
+				loc.removePropertyChangeListener(this);
+				loc.addPropertyChangeListener(this);
+				boolean services = false;
+				// does train direction service location?
+				if ((rl.getTrainDirection() & loc.getTrainDirections())>0)
+					services = true;
+				// train must service a single location
+				if (locations.size() == 1)
+					services = true;
 				// check can drop and pickup, and moves > 0
-				if ((rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
+				if (services && (rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
 					checkBox.setSelected(!_train.skipsLocation(rl.getId()));
 				else
 					checkBox.setEnabled(false);
@@ -908,14 +921,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 			Route route = _train.getRoute();
-			if (route != null)
+			if (route != null){
 				route.removePropertyChangeListener(this);
+				List<String> locations = route.getLocationsBySequenceList();
+				for (int i =0; i<locations.size(); i++){
+					RouteLocation rl = route.getLocationById(locations.get(i));
+					Location loc = LocationManager.instance().getLocationByName(rl.getName());
+					loc.removePropertyChangeListener(this);
+				}
+			}
 		}
 		super.dispose();
 	}
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
 			updateCarTypeCheckboxes();
 		}
@@ -925,10 +946,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
-		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || 
+				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();
 		}
-		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || 
+				e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateNumberCars();
 		}
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
