@@ -72,7 +72,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1155,9 +1155,9 @@ public class LogixTableAction extends AbstractTableAction {
 			return;
         if (_curLogix.getSystemName().equals(SensorGroupFrame.logixSysName)) {
             javax.swing.JOptionPane.showMessageDialog(
-                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
-                                new Object[] {SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName }),
-                                 rbx .getString("WarnTitle"),
+                    editLogixFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
+                        new Object[] {SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName }),
+                    rbx .getString("WarnTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -1883,7 +1883,12 @@ public class LogixTableAction extends AbstractTableAction {
         String and = " " + rbx.getString("LogicAND").toLowerCase() + " ";
         String or = " " + rbx.getString("LogicOR").toLowerCase() + " ";
         String str = new String("");
-        for (int i=0; i<_variableList.size(); i++) {
+        if (_variableList.get(0).isNegated())
+        {
+            str = not+ " ";
+        }
+        str = str + row + "1";
+        for (int i=1; i<_variableList.size(); i++) {
             ConditionalVariable variable = _variableList.get(i);
             switch (variable.getOpern() ) {
                 case Conditional.OPERATOR_AND:
