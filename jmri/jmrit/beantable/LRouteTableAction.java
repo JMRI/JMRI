@@ -133,7 +133,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     getBySystemName(sysName).addPropertyChangeListener(this);
                 }
             }
-            log.debug("updateNameList: sysNameList size= "+sysNameList.size());
+            if(log.isDebugEnabled()) {
+                log.debug("updateNameList: sysNameList size= "+sysNameList.size());
+            }
         }
         public String getColumnName(int col) {
             if (col == EDITCOL)
@@ -456,6 +458,9 @@ public class LRouteTableAction extends AbstractTableAction {
         _userName.setText(logix.getUserName());
         String logixSysName = logix.getSystemName();
         int numConditionals = logix.getNumConditionals();
+        if(log.isDebugEnabled()) {
+            log.debug("setupEdit: logixSysName= "+logixSysName+", numConditionals= "+numConditionals);
+        }
         for (int i=0; i<numConditionals; i++) {
             String cSysName = logix.getConditionalByNumberOrder(i);
             switch (getRouteConditionalType(logixSysName, cSysName))
@@ -1412,6 +1417,7 @@ public class LRouteTableAction extends AbstractTableAction {
     void updatePressed(boolean newRoute ) {
         Logix logix = checkNamesOK();
         if (logix == null) {
+            log.error("No Logix found!");
             return;
         }
         String sName = logix.getSystemName();
@@ -1422,7 +1428,11 @@ public class LRouteTableAction extends AbstractTableAction {
         initializeIncludedInputList();
         initializeIncludedOutputList();
         initializeIncludedAlignList();
-
+        if(log.isDebugEnabled()) {
+            log.debug("updatePressed: _includedInputList.size()= "+_includedInputList.size()+
+                  ", _includedOutputList.size()= "+_includedOutputList.size()+
+                  ", _includedAlignList.size()= "+_includedAlignList.size());
+        }
         ////// Construct output actions for trigger conditionals ///////////
         ArrayList <ConditionalAction> actionList = new ArrayList<ConditionalAction>();
         for (int i=0; i<_includedOutputList.size(); i++) {
@@ -1528,6 +1538,11 @@ public class LRouteTableAction extends AbstractTableAction {
                      rbx .getString("addErr"), javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if(log.isDebugEnabled()) {
+            log.debug("actionList.size()= "+actionList.size()+", oneTriggerList.size()= "+oneTriggerList.size()+
+                  ", twoTriggerList.size()= "+twoTriggerList.size()+
+                  ", onChangeList.size()= "+onChangeList.size()+", vetoList.size()= "+vetoList.size());
+        }
         logix.deActivateLogix();
 
         // remove old Conditionals for actions (ver 2.5.2 only -remove a bad idea)
@@ -1565,13 +1580,13 @@ public class LRouteTableAction extends AbstractTableAction {
             numConds = makeRouteConditional(numConds, /*true, actionList,*/ onChangeList, twoTriggerList, 
                                                vetoList, logix, sName, uName, "T");
         } else {
-            for (int i=0; i<oneTriggerList.size(); i++){
+            for (int i=0; i<oneTriggerList.size(); i++) {
                 ArrayList<ConditionalVariable> vList = new ArrayList<ConditionalVariable>();
                 vList.add(oneTriggerList.get(i));
                 numConds = makeRouteConditional(numConds, /*false,*/ actionList, vList, 
                                                    vetoList, logix, sName, uName, "T");
             }
-            for (int i=0; i<twoTriggerList.size(); i++){
+            for (int i=0; i<twoTriggerList.size(); i++) {
                 ArrayList<ConditionalVariable> vList = new ArrayList<ConditionalVariable>();
                 vList.add(twoTriggerList.get(i));
                 numConds = makeRouteConditional(numConds, /*true, actionList,*/ onChangeList, vList, 
@@ -1738,7 +1753,17 @@ public class LRouteTableAction extends AbstractTableAction {
             numConds = makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList, 
                                                vetoList, logix, sName, uName, "L");
         }
+        System.out.println("Conditionals added= "+logix.getNumConditionals());
+        for (int i=0; i<logix.getNumConditionals(); i++)
+        {
+            System.out.println("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
+        }
         logix.activateLogix();
+        System.out.println("Conditionals added= "+logix.getNumConditionals());
+        for (int i=0; i<logix.getNumConditionals(); i++)
+        {
+            System.out.println("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
+        }
         finishUpdate(uName, newRoute);
     } //updatePressed
 
@@ -1756,6 +1781,9 @@ public class LRouteTableAction extends AbstractTableAction {
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction>actionList,
                         ArrayList<ConditionalVariable>triggerList, ArrayList<ConditionalVariable>vetoList,
                                 Logix logix, String sName, String uName, String type) {
+        if(log.isDebugEnabled()) {
+            log.debug("makeRouteConditional: numConds= "+numConds+", triggerList.size()= "+triggerList.size());
+        }
         if ((triggerList.size() == 0) && (vetoList.size() ==0)) {
             return numConds;
         }
@@ -1805,6 +1833,7 @@ public class LRouteTableAction extends AbstractTableAction {
             int logicType = _newRouteType ? Conditional.MIXED : Conditional.ALL_AND;
             c.setLogicType(logicType, antecedent);
             logix.addConditional(cSystemName, 0);
+            System.out.println("Conditional added: SysName= \""+cSystemName+"\"");
             c.calculate(true, null);
             numConds++;
         }
@@ -1825,6 +1854,7 @@ public class LRouteTableAction extends AbstractTableAction {
         c.setAction(actionList);
         c.setLogicType(Conditional.ALL_AND, "");
         logix.addConditional(cSystemName, 0);
+        System.out.println("Conditional added: SysName= \""+cSystemName+"\"");
         c.calculate(true, null);
         numConds++;
         return numConds;
