@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LogixAddEdit.shtml,v 1.5 2009-03-28 16:31:51 jacobsen Exp $ -->
+<!-- $Id: LogixAddEdit.shtml,v 1.6 2009-05-02 04:15:23 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -60,16 +60,10 @@
 	may not take effect.</b></p> 
 	<P>Clicking <b>Calculate</b> under the conditionals table causes all 
 	Conditionals of the Logix to be calculated. Resulting states are displayed in 
-	the State column of the table. When <b>Calculate</b> is clicked, or when any
-	of the monitored entities of an active Logix change state, Conditionals are 
-	calculated in order of their position in the conditionals table, starting at 
-	the top and proceeding down. For many cases, the order of calculation is not 
-	important. For some cases (for example, where one Conditional tests the state 
-	of another) the order of calculating Conditionals may change the results.  
-	So pay attention to the order of the Conditionals in the conditionals table. 
-	When Conditionals are calculated via the <b>Calculate</b> button, no actions 
-	are taken.</p>
-    <p>The order of Conditionals in the Conditionals table may be changed
+	the State column of the table. Since the Logix is "inactive" while being edited, 
+	no Conditional actions are taken when the <b>Calculate</b> button is pressed.  
+	</p>
+        <p>The order of Conditionals in the Conditionals table may be changed
 	by clicking <b>Reorder</b> (below the Conditionals table). Clicking
 	<b>Reorder</b> changes all edit buttons in the last Column of the table to 
 	<b>First</b>. Select the Conditional that is to be first, and it

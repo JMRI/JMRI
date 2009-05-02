@@ -956,6 +956,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.RouteTable" url="package/jmri/jmrit/beantable/RouteTable.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.LRouteTable" url="package/jmri/jmrit/beantable/LRouteTable.shtml"/>
+
 <mapID target="package.jmri.jmrix.loconet.soundloader.EditorFrame" url="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.locogen.LocoGenFrame" url="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml"/>
@@ -1017,6 +1019,8 @@
 <mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml"/>
 
 <mapID target="html.tools.Routes" url="html/tools/Routes.shtml"/>
+
+<mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
 
 <mapID target="manual.Main_Panels_PanelEditor" url="manual/Main_Panels.shtml#PanelEditor"/>
 
@@ -1185,8 +1189,6 @@
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 
 <mapID target="package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml"/>
-
-<mapID target="package.jmri.jmrit.beantable.LRouteTable" url="package/jmri/jmrit/beantable/LRouteTable.shtml"/>
 
 <mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml"/>
 

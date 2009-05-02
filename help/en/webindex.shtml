@@ -529,28 +529,26 @@
 </li>
  
 <li>Logix <ul>
-  
-<li>
-<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add Logix </a>
-<ul></ul>
-</li>
-
-  
-<li>Digitrax <ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Edit Logix </a>
-<ul></ul>
-</li>
-
-  
+   
 <li>
 <a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix Table </a>
 <ul></ul>
 </li>
 
+<li>
+<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add Logix </a>
+<ul></ul>
+</li>
+
+<li>
+<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Edit Logix </a>
+<ul></ul>
+</li>
+ 
+<li>
+<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Edit Conditional </a>
+<ul></ul>
+</li>
  
 </ul>
 </li>
@@ -801,6 +799,27 @@
 </li>
 
  
+</ul>
+</li>
+ 
+<li>LRoute <ul>
+  
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Add LRoute </a>
+<ul></ul>
+</li>
+
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoute Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Edit LRoute </a>
+<ul></ul>
+</li>
+
 </ul>
 </li>
  
