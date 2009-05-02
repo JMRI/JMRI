@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.11 2009-03-28 16:31:51 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.12 2009-05-02 04:10:05 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -42,69 +42,60 @@ and one for set up of actions. Conditionals are statements of the form:</P>
 	if (logical expression) then (action).
 </UL>
 A Conditional has two distinct parts: its "logical expression" and its
-"action". The window has separate sections for set up of each.
-<P></P>
+"action". The window has separate sections for the set up of each.
+</p>
 <P>The logical expression section contains a table of state
-variables, with two buttons below. Press the <B>Add State Variable</B>
-to add a state variable (a row in the state variables table). The first
-column in the state variables table displays an automatic AND when
-appropriate. The second column contains a choice box that allows the
-user to select the NOT operator as needed. The third column contains a
-scrolling choice box, allowing selection of state variable type. Next
-are three columns, Name, Data 1, and Data 2, that are used to provide
-needed information for the selected variable type. When a variable type
-is selected, N/A (for Not Applicable) is displayed in data entries that
-are not needed to define the state variable, and a prompt message
-telling what to enter in the remaining column(s) is displayed below the
-table (above the two buttons). Available state variables are documented
-<A HREF="#variable">below</A>. When a name is entered, it must
-correspond to the system name or the user name of an existing entity
-(sensor, turnout, light, etc). It is useful to open the Sensor Table
-when entering sensor names, or the Turnout Table to show available
-turnouts, etc.</P>
+variables, with two buttons below.  The first
+column in the state variables table displays the row number of the 
+state variable.  This is only of importance when the <b>Logic Operator</b>
+choice is set to 'Mixed'.  The second column contains an automatic AND when
+the <b>Logic Operator</b> choice is set to 'AND' or an automatic OR
+when the choice is 'OR'.  When the choice is 'Mixed' the user may 
+select AND or OR as needed.   The third column contains a choice box that allows the
+user to select the NOT operator as needed. The fourth column is a description
+of the state variable typeand the condition for which it is to be tested. Next
+is a column displaying the current state for the test description.
+The state displayed includes the effect
+of the NOT operator, if NOT is selected. 
 <P>The Triggers Calculation column contains checkboxes that normally
 are checked, so that a change in the state variable will trigger a
 calculation of the Logix. For those rare cases where a change in a
 specific entity (sensor, turnout, etc.) should not trigger a
-calculation, you should uncheck the checkbox by clicking on it.
-Unchecking the checkbox tells the program not to monitor that entity for
-state changes. Note that if an entity occurs in more than one state
-variable in any Conditional of the Logix, <B>all</B> state variables
-where the specific entity occurs must be unchecked if a change in that
-entity's state is not to trigger a calculation. If there are
-inconsistencies (checked in some places, and unchecked in others) are
-found when the Edit Logix window is closed, a warning is displayed.
-Inconsistencies result in Logix calculation when the entity changes
-state, which could produce unexpected behavior. So don't ignore the
-warnings; fix the inconsistencies.</P>
-<P>The last column of the table (<B>Delete</B> buttons) is used to
+calculation result, you should uncheck the checkbox by clicking on it.
+Unchecking the checkbox tells the program to monitor that entity for
+state changes and calculate the stae of the Conditional, but take no
+action on the result of the calculation.
+</P>
+<P>The last two columns of the table (<B>Edit</B> and <B>Delete</B> buttons)
+are used to edit or delete that row in the state variable table.
 delete a state variable if you decide it is no longer needed. The State
 column of the table shows the state (true or false) of each state
-variable when it is evaluated. The state displayed includes the effect
-of the NOT operator, if NOT is selected. For the logical expression, and
-therefore the Conditional, to calculate true, all state variables must
-evaluate to true.</P>
+variable when it is evaluated.  
+</p>
+<p>For the logical expression, and
+therefore the Conditional, to calculate true, all state variables
+must evaluate to true.</P>
 <P>At any time during the entry of state variable data, <B>Check
 State Variables</B> may be clicked to check entered data and evaluate state
 variables. When this button is pressed, checking and evaluation proceeds
 until the check completes successfully, or an error is detected. If an
 error is detected, checking stops for you to correct the error and click
-<B>Check State Variables</B> again. <B>Please remember after editing
+<B>Check State Variables</B> again. <i>Please remember after editing
 name and data items to click a different cell in the table before
 clicking <B>Check State Variables</B> (or <B>Update Conditional</B> at
 the bottom of the window) so that the program is notified that you have
 finished your entry. Otherwise your entry may not take effect, and an
-error may be reported unnecessarily.</B></P>
+error may be reported unnecessarily.</i></P>
 
 <p>
-At first, the Conditional will test for the "AND" of all the 
-variables.  It will be true when they are all true, after taking the
+The default <b>Logic Operator</b> is 'AND'.  In this case the Conditional 
+will test if all variable tests are true, after taking the
 "NOT" negations into account.
-Using the "Logic Operator" box below the list of variables, you can
+Using the <b>Logic Operator</b> box below the list of variables, you can
 change that to "OR" or "Mixed".  "OR" means the conditional will be
-true if any of the variables are true, after accounting for the negations.
+true if any one of the variable tests are true, after accounting for the negations.
 Selecting "Mixed" will let you enter a logical expression in a new 
-text box.  
+text box using AND's, 'OR's and NOT's and the row numbers.  
 In this expression, 
 each variable is referred to by number, e.g. R1, R2, R3
 for the 1st three variables, you can use the operators "and", "or" 
@@ -112,11 +103,41 @@ and "not" in addition to parentheses.
 Some examples:
 <pre>
    R1 and R2
-   
    R1 or (R2 and R3)
-   
    (R2 and R3) or (R3 and R1)
 </pre>
+<H2>Adding a New State Variable</H2>
+        <p>Press the <b>Add State Variable</b> to add a state 
+	variable (a row in the state variables table).  This brings up a
+        window with a choice box for the user to select a state variable type.
+        Available state  variables are documented 
+	<a href="#variable">below</a>.  When a type is choosen the Edit Variable
+        window displays a text field for the name of the entity to be used for
+        the state variable. 
+        When a name (either system name or user
+	name) is entered, it must correspond to an existing entity (sensor, turnout, 
+	light, etc.). It is useful to open the Sensor Table when entering sensor 
+	names, or the Turnout Table to show available turnouts, etc.</p>
+	<p><b>Caution:</b> If you use user names to specify state variables be 
+	careful when editing your user names or you may break your state variable
+	definitions. The user name specified must match, character for character, 
+	including blanks, the actual user name of the sensor, turnout, etc., for 
+	your state variables to work. If you want to be able to freely edit your 
+	user names, use system names to define your state variables.</p>
+	<p>At any time during the entry 
+	of state variable data, the <b>Check State Variables</b> button may be 
+	clicked to check the entered data and evaluate the state variables. When
+	this button is pressed, the checking and evaluation proceeds until the
+	check completes successfully, or an error is detected. If an error is 
+	detected, the checking stops for the user to correct the error and click
+	<b>Check State Variables</b> again. <i>Please remember after editing the 
+	system name and data items to click a different cell in the table before 
+	clicking <b>Check State Variables</b> (or <b>Update Conditional</b> at 
+	the bottom of the window) so that the program is notified that you have 
+	finished your entry. Otherwise your entry may not take effect, and an error 
+	may be reported unnecessarily.</i></p>
+
+<H2>Adding a New Action</H2>
 
 <P>The action section of the Edit Conditional window provides for
 specifying the actions to be taken when a Conditional is
