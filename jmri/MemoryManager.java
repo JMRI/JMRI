@@ -39,9 +39,9 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @see             jmri.Memory
- * @see             jmri.AbstractMemoryManager
+ * @see             jmri.managers.AbstractMemoryManager
  * @see             jmri.InstanceManager
  */
 public interface MemoryManager extends Manager {

@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.2 2009-05-03 17:08:44 jacobsen Exp $
+  $Id: package.html,v 1.1 2009-05-03 17:08:44 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -14,25 +14,21 @@
 </head>
 <body bgcolor="white">
 
-Provides implementations of various JMRI interfaces.
+Provides implementations of various JMRI managers.
 
 <p>
 As a long term project, we're moving various Abstract* and Default*
-implementations out of the {@link jmri} package itself, and moved 
+managers out of the {@link jmri} package itself, and moved 
 into here. In the meantime, you'll find many of them still in 
 {@link jmri}.
 
 <p>
-Implementations of managers can be found in the
-{@link jmri.managers} package.
-
-<p>
-Implementations that use Swing should be put in the
-{@link jmri.implementation.swing} package.
+Implementations of individual object interfaces are
+found in the {@link jmri.implementations} package.
 
 <!-- Put @see and @since tags down here. -->
-@see jmri.managers
-@since 2.1.5
+@see jmri.implementations
+@since 2.5.3
 
 </body>
 </html>
