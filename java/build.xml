@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.43 $ -->
+<!-- Revision $Revision: 1.44 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -374,11 +374,12 @@
            windowtitle="JMRI API">
       <group title="Core" packages="jmri"/>
       <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
-      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+      <group title="Applications" packages="apps:apps.*"/>
+      <group title="Implementations" packages="jmri.implementation:jmri.managers:jmri.progdebugger:jmri.layout"/>
       <group title="Utilities" packages="jmri.util:jmri.util.*"/>
       <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
-      <group title="Applications" packages="apps:apps.*"/>
-      <group title="Implementations" packages="jmri.managers:jmri.progdebugger:jmri.layout"/>
+      <!-- Layout Connections last because so large -->
+      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 	  
       <classpath refid="project.class.path"    />
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
