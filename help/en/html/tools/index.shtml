@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2009-05-02 04:14:08 pete_cressman Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2009-05-03 18:08:52 pete_cressman Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -104,12 +104,13 @@
 
 		<dt><h3><a href="LRoutes.shtml">LRoutes</a></h3></dt>
 		<dd>
-		    An LRoutes extend the capabilities of Routes by 
+		    LRoutes extend the capabilities of Routes by 
                     implementing them as a Logix.  LRoutes can be defined 
                     with an unlimited number of Sensors, Turnouts, Lights, 
                     and/or SignalHeads for actions or controls.  LRoutes
-                    may be extended to include any of the Logix capabilities
-                    and provide an easy to use start for creating a new Logix.
+                    provide an easy starting point for creating new Logix
+                    since thay may be extended to include any of the 
+                    Logix capabilities.
 		</dd>
 
         <dt><h3><a href="fastclock/index.shtml">Fast Clocks</a></h3></dt>
