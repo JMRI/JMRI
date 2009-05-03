@@ -1,6 +1,9 @@
 // DefaultMemoryManager.java
 
-package jmri;
+package jmri.managers;
+
+import jmri.*;
+import jmri.implementation.DefaultMemory;
 
 /**
  * Provide the concrete implementation for the Internal Memory Manager.

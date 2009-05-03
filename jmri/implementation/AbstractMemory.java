@@ -1,6 +1,8 @@
 // AbstractMemory.java
 
-package jmri;
+package jmri.implementation;
+
+import jmri.*;
 
 /**
  * Base for the Memory interface.
@@ -11,7 +13,7 @@ package jmri;
  * that corresponds to a particular physical Reporter on the layout.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.1 $
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
 

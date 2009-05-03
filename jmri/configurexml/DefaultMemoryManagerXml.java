@@ -1,43 +1,13 @@
 package jmri.configurexml;
 
-import jmri.DefaultMemoryManager;
-
-import org.jdom.Element;
-
 /**
- * Persistency implementation for the default MemoryManager persistance.
- * <P>The state of memory objects is not persisted, just their existance.
+ * Dummy class, just present so files that refer to this 
+ * class (e.g. pre JMRI 2.5.4 files) can still be read by
+ * deferring to the present class.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2009
+ * @version $Revision: 1.7 $
  */
-public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
-
-    public DefaultMemoryManagerXml() {
-    }
-
-    /**
-     * Subclass provides implementation to create the correct top
-     * element, including the type information.
-     * Default implementation is to use the local class here.
-     * @param memories The top-level element being created
-     */
-    public void setStoreElementClass(Element memories) {
-        memories.setAttribute("class","jmri.configurexml.DefaultMemoryManagerXml");
-    }
-
-    /**
-     * Create a MemoryManager object of the correct class, then
-     * register and fill it.
-     * @param memories Top level Element to unpack.
-     */
-    public void load(Element memories) {
-        // create the master object
-        DefaultMemoryManager mgr = DefaultMemoryManager.instance();
-        // load individual routes
-        loadMemories(memories);
-
-    }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultMemoryManagerXml.class.getName());
+public class DefaultMemoryManagerXml 
+    extends jmri.managers.configurexml.DefaultMemoryManagerXml {
 }

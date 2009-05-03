@@ -1,6 +1,8 @@
 // DefaultMemory.java
 
-package jmri;
+package jmri.implementation;
+
+import jmri.*;
 
 /**
  * Concrete implementation of the Reporter interface for the Internal system.

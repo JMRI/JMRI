@@ -7,6 +7,7 @@ import jmri.jmrit.display.LayoutBlockManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import jmri.managers.DefaultMemoryManager;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -31,7 +32,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 public class InstanceManager {
 
