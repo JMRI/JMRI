@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-5-4.dtd,v 1.1 2009-04-24 23:15:16 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-5-4.dtd,v 1.2 2009-05-04 06:37:11 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.5.4 development.  Do not modify it       -->
 <!-- after version 2.5.4 is released.  For more information,                -->
@@ -229,15 +229,18 @@
   <!ELEMENT conditional (conditionalStateVariable*,conditionalAction*) >
     <!ATTLIST conditional systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST conditional userName	CDATA #IMPLIED>
+    <!ATTLIST conditional antecedent CDATA #IMPLIED>
+    <!ATTLIST conditional logicType	CDATA #IMPLIED>
 
     <!ELEMENT conditionalStateVariable EMPTY >
      <!ATTLIST conditionalStateVariable operator	CDATA #REQUIRED>  
+     <!ATTLIST conditionalStateVariable negated	(yes | no) "no" >  
      <!ATTLIST conditionalStateVariable type	CDATA #REQUIRED>  
      <!ATTLIST conditionalStateVariable systemName	CDATA #REQUIRED>  
      <!ATTLIST conditionalStateVariable dataString	CDATA #REQUIRED> 
      <!ATTLIST conditionalStateVariable num1	CDATA #REQUIRED> 
      <!ATTLIST conditionalStateVariable num2	CDATA #REQUIRED> 
-     <!ATTLIST conditionalStateVariable triggersCalc	CDATA #REQUIRED> 
+     <!ATTLIST conditionalStateVariable triggersCalc (yes|no) "yes" > 
 
     <!ELEMENT conditionalAction EMPTY >
      <!ATTLIST conditionalAction option	CDATA #REQUIRED>  
