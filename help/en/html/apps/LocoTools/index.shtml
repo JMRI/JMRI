@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2008-04-12 07:18:51 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2009-05-04 17:03:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -79,6 +79,8 @@
 			time the message was received, and/or the raw packet
 			bytes. The log information can also be stored in a text
 			file.</p>
+			For more information, see the
+			<a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">help page</a>.
 		    </dd>
 
 		    <dt class=im100w>
@@ -117,6 +119,8 @@
 			hexadecimal as pairs of characters, in the same way its
 			displayed in the LocoNet monitor.
 			</p>
+			For more information, see the
+			<a href="../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">help page</a>.
 		    </dd>
 
 		    <dt class=im100w>
@@ -141,6 +145,9 @@
 		    More on the tool for the
 		    <ul>
 		    <LI><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+		    <LI><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
+		    <LI><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
+		    <LI><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
 		    </ul>
 		    </dd>
 
