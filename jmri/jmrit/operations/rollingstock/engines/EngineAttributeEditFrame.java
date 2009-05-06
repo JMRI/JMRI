@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -132,7 +132,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 					rb.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
-			
+			if (newItem.equals(oldItem))
+				return;
 			addItemToCombobox (newItem);
 			replaceItem(oldItem, newItem);
 			deleteItemFromCombobox (oldItem);
@@ -141,6 +142,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
 	private void deleteItemFromCombobox (String deleteItem){
 		if(_comboboxName == EngineEditFrame.ROAD){
+			// purge train and locations by using replace
 			CarRoads.instance().replaceName(deleteItem, null);
 		}
 		if(_comboboxName == EngineEditFrame.MODEL){
