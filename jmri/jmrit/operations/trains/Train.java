@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.43 $
+ * @version             $Revision: 1.44 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -499,18 +499,22 @@ public class Train implements java.beans.PropertyChangeListener {
    		return roads;
     }
     
-    public void addRoadName(String road){
+    public boolean addRoadName(String road){
      	if (_roadList.contains(road))
-    		return;
+    		return false;
     	_roadList.add(road);
     	log.debug("train (" +getName()+ ") add car road "+road);
     	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+    	return true;
     }
     
-    public void deleteRoadName(String road){
+    public boolean deleteRoadName(String road){
+     	if (!_roadList.contains(road))
+    		return false;
     	_roadList.remove(road);
     	log.debug("train (" +getName()+ ") delete car road "+road);
     	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+       	return true;
     }
     
     public boolean acceptsRoadName(String road){

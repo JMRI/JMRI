@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -133,8 +133,9 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     
     public void replaceName(String oldName, String newName){
     	addName(newName);
-    	deleteName(oldName);
     	firePropertyChange (CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+    	// need to keep old name so location manager can replace properly
+       	deleteName(oldName);
     }
     
     public JComboBox getComboBox(){
