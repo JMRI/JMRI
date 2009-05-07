@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
 import java.util.List;
+import javax.swing.JComboBox;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
@@ -24,7 +25,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -74,6 +75,12 @@ public class OperationsCarsTest extends TestCase {
 		cc1.addName("Ugly Brown");
 		Assert.assertTrue("Car Color Still Has BoxCar Red", cc1.containsName("BoxCar Red"));
 		Assert.assertTrue("Car Color Add Ugly Brown", cc1.containsName("Ugly Brown"));
+		String[] colors = cc1.getNames();
+		Assert.assertEquals("First color name", "Ugly Brown", colors[0]);
+		Assert.assertEquals("2nd color name", "BoxCar Red", colors[1]);
+		JComboBox box = cc1.getComboBox();
+		Assert.assertEquals("First comboBox color name", "Ugly Brown", box.getItemAt(0));
+		Assert.assertEquals("2nd comboBox color name", "BoxCar Red", box.getItemAt(1));
 		cc1.deleteName("Ugly Brown");
 		Assert.assertFalse("Car Color Delete Ugly Brown", cc1.containsName("Ugly Brown"));
 		cc1.deleteName("BoxCar Red");
@@ -96,6 +103,12 @@ public class OperationsCarsTest extends TestCase {
 		cl1.addName("2");
 		Assert.assertTrue("Car Length Still Has 1", cl1.containsName("1"));
 		Assert.assertTrue("Car Length Add s2", cl1.containsName("2"));
+		String[] lengths = cl1.getNames();
+		Assert.assertEquals("First length name", "2", lengths[0]);
+		Assert.assertEquals("2nd length name", "1", lengths[1]);
+		JComboBox box = cl1.getComboBox();
+		Assert.assertEquals("First comboBox length name", "2", box.getItemAt(0));
+		Assert.assertEquals("2nd comboBox length name", "1", box.getItemAt(1));
 		cl1.deleteName("2");
 		Assert.assertFalse("Car Length Delete 2", cl1.containsName("2"));
 		cl1.deleteName("1");
@@ -114,6 +127,12 @@ public class OperationsCarsTest extends TestCase {
 		co1.addName("Really Rich 3");
 		Assert.assertTrue("Car Owner Still Has", co1.containsName("Rich Guy 1"));
 		Assert.assertTrue("Car Owner Add second", co1.containsName("Really Rich 3"));
+		String[] owners = co1.getNames();
+		Assert.assertEquals("First owner name", "Really Rich 3", owners[0]);
+		Assert.assertEquals("2nd owner name", "Rich Guy 1", owners[1]);
+		JComboBox box = co1.getComboBox();
+		Assert.assertEquals("First comboBox owner name", "Really Rich 3", box.getItemAt(0));
+		Assert.assertEquals("2nd comboBox owner name", "Rich Guy 1", box.getItemAt(1));
 		co1.deleteName("Really Rich 3");
 		Assert.assertFalse("Car Owner Delete", co1.containsName("Really Rich 3"));
 		co1.deleteName("Rich Guy 1");
@@ -137,8 +156,17 @@ public class OperationsCarsTest extends TestCase {
 		cr1.addName("Road New3");
 		Assert.assertTrue("Car Roads Still Has New1", cr1.containsName("Road New1"));
 		Assert.assertTrue("Car Roads Add New3", cr1.containsName("Road New3"));
-		cr1.deleteName("Road New3");
-		Assert.assertFalse("Car Roads Delete New3", cr1.containsName("Road New3"));
+		cr1.replaceName("Road New3", "Road New4");
+		Assert.assertFalse("Car Roads replace New3", cr1.containsName("Road New3"));
+		Assert.assertTrue("Car Roads replace New3 with New4", cr1.containsName("Road New4"));
+		String[] roads = cr1.getNames();
+		Assert.assertEquals("First road name", "Road New4", roads[0]);
+		Assert.assertEquals("2nd road name", "Road New1", roads[1]);
+		JComboBox box = cr1.getComboBox();
+		Assert.assertEquals("First comboBox road name", "Road New4", box.getItemAt(0));
+		Assert.assertEquals("2nd comboBox road name", "Road New1", box.getItemAt(1));
+		cr1.deleteName("Road New4");
+		Assert.assertFalse("Car Roads Delete New4", cr1.containsName("Road New4"));
 		cr1.deleteName("Road New1");
 		Assert.assertFalse("Car Roads Delete New1", cr1.containsName("Road New1"));
 	}
@@ -158,8 +186,17 @@ public class OperationsCarsTest extends TestCase {
 		ct1.addName("Type New3");
 		Assert.assertTrue("Car Types Still Has New1", ct1.containsName("Type New1"));
 		Assert.assertTrue("Car Types Add New3", ct1.containsName("Type New3"));
-		ct1.deleteName("Type New3");
-		Assert.assertFalse("Car Types Delete New3", ct1.containsName("Type New3"));
+		ct1.replaceName("Type New3", "Type New4");
+		Assert.assertFalse("Car Types replace New3", ct1.containsName("Type New3"));
+		Assert.assertTrue("Car Types replace New3 with New4", ct1.containsName("Type New4"));
+		String[] types = ct1.getNames();
+		Assert.assertEquals("First type name", "Type New4", types[0]);
+		Assert.assertEquals("2nd type name", "Type New1", types[1]);
+		JComboBox box = ct1.getComboBox();
+		Assert.assertEquals("First comboBox type name", "Type New4", box.getItemAt(0));
+		Assert.assertEquals("2nd comboBox type name", "Type New1", box.getItemAt(1));
+		ct1.deleteName("Type New4");
+		Assert.assertFalse("Car Types Delete New4", ct1.containsName("Type New4"));
 		ct1.deleteName("Type New1");
 		Assert.assertFalse("Car Types Delete New1", ct1.containsName("Type New1"));
 	}

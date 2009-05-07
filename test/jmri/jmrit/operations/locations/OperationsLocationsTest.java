@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import java.util.List;
 import java.io.File;
@@ -33,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -609,8 +610,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test typename support
 	public void testTypeNameSupport() {
-		Location l = new Location("Test id", "Test Name");
-		Assert.assertEquals("Location id", "Test id", l.getId());
+		// use LocationManager to allow replace car type to work properly
+		Location l = LocationManager.instance().newLocation("Test Name");
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
 		Assert.assertEquals("Location Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
@@ -651,12 +652,71 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
 		
+		Track t = l.addTrack("new track", Track.SIDING);
+		
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
 		Assert.assertEquals("Location Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
 		Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
+	
+		Assert.assertEquals("Track Accepts Type Name BoxCar", false, t.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Track Accepts Type Name Boxcar", false, t.acceptsTypeName("Boxcar"));
+		Assert.assertEquals("Track Accepts Type Name MOW", false, t.acceptsTypeName("MOW"));
+		Assert.assertEquals("Track Accepts Type Name Caboose", false, t.acceptsTypeName("Caboose"));
+		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
+	
+		t.addTypeName("Baggage");
+		t.addTypeName("BoxCar");
+		t.addTypeName("Caboose");
+		t.addTypeName("Coal");
+		t.addTypeName("Engine");
+		t.addTypeName("Hopper");
+		t.addTypeName("MOW");
+		t.addTypeName("Passenger");
+		t.addTypeName("Reefer");
+		t.addTypeName("Stock");
+		t.addTypeName("Tank Oil");
+
+		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Track Accepts Type Name Boxcar", false, t.acceptsTypeName("Boxcar"));
+		Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
+		Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName("Caboose"));
+		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
+
+		// test replace		
+		ct.replaceName("BoxCar", "boxcar");
+		
+		Assert.assertFalse("Location Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
+		Assert.assertTrue("Location Accepts Type Name boxcar", l.acceptsTypeName("boxcar"));
+		Assert.assertFalse("Track Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
+		Assert.assertTrue("Track Accepts Type Name boxcar", t.acceptsTypeName("boxcar"));
+
+	}
+	
+	public void testRoadNameSupport(){
+		// use LocationManager to allow replace car road to work properly
+		Location l = LocationManager.instance().newLocation("Test Name 2");
+		Assert.assertEquals("Location Name", "Test Name 2", l.getName());
+		
+		Track t = l.addTrack("new track", Track.SIDING);
+		
+		t.setRoadOption(Track.INCLUDEROADS);
+		t.addRoadName("Test Road Name");
+		t.addRoadName("Test Road Name 2");
+		Assert.assertTrue("track should accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
+		Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
+		Assert.assertFalse("track should Not accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+		
+		CarRoads cr = CarRoads.instance();
+		cr.replaceName("Test Road Name", "New Test Road Name");
+		
+		Assert.assertFalse("track should Not accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
+		Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
+		Assert.assertTrue("track should accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+
 	}
 
 	// test pickup support
@@ -781,6 +841,8 @@ public class OperationsLocationsTest extends TestCase {
 	public void testXMLCreate() {
 		LocationManager manager = LocationManager.instance();
 		manager.dispose();
+		// dispose kills instance, so reload manager
+		manager = LocationManager.instance();
 		List locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 		manager.newLocation("Test Location 2");

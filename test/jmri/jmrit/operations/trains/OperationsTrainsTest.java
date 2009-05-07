@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2733,6 +2733,63 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c2 track 12", "Bedford Yard 1", c2.getTrackName());
 		Assert.assertEquals("c3 track 12", "Chelmsford Interchange 1", c3.getTrackName());
 		Assert.assertEquals("c13 track 12", "Westford Yard 1", c13.getTrackName());
+
+		// interchange testing done, now test replace car type and road
+		
+		// replace should modify locations and trains
+		ct.replaceName("Boxcar", "boxcar");
+		
+		Assert.assertFalse("loc1 should not accept Boxcar", loc1.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("loc2 should not accept Boxcar", loc2.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("track loc1trk1 should not accept Boxcar", loc1trk1.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("track loc2trk1 should not accept Boxcar", loc2trk1.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("train 1 should not accept Boxcar", train1.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("train 2 should not accept Boxcar", train2.acceptsTypeName("Boxcar"));
+		Assert.assertFalse("train 3 should not accept Boxcar", train3.acceptsTypeName("Boxcar"));
+
+		Assert.assertTrue("loc1 should accept boxcar", loc1.acceptsTypeName("boxcar"));
+		Assert.assertTrue("loc2 should accept boxcar", loc2.acceptsTypeName("boxcar"));
+		Assert.assertTrue("track loc1trk1 should accept boxcar", loc1trk1.acceptsTypeName("boxcar"));
+		Assert.assertTrue("track loc2trk1 should accept boxcar", loc2trk1.acceptsTypeName("boxcar"));
+		Assert.assertTrue("train 1 should accept boxcar", train1.acceptsTypeName("boxcar"));
+		Assert.assertTrue("train 2 should accept boxcar", train2.acceptsTypeName("boxcar"));
+		Assert.assertTrue("train 3 should accept boxcar", train3.acceptsTypeName("boxcar"));
+
+		ct.replaceName("boxcar", "Boxcar");
+		
+		Assert.assertTrue("loc1 should accept Boxcar", loc1.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("loc2 should accept Boxcar", loc2.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("track loc1trk1 should accept Boxcar", loc1trk1.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("track loc2trk1 should accept Boxcar", loc2trk1.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("train 1 should accept Boxcar", train1.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("train 2 should accept Boxcar", train2.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("train 3 should accept Boxcar", train3.acceptsTypeName("Boxcar"));
+
+		// now test road name replace
+				
+		loc1trk1.setRoadOption(Track.INCLUDEROADS);
+		loc1trk1.addRoadName("CP");
+		loc1trk1.addRoadName("PC");
+		train1.setRoadOption(Train.INCLUDEROADS);
+		train1.addRoadName("CP");
+		train1.addRoadName("PC");
+		
+		Assert.assertTrue("track loc1trk1 should accept road CP", loc1trk1.acceptsRoadName("CP"));
+		Assert.assertTrue("track loc1trk1 should accept road PC", loc1trk1.acceptsRoadName("PC"));
+		Assert.assertFalse("track loc1trk1 should Not accept road PC", loc1trk1.acceptsRoadName("UP"));
+		Assert.assertTrue("Train 1 should accept road CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("Train 1 should accept road PC", train1.acceptsRoadName("PC"));
+		Assert.assertFalse("Train 1 should Not accept road UP", train1.acceptsRoadName("UP"));
+
+		CarRoads cr = CarRoads.instance();
+		cr.replaceName("CP", "UP");
+		
+		Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1.acceptsRoadName("CP"));
+		Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.acceptsRoadName("PC"));
+		Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.acceptsRoadName("UP"));
+		Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.acceptsRoadName("CP"));
+		Assert.assertTrue("after replace Train 1 should accept road PC", train1.acceptsRoadName("PC"));
+		Assert.assertTrue("after replace Train 1 should accept road UP", train1.acceptsRoadName("UP"));
 
 	}
 	

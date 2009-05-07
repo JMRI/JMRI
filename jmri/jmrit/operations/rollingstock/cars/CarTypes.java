@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class CarTypes implements java.beans.PropertyChangeListener {
 	
@@ -119,12 +119,12 @@ public class CarTypes implements java.beans.PropertyChangeListener {
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String type){
     	list.remove(type);
-    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
      }
     
     public boolean containsName(String type){

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -155,7 +155,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 				return "Car has a " +SCHEDULE+ " " +LOAD+ " ("+getLoad()+")";
 		}
 		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
-		ScheduleManager scheduleManager = new ScheduleManager().instance();
+		ScheduleManager scheduleManager = ScheduleManager.instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){
 			log.warn("Could not find schedule ("+track.getScheduleName()+")");
