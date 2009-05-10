@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.1 2009-04-25 00:12:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.2 2009-05-10 23:44:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -70,6 +70,9 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+If you're using a MERG CAN-RS or CAN-USB unit to talk to a MERG CBUS, you should
+check that your preferences are set properly.
+
 <h3>Warnings from older versions:</h3>
 
 Starting with version 2.5.3, JMRI uses a new version of the Log4J library, and 
@@ -81,12 +84,6 @@ you don't have to worry about this.
 
 <p>
 The XSLT location was moved back to the web in JMRI 2.5.3.
-
-<p>
-There is a problem with the CBUS support when using 
-GridConnect style adapters.  If this describes your 
-situation, you should stay with an earlier version (probably
-JMRI 2.5.1) until a later version lists this as fixed.
 
 <p>
 Starting in JMRI 2.5.2, Logix support has a lot of
@@ -135,6 +132,21 @@ are using a Linux computer.
 
 <h3>Changes since test version 2.5.3:</h3>
 
+Andrew Crosland sorted out a problem with the GridConnect connections to CAN and CBUS.
+This fixes a problem sending frames that was present in JMRI 2.5.1 and 2.5.2.
+Note that if you're using a MERG CAN-RS or CAN-USB unit, you should
+check that your preferences are set properly.
+
+<p>
+Dan Boudreau made some operations updates. 
+The "show route" location box as grayed out if train can't service that location.
+The location print/preview now includes which car types and roads are serviced 
+by each location and track.
+
+<p>
+Dan Boudreau improved reporting and printing in the operations tools.
+You can now see and print what type of cars and engines can be serviced by a location.
+You can also request thatall of the info provided by the edit location be printed.
 
 <!--#include virtual="/Footer" -->
 
