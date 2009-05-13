@@ -1,4 +1,4 @@
-// OperationsLocationsTest.java
+//OperationsLocationsTest.java
 
 package jmri.jmrit.operations.locations;
 
@@ -7,6 +7,9 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import java.util.List;
 import java.io.File;
+import javax.swing.JComboBox;
+import java.awt.Dimension;
+import java.awt.Point;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -34,12 +37,12 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsLocationsTest extends TestCase {
 
-        // test Location Class (part one)
-        // test Location creation
+	// test Location Class (part one)
+	// test Location creation
 	public void testCreate() {
 		Location l = new Location("Test id", "Test Name");
 		Assert.assertEquals("Location id", "Test id", l.getId());
@@ -76,16 +79,16 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Constant SWITCHLIST_CHANGED_PROPERTY", "switchList", Location.SWITCHLIST_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant DISPOSE_CHANGED_PROPERTY", "dispose", Location.DISPOSE_CHANGED_PROPERTY);
 	}
-        
-        // test ScheduleItem class
-        // test ScheduleItem public constants
+
+	// test ScheduleItem class
+	// test ScheduleItem public constants
 	public void testScheduleItemConstants() {
 		Assert.assertEquals("Location ScheduleItem Constant NUMBER_CHANGED_PROPERTY", "number", ScheduleItem.NUMBER_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "type", ScheduleItem.TYPE_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "road", ScheduleItem.ROAD_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "load", ScheduleItem.LOAD_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant DISPOSE", "dispose", ScheduleItem.DISPOSE);
-        }
+	}
 
 	// test ScheduleItem attributes
 	public void testScheduleItemAttributes() {
@@ -93,34 +96,34 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location ScheduleItem id", "Test id", ltsi.getId());
 		Assert.assertEquals("Location ScheduleItem Type", "Test Type", ltsi.getType());
 
-                ltsi.setType("New Test Type");
+		ltsi.setType("New Test Type");
 		Assert.assertEquals("Location ScheduleItem set Type", "New Test Type", ltsi.getType());
 
-                ltsi.setComment("New Test Comment");
+		ltsi.setComment("New Test Comment");
 		Assert.assertEquals("Location ScheduleItem set Comment", "New Test Comment", ltsi.getComment());
 
-                ltsi.setRoad("New Test Road");
+		ltsi.setRoad("New Test Road");
 		Assert.assertEquals("Location ScheduleItem set Road", "New Test Road", ltsi.getRoad());
 
-                ltsi.setLoad("New Test Load");
+		ltsi.setLoad("New Test Load");
 		Assert.assertEquals("Location ScheduleItem set Load", "New Test Load", ltsi.getLoad());
 
-                ltsi.setShip("New Test Ship");
+		ltsi.setShip("New Test Ship");
 		Assert.assertEquals("Location ScheduleItem set Ship", "New Test Ship", ltsi.getShip());
 
-                ltsi.setSequenceId(22);
+		ltsi.setSequenceId(22);
 		Assert.assertEquals("Location ScheduleItem set SequenceId", 22, ltsi.getSequenceId());
 
-                ltsi.setCount(222);
+		ltsi.setCount(222);
 		Assert.assertEquals("Location ScheduleItem set Count", 222, ltsi.getCount());
-        }
-        
-        // test Schedule class
-        // test schedule public constants
+	}
+
+	// test Schedule class
+	// test schedule public constants
 	public void testScheduleConstants() {
 		Assert.assertEquals("Location Schedule Constant LISTCHANGE_CHANGED_PROPERTY", "listChange", Schedule.LISTCHANGE_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Schedule Constant DISPOSE", "dispose", Schedule.DISPOSE);
-        }
+	}
 
 	// test schedule attributes
 	public void testScheduleAttributes() {
@@ -128,14 +131,14 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Schedule id", "Test id", lts.getId());
 		Assert.assertEquals("Location Schedule Name", "Test Name", lts.getName());
 
-                lts.setName("New Test Name");
+		lts.setName("New Test Name");
 		Assert.assertEquals("Location Schedule set Name", "New Test Name", lts.getName());
 		Assert.assertEquals("Location Schedule toString", "New Test Name", lts.toString());
 
-                lts.setComment("New Test Comment");
+		lts.setComment("New Test Comment");
 		Assert.assertEquals("Location Schedule set Comment", "New Test Comment", lts.getComment());
-        }
-        
+	}
+
 	// test schedule scheduleitem
 	public void testScheduleScheduleItems() {
 		Schedule lts = new Schedule("Test id", "Test Name");
@@ -144,38 +147,167 @@ public class OperationsLocationsTest extends TestCase {
 
 		ScheduleItem ltsi1, ltsi2, ltsi3, ltsi4;
 
-                ltsi1 = lts.addItem("New Test Type");
+		ltsi1 = lts.addItem("New Test Type");
 		Assert.assertEquals("Location Schedule ScheduleItem Check Type", "New Test Type", ltsi1.getType());
 
-                String testid = ltsi1.getId();
-                ltsi2 = lts.getItemByType("New Test Type");
+		String testid = ltsi1.getId();
+		ltsi2 = lts.getItemByType("New Test Type");
 		Assert.assertEquals("Location Schedule ScheduleItem Check Ids", testid, ltsi2.getId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 0", 1, ltsi2.getSequenceId());
 
-                ltsi3 = lts.addItem("New Second Test Type");
+		ltsi3 = lts.addItem("New Second Test Type");
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 1", 1, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 2", 2, ltsi3.getSequenceId());
-                
-                lts.moveItemUp(ltsi3);
+
+		lts.moveItemUp(ltsi3);
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 3", 2, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 4", 1, ltsi3.getSequenceId());
 
-                ltsi4 = lts.addItem("New Third Test Type", 2);
+		ltsi4 = lts.addItem("New Third Test Type", 2);
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 5", 3, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 6", 1, ltsi3.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 7", 2, ltsi4.getSequenceId());
 
-                lts.moveItemDown(ltsi3);
+		lts.moveItemDown(ltsi3);
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 3, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 2, ltsi3.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 10", 1, ltsi4.getSequenceId());
 
-                lts.deleteItem(ltsi3);
+		lts.deleteItem(ltsi3);
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 2, ltsi1.getSequenceId());
 		Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 1, ltsi4.getSequenceId());
-        }
+	}
 
-        // test Track class
+	public void testScheduleManager(){
+		LocationManager lm = LocationManager.instance();
+		Location l = lm.newLocation("new test location");
+		Track t = l.addTrack("track 1", Track.SIDING);
+		
+		ScheduleManager sm = ScheduleManager.instance();
+		
+		// clear out any previous schedules
+		sm.dispose();
+		sm = ScheduleManager.instance();
+		
+		Schedule s1 = sm.newSchedule("new schedule");
+		Schedule s2 = sm.newSchedule("newer schedule");
+		ScheduleItem i1 = s1.addItem("BoxCar");
+		i1.setRoad("new road");
+		i1.setLoad("new load");
+		i1.setShip("new ship load");
+		ScheduleItem i2 = s1.addItem("Caboose");
+		i2.setRoad("road");
+		i2.setLoad("load");
+		i2.setShip("ship load");
+		
+		Assert.assertEquals("1 First schedule name", "new schedule", s1.getName());
+		Assert.assertEquals("1 First schedule name", "newer schedule", s2.getName());
+		
+		List names = sm.getSchedulesByNameList();
+		Assert.assertEquals("There should be 2 schedules", 2, names.size());
+		Schedule sch1 = sm.getScheduleById((String)names.get(0));
+		Schedule sch2 = sm.getScheduleById((String)names.get(1));
+		Assert.assertEquals("2 First schedule name", "new schedule", sch1.getName());
+		Assert.assertEquals("2 First schedule name", "newer schedule", sch2.getName());
+		Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
+		Assert.assertEquals("Schedule 2", sch2, sm.getScheduleByName("newer schedule"));
+		
+		JComboBox box = sm.getComboBox();
+		Assert.assertEquals("3 First schedule name", "", box.getItemAt(0));
+		Assert.assertEquals("3 First schedule name", sch1, box.getItemAt(1));
+		Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
+		
+		JComboBox box2 = sm.getSidingsByScheduleComboBox(s1);
+		Assert.assertEquals("First siding name", null, box2.getItemAt(0));
+		
+		// now add a schedule to siding
+		t.setScheduleName("new schedule");
+		
+		JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
+		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
+		
+		Assert.assertEquals("Location track pair location", l, ltp.getLocation()); 
+		Assert.assertEquals("Location track pair track", t, ltp.getTrack()); 
+		
+		Assert.assertEquals("1 Schedule Item 1 type", "BoxCar", i1.getType());
+		Assert.assertEquals("1 Schedule Item 1 road", "new road", i1.getRoad());
+		Assert.assertEquals("1 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("1 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("1 Schedule Item 2 type", "Caboose", i2.getType());
+		Assert.assertEquals("1 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("1 Schedule Item 2 load", "load", i2.getLoad());
+		Assert.assertEquals("1 Schedule Item 2 ship", "ship load", i2.getShip());
+		
+		sm.replaceRoad("new road", "replaced road");
+		
+		Assert.assertEquals("2 Schedule Item 1 type", "BoxCar", i1.getType());
+		Assert.assertEquals("2 Schedule Item 1 road", "replaced road", i1.getRoad());
+		Assert.assertEquals("2 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("2 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("2 Schedule Item 2 type", "Caboose", i2.getType());
+		Assert.assertEquals("2 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("2 Schedule Item 2 load", "load", i2.getLoad());
+		Assert.assertEquals("2 Schedule Item 2 ship", "ship load", i2.getShip());
+		
+		sm.replaceType("BoxCar", "replaced car type");
+		
+		Assert.assertEquals("3 Schedule Item 1 type", "replaced car type", i1.getType());
+		Assert.assertEquals("3 Schedule Item 1 road", "replaced road", i1.getRoad());
+		Assert.assertEquals("3 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("3 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("3 Schedule Item 2 type", "Caboose", i2.getType());
+		Assert.assertEquals("3 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("3 Schedule Item 2 load", "load", i2.getLoad());
+		Assert.assertEquals("3 Schedule Item 2 ship", "ship load", i2.getShip());
+
+		sm.replaceType("Caboose", "BoxCar");
+		
+		Assert.assertEquals("4 Schedule Item 1 type", "replaced car type", i1.getType());
+		Assert.assertEquals("4 Schedule Item 1 road", "replaced road", i1.getRoad());
+		Assert.assertEquals("4 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("4 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("4 Schedule Item 2 type", "BoxCar", i2.getType());
+		Assert.assertEquals("4 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("4 Schedule Item 2 load", "load", i2.getLoad());
+		Assert.assertEquals("4 Schedule Item 2 ship", "ship load", i2.getShip());
+		
+		sm.replaceLoad("BoxCar", "load", "new load");
+		
+		Assert.assertEquals("5 Schedule Item 1 type", "replaced car type", i1.getType());
+		Assert.assertEquals("5 Schedule Item 1 road", "replaced road", i1.getRoad());
+		Assert.assertEquals("5 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("5 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("5 Schedule Item 2 type", "BoxCar", i2.getType());
+		Assert.assertEquals("5 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("5 Schedule Item 2 load", "new load", i2.getLoad());
+		Assert.assertEquals("5 Schedule Item 2 ship", "ship load", i2.getShip());
+
+		sm.replaceLoad("BoxCar", "new load", "next load");
+		
+		Assert.assertEquals("6 Schedule Item 1 type", "replaced car type", i1.getType());
+		Assert.assertEquals("6 Schedule Item 1 road", "replaced road", i1.getRoad());
+		Assert.assertEquals("6 Schedule Item 1 load", "new load", i1.getLoad());
+		Assert.assertEquals("6 Schedule Item 1 ship", "new ship load", i1.getShip());
+		
+		Assert.assertEquals("6 Schedule Item 2 type", "BoxCar", i2.getType());
+		Assert.assertEquals("6 Schedule Item 2 road", "road", i2.getRoad());
+		Assert.assertEquals("6 Schedule Item 2 load", "next load", i2.getLoad());
+		Assert.assertEquals("6 Schedule Item 2 ship", "ship load", i2.getShip());
+		
+		// remove all schedules
+		sm.dispose();
+		
+		names = sm.getSchedulesByNameList();
+		Assert.assertEquals("There should be no schedules", 0, names.size());
+		
+	}
+
+	// test Track class
 	// test Track public constants
 	public void testTrackConstants() {
 		Assert.assertEquals("Location Track Constant ANY", "Any", Track.ANY);
@@ -200,7 +332,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Constant ROADS_CHANGED_PROPERTY", "roads", Track.ROADS_CHANGED_PROPERTY);
 		Assert.assertEquals("Location track Constant SCHEDULE_CHANGED_PROPERTY", "schedule change", Track.SCHEDULE_CHANGED_PROPERTY);
 		Assert.assertEquals("Location track Constant DISPOSE_CHANGED_PROPERTY", "dispose", Track.DISPOSE_CHANGED_PROPERTY);
-        }
+	}
 
 	// test Track attributes
 	public void testTrackAttributes() {
@@ -209,16 +341,16 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
 
-                t.setName("New Test Name");
+		t.setName("New Test Name");
 		Assert.assertEquals("Location Track set Name", "New Test Name", t.getName());
 
-                t.setComment("New Test Comment");
+		t.setComment("New Test Comment");
 		Assert.assertEquals("Location Track set Comment", "New Test Comment", t.getComment());
 
-                t.setMoves(40);
+		t.setMoves(40);
 		Assert.assertEquals("Location Track Moves", 40, t.getMoves());
 
-                t.setLength(400);
+		t.setLength(400);
 		Assert.assertEquals("Location Track Length", 400, t.getLength());
 
 		t.setReserved(200);
@@ -248,15 +380,15 @@ public class OperationsLocationsTest extends TestCase {
 		t.setTrainDirections(Track.NORTH+Track.SOUTH+Track.EAST+Track.WEST);
 		Assert.assertEquals("Location Track Direction North+South+East+West", Track.NORTH+Track.SOUTH+Track.EAST+Track.WEST, t.getTrainDirections());
 
-                t.setRoadOption("New Test Road Option");
+		t.setRoadOption("New Test Road Option");
 		Assert.assertEquals("Location Track set Road Option", "New Test Road Option", t.getRoadOption());
 
-                t.setDropOption("New Test Drop Option");
+		t.setDropOption("New Test Drop Option");
 		Assert.assertEquals("Location Track set Drop Option", "New Test Drop Option", t.getDropOption());
 
-                t.setPickupOption("New Test Pickup Option");
+		t.setPickupOption("New Test Pickup Option");
 		Assert.assertEquals("Location Track set Pickup Option", "New Test Pickup Option", t.getPickupOption());
-        }
+	}
 
 	// test Track car support
 	public void testTrackCarSupport() {
@@ -343,7 +475,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car 9th Number of Engines", 0, t.getNumberEngines());
 		Assert.assertEquals("Location Track Car 9th Used Length", 50+4, t.getUsedLength()); // Drawbar length is 4
 
-                t.deleteRS(c3);
+		t.deleteRS(c3);
 
 		Assert.assertEquals("Location Track Car Last Number of Rolling Stock", 0, t.getNumberRS());
 		Assert.assertEquals("Location Track Car Last Number of Cars", 0, t.getNumberCars());
@@ -401,7 +533,7 @@ public class OperationsLocationsTest extends TestCase {
 
 		t.deleteDropRS(c1);
 		Assert.assertEquals("Location Track Drops 4th", 0, t.getDropRS());
-       		Assert.assertEquals("Location Track Drops 4th Reserved", 0, t.getReserved());
+		Assert.assertEquals("Location Track Drops 4th Reserved", 0, t.getReserved());
 	}
 
 	// test Track typename support
@@ -411,7 +543,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
 
-                /* Test Type Name */
+		/* Test Type Name */
 		Assert.assertEquals("Location Track Accepts Type Name undefined", false, t.acceptsTypeName("TestTypeName"));
 
 		t.addTypeName("TestTypeName");
@@ -426,20 +558,20 @@ public class OperationsLocationsTest extends TestCase {
 		t.deleteTypeName("TestTypeName");
 		Assert.assertEquals("Location Track Accepts Type Name deleted", false, t.acceptsTypeName("TestTypeName"));
 
-                /* Needed so later tests will behave correctly */
-                ct.deleteName("TestTypeName");
+		/* Needed so later tests will behave correctly */
+		ct.deleteName("TestTypeName");
 
 		ct.addName("Baggager");
-		
+
 		t.addTypeName("Baggager");
-		
+
 		Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.acceptsTypeName("Baggager"));
 
-                /* Test Road Name */
-                t.setRoadOption(Track.INCLUDEROADS);
+		/* Test Road Name */
+		t.setRoadOption(Track.INCLUDEROADS);
 		Assert.assertEquals("Location Track set Road Option INCLUDEROADS", "Include", t.getRoadOption());
 
-                Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.acceptsRoadName("TestRoadName"));
+		Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.acceptsRoadName("TestRoadName"));
 
 		t.addRoadName("TestRoadName");
 		Assert.assertEquals("Location Track Accepts Road Name defined", true, t.acceptsRoadName("TestRoadName"));
@@ -447,43 +579,43 @@ public class OperationsLocationsTest extends TestCase {
 		t.addRoadName("TestOtherRoadName");
 		Assert.assertEquals("Location Track Accepts Road Name other defined", true, t.acceptsRoadName("TestRoadName"));
 
-                t.deleteRoadName("TestRoadName");
+		t.deleteRoadName("TestRoadName");
 		Assert.assertEquals("Location Track Accepts Road Name deleted", false, t.acceptsRoadName("TestRoadName"));
 
-                t.setRoadOption(Track.ALLROADS);
+		t.setRoadOption(Track.ALLROADS);
 		Assert.assertEquals("Location Track set Road Option AllROADS", "All", t.getRoadOption());
 		Assert.assertEquals("Location Track Accepts All Road Names", true, t.acceptsRoadName("TestRoadName"));
 
-                t.setRoadOption(Track.EXCLUDEROADS);
+		t.setRoadOption(Track.EXCLUDEROADS);
 		Assert.assertEquals("Location Track set Road Option EXCLUDEROADS", "Exclude", t.getRoadOption());
 		Assert.assertEquals("Location Track Excludes Road Names", true, t.acceptsRoadName("TestRoadName"));
 
-                t.addRoadName("TestRoadName");
+		t.addRoadName("TestRoadName");
 		Assert.assertEquals("Location Track Excludes Road Names 2", false, t.acceptsRoadName("TestRoadName"));
 
-                /* Test Drop IDs */
-                Assert.assertEquals("Location Track Accepts Drop ID undefined", false, t.containsDropId("TestDropId"));
+		/* Test Drop IDs */
+		Assert.assertEquals("Location Track Accepts Drop ID undefined", false, t.containsDropId("TestDropId"));
 
 		t.addDropId("TestDropId");
-                Assert.assertEquals("Location Track Accepts Drop ID defined", true, t.containsDropId("TestDropId"));
+		Assert.assertEquals("Location Track Accepts Drop ID defined", true, t.containsDropId("TestDropId"));
 
 		t.addDropId("TestOtherDropId");
-                Assert.assertEquals("Location Track Accepts Drop ID other defined", true, t.containsDropId("TestDropId"));
+		Assert.assertEquals("Location Track Accepts Drop ID other defined", true, t.containsDropId("TestDropId"));
 
-                t.deleteDropId("TestDropId");
-                Assert.assertEquals("Location Track Accepts Drop ID deleted", false, t.containsDropId("TestDropId"));
+		t.deleteDropId("TestDropId");
+		Assert.assertEquals("Location Track Accepts Drop ID deleted", false, t.containsDropId("TestDropId"));
 
-                /* Test Pickup IDs */
-                Assert.assertEquals("Location Track Accepts Pickup ID undefined", false, t.containsPickupId("TestPickupId"));
+		/* Test Pickup IDs */
+		Assert.assertEquals("Location Track Accepts Pickup ID undefined", false, t.containsPickupId("TestPickupId"));
 
 		t.addPickupId("TestPickupId");
-                Assert.assertEquals("Location Track Accepts Pickup ID defined", true, t.containsPickupId("TestPickupId"));
+		Assert.assertEquals("Location Track Accepts Pickup ID defined", true, t.containsPickupId("TestPickupId"));
 
 		t.addPickupId("TestOtherPickupId");
-                Assert.assertEquals("Location Track Accepts Pickup ID other defined", true, t.containsPickupId("TestPickupId"));
+		Assert.assertEquals("Location Track Accepts Pickup ID other defined", true, t.containsPickupId("TestPickupId"));
 
-                t.deletePickupId("TestPickupId");
-                Assert.assertEquals("Location Track Accepts Pickup ID deleted", false, t.containsPickupId("TestPickupId"));
+		t.deletePickupId("TestPickupId");
+		Assert.assertEquals("Location Track Accepts Pickup ID deleted", false, t.containsPickupId("TestPickupId"));
 	}
 
 	// test Track schedule support
@@ -493,12 +625,13 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
 
-                t.setScheduleName("Test Schedule Name");
+		t.setScheduleName("Test Schedule Name");
 		Assert.assertEquals("Location Track set Schedule Name", "Test Schedule Name", t.getScheduleName());
-                t.setScheduleItemId("Test Schedule Item Id");
+		t.setScheduleItemId("Test Schedule Item Id");
 		Assert.assertEquals("Location Track set Schedule Item Id", "Test Schedule Item Id", t.getScheduleItemId());
-                t.setScheduleCount(2);
+		t.setScheduleCount(2);
 		Assert.assertEquals("Location Track set Schedule Count", 2, t.getScheduleCount());
+
 	}
 
 	// test Track load support
@@ -508,30 +641,30 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
 
-                /* Test Load Swapable */
-                Assert.assertEquals("Location Track Load Swapable default", false, t.isLoadSwapEnabled());
-                t.enableLoadSwaps(true);
-                Assert.assertEquals("Location Track Load Swapable true", true, t.isLoadSwapEnabled());
-                t.enableLoadSwaps(false);
-                Assert.assertEquals("Location Track Load Swapable false", false, t.isLoadSwapEnabled());
+		/* Test Load Swapable */
+		Assert.assertEquals("Location Track Load Swapable default", false, t.isLoadSwapEnabled());
+		t.enableLoadSwaps(true);
+		Assert.assertEquals("Location Track Load Swapable true", true, t.isLoadSwapEnabled());
+		t.enableLoadSwaps(false);
+		Assert.assertEquals("Location Track Load Swapable false", false, t.isLoadSwapEnabled());
 
-                /* Test Remove Loads */
-                Assert.assertEquals("Location Track Remove Loads default", false, t.isRemoveLoadsEnabled());
-                t.enableRemoveLoads(true);
-                Assert.assertEquals("Location Track Remove Loads true", true, t.isRemoveLoadsEnabled());
-                t.enableRemoveLoads(false);
-                Assert.assertEquals("Location Track Remove Loads false", false, t.isRemoveLoadsEnabled());
+		/* Test Remove Loads */
+		Assert.assertEquals("Location Track Remove Loads default", false, t.isRemoveLoadsEnabled());
+		t.enableRemoveLoads(true);
+		Assert.assertEquals("Location Track Remove Loads true", true, t.isRemoveLoadsEnabled());
+		t.enableRemoveLoads(false);
+		Assert.assertEquals("Location Track Remove Loads false", false, t.isRemoveLoadsEnabled());
 
-                /* Test Add Loads */
-                Assert.assertEquals("Location Track Add Loads default", false, t.isAddLoadsEnabled());
-                t.enableAddLoads(true);
-                Assert.assertEquals("Location Track Add Loads true", true, t.isAddLoadsEnabled());
-                t.enableAddLoads(false);
-                Assert.assertEquals("Location Track Add Loads false", false, t.isAddLoadsEnabled());
-     	}
+		/* Test Add Loads */
+		Assert.assertEquals("Location Track Add Loads default", false, t.isAddLoadsEnabled());
+		t.enableAddLoads(true);
+		Assert.assertEquals("Location Track Add Loads true", true, t.isAddLoadsEnabled());
+		t.enableAddLoads(false);
+		Assert.assertEquals("Location Track Add Loads false", false, t.isAddLoadsEnabled());
+	}
 
-        // test Locations class (part two)
-        // test length attributes
+	// test Locations class (part two)
+	// test length attributes
 	public void testLengthAttributes() {
 		Location l = new Location("Test id", "Test Name");
 		Assert.assertEquals("Location id", "Test id", l.getId());
@@ -639,7 +772,7 @@ public class OperationsLocationsTest extends TestCase {
 		ct.addName("Reefer");
 		ct.addName("Stock");
 		ct.addName("Tank Oil");
-		
+
 		l.addTypeName("Baggage");
 		l.addTypeName("BoxCar");
 		l.addTypeName("Caboose");
@@ -651,22 +784,22 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("Reefer");
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
-		
+
 		Track t = l.addTrack("new track", Track.SIDING);
-		
+
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
 		Assert.assertEquals("Location Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
 		Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
-	
+
 		Assert.assertEquals("Track Accepts Type Name BoxCar", false, t.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Track Accepts Type Name Boxcar", false, t.acceptsTypeName("Boxcar"));
 		Assert.assertEquals("Track Accepts Type Name MOW", false, t.acceptsTypeName("MOW"));
 		Assert.assertEquals("Track Accepts Type Name Caboose", false, t.acceptsTypeName("Caboose"));
 		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
-	
+
 		t.addTypeName("Baggage");
 		t.addTypeName("BoxCar");
 		t.addTypeName("Caboose");
@@ -686,37 +819,65 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
 
-		// test replace		
+		// test replace	
+
+		// also test replace type in schedules
+		ScheduleManager sm = ScheduleManager.instance();
+		Schedule s = sm.newSchedule("newest schedule");
+		ScheduleItem i1 = s.addItem("BoxCar");
+		ScheduleItem i2 = s.addItem("Caboose");
+
+		Assert.assertEquals("ScheudleItem i1 Type BoxCar", "BoxCar", i1.getType());
+		Assert.assertEquals("ScheudleItem i2 Type Caboose", "Caboose", i2.getType());
+
 		ct.replaceName("BoxCar", "boxcar");
-		
+
 		Assert.assertFalse("Location Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
 		Assert.assertTrue("Location Accepts Type Name boxcar", l.acceptsTypeName("boxcar"));
 		Assert.assertFalse("Track Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
 		Assert.assertTrue("Track Accepts Type Name boxcar", t.acceptsTypeName("boxcar"));
-
+		Assert.assertEquals("ScheudleItem i1 Type boxcar", "boxcar", i1.getType());
+		Assert.assertEquals("Check ScheudleItem i2 Type Caboose", "Caboose", i2.getType());
+		
+		// remove all schedules
+		sm.dispose();
 	}
-	
+
 	public void testRoadNameSupport(){
 		// use LocationManager to allow replace car road to work properly
 		Location l = LocationManager.instance().newLocation("Test Name 2");
 		Assert.assertEquals("Location Name", "Test Name 2", l.getName());
-		
+
 		Track t = l.addTrack("new track", Track.SIDING);
-		
+
 		t.setRoadOption(Track.INCLUDEROADS);
 		t.addRoadName("Test Road Name");
 		t.addRoadName("Test Road Name 2");
+
+		ScheduleManager sm = ScheduleManager.instance();
+		Schedule s = sm.newSchedule("test schedule");
+		ScheduleItem i1 = s.addItem("BoxCar");
+		ScheduleItem i2 = s.addItem("BoxCar");
+		i1.setRoad("Test Road Name");
+		i2.setRoad("Test Road Name 2");
+
 		Assert.assertTrue("track should accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
 		Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
 		Assert.assertFalse("track should Not accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
-		
+		Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "Test Road Name", i1.getRoad());
+		Assert.assertEquals("ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoad());
+
 		CarRoads cr = CarRoads.instance();
 		cr.replaceName("Test Road Name", "New Test Road Name");
-		
+
 		Assert.assertFalse("track should Not accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
 		Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
 		Assert.assertTrue("track should accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
-
+		Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "New Test Road Name", i1.getRoad());
+		Assert.assertEquals("Check ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoad());
+	
+		// remove all schedules
+		sm.dispose();
 	}
 
 	// test pickup support
@@ -843,11 +1004,66 @@ public class OperationsLocationsTest extends TestCase {
 		manager.dispose();
 		// dispose kills instance, so reload manager
 		manager = LocationManager.instance();
+		
+		// load options
+		LocationEditFrame frame = new LocationEditFrame();
+		frame.setSize(10, 12);
+		frame.setLocation(14, 16);
+		manager.setLocationEditFrame(frame);
+		
+		// now load locations
 		List locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
-		manager.newLocation("Test Location 2");
-		manager.newLocation("Test Location 1");
-		manager.newLocation("Test Location 3");
+		Location l1 = manager.newLocation("Test Location 2");
+		Location l2 = manager.newLocation("Test Location 1");
+		Location l3 = manager.newLocation("Test Location 3");
+		
+		Track t1 = l1.addTrack("A Yard", Track.YARD);
+		Track t2 = l1.addTrack("A Siding", Track.SIDING);
+		Track t3 =l2.addTrack("An Interchange", Track.INTERCHANGE);
+		Track t4 =l3.addTrack("A Stage", Track.STAGING);
+		
+		t1.addRoadName("Track 1 Road");
+		t1.setRoadOption(Track.INCLUDEROADS);
+		t2.addTypeName("Track 2 Type");
+		t3.addRoadName("Track 3 Road");
+		t3.setRoadOption(Track.EXCLUDEROADS);
+		t4.addTypeName("Track 4 Type");
+		
+		CarTypes ct = CarTypes.instance();
+		ct.addName("Boxcar");
+		ct.addName("boxCar");
+		ct.addName("BoxCar");
+		ct.addName("Track 2 Type");
+		ct.addName("Track 4 Type");
+		
+		// also test schedules
+		
+		ScheduleManager sm = ScheduleManager.instance();
+		Schedule s1 = sm.newSchedule("Schedule 1 Name");
+		s1.setComment("Schedule 1 Comment");
+		ScheduleItem s1i1 = s1.addItem("Boxcar");
+		s1i1.setRoad("Schedule 1 Item 1 Road");
+		s1i1.setLoad("Schedule 1 Item 1 Load");
+		s1i1.setShip("Schedule 1 Item 1 Ship");
+		s1i1.setCount(321);
+		s1i1.setComment("Schedule 1 Item 1 Comment");
+		
+		ScheduleItem s1i2 = s1.addItem("boxcar");
+		s1i2.setRoad("Schedule 1 Item 2 Road");
+		s1i2.setLoad("Schedule 1 Item 2 Load");
+		s1i2.setShip("Schedule 1 Item 2 Ship");
+		s1i2.setCount(222);
+		s1i2.setComment("Schedule 1 Item 2 Comment");
+
+		Schedule s2 = sm.newSchedule("Schedule 2 Name");
+		s2.setComment("Schedule 2 Comment");
+		ScheduleItem s2i1 = s2.addItem("BoxCar");
+		s2i1.setRoad("Schedule 2 Item 1 Road");
+		s2i1.setLoad("Schedule 2 Item 1 Load");
+		s2i1.setShip("Schedule 2 Item 1 Ship");
+		s2i1.setCount(123);
+		s2i1.setComment("Schedule 2 Item 1 Comment");
 
 		locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById((String)locationList.get(0)).getName());
@@ -861,7 +1077,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
 		manager.getLocationByName("Test Location 1").setSwitchList(true);
-		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
 		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
 		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
 		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
@@ -870,20 +1086,20 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
 		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
 		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 2").setSwitchList(true);
-		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 2").setSwitchList(false);
+		manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
 		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 2").addTypeName("Boxcar");
 		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
 		manager.getLocationByName("Test Location 2").addTypeName("Coal");
 		manager.getLocationByName("Test Location 2").addTypeName("Engine");
 		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
 		manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
+		manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
 		manager.getLocationByName("Test Location 3").setSwitchList(true);
-		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
+		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST+Location.NORTH);
 		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
+		manager.getLocationByName("Test Location 3").addTypeName("boxCar");
 		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
 		manager.getLocationByName("Test Location 3").addTypeName("Coal");
 		manager.getLocationByName("Test Location 3").addTypeName("Engine");
@@ -933,53 +1149,176 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
 
 		LocationManagerXml.instance().writeOperationsLocationFile();
+		
 	}
 
 	// test location Xml read support preparation
 	public void testXMLReadPrep() {
-                LocationManager manager = LocationManager.instance();
-                List locationList = manager.getLocationsByIdList();
-                Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
+		LocationManager manager = LocationManager.instance();
+		List locationList = manager.getLocationsByIdList();
+		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
-                //  Revert the main xml file back to the backup file.
-                LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
-
-                //  Need to dispose of the LocationManager's list and hash table
-                manager.dispose();	
+		//  Revert the main xml file back to the backup file.
+		LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
+		
+		//  Need to dispose of the LocationManager's list and hash table
+		manager.dispose();	
+		// delete all schedules
+		ScheduleManager.instance().dispose();	
 	}
 
 	// test location Xml read support
 	public void testXMLRead() throws Exception  {
-                LocationManager manager = LocationManager.instance();
-                List locationList = manager.getLocationsByNameList();
+		LocationManager manager = LocationManager.instance();
+		List locationList = manager.getLocationsByNameList();
+		
+		CarTypes ct = CarTypes.instance();
+		ct.addName("Boxcar");
+		ct.addName("boxCar");
+		ct.addName("BoxCar");
+		ct.addName("Track 2 Type");
+		ct.addName("Track 4 Type");
 
-                // The dispose has removed all locations from the Manager.
-                Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+		// The dispose has removed all locations from the Manager.
+		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
-                // Need to force a re-read of the xml file.
-                LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
+		// Need to force a re-read of the xml file.
+		LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
 
-                locationList = manager.getLocationsByNameList();
-                Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
+		// check options
+		Dimension frameDim = manager.getLocationEditFrameSize();
+		Point frameLoc = manager.getLocationEditFramePosition();
+		Assert.assertEquals("LocationEditFrame size X", 10.0, frameDim.getWidth());
+		Assert.assertEquals("LocationEditFrame size Y", 12.0, frameDim.getHeight());
+		Assert.assertEquals("LocationEditFrame Postion X", 14.0, frameLoc.getX());
+		Assert.assertEquals("LocationEditFrame Postion Y", 16.0, frameLoc.getY());
+		
+		// check locations
+		locationList = manager.getLocationsByNameList();
+		Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
 
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
-                    }
-                }
+		for (int i = 0; i < locationList.size(); i++) {
+			String locationId = (String)locationList.get(i);
+			Location loc = manager.getLocationById(locationId);
 
+			if (i == 0) {
+				Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());
+				Assert.assertEquals("Location 1 operations", Location.NORMAL, loc.getLocationOps());
+				Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
+				Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
+				Assert.assertEquals("Location 1 switchList", true, loc.getSwitchList());
+				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
+				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
+				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("Boxcar"));
+				List list = loc.getTracksByNameList(null);
+				Assert.assertEquals("Location 1 has n tracks", 1, list.size());
+				Track t = loc.getTrackById((String)list.get(0));
+				Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
+				Assert.assertEquals("Location 1 track road option", Track.EXCLUDEROADS, t.getRoadOption());
+				Assert.assertEquals("Location 1 track road", true, t.acceptsRoadName("Track 1 Road"));
+				Assert.assertEquals("Location 1 track road", false, t.acceptsRoadName("Track 3 Road"));
+			}
+			if (i == 1) {
+				Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
+				Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
+				Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
+				Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
+				Assert.assertEquals("Location 2 switchList", false, loc.getSwitchList());
+				Assert.assertEquals("Location 2 car type", true, loc.acceptsTypeName("Boxcar"));
+				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
+				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
+		
+				List list = loc.getTracksByNameList(null);
+				Assert.assertEquals("Location 2 has n tracks", 2, list.size());
+				Track t = loc.getTrackById((String)list.get(0));
+				Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
+				Assert.assertEquals("Location 2 track 1 road option", Track.ALLROADS, t.getRoadOption());
+				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
+				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
+				Assert.assertEquals("Location 2 track 1 type", true, t.acceptsTypeName("Track 2 Type"));
+				Assert.assertEquals("Location 2 track 1 type", false, t.acceptsTypeName("Track 4 Type"));
+				t = loc.getTrackById((String)list.get(1));
+				Assert.assertEquals("Location 2 2nd track name", "A Yard", t.getName());
+				Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDEROADS, t.getRoadOption());
+				Assert.assertEquals("Location 2 track 2 road", true, t.acceptsRoadName("Track 1 Road"));
+				Assert.assertEquals("Location 2 track 2 road", false, t.acceptsRoadName("Track 3 Road"));
+				Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 2 Type"));
+				Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 4 Type"));
+
+			}
+			if (i == 2) {
+				Assert.assertEquals("New Location by Name List 3", "Test Location 3", loc.getName());
+				Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
+				Assert.assertEquals("Location 3 direction", Location.EAST+Location.WEST+Location.NORTH, loc.getTrainDirections());
+				Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());
+				Assert.assertEquals("Location 3 switchList", true, loc.getSwitchList());
+				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("boxCar"));
+				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
+				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("Boxcar"));
+		
+				List list = loc.getTracksByNameList(null);
+				Assert.assertEquals("Location 3 has n tracks", 1, list.size());
+				Track t = loc.getTrackById((String)list.get(0));
+				Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());
+				Assert.assertEquals("Location 3 track 1 road option", Track.ALLROADS, t.getRoadOption());
+				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
+				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
+				Assert.assertEquals("Location 3 track type", false, t.acceptsTypeName("Track 2 Type"));
+				Assert.assertEquals("Location 3 track type", true, t.acceptsTypeName("Track 4 Type"));
+			}
+		}
+		
+		// check Schedules
+		
+		ScheduleManager sm = ScheduleManager.instance();
+		List <String>list = sm.getSchedulesByNameList();
+		
+		Assert.assertEquals("There should be 2 schedules", 2, list.size());
+		Schedule s1 = sm.getScheduleById(list.get(0));
+		Schedule s2 = sm.getScheduleById(list.get(1));
+		
+		Assert.assertEquals("Schedule 1 name", "Schedule 1 Name", s1.getName());
+		Assert.assertEquals("Schedule 2 name", "Schedule 2 Name", s2.getName());
+		Assert.assertEquals("Schedule 1 comment", "Schedule 1 Comment", s1.getComment());
+		Assert.assertEquals("Schedule 2 comment", "Schedule 2 Comment", s2.getComment());
+		
+		List <String> s1items = s1.getItemsBySequenceList(); 
+		Assert.assertEquals("There should be 2 items", 2, s1items.size());
+		ScheduleItem si1 = s1.getItemById(s1items.get(0));
+		Assert.assertEquals("Item 1 type", "Boxcar", si1.getType());
+		Assert.assertEquals("Item 1 load", "Schedule 1 Item 1 Load", si1.getLoad());
+		Assert.assertEquals("Item 1 ship", "Schedule 1 Item 1 Ship", si1.getShip());
+		Assert.assertEquals("Item 1 type", "Schedule 1 Item 1 Comment", si1.getComment());
+		Assert.assertEquals("Item 1 road", "Schedule 1 Item 1 Road", si1.getRoad());
+		Assert.assertEquals("Item 1 count", 321, si1.getCount());
+		
+		ScheduleItem si2 = s1.getItemById(s1items.get(1));
+		Assert.assertEquals("Item 2 type", "boxcar", si2.getType());
+		Assert.assertEquals("Item 2 load", "Schedule 1 Item 2 Load", si2.getLoad());
+		Assert.assertEquals("Item 2 ship", "Schedule 1 Item 2 Ship", si2.getShip());
+		Assert.assertEquals("Item 2 type", "Schedule 1 Item 2 Comment", si2.getComment());
+		Assert.assertEquals("Item 2 road", "Schedule 1 Item 2 Road", si2.getRoad());
+		Assert.assertEquals("Item 2 count", 222, si2.getCount());
+	
+		List <String> s2items = s2.getItemsBySequenceList(); 
+		Assert.assertEquals("There should be 1 items", 1, s2items.size());
+		ScheduleItem si3 = s2.getItemById(s2items.get(0));
+		Assert.assertEquals("Item 3 type", "BoxCar", si3.getType());
+		Assert.assertEquals("Item 3 load", "Schedule 2 Item 1 Load", si3.getLoad());
+		Assert.assertEquals("Item 3 ship", "Schedule 2 Item 1 Ship", si3.getShip());
+		Assert.assertEquals("Item 3 type", "Schedule 2 Item 1 Comment", si3.getComment());
+		Assert.assertEquals("Item 3 type", "Schedule 2 Item 1 Road", si3.getRoad());
+		Assert.assertEquals("Item 3 count", 123, si3.getCount());
+		
+		// delete all locations
+		manager.dispose();
+		// delete all schedules
+		sm.dispose();
+		// clear out the file
+		LocationManagerXml.instance().writeOperationsLocationFile();
 	}
 
-        // TODO: Add tests for adding + deleting the same cars
+	// TODO: Add tests for adding + deleting the same cars
 
 	// TODO: Add tests for track locations
 
@@ -988,65 +1327,65 @@ public class OperationsLocationsTest extends TestCase {
 	// TODO: Add test to read xml file
 	// from here down is testing infrastructure
 
-    // Ensure minimal setup for log4J
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        
-        // This test doesn't touch setup but we'll protect
-        // Repoint OperationsXml to JUnitTest subdirectory
-        String tempstring = OperationsXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-        }
-        
-        // This test doesn't touch routes but we'll protect
-        // Repoint RouteManagerXml to JUnitTest subdirectory
-        tempstring = RouteManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        }
-        
-        // Repoint EngineManagerXml to JUnitTest subdirectory
-        tempstring = EngineManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        }
-        
-        // This test doesn't touch cars but we'll protect
-        // Repoint CarManagerXml to JUnitTest subdirectory
-        tempstring = CarManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        }
-        
-        // Repoint LocationManagerXml to JUnitTest subdirectory
-        tempstring = LocationManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        }
-        
-        // Repoint TrainManagerXml to JUnitTest subdirectory
-        tempstring = TrainManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-        }
-    	
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
-    }
+	// Ensure minimal setup for log4J
+
+	/**
+	 * Test-by test initialization.
+	 * Does log4j for standalone use, and then
+	 * creates a set of turnouts, sensors and signals
+	 * as common background for testing
+	 */
+	@Override
+	protected void setUp() {
+		apps.tests.Log4JFixture.setUp();
+
+		// This test doesn't touch setup but we'll protect
+		// Repoint OperationsXml to JUnitTest subdirectory
+		String tempstring = OperationsXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+		}
+
+		// This test doesn't touch routes but we'll protect
+		// Repoint RouteManagerXml to JUnitTest subdirectory
+		tempstring = RouteManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		}
+
+		// Repoint EngineManagerXml to JUnitTest subdirectory
+		tempstring = EngineManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		}
+
+		// This test doesn't touch cars but we'll protect
+		// Repoint CarManagerXml to JUnitTest subdirectory
+		tempstring = CarManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		}
+
+		// Repoint LocationManagerXml to JUnitTest subdirectory
+		tempstring = LocationManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		}
+
+		// Repoint TrainManagerXml to JUnitTest subdirectory
+		tempstring = TrainManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		}
+
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+LocationManagerXml.getOperationsDirectoryName());
+	}
 
 	public OperationsLocationsTest(String s) {
 		super(s);
@@ -1064,9 +1403,9 @@ public class OperationsLocationsTest extends TestCase {
 		return suite;
 	}
 
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() { 
-        apps.tests.Log4JFixture.tearDown();
-    }
+	// The minimal setup for log4J
+	@Override
+	protected void tearDown() { 
+		apps.tests.Log4JFixture.tearDown();
+	}
 }
