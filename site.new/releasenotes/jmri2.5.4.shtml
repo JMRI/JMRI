@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.2 2009-05-10 23:44:06 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.3 2009-05-15 14:50:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -147,6 +147,14 @@ by each location and track.
 Dan Boudreau improved reporting and printing in the operations tools.
 You can now see and print what type of cars and engines can be serviced by a location.
 You can also request thatall of the info provided by the edit location be printed.
+
+<p>
+Paul Bender added support for F13-F28 on Lenz systems upgraded to XPressNet version 3.6.
+
+<p>
+Paul Bender updated the XPressNet support for the Hornby Elite: 
+Do not send the "OFF" XPressNet message 
+(The Elite appears to react in the same manner to both the "ON" messages and the "OFF" messages).
 
 <!--#include virtual="/Footer" -->
 
