@@ -16,8 +16,8 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
- * @author  Paul Bender (C) 2008
- * @version    $Revision: 1.4 $
+ * @author  Paul Bender (C) 2008-2009
+ * @version    $Revision: 1.5 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
@@ -88,6 +88,27 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
      * functions F9, F10, F11, F12
      */
     protected void sendMomentaryFunctionGroup3()
+    {
+          if(log.isDebugEnabled())
+		log.debug("Momentary function request not supported by Elite.");
+          return;
+    }
+    
+    /**
+     * Send the XpressNet message to set the momentary state of
+     * functions F13, F14, F15, F16, F17, F18, F19, F20
+     */
+    protected void sendMomentaryFunctionGroup4()
+    {
+          if(log.isDebugEnabled())
+		log.debug("Momentary function request not supported by Elite.");
+          return;
+    }
+    /**
+     * Send the XpressNet message to set the momentary state of
+     * functions F21, F22, F23, F24, F25, F26, F27, F28
+     */
+    protected void sendMomentaryFunctionGroup5()
     {
           if(log.isDebugEnabled())
 		log.debug("Momentary function request not supported by Elite.");

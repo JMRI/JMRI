@@ -12,8 +12,8 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.12 $
+ * @author			Paul Bender  Copyright (C) 2003-2009
+ * @version			$Revision: 2.13 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -546,6 +546,35 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	XNetMessage msg=new XNetMessage(5);
  	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ); 
         msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
+        msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+        msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+        msg.setParity();
+        return(msg);
+    }
+    /*
+     * Given a locomotive address, request the function on/off state 
+     * for functions 13-28
+     * @param address is the locomotive address
+     */
+    public static XNetMessage getLocomotiveFunctionHighOnStatusMsg(int address){
+	XNetMessage msg=new XNetMessage(5);
+ 	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ); 
+        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON);
+        msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+        msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+        msg.setParity();
+        return(msg);
+    }
+ 
+    /*
+     * Given a locomotive address, request the function state (momentary status)
+     * for high functions (functions 13-28) 
+     * @param address is the locomotive address
+     */
+    public static XNetMessage getLocomotiveFunctionHighMomStatusMsg(int address){
+	XNetMessage msg=new XNetMessage(5);
+ 	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ); 
+        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM);
         msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
         msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
         msg.setParity();

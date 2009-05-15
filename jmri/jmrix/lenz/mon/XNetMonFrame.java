@@ -11,9 +11,9 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- # @author          Paul Bender Copyright (C) 2004-2007
+ # @author          Paul Bender Copyright (C) 2004-2009
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.24 $
+ * @version         $Revision: 2.25 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -245,13 +245,22 @@ import jmri.jmrix.lenz.XNetConstants;
 			}
 		// Loco Information Response Messages
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
-		     text = new String("Locomotive Information Response: Normal Unit ");
-		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
-                     // message byte 4, contains F0,F1,F2,F3,F4
-	             int element3 = l.getElement(3);
-                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
-	             int element4 = l.getElement(4);
-	             text += parseFunctionStatus(element3,element4);
+                     if(l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
+		          text = new String("Locomotive F13-F28 Momentary Status: ");
+                          // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
+			  int element3 = l.getElement(2);
+                          // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
+			  int element4 = l.getElement(3);
+			  text += parseFunctionHighMomentaryStatus(element3,element4);
+                     } else {
+		        text = new String("Locomotive Information Response: Normal Unit ");
+		        text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+                        // message byte 4, contains F0,F1,F2,F3,F4
+	                int element3 = l.getElement(3);
+                        // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	                int element4 = l.getElement(4);
+	                text += parseFunctionStatus(element3,element4);
+                     }
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
                      if(l.getElement(1)==0xF8) {
                      // This message is a Hornby addition to the protocol
@@ -321,7 +330,7 @@ import jmri.jmrix.lenz.XNetConstants;
 			  text += l.getThrottleMsgAddr();
 			  text += " is being operated by another device.";
                           break;
-		       case XNetConstants.LOCO_FUNCTION_STATUS:
+		       case XNetConstants.LOCO_FUNCTION_STATUS: {
 			  text += "Locomotive ";
 			  text += " Function Status: ";
                           // message byte 3, contains F0,F1,F2,F3,F4
@@ -330,6 +339,17 @@ import jmri.jmrix.lenz.XNetConstants;
 			  int element4 = l.getElement(3);
 			  text += parseFunctionMomentaryStatus(element3,element4);
                           break;
+                       }
+		       case XNetConstants.LOCO_FUNCTION_STATUS_HIGH:{
+			  text += "Locomotive ";
+			  text += "F13-F28 Status: ";
+                          // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
+			  int element3 = l.getElement(2);
+                          // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
+			  int element4 = l.getElement(3);
+			  text += parseFunctionHighStatus(element3,element4);
+                          break;
+                       }
 		       default: text = l.toString();
                    }
 		// Feedback Response Messages
@@ -658,9 +678,71 @@ import jmri.jmrix.lenz.XNetConstants;
 					else text += "F12 off ";
 						break;
 					}
+		  case XNetConstants.LOCO_SET_FUNC_GROUP4: {
+						text = text 
+						+new String("Set Function Group 4 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F13 on ";
+					else text += "F13 off ";
+					if((element4 & 0x02)!=0)
+						text += "F14 on ";
+					else text += "F14 off ";
+					if((element4 & 0x04)!=0)
+						text += "F15 on ";
+					else text += "F15 off ";
+					if((element4 & 0x08)!=0)
+						text += "F16 on ";
+					else text += "F16 off ";
+					if((element4 & 0x10)!=0)
+						text += "F17 on ";
+					else text += "F17 off ";
+					if((element4 & 0x20)!=0)
+						text += "F18 on ";
+					else text += "F18 off ";
+					if((element4 & 0x40)!=0)
+						text += "F19 on ";
+					else text += "F19 off ";
+					if((element4 & 0x80)!=0)
+						text += "F20 on ";
+					else text += "F20 off ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_GROUP5: {
+						text = text 
+						+new String("Set Function Group 5 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F21 on ";
+					else text += "F21 off ";
+					if((element4 & 0x02)!=0)
+						text += "F22 on ";
+					else text += "F22 off ";
+					if((element4 & 0x04)!=0)
+						text += "F23 on ";
+					else text += "F23 off ";
+					if((element4 & 0x08)!=0)
+						text += "F24 on ";
+					else text += "F24 off ";
+					if((element4 & 0x10)!=0)
+						text += "F25 on ";
+					else text += "F25 off ";
+					if((element4 & 0x20)!=0)
+						text += "F26 on ";
+					else text += "F26 off ";
+					if((element4 & 0x40)!=0)
+						text += "F27 on ";
+					else text += "F27 off ";
+					if((element4 & 0x80)!=0)
+						text += "F28 on ";
+					else text += "F28 off ";
+						break;
+					}
 		  case XNetConstants.LOCO_SET_FUNC_Group1: {
 						text = text 
-						+new String("Set Function Group 1 Status for address: "
+						+new String("Set Function Group 1 Momentary Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x10)==0)
@@ -682,7 +764,7 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group2: {
 						text = text 
-						+new String("Set Function Group 2 Status for address: "
+						+new String("Set Function Group 2 Momentary Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
@@ -701,7 +783,7 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group3: {
 						text = text 
-						+new String("Set Function Group 1 Status for address: "
+						+new String("Set Function Group 3 Momentary Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
@@ -716,6 +798,68 @@ import jmri.jmrix.lenz.XNetConstants;
 					if((element4 & 0x08)==0) 
 						text += "F12 continuous ";
 					else text += "F12 momentary ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_Group4: {
+						text = text 
+						+new String("Set Function Group 4 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)==0)
+						text += "F13 continuous ";
+					else text += "F13 momentary ";
+					if((element4 & 0x02)==0)
+						text += "F14 continuous ";
+					else text += "F14 momentary ";
+					if((element4 & 0x04)==0)
+						text += "F15 continuous ";
+					else text += "F15 momentary ";
+					if((element4 & 0x08)==0) 
+						text += "F16 continuous ";
+					else text += "F16 momentary ";
+					if((element4 & 0x10)==0)
+						text += "F17 continuous ";
+					else text += "F17 momentary ";
+					if((element4 & 0x20)==0)
+						text += "F18 continuous ";
+					else text += "F18 momentary ";
+					if((element4 & 0x40)==0)
+						text += "F19 continuous ";
+					else text += "F19 momentary ";
+					if((element4 & 0x80)==0) 
+						text += "F20 continuous ";
+					else text += "F20 momentary ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_Group5: {
+						text = text 
+						+new String("Set Function Group 5 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)==0)
+						text += "F21 continuous ";
+					else text += "F21 momentary ";
+					if((element4 & 0x02)==0)
+						text += "F22 continuous ";
+					else text += "F22 momentary ";
+					if((element4 & 0x04)==0)
+						text += "F23 continuous ";
+					else text += "F23 momentary ";
+					if((element4 & 0x08)==0) 
+						text += "F24 continuous ";
+					else text += "F24 momentary ";
+					if((element4 & 0x10)==0)
+						text += "F25 continuous ";
+					else text += "F25 momentary ";
+					if((element4 & 0x20)==0)
+						text += "F26 continuous ";
+					else text += "F26 momentary ";
+					if((element4 & 0x40)==0)
+						text += "F27 continuous ";
+					else text += "F27 momentary ";
+					if((element4 & 0x80)==0) 
+						text += "F28 continuous ";
+					else text += "F28 momentary ";
 						break;
 					}
 		  case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ: text = text 
@@ -763,6 +907,16 @@ import jmri.jmrix.lenz.XNetConstants;
 			      text=new String("Request for Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) + 
 				  " function momentary/continuous status.");
+                              break;
+		          case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
+			      text=new String("Request for Address " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)) + 
+				  " F13-F28 on/off status.");
+                              break;
+		          case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
+			      text=new String("Request for Address " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)) + 
+				  " F13-F28 momentary/continuous status.");
                               break;
                           case XNetConstants.LOCO_INFO_REQ_V3:
 			      text=new String("Request for Address " +
@@ -935,7 +1089,65 @@ import jmri.jmrix.lenz.XNetConstants;
 		else text += "F12 off ";
 		return(text);
         }
-        /* Parse the Momentary status of functions.
+
+        /* Parse the status of functions functions F13-F28.
+         * element3 contains F20,F19,F18,F17,F16,F15,F14,F13
+         * element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+         */
+
+	private String parseFunctionHighStatus(int element3,int element4){
+		String text = new String("");
+		if((element3 & 0x01)!=0) 
+		   text += "F13 on ";
+		else text += "F13 off ";
+		if((element3 & 0x02)!=0)
+	           text += "F14 on ";
+		else text += "F14 off ";
+		if((element3 & 0x04)!=0)
+		   text += "F15 on ";
+	        else text += "F15 off ";
+		if((element3 & 0x08)!=0)
+		   text += "F16 on ";
+	        else text += "F16 off ";
+		if((element3 & 0x10)!=0) 
+		   text += "F17 on ";
+		else text += "F17 off ";
+		if((element3 & 0x20)!=0)
+	 	   text += "F18 on ";
+		else text += "F18 off ";
+		if((element3 & 0x40)!=0)
+		   text += "F19 on ";
+		else text += "F19 off ";
+		if((element3 & 0x80)!=0)
+		   text += "F20 on ";
+		else text += "F20 off ";
+	        if((element4 & 0x01)!=0) 
+		   text += "F21 on ";
+		else text += "F21 off ";
+		if((element4 & 0x02)!=0)
+		   text += "F22 on ";
+		else text += "F22 off ";
+		if((element4 & 0x04)!=0)
+		   text += "F23 on ";
+		else text += "F23 off ";
+		if((element4 & 0x08)!=0)
+		   text += "F24 on ";
+		else text += "F24 off ";
+		if((element4 & 0x10)!=0) 
+		   text += "F25 on ";
+		else text += "F25 off ";
+		if((element4 & 0x20)!=0)
+	 	   text += "F26 on ";
+		else text += "F26 off ";
+		if((element4 & 0x40)!=0)
+		   text += "F27 on ";
+		else text += "F27 off ";
+		if((element4 & 0x80)!=0)
+		   text += "F28 on ";
+		else text += "F28 off ";
+		return(text);
+        }
+        /* Parse the Momentary sytatus of functions.
          * element3 contains the data byte including F0,F1,F2,F3,F4
          * element4 contains F12,F11,F10,F9,F8,F7,F6,F5
          */
@@ -981,6 +1193,64 @@ import jmri.jmrix.lenz.XNetConstants;
 		if((element4 & 0x80)!=0)
 		   text += "F12 Momentary ";
 		else text += "F12 Continuous ";
+		return(text);
+        }
+  
+        /* Parse the Momentary sytatus of functions F13-F28.
+         * element3 contains F20,F19,F18,F17,F16,F15,F14,F13
+         * element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+         */
+
+	private String parseFunctionHighMomentaryStatus(int element3,int element4){
+		String text = new String("");
+		if((element3 & 0x01)!=0) 
+		   text += "F13 Momentary ";
+		else text += "F13 Continuous ";
+		if((element3 & 0x02)!=0)
+	           text += "F14 Momentary ";
+		else text += "F14 Continuous ";
+		if((element3 & 0x04)!=0)
+		   text += "F15 Momentary ";
+	        else text += "F15 Continuous ";
+		if((element3 & 0x08)!=0)
+		   text += "F16 Momentary ";
+	        else text += "F16 Continuous ";
+		if((element3 & 0x10)!=0) 
+		   text += "F17 Momentary ";
+		else text += "F17 Continuous ";
+		if((element3 & 0x20)!=0)
+	 	   text += "F18 Momentary ";
+		else text += "F18 Continuous ";
+		if((element3 & 0x40)!=0)
+		   text += "F19 Momentary ";
+		else text += "F19 Continuous ";
+		if((element3 & 0x80)!=0)
+		   text += "F20 Momentary ";
+		else text += "F20 Continuous ";
+		if((element4 & 0x01)!=0) 
+		   text += "F21 Momentary ";
+		else text += "F21 Continuous ";
+		if((element4 & 0x02)!=0)
+	 	   text += "F22 Momentary ";
+		else text += "F22 Continuous ";
+		if((element4 & 0x04)!=0)
+		   text += "F23 Momentary ";
+		else text += "F23 Continuous ";
+		if((element4 & 0x08)!=0)
+		   text += "F24 Momentary ";
+		else text += "F24 Continuous ";
+		if((element4 & 0x10)!=0) 
+		   text += "F25 Momentary ";
+		else text += "F25 Continuous ";
+		if((element4 & 0x20)!=0)
+	 	   text += "F26 Momentary ";
+		else text += "F26 Continuous ";
+		if((element4 & 0x40)!=0)
+		   text += "F27 Momentary ";
+		else text += "F27 Continuous ";
+		if((element4 & 0x80)!=0)
+		   text += "F28 Momentary ";
+		else text += "F28 Continuous ";
 		return(text);
         }
 

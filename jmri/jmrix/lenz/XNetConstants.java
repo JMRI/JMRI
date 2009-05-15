@@ -2,7 +2,7 @@
  * XNetConstants.java
  *
  * Description:		Constants to represent values seen in XpressNet traffic
- * @author		Paul Bender  Copyright (C) 2003
+ * @author		Paul Bender  Copyright (C) 2003-2009
  * @version             $ Revision: 1.9 $
  *
  * Variable prefix abreviation keys:
@@ -108,7 +108,9 @@ public final static int LOCO_NOT_AVAILABLE_V1 = 0xA3; /* for XNet V1 */
 public final static int LOCO_AVAILABLE_V2 = 0x84; /* for XNet V2 */
 public final static int LOCO_NOT_AVAILABLE_V2 = 0xA4; /* for XNet V2 */
 
-/* Locomotive Information for V3 */
+/* Locomotive Information for V3 
+   NOTE: for version 3.6, 0xE4 and 0xE3 are used to send information
+         about functions 13-28 */
 public final static int LOCO_INFO_NORMAL_UNIT = 0xE4;
 public final static int LOCO_INFO_MUED_UNIT   = 0xE5;
 public final static int LOCO_INFO_MU_ADDRESS  = 0xE2;
@@ -118,6 +120,8 @@ public final static int LOCO_INFO_RESPONSE    = 0xE3;
 /* response types for LOCO_INFO_RESPONSE (byte two commands */
 public final static int LOCO_NOT_AVAILABLE     = 0x40;
 public final static int LOCO_FUNCTION_STATUS  = 0x50;
+public final static int LOCO_FUNCTION_STATUS_HIGH = 0x52; // for F13-F28
+public final static int LOCO_FUNCTION_STATUS_HIGH_MOM = 0x51; // for F13-F28
 
 /* responses for stack/database searches */
 public final static int LOCO_SEARCH_RESPONSE_N  = 0x30; /*Normal Loco */
@@ -207,6 +211,12 @@ public final static int LOCO_INFO_REQ_V3 = 0x00; /* for XNet V3, follow
 					         with 2 byte address */
 public final static int LOCO_INFO_REQ_FUNC = 0x07; /* momentary/constatant
                                                   function status request */
+public final static int LOCO_INFO_REQ_FUNC_HI_ON = 0x09; /* ON/OFF
+                                                  function status request 
+                                                  for Functions 13-28*/
+public final static int LOCO_INFO_REQ_FUNC_HI_MOM = 0x08; /* momentary/constatant
+                                                  function status request 
+                                                  for Functions 13-28*/
 public final static int LOCO_STACK_SEARCH_FWD = 0x05; /* search forward in 
 		    		the command station stack for this unit */
 public final static int LOCO_STACK_SEARCH_BKWD = 0x06; /* search backward in 
@@ -234,11 +244,15 @@ public final static int LOCO_SPEED_128   = 0x13; /* speed and direction 128
 public final static int LOCO_SET_FUNC_GROUP1 = 0x20; /* set functions F0-F4*/
 public final static int LOCO_SET_FUNC_GROUP2 = 0x21; /* set functions F5-F8*/
 public final static int LOCO_SET_FUNC_GROUP3 = 0x22; /* set functions F9-F12*/
+public final static int LOCO_SET_FUNC_GROUP4 = 0x23; /* set functions F13-F20*/
+public final static int LOCO_SET_FUNC_GROUP5 = 0x28; /* set functions F21-F28*/
 
 /* these set momentary status for functions with 0xE4 as the opcode*/
 public final static int LOCO_SET_FUNC_Group1 = 0x24; /* set functions F0-F4*/
 public final static int LOCO_SET_FUNC_Group2 = 0x25; /* set functions F5-F8*/
 public final static int LOCO_SET_FUNC_Group3 = 0x26; /* set functions F9-F12*/
+public final static int LOCO_SET_FUNC_Group4 = 0x27; /* set functions F13-F20*/
+public final static int LOCO_SET_FUNC_Group5 = 0x2C; /* set functions F21-F28*/
 
 /* add a unit to a multi-unit set opcode requires addition of the 
 direction relative to the lead unit as the least significant bit 
