@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.83 2009-05-15 14:50:18 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.84 2009-05-15 20:48:55 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -36,7 +36,9 @@ searching, but unfortunately costs $0.08 per page.
 <p>
 As a convenience for people following the case, 
 we're providing the most important documents here, and access to the 
-complete list further down the page.
+complete list further down the page. 
+(If you do want to look things up directly on PACER, the
+case number is "3:06-cv-01905-JSW")
 <ul>
 <li>This page contains the complete docket from the main
 case in the Northern District of California
