@@ -99,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.17 $
+ * @version			$Revision: 2.18 $
  */
 
 package jmri.jmrix.lenz;
@@ -109,10 +109,10 @@ import jmri.AbstractTurnout;
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /* State information */
-    static final int OFFSENT = 1;
-    static final int COMMANDSENT = 2;
-    static final int IDLE = 0;
-    private int InternalState = IDLE;
+    protected static final int OFFSENT = 1;
+    protected static final int COMMANDSENT = 2;
+    protected static final int IDLE = 0;
+    protected int InternalState = IDLE;
 
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
@@ -468,7 +468,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /* Send an "Off" message to the decoder for this output  */
-    private synchronized void sendOffMessage() {
+    protected synchronized void sendOffMessage() {
             // We need to tell the turnout to shut off the output.
 	    if(log.isDebugEnabled()) log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
             XNetMessage msg =  XNetMessage.getTurnoutCommandMsg(mNumber,
