@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.1 2009-05-15 03:12:14 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>JMRI: NMRA 2009 Clinics</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="clinics java model railroad JMRI CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+
+<hr class="hide">
+
+<div class="nomenu" id="mBody">
+  <div id="mainContent">
+    <H2>JMRI NMRA 2009 Clinics</H2>
+
+There will be several JMRI-related clinics presented at the 
+<a href="http://hn2009.org/home.html">2009 NMRA Convention</a> in Hartford, CT, USA.  
+
+<table border="1">
+<tr><th>Date/Time</th><th>Title</th></tr>
+<tr><td>Sunday 7-8PM</td><td>Intro To Decoder Programming With JMRI/DecoderPro</td></tr>
+<tr><td>Sunday 8:30-9:30PM</td><td>Introduction To Layout Control With JMRI/PanelPro</td></tr>
+<tr><td>Sunday 10-11PM</td><td>Add Signals To Your Layout With JMRI/PanelPro</td></tr>
+<tr><td>Monday 7-8PM</td><td>Advanced Decoder Programming With JMRI/DecoderPro</td></tr>
+<tr><td>Monday 8:30-9:30PM</td><td>JMRI Operations And Computer Generated Switch Lists</td></tr>
+<tr><td>Monday 10-11PM</td><td>Create a Detailed 2D CTC Machine Model With JMRI/PanelPro</td></tr>
+<tr><td>Tuesday 7-8PM</td><td>Using the JMRI/PanelPro Layout Editor</td></tr>
+<tr><td>Tuesday 8:30-11PM</td><td>JMRI User Group Meeting: What's New In JMRI?</td></tr>
+<tr><td>Friday 2:30-3:30PM</td><td>Intro To Decoder Programming With JMRI/DecoderPro</td></tr>
+<tr><td>Friday 4-5PM</td><td>Introduction To Layout Control With JMRI/PanelPro</td></tr>
+</table>
+
+After the convention, we plan to post links here.
+
+<p>
+(Under construction)
+
+<!--#include virtual="/Footer" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+</body>
+</html>
+
