@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Debug.shtml,v 1.1 2008-02-22 03:57:02 jacobsen Exp $ -->
+<!-- $Id: Debug.shtml,v 1.2 2009-05-16 18:10:14 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -40,7 +40,7 @@ JMRI: Debugging Your Installation
 	<p class=example> java -version </p>
 
 	at a command prompt and looking the message that produces. 
-	You need to have at least Java version 1.1.8
+	You need to have at least Java version 1.5
 	installed to use JMRI.  If you get a message about "command not found"
 	or similar, then Java is not properly installed; consult the
 	install pages for your 
