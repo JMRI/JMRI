@@ -50,7 +50,7 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @version $Revision: 1.96 $
+ * @version $Revision: 1.97 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -132,7 +132,6 @@ public class PanelEditor extends JmriJFrame {
     JButton backgroundAddButton = new JButton(rb.getString("ButtonAddBkg"));
     
     static boolean showCloseInfoMessage = true;	//display info message when closing panel
-    static boolean deletePanelOnClose = false;	// when true, delete panel on close
     
     public PanelEditor() { this(rb.getString("Title"));}
 
@@ -1101,17 +1100,17 @@ public class PanelEditor extends JmriJFrame {
 			String name = "Panel";
 			if (getTarget().getTopLevelAncestor() != null)
 				name = ((JFrame) getTarget().getTopLevelAncestor()).getTitle();
-			int selectedValue = JOptionPane.showOptionDialog(null, java.text.MessageFormat.format(rb.getString("PanelCloseQuestion"),
+			int selectedValue = JOptionPane.showOptionDialog(frame, 
+					java.text.MessageFormat.format(rb.getString("PanelCloseQuestion") +"\n" +
+							rb.getString("PanelCloseHelp"),
 							new Object[] { name }), null,
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-					null, new Object[] { rb.getString("ButtonHide"), rb.getString("ButtonDelete"),
-							rb.getString("ButtonDontShow") }, rb.getString("ButtonDontShow"));
-			if (selectedValue == 0) deletePanelOnClose = false;
-			if (selectedValue == 1) deletePanelOnClose = true;
-			if (selectedValue == 2) showCloseInfoMessage = false;
-		}
-		if (deletePanelOnClose){
-			deletePanel();
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+							null, new Object[] { rb.getString("ButtonHide"), rb.getString("ButtonDelete"),
+				rb.getString("ButtonDontShow") }, rb.getString("ButtonHide"));
+			if (selectedValue == 1) 
+				deletePanel();
+			if (selectedValue == 2) 
+				showCloseInfoMessage = false;
 		}
     }
 
