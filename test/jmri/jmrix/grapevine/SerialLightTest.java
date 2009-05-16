@@ -3,13 +3,14 @@
 package jmri.jmrix.grapevine;
 
 import jmri.*;
+import jmri.implementation.AbstractLightTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialLightTest extends AbstractLightTest {
 

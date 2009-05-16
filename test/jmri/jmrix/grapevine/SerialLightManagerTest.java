@@ -14,9 +14,9 @@ import jmri.jmrix.AbstractMRListener;
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
-public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
+public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 
 	public void setUp() {
 	    apps.tests.Log4JFixture.setUp();

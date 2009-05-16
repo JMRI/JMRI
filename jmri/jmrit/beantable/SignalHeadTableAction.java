@@ -18,8 +18,8 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
-import jmri.DoubleTurnoutSignalHead;
-import jmri.TripleTurnoutSignalHead;
+import jmri.implementation.DoubleTurnoutSignalHead;
+import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.Turnout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -716,7 +716,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(name.getText())) {			
-                s = new jmri.TripleTurnoutSignalHead(name.getText(),t1, t2, t3);
+                s = new jmri.implementation.TripleTurnoutSignalHead(name.getText(),t1, t2, t3);
                 InstanceManager.signalHeadManagerInstance().register(s);
             }
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
@@ -729,12 +729,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(name.getText())) {			
-            	s = new jmri.DoubleTurnoutSignalHead(name.getText(),t1, t2);
+            	s = new jmri.implementation.DoubleTurnoutSignalHead(name.getText(),t1, t2);
 		InstanceManager.signalHeadManagerInstance().register(s);
             }
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
             if (checkBeforeCreating(name.getText())) {
-				s = new jmri.VirtualSignalHead(name.getText());
+				s = new jmri.implementation.VirtualSignalHead(name.getText());
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
         } else if (lsDec.equals(typeBox.getSelectedItem())) {
@@ -764,14 +764,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(name.getText())) {
-				s = new jmri.LsDecSignalHead(name.getText(), t1, s1, t2, s2, t3, s3, t4, s4, t5, s5, t6, s6, t7, s7);
+				s = new jmri.implementation.LsDecSignalHead(name.getText(), t1, s1, t2, s2, t3, s3, t4, s4, t5, s5, t6, s6, t7, s7);
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
 		} else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
 			String addrStr = name.getText() ;
 			int number ;
 			if (checkBeforeCreating(name.getText())) {            
-				s = new jmri.DccSignalHead(name.getText());
+				s = new jmri.implementation.DccSignalHead(name.getText());
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
         } else log.error("Unexpected type: "+typeBox.getSelectedItem());
@@ -988,45 +988,45 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
             ev1Label.setVisible(true);
             eto1.setVisible(true);
-			eto1.setText(((jmri.LsDecSignalHead)curS).getGreen().getSystemName());
+			eto1.setText(((jmri.implementation.LsDecSignalHead)curS).getGreen().getSystemName());
             es1Box.setVisible(true);
-			setTurnoutStateInBox(es1Box, ((jmri.LsDecSignalHead)curS).getGreenState(), turnoutStateValues);
+			setTurnoutStateInBox(es1Box, ((jmri.implementation.LsDecSignalHead)curS).getGreenState(), turnoutStateValues);
             ev2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             ev2Label.setVisible(true);
             eto2.setVisible(true);
-			eto2.setText(((jmri.LsDecSignalHead)curS).getYellow().getSystemName());
+			eto2.setText(((jmri.implementation.LsDecSignalHead)curS).getYellow().getSystemName());
             es2Box.setVisible(true);
-			setTurnoutStateInBox(es2Box, ((jmri.LsDecSignalHead)curS).getYellowState(), turnoutStateValues);
+			setTurnoutStateInBox(es2Box, ((jmri.implementation.LsDecSignalHead)curS).getYellowState(), turnoutStateValues);
             ev3Label.setText(rb.getString("LabelRedTurnoutNumber"));
 			ev3Label.setVisible(true);
             eto3.setVisible(true);
-			eto3.setText(((jmri.LsDecSignalHead)curS).getRed().getSystemName());
+			eto3.setText(((jmri.implementation.LsDecSignalHead)curS).getRed().getSystemName());
             es3Box.setVisible(true);
-			setTurnoutStateInBox(es3Box, ((jmri.LsDecSignalHead)curS).getRedState(), turnoutStateValues);
+			setTurnoutStateInBox(es3Box, ((jmri.implementation.LsDecSignalHead)curS).getRedState(), turnoutStateValues);
             ev4Label.setText(rb.getString("LabelFlashGreenTurnoutNumber"));
             ev4Label.setVisible(true);
             eto4.setVisible(true);
-			eto4.setText(((jmri.LsDecSignalHead)curS).getFlashGreen().getSystemName());
+			eto4.setText(((jmri.implementation.LsDecSignalHead)curS).getFlashGreen().getSystemName());
             es4Box.setVisible(true);
-			setTurnoutStateInBox(es4Box, ((jmri.LsDecSignalHead)curS).getFlashGreenState(), turnoutStateValues);
+			setTurnoutStateInBox(es4Box, ((jmri.implementation.LsDecSignalHead)curS).getFlashGreenState(), turnoutStateValues);
             ev5Label.setText(rb.getString("LabelFlashYellowTurnoutNumber"));
             ev5Label.setVisible(true);
             eto5.setVisible(true);
-			eto5.setText(((jmri.LsDecSignalHead)curS).getFlashYellow().getSystemName());
+			eto5.setText(((jmri.implementation.LsDecSignalHead)curS).getFlashYellow().getSystemName());
             es5Box.setVisible(true);
-			setTurnoutStateInBox(es5Box, ((jmri.LsDecSignalHead)curS).getFlashYellowState(), turnoutStateValues);
+			setTurnoutStateInBox(es5Box, ((jmri.implementation.LsDecSignalHead)curS).getFlashYellowState(), turnoutStateValues);
 			ev6Label.setText(rb.getString("LabelFlashRedTurnoutNumber"));
             ev6Label.setVisible(true);
             eto6.setVisible(true);
- 			eto6.setText(((jmri.LsDecSignalHead)curS).getFlashRed().getSystemName());
+ 			eto6.setText(((jmri.implementation.LsDecSignalHead)curS).getFlashRed().getSystemName());
 			es6Box.setVisible(true);
-			setTurnoutStateInBox(es6Box, ((jmri.LsDecSignalHead)curS).getFlashRedState(), turnoutStateValues);
+			setTurnoutStateInBox(es6Box, ((jmri.implementation.LsDecSignalHead)curS).getFlashRedState(), turnoutStateValues);
 			ev7Label.setText(rb.getString("LabelDarkTurnoutNumber"));
             ev7Label.setVisible(true);
             eto7.setVisible(true);
-			eto7.setText(((jmri.LsDecSignalHead)curS).getDark().getSystemName());
+			eto7.setText(((jmri.implementation.LsDecSignalHead)curS).getDark().getSystemName());
             es7Box.setVisible(true);
-			setTurnoutStateInBox(es7Box, ((jmri.LsDecSignalHead)curS).getDarkState(), turnoutStateValues);
+			setTurnoutStateInBox(es7Box, ((jmri.implementation.LsDecSignalHead)curS).getDarkState(), turnoutStateValues);
 		}
 		else if (className.equals("jmri.jmrix.loconet.SE8cSignalHead")) {
 			signalType.setText(se8c4Aspect);
@@ -1133,44 +1133,44 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				noTurnoutMessage(ev1Label.getText(), eto1.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setGreen(t1);
+			else ((jmri.implementation.LsDecSignalHead)curS).setGreen(t1);
 			if (t2==null) {
 				noTurnoutMessage(ev2Label.getText(), eto2.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setYellow(t2);
+			else ((jmri.implementation.LsDecSignalHead)curS).setYellow(t2);
             if (t3==null) {
 				noTurnoutMessage(ev3Label.getText(), eto3.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setRed(t3);
+			else ((jmri.implementation.LsDecSignalHead)curS).setRed(t3);
             if (t4==null) {
 				noTurnoutMessage(ev4Label.getText(), eto4.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setFlashGreen(t4);
+			else ((jmri.implementation.LsDecSignalHead)curS).setFlashGreen(t4);
             if (t5==null) {
 				noTurnoutMessage(ev5Label.getText(), eto5.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setFlashYellow(t5);
+			else ((jmri.implementation.LsDecSignalHead)curS).setFlashYellow(t5);
             if (t6==null) {
 				noTurnoutMessage(ev6Label.getText(), eto6.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setFlashRed(t6);
+			else ((jmri.implementation.LsDecSignalHead)curS).setFlashRed(t6);
             if (t7==null) {
 				noTurnoutMessage(ev7Label.getText(), eto7.getText());
 				return;
 			}
-			else ((jmri.LsDecSignalHead)curS).setDark(t7);
-			((jmri.LsDecSignalHead)curS).setGreenState(turnoutStateFromBox(es1Box));
-			((jmri.LsDecSignalHead)curS).setYellowState(turnoutStateFromBox(es2Box));
-			((jmri.LsDecSignalHead)curS).setRedState(turnoutStateFromBox(es3Box));
-			((jmri.LsDecSignalHead)curS).setFlashGreenState(turnoutStateFromBox(es4Box));
-			((jmri.LsDecSignalHead)curS).setFlashYellowState(turnoutStateFromBox(es5Box));
-			((jmri.LsDecSignalHead)curS).setFlashRedState(turnoutStateFromBox(es6Box));
-			((jmri.LsDecSignalHead)curS).setDarkState(turnoutStateFromBox(es7Box));    
+			else ((jmri.implementation.LsDecSignalHead)curS).setDark(t7);
+			((jmri.implementation.LsDecSignalHead)curS).setGreenState(turnoutStateFromBox(es1Box));
+			((jmri.implementation.LsDecSignalHead)curS).setYellowState(turnoutStateFromBox(es2Box));
+			((jmri.implementation.LsDecSignalHead)curS).setRedState(turnoutStateFromBox(es3Box));
+			((jmri.implementation.LsDecSignalHead)curS).setFlashGreenState(turnoutStateFromBox(es4Box));
+			((jmri.implementation.LsDecSignalHead)curS).setFlashYellowState(turnoutStateFromBox(es5Box));
+			((jmri.implementation.LsDecSignalHead)curS).setFlashRedState(turnoutStateFromBox(es6Box));
+			((jmri.implementation.LsDecSignalHead)curS).setDarkState(turnoutStateFromBox(es7Box));    
 		}
 		else if (className.equals("jmri.jmrix.loconet.SE8cSignalHead")) {
 			String nam = eName.getText();

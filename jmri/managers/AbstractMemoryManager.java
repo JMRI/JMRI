@@ -3,12 +3,13 @@
 package jmri.managers;
 
 import jmri.*;
+import jmri.implementation.AbstractManager;
 
 /**
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {

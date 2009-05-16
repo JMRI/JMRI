@@ -2,7 +2,7 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.AbstractLightManager;
+import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
 /**
@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class XNetLightManager extends AbstractLightManager {
 

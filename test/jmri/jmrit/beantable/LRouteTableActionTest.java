@@ -88,7 +88,7 @@ public class LRouteTableActionTest extends SwingTestCase {
             Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(
                                                         "Conditional"+i, "Conditional"+i);
             assertNotNull(i+"th Conditional is null!", c);
-            SignalHead sh = new jmri.VirtualSignalHead("Signal"+i);
+            SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal"+i);
             assertNotNull(i+"th SignalHead is null!", sh);
             InstanceManager.signalHeadManagerInstance().register(sh);
             Route r = new jmri.DefaultRoute("Route"+i);

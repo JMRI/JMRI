@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 
 import jmri.*;
 
-public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
 		// create and register the manager object

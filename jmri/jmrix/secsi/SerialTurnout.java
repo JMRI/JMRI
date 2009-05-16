@@ -2,7 +2,7 @@
 
 package jmri.jmrix.secsi;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
 /**
@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for SECSI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

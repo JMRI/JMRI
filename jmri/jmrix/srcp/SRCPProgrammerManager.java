@@ -2,7 +2,7 @@
 
 package jmri.jmrix.srcp;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 

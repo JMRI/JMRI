@@ -2,14 +2,14 @@
 
 package jmri.managers;
 
-import jmri.AbstractSensorManager;
-import jmri.AbstractSensor;
+import jmri.managers.AbstractSensorManager;
+import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class InternalSensorManager extends AbstractSensorManager {
 

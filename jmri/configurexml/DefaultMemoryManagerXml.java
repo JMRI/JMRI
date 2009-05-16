@@ -6,7 +6,8 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
+ * @deprecated 2.5.4
  */
 public class DefaultMemoryManagerXml 
     extends jmri.managers.configurexml.DefaultMemoryManagerXml {

@@ -18,9 +18,9 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class TransitManagerXml extends AbstractNamedBeanManagerConfigXML {
+public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public TransitManagerXml() {
     }

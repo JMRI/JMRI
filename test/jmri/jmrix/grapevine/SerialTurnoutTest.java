@@ -3,13 +3,14 @@
 package jmri.jmrix.grapevine;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

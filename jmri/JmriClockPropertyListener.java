@@ -7,9 +7,9 @@ import java.util.Date;
 import jmri.Timebase;
 
 /**
- * A class monitoring a bound value used to set the state of a variable used
- * in one or more Conditionals of a Logix.
- * For use with Conditional variables having two states which are determined
+ * A service class for monitoring a bound property
+ * in one of the JMRI Named beans
+ * For use with properties having two states which are determined
  * by containment in an interval (e.g. Fast Clock ranges).
  * <P>
  * This file is part of JMRI.
@@ -26,6 +26,7 @@ import jmri.Timebase;
  * <P>
  * @author			Pete Cressman Copyright (C) 2009
  * @version			$Revision 1.0 $
+ * @since           2.5.1
  */
 
 public class JmriClockPropertyListener extends JmriSimplePropertyListener

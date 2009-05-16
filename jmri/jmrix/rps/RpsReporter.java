@@ -6,14 +6,14 @@ import javax.vecmath.*;
 import java.util.ArrayList;
 
 import jmri.Reporter;
-import jmri.AbstractReporter;
+import jmri.implementation.AbstractReporter;
 
 /**
  * RPS implementation of the Reporter interface.
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {

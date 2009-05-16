@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
 
 package jmri.jmrix.nce;
@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 
 import jmri.*;
 
-public class NceTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
 		// create and register the manager object

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
 /**
@@ -16,7 +16,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

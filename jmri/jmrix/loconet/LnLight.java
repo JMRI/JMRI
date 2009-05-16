@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractLight;
+import jmri.implementation.AbstractLight;
 // import jmri.SignalHead;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class LnLight extends AbstractLight {
 

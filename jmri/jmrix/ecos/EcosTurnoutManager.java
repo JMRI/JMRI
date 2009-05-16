@@ -10,9 +10,9 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class EcosTurnoutManager extends jmri.AbstractTurnoutManager
+public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
 
     public EcosTurnoutManager() {

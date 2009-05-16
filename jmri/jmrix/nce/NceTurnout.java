@@ -2,7 +2,7 @@
 
 package jmri.jmrix.nce;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.PushbuttonPacket;
@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  */
 public class NceTurnout extends AbstractTurnout {
 

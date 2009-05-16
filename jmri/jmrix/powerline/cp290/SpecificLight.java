@@ -2,7 +2,7 @@
 
 package jmri.jmrix.powerline.cp290;
 
-import jmri.AbstractVariableLight;
+import jmri.implementation.AbstractVariableLight;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.powerline.*;
@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 

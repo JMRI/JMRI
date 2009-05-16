@@ -2,7 +2,7 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 

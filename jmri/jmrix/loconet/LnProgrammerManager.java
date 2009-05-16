@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class LnProgrammerManager  extends DefaultProgrammerManager {
 

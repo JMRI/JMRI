@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
 
@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SprogTurnout extends AbstractTurnout {
 

@@ -15,9 +15,9 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class DefaultLogixManagerXml extends AbstractNamedBeanManagerConfigXML {
+public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public DefaultLogixManagerXml() {
     }

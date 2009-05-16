@@ -1,6 +1,7 @@
 package jmri;
 
 import jmri.Timebase;
+import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -26,7 +27,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {

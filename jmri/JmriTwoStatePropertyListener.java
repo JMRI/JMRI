@@ -4,8 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * A class monitoring a bound value used to set the state of a variable used
- * in one or more Conditionals of a Logix.
+ * A service class for monitoring a bound property in one of the JMRI Named beans
+ * (Turnout, Sensor, etc).
  * For use where only two states are possible, ACTIVE/INACTIVE, THROWN/CLOSED etc.
  * <P>
  * This file is part of JMRI.
@@ -22,6 +22,7 @@ import java.beans.PropertyChangeListener;
  * <P>
  * @author			Pete Cressman Copyright (C) 2009
  * @version			$Revision 1.0 $
+ * @since           2.5.1
  */
 
 public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener

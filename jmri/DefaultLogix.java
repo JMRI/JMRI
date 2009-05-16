@@ -8,12 +8,13 @@ import jmri.SignalHead;
 import jmri.Memory;
 import java.util.ArrayList;
 import java.util.Iterator;
+import jmri.implementation.AbstractNamedBean;
 
  /**
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean

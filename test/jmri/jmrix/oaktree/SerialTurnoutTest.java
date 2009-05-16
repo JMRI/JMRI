@@ -3,12 +3,13 @@
 package jmri.jmrix.oaktree;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -47,7 +47,7 @@ public class ConfigXmlManagerTest extends TestCase {
                     innerFlag=true;
                 }
             };
-        Object o1=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        Object o1=  new jmri.implementation.TripleTurnoutSignalHead("","", null, null, null);
         innerFlag=false;
         configxmlmanager.registerConfig(o1);
         Assert.assertTrue("register found class", !innerFlag);
@@ -61,9 +61,9 @@ public class ConfigXmlManagerTest extends TestCase {
                     innerFlag=true;
                 }
             };
-        Object o1=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
-        Object o2=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
-        Object o3=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        Object o1=  new jmri.implementation.TripleTurnoutSignalHead("","", null, null, null);
+        Object o2=  new jmri.implementation.TripleTurnoutSignalHead("","", null, null, null);
+        Object o3=  new jmri.implementation.TripleTurnoutSignalHead("","", null, null, null);
         innerFlag=false;
         configxmlmanager.registerConfig(o1);
         Assert.assertTrue("find found it", configxmlmanager.findInstance(o1.getClass(),1)==o1);

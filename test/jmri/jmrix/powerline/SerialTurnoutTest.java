@@ -3,12 +3,13 @@
 package jmri.jmrix.powerline;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

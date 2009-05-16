@@ -2,6 +2,7 @@
 
 package jmri;
 
+import jmri.managers.TurnoutManagerScaffold;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class InstanceManagerTest extends TestCase {
 

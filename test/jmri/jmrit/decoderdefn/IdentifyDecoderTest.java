@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmrit.roster.IdentifyDecoder class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class IdentifyDecoderTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class IdentifyDecoderTest extends TestCase {
                                 cvRead = CV;
                         }
                 };
-                jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
+                jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
 
                 // create our test object
                 IdentifyDecoder i = new IdentifyDecoder() {

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.acela;
 
-import jmri.DefaultSignalHead;
+import jmri.implementation.DefaultSignalHead;
 
 /**
  * AcelaSignalHead.java

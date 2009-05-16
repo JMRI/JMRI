@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.DefaultClockControl;
+import jmri.implementation.DefaultClockControl;
 import java.util.Date;
 import java.awt.event.*;
 
@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import jmri.Sensor;
-import jmri.AbstractNamedBean;
+import jmri.implementation.AbstractNamedBean;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor panel 
@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutBlock extends AbstractNamedBean

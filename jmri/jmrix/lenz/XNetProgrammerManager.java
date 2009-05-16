@@ -2,7 +2,7 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.3 $
+ * @version	$Revision: 2.4 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 

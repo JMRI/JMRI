@@ -13,7 +13,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
@@ -24,7 +24,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
         // register this as the default, register as the Programmer
         self = this;
-        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
+        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(this));
 
     }
 

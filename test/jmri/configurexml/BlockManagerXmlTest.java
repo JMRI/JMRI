@@ -2,7 +2,7 @@
 
 package jmri.configurexml;
 
-import jmri.AbstractSensor;
+import jmri.implementation.AbstractSensor;
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  * 
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BlockManagerXmlTest extends TestCase {
 
@@ -48,7 +48,7 @@ public class BlockManagerXmlTest extends TestCase {
         p21.setBlock(b1);
         p21.setFromBlockDirection(Path.RIGHT);
         p21.setToBlockDirection(Path.LEFT);
-        p21.addSetting(new BeanSetting(new jmri.AbstractTurnout("IT1"){
+        p21.addSetting(new BeanSetting(new jmri.implementation.AbstractTurnout("IT1"){
                             public void turnoutPushbuttonLockout(boolean b){}
                             public void forwardCommandChangeToLayout(int i){}
                         }, 

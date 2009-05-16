@@ -2,7 +2,7 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.AbstractLight;
+import jmri.implementation.AbstractLight;
 import jmri.Sensor;
 import jmri.Turnout;
 // import jmri.Light;
@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 

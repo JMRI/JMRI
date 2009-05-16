@@ -3,13 +3,13 @@
 package jmri.jmrix.rps;
 
 import jmri.Reporter;
-import jmri.AbstractReporterManager;
+import jmri.managers.AbstractReporterManager;
 
 /**
  * RPS implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.3.1
  */
 public class RpsReporterManager extends AbstractReporterManager {

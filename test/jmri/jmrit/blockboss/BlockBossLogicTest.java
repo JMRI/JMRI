@@ -19,7 +19,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class BlockBossLogicTest extends TestCase {
 	
@@ -187,13 +187,13 @@ public class BlockBossLogicTest extends TestCase {
         s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
         s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
 
-        h1 = new jmri.VirtualSignalHead("IH1");
+        h1 = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.VirtualSignalHead("IH2");
+        h2 = new jmri.implementation.VirtualSignalHead("IH2");
         InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.VirtualSignalHead("IH3");
+        h3 = new jmri.implementation.VirtualSignalHead("IH3");
         InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.VirtualSignalHead("IH4");
+        h4 = new jmri.implementation.VirtualSignalHead("IH4");
         InstanceManager.signalHeadManagerInstance().register(h4);
     }
 

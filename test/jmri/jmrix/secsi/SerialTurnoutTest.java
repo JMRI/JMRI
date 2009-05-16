@@ -3,12 +3,13 @@
 package jmri.jmrix.secsi;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.secsi.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

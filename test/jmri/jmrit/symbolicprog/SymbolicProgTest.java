@@ -2,7 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class SymbolicProgTest extends TestCase {
 

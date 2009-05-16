@@ -2,7 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.AbstractTurnoutManager;
+import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 
 /**
@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 

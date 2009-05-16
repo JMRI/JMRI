@@ -14,9 +14,9 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
-public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
     public String getSystemName(int i) {
         return "XT"+i;

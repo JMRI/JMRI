@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.implementation.DefaultSignalHead;
 import jmri.jmrit.Sound;
 import jmri.Timebase;
 import jmri.jmrit.beantable.LogixTableAction;

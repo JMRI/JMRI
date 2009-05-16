@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -38,7 +38,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 			log.error("Creating too many Mx1Programmer objects");
 		// register this as the default, register as the Programmer
 		self = this;
-		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
+		jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(this));
 
         // connect to listen
         controller().addMx1Listener(~0, this);

@@ -17,10 +17,10 @@ import jmri.Reporter;
  * <P>
  * Description:		Implement Reporter manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
-public class LnReporterManager extends jmri.AbstractReporterManager implements LocoNetListener {
+public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnReporterManager() {

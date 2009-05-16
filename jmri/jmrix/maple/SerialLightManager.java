@@ -2,7 +2,7 @@
 
 package jmri.jmrix.maple;
 
-import jmri.AbstractLightManager;
+import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
 /**
@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author  Bob Jacobsen Copyright (C) 2008
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialLightManager extends AbstractLightManager {
 

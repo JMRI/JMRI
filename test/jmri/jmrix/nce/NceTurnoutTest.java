@@ -3,12 +3,12 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 package jmri.jmrix.nce;
 
-import jmri.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * @author			Bob Jacobsen Copyright 2005
  * @version
  */
-public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
 	public String getSystemName(int i) {
 		return "LT"+i;

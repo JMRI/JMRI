@@ -4,6 +4,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.*;
 import jmri.jmrix.can.*;
+import jmri.managers.AbstractTurnoutManager;
 
 /**
  * CAN CBUS implementation of a TurnoutManager.
@@ -11,7 +12,7 @@ import jmri.jmrix.can.*;
  * Turnouts must be manually created.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {

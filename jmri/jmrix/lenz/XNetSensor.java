@@ -2,14 +2,14 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.AbstractSensor;
+import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
 /**
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.10 $
+ * @version         $Revision: 2.11 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 

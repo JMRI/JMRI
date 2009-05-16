@@ -17,13 +17,13 @@ import jmri.Sensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003, 2007
  * @author      Dave Duchamp, multi node extensions, 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  *
  * @author      Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
 
-public class AcelaSensorManager extends jmri.AbstractSensorManager
+public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             implements AcelaListener {
 
     public AcelaSensorManager() {

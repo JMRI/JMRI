@@ -3,6 +3,7 @@
 package jmri;
 
 import java.util.List;
+import jmri.implementation.AbstractManager;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -30,7 +31,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

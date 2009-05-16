@@ -2,7 +2,7 @@
 
 package jmri.jmrix.oaktree;
 
-import jmri.AbstractLight;
+import jmri.implementation.AbstractLight;
 import jmri.Sensor;
 import jmri.Turnout;
 
@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialLight extends AbstractLight {
 

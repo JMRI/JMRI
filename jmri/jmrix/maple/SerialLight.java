@@ -2,7 +2,7 @@
 
 package jmri.jmrix.maple;
 
-import jmri.AbstractLight;
+import jmri.implementation.AbstractLight;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.AbstractNode;
@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractNode;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialLight extends AbstractLight {
 

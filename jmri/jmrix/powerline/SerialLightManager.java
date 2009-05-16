@@ -2,7 +2,7 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.AbstractLightManager;
+import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
 /**
@@ -12,7 +12,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 

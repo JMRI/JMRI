@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  * @author			Bob Coleman Copyright 2008
  */
-public class AcelaTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
     public String getSystemName(int i) {
         return "AT"+i;

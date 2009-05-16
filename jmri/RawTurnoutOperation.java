@@ -3,13 +3,16 @@
  */
 package jmri;
 
+import jmri.implementation.AbstractTurnout;
+import jmri.implementation.RawTurnoutOperator;
+
 /**
  * RawTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback by sending raw NMRA commands
  * to the turnout.
  * This class is based on the NoTurnoutOperation class.
  * @author Paul Bender 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 

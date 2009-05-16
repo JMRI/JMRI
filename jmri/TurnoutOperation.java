@@ -5,6 +5,7 @@ package jmri;
 
 import java.util.List;
 import java.util.Iterator;
+import jmri.implementation.AbstractTurnout;
 
 /**
  * Framework for automating reliable turnout operation. This interface allows

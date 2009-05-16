@@ -3,14 +3,14 @@
 package jmri.managers;
 
 import jmri.Turnout;
-import jmri.AbstractTurnout;
-import jmri.AbstractTurnoutManager;
+import jmri.implementation.AbstractTurnout;
+import jmri.managers.AbstractTurnoutManager;
 
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 

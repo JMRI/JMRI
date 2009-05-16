@@ -13,9 +13,9 @@ import jmri.jmrix.AbstractMRReply;
  * CSV representation of the region.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class RpsSensorManager extends jmri.AbstractSensorManager {
+public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
     public RpsSensorManager() {
         super();

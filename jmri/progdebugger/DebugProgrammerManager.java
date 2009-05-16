@@ -2,7 +2,7 @@
 
 package jmri.progdebugger;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 import java.util.Hashtable;
 
@@ -16,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 

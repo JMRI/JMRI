@@ -10,9 +10,9 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
-public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
+public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 

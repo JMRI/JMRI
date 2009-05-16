@@ -15,7 +15,7 @@ import jmri.ConditionalManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
-import jmri.DefaultSignalHead;
+import jmri.implementation.DefaultSignalHead;
 import jmri.Route;
 import jmri.Memory;
 import jmri.Timebase;
@@ -72,7 +72,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class LogixTableAction extends AbstractTableAction {

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see     jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CbusProgrammerManager  extends DefaultProgrammerManager {
 

@@ -3,11 +3,14 @@
  */
 package jmri;
 
+import jmri.implementation.AbstractTurnout;
+import jmri.implementation.SensorTurnoutOperator;
+
 /**
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 

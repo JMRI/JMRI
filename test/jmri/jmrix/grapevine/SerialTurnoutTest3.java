@@ -3,13 +3,14 @@
 package jmri.jmrix.grapevine;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * high card and high port on card
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 

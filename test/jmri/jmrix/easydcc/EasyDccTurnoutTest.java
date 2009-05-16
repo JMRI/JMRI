@@ -12,7 +12,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
-import jmri.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTest;
 
 public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 

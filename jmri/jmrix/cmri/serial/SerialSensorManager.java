@@ -18,9 +18,9 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
-public class SerialSensorManager extends jmri.AbstractSensorManager
+public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
 
     /**

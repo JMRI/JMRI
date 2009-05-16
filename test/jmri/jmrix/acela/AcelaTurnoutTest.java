@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmrix.acela.AcelaTurnout} class.
  * @author	    Bob Coleman
  */
-public class AcelaTurnoutTest extends jmri.AbstractTurnoutTest {
+public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     private AcelaTrafficControlScaffold tcis = null;
 

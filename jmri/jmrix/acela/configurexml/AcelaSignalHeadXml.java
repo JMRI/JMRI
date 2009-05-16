@@ -4,7 +4,6 @@ package jmri.jmrix.acela.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import jmri.configurexml.AbstractNamedBeanManagerConfigXML;
 import java.util.List;
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
@@ -17,7 +16,7 @@ import org.jdom.Element;
  * based upon example of Grapevine by Bob Jacobsen
  * @author Bob Coleman Copyright: Copyright (c) 2009
  */
-public class AcelaSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
+public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public AcelaSignalHeadXml() {}
 

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
 /**
@@ -45,7 +45,7 @@ import jmri.Turnout;
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author			David Duchamp Copyright (C) 2004, 2007
  * @author			Dan Boudreau Copyright (C) 2007
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

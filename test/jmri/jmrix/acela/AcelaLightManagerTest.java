@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  * @author			Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest extends jmri.AbstractLightMgrTest  {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 
     public String getSystemName(int i) {
         return "AL"+i;

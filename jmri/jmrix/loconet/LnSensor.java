@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractSensor;
+import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
 /**
@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 

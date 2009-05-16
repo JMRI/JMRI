@@ -3,13 +3,14 @@
 package jmri.util;
 
 import jmri.*;
+import jmri.implementation.AbstractTurnout;
 import junit.framework.*;
 import java.util.*;
 
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class OrderedHashtableTest extends TestCase {
 

@@ -18,9 +18,9 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
-public class DefaultConditionalManagerXml extends AbstractNamedBeanManagerConfigXML {
+public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public DefaultConditionalManagerXml() {
     }

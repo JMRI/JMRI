@@ -10,11 +10,12 @@ package jmri;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import jmri.implementation.AbstractNamedBean;
 
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {

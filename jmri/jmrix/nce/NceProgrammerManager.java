@@ -2,7 +2,7 @@
 
 package jmri.jmrix.nce;
 
-import jmri.DefaultProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
 /**
@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 

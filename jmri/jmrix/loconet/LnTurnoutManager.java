@@ -37,10 +37,10 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.22 $
+ * @version         $Revision: 1.23 $
  */
 
-public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
+public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller) {

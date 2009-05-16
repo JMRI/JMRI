@@ -18,9 +18,9 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class SectionManagerXml extends AbstractNamedBeanManagerConfigXML {
+public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public SectionManagerXml() {
     }

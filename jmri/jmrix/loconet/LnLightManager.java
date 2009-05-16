@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractLightManager;
+import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
 /**
@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LnLightManager extends AbstractLightManager {
 

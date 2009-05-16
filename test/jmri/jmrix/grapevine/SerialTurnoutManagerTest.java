@@ -12,9 +12,9 @@ import jmri.*;
  *
  * Description:	    tests for the SerialTurnoutManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
-public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
 	    apps.tests.Log4JFixture.setUp();

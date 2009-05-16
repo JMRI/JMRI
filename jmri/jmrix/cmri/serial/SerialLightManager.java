@@ -2,7 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.AbstractLightManager;
+import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
 /**
@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialLightManager extends AbstractLightManager {
 

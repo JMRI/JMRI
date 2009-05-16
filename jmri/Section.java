@@ -6,6 +6,7 @@ import jmri.Block;
 import jmri.Sensor;
 import jmri.Timebase;
 import java.util.ArrayList;
+import jmri.implementation.AbstractNamedBean;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be 
@@ -84,7 +85,7 @@ import java.util.ArrayList;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {

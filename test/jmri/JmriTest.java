@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class JmriTest extends TestCase {
 
@@ -40,6 +40,7 @@ public class JmriTest extends TestCase {
         suite.addTest(jmri.NmraPacketTest.suite());
         suite.addTest(jmri.configurexml.ConfigXmlTest.suite());
         suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
+        suite.addTest(jmri.managers.ManagersTest.suite());
         suite.addTest(jmri.jmrix.JmrixTest.suite());  // last due to threading issues?
         suite.addTest(jmri.jmrit.JmritTest.suite());  // last due to classloader issues?
         suite.addTest(jmri.util.UtilTest.suite());

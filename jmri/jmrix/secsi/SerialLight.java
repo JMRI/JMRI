@@ -2,7 +2,7 @@
 
 package jmri.jmrix.secsi;
 
-import jmri.AbstractLight;
+import jmri.implementation.AbstractLight;
 import jmri.Sensor;
 import jmri.Turnout;
 
@@ -13,7 +13,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialLight extends AbstractLight {
 

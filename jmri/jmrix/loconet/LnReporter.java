@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractReporter;
+import jmri.implementation.AbstractReporter;
 
 /**
  * Extend jmri.AbstractReporter for LocoNet layouts
@@ -30,7 +30,7 @@ import jmri.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {

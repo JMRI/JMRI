@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractTurnout;
+import jmri.implementation.AbstractTurnout;
 /**
  * Extend jmri.AbstractTurnout for LocoNet layouts
  * <P>
@@ -36,7 +36,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.DefaultSignalHead;
+import jmri.implementation.DefaultSignalHead;
 
 /**
  * Extend jmri.SignalHead for signals implemented by an SE8c
@@ -24,7 +24,7 @@ import jmri.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 

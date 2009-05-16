@@ -2,11 +2,13 @@
 
 package jmri;
 
+import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.display.LayoutBlockManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultMemoryManager;
 
 /**
@@ -32,7 +34,7 @@ import jmri.managers.DefaultMemoryManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.40 $
+ * @version			$Revision: 1.41 $
  */
 public class InstanceManager {
 

@@ -10,6 +10,7 @@ import jmri.Timebase;
 //import jmri.jmrit.dispatcher.ActiveTrain;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.implementation.AbstractNamedBean;
 
 /**
  * Class providing the basic implementation of a Transit.
@@ -48,7 +49,7 @@ import java.util.List;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
