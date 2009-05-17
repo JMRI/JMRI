@@ -60,8 +60,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.23 $
- * @see         jmri.AbstractTurnout
+ * @version	$Revision: 1.24 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame

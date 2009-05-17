@@ -26,9 +26,8 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.9 $
- * @see         jmri.AbstractManager
- * @see         jmri.AbstractNamedBean
+ * @version	$Revision: 1.10 $
+ * @see         jmri.Manager
  */
 public interface NamedBean {
 

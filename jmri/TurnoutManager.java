@@ -40,9 +40,8 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  * @see             jmri.Turnout
- * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */

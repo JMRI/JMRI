@@ -37,9 +37,8 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see             jmri.Reporter
- * @see             jmri.AbstractReporterManager
  * @see             jmri.InstanceManager
  */
 public interface ReporterManager extends Manager {

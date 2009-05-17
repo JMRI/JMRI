@@ -41,9 +41,8 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.Sensor
- * @see         jmri.AbstractReporter
  * @see         jmri.ReporterManager
  * @see         jmri.InstanceManager
  */
