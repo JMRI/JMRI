@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_eMOTION_Motor.xml,v 1.1 2009-02-22 22:42:02 jacobsen Exp $ -->
+<!-- $Id: Massoth_eMOTION_Motor.xml,v 1.2 2009-05-19 17:33:00 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.3" lastUpdated="20090305" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.2" lastUpdated="20090218" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -39,19 +41,22 @@
       To date, I have encountered the following values in CV 106 (any additions to
       this list would be appreciated):
 
-      55020:           10
-      55021:           192
-      55022:           16
-      Small onboard:   65, 73, 81, 82, 83
-      Large onboard:   129, 134, 145
-      55027:           193
-      eMOTION L:       201 (according to 1.0 manual)
-      eMOTION LS:      202 (according to 2.2 manual)
-      eMOTION XL:      193 (according to 2.0 manual), 200
-      eMOTION XXL:     ???
-      eMOTION XLS:     202 (according to 1.3 manual), 203
-      eMOTION 8FL:     204 (according to 1.2 manual)
-      LED Light:       204
+      55020:              10
+      55021:             192
+      55022:              16
+      Small onboard:      65 (steam), 73 (steam), 81 (diesel), 82 (diesel), 83 (rail car), 93
+      Large onboard:     129 (steam), 134 (2-10-2), 137 (Aster steam), 145 (diesel/electric)
+                         146 (rail car), 147 (US diesel)
+      55027:             193
+      eMOTION L:         201 (according to 1.0 manual)
+      eMOTION LS:        202 (according to 2.2 manual)
+      eMOTION XL:        193 (according to 2.0 manual), 200
+      eMOTION XXL:       ???
+      eMOTION XLS:       202 (according to 1.3 manual), 203
+      eMOTION 8FL:       204 (according to 1.2 manual)
+      LED Light:         204
+      6500x sound unit:  208
+      Hot Metal Car:      10
 
       This definition was based on the Massoth eMOTION XL documents Nr. 8150001,
       first unnumbered version (8 pages) and Version 1.2 (44 pages),
@@ -106,7 +111,10 @@
               Added features from firmware version 1.5
                 CV 19 Consist address
               Added family lowVersionID & highVersionID, high version is higher than current version at time of writing
-        
+
+        1.3 - 5 Mar 2009
+              Converted single "Speed Control" pane to "Basic Speed Control" and "Speed Table" following Bruce Shanks'
+                 Version 13 changes to the Comprehensive programmer    
 -->
 
 
@@ -1025,45 +1033,60 @@
 		</column>
 	</pane>
 
-	<pane name="Speed Control">
+	<pane name="Basic Speed Control">
 		<column>
 			<row>
 				<column>
 					<label label=" "/>
-					<display item="Vstart" />
-					<display item="Vmid" />
-					<display item="Vhigh" />
-					<label label=" "/>
-				</column>
-				<column>
-					<display item="Vstart" format="hslider" label="" />
-					<display item="Vmid" format="hslider" label="" />
-					<display item="Vhigh" format="hslider" label="" />
-				</column>
-			</row>
-			<separator/>
-			<row>
-				<column>
-					<label label=" "/>
-					<display item="Speed Table Definition"
-						format="offradiobutton" label=""/>
+					<display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
+					<label label="           To turn off, use Speed Table pane"/>
 					<label label=" "/>
 				</column>
 			</row>
 			<row>
+				<label label=" "/>
+			</row>
+			<row>
+				<label label=" "/>
+			</row>
+			<row>
 				<column>
-					<display item="Speed Table Definition"
-						format="onradiobutton" layout="above" label=""/>
+					<display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
+					<display item="Vmid" tooltip="Sets the voltage at mid throttle"/>
+					<display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
+					<display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
 				</column>
+				<column>
+					<display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1"/>
+					<display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle"/>
+					<display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle"/>
+				</column>
+			</row>
+		</column>
+	</pane>
+
+	<pane name="Speed Table">
+		<column>
+			<row>
+				<column>
+					<display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
+					<label label="            To turn off, use Basic Speed Control pane"/>
+				</column>
+			</row>
+			<row>
+				<label label=" "/>
+			</row>
+			<row>
+				<label label=" "/>
 			</row>
 			<row>
 				<column>
 					<label label=" "/>
-					<display item="Speed Table Selection" />
+					<display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
 				</column>
 			</row>
 			<row>
-			  <column>
+				<column>
 					<display item="Speed Table" layout="above"/>
 					<label label=" "/>
 				</column>
