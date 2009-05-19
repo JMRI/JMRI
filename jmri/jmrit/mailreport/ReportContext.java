@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class ReportContext {
 
@@ -36,6 +36,12 @@ public class ReportContext {
         
         String prog = System.getProperty("user.dir");
         addString("Program directory: "+prog+"  ");
+
+        String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
+        addString("Roster index location: "+roster+"  ");
+
+        String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
+        addString("Operations files location: "+operations+"  ");
 
         addProperty("java.vendor");
         addProperty("java.home");
