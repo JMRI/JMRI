@@ -28,7 +28,7 @@ package jmri;
  * <P>
  * Turnout feedback is involved in the connection between these two states;
  * for more information see the
- * <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TurnoutFeedback.shtml">feedback page</a>.
+ * <a href="http://jmri.org/help/en/html/doc/Technical/TurnoutFeedback.shtml">feedback page</a>.
  * <P>
  * The AbstractTurnout class contains a basic implementation of the state and messaging
  * code, and forms a useful start for a system-specific implementation.
@@ -60,7 +60,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
