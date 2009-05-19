@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id: CT_Elektronik_DCX_new2.xml,v 1.9 2009-03-21 21:55:20 jacobsen Exp $ -->
+<!-- $Id: CT_Elektronik_DCX_new2.xml,v 1.10 2009-05-19 20:37:25 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,9 @@
 <!-- for more details.                                                      -->
 
 <decoder-config showEmptyPanes="no">
+		<version author="ncliffe@btinternet.com"
+			version="1.6" lastUpdated="2009/4/02"/>
+
 		<version author="ncliffe@btinternet.com"
 			version="1.5" lastUpdated="2009/3/12"/>
 
@@ -44,11 +47,18 @@
 	<!--     CV's sorted to numeric order -->
 	<!--     CV's 163-166 added for "shunt mode", for completeness of shunt mode options -->
 	<!--     lighting effects pane extensively revised  -->
+	<!-- version 1.6, Nigel Cliffe 2009/04/02  -->
+	<!-- Note that V66 decoders are now in "CT_Elektronic_DCX_V60_plus"  --> 
+	<!--     Splitting files to pre-v66 and post-v66 due to change in values with CV152/153 -->
+	<!--     v56 DCX74 / v59 DCX75 mapping of white/yellow is white=2, yellow=1 , but yellow will "flash" in non-direction momentarily -->
+	<!--     Noted in v66 DCX74 that mapping has changed to white=1, yellow=2 and works correctly -->
+	<!--     Require more user observations of if any decoders exist between v59 and v66, and any -->
+	<!--     four-output wire decoders.  -->
 
-
+	
 <decoder>
 	<family name="DCX Series (v.27 and higher)" mfg="CT Elektronik"
-		lowVersionID="27" highVersionID="66"
+		lowVersionID="27" highVersionID="59"
 		comment="DCX74, DCX75, with variants">
 
 		<model model="DCX74D" numOuts="2" numFns="10"
@@ -726,6 +736,10 @@
 		</variable>
 
 
+<!--  NC comment, version 56 and version 66 decoders seem different.  
+	In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
+	In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)
+-->	
 		<variable label="Engine FWD, Uncoupling BWD" CV="152" default="4"
 			tooltip="CV152, Engine FWD, Uncoupling BWD, bitwise output wire">
 			<decVal/></variable>
@@ -733,12 +747,24 @@
 		<variable label="Loco travel FWD, rear coupler" CV="152" tooltip = "CV152 select output wire for uncoupler action" >
 			<enumVal>
 			<enumChoice choice="None" />
-			<enumChoice choice="1 White" value="2" />
-			<enumChoice choice="2 Yellow" value="4" />
-			<enumChoice choice="3 Green"  value="8" />
-			<enumChoice choice="4 Purple"  value="16" />
+			<enumChoice choice="2 White" value="2" />
+			<enumChoice choice="1 Yellow"  value="1" />
+			<enumChoice choice="4 ??" value="4" />
+			<enumChoice choice="8 Green"  value="8" />
+			<enumChoice choice="16 Purple"  value="16" />
 			</enumVal>
 		</variable>
+
+		<variable label="V66 Loco travel FWD, rear coupler" CV="152" tooltip = "CV152 select output wire for uncoupler action" >
+			<enumVal>
+			<enumChoice choice="None" />
+			<enumChoice choice="1 White" value="1" />
+			<enumChoice choice="2 Yellow" value="2" />
+			<enumChoice choice="3 ??"  value="3" />
+			<enumChoice choice="4 ??"  value="4" />
+			</enumVal>
+		</variable>
+			
 		
 		<variable label="Engine BWD, Uncoupling FWD" CV="153" default="8"
 			tooltip="CV153, Engine BWD, Uncoupling FWD, bitwise output wire">
@@ -748,10 +774,21 @@
 		<variable label="Loco travel BWD, front coupler" CV="153" tooltip = "CV153 select output wire for uncoupler action" >
 			<enumVal>
 			<enumChoice choice="None" />
-			<enumChoice choice="1 White" value="2" />
-			<enumChoice choice="2 Yellow" value="4" />
-			<enumChoice choice="3 Green"  value="8" />
-			<enumChoice choice="4 Purple"  value="16" />
+			<enumChoice choice="2 White" value="2" />
+			<enumChoice choice="1 Yellow"  value="1" />
+			<enumChoice choice="4 ??" value="4" />
+			<enumChoice choice="8 Green"  value="8" />
+			<enumChoice choice="16 Purple"  value="16" />
+			</enumVal>
+		</variable>
+
+		<variable label="V66 Loco travel BWD, front coupler" CV="153" tooltip = "CV153 select output wire for uncoupler action" >
+			<enumVal>
+			<enumChoice choice="None" />
+			<enumChoice choice="1 White" value="1" />
+			<enumChoice choice="2 Yellow" value="2" />
+			<enumChoice choice="3 ??"  value="3" />
+			<enumChoice choice="4 ??"  value="4" />
 			</enumVal>
 		</variable>
 
@@ -949,10 +986,14 @@
 			<display item="F-Button Used For Auto-Uncoupling" label="Fn Key to start movement" />
 			<label label="  " />
 			<label label="Uncoupler outputs with movement"/>
-			<display item="Loco travel FWD, rear coupler" label="Loco forward, rear coupler" />
-			<display item="Loco travel BWD, front coupler" label="Loco reversing, front coupler" />
+			<separator/>
+			<label label="Decoder Version V40-V59 movement" />
+			<display item="Loco travel FWD, rear coupler" label="Loco forward, rear coupler" /> 
+			<display item="Loco travel BWD, front coupler" label="Loco reversing, front coupler" /> 
 			<label label="  " />
-			
+			<label label="Read Only information" />
+			<display item="Decoder Version" label="Decoder Version" />
+
 		</column>
 
 		<column>
@@ -1115,5 +1156,9 @@
 
 
 
+
+
+
+ 	  	 
 
  	  	 
