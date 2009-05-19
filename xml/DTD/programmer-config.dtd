@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.20 $ -->
+<!-- $Revision: 1.21 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT programmer-config (version, programmer)>
+<!ELEMENT programmer-config (version*, programmer)>
 
 <!-- The version section identifies the file information.  Similar -->
 <!-- clauses appear in other DTD files; check consistency. -->
