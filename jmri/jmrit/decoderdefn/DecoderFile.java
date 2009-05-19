@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -160,6 +160,15 @@ public class DecoderFile extends XmlFile {
         return decoderElement.getChild("family").getAttribute("mfg").getValue();
     }
 
+    boolean isProductIDok(Element e) {
+        if (e.getAttributeValue("include") != null) {
+            String include = e.getAttributeValue("include");
+            String test = ","+include+",";
+            return test.contains(","+_productID+",");
+        }
+        return true;
+    }
+    
     // use the decoder Element from the file to load a VariableTableModel for programming.
     public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
@@ -181,6 +190,8 @@ public class DecoderFile extends XmlFile {
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                     && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
                     continue;
+                // if not correct productID, skip
+                if (!isProductIDok(e)) continue;
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
@@ -203,6 +214,8 @@ public class DecoderFile extends XmlFile {
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                     && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
                     continue;
+                // if not correct productID, skip
+                if (!isProductIDok(e)) continue;
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
