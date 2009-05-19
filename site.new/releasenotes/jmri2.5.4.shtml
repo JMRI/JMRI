@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.4 2009-05-16 18:08:38 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.5 2009-05-19 16:39:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -155,6 +155,19 @@ Paul Bender added support for F13-F28 on Lenz systems upgraded to XPressNet vers
 Paul Bender updated the XPressNet support for the Hornby Elite: 
 Do not send the "OFF" XPressNet message 
 (The Elite appears to react in the same manner to both the "ON" messages and the "OFF" messages).
+
+<p>
+Dick Bronson improved the USS CTC panel background images in 
+<a href="http://jmri.org/resources/icons/USS/background/">icons/USS/background</a> 
+to remove the appearance of repetitive blotches in the track background area.
+He also added some new 850 pixel high background slices sized to fit the new 1440 x
+900 pixel wide screen monitors. 
+
+<p>
+A number of JMRI implementation classes have been moved to clean up the code organization.
+This only effects you if you've written somehat low-level Java or Python code to e.g.
+implement a new system.  If you've done that, and you encouter compilation problems,
+look in the jmri.managers and jmri.implementation packages.
 
 <!--#include virtual="/Footer" -->
 
