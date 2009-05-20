@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -23,7 +23,9 @@ public class OperationsXml extends XmlFile {
 	/** record the single instance **/
 	private static OperationsXml _instance = null;
 
-	public static synchronized OperationsXml instance() {
+    public synchronized static void resetInstance() { _instance = null; }
+
+    public static synchronized OperationsXml instance() {
 		if (_instance == null) {
 			if (log.isDebugEnabled()) log.debug("OperationsXml creating instance");
 			// create and load
@@ -110,7 +112,7 @@ public class OperationsXml extends XmlFile {
 		}
 	}
 
-	public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
+	public static String defaultOperationsFilename() { return getFileLocation()+OperationsDirectoryName+File.separator+OperationsFileName;}
 
 	public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
 	public static String getOperationsDirectoryName(){
@@ -123,6 +125,35 @@ public class OperationsXml extends XmlFile {
 		return OperationsFileName;
 	}
 	private static String OperationsFileName = "Operations.xml";
+
+    /**
+     * Set the default location for Operations files.
+     *
+     * @param f Absolute pathname to use. A null or "" argument flags
+     * a return to the original default in prefsdir.
+     */
+    public static void setFileLocation(String f) {
+        if (f!=null && !f.equals("")) {
+            if (f.endsWith(File.separator))
+                fileLocation = f;
+            else
+                fileLocation = f+File.separator;
+        } else {
+            if (log.isDebugEnabled()) log.debug("Operations location reset to default");
+            fileLocation = XmlFile.prefsDir();
+        }
+        // and make sure next request gets the new one
+        resetInstance();
+    }
+
+    /**
+     * Absolute path to location of Operations files.
+     * <P>
+     * Default is in the prefsDir, but can be set to anything.
+     * @see XmlFile#prefsDir()
+     */
+    public static String getFileLocation() { return fileLocation; }
+    private static String fileLocation = XmlFile.prefsDir();
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsXml.class.getName());
 
