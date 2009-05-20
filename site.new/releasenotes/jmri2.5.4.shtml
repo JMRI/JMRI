@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.5 2009-05-19 16:39:38 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.6 2009-05-20 14:33:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,15 @@ A number of JMRI implementation classes have been moved to clean up the code org
 This only effects you if you've written somehat low-level Java or Python code to e.g.
 implement a new system.  If you've done that, and you encouter compilation problems,
 look in the jmri.managers and jmri.implementation packages.
+
+<p>
+Jeff Schmaltz updated the Massoth LBG, eMotion motor and sound decoders, and LGB 55027 decoder definition.
+
+<p>
+Nigel Cliffe fixed a bug found earlier CT DCX decoder definition (actually a bug in the decoders). 
+CVs 152/153 take different values if the decoder is v27-59 or v66. 
+Splitting the decoder file on the version number of the decoder seems
+easiest, so there are now two definitions.
 
 <!--#include virtual="/Footer" -->
 
