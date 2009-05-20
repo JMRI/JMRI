@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2009-05-15 03:12:14 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2009-05-20 14:33:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>JMRI: NMRA 2009 Clinics</TITLE>
@@ -26,9 +26,15 @@
   <div id="mainContent">
     <H2>JMRI NMRA 2009 Clinics</H2>
 
+<a href="http://hn2009.org/home.html"><img src="http://hn2009.org/home_files/shapeimage_2.png" width="135" height="105" alt="NMRA convention logo" align="right"></a>
+
 There will be several JMRI-related clinics presented at the 
 <a href="http://hn2009.org/home.html">2009 NMRA Convention</a> in Hartford, CT, USA.  
 
+<p>
+Our JMRI User Group Meeting will be Tuesday evening. 
+Two introductory clinics will be presented on Sunday and repeated on Friday.
+<p>
 <table border="1">
 <tr><th>Date/Time</th><th>Title</th></tr>
 <tr><td>Sunday 7-8PM</td><td>Intro To Decoder Programming With JMRI/DecoderPro</td></tr>
@@ -43,10 +49,22 @@ There will be several JMRI-related clinics presented at the
 <tr><td>Friday 4-5PM</td><td>Introduction To Layout Control With JMRI/PanelPro</td></tr>
 </table>
 
-After the convention, we plan to post links here.
+<p>
+After the convention, we'll post as many links to presentations as we can.
+You can get an idea of what they'll be like from the
+<a href="../NMRA2008/index.html">2008 clinics page</a>.
 
 <p>
-(Under construction)
+More information on the NMRA Hartford convention can be found on the  
+<a href="http://hn2009.org/home.html">convention website</a>
+(click on the
+<a href="http://hn2009.org/rail_clinics.html">Rail Clinics</a> 
+link to see 
+all clinics). 
+Many interesting clinics are listed in addition to ours.
+
+<p>
+Hope to see you there!
 
 <!--#include virtual="/Footer" -->
 
