@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -81,10 +81,10 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
      */
     public boolean okToSend() {
             if(CheckBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
+                if(log.isDebugEnabled()) log.debug("Buffer Empty: " + OutputBufferEmpty);
                 return (OutputBufferEmpty);
             } else {
-                log.debug("No Flow Control or Buffer Check");
+                if(log.isDebugEnabled()) log.debug("No Flow Control or Buffer Check");
                 return(true);
             }
     }
@@ -141,16 +141,18 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
        // this thread has one task.  It repeatedly reads from the input pipe
        // and writes modified data to the output pipe.  This is the heart
        // of the command station simulation.
-       log.debug("Simulator Thread Started");
+       if(log.isDebugEnabled()) log.debug("Simulator Thread Started");
        for(;;){
          XNetMessage m=readMessage();
-         log.debug("Simulator Thread received message " + m.toString() );
+         if(log.isDebugEnabled()) log.debug("Simulator Thread received message " + m.toString() );
          XNetReply r=generateReply(m);
          writeReply(r);
-         log.debug("Simulator Thread sent Reply" + r.toString() );
+         if(log.isDebugEnabled()) log.debug("Simulator Thread sent Reply" + r.toString() );
        }
     }
 
+    // readMessage reads one incoming message from the buffer
+    // and sets outputBufferEmpty to true.
     private XNetMessage readMessage(){
       XNetMessage msg = null;
       try{
@@ -162,6 +164,9 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
       return(msg);
     }
 
+
+    // generateReply is the heart of the simulation.  It translates an 
+    // incoming XNetMessage into an outgoing XNetReply.
     private XNetReply generateReply(XNetMessage m){
             XNetReply reply = new XNetReply();
             switch(m.getElement(0)){
@@ -176,20 +181,86 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
                      reply.setElement(4,0x00); // set the parity byte to 0
                      reply.setParity();
                      break;
+                   case XNetConstants.EMERGENCY_OFF:
+                   case XNetConstants.RESUME_OPS:
+                   case XNetConstants.SERVICE_MODE_CSRESULT:
+                   case XNetConstants.CS_STATUS:              
                    default:
-		     reply.setOpCode(XNetConstants.CS_INFO);
-                     reply.setElement(1,XNetConstants.CS_NOT_SUPPORTED & 0xff);
-                     reply.setElement(2,0x00); // set the parity byte to 0
-                     reply.setParity();
+                     reply=notSupportedReply();
                    } 
                    break;
-               default:
-		  reply.setOpCode(XNetConstants.CS_INFO);
-                  reply.setElement(1,XNetConstants.CS_NOT_SUPPORTED);
-                  reply.setElement(2,0x00); // set the parity byte to 0
-                  reply.setParity();
+               case XNetConstants.LI_VERSION_REQUEST:
+                    reply.setOpCode(XNetConstants.LI_VERSION_RESPONSE);
+                    reply.setElement(1,0x00);  // set the hardware type to 0
+                    reply.setElement(2,0x00);  // set the firmware version to 0
+                    reply.setElement(3,0x00);  // set the parity byte to 0
+                    reply.setParity();
+                    break;
+               case XNetConstants.LOCO_OPER_REQ:
+                    if(m.getElement(1)==XNetConstants.LOCO_ADD_MULTI_UNIT_REQ ||
+                       m.getElement(1)==XNetConstants.LOCO_REM_MULTI_UNIT_REQ ||
+                       m.getElement(1)==XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD ||
+                       m.getElement(1)==XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD) {
+                           reply=notSupportedReply();
+                           break;
+                       }
+               case XNetConstants.EMERGENCY_STOP:
+               case XNetConstants.ACC_OPER_REQ:
+                   reply=okReply();
+                   break;
+               case XNetConstants.LOCO_STATUS_REQ:                 
+                   switch(m.getElement(1)){
+                       case XNetConstants.LOCO_INFO_REQ_V3:
+                       reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
+                       reply.setElement(1,0x04);  // set to 128 speed step mode
+                       reply.setElement(2,0x00);  // set the speed to 0 
+                                                  // direction reverse
+                       reply.setElement(3,0x00);  // set function group a off
+                       reply.setElement(4,0x00);  // set function group b off
+                       reply.setElement(5,0x00);  // set the parity byte to 0
+                       reply.setParity();         // set the parity correctly.
+                       break;
+                       case XNetConstants.LOCO_INFO_REQ_FUNC:
+                       case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
+                       case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
+                       default:
+                           reply=notSupportedReply();
+                   }
+                   break;
+               case XNetConstants.LI101_REQUEST:
+               case XNetConstants.CS_SET_POWERMODE:
+               //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
+                                                        //and CS_SET_POWERMODE 
+                                                        //have the same value
+               case XNetConstants.PROG_WRITE_REQUEST:
+               case XNetConstants.OPS_MODE_PROG_REQ:
+               case XNetConstants.LOCO_DOUBLEHEAD:
+               case XNetConstants.ACC_INFO_REQ: 
+		default:
+                   reply=notSupportedReply();
             }
             return(reply);
+    }
+
+    // We have a few canned response messages.
+
+    // Create an Unsupported XNetReply message
+    private XNetReply notSupportedReply(){
+       XNetReply r = new XNetReply();
+       r.setOpCode(XNetConstants.CS_INFO);
+       r.setElement(1,XNetConstants.CS_NOT_SUPPORTED);
+       r.setElement(2,0x00); // set the parity byte to 0
+       r.setParity();
+       return r;
+    }
+    // Create an OK XNetReply message
+    private XNetReply okReply(){
+       XNetReply r=new XNetReply();
+       r.setOpCode(XNetConstants.LI_MESSAGE_RESPONSE_HEADER);
+       r.setElement(1,XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
+       r.setElement(2,0x00); // set the parity byte to 0
+       r.setParity();
+       return r;
     }
 
     private void writeReply(XNetReply r){
@@ -209,8 +280,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
      * <P>
      * Only used in the Receive thread.
      *
-     * @param msg message to fill
-     * @param istream character source.
+     * @returns filled message 
      * @throws IOException when presented by the input source.
      */
     private XNetMessage loadChars() throws java.io.IOException{
