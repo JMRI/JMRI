@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -131,7 +131,10 @@ public class Setup {
 	
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
+	
+	private static boolean showCarLength = true;		//when true, show car length in manifests 
 	private static boolean showCarLoad = false;			//when true, show car load in manifests 
+	private static boolean showCarColor = true;			//when true, show car color in manifests 
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
@@ -225,6 +228,14 @@ public class Setup {
 		return appendCarComment;
 	}
 	
+	public static void  setShowCarLengthEnabled(boolean enable){
+		showCarLength = enable;
+	}
+	
+	public static boolean isShowCarLengthEnabled(){
+		return showCarLength;
+	}
+	
 	public static void  setShowCarLoadEnabled(boolean enable){
 		showCarLoad = enable;
 	}
@@ -233,6 +244,14 @@ public class Setup {
 		return showCarLoad;
 	}
 	
+	public static void  setShowCarColorEnabled(boolean enable){
+		showCarColor = enable;
+	}
+	
+	public static boolean isShowCarColorEnabled(){
+		return showCarColor;
+	}
+
 	public static void  setTrainIconCordEnabled(boolean enable){
 		enableTrainIconXY = enable;
 	}
@@ -518,7 +537,9 @@ public class Setup {
     	values.setAttribute("carTypes", getCarTypes());
     	values.setAttribute("switchTime", Integer.toString(getSwitchTime()));
     	values.setAttribute("travelTime", Integer.toString(getTravelTime()));
+    	values.setAttribute("showCarLength", isShowCarLengthEnabled()?"true":"false");
     	values.setAttribute("showCarLoad", isShowCarLoadEnabled()?"true":"false");
+    	values.setAttribute("showCarColor", isShowCarColorEnabled()?"true":"false");
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
@@ -610,10 +631,20 @@ public class Setup {
            	if (log.isDebugEnabled()) log.debug("CarTypes: "+types);
            	Setup.setCarTypes(types);
         }
+        if ((a = operations.getChild("settings").getAttribute("showCarLength"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("showCarLength: "+enable);
+           	Setup.setShowCarLengthEnabled(enable.equals("true"));
+        }
         if ((a = operations.getChild("settings").getAttribute("showCarLoad"))!= null){
         	String enable = a.getValue();
            	if (log.isDebugEnabled()) log.debug("showCarLoad: "+enable);
            	Setup.setShowCarLoadEnabled(enable.equals("true"));
+        }
+        if ((a = operations.getChild("settings").getAttribute("showCarColor"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("showCarColor: "+enable);
+           	Setup.setShowCarColorEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
         	String enable = a.getValue();

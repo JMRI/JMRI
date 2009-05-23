@@ -1,4 +1,4 @@
-// OperationsSetupTest.java
+//OperationsSetupTest.java
 
 package jmri.jmrit.operations.setup;
 
@@ -24,12 +24,12 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsSetupTest extends TestCase {
 
 	// test creation
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testCreate() {
 		Setup s = new Setup();
 		s.setRailroadName("Test Railroad Name");
@@ -39,14 +39,14 @@ public class OperationsSetupTest extends TestCase {
 	}
 
 	// test public constants
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testConstants() {
 		Setup s = new Setup();
 
 		s.setRailroadName("Test Railroad Name");
 		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
 
-                Assert.assertEquals("Operations Setup Constant Z_SCALE", 1, Setup.Z_SCALE);
+		Assert.assertEquals("Operations Setup Constant Z_SCALE", 1, Setup.Z_SCALE);
 		Assert.assertEquals("Operations Setup Constant N_SCALE", 2, Setup.N_SCALE);
 		Assert.assertEquals("Operations Setup Constant TT_SCALE", 3, Setup.TT_SCALE);
 		Assert.assertEquals("Operations Setup Constant HOn3_SCALE", 4, Setup.HOn3_SCALE);
@@ -69,33 +69,33 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Operations Setup Constant SOUTH_DIR", "South", Setup.SOUTH_DIR);
 
 		Assert.assertEquals("Operations Setup Constant DESCRIPTIVE", "Descriptive", Setup.DESCRIPTIVE);
-                /* Should be fixed in setup to AAR Codes */
-                Assert.assertEquals("Operations Setup Constant AAR", "ARR Codes", Setup.AAR);
-	        
+		/* Should be fixed in setup to AAR Codes */
+		Assert.assertEquals("Operations Setup Constant AAR", "ARR Codes", Setup.AAR);
+
 		Assert.assertEquals("Operations Setup Constant MONOSPACED", "Monospaced", Setup.MONOSPACED);
 		Assert.assertEquals("Operations Setup Constant SANSERIF", "SansSerif", Setup.SANSERIF);
 		Assert.assertEquals("Operations Setup Constant LENGTHABV", "'", Setup.LENGTHABV);
 
-                Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);
-                Assert.assertEquals("Operations Setup Constant BUILD_REPORT_NORMAL", "3", Setup.BUILD_REPORT_NORMAL);
-                Assert.assertEquals("Operations Setup Constant BUILD_REPORT_DETAILED", "5", Setup.BUILD_REPORT_DETAILED);
-                Assert.assertEquals("Operations Setup Constant BUILD_REPORT_VERY_DETAILED", "7", Setup.BUILD_REPORT_VERY_DETAILED);
+		Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);
+		Assert.assertEquals("Operations Setup Constant BUILD_REPORT_NORMAL", "3", Setup.BUILD_REPORT_NORMAL);
+		Assert.assertEquals("Operations Setup Constant BUILD_REPORT_DETAILED", "5", Setup.BUILD_REPORT_DETAILED);
+		Assert.assertEquals("Operations Setup Constant BUILD_REPORT_VERY_DETAILED", "7", Setup.BUILD_REPORT_VERY_DETAILED);
 	}
-	
+
 	// test menu attributes
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testMenuAttributes() {
 		Setup s = new Setup();
 		s.setMainMenuEnabled(true);
-                /* Seems to be failing on test machine */
+		/* Seems to be failing on test machine */
 //		Assert.assertTrue(s.isMainMenuEnabled());
 		s.setMainMenuEnabled(false);
 //		Assert.assertFalse(s.isMainMenuEnabled());
 	}
-	
-	
+
+
 	// test scale attributes
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testScaleAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
@@ -182,8 +182,8 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("G Added Weight", 2000, s.getAddWeight());
 	}
 
-        // test train attributes
-    @SuppressWarnings("static-access")
+	// test train attributes
+	@SuppressWarnings("static-access")
 	public void testTrainAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
@@ -213,15 +213,25 @@ public class OperationsSetupTest extends TestCase {
 		s.setCarTypes("Test Car Types");
 		Assert.assertEquals("Car Types", "Test Car Types", s.getCarTypes());
 
-                s.setAppendCarCommentEnabled(true);
+		s.setAppendCarCommentEnabled(true);
 		Assert.assertTrue(s.isAppendCarCommentEnabled());
 		s.setAppendCarCommentEnabled(false);
 		Assert.assertFalse(s.isAppendCarCommentEnabled());
 
-                s.setShowCarLoadEnabled(true);
+		s.setShowCarLengthEnabled(true);
+		Assert.assertTrue(s.isShowCarLengthEnabled());
+		s.setShowCarLengthEnabled(false);
+		Assert.assertFalse(s.isShowCarLengthEnabled());
+		
+		s.setShowCarLoadEnabled(true);
 		Assert.assertTrue(s.isShowCarLoadEnabled());
 		s.setShowCarLoadEnabled(false);
 		Assert.assertFalse(s.isShowCarLoadEnabled());
+
+		s.setShowCarColorEnabled(true);
+		Assert.assertTrue(s.isShowCarColorEnabled());
+		s.setShowCarColorEnabled(false);
+		Assert.assertFalse(s.isShowCarColorEnabled());
 
 		s.setBuildReportLevel("Test Build Report Level");
 		Assert.assertEquals("Build Report Level", "Test Build Report Level", s.getBuildReportLevel());
@@ -232,9 +242,9 @@ public class OperationsSetupTest extends TestCase {
 		s.setTravelTime(8);
 		Assert.assertEquals("Travel Time", 8, s.getTravelTime());
 	}
-	
+
 	// test panel attributes
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testPanelAttributes() {
 		Setup s = new Setup();
 		// Not really necessary
@@ -281,7 +291,7 @@ public class OperationsSetupTest extends TestCase {
 	}
 
 	// test xml file creation
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testXMLFileCreate() throws Exception {
 		Setup s;
 		s = createTestSetup();
@@ -307,7 +317,7 @@ public class OperationsSetupTest extends TestCase {
 	}
 
 	// test xml file read
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void testXMLFileRead() throws Exception {
 		Setup s = new Setup();
 
@@ -316,17 +326,19 @@ public class OperationsSetupTest extends TestCase {
 		s.setPanelName("Before Read Test Panel Name");
 		s.setFontName("Before Read Test Font Name");
 
-                s.setMainMenuEnabled(false);
+		s.setMainMenuEnabled(false);
 
 		s.setTrainDirection(Setup.EAST);
 		s.setTrainLength(2222);
 		s.setEngineSize(222);
 		s.setScale(Setup.N_SCALE);
 
-                s.setCarTypes("Before Read Test Car Types");
+		s.setCarTypes("Before Read Test Car Types");
 		s.setSwitchTime(22);
 		s.setTravelTime(222);
+		s.setShowCarLengthEnabled(false);
 		s.setShowCarLoadEnabled(false);
+		s.setShowCarColorEnabled(false);
 		s.setAppendCarCommentEnabled(false);
 		s.setBuildReportLevel("22");
 
@@ -344,19 +356,21 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Before Read Panel Name", "Before Read Test Panel Name", s.getPanelName());
 		Assert.assertEquals("Before Read Font Name", "Before Read Test Font Name", s.getFontName());
 
-                Assert.assertEquals("Before Read Main Menu Enabled", false, s.isMainMenuEnabled());
+		Assert.assertEquals("Before Read Main Menu Enabled", false, s.isMainMenuEnabled());
 
 		Assert.assertEquals("Before Read Direction East", 1, s.getTrainDirection());
 		Assert.assertEquals("Before Read Train Length", 2222, s.getTrainLength());
 		Assert.assertEquals("Before Read Engine Size", 222, s.getEngineSize());
 		Assert.assertEquals("Before Read Scale", 2, s.getScale());
 
-                Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", s.getCarTypes());
+		Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", s.getCarTypes());
 		Assert.assertEquals("Before Read Switch Time", 22, s.getSwitchTime());
 		Assert.assertEquals("Before Read Travel Time", 222, s.getTravelTime());
-                Assert.assertEquals("Before Read Show Car Load Enabled", false, s.isShowCarLoadEnabled());
-                Assert.assertEquals("Before Read Append Car Comment Enabled", false, s.isAppendCarCommentEnabled());
-                Assert.assertEquals("Before Read Build Report Level", "22", s.getBuildReportLevel());
+		Assert.assertEquals("Before Read Show Car Length Enabled", false, s.isShowCarLengthEnabled());
+		Assert.assertEquals("Before Read Show Car Load Enabled", false, s.isShowCarLoadEnabled());
+		Assert.assertEquals("Before Read Show Car Color Enabled", false, s.isShowCarColorEnabled());
+		Assert.assertEquals("Before Read Append Car Comment Enabled", false, s.isAppendCarCommentEnabled());
+		Assert.assertEquals("Before Read Build Report Level", "22", s.getBuildReportLevel());
 
 		Assert.assertEquals("Before Read Train Icon Cord Enabled True", false, s.isTrainIconCordEnabled());
 		Assert.assertEquals("Before Read Train Icon Append Enabled True", false, s.isTrainIconAppendEnabled());
@@ -374,19 +388,21 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("After Read Panel Name", "File Test Panel Name", s.getPanelName());
 		Assert.assertEquals("After Read Font Name", "File Test Font Name", s.getFontName());
 
-                Assert.assertEquals("After Read Main Menu Enabled", true, s.isMainMenuEnabled());
+		Assert.assertEquals("After Read Main Menu Enabled", true, s.isMainMenuEnabled());
 
 		Assert.assertEquals("After Read Direction East", 1+2+4+8, s.getTrainDirection());
 		Assert.assertEquals("After Read Train Length", 1111, s.getTrainLength());
 		Assert.assertEquals("After Read Engine Size", 111, s.getEngineSize());
 		Assert.assertEquals("After Read Scale", 11, s.getScale());
 
-                Assert.assertEquals("After Read Test Car Types", "File Test Car Types", s.getCarTypes());
+		Assert.assertEquals("After Read Test Car Types", "File Test Car Types", s.getCarTypes());
 		Assert.assertEquals("After Read Switch Time", 11, s.getSwitchTime());
 		Assert.assertEquals("After Read Travel Time", 111, s.getTravelTime());
-                Assert.assertEquals("After Read Show Car Load Enabled", true, s.isShowCarLoadEnabled());
-                Assert.assertEquals("After Read Append Car Comment Enabled", true, s.isAppendCarCommentEnabled());
-                Assert.assertEquals("After Read Build Report Level", "11", s.getBuildReportLevel());
+		Assert.assertEquals("After Read Show Car Length Enabled", true, s.isShowCarLengthEnabled());
+		Assert.assertEquals("After Read Show Car Load Enabled", true, s.isShowCarLoadEnabled());
+		Assert.assertEquals("After Read Show Car Color Enabled", true, s.isShowCarColorEnabled());
+		Assert.assertEquals("After Read Append Car Comment Enabled", true, s.isAppendCarCommentEnabled());
+		Assert.assertEquals("After Read Build Report Level", "11", s.getBuildReportLevel());
 
 		Assert.assertEquals("After Read Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
 		Assert.assertEquals("After Read Train Icon Append Enabled True", true, s.isTrainIconAppendEnabled());
@@ -403,7 +419,7 @@ public class OperationsSetupTest extends TestCase {
 
 	// TODO: Add test to read xml file
 
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public static Setup createTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
@@ -427,9 +443,9 @@ public class OperationsSetupTest extends TestCase {
 		s.setOwnerName("File Test Railroad Owner");
 		s.setPanelName("File Test Panel Name");
 		s.setFontName("File Test Font Name");
-                
-                s.setMainMenuEnabled(true);
-                
+
+		s.setMainMenuEnabled(true);
+
 		s.setTrainDirection(Setup.EAST+Setup.WEST+Setup.NORTH+Setup.SOUTH);
 		s.setTrainLength(1111);
 		s.setEngineSize(111);
@@ -437,10 +453,12 @@ public class OperationsSetupTest extends TestCase {
 		s.setCarTypes("File Test Car Types");
 		s.setSwitchTime(11);
 		s.setTravelTime(111);
+		s.setShowCarLengthEnabled(true);
 		s.setShowCarLoadEnabled(true);
+		s.setShowCarColorEnabled(true);
 		s.setAppendCarCommentEnabled(true);
 		s.setBuildReportLevel("11");
-                        
+
 		s.setTrainIconCordEnabled(true);
 		s.setTrainIconAppendEnabled(true);
 		s.setTrainIconColorNorth("Blue");
@@ -459,7 +477,7 @@ public class OperationsSetupTest extends TestCase {
 		return s;
 	}
 
-    @SuppressWarnings("static-access")
+	@SuppressWarnings("static-access")
 	public void readTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
@@ -485,68 +503,68 @@ public class OperationsSetupTest extends TestCase {
 
 	// from here down is testing infrastructure
 
-    // Ensure minimal setup for log4J
-    
-    /**
-    * Test-by test initialization.
-    * Does log4j for standalone use, and then
-    * creates a set of turnouts, sensors and signals
-    * as common background for testing
-    */
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+	// Ensure minimal setup for log4J
 
-        // Repoint OperationsXml to JUnitTest subdirectory
-        String tempstring = OperationsXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        }
-        // this test expects the file name to be reloaded
-        OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-    	
-        // The OperationsSetup test doesn't touch routes but we'll protect
-        // Repoint RouteManagerXml to JUnitTest subdirectory
-        tempstring = RouteManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        }
-        
-        // This test doesn't touch cars but we'll protect
-        // Repoint CarManagerXml to JUnitTest subdirectory
-        tempstring = CarManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        }
-        
-        // This test doesn't touch engines but we'll protect
-        // Repoint EngineManagerXml to JUnitTest subdirectory
-        tempstring = EngineManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        }
-        
-        // This test doesn't touch locations but we'll protect
-        // Repoint LocationManagerXml to JUnitTest subdirectory
-        tempstring = LocationManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        }
-        
-        // This test doesn't touch trains but we'll protect
-        // Repoint TrainManagerXml to JUnitTest subdirectory
-        tempstring = TrainManagerXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator+"JUnitTest")){
-        	TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
-        	TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-        }
-        
-    	XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+RouteManagerXml.getOperationsDirectoryName());
-    }
+	/**
+	 * Test-by test initialization.
+	 * Does log4j for standalone use, and then
+	 * creates a set of turnouts, sensors and signals
+	 * as common background for testing
+	 */
+	@Override
+	protected void setUp() {
+		apps.tests.Log4JFixture.setUp();
+
+		// Repoint OperationsXml to JUnitTest subdirectory
+		String tempstring = OperationsXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			OperationsXml.setOperationsDirectoryName(OperationsXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+		}
+		// this test expects the file name to be reloaded
+		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
+
+		// The OperationsSetup test doesn't touch routes but we'll protect
+		// Repoint RouteManagerXml to JUnitTest subdirectory
+		tempstring = RouteManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			RouteManagerXml.setOperationsDirectoryName(RouteManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		}
+
+		// This test doesn't touch cars but we'll protect
+		// Repoint CarManagerXml to JUnitTest subdirectory
+		tempstring = CarManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			CarManagerXml.setOperationsDirectoryName(CarManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		}
+
+		// This test doesn't touch engines but we'll protect
+		// Repoint EngineManagerXml to JUnitTest subdirectory
+		tempstring = EngineManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			EngineManagerXml.setOperationsDirectoryName(EngineManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		}
+
+		// This test doesn't touch locations but we'll protect
+		// Repoint LocationManagerXml to JUnitTest subdirectory
+		tempstring = LocationManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			LocationManagerXml.setOperationsDirectoryName(LocationManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		}
+
+		// This test doesn't touch trains but we'll protect
+		// Repoint TrainManagerXml to JUnitTest subdirectory
+		tempstring = TrainManagerXml.getOperationsDirectoryName();
+		if (!tempstring.contains(File.separator+"JUnitTest")){
+			TrainManagerXml.setOperationsDirectoryName(TrainManagerXml.getOperationsDirectoryName()+File.separator+"JUnitTest");
+			TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		}
+
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+RouteManagerXml.getOperationsDirectoryName());
+	}
 
 	public OperationsSetupTest(String s) {
 		super(s);
@@ -564,7 +582,7 @@ public class OperationsSetupTest extends TestCase {
 		return suite;
 	}
 
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+	// The minimal setup for log4J
+	@Override
+	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

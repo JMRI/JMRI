@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -96,8 +96,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     JCheckBox eastCheckBox = new JCheckBox();
 	JCheckBox northCheckBox = new JCheckBox();
 	JCheckBox mainMenuCheckBox = new JCheckBox();
-	JCheckBox showLoadCheckBox = new JCheckBox();
-	JCheckBox appendCommentCheckBox = new JCheckBox();
+	JCheckBox showLengthCheckBox = new JCheckBox(rb.getString("ShowCarLength"));
+	JCheckBox showLoadCheckBox = new JCheckBox(rb.getString("ShowCarLoad"));
+	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("ShowCarColor"));
+	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("CarComment"));
 	JCheckBox iconCheckBox = new JCheckBox();
 	JCheckBox appendCheckBox = new JCheckBox();
 	
@@ -183,9 +185,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		textPrinter.setVisible(true);
 		textManifest.setText(rb.getString("Manifest"));
 		textManifest.setVisible(true);
-		showLoadCheckBox.setText(rb.getString("CarLoad"));
+		
+		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
 		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
-		appendCommentCheckBox.setText(rb.getString("CarComment"));
+		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
+		
 		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 		textBuildReport.setText(rb.getString("BuildReport"));
 		textBuildReport.setVisible(true);
@@ -320,8 +324,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (pPrinter, buildReportMax, 3, 10);
 		addItemLeft (pPrinter, buildReportVD, 4, 10);
 		addItem (pPrinter, textManifest, 0, 12);
-		addItemLeft (pPrinter, showLoadCheckBox, 1, 12);
-		addItemWidth (pPrinter, appendCommentCheckBox, 2, 2, 12);
+		addItemLeft (pPrinter, showLengthCheckBox, 1, 12);
+		addItemLeft (pPrinter, showLoadCheckBox, 2, 12);
+		addItemLeft (pPrinter, showColorCheckBox, 3, 12);
+		addItemLeft (pPrinter, appendCommentCheckBox, 4, 12);
 		
 		
 		setPrinterFontRadioButton();
@@ -465,8 +471,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setFontName(Setup.MONOSPACED);
 			else
 				Setup.setFontName(Setup.SANSERIF);
-			// show car load
+			// show car attributes
+			Setup.setShowCarLengthEnabled(showLengthCheckBox.isSelected());
 			Setup.setShowCarLoadEnabled(showLoadCheckBox.isSelected());
+			Setup.setShowCarColorEnabled(showColorCheckBox.isSelected());
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
 			// build report level
