@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.6 2009-05-20 14:33:00 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.7 2009-05-24 06:56:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -177,6 +177,14 @@ Nigel Cliffe fixed a bug found earlier CT DCX decoder definition (actually a bug
 CVs 152/153 take different values if the decoder is v27-59 or v66. 
 Splitting the decoder file on the version number of the decoder seems
 easiest, so there are now two definitions.
+
+<p>
+Paul Bender has added initial support for an "XPressNet Simulator" connection type.
+It currently handles only certain basic message types.
+
+<p>
+Dan Boudreau added an operations control for whether
+car lengths and car colors are printed on manifests and switch lists.
 
 <!--#include virtual="/Footer" -->
 
