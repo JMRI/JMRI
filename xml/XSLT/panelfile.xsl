@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.22 2009-04-20 14:16:09 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.23 2009-05-24 06:55:50 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -199,10 +199,12 @@
         </tr>
         <!-- index through individal block elements -->
         <xsl:for-each select="block">
+            <xsl:sort select="@signal" />
             <xsl:call-template name="signalelement"/>
         </xsl:for-each>
         <!-- index new form, if present -->
         <xsl:for-each select="signalelement">
+            <xsl:sort select="@signal" />
             <xsl:call-template name="signalelement"/>
         </xsl:for-each>
         </table>
