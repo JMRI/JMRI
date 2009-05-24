@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -237,6 +237,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	// now re-sort
     	List<String> out = new ArrayList<String>();
     	int engineNumber = 0;
+    	String[] number;
     	boolean engineAdded = false;
     	Engine engine;
     	
@@ -244,14 +245,16 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     		engineAdded = false;
     		engine = getEngineById (sortByRoad.get(i));
     		try{
-    			engineNumber = Integer.parseInt (engine.getNumber());
+    			number = engine.getNumber().split("-");
+    			engineNumber = Integer.parseInt(number[0]);
     		}catch (NumberFormatException e) {
  //   			log.debug("Road number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
     			engine = getEngineById (out.get(j));
         		try{
-        			int outEngineNumber = Integer.parseInt (engine.getNumber());
+        			number = engine.getNumber().split("-");
+        			int outEngineNumber = Integer.parseInt(number[0]);
         			if (engineNumber < outEngineNumber){
         				out.add(j, sortByRoad.get(i));
         				engineAdded = true;

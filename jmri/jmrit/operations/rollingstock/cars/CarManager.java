@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -296,6 +296,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	// now re-sort
     	List<String> out = new ArrayList<String>();
     	int carNumber = 0;
+    	String[] number;
     	boolean carAdded = false;
     	Car c;
     	
@@ -303,14 +304,16 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carAdded = false;
     		c = getCarById (sortByRoad.get(i));
     		try{
-    			carNumber = Integer.parseInt (c.getNumber());
+    			number = c.getNumber().split("-");
+    			carNumber = Integer.parseInt(number[0]);
     		}catch (NumberFormatException e) {
  //   			log.debug("Road number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
     			c = getCarById (out.get(j));
         		try{
-        			int outCarNumber = Integer.parseInt (c.getNumber());
+        			number = c.getNumber().split("-");
+        			int outCarNumber = Integer.parseInt(number[0]);
         			if (carNumber < outCarNumber){
         				out.add(j, sortByRoad.get(i));
         				carAdded = true;
