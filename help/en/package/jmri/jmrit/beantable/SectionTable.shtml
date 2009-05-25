@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SectionTable.shtml,v 1.4 2009-02-09 21:48:57 djduchamp Exp $ -->
+<!-- $Id: SectionTable.shtml,v 1.5 2009-05-25 15:37:58 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -28,8 +28,8 @@
 <H2> What is a Section?
 </H2>
 <P>A <b>Section</b> is a group of one or more connected <b>Blocks</b> that may be 
-allocated to one or more trains traveling in a given direction. A Block may be 
-in multiple Sections. All Blocks contained in a given Section must be unique. 
+allocated to a train traveling in a given direction. A Block may be 
+in multiple Sections. All Blocks contained in a given Section must be different. 
 Blocks are kept in order--the first block is connected to the second, the second 
 is connected to the third, etc. That means a Block in a Section must be connected 
 to the Block before it (if there is one) and to the Block after it (if there is 
@@ -43,12 +43,8 @@ automatically by the computer.</p>
 <P>A Section has a <b>direction</b> defined by the sequence in which Blocks are 
 added to the Section. A train may run through a Section in either the <b>forward</b> 
 direction (from first block to last block) or <b>reverse</b> direction (from last 
-block to first block).</p>
-<p> Sections are designed so that a Section of sufficient length may be allocated 
-to more than one train provided the trains are traveling in the same direction. 
-There must be at least one block between trains traveling in the same direction 
-in a Section. Note that allocating a Section to two trains at the same time is not 
-currently supported by Dispatcher.</p>
+block to first block). If a Section has only one Block, the "direction" of that  
+Section is defined when setting up its <b>Entry Points</b> (see below).</p>
 <P>A Section has two or more <b>Entry Points</b>. An Entry Point defines a 
 connection to a Block outside of the Section. Entry Points are derived from Paths of 
 Blocks in the Section--Paths that represent connections to Blocks not contained in 
@@ -56,6 +52,11 @@ the Section. Entry Points are grouped according to whether entering
 the Section at that Entry Point will result in a train traveling in the "forward" 
 direction, or whether entering at that Entry Point will result in a train 
 traveling in the "reverse" direction.</P>
+<p> Sections are designed so that a Section of sufficient length may be allocated 
+to more than one train provided the trains are traveling in the same direction. 
+There must be at least one block between trains traveling in the same direction 
+in a Section. Note: Allocating a Section to two trains at the same time is not 
+currently supported by <A HREF="../dispatcher/Dispatcher.shtml">Dispatcher.</a></p>
 <H2> Requirements for using Sections
 </H2>
 <P>Sections may be used with a Panel Editor panel, with a Layout Editor panel, with 
@@ -75,8 +76,8 @@ branch to industries do not need to be separately blocked, but blocking here is
 acceptable. A layout blocking scheme that works well for signals, should work fine 
 for Sections also.</p>
 <p>Signals are not required for using Sections, but Sections will work fine with 
-signals installed. If signals are installed, Sections provide an easy way to set 
-up simple APB signaling (see below).</p>  
+signals installed. If signals are installed, the direction sensors included in 
+Sections provide an easy way to set up simple APB signaling (see below).</p>  
 <H2> Support for Optional Sensors
 </H2>
 <P>Optionally each Section may have two <i>direction sensors</i>, one for the forward 
@@ -85,7 +86,9 @@ bearing system names that begin with IS. They automatically follow the state of 
 Section, i.e. when the state of the Section is FORWARD, the Forward Sensor is 
 <b>INACTIVE</b> and the Reverse Sensor is <b>ACTIVE</b>. These sensors may be used 
 to force signals for travel in their respective directions to <b>RED</b> when they 
-are ACTIVE. When a Section is FREE, both of its direction Sensors are ACTIVE.</P>
+are ACTIVE. When a Section is FREE, both of its direction Sensors are ACTIVE. Tools 
+are provided to automatically add direction sensors to signal logic (<a href="#tools">
+see below</a>). </P>
 <P>Also optionally each Section may have two <i>stopping sensors</i> that indicate
 when a train in the Section has reached the end of the Section by traveling in 
 the forward direction or in the reverse direction. For manual dispatching, these 
@@ -95,9 +98,9 @@ be used to stop a train before it reaches the end of its allocated Section, and
 before it overruns a red signal, if signals are present.</>
 <H2> Using the Section Table to Display and Create Sections
 </H2>
-<P>All the Sections that JMRI knows about can be referenced
-using the <b>Section Table</b> tool under <b>Tables</b> in the Tools menu of most 
-JMRI programs. There are eight columns in the table:</P>
+<P>All the Sections that JMRI knows about can be viewed using the <b>Section 
+Table</b>.  Select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
+of the main JMRI program window. There are eight columns in the Section Table:</P>
 <UL>
 <LI><b>System Name</b> - The system name is assigned to the Section when it's created, 
 and can't be changed.</LI>
@@ -107,17 +110,17 @@ to whatever you want.</LI>
 <LI><b>State</b> - The state of a Section tells whether a section is "allocated" 
 or "in use" by one or more trains.  The state of a newly added section is always
 <b>FREE</b>. When a Section is allocated for travel in the direction from the 
-"Begin Block" toward the "End Block", the state is <b>FORWARD</b>.  When allocated 
+"First Block" toward the "Last Block", the state is <b>FORWARD</b>.  When allocated 
 for travel in the opposite direction, the state is <b>REVERSE</b>.</LI>
 <LI><b>Comment</b> - This column is for your use to record any comment you may want
 to use to keep track of your Sections. It is for information only.</LI>
 <LI>Click the <b>Delete</b> button in a specific row to delete the Section in that row. 
 Remember to remove any Transits associated using this Section. Any Transit that 
 uses a deleted Section will be broken! Use this button with caution!</LI>
-<LI><b>Begin Block</b> - This column displays the first block in the Section. 
+<LI><b>First Block</b> - This column displays the first block in the Section. 
 Since a section is a group of one or more connected blocks, there is always an
 entry.</LI> 
-<LI><b>End Block</b> - This column shows the final block in the Section. 
+<LI><b>Last Block</b> - This column shows the final block in the Section. 
 Since a section may contain only one block, this entry may be the same as the Begin
 Block entry.</LI>
 <LI>Click the <b>Edit</b> button in a row to view or change entered information
@@ -130,23 +133,103 @@ may be edited at a time. A Section may not be edited if another is being created
 "<A HREF="SectionAddEdit.shtml">Add.." button</a>. A window will be brought up 
 that will allow you to define the blocks included in the new Section, and if 
 necessary, designate which entry points to the section result in travel in the 
-forward and reverse directions.</p>
+FORWARD and REVERSE directions.</p>
 <p>Currently the user must manually select <b>FORWARD</b> or <b>REVERSE</b> for each 
 Entry Point after all Blocks are added to a Section. The program will set some directions
 automatically, but others are left as <b>UNKNOWN</b>. An Entry Point should be set 
 to FORWARD if a train entering the Section at that Entry Point would be traveling 
-in the FORWARD direction. Otherwise it should be set to REVERSE. It doesn't make any 
-difference which direction through a Section is designated FORWARD, as long as all 
-Entry Points are consistent. A possible future addition is to set directions of 
-Entry Points automatically from the connectivity found in a Layout Editor panel, if 
-one is available.</p>
+in the FORWARD direction. Otherwise it should be set to REVERSE. A possible future 
+addition is to set directions of Entry Points automatically from the connectivity 
+found in a Layout Editor panel.</p>
+<p>For Sections with more than one Block, travel from a lower-numbered block to 
+a higher-numbered block is FORWARD travel. Stated a different way, moving from a 
+block higher in the block list to a block lower in the list is FORWARD travel. 
+Similarly moving from a higher-numbered block to a lower-numbered block is REVERSE 
+travel. For Sections with only one block, it doesn't make any difference which 
+direction through the Section is designated FORWARD, as long as 
+
+<p>All Entry Points must be consistent. That is: 
+<UL>
+<LI>REVERSE and FORWARD directions of travel must be opposite.</li> 
+<LI>Entering at any FORWARD Entry Point must result in travel in the same 
+direction as entering at all other FORWARD Entry Points.</li>
+<li>Entering at any REVERSE Entry Point must result in travel 
+in the same direction as entering at all other REVERSE Entry Points.</li>
+</UL>
+<p><b>WARNING: if Entry Points are not consistent strange behavior may result 
+when using the Section.</b></p>
+<a name="tools"><H2> Section Table Tools
+</H2>
+<P> The Section Table has a <b>Tools</b> menu to facilitate use of Sections. 
+Normally these tools would be used after all Sections are defined. 
+The menu items and their use are described below:</p>
+<ul>
+<li><p><b>Validate All Sections...</b> - When this item is selected, each Section 
+is tested for self consistency.  Current tests include checking the connectivity 
+between multiple blocks, checking that there are no missing Entry Points or 
+extra Entry Points, and, if a Layout Editor panel is available, checking that 
+Paths are correctly set up for the Blocks in the Sections.  <b>This tool does 
+not check if the FORWARD and REVERSE directions are correctly set for each 
+Entry Point</b>, but that feature is a planned future addition.  After testing is 
+complete a message is displayed giving the results of the testing. Detailed error 
+messages, if any, are placed in the JMRI error log.</p>
+</li>
+<li><p><b>Set Direction Sensors in Logic...</b> - When this item is selected, 
+direction sensors defined for each Section are placed in the signal logic 
+of appropriate signal heads--those signal heads internal to the Section or 
+protecting entry to the Section. Direction sensors follow the allocation 
+status of their Sections. When a Section is FREE (not allocated), both of its 
+direction sensors are set ACTIVE. By placing these sensors in appropriate 
+signal head logic, all signals internal to or protecting entry points to the 
+Section are forced RED when the Section is FREE. When a Section is allocated 
+for travel in the FORWARD direction, its forward direction sensor is set 
+INACTIVE, allowing signal head logic to function normally for travel through 
+the Section in the FORWARD direction, but keeping signals governing travel in 
+the REVERSE direction set RED. Similarly, when the Section is allocated for travel 
+in the REVERSE direction, the reverse direction sensor is set INACTIVE, and the 
+forward direction sensor is set ACTIVE, allowing signals to clear travel in the 
+REVERSE direction, but to block travel in the FORWARD direction. Setting of 
+direction sensors is done automatically by software in 
+<A HREF="../dispatcher/Dispatcher.shtml">Dispatcher</a> that allocates 
+Sections.</p>
+<p> This tool should only be used after all Sections have been defined and all 
+signal head logic has been set up. A Layout Editor panel is required, because 
+the software needs the panel's connectivity to figure out which signal 
+heads need which direction sensor.  If a direction sensor is already in the 
+Simple Signal Logic (SSL) for a signal head, it is not duplicated.  However, if 
+an incorrect direction sensor is in the SSL, it is not removed. (Use the tool 
+described below to remove direction sensors.) After placing direction sensors is 
+complete a message is displayed giving results. Detailed 
+error messages, if any, are placed in the JMRI error log. When an error occurs, 
+the most common reasons are 1) missing information (signal heads missing or 
+signal logic not set up) or 2) errors in setting up Section Entry Point 
+directions.</p>
+</li>
+<li><b>Remove Direction Sensors from Logic...</b> - This tool assembles a list 
+of all direction sensors defined in Sections currently in the Section Table, then 
+removes all sensors that are contained in this list from the Simple Signal Logic 
+(SSL) of all signal heads. This tool cancels the effect of the <b>Set Direction 
+Sensors in Logic...</b> tool, and in addition removes any defined direction sensors 
+that might be in an incorrect SSL. If errors were noted while setting direction 
+sensors using the above tool, then corrected, running this tool before attempting 
+to set direction sensors again is sometimes useful.</li>
+<p>A Layout Editor panel is required to run this tool. After removal of direction 
+sensors from signal logic is complete a message is displayed giving the results 
+of running the tool. Detailed error messages, if any, are placed in the JMRI 
+error log.</p>
+</li>
+</ul>
+
+
 <H2> Saving Sections to Disk
 </H2>
-<P> Use the Store item in the File menu to save Section information to disk. This 
-information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  To store your panels in the same 
-file (recommended), select <b>File>Store>Store Configuration and Panels To 
-File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
+<P> Use the <b>Store</b> item in the <b>File</b> menu of the Section Table (or 
+the <b>Store Panels...</b> item in the <b>Panels</b> menu of the main JMRI 
+window) to save Section information to disk. This information (and any modified 
+signal logic information) is saved with the configuration and panels in an XML 
+file, along with control panel setup and similar stuff. To store your panels in 
+the same file (recommended), select <b>File>Store>Store Configuration and Panels To 
+File...</b> or select <b>Panels>Store Panels...</b> in the main JMRI window.
 </P>
 <!--#include virtual="/Footer" -->
 </body>
