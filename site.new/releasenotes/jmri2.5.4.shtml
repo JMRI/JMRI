@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.4.shtml,v 1.7 2009-05-24 06:56:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.4.shtml,v 1.8 2009-05-25 17:43:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -185,6 +185,18 @@ It currently handles only certain basic message types.
 <p>
 Dan Boudreau added an operations control for whether
 car lengths and car colors are printed on manifests and switch lists.
+
+<p>
+Jack Shall updated the Comprehensive programmer format to look better with 
+complex sound decoders.
+
+<p>
+Dave Duchamp has updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/SectionTable.shtml">dispatcher support</a>
+to fix some bugs,
+and to
+add tools to Section Table to automatically add direction sensors to signal logic for simple APB signaling.
+
 
 <!--#include virtual="/Footer" -->
 
