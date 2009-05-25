@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class AutoTurnouts {
@@ -188,7 +188,7 @@ public class AutoTurnouts {
 			}
 			if (turnoutsOK) {
 				// move to next Block if any
-				if ( nextBlockSeqNum > 0 ) {
+				if ( nextBlockSeqNum >= 0 ) {
 					prevBlock = curBlock;
 					curBlock = nextBlock;
 					curBlockSeqNum = nextBlockSeqNum;
