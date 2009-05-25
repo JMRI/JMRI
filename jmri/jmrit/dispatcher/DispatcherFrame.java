@@ -3,6 +3,7 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.*;
+import jmri.Scale;
 import jmri.util.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -46,7 +47,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 

@@ -4,6 +4,7 @@ package jmri.jmrit.dispatcher;
 
 import javax.swing.*;
 import java.awt.*;
+import jmri.Scale;
 
 import jmri.jmrit.display.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class OptionsMenu extends JMenu {

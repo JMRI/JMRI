@@ -1,13 +1,14 @@
 // Scale.java
 
-package jmri.jmrit.dispatcher;
+package jmri;
 
 /**
- * Scale specifies the scale of a layout and provides methods related to layout scale
+ * Provide values and methods related to layout scale.
  * <P>
  * *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.1 $
+ * @since       2.5.4
  */
 public class Scale {
 
@@ -28,7 +29,11 @@ public class Scale {
 	
 	public static final int NUM_SCALES = 10;
 	
-	public static double getScaleFactor (int scale) {
+        /**
+         * scaleFactor is a number less than 1 representing the 
+         * reduction from full size.
+         */
+        public static double getScaleFactor (int scale) {
 		switch (scale) {
 			case Z:
 				return (1.0/220.0);
@@ -55,6 +60,10 @@ public class Scale {
 		}
 	}
 	
+        /**
+         * Provide a standard human-readable indication of scale
+         * that includes both name (letter) and reduction ratio.
+         */
 	public static String getScaleID(int scale) {
 		switch (scale) {
 			case Z:
@@ -83,6 +92,9 @@ public class Scale {
 	}
 	
 	
+        /**
+         * Provide the short name for the scale.
+         */
 	public static String getShortScaleID(int scale) {
 		switch (scale) {
 			case Z:
@@ -110,7 +122,6 @@ public class Scale {
 		}
 	}
 	    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Scale.class.getName());
 }
 
 /* @(#)Scale.java */
