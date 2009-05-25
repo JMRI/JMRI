@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LayoutEditorTools 
@@ -3147,8 +3147,10 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
+		String headName = head.getSystemName();
+		if (secondHead!=null) headName = secondHead.getSystemName();
 		SignalHead nextHead2 = getNextSignalFromObject(track2,
-				(Object)layoutTurnout, secondHead.getSystemName(), setSignalsAtXoverFrame);
+				(Object)layoutTurnout, headName, setSignalsAtXoverFrame);
 		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtXoverFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),

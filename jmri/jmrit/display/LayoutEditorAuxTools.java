@@ -35,7 +35,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutEditorAuxTools 
@@ -570,8 +570,6 @@ public class LayoutEditorAuxTools
 		// if not found in list, add it
 		if (looking) {
 			cList.add(c);
-// djd debugging
-//			log.error("  Adding LayoutConnectivity - "+blk1.getID()+", "+blk2.getID());
 		}
 	}
 	

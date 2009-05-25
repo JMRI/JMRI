@@ -50,7 +50,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -4247,6 +4247,13 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		if (conTools==null) log.error("Unable to establish link to Connectivity Tools for Layout Editor panel "+layoutName);
 		return conTools;
+	}
+	public LayoutEditorTools getLETools() {
+		if (tools == null) {
+			tools = new LayoutEditorTools(thisPanel);
+		}
+		if (tools==null) log.error("Unable to establish link to Layout Editor Tools for Layout Editor panel "+layoutName);
+		return tools;
 	}
 	
 	/**
