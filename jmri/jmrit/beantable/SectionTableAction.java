@@ -12,6 +12,7 @@ import jmri.BlockManager;
 import jmri.Sensor;
 import jmri.Path;
 import jmri.Transit;
+
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -45,7 +46,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SectionTableAction extends AbstractTableAction {
@@ -468,7 +469,7 @@ public class SectionTableAction extends AbstractTableAction {
 			clearForCreate();
 		}
 		// initialize layout editor panels
-		if (initializeLayoutEditorCombo()) {
+		if (initializeLayoutEditorCombo(layoutEditorBox)) {
 			manually.setVisible(true);
 			automatic.setVisible(true);
 			layoutEditorBox.setVisible(true);
@@ -722,16 +723,16 @@ public class SectionTableAction extends AbstractTableAction {
 			blockTableModel.fireTableDataChanged();
 		}
 	}
-	private boolean initializeLayoutEditorCombo() {
+	private boolean initializeLayoutEditorCombo(JComboBox box) {
 		// get list of Layout Editor panels
 		lePanelList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
 		if (lePanelList.size()==0) return false;
-		layoutEditorBox.removeAllItems();
-		layoutEditorBox.addItem(rbx.getString("None"));
+		box.removeAllItems();
+		box.addItem(rbx.getString("None"));
 		for (int i=0; i<lePanelList.size(); i++) {
-			layoutEditorBox.addItem(((LayoutEditor)lePanelList.get(i)).getTitle());
+			box.addItem(((LayoutEditor)lePanelList.get(i)).getTitle());
 		}
-		layoutEditorBox.setSelectedIndex(1);
+		box.setSelectedIndex(1);
 		return true;
 	}
 	private void layoutEditorSelectionChanged() {
@@ -825,8 +826,7 @@ public class SectionTableAction extends AbstractTableAction {
 				((EntryPoint)epList.get(0)).setTypeReverse();
 			}
 		}
-// debugging		
-// here add code to use Layout Editor connectivity		
+// here add code to use Layout Editor connectivity if desired in the future	
 		entryPointTableModel.fireTableDataChanged();			
 	}
 	private EntryPoint getEntryPointInList(ArrayList list, Block b, Block pb, String pbDir) {
@@ -847,7 +847,138 @@ public class SectionTableAction extends AbstractTableAction {
 	}
 	
     private boolean noWarn = false;
+    
+    /**
+     * Add the Tools menu item
+     */
+    public void addToFrame(BeanTableFrame f) {
+		frame = f;
+        JMenuBar menuBar = f.getJMenuBar();
+        JMenu toolsMenu = new JMenu(rbx.getString("Tools"));
+        menuBar.add(toolsMenu);
+        JMenuItem validate = new JMenuItem(rbx.getString("ValidateAllSections")+"...");
+        toolsMenu.add(validate);
+        validate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (sectionManager!=null) {
+						initializeLayoutEditor(false);
+						int n = sectionManager.validateAllSections(frame, panel);
+						if (n>0) {
+							JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(
+									rbx.getString("Message14"),new Object[] {""+n}), 
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+						}
+						else if (n==-2) {
+							JOptionPane.showMessageDialog(frame, rbx.getString("Message16"),
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+						}
+						else if (n==0) {
+							JOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
+									rbx.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+            });
+        JMenuItem setDirSensors = new JMenuItem(rbx.getString("SetupDirectionSensors")+"...");
+        toolsMenu.add(setDirSensors);
+        setDirSensors.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (sectionManager!=null) {
+						if (initializeLayoutEditor(true)) {
+							int n = sectionManager.setupDirectionSensors(panel);
+							if (n>0) {
+								JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(
+									rbx.getString("Message27"),new Object[] {""+n}), 
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+							}
+							else if (n==-2) {
+								JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+							}
+							else if (n==0) {
+								JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
+									rbx.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					}
+				}
+            });		
+        JMenuItem removeDirSensors = new JMenuItem(rbx.getString("RemoveDirectionSensors")+"...");
+        toolsMenu.add(removeDirSensors);
+        removeDirSensors.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (sectionManager!=null) {
+						if (initializeLayoutEditor(true)) {
+							int n = sectionManager.removeDirectionSensorsFromSSL(panel);
+							if (n>0) {
+								JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(
+									rbx.getString("Message33"),new Object[] {""+n}), 
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+							}
+							else if (n==-2) {
+								JOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
+									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+							}
+							else if (n==0) {
+								JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
+									rbx.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					}
+				}
+            });		
+    }
+	jmri.util.JmriJFrame frame = null;
 	
+	LayoutEditor panel = null;
+	private boolean initializeLayoutEditor(boolean required) {
+		// Get a Layout Editor panel. Choose Layout Editor panel if more than one.
+		ArrayList layoutEditorList = 
+					jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+		if ( (panel==null) || (layoutEditorList.size()>1) ) {
+			if (layoutEditorList.size()>1) {
+				// initialize for choosing between layout editors
+				Object choices[] = new Object[layoutEditorList.size()];
+				int index = 0;
+				for (int i = 0; i<layoutEditorList.size(); i++) {
+					String txt = ((LayoutEditor)layoutEditorList.get(i)).getTitle();
+					choices[i] = (Object)txt;
+					if ((Object)panel==layoutEditorList.get(i)) index = i;
+				}
+				// choose between Layout Editors
+				Object panelName = JOptionPane.showInputDialog(frame, 
+					(Object)(rbx.getString("Message11")), rbx.getString("ChoiceTitle"), 
+					JOptionPane.QUESTION_MESSAGE, null, choices, choices[index]);
+				if ( (panelName==null) && required) {
+					JOptionPane.showMessageDialog(frame, rbx.getString("Message12"));
+					panel = null;
+					return false;
+				}
+				for (int j = 0; j<layoutEditorList.size(); j++) {
+					if (panelName.equals(choices[j])) {
+						panel = (LayoutEditor)layoutEditorList.get(j);
+						return true;
+					}
+				}
+				return false;
+			}
+			else if (layoutEditorList.size() == 1) {
+				panel = (LayoutEditor)layoutEditorList.get(0);
+				return true;
+			}
+			else {
+				if (required) {
+					JOptionPane.showMessageDialog(frame, rbx.getString("Message13"));
+					panel = null;
+				}
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void validateAllSections(ActionEvent e) {
+	}
 	/**
 	 * Table model for Blocks in Create/Edit Section window
 	 */

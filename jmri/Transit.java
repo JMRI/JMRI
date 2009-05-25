@@ -6,8 +6,9 @@ import jmri.Section;
 import jmri.TransitSection;
 import jmri.Block;
 import jmri.Timebase;
-//import jmri.jmrit.display.LayoutEditor;
-//import jmri.jmrit.dispatcher.ActiveTrain;
+import jmri.jmrit.display.LayoutEditor;
+import jmri.util.JmriJFrame;
+
 import java.util.ArrayList;
 import java.util.List;
 import jmri.implementation.AbstractNamedBean;
@@ -49,7 +50,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -357,7 +358,33 @@ public class Transit extends AbstractNamedBean
 		if (firstTS.getDirection() != lastTS.getDirection())
 			return false;		
 		return true;
-	}											
+	}
+	
+	/**
+	 * Checks that exit Signal Heads are in place for all Sections in this Transit and for 
+	 *		block boundaries at turnouts or level crossings within Sections of the Transit for 
+	 *		the direction defined in this Transit.
+	 * Signal Heads are not required at anchor point block boundaries where both blocks are 
+	 *		within the same Section, and for turnouts with two or more connections in the same Section.
+	 * Returns "true" if everything is OK. Sends message to the user if a signal head is missing,
+	 *		and returns 'false'. Quits looking after finding the first missing signal head.
+	 */
+	public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
+// djd debugging
+// add code here	
+		return true;
+	}
+	
+	/**
+	 * Validates connectivity through the Transit.
+	 * Returns "true" if everything is OK. Sends message to the user if break in connectivity 
+	 *		is detected, ,and returns 'false'. Quits looking after finding the first problem.
+	 */
+	public boolean validateConnectivity(JmriJFrame frame, LayoutEditor panel) {
+// djd debugging
+// add code here	
+		return true;
+	}
 	    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Transit.class.getName());
 	

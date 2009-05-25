@@ -5,6 +5,17 @@ package jmri;
 import jmri.Block;
 import jmri.Sensor;
 import jmri.Timebase;
+import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.ConnectivityUtil;
+import jmri.jmrit.display.PositionablePoint;
+import jmri.jmrit.display.LevelXing;
+import jmri.jmrit.display.LayoutTurnout;
+import jmri.jmrit.display.LayoutBlock;
+import jmri.jmrit.display.LayoutBlockManager;
+import jmri.jmrit.display.TrackNode;
+import jmri.jmrit.display.TrackSegment;
+
+import jmri.util.JmriJFrame;
 import java.util.ArrayList;
 import jmri.implementation.AbstractNamedBean;
 
@@ -85,7 +96,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -689,15 +700,1158 @@ public class Section extends AbstractNamedBean
 	}
 	
 	/**
-	 * Validate and initialize the Section. 
-	 * This checks block connectivity, removes redundant EntryPoints,
-	 *  and otherwise checks internal consistency of the Section.
+	 * Returns EntryPoint.FORWARD if proceeding from the throat to the other end is movement in the forward 
+	 *	direction.  Returns EntryPoint.REVERSE if proceeding from the throat to the other end is movement in 
+	 *  the reverse direction.
+	 * Returns EntryPoint.UNKNOWN if cannot determine direction. This should only happen if blocks are not 
+	 *	set up correctly--if all connections go to the same Block, or not all Blocks set.
+	 * An error message is logged if EntryPoint.UNKNOWN is returned.
 	 */
-	public boolean validate() {
-// add code
-		return true;
+	private int getDirectionStandardTurnout(LayoutTurnout t, ConnectivityUtil cUtil) {
+		LayoutBlock aBlock = ((TrackSegment)t.getConnectA()).getLayoutBlock();
+		LayoutBlock bBlock = ((TrackSegment)t.getConnectB()).getLayoutBlock();
+		LayoutBlock cBlock = ((TrackSegment)t.getConnectC()).getLayoutBlock();
+		if ( (aBlock==null) || (bBlock==null) || (cBlock==null) ) {
+			log.error("All blocks not assigned for track segments connecting to turnout - "+
+										t.getTurnout().getSystemName()+".");
+			return EntryPoint.UNKNOWN;
+		}
+		Block exBlock = checkDualDirection(aBlock,bBlock,cBlock);
+		if ( (exBlock!=null) || ( (aBlock==bBlock) && (aBlock==cBlock) ) ) {
+			// using Entry Points directly will lead to a problem, try following track - first from A following B
+			int dir = EntryPoint.UNKNOWN;
+			Block tBlock = null;
+			TrackNode tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_A, (TrackSegment)t.getConnectA(), 
+										false, Turnout.CLOSED);
+			while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+				tn = cUtil.getNextNode(tn, 0);
+				tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
+			}
+			if (tBlock==null) {
+				// try from A following C
+				tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_A, (TrackSegment)t.getConnectA(), 
+										false, Turnout.THROWN);
+				while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+					tn = cUtil.getNextNode(tn, 0);
+					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
+				}
+			}
+			if (tBlock!=null) {
+				LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+				if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+			}
+			if (dir == EntryPoint.UNKNOWN) {	
+				// try from B following A
+				tBlock = null;
+				tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_B, (TrackSegment)t.getConnectB(), 
+										false, Turnout.CLOSED);
+				while ( (tBlock==null) && (tn!=null && (!tn.reachedEndOfTrack())) ) {
+					tn = cUtil.getNextNode(tn, 0);
+					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
+				}
+				if (tBlock!=null) {
+					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+				}
+			}
+			if (dir == EntryPoint.UNKNOWN) {	
+				log.error("Block definition ambiguity - cannot determine direction of Turnout "+
+							t.getTurnout().getSystemName()+" in Section "+getSystemName()+".");
+			}
+			return dir;
+		}
+		if ( (aBlock!=bBlock) && containsBlock(aBlock.getBlock()) && containsBlock(bBlock.getBlock()) ) {
+			// both blocks are different, but are in this Section
+			if (getBlockSequenceNumber(aBlock.getBlock()) < getBlockSequenceNumber(bBlock.getBlock())) {
+				return EntryPoint.FORWARD;
+			}
+			else {
+				return EntryPoint.REVERSE;
+			}
+		}
+		else if ( (aBlock!=cBlock) && containsBlock(aBlock.getBlock()) && containsBlock(cBlock.getBlock()) ) {
+			// both blocks are different, but are in this Section
+			if (getBlockSequenceNumber(aBlock.getBlock()) < getBlockSequenceNumber(cBlock.getBlock())) {
+				return EntryPoint.FORWARD;
+			}
+			else {
+				return EntryPoint.REVERSE;
+			}
+		}
+		LayoutBlock tBlock = t.getLayoutBlock();
+		if (tBlock==null) {
+			log.error("Block not assigned for turnout "+t.getTurnout().getSystemName());
+			return EntryPoint.UNKNOWN;
+		}
+		if ( containsBlock(aBlock.getBlock()) && (!containsBlock(bBlock.getBlock())) ) {
+			// aBlock is in Section, bBlock is not
+			int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, bBlock);
+			if (dir!=EntryPoint.UNKNOWN) return dir;
+			if ( (tBlock!=bBlock) && (!containsBlock(tBlock.getBlock())) ) {
+				dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, tBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+		}
+		if ( containsBlock(aBlock.getBlock()) && (!containsBlock(cBlock.getBlock())) ) {
+			// aBlock is in Section, cBlock is not
+			int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, cBlock);
+			if (dir!=EntryPoint.UNKNOWN) return dir;
+			if ( (tBlock!=cBlock) && (!containsBlock(tBlock.getBlock())) ) {
+				dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, tBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+		}
+		if ( (containsBlock(bBlock.getBlock()) || containsBlock(cBlock.getBlock())) && 
+												(!containsBlock(aBlock.getBlock())) ) {
+			// bBlock or cBlock is in Section, aBlock is not
+			int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, aBlock);
+			if (dir!=EntryPoint.UNKNOWN) return dir;
+			if ( (tBlock!=aBlock) && (!containsBlock(tBlock.getBlock())) ) {
+				dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, tBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+		}
+		// should never get here
+		log.error("Unexpected error in getDirectionStandardTurnout when working with turnout "+
+							t.getTurnout().getSystemName());
+		return EntryPoint.UNKNOWN;
+	}
+	
+	/**
+	 * Returns EntryPoint.FORWARD if proceeding from A to B (or D to C) is movement in the forward 
+	 *	direction.  Returns EntryPoint.REVERSE if proceeding from A to B (or D to C)  is movement in 
+	 *  the reverse direction.
+	 * Returns EntryPoint.UNKNOWN if cannot determine direction. This should only happen if blocks are not 
+	 *	set up correctly--if all connections go to the same Block, or not all Blocks set.
+	 * An error message is logged if EntryPoint.UNKNOWN is returned.
+	 */
+	private int getDirectionXoverTurnout(LayoutTurnout t, ConnectivityUtil cUtil) {
+		LayoutBlock aBlock = ((TrackSegment)t.getConnectA()).getLayoutBlock();
+		LayoutBlock bBlock = ((TrackSegment)t.getConnectB()).getLayoutBlock();
+		LayoutBlock cBlock = ((TrackSegment)t.getConnectC()).getLayoutBlock();
+		LayoutBlock dBlock = ((TrackSegment)t.getConnectD()).getLayoutBlock();
+		if ( (aBlock==null) || (bBlock==null) || (cBlock==null) || (dBlock==null) ) {
+			log.error("All blocks not assigned for track segments connecting to crossover turnout - "+
+										t.getTurnout().getSystemName()+".");
+			return EntryPoint.UNKNOWN;
+		}
+		if ( (aBlock==bBlock) && (aBlock==cBlock) && (aBlock==dBlock) ) {
+			log.error("Block setup problem - All track segments connecting to crossover turnout - "+
+							t.getTurnout().getSystemName()+" are assigned to the same Block.");
+			return EntryPoint.UNKNOWN;
+		}
+		if ( (containsBlock(aBlock.getBlock())) || (containsBlock(bBlock.getBlock())) ) {
+			LayoutBlock exBlock = null;
+			if (aBlock==bBlock) {
+				if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) && (cBlock==dBlock) ) exBlock = cBlock;
+			}
+			if (exBlock!=null) {
+				// set direction by tracking from a or b
+				int dir = EntryPoint.UNKNOWN;
+				Block tBlock = null;
+				TrackNode tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_A, (TrackSegment)t.getConnectA(), 
+										false, Turnout.CLOSED);
+				while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+					tn = cUtil.getNextNode(tn, 0);
+					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
+				}
+				if (tBlock!=null) {
+					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+				}
+				else {
+					tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_B, (TrackSegment)t.getConnectB(), 
+										false, Turnout.CLOSED);
+					while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+						tn = cUtil.getNextNode(tn, 0);
+						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
+					}
+					if (tBlock!=null) {
+						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+					}
+				}
+				if (dir == EntryPoint.UNKNOWN) {	
+					log.error("Block definition ambiguity - cannot determine direction of crossover Turnout "+
+							t.getTurnout().getSystemName()+" in Section "+getSystemName()+".");
+				}
+				return dir;
+			}
+			if ( (aBlock!=bBlock) && containsBlock(aBlock.getBlock()) && containsBlock(bBlock.getBlock()) ) {
+				if (getBlockSequenceNumber(aBlock.getBlock()) < getBlockSequenceNumber(bBlock.getBlock())) {
+					return EntryPoint.FORWARD;
+				}
+				else {
+					return EntryPoint.REVERSE;
+				}
+			}
+			if ( containsBlock(aBlock.getBlock()) && (!containsBlock(bBlock.getBlock())) ) {
+				int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, bBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( containsBlock(bBlock.getBlock()) && (!containsBlock(aBlock.getBlock())) ) {
+				int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, aBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( (t.getTurnoutType()!=LayoutTurnout.LH_XOVER) && containsBlock(aBlock.getBlock()) && 
+													(!containsBlock(cBlock.getBlock())) ) {
+				int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, cBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( (t.getTurnoutType()!=LayoutTurnout.RH_XOVER) && containsBlock(bBlock.getBlock()) && 
+													(!containsBlock(dBlock.getBlock())) ) {
+				int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, dBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+		}
+		if ( (containsBlock(dBlock.getBlock())) || (containsBlock(cBlock.getBlock())) ) {
+			LayoutBlock exBlock = null;
+			if (dBlock==cBlock) {
+				if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) && (bBlock==aBlock) ) exBlock = aBlock;
+			}
+			if (exBlock!=null) {
+				// set direction by tracking from c or d
+				int dir = EntryPoint.UNKNOWN;
+				Block tBlock = null;
+				TrackNode tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_D, (TrackSegment)t.getConnectD(), 
+										false, Turnout.CLOSED);
+				while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+					tn = cUtil.getNextNode(tn, 0);
+					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
+				}
+				if (tBlock!=null) {
+					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+				}				
+				else {
+					tn = new TrackNode((Object)t, LayoutEditor.TURNOUT_C, (TrackSegment)t.getConnectC(), 
+										false, Turnout.CLOSED);
+					while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+						tn = cUtil.getNextNode(tn, 0);
+						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
+					}
+					if (tBlock!=null) {
+						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+					}
+				}
+				if (dir == EntryPoint.UNKNOWN) {	
+					log.error("Block definition ambiguity - cannot determine direction of crossover Turnout "+
+							t.getTurnout().getSystemName()+" in Section "+getSystemName()+".");
+				}
+				return dir;
+			}
+			if ( (dBlock!=cBlock) && containsBlock(dBlock.getBlock()) && containsBlock(cBlock.getBlock()) ) {
+				if (getBlockSequenceNumber(dBlock.getBlock()) < getBlockSequenceNumber(cBlock.getBlock())) {
+					return EntryPoint.FORWARD;
+				}
+				else {
+					return EntryPoint.REVERSE;
+				}
+			}
+			if ( containsBlock(dBlock.getBlock()) && (!containsBlock(cBlock.getBlock())) ) {
+				int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, cBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( containsBlock(cBlock.getBlock()) && (!containsBlock(dBlock.getBlock())) ) {
+				int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, dBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( (t.getTurnoutType()!=LayoutTurnout.RH_XOVER) && containsBlock(dBlock.getBlock()) && 
+													(!containsBlock(bBlock.getBlock())) ) {
+				int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, bBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+			if ( (t.getTurnoutType()!=LayoutTurnout.LH_XOVER) && containsBlock(cBlock.getBlock()) && 
+													(!containsBlock(aBlock.getBlock())) ) {
+				int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, aBlock);
+				if (dir!=EntryPoint.UNKNOWN) return dir;
+			}
+		}
+		return EntryPoint.UNKNOWN;
+	}
+	private boolean placeSensorInCrossover(String b1Name, String b2Name, String c1Name, String c2Name,
+						int direction, ConnectivityUtil cUtil) {
+		SignalHead b1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(b1Name);
+		SignalHead b2Head = null;
+		SignalHead c1Head = null;
+		SignalHead c2Head = null;
+		boolean success = true;
+		if ( (b2Name!=null) && (!b2Name.equals("")) ) {
+			b2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(b2Name);
+		}				
+		if ( (c1Name!=null) && (!c1Name.equals("")) ) {
+			c1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(c1Name);
+		}				
+		if ( (c2Name!=null) && (!c2Name.equals("")) ) {
+			c2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(c2Name);
+		}
+		if (b2Head!=null) {
+			if (!checkDirectionSensor(b1Head, direction, ConnectivityUtil.OVERALL, cUtil)) success = false;
+		}
+		else {
+			if (!checkDirectionSensor(b1Head, direction, ConnectivityUtil.CONTINUING, cUtil)) success = false;
+		}
+		if (c2Head!=null) {
+			if (!checkDirectionSensor(c2Head, direction, ConnectivityUtil.OVERALL, cUtil)) success = false;
+		}
+		else if (c1Head!=null) {
+			if (!checkDirectionSensor(c1Head, direction, ConnectivityUtil.DIVERGING, cUtil)) success = false;
+		}
+		return success;				
+	}
+	private int checkLists (ArrayList forwardList, ArrayList reverseList, LayoutBlock lBlock) {
+		for (int i = 0; i<forwardList.size(); i++) {
+			if ( ((EntryPoint)forwardList.get(i)).getFromBlock() == lBlock.getBlock() ) {
+				return EntryPoint.FORWARD;
+			}
+		}
+		for (int i = 0; i<reverseList.size(); i++) {
+			if ( ((EntryPoint)reverseList.get(i)).getFromBlock() == lBlock.getBlock() ) {
+				return EntryPoint.REVERSE;
+			}
+		}
+		return EntryPoint.UNKNOWN;
+	}
+	private Block checkDualDirection(LayoutBlock aBlock, LayoutBlock bBlock, LayoutBlock cBlock) {
+		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+			Block b = ((EntryPoint)mForwardEntryPoints.get(i)).getFromBlock();
+			for (int j = 0; j<mReverseEntryPoints.size(); j++) {
+				if ( ((EntryPoint)mReverseEntryPoints.get(j)).getFromBlock() == b ) {
+					// possible dual direction
+					if (aBlock.getBlock() == b) return b;
+					else if (bBlock.getBlock() == b) return b;
+					else if ( (cBlock.getBlock() == b) && (aBlock==bBlock) ) return b;
+				}
+			}
+		}
+		return null;
 	}
 		
+	/**
+	 * Returns the direction for proceeding from LayoutBlock b to LayoutBlock a.  LayoutBlock a must be 
+	 *		in the Section. LayoutBlock b may be in this Section or may be an Entry Point to the Section.
+	 */
+	private int getDirectionForBlocks(LayoutBlock a, LayoutBlock b) {
+		if (containsBlock(b.getBlock())) {
+			// both blocks are within this Section
+			if (getBlockSequenceNumber(a.getBlock()) > getBlockSequenceNumber(b.getBlock())) {
+				return EntryPoint.FORWARD;
+			}
+			else {
+				return EntryPoint.REVERSE;
+			}
+		}
+		// bBlock must be an entry point
+		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+			if (((EntryPoint)mForwardEntryPoints.get(i)).getFromBlock() == b.getBlock()) {
+				return EntryPoint.FORWARD;
+			}
+		}
+		for (int j = 0; j<mForwardEntryPoints.size(); j++) {
+			if (((EntryPoint)mReverseEntryPoints.get(j)).getFromBlock() == b.getBlock()) {
+				return EntryPoint.REVERSE;
+			}
+		}
+		// should never get here										
+		log.error("Unexpected error in getDirectionForBlocks when working with LevelCrossing in Section "+
+							getSystemName());
+		return EntryPoint.UNKNOWN;
+	}
+	/* 
+	 * Returns 'true' if successfully checked direction sensor by follow connectivity from specified 
+	 *		track node.  Returns 'false' if an error occurred.
+	 */ 
+	private boolean setDirectionSensorByConnectivity(TrackNode tNode, TrackNode altNode, SignalHead sh, 
+								Block cBlock, ConnectivityUtil cUtil) {
+		boolean successful = false;
+		TrackNode tn = tNode;
+		if ( (tn!=null) && (sh!=null) ) {
+			Block tBlock = null;
+			LayoutBlock lb = null;
+			int dir = EntryPoint.UNKNOWN;
+			while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+				tn = cUtil.getNextNode(tn, 0);
+				tBlock = cUtil.getExitBlockForTrackNode(tn, null);
+			}
+			if (tBlock!=null) {								
+				lb = InstanceManager.layoutBlockManagerInstance().
+															getByUserName(tBlock.getUserName());
+				if (lb!=null) 
+					dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+			}
+			else {
+				tn = altNode;
+				while ( (tBlock==null) && (tn!=null) && (!tn.reachedEndOfTrack()) ) {
+					tn = cUtil.getNextNode(tn, 0);
+					tBlock = cUtil.getExitBlockForTrackNode(tn, null);
+				}
+				if (tBlock!=null) {
+					lb = InstanceManager.layoutBlockManagerInstance().
+															getByUserName(tBlock.getUserName());
+					if (lb!=null) {
+						dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+						if (dir == EntryPoint.REVERSE) dir = EntryPoint.FORWARD;
+						else if (dir == EntryPoint.FORWARD) dir = EntryPoint.REVERSE;
+					}										
+				}
+			}
+			if (dir!=EntryPoint.UNKNOWN) {
+				if (checkDirectionSensor(sh, dir, ConnectivityUtil.OVERALL, cUtil)) successful = true;
+			}
+			else {
+				log.error("Trouble following track in Block "+
+										cBlock.getSystemName()+" in Section "+getSystemName()+".");
+			}
+		}
+		return successful;
+	}
+
+	
+	/** 
+	 * Places direction sensors in SSL for all Signal Heads in this Section if the Sensors
+	 *		are not already present in the SSL. 
+	 * Only anchor point block boundaries that have assigned signals are considered.
+	 * Only turnouts that have assigned signals are considered.
+	 * Only level crossings that have assigned signals are considered.
+	 * Turnouts and anchor points without signals are counted, and reported in warning messages 
+	 *		during this procedure, if there are any missing signals.
+	 * If this method has trouble, an error message is placed in the log describing the trouble.
+	 * If a direction sensor has not been defined for this Section, a message to that 
+	 *		effect is issued to the log, and an error count of 1 is returned.
+	 * Returns an an error count of 0, if no errors occurred.
+	 */
+	public int placeDirectionSensors(LayoutEditor panel) {
+		int missingSignalsBB = 0;
+		int missingSignalsTurnouts = 0;
+		int missingSignalsLevelXings = 0;
+		int errorCount = 0;
+		if (panel==null) {
+			log.error("Null Layout Editor panel on call to 'placeDirectionSensors'");
+			return 1;
+		}
+		if (initializationNeeded) initializeBlocks();
+		if ( (mForwardBlockingSensorName==null) || (mForwardBlockingSensorName.equals("")) ||
+				(mReverseBlockingSensorName==null) || (mReverseBlockingSensorName.equals("")) ) {
+			log.error("Missing direction sensor in Section "+getSystemName());
+			return 1;
+		}
+		LayoutBlockManager layoutBlockManager = InstanceManager.layoutBlockManagerInstance();
+		ConnectivityUtil cUtil = panel.getConnectivityUtil();
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			Block cBlock = (Block)mBlockEntries.get(i);
+			LayoutBlock lBlock = layoutBlockManager.getByUserName(cBlock.getUserName());			
+			ArrayList anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
+			for (int j = 0; j<anchorList.size(); j++) {
+				PositionablePoint p = (PositionablePoint)anchorList.get(j);
+				if ( (p.getEastBoundSignal()!=null) && (p.getWestBoundSignal()!=null) && 
+						(!p.getEastBoundSignal().equals("")) && (!p.getWestBoundSignal().equals("")) ) {
+					// have a signalled block boundary
+					SignalHead sh = cUtil.getSignalHeadAtAnchor(p, cBlock, false);
+					if (sh==null) {
+						log.warn("Unexpected missing signal head at boundary of Block "+cBlock.getUserName());
+						errorCount ++;
+					}
+					else {
+						int direction = cUtil.getDirectionFromAnchor(mForwardEntryPoints, 
+									mReverseEntryPoints, p);
+						if (direction==EntryPoint.UNKNOWN) {
+							// anchor is at a Block boundary within the Section
+							sh = cUtil.getSignalHeadAtAnchor(p, cBlock, true);
+							Block otherBlock = ((p.getConnect1()).getLayoutBlock()).getBlock();
+							if (otherBlock==cBlock) otherBlock = ((p.getConnect2()).getLayoutBlock()).getBlock();
+							if (getBlockSequenceNumber(cBlock) > getBlockSequenceNumber(otherBlock)) { 
+								direction = EntryPoint.REVERSE;
+							}
+							else {
+								direction = EntryPoint.FORWARD;
+							}
+						}
+						if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+					}
+				}
+				else {
+					errorCount++;
+					missingSignalsBB ++;
+				}
+			}
+			ArrayList xingList = cUtil.getLevelCrossingsThisBlock(cBlock);
+			for (int k = 0; k<xingList.size(); k++) {
+				LevelXing x = (LevelXing)xingList.get(k);
+				LayoutBlock alBlock = ((TrackSegment)x.getConnectA()).getLayoutBlock();
+				LayoutBlock blBlock = ((TrackSegment)x.getConnectB()).getLayoutBlock();
+				LayoutBlock clBlock = ((TrackSegment)x.getConnectC()).getLayoutBlock();
+				LayoutBlock dlBlock = ((TrackSegment)x.getConnectD()).getLayoutBlock();
+				if (cUtil.isInternalLevelXingAC(x, cBlock)) {
+					// have an internal AC level crossing - is it signaled?
+					if ( ((x.getSignalAName()!=null) && (!x.getSignalAName().equals(""))) ||
+							((x.getSignalCName()!=null) && (!x.getSignalCName().equals(""))) ) {
+						// have a signaled AC level crossing internal to this block
+						if ( (x.getSignalAName()!=null) && (!x.getSignalAName().equals("")) ) {
+							// there is a signal at A in the level crossing
+							TrackNode tn = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_A, 
+												(TrackSegment)x.getConnectA(), false, 0);
+							TrackNode altNode = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_C, 
+												(TrackSegment)x.getConnectC(), false, 0);
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalAName());
+							if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) errorCount ++;
+						}									
+						if ( (x.getSignalCName()!=null) && (!x.getSignalCName().equals("")) ) {
+							// there is a signal at C in the level crossing
+							TrackNode tn = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_C, 
+												(TrackSegment)x.getConnectC(), false, 0);
+							TrackNode altNode = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_A, 
+												(TrackSegment)x.getConnectA(), false, 0);
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalCName());
+							if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) errorCount ++;
+						}
+					}
+				}
+				else if (alBlock == lBlock) {
+					// have a level crossing with AC spanning a block boundary, with A in this Block
+					int direction = getDirectionForBlocks(alBlock, clBlock);
+					if (direction != EntryPoint.UNKNOWN) {
+						if ( (x.getSignalCName()!=null) && (!x.getSignalCName().equals("")) ) {
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalCName());
+							if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+						}
+					}	
+					else {
+						errorCount++;
+					}					
+				}
+				else if (clBlock == lBlock) {
+					// have a level crossing with AC spanning a block boundary, with C in this Block
+					int direction = getDirectionForBlocks(clBlock, alBlock);
+					if (direction != EntryPoint.UNKNOWN) { 
+						if ( (x.getSignalAName()!=null) && (!x.getSignalAName().equals("")) ) {
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalAName());
+							if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+						}
+					}
+					else {
+						errorCount++;
+					}					
+				}
+				if (cUtil.isInternalLevelXingBD(x, cBlock)) {
+					// have an internal BD level crossing - is it signaled?
+					if ( ((x.getSignalBName()!=null) && (!x.getSignalBName().equals(""))) ||
+							((x.getSignalDName()!=null) && (!x.getSignalDName().equals(""))) ) {
+						// have a signaled BD level crossing internal to this block
+						if ( (x.getSignalBName()!=null) && (!x.getSignalBName().equals("")) ) {
+							// there is a signal at B in the level crossing
+							TrackNode tn = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_B, 
+												(TrackSegment)x.getConnectB(), false, 0);
+							TrackNode altNode = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_D, 
+												(TrackSegment)x.getConnectD(), false, 0);
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalBName());
+							if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) errorCount ++;
+						}
+						if ( (x.getSignalDName()!=null) && (!x.getSignalDName().equals("")) ) {
+							// there is a signal at C in the level crossing
+							TrackNode tn = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_D, 
+												(TrackSegment)x.getConnectD(), false, 0);
+							TrackNode altNode = new TrackNode((Object)x, LayoutEditor.LEVEL_XING_B, 
+												(TrackSegment)x.getConnectB(), false, 0);
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalDName());
+							if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) errorCount ++;
+						}
+					}
+				}
+				else if (blBlock == lBlock) {
+					// have a level crossing with BD spanning a block boundary, with B in this Block
+					int direction = getDirectionForBlocks(blBlock, dlBlock);
+					if (direction != EntryPoint.UNKNOWN) {
+						if ( (x.getSignalDName()!=null) && (!x.getSignalDName().equals("")) ) {
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalDName());
+							if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+						}
+					}	
+					else {
+						errorCount++;
+					}					
+				}
+				else if (dlBlock == lBlock) {
+					// have a level crossing with BD spanning a block boundary, with D in this Block
+					int direction = getDirectionForBlocks(dlBlock, blBlock);
+					if (direction != EntryPoint.UNKNOWN) { 
+						if ( (x.getSignalBName()!=null) && (!x.getSignalBName().equals("")) ) {
+							SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															x.getSignalBName());
+							if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+						}
+					}
+					else {
+						errorCount++;
+					}					
+				}
+			}
+			ArrayList turnoutList = cUtil.getLayoutTurnoutsThisBlock(cBlock);
+			for (int m = 0; m<turnoutList.size(); m++) {
+				LayoutTurnout t = (LayoutTurnout)turnoutList.get(m);
+				if ( cUtil.layoutTurnoutHasRequiredSignals(t) ) {
+					// have a signalled turnout
+					if ( (t.getLinkType()==LayoutTurnout.NO_LINK) &&
+						( (t.getTurnoutType()==LayoutTurnout.RH_TURNOUT) || 
+							(t.getTurnoutType()==LayoutTurnout.LH_TURNOUT) ||
+								(t.getTurnoutType()==LayoutTurnout.WYE_TURNOUT) ) ) {
+						// standard turnout - nothing special
+						// Note: direction is for proceeding from the throat to either other track
+						int direction = getDirectionStandardTurnout(t,cUtil);
+						int altDirection = EntryPoint.FORWARD;
+						if (direction == EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+// djd debugging
+// if (direction==EntryPoint.FORWARD)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - FORWARD");
+// if (direction==EntryPoint.REVERSE)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - REVERSE");
+// if (direction==EntryPoint.UNKNOWN)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - UNKNOWN");
+// end debugging
+						if (direction==EntryPoint.UNKNOWN) errorCount ++;
+						else {
+							SignalHead aHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															t.getSignalA1Name());
+							SignalHead a2Head = null;
+							String a2Name = t.getSignalA2Name();
+							if ( (a2Name!=null) && (!a2Name.equals("")) ) {
+								a2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(a2Name);
+							}
+							SignalHead bHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															t.getSignalB1Name());
+							SignalHead cHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+															t.getSignalC1Name());
+							if (t.getLayoutBlock().getBlock()==cBlock) {
+								// turnout is in this block, set direction sensors on all signal heads
+								// Note: need allocation to traverse this turnout
+								if (!checkDirectionSensor(aHead, direction, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								if (a2Head!=null) {
+									if (!checkDirectionSensor(a2Head, direction, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								}
+								if (!checkDirectionSensor(bHead, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								if (!checkDirectionSensor(cHead, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+							}
+							else {
+								if (((TrackSegment)t.getConnectA()).getLayoutBlock().getBlock()==cBlock) {
+									// throat Track Segment is in this Block
+									if (!checkDirectionSensor(bHead, altDirection, 
+														ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if (!checkDirectionSensor(cHead, altDirection, 
+														ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								}
+								if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
+										(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) ) ||
+										( (t.getContinuingSense()==Turnout.THROWN) && 
+										(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) )	) {
+									// continuing track segment is in this block, normal continuing sense - or -
+									//		diverging track segment is in this block, reverse continuing sense.
+									if (a2Head==null) {
+										// single head at throat
+										if (!checkDirectionSensor(aHead, direction, 
+													ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
+									}
+									else {
+										// two heads at throat
+										if (!checkDirectionSensor(aHead, direction, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}									
+								}
+								if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
+										(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) ) ||
+										( (t.getContinuingSense()==Turnout.THROWN) && 
+										(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) )	) {
+									// diverging track segment is in this block, normal continuing sense - or -
+									//		continuing track segment is in this block, reverse continuing sense.
+									if (a2Head==null) {
+										// single head at throat
+										if (!checkDirectionSensor(aHead, direction, 
+													ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
+									}
+									else {
+										// two heads at throat
+										if (!checkDirectionSensor(a2Head, direction, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}
+								}
+							}
+						}
+					}
+					else if (t.getLinkType()!=LayoutTurnout.NO_LINK) {
+						// special linked turnout
+						LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(t.getLinkedTurnoutName(),panel);
+						if (tLinked==null) log.error("null Layout Turnout linked to turnout "+t.getTurnout().getSystemName());
+						else if (t.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
+							SignalHead b1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalB1Name());
+							SignalHead b2Head = null;
+							String hName = t.getSignalB2Name();
+							if ( (hName!=null) && (!hName.equals("")) ) {
+								b2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+							}
+							SignalHead c1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalC1Name());
+							SignalHead c2Head = null;
+							hName = t.getSignalC2Name();
+							if ( (hName!=null) && (!hName.equals("")) ) {
+								c2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+							}
+							int direction = getDirectionStandardTurnout(t,cUtil);
+							int altDirection = EntryPoint.FORWARD;
+							if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+							if (direction!=EntryPoint.UNKNOWN)  {
+								if (t.getLayoutBlock().getBlock()==cBlock) {
+// the following are commented out because not doing so will overflow the number of sensors allowed by SSL's																
+//									// turnout is in this block, set direction sensors on all signal heads
+//									// Note: need allocation to traverse this turnout
+//									if (!checkDirectionSensor(b1Head, altDirection, 
+//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+//									if (b2Head!=null) 
+//										if (!checkDirectionSensor(b2Head, altDirection, 
+//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+//									if (!checkDirectionSensor(c1Head, altDirection, 
+//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+//									if (c2Head!=null) 
+//										if (!checkDirectionSensor(c2Head, altDirection, 
+//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								}
+								else {
+									// turnout is not in this block, switch to heads of linked turnout
+									b1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				tLinked.getSignalB1Name());
+									hName = tLinked.getSignalB2Name();
+									b2Head = null;
+									if ( (hName!=null) && (!hName.equals("")) ) {
+										b2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+									}
+									c1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				tLinked.getSignalC1Name());
+									c2Head = null;
+									hName = tLinked.getSignalC2Name();
+									if ( (hName!=null) && (!hName.equals("")) ) {
+										c2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+									}									
+									if (((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) {
+										// continuing track segment is in this block
+										if (b2Head!=null) {
+											if (!checkDirectionSensor(b1Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										}
+										else {
+											if (!checkDirectionSensor(b1Head, direction, 
+															ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
+										}	
+										if (c2Head!=null) {
+											if (!checkDirectionSensor(c1Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										}
+										else {
+											if (!checkDirectionSensor(c1Head, direction, 
+															ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
+										}
+									}
+									else if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
+										// diverging track segment is in this block
+										if (b2Head!=null) {
+											if (!checkDirectionSensor(b2Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										}
+										else {
+											if (!checkDirectionSensor(b1Head, direction, 
+															ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
+										}	
+										if (c2Head!=null) {
+											if (!checkDirectionSensor(c2Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										}
+										else {
+											if (!checkDirectionSensor(c1Head, direction, 
+															ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
+										}
+									}
+								}
+							}
+						}
+						else if (t.getLinkType()==LayoutTurnout.FIRST_3_WAY) {
+							SignalHead a1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalA1Name());
+							SignalHead a2Head = null;
+							String hName = t.getSignalA2Name();
+							if ( (hName!=null) && (!hName.equals("")) ) {
+								a2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+							}
+							SignalHead a3Head = null;
+							hName = t.getSignalA3Name();
+							if ( (hName!=null) && (!hName.equals("")) ) {
+								a3Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+							}
+							SignalHead cHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalC1Name());
+							int direction = getDirectionStandardTurnout(t,cUtil);
+							int altDirection = EntryPoint.FORWARD;
+							if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+							if (direction!=EntryPoint.UNKNOWN) {
+								if (t.getLayoutBlock().getBlock()==cBlock) {
+									// turnout is in this block, set direction sensors on all signal heads
+									// Note: need allocation to traverse this turnout
+									if (!checkDirectionSensor(a1Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if ( (a2Head!=null) && (a3Head!=null) ) {
+										if (!checkDirectionSensor(a2Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										if (!checkDirectionSensor(a3Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}
+									if (!checkDirectionSensor(cHead, altDirection, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								}
+								else {
+									// turnout is not in this block
+									if (((TrackSegment)t.getConnectA()).getLayoutBlock().getBlock()==cBlock) {
+										// throat Track Segment is in this Block
+										if (!checkDirectionSensor(cHead, altDirection, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}
+									else if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
+										// diverging track segment is in this Block
+										if (a2Head!=null) {
+											if (!checkDirectionSensor(a2Head, altDirection, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+										}
+										else {
+											if (!checkDirectionSensor(a1Head, altDirection, 
+															ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
+										}
+									}
+								}
+							}
+						}
+						else if (t.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
+							SignalHead bHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalB1Name());
+							SignalHead cHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																				t.getSignalC1Name());
+							SignalHead a1Head = InstanceManager.signalHeadManagerInstance().getSignalHead(
+																			tLinked.getSignalA1Name());
+							SignalHead a3Head = null;
+							String hName = tLinked.getSignalA3Name();
+							if ( (hName!=null) && (!hName.equals("")) ) {
+								a3Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
+							}
+							int direction = getDirectionStandardTurnout(t,cUtil);
+							int altDirection = EntryPoint.FORWARD;
+							if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+							if (direction!=EntryPoint.UNKNOWN) {
+								if (t.getLayoutBlock().getBlock()==cBlock) {
+									// turnout is in this block, set direction sensors on b and c signal heads
+									// Note: need allocation to traverse this turnout
+									if (!checkDirectionSensor(bHead, altDirection, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if (!checkDirectionSensor(cHead, altDirection, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+								}
+								if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
+									// diverging track segment is in this Block
+									if (a3Head!=null) {
+										if (!checkDirectionSensor(a3Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}
+									else {
+										log.error("Turnout "+tLinked.getTurnoutName()+" - SSL for head "+a1Head.getSystemName()+
+											" cannot handle direction sensor for second diverging track.");
+										errorCount ++;
+									}										
+								}
+								else if (((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) {
+									// continuing track segment is in this Block
+									if (a3Head!=null) {
+										if (!checkDirectionSensor(a1Head, direction, 
+															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									}
+									else {
+										if (!checkDirectionSensor(a1Head, direction, 
+															ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
+									}																				
+								}
+							}
+						}
+					}
+					else if ( (t.getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+							(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ||
+								(t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ) {
+						// crossover turnout 
+						// Note: direction is for proceeding from A to B (or D to C)
+						int direction = getDirectionXoverTurnout(t,cUtil);
+						int altDirection = EntryPoint.FORWARD;
+						if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+// djd debugging
+// if (direction==EntryPoint.FORWARD)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - FORWARD");
+// if (direction==EntryPoint.REVERSE)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - REVERSE");
+// if (direction==EntryPoint.UNKNOWN)
+// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - UNKNOWN");
+// end debugging
+						if (direction==EntryPoint.UNKNOWN) errorCount ++;
+						else {
+							if (((TrackSegment)t.getConnectA()).getLayoutBlock().getBlock()==cBlock) {
+								if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ||
+										(t.getTurnoutType()==LayoutTurnout.RH_XOVER) ) {
+									if (!placeSensorInCrossover(t.getSignalB1Name(),t.getSignalB2Name(),
+											t.getSignalC1Name(),t.getSignalC2Name(),altDirection,cUtil)) errorCount ++;
+								}
+								else {
+									if (!placeSensorInCrossover(t.getSignalB1Name(),t.getSignalB2Name(),
+											null,null,altDirection,cUtil)) errorCount ++;
+								}
+							}
+							if (((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) {
+								if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ||
+										(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ) {
+									if (!placeSensorInCrossover(t.getSignalA1Name(),t.getSignalA2Name(),
+											t.getSignalD1Name(),t.getSignalD2Name(),direction,cUtil)) errorCount ++;
+								}
+								else {
+									if (!placeSensorInCrossover(t.getSignalA1Name(),t.getSignalA2Name(),
+											null,null,direction,cUtil)) errorCount ++;
+								}
+							}
+							if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
+								if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ||
+										(t.getTurnoutType()==LayoutTurnout.RH_XOVER) ) {
+									if (!placeSensorInCrossover(t.getSignalD1Name(),t.getSignalD2Name(),
+											t.getSignalA1Name(),t.getSignalA2Name(),direction,cUtil)) errorCount ++;
+								}
+								else {
+									if (!placeSensorInCrossover(t.getSignalD1Name(),t.getSignalD2Name(),
+											null,null,direction,cUtil)) errorCount ++;
+								}
+							}
+							if (((TrackSegment)t.getConnectD()).getLayoutBlock().getBlock()==cBlock) {
+								if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ||
+										(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ) {
+									if (!placeSensorInCrossover(t.getSignalC1Name(),t.getSignalC2Name(),
+											t.getSignalB1Name(),t.getSignalB2Name(),altDirection,cUtil)) errorCount ++;
+								}
+								else {
+									if (!placeSensorInCrossover(t.getSignalC1Name(),t.getSignalC2Name(),
+											null,null,altDirection,cUtil)) errorCount ++;
+								}
+							}
+						}
+					}
+					else {
+						log.error("Unknown turnout type for turnout "+t.getTurnout().getSystemName()+ 
+										" in Section "+getSystemName()+".");
+						errorCount ++;
+					}
+				}
+				else {
+					// signal heads missing in turnout
+					missingSignalsTurnouts ++;
+				}
+			}								
+		}
+		// set up missing signal head message, if any
+		if ( (missingSignalsBB+missingSignalsTurnouts+missingSignalsLevelXings) > 0 ) {
+			String s = "Section - "+getSystemName();
+			if ( (getUserName()!=null) && (!getUserName().equals("")) )
+				s = s+"("+getUserName()+")";
+			if (missingSignalsBB>0) {
+				s = s+", "+(missingSignalsBB)+" anchor point signal heads missing";
+			}
+			if (missingSignalsTurnouts>0) {
+				s = s+", "+(missingSignalsTurnouts)+" turnouts missing signals";
+			}
+			if (missingSignalsLevelXings>0) {
+				s = s+", "+(missingSignalsLevelXings)+" level crossings missing signals";
+			}
+			log.warn(s);
+		}
+		
+		return errorCount;
+	}
+	private boolean checkDirectionSensor(SignalHead sh, int direction, int where,
+																ConnectivityUtil cUtil) {
+		String sensorName = "";
+		if (direction == EntryPoint.FORWARD) {		
+			sensorName = mForwardBlockingSensorName;
+		}
+		else if (direction == EntryPoint.REVERSE) {
+			sensorName = mReverseBlockingSensorName;
+		}
+		return (cUtil.addSensorToSignalHeadLogic(sensorName, sh, where));
+	}
+	private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
+		Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+		if (t==null) return null;
+		LayoutTurnout lt = null;
+		for (int i=0; i<panel.turnoutList.size(); i++) {
+			lt = (LayoutTurnout)panel.turnoutList.get(i);
+			if (lt.getTurnout()==t) return lt;
+		}
+		return null;
+	}
+	
+	/**
+	 * Checks that there are Signal Heads at all Entry Points to this Section. 
+	 * This method will warn if it finds unsignalled internal turnouts, but will continue 
+	 *		checking.  Unsignalled entry points except for those at unsignalled internal 
+	 *		turnouts will be considered errors, and will be reported to the user.  This 
+	 *		method stops searching when it find the first missing Signal Head.
+	 * Returns 'true' if successful, 'false' otherwise.
+	 */
+	public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
+		if (panel==null) {
+			log.error("Null Layout Editor panel on call to 'checkSignals'");
+			return false;
+		}
+		if (initializationNeeded) initializeBlocks();
+		Block eBlock = getEntryBlock();
+		ArrayList epList = getListOfForwardBlockEntryPoints(eBlock);
+		if (epList.size() > 0) {
+			
+// djd debugging		
+// add code here
+		}
+		return true;
+	}
+	private ArrayList getListOfForwardBlockEntryPoints(Block b) {
+		if (initializationNeeded) initializeBlocks();
+		ArrayList a = new ArrayList();
+		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+			if ( b == ((EntryPoint)mForwardEntryPoints.get(i)).getBlock() ){
+				a.add((EntryPoint)mForwardEntryPoints.get(i));
+			}
+		}
+		return a;
+	}
+	
+	/**
+	 * Validate the Section. 
+	 * This checks block connectivity, warns of redundant EntryPoints,
+	 *		and otherwise checks internal consistency of the Section.
+	 * An appropriate error message is logged if a problem is found.
+	 * This method assumes that Block Paths are correctly initialized.
+	 * If a Layout Editor panel is available, lePanel!=null, the initialization 
+	 *		of Blocks is checked.
+	 * Returns an empty string "", if everything checks out.  Returns 
+	 *		a string describing the error if an error is found.
+	 */
+	public String validate(LayoutEditor lePanel) {
+		if (initializationNeeded) initializeBlocks();
+		// validate Paths and Bean Settings if a Layout Editor panel is available
+		if (lePanel!=null) {
+			for (int i=0; i<(mBlockEntries.size()-1); i++) {
+				LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getByUserName(
+								getBlockBySequenceNumber(i).getUserName());
+				if (lBlock==null) {
+					log.error("Layout Block "+getBlockBySequenceNumber(i).getUserName()+
+									" not found.  Paths not checked.");
+				}
+				else {
+					lBlock.updatePathsUsingPanel(lePanel);
+				}
+			}
+		}	
+		// check connectivity between internal blocks
+		if (mBlockEntries.size()>1) {
+			for (int i=0; i<(mBlockEntries.size()-1); i++) {
+				if (!connected(getBlockBySequenceNumber(i), getBlockBySequenceNumber(i+1))) {
+					String s = "Sequential Blocks - "+getBlockBySequenceNumber(i).getSystemName()+
+						", "+getBlockBySequenceNumber(i+1).getSystemName()+
+						" - are not connected in Section "+getSystemName()+".";						
+					return s;
+				}
+				if (!connected(getBlockBySequenceNumber(i+1), getBlockBySequenceNumber(i))) {
+					String s = "Sequential Blocks - "+getBlockBySequenceNumber(i).getSystemName()+
+						", "+getBlockBySequenceNumber(i+1).getSystemName()+
+						" - Paths are not consistent - Section "+getSystemName()+".";
+					return s;
+				}
+			}
+		}
+		// validate entry points 
+		if ((mForwardEntryPoints.size() == 0) && (mReverseEntryPoints.size()==0)) {
+			String s = "Section "+getSystemName()+ "has no Entry Points.";
+			return s;
+		}
+		if (mForwardEntryPoints.size()>0) {
+			for (int i = 0; i<mForwardEntryPoints.size(); i++) {
+				EntryPoint ep = (EntryPoint)mForwardEntryPoints.get(i);
+				if (!containsBlock(ep.getBlock())) {
+					String s = "Entry Point Block, "+ep.getBlock().getSystemName()+
+							", is not a Block in Section "+getSystemName()+".";
+					return s;
+				}
+				if (!connectsToBlock(ep.getFromBlock())) {
+					String s = "Entry Point From Block, "+ep.getBlock().getSystemName()+
+							", is not connected to a Block in Section "+getSystemName()+".";
+					return s;
+				}
+				if (!ep.isForwardType()) {
+					String s = "Direction of FORWARD Entry Point From Block "+
+							ep.getFromBlock().getSystemName()+" to Section "+
+							getSystemName()+" is incorrectly set.";
+					return s;
+				}
+				if (!connected(ep.getBlock(), ep.getFromBlock())) {
+					String s = "Entry Point Blocks, "+ep.getBlock().getSystemName()+
+							" and "+ep.getFromBlock().getSystemName()+
+							", are not connected in Section "+getSystemName()+".";
+					return s;
+				}
+			}
+		}
+		if (mReverseEntryPoints.size()>0) {
+			for (int i = 0; i<mReverseEntryPoints.size(); i++) {
+				EntryPoint ep = (EntryPoint)mReverseEntryPoints.get(i);
+				if (!containsBlock(ep.getBlock())) {
+					String s = "Entry Point Block, "+ep.getBlock().getSystemName()+
+							", is not a Block in Section "+getSystemName()+".";
+					return s;
+				}
+				if (!connectsToBlock(ep.getFromBlock())) {
+					String s = "Entry Point From Block, "+ep.getBlock().getSystemName()+
+							", is not connected to a Block in Section "+getSystemName()+".";
+					return s;
+				}
+				if (!ep.isReverseType()) {
+					String s = "Direction of REVERSE Entry Point From Block "+
+							ep.getFromBlock().getSystemName()+" to Section "+
+							getSystemName()+" is incorrectly set.";
+					return s;
+				}
+				if (!connected(ep.getBlock(), ep.getFromBlock())) {
+					String s = "Entry Point Blocks, "+ep.getBlock().getSystemName()+
+							" and "+ep.getFromBlock().getSystemName()+
+							", are not connected in Section "+getSystemName()+".";
+					return s;
+				}
+			}
+		}
+		return "";
+	}	
+	private boolean connected(Block b1, Block b2) {
+		if ( (b1!=null) && (b2!=null) ) {
+			ArrayList paths = (ArrayList)b1.getPaths();
+			for (int i = 0; i<paths.size(); i++) {
+				if (((Path)paths.get(i)).getBlock() == b2) return true;
+			}
+		}
+		return false;
+	}		
+	
 						
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Section.class.getName());
 	

@@ -2,7 +2,11 @@
 
 package jmri;
 
+import jmri.jmrit.display.LayoutEditor;
+
 import java.util.List;
+import java.util.ArrayList;
+
 import jmri.implementation.AbstractManager;
 
 /**
@@ -31,7 +35,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -106,6 +110,82 @@ public class SectionManager extends AbstractManager
         return (Section)_tuser.get(key);
     }
 	
+	/**
+	 * Validates all Sections 
+	 */
+	public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
+		List list = getSystemNameList();
+		int numSections = 0;
+		int numErrors = 0;
+		if (list.size()<=0) return -2;
+		for (int i = 0; i<list.size(); i++) {
+			String s = getBySystemName((String)list.get(i)).validate(lePanel);
+			if (!s.equals("")) {
+				log.error(s);
+				numErrors ++;
+			}
+			numSections ++;
+		}
+		if (log.isDebugEnabled()) log.debug("Validated "+numSections+" Sections - "+
+											numErrors+" errors or warnings.");
+		return numErrors;
+	}
+	
+	/**
+	 * Checks direction sensors in SSL for signals.
+	 * Returns '0' for no errors
+	 * Returns n, where n is a positive number for number of errors or warnings
+	 * Returns -1 if there is no LayoutEditor panel
+	 * Returns -2 if there are no Sections defined
+	 */
+	public int setupDirectionSensors(LayoutEditor lePanel) {
+		if (lePanel==null) return -1;
+		List list = getSystemNameList();
+		int numSections = 0;
+		int numErrors = 0;
+		if (list.size()<=0) return -2;
+		for (int i = 0; i<list.size(); i++) {
+			int errors = getBySystemName((String)list.get(i)).placeDirectionSensors(lePanel);
+			numErrors = numErrors + errors;
+			numSections ++;
+		}
+		if (log.isDebugEnabled()) log.debug("Checked direction sensors for "+numSections+
+					" Sections - "+numErrors+" errors or warnings.");
+		return numErrors;
+	}
+	
+	/**
+	 * Removes direction sensors from SSL for all signals.
+	 * Returns '0' for no errors
+	 * Returns n, where n is a positive number for number of errors or warnings
+	 * Returns -1 if there is no LayoutEditor panel
+	 * Returns -2 if there are no Sections defined
+	 */
+	public int removeDirectionSensorsFromSSL(LayoutEditor lePanel) {
+		if (lePanel==null) return -1;
+		jmri.jmrit.display.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
+		List list = getSystemNameList();
+		if (list.size()<=0) return -2;
+		int numErrors = 0;
+		ArrayList sensorList = new ArrayList<String>();
+		for (int i = 0; i<list.size(); i++) {
+			Section s = getBySystemName((String)list.get(i));
+			String name = s.getReverseBlockingSensorName();
+			if ( (name!=null) && (!name.equals("")) ) 
+				sensorList.add(name);
+			name = s.getForwardBlockingSensorName();
+			if ( (name!=null) && (!name.equals("")) ) 
+				sensorList.add(name);
+		}
+		jmri.SignalHeadManager shManager = InstanceManager.signalHeadManagerInstance();
+		List signalList = shManager.getSystemNameList();
+		for (int j=0; j<signalList.size(); j++) {
+			SignalHead sh = shManager.getBySystemName((String)signalList.get(j));
+			if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList,	sh)) numErrors ++;	
+		}
+		return numErrors;
+	}
+		 	
     static SectionManager _instance = null;
     static public SectionManager instance() {
         if (_instance == null) {

@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -296,7 +296,7 @@ public class TransitTableAction extends AbstractTableAction {
 			sectionTableModel = new SectionTableModel();
 			JTable sectionTable = new JTable(sectionTableModel);
 			sectionTable.setRowSelectionAllowed(false);
-			sectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550,150));
+			sectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(650,150));
 			TableColumnModel sectionColumnModel = sectionTable.getColumnModel();
 			TableColumn sequenceColumn = sectionColumnModel.getColumn(SectionTableModel.SEQUENCE_COLUMN);
 			sequenceColumn.setResizable(true);
@@ -586,7 +586,14 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 	}
 	private boolean checkTransitInformation() {
-// add code here
+		if (sectionList.size()<=0) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+					.getString("Message26"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);			
+			return false;
+		}		
+// djd debugging
+// add code here as needed
 		return true;
 	}
 	private boolean setTransitInformation() {
@@ -758,7 +765,8 @@ public class TransitTableAction extends AbstractTableAction {
 		public static final int SECTIONNAME_COLUMN = 1;
 		public static final int ACTION_COLUMN = 2;
 		public static final int DATA_COLUMN = 3;
-		public static final int ALTERNATE_COLUMN = 4;
+		public static final int SEC_DIRECTION_COLUMN = 4;
+		public static final int ALTERNATE_COLUMN = 5;
 
 		public SectionTableModel() {
 			super();
@@ -802,6 +810,8 @@ public class TransitTableAction extends AbstractTableAction {
 				return rbx.getString("SectionName");
 			case ACTION_COLUMN:
 				return rbx.getString("ActionColName");
+			case SEC_DIRECTION_COLUMN:
+				return rbx.getString("DirectionColName");
 			case ALTERNATE_COLUMN:
 				return rbx.getString("AlternateColName");
 			default:
@@ -819,6 +829,8 @@ public class TransitTableAction extends AbstractTableAction {
 				return new JTextField(12).getPreferredSize().width;				
 			case DATA_COLUMN:
 				return new JTextField(8).getPreferredSize().width;				
+			case SEC_DIRECTION_COLUMN:
+				return new JTextField(12).getPreferredSize().width;	
 			case ALTERNATE_COLUMN:
 				return new JTextField(12).getPreferredSize().width;	
 			}
@@ -850,7 +862,13 @@ public class TransitTableAction extends AbstractTableAction {
 				case DATA_COLUMN:
 					if ( action[rx]==TransitSection.PAUSE )
 						return (""+data[rx]);
-					return (" ");						
+					return (" ");	
+				case SEC_DIRECTION_COLUMN:
+					if ( direction[rx]==Section.FORWARD )
+						return rbx.getString("SectionForward");
+					else if (direction[rx]==Section.REVERSE)
+						return rbx.getString("SectionReverse");
+					return rbx.getString("Unknown");
 				case ALTERNATE_COLUMN:
 					if ( alternate[rx] )
 						return rbx.getString("Alternate");

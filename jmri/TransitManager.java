@@ -30,7 +30,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -100,12 +100,9 @@ public class TransitManager extends AbstractManager
     }
 
     /**
-     * Remove an existing Transit and reduce the use count of each of 
-	 *    its Sections. 
-     */
+     * Remove an existing Transit
+	 */
     public void deleteTransit(Transit z) {
-		// decrement use count of Sections if there are any
-// here add use count decrement	
 		// delete the Transit				
         deregister(z);
 		z.dispose();
