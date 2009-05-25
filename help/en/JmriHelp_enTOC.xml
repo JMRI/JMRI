@@ -218,18 +218,19 @@
   <tocitem text="Locomotive Speed Matching " target="html.tools.speedometer.SpeedMatch"/>
 
   <tocitem text="Logix " target="html.tools.Logix">
-
    <tocitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
+
    <tocitem text="Add/Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
+
    <tocitem text="Add/Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
 
   </tocitem>
-  
   <tocitem text="LRoutes " target="html.tools.LRoutes">
    <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+
    <tocitem text="Adding/Editing LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
+
   </tocitem>
-  
   <tocitem text="Memory Monitor " target="package.jmri.jmrit.MemoryFrameAction"/>
 
   <tocitem text="Memories " target="html.tools.Memories">

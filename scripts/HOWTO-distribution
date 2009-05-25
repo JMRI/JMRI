@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.89 $)
+distribution.  ($Revision: 1.90 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -206,23 +206,20 @@ change that (temporarily) for a production release
 
 ( ) Complete all the above before continuing
 
-
-////////////////
-// in the future, consider using sf-upload to create the 
-// SF.net release structures:  http://sf-upload.sourceforge.net/
+( ) Use sf-upload to create the SF.net release structures:  http://sf-upload.sourceforge.net/
     cd scripts
     bbedit notesfile*.txt changefile.txt
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3-test test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.5.3-test.tgz -type ".gz" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3-test test version for Mac OS X" -nf notesfileMac.txt  -cf changefile.txt -f JMRI.2.5.3-test.dmg -type ".dmg" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3-test test version for Windows" -nf notesfileWin.txt  -cf changefile.txt -f JMRI.2.5.3-test.exe -type ".exe (32-bit Windows)" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3 test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.5.3.tgz -type ".gz" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3 test version for Mac OS X" -nf notesfileMac.txt  -cf changefile.txt -f JMRI.2.5.3.dmg -type ".dmg" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.5.3 test version for Windows" -nf notesfileWin.txt  -cf changefile.txt -f JMRI.2.5.3.exe -type ".exe (32-bit Windows)" -noupload
 
-    (prod package is 33771)
-    (want multiple notes files e.g for Linux/Windows/Mac, perhaps created by script from some parts?)
+    (prod package is 33771; note that notes have to change)
     (have to have a ~/.sfuploadrc file)
     
-////////////////
+    --------------------------------------------
+    Older methods (don't use if above succeeds):
  
-( ) Login to SourceForge web using Firefox
+    Login to SourceForge web using Firefox
 
 	Go to the project home page, login, then admin page
 	
@@ -238,16 +235,18 @@ change that (temporarily) for a production release
         
     The note says:
 
-The JMRI 2.5.3 test version is now available for download. 
-This is the specific version for Windows users. 
-For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.5.3.shtml
+        The JMRI 2.5.3 test version is now available for download. 
+        This is the specific version for Windows users. 
+        For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.5.3.shtml
 
     The change log says:
     
-The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.5.3.shtml
+        The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.5.3.shtml
 
 	Don't select "preserve preformatted text"
 	
+    --------------------------------------------
+
 ( ) Commit release note files to the web site CVS directory
 
 ( ) Wait until the downloads have propagated to the mirrors; check 

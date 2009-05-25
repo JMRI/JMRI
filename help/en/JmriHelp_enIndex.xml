@@ -174,18 +174,22 @@
  </indexitem>
  <indexitem text="Logix ">
   <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
+
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
+
   <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
+
   <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
 
  </indexitem>
- 
  <indexitem text="LRoute ">
   <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+
   <indexitem text="Add LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
+
   <indexitem text="Edit LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
+
  </indexitem>
- 
  <indexitem text="Memories " target="html.tools.Memories">
   <indexitem text="Add Memory " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
 
