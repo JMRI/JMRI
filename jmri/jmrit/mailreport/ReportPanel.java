@@ -11,7 +11,7 @@ import javax.swing.*;
  * User interface for sending a problem report via email
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ReportPanel extends JPanel {
 
@@ -20,6 +20,7 @@ public class ReportPanel extends JPanel {
     // member declarations
     JButton sendButton;
     JTextField emailField = new JTextField(40);
+    JTextField hostField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
     JTextArea descField = new JTextArea(5,40);
     JCheckBox checkContext;
@@ -44,6 +45,16 @@ public class ReportPanel extends JPanel {
         p1.add(l);
         emailField.setToolTipText(rb.getString("TooltipEmail"));
         p1.add(emailField);
+        add(p1);
+
+        p1 = new JPanel();
+        p1.setLayout(new FlowLayout());
+        l = new JLabel(rb.getString("LabelHost"));
+        l.setToolTipText(rb.getString("TooltipHost"));
+        p1.add(l);
+        hostField.setToolTipText(rb.getString("TooltipHost"));
+        hostField.setText(rb.getString("MailHost"));
+        p1.add(hostField);
         add(p1);
 
         p1 = new JPanel();
@@ -88,7 +99,7 @@ public class ReportPanel extends JPanel {
         // create message
         MailMessage msg = new MailMessage(
                                rb.getString("Destination"),
-                               rb.getString("MailHost"),
+                               hostField.getText(),
                                summaryField.getText());
         msg.setFrom(emailField.getText());
         msg.prepare();

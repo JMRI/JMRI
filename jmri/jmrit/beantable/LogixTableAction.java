@@ -10,6 +10,7 @@ import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Conditional;
 import jmri.ConditionalAction;
+import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.ConditionalManager;
 import jmri.Sensor;
@@ -72,7 +73,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1623,7 +1624,7 @@ public class LogixTableAction extends AbstractTableAction {
             return;
 		}
 		_showReminder = true;
-        _actionList.add(new ConditionalAction());
+        _actionList.add(new DefaultConditionalAction());
         _newItem = true;
 		_actionTableModel.fireTableRowsInserted(_actionList.size(),
 				_actionList.size());
@@ -2082,7 +2083,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         _actionTypeBox = new JComboBox();
         for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
-            _actionTypeBox.addItem(ConditionalAction.getTypeString(i));
+            _actionTypeBox.addItem(DefaultConditionalAction.getTypeString(i));
         }
         JPanel typePanel = makeEditPanel(_actionTypeBox, "LabelActionType", "ActionTypeHint");
         panel1.add(typePanel);
@@ -2090,7 +2091,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         _actionOptionBox = new JComboBox();
         for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
-            _actionOptionBox.addItem(ConditionalAction.getOptionString(i));
+            _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i));
         }
         _optionPanel = makeEditPanel(_actionOptionBox, "LabelActionOption", "ActionOptionHint");
         _optionPanel.setVisible(false);
@@ -2578,7 +2579,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType["+actionType+"] = "+ConditionalAction.getTypeString(actionType));
+            log.warn("Unexpected actionType["+actionType+"] = "+DefaultConditionalAction.getTypeString(actionType));
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());

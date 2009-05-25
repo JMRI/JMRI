@@ -16,12 +16,12 @@ import org.jdom.Element;
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2002, 2008
- * @version	   $Revision: 1.10 $
+ * @version	   $Revision: 1.11 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
                          implements java.beans.PropertyChangeListener  {
 
-    jmri.ProgModeSelector  modePane;
+    jmri.jmrit.progsupport.ProgModeSelector  modePane;
 
 
     /**
@@ -29,7 +29,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
-        if (modePane== null) modePane = new jmri.ProgDeferredServiceModePane();
+        if (modePane== null) modePane = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
         log.debug("invoked getModePane");
         return modePane;
     }

@@ -36,13 +36,13 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
-    jmri.ProgModeSelector  modePane    = new jmri.ProgDeferredServiceModePane();
+    jmri.jmrit.progsupport.ProgModeSelector  modePane    = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
 
     static final java.util.ResourceBundle rbt 
         = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");

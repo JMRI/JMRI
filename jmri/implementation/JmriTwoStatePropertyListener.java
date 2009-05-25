@@ -1,13 +1,13 @@
-package jmri;
+package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.*;
 
 /**
- * A service class for monitoring a bound property
- * in one of the JMRI Named beans
- * For use with properties having two states which are determined
- * by equality to a String value (e.g. Internal Memory).
+ * A service class for monitoring a bound property in one of the JMRI Named beans
+ * (Turnout, Sensor, etc).
+ * For use where only two states are possible, ACTIVE/INACTIVE, THROWN/CLOSED etc.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -26,14 +26,11 @@ import java.beans.PropertyChangeListener;
  * @since           2.5.1
  */
 
-public class JmriMemoryPropertyListener extends JmriSimplePropertyListener
+public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener
 {
-    String _data;
-
-    JmriMemoryPropertyListener(String propName, int type, String name, int varType, 
-                                Conditional client, String data) {
+    JmriTwoStatePropertyListener(String propName, int type, String name, int varType, 
+                              Conditional client) {
         super(propName, type, name, varType, client);
-        _data = data;
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
@@ -41,16 +38,20 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener
             ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
             ", enabled = "+_enabled);
         if ( getPropertyName().equals(evt.getPropertyName()) ) {
-            String newValue = (String) evt.getNewValue();
-            String oldValue = (String) evt.getOldValue();
-            if (newValue == null) return;
-            if (oldValue == null) return;
-            if ( newValue.equals(_data) || oldValue.equals(_data) ) {
-                // property has changed to/from the watched state, calculate
-                super.propertyChange(evt);
-            }
+            super.propertyChange(evt);
         }
+        /*
+        int newState = ((Number) evt.getNewValue()).intValue();
+        int oldState = ((Number) evt.getOldValue()).intValue();
+        if (newState != oldState)  {
+            // property has changed to/from the watched state, calculate
+            super.propertyChange(evt);
+        }
+        */
     }
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriMemoryPropertyListener.class.getName());
+
+static final org.apache.log4j.Logger 
+log = org.apache.log4j.Logger.getLogger(JmriTwoStatePropertyListener.class.getName());
 }
+
 

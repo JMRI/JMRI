@@ -10,9 +10,10 @@ import jmri.Turnout;
 import jmri.Sensor;
 import jmri.Light;
 import jmri.SignalHead;
-import jmri.DefaultConditional;
+import jmri.implementation.DefaultConditional;
 import jmri.Conditional;
 import jmri.ConditionalAction;
+import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.ConditionalManager;
 import jmri.Logix;
@@ -1461,17 +1462,17 @@ public class LRouteTableAction extends AbstractTableAction {
                     }
                     break;
             }
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                   actionType, name, state, params));
         }
         String file = scriptFile.getText();
         if (file.length() > 0) {
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                   Conditional.ACTION_RUN_SCRIPT, "", -1, file));
         }
         file = soundFile.getText();
         if (file.length() > 0) {
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                   Conditional.ACTION_PLAY_SOUND, "", -1, file));
         }
         ArrayList <ConditionalAction> onChangeList = cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE);
@@ -1610,9 +1611,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (name == null || name.length() == 0) {
                  name = sensor.getSysName();
             }
-            aList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+            aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                                             Conditional.ACTION_SET_SENSOR, name, Sensor.ACTIVE, ""));
-            aList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+            aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                                             Conditional.ACTION_SET_SENSOR, name, Sensor.INACTIVE, ""));
             int alignType = sensor.getState();
             for (int k=0; k<_includedOutputList.size(); k++) {
@@ -1743,10 +1744,10 @@ public class LRouteTableAction extends AbstractTableAction {
                 if (eltName == null || eltName.length() == 0) {
                      eltName = elt.getSysName();
                 }
-                aList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
+                aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                                      Conditional.ACTION_LOCK_TURNOUT,
                                                      eltName, Turnout.LOCKED, ""));
-                aList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE, 
+                aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE, 
                                                      Conditional.ACTION_LOCK_TURNOUT,
                                                      eltName, Turnout.UNLOCKED, ""));
             }
@@ -1868,7 +1869,7 @@ public class LRouteTableAction extends AbstractTableAction {
         ArrayList <ConditionalAction> list = new ArrayList <ConditionalAction> ();
         for (int i = 0; i<actionList.size(); i++) {
             ConditionalAction action = actionList.get(i);
-            ConditionalAction clone = new ConditionalAction();
+            ConditionalAction clone = new DefaultConditionalAction();
             clone.setType(action.getType());
             clone.setOption(option);
             clone.setDeviceName(action.getDeviceName());

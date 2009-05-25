@@ -11,7 +11,7 @@ import jmri.*;
 /**
  * Pane for selecting an active decoder from multiple ones in a loco
  * @author   Bob Jacobsen   Copyright (C) 2003
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
@@ -25,7 +25,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
 
     JLabel status = new JLabel("Idle");
     JToggleButton searchButton = new JToggleButton("Search");
-    jmri.ProgModePane modePane = new jmri.ProgModePane(BoxLayout.Y_AXIS);
+    jmri.jmrit.progsupport.ProgModePane modePane = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
 
     public DualDecoderSelectPane() {
         // general GUI config

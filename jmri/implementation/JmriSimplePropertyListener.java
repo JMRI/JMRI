@@ -1,8 +1,9 @@
-package jmri;
+package jmri.implementation;
 
 import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.*;
 
 /**
  * A service base class for monitoring a bound property

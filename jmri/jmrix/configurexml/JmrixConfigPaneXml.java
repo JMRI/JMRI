@@ -1,14 +1,16 @@
 package jmri.jmrix.configurexml;
 
 import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.GuiLafConfigPaneXml;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.JmrixConfigPane;
+
+import org.jdom.Element;
+
+import jmri.configurexml.GuiLafConfigPaneXml;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.jdom.Element;
 
 /**
  * Handle XML persistance of layout connections.
@@ -20,7 +22,7 @@ import org.jdom.Element;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -106,6 +108,6 @@ public class JmrixConfigPaneXml implements XmlAdapter {
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPaneXml.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPaneXml.class.getName());
 
 }

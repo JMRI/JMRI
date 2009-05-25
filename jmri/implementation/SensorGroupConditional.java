@@ -1,5 +1,6 @@
-package jmri;
+package jmri.implementation;
 
+import jmri.*;
 import jmri.Timebase;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;

@@ -10,7 +10,8 @@ import jmri.Logix;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
-import jmri.SensorGroupConditional;
+import jmri.implementation.DefaultConditionalAction;
+import jmri.implementation.SensorGroupConditional;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent; 
@@ -40,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -219,7 +220,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 String sensor = (String)_sensorModel.getValueAt(i,_sensorModel.SNAME_COLUMN);
                 variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_OR,
                                                          Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
-                actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                                                      Conditional.ACTION_SET_SENSOR, sensor, 
                                                      Sensor.INACTIVE, ""));
                 count++;

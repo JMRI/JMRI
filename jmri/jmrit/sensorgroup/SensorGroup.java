@@ -5,6 +5,7 @@ package jmri.jmrit.sensorgroup;
 import jmri.*;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.implementation.DefaultRoute;
 
 /**
  * Object for representing, creating and editing sensor groups.
@@ -13,7 +14,7 @@ import java.util.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SensorGroup {
 

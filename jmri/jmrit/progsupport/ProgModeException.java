@@ -1,6 +1,8 @@
 // ProgModeException.java
 
-package jmri;
+package jmri.jmrit.progsupport;
+
+import jmri.*;
 
 /** 
  * Represents an attempt to use an unsupported mode or option
@@ -8,7 +10,7 @@ package jmri;
  * This is a configuration failure, not an operational failure
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.1 $
  */
 public class ProgModeException extends ProgrammerException {
 	public ProgModeException(String s) { super(s); }

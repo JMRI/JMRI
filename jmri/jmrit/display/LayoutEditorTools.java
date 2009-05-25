@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.Conditional;
 import jmri.ConditionalAction;
+import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
 
@@ -32,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LayoutEditorTools 
@@ -5566,10 +5567,10 @@ public class LayoutEditorTools
                                                  type, turnoutName, true));
             c.setStateVariables(variableList);
             ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                                                  Conditional.ACTION_SET_SENSOR, sensorName,
                                                  Sensor.ACTIVE, ""));
-            actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                                                  Conditional.ACTION_SET_SENSOR, sensorName,
                                                  Sensor.INACTIVE, ""));
 			c.setAction(actionList);										// string data

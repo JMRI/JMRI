@@ -4,6 +4,7 @@ package jmri;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import jmri.ConditionalAction;
 /**
  * A Conditional is layout control logic, consisting of a logical 
  * expression and an action.

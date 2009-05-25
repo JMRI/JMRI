@@ -1,9 +1,10 @@
 // ProgDeferredServiceModePane.java
 
-package jmri;
+package jmri.jmrit.progsupport;
 
 import java.awt.*;
 import javax.swing.*;
+import jmri.*;
 
 import jmri.Programmer;
 
@@ -42,7 +43,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.1 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 

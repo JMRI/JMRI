@@ -4,6 +4,7 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 import java.util.ArrayList;
+import jmri.implementation.DefaultConditionalAction;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories,
  * etc that make up a OsIndicator.
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class OsIndicator implements Constants {
 
@@ -69,10 +70,10 @@ public class OsIndicator implements Constants {
         }
         
         ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
-        actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+        actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                                              Conditional.ACTION_SET_TURNOUT, output,
                                              Turnout.CLOSED, " "));
-        actionList.add(new ConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+        actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                                              Conditional.ACTION_SET_TURNOUT, output,
                                              Turnout.THROWN, " "));
         c.setAction(actionList);										// string data

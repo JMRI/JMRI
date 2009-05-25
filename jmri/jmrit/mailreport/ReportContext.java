@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class ReportContext {
 
@@ -40,8 +40,8 @@ public class ReportContext {
         String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
         addString("Roster index location: "+roster+"  ");
 
-        String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
-        addString("Operations files location: "+operations+"  ");
+        //String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
+        //addString("Operations files location: "+operations+"  ");
 
         addProperty("java.vendor");
         addProperty("java.home");

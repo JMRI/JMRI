@@ -1,6 +1,6 @@
 // DefaultRoute.java
 
-package jmri;
+package jmri.implementation;
 
  /**
  * Class providing the basic logic of the Route interface.
@@ -10,12 +10,12 @@ package jmri;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.1 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import jmri.implementation.AbstractNamedBean;
+import jmri.*;
 
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {

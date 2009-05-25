@@ -4,6 +4,7 @@ package jmri.jmrit.symbolicprog.symbolicframe;
 
 import jmri.*;
 import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
 import java.awt.*;
 import java.io.*;
@@ -18,7 +19,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 

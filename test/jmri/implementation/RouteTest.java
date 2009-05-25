@@ -1,7 +1,8 @@
 // RouteTest.java
 
-package jmri;
+package jmri.implementation;
 
+import jmri.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -10,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Route interface
  * @author	Bob Jacobsen  Copyright (C) 2006, 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  */
 public class RouteTest extends TestCase {
 

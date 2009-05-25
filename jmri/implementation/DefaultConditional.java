@@ -1,7 +1,7 @@
-package jmri;
+package jmri.implementation;
 
+import jmri.*;
 import jmri.Timebase;
-import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -27,7 +27,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.1 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -127,7 +127,7 @@ public class DefaultConditional extends AbstractNamedBean
         ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
 		for (int i = 0; i<_actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            ConditionalAction clone = new ConditionalAction();
+            ConditionalAction clone = new DefaultConditionalAction();
             clone.setType(action.getType());
             clone.setOption(action.getOption());
             clone.setDeviceName(action.getDeviceName());

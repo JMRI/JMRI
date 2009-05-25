@@ -3,6 +3,7 @@
 package jmri;
 
 import jmri.implementation.AbstractManager;
+import jmri.implementation.DefaultLogix;
 
 /**
  * Basic Implementation of a LogixManager.
@@ -16,7 +17,7 @@ import jmri.implementation.AbstractManager;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {

@@ -1,8 +1,9 @@
 // ProgServiceModePane.java
 
-package jmri;
+package jmri.jmrit.progsupport;
 
 import javax.swing.BoxLayout;
+import jmri.*;
 
 /**
  * Provide a JPanel to configure the service mode programmer.
@@ -33,7 +34,7 @@ import javax.swing.BoxLayout;
  * for more details.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.1 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 

@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -24,7 +24,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     javax.swing.JTextField  addrField       = new javax.swing.JTextField(4);
     javax.swing.JTextField  valField        = new javax.swing.JTextField(4);
 
-    jmri.ProgModePane       modePane        = new jmri.ProgModePane(BoxLayout.Y_AXIS);
+    jmri.jmrit.progsupport.ProgModePane       modePane        = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
 
     javax.swing.ButtonGroup radixGroup 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton hexButton    	= new javax.swing.JRadioButton();
