@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import jmri.managers.AbstractSignalHeadManager;
+import jmri.managers.DefaultConditionalManager;
+import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
+import jmri.managers.DefaultRouteManager;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -34,7 +37,7 @@ import jmri.managers.DefaultMemoryManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 public class InstanceManager {
 

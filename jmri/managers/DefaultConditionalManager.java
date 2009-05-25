@@ -1,9 +1,10 @@
 // DefaultConditionalManager.java
 
-package jmri;
+package jmri.managers;
 
 import java.util.Iterator;
 import java.util.List;
+import jmri.*;
 import jmri.implementation.AbstractManager;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
@@ -26,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.1 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {

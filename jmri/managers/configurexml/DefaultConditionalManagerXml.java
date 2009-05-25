@@ -8,7 +8,7 @@ import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.ConditionalManager;
-import jmri.DefaultConditionalManager;
+import jmri.managers.DefaultConditionalManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

@@ -5,7 +5,7 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
-import jmri.DefaultLogixManager;
+import jmri.managers.DefaultLogixManager;
 import java.util.List;
 import org.jdom.Element;
 
@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

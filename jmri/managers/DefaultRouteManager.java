@@ -1,7 +1,8 @@
 // DefaultRouteManager.java
 
-package jmri;
+package jmri.managers;
 
+import jmri.*;
 import jmri.implementation.AbstractManager;
 import jmri.implementation.DefaultRoute;
 
@@ -11,7 +12,7 @@ import jmri.implementation.DefaultRoute;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.1 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
