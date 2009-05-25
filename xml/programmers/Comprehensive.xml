@@ -12,13 +12,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.28 2009-04-20 05:51:41 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.29 2009-05-25 17:32:29 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
     <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
     <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
     <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
+    <version version="17" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090525"/>
+
 <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
 <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
@@ -34,6 +36,11 @@
 <!-- Version 16 - added four more lighting options to Lights pane, -->
 <!--              very minor format change in Motor pane, -->
 <!--              Fixed tool tips for "Analog Mode Function Status" items -->
+<!-- Version 17 - Modified format of Analog Controls pane to 3 columns. Modified spaces -->
+<!--              from Sound Levels pane so columns align when equally populated. Added "buffer" -->
+<!--              labels to Advanced pane to create spaces between columns. -->
+
+
     <programmer decoderFilePanes="yes" showEmptyPanes="default">
         <pane name="Basic">
             <column>
@@ -246,6 +253,7 @@
                 <display item="Function 10 effect generated"/>
             </column>
             <column>
+                <label label=" "/>
                 <display item="Function 11 effect generated"/>
                 <display item="Function 12 effect generated"/>
                 <display item="Function 13 effect generated"/>
@@ -308,6 +316,12 @@
             <column>
                 <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)"/>
                 <display item="Analog Vstart" tooltip="CV 60"/>
+                <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
+                <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
+                <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
+                <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
+                <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
+                <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero"/>
             </column>
             <column>
                 <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode"/>
@@ -391,14 +405,6 @@
                 <display item="Analog Mode Function Status - F18(f)" format="checkbox" tooltip="Sets the status of function F18(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F18(r)" format="checkbox" tooltip="Sets the status of function F18(r) when the unit is operating in analog power mode"/>
             </column>
-            <column>
-                <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-                <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-                <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-                <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-                <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-                <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero"/>
-            </column>
         </pane>
         <pane name="Consist">
             <column>
@@ -452,6 +458,9 @@
                 <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it"/>
             </column>
             <column>
+			<label label="      "/>
+	    </column>
+            <column>
                 <display item="Advanced Group 1 Option 1"/>
                 <display item="Advanced Group 1 Option 2"/>
                 <display item="Advanced Group 1 Option 3"/>
@@ -461,6 +470,9 @@
                 <display item="Advanced Group 1 Option 7"/>
                 <display item="Advanced Group 1 Option 8"/>
             </column>
+            <column>
+			<label label="      "/>
+	    </column>
             <column>
                 <display item="Advanced Group 2 Option 1"/>
                 <display item="Advanced Group 2 Option 2"/>
@@ -613,6 +625,7 @@
         <pane name="Sound Levels">
             <row>
                 <column>
+                    <label label=" "/>
                     <row>
                         <display item="Sound Setting 1" layout="above" label=""/>
                         <label label=" "/>
@@ -802,7 +815,7 @@
                     </row>
                 </column>
             </row>
-             <row>
+            <row>
                 <column>
                     <label label=" "/>
                     <row>
@@ -866,7 +879,7 @@
                     </row>
                 </column>
             </row>
-       </pane>
+        </pane>
         <pane name="CVs">
             <column>
                 <cvtable/>
@@ -874,5 +887,7 @@
         </pane>
     </programmer>
 </programmer-config>
+
+ 	  	 
 
  	  	 
