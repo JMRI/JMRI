@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -139,6 +139,7 @@ public class BlockBossLogic extends Siglet {
     public BlockBossLogic(String name) {
         super(name+" BlockBossLogic");
         this.name = name;
+        if (log.isTraceEnabled()) log.trace("Create BBL "+name);
         driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         if (driveSignal == null) log.warn("Signal "+name+" was not found!");
     }
@@ -541,12 +542,14 @@ public class BlockBossLogic extends Siglet {
      * and apply it.
      */
     public void setOutput() {
+        if (log.isTraceEnabled()) log.trace("setOutput for "+name);
         // make sure init is complete
         if ( (outputs == null) || (outputs[0]==null) ) return;
         
         // if "hold" is true, must show red
         if (getHold()) {
             ((SignalHead)outputs[0]).setAppearance(SignalHead.RED);
+            if (log.isDebugEnabled()) log.debug("setOutput red due to held for "+name);
             return;
         }
         
@@ -658,8 +661,10 @@ public class BlockBossLogic extends Siglet {
         doApproach();
         
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
 
     void doTrailingMain() {
@@ -702,8 +707,10 @@ public class BlockBossLogic extends Siglet {
         doApproach();
         
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
 
     void doTrailingDiverging() {
@@ -746,8 +753,10 @@ public class BlockBossLogic extends Siglet {
         doApproach();
         
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
     
     void doFacing() {
