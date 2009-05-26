@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -142,13 +142,33 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.waitMsec(5000)
         return 0 #continue if 1, run once if 0
     
+    # return userName if available, else systemName
+    def giveBlockName(self, block) :
+        if (block == None) :
+            return 'None'
+        else :
+            if ((block.getUserName() == None) or (block.getUserName() == '')) :
+                return block.getSystemName()
+            else :
+                return block.getUserName()
+
+    # return userName if available, else systemName
+    def giveSignalName(self, sig) :
+        if (sig == None) :
+            return 'None'
+        else :
+            if ((sig.getUserName() == None) or (sig.getUserName() == '')) :
+                return sig.getSystemName()
+            else :
+                return sig.getUserName()
+
     # figure out if we moved and where
     def didWeMove(self, event) :
         if (self.isRunning == False) :
             #self.msgText("didWeMove called while isRunning was false\n")
             return
         #if (self.currentBlock != None) :
-            #self.msgText("Current block: " + self.currentBlock.getUserName() + "\n")
+            #self.msgText("Current block: " + self.giveBlockName(self.currentBlock) + "\n")
         newCurrentBlocks = self.findCurrentBlocks()
         # new current block must be farthest connected to current block in current direction chain
         oldCurrent = self.currentBlock
@@ -161,8 +181,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (newCurrent == None) :
                 newBlockText = "None"
             else :
-                newBlockText = newCurrent.getUserName()
-            self.msgText("try " + giveUpTimer.toString() + " " + tryBlock.getUserName() + " " + newBlockText + "\n")
+                newBlockText = giveBlockName(newCurrent)
+            self.msgText("try " + giveUpTimer.toString() + " " + self.giveBlockName(tryBlock) + " " + newBlockText + "\n")
             if ((newCurrent == tryBlock) or (newCurrent == None)) :
                 break
             else :
@@ -175,18 +195,18 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.blockBeyond.text = " "
             self.blockBeyondLength.text = " "
             self.currentBlock = tryBlock
-            self.blockStart.text = tryBlock.getUserName()
-            self.blockNow.text = self.currentBlock.getUserName()
+            self.blockStart.text = self.giveBlockName(tryBlock)
+            self.blockNow.text = self.giveBlockName(self.currentBlock)
             self.blockNowLength.text = self.currentBlock.getLengthIn().toString()
             self.nextBlock = self.findNextBlock(self.currentBlock)
             self.testAddBlockListener(self.currentBlock)
             if (self.nextBlock != None) :
-                self.blockNext.text = self.nextBlock.getUserName()
+                self.blockNext.text = self.giveBlockName(self.nextBlock)
                 self.blockNextLength.text = self.nextBlock.getLengthIn().toString()
                 self.beyondBlock = self.findNextBlock(self.nextBlock)
                 self.testAddBlockListener(self.nextBlock)
                 if (self.beyondBlock != None) :
-                    self.blockBeyond.text = self.beyondBlock.getUserName()
+                    self.blockBeyond.text = self.giveBlockName(self.beyondBlock)
                     self.blockBeyondLength.text = self.beyondBlock.getLengthIn().toString()
                     self.testAddBlockListener(self.beyondBlock)
             self.priorBlock = oldCurrent
@@ -194,14 +214,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         # find next block from currentBlock
         if (self.currentBlock != None) :
             if (self.blockAhead2.isSelected() == False) :
-                self.msgText("3 block test: " + self.currentBlock.getUserName() + "\n")
+                self.msgText("3 block test: " + self.giveBlockName(self.currentBlock) + "\n")
                 # if only looking ahead to next block
                 self.findNewSpeed(self.currentBlock, self.nextBlock)
             else :
-                self.msgText("4 block test: " + self.nextBlock.getUserName() + "\n")
+                self.msgText("4 block test: " + self.giveBlockName(self.nextBlock) + "\n")
                 # if looking ahead beyond block (4 block system)
                 if (self.beyondBlock == None) :
-                    self.msgText("failed to find next block: " + self.nextBlock.getUserName() + "\n")
+                    self.msgText("failed to find next block: " + self.giveBlockName(self.nextBlock) + "\n")
                     self.doHalt()
                 else :
                     self.findNewSpeed(self.nextBlock, self.beyondBlock)
@@ -216,14 +236,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.signalBeyondText.text = self.cvtAppearanceText(nearSig)
                     self.testAddSignalListener(farSig)
                 else :
-                    if (self.beyondBlock != None) :
+                    if (self.beyondBlock == None) :
                         self.msgText("No far block, can't get a signal!\n")
                     else :
-                        self.msgText("No signal found for far block: " + self.beyondBlock.getUserName() + "\n")
+                        self.msgText("No signal found for far block: " + self.giveBlockName(self.beyondBlock) + "\n")
                     if (self.isRunning) :
                         self.doHalt()
             else :
-                self.msgText("No signal found for next block: " + self.nextBlock.getUserName() + "\n")
+                self.msgText("No signal found for next block: " + self.giveBlockName(self.nextBlock) + "\n")
                 if (self.isRunning) :
                     self.doHalt()
         return
@@ -263,13 +283,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         i = 0
         while(len(self.listenerBlockListeners) > i) :
             b = self.listenerBlocks[i]
-            self.msgText("releasing listener for block " + b.getUserName() + "\n")
+            self.msgText("releasing listener for block " + self.giveBlockName(b) + "\n")
             b.removePropertyChangeListener(self.listenerBlockListeners[i])
             i = i + 1
         i = 0
         while(len(self.listenerSignalListeners) > i) :
             s = self.listenerSignals[i]
-            self.msgText("releasing listener for signal " + s.getUserName() + "\n")
+            self.msgText("releasing listener for signal " + self.giveSignalName(s) + "\n")
             s.removePropertyChangeListener(self.listenerSignalListeners[i])
             i = i + 1
 #        if (self.redDelayTimer != None) :
@@ -296,19 +316,19 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 pB = p.getBlock()
                 if (p.checkPathSet()) :
                     dirTest = p.getToBlockDirection()
-                    #self.msgText("findNewCurrentBlock testing for " + jmri.Path.decodeDirection(cDir) + " from " + cBlock.getUserName() + " vs " + pB.getUserName() + " pointing " + jmri.Path.decodeDirection(dirTest) + "\n")
+                    #self.msgText("findNewCurrentBlock testing for " + jmri.Path.decodeDirection(cDir) + " from " + self.giveBlockName(cBlock) + " vs " + self.giveBlockName(pB) + " pointing " + jmri.Path.decodeDirection(dirTest) + "\n")
                     if (cDir & dirTest == cDir) :
                         for c in cList :
                             if (c == pB) :
                                 nBlock = pB
-                                #self.msgText("findNewCurrentBlock found " + pB.getUserName() + "\n")
+                                #self.msgText("findNewCurrentBlock found " + self.giveBlockName(pB) + "\n")
                                 break
                             #else :
-                                #self.msgText("findNewCurrentBlock not in cList: " + c.getUserName() + "\n")
+                                #self.msgText("findNewCurrentBlock not in cList: " + self.giveBlockName(c) + "\n")
                     if (nBlock != None) :
                         break
                 #else :
-                    #self.msgText("findNewCurrentBlock path not traversable: " + cBlock.getUserName() + " to " + pB.getUserName() + "\n")
+                    #self.msgText("findNewCurrentBlock path not traversable: " + self.giveBlockName(cBlock) + " to " + self.giveBlockName(pB) + "\n")
         return nBlock
 
     # figure out signal names and decide speeds
@@ -326,10 +346,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.msgText("Failed to find next block\n")
                     self.doHalt()
                 else :
-                    self.msgText("looking for signal between " + cBlock.getUserName() + " and " + nBlock.getUserName() + "\n")
+                    self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
                     s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
                     if (s != None) :
-                        self.msgText("Found signal: " + s.getUserName() + " displaying: " + self.cvtAppearanceText(s) + "\n")
+                        self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
                         self.speedFromAppearance(s)
                     else :
                         self.msgText("Failed finding signal!\n")
@@ -357,7 +377,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (sig.getAppearance() == FLASHGREEN) :
             rep = rep + "doGreenFlash "
             self.doSpeedGreenFlash()
-        #self.msgText("Found signal " + sig.getUserName() + " displaying: " + self.cvtAppearanceText(sig) + " so we will: " + rep + "\n")
+        #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + self.cvtAppearanceText(sig) + " so we will: " + rep + "\n")
         return
         
     # convert signal appearance to english
@@ -383,7 +403,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             rep = rep + "Dark "
         else :
             rep = rep + "Unknown "
-        #self.msgText("Found signal " + sig.getUserName() + " displaying: " + rep + "\n")
+        #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + rep + "\n")
         return rep
         
     # convert signal appearance to icon
@@ -404,7 +424,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 rep = self.greenFlashSignalIcon
             else :
                 rep = self.unknownSignalIcon
-        #self.msgText("Found signal " + sig.getUserName() + " displaying: " + rep + "\n")
+        #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + rep + "\n")
         return rep
         
     # compare two lists, reply true or false
@@ -530,7 +550,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("doStop\n")
             self.locoSpeed.text = "0"
             if (self.currentBlock != None) :
-                self.blockStart.text = self.currentBlock.getUserName()
+                self.blockStart.text = self.giveBlockName(self.currentBlock)
         return
                
     # doHalt is for stopping due to error conditions, won't restart
@@ -541,7 +561,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("doHalt, something was in error!!\n")
             self.locoSpeed.text = "0"
             if (self.currentBlock != None) :
-                self.blockStart.text = self.currentBlock.getUserName()
+                self.blockStart.text = self.giveBlockName(self.currentBlock)
         self.msgText("*** Run stopped ***\n")
         self.stopButton.setEnabled(False)
         self.startButton.setEnabled(True)
@@ -624,7 +644,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def testIfBlockNameValid(self, userName) :
         foundStart = False
         b = blocks.getByUserName(userName)
-        if (b != None and b.getUserName() == userName) :
+        if (b != None and self.giveBlockName(b) == userName) :
             foundStart = True
         return foundStart
         
@@ -653,7 +673,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.isRunning = True
                 self.didWeMove(None)
                 if (self.isRunning) :
-                    self.msgText("Starting current:" + self.currentBlock.getUserName() + "\n")
+                    self.msgText("Starting current:" + self.giveBlockName(self.currentBlock) + "\n")
         self.msgText("whenStartButtonClicked, done\n")     # add text
         return
             
@@ -691,13 +711,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             blockTest = p.getBlock()
             if (p.checkPathSet()) :
                 dirTest = p.getToBlockDirection()
-                #self.msgText("findNextBlock path traversable: "  + cB.getUserName() + " to " + blockTest.getUserName() + " dirTest: " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + " dirFlag: " + jmri.Path.decodeDirection(dirFlag) + ":" + dirFlag.toString() + " result: " + (dirTest & dirFlag).toString() + "\n")
+                #self.msgText("findNextBlock path traversable: "  + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + " dirTest: " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + " dirFlag: " + jmri.Path.decodeDirection(dirFlag) + ":" + dirFlag.toString() + " result: " + (dirTest & dirFlag).toString() + "\n")
                 if (dirTest & dirFlag != 0) :
                     nB = blockTest
-                    #self.msgText("findNextBlock Found " + blockTest.getUserName() + "\n")
+                    #self.msgText("findNextBlock Found " + self.giveBlockName(blockTest) + "\n")
                     #break
             #else :
-                #self.msgText("findNextBlock path not traversable: " + cB.getUserName() + " to " + blockTest.getUserName() + "\n")
+                #self.msgText("findNextBlock path not traversable: " + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + "\n")
         return nB
         
     # ActionListener - used for the stop timeout
