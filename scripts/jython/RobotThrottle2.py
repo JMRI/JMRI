@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -871,14 +871,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoSpeedGreen.setToolTipText("Green Speed is a number from 1 to 100%")
         self.locoSpeedGreen.actionPerformed = self.whenLocoChanged
         self.locoSpeedGreen.focusLost = self.whenLocoChanged
-        self.locoSpeedGreen.text = "60"
+        self.locoSpeedGreen.text = "44"
         
         # create the physical speed field for a Green Signal
         self.locoRateGreen = javax.swing.JTextField(sizeRateField)    # sized to hold 5 characters
         self.locoRateGreen.setToolTipText("Throttle as Distance/Second, approaching Green signal")
         self.locoRateGreen.actionPerformed = self.whenLocoChanged
         self.locoRateGreen.focusLost = self.whenLocoChanged
-        self.locoRateGreen.text = "0"
+        self.locoRateGreen.text = "9"
         
         # create the speed fields for a Yellow Flash Signal
         self.locoSpeedYellowFlash = javax.swing.JTextField(sizeSpeedField)    # sized to hold 5 characters
@@ -906,7 +906,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoRateYellow.setToolTipText("Throttle as Distance/Second, approaching yellow signal")
         self.locoRateYellow.actionPerformed = self.whenLocoChanged
         self.locoRateYellow.focusLost = self.whenLocoChanged
-        self.locoRateYellow.text = "0"
+        self.locoRateYellow.text = "6"
         
         # create the speed fields for a Red Flash Signal
         self.locoSpeedRedFlash = javax.swing.JTextField(sizeSpeedField)    # sized to hold 5 characters
@@ -927,21 +927,21 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoSpeedRed.setToolTipText("Red Speed is a number from 1 to 100%, creep to Red Signal")
         self.locoSpeedRed.actionPerformed = self.whenLocoChanged
         self.locoSpeedRed.focusLost = self.whenLocoChanged
-        self.locoSpeedRed.text = "5"
+        self.locoSpeedRed.text = "30"
         
         # create the physical speed field for a Red Signal
         self.locoRateRed = javax.swing.JTextField(sizeRateField)    # sized to hold 5 characters
         self.locoRateRed.setToolTipText("Throttle as Distance/Second, approaching red signal")
         self.locoRateRed.actionPerformed = self.whenLocoChanged
         self.locoRateRed.focusLost = self.whenLocoChanged
-        self.locoRateRed.text = "2"
+        self.locoRateRed.text = "6"
         
         # create the distance field for a Red Signal
         self.locoDistanceRedStop = javax.swing.JTextField(5)    # sized to hold 5 characters
         self.locoDistanceRedStop.setToolTipText("Distance to stop at Red Speed, inches")
         self.locoDistanceRedStop.actionPerformed = self.whenLocoChanged
         self.locoDistanceRedStop.focusLost = self.whenLocoChanged
-        self.locoDistanceRedStop.text = "5"
+        self.locoDistanceRedStop.text = "30"
         
         # create current speed display
         self.locoSpeed = javax.swing.JLabel()
