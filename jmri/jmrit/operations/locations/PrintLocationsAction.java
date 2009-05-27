@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -317,7 +317,7 @@ public class PrintLocationsAction  extends AbstractAction {
 			try {
 				String s = "\t" +name + getDirection(track.getTrainDirections());
 				writer.write(s, 0, s.length());
-				s = getTrackTypes(track);
+				s = getTrackTypes(location, track);
 				writer.write(s, 0, s.length());
 				s = getTrackRoads(track);
 				writer.write(s, 0, s.length());
@@ -363,13 +363,13 @@ public class PrintLocationsAction  extends AbstractAction {
 		return t;
 	}
 	
-	private String getTrackTypes(Track track){
+	private String getTrackTypes(Location location, Track track){
 		String t = "\t\t" + rb.getString("TypesServicedTrack") + newLine + "\t\t";
 		int charCount = 0;
 		int typeCount = 0;
 		String[] cTypes = CarTypes.instance().getNames();	
 		for (int i =0; i<cTypes.length; i++){
-			if(track.acceptsTypeName(cTypes[i])){
+			if(location.acceptsTypeName(cTypes[i]) && track.acceptsTypeName(cTypes[i])){
 				t = t + cTypes[i] + ", ";
 				typeCount++;
 				charCount += cTypes[i].length() +2;
