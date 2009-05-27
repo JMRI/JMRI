@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -50,6 +50,18 @@ public class PrintCarRosterAction  extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
+        // Print all cars?
+        boolean printAll = true;
+        
+        int selectedValue = JOptionPane.showOptionDialog(mFrame, 
+        		rb.getString("PrintAllCars"), null,
+        		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+        		null, new Object[] { rb.getString("ButtonYes"), rb.getString("ButtonNo")},
+        		rb.getString("ButtonYes"));
+
+        if (selectedValue == 1)
+        	printAll = false;
+ 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
@@ -59,7 +71,6 @@ public class PrintCarRosterAction  extends AbstractAction {
             return;
         }
         
- 
         // Loop through the Roster, printing as needed
         String newLine = "\n";
         String location;
@@ -83,6 +94,9 @@ public class PrintCarRosterAction  extends AbstractAction {
         	writer.write(s, 0, s.length());
         	for (int i=0; i<cars.size(); i++){
         		Car car = manager.getCarById(cars.get(i));
+        		// skip cars without a location?
+        		if (car.getLocationName().equals("") && !printAll)
+        			continue;
         		location = "";
         		if (!car.getLocationName().equals("")){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
