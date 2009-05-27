@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -240,7 +240,8 @@ public class TrainManagerXml extends XmlFile {
      * Store the train's build status
      */
     public File createTrainBuildReportFile(String name) {
-		makeBackupFile(defaultBuildReportFilename(name));
+    	if(backupFile)
+    		makeBackupFile(defaultBuildReportFilename(name));
 		File file = null;
 		try {
 			if (!checkFile(defaultBuildReportFilename(name))) {
@@ -278,7 +279,8 @@ public class TrainManagerXml extends XmlFile {
      * Store the train's manifest
      */
     public File createTrainManifestFile(String name) {
-		makeBackupFile(defaultManifestFilename(name));
+    	if(backupFile)
+    		makeBackupFile(defaultManifestFilename(name));
 		File file = null;
 		try {
 			if (!checkFile(defaultManifestFilename(name))) {
@@ -315,10 +317,11 @@ public class TrainManagerXml extends XmlFile {
      * Store the switchlist for a location
      */
     public File createSwitchListFile(String name) {
-		makeBackupFile(defaultManifestFilename(name));
+    	if(backupFile)
+    		makeBackupFile(defaultSwitchListName(name));
 		File file = null;
 		try {
-			if (!checkFile(defaultManifestFilename(name))) {
+			if (!checkFile(defaultSwitchListName(name))) {
 				// The file does not exist, create it before writing
 				file = new File(defaultSwitchListName(name));
 				File parentDir = file.getParentFile();
@@ -350,8 +353,9 @@ public class TrainManagerXml extends XmlFile {
     private boolean dirty = false;
     void setDirty(boolean b) {dirty = b;}
     boolean isDirty() {return dirty;}
-
     
+    private boolean backupFile = false;		// set to true to create backups during debug
+   
     public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
 
     public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
