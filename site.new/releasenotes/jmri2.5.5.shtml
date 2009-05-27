@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.1 2009-05-27 00:31:44 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.2 2009-05-27 22:20:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -137,6 +137,14 @@ are using a Linux computer.
 Ken Cameron fixed an error in the RobotThrottle demo script
 that happened when items didn't have user names.
 
+<p>
+Dan Boudreau improved printing in operations:
+When printing locations, tracks now only 
+show which rolling stock types are accepted;
+provide users the option to only print cars that have a valid location.
+
+<p>
+Paul Bender fixed a problem when XPressNet simulator is starting up.
 
 <!--#include virtual="/Footer" -->
 
