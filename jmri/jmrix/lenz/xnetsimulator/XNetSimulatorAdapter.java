@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -54,7 +54,6 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         catch (java.io.IOException e) {
             log.error("init (pipe): Exception: "+e.toString());
         }
-        configure();
     }
 
     public String openPort(String portName, String appName)  {
