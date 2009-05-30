@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import jmri.jmrit.decoderdefn.DecoderFile;
+
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +24,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.38 $
+ * @version   $Revision: 1.39 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -422,19 +424,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public int piCv() {return _piCv;}
     private int _siCv = -1;
     public int siCv() {return _siCv;}
-
-    boolean isIncluded(String include, String productID) {
-        String test = ","+include+",";
-        return test.contains(","+productID+",");
-    }
-
+    
     public int setIndxRow(int row, Element e, String productID) {
-        if (e.getAttributeValue("include") != null) {
-            String include = e.getAttributeValue("include");
-            if (isIncluded(include, productID) == false) {
-                if (log.isDebugEnabled()) log.debug("include not match, return row - 1 ="+(row-1));
-                return row - 1;
-            }
+        if (DecoderFile.isIncluded(e, productID) == false) {
+            if (log.isDebugEnabled()) log.debug("include not match, return row - 1 ="+(row-1));
+            return row - 1;
         }
 
         // get the values for the VariableValue ctor
@@ -532,8 +526,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             iv = v1;
             for (int x = 0; x < l.size(); x++) {
                 Element ex = (Element)l.get(x);
-                String include = ex.getAttributeValue("include");
-                if (include != null && !isIncluded(include, productID)) {
+                if (DecoderFile.isIncluded(ex, productID) == false) {
                     l.remove(x);
                     x--;
                 }

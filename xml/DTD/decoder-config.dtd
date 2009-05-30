@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.51 $ -->
+<!-- $Revision: 1.52 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -188,6 +188,9 @@
 <!ATTLIST variable minOut    CDATA #IMPLIED > <!-- min number of outputs in decoder for this to be valid -->
 <!ATTLIST variable inOptions CDATA #IMPLIED > <!-- variable present if any of the options are present -->
 <!ATTLIST variable tooltip   CDATA #IMPLIED > <!-- variable-specific tooltip, see also programmer DTD -->
+<!ATTLIST variable include   CDATA #IMPLIED > <!-- comma-sep list of models that include this; must be empty or match for variable to be used -->
+<!ATTLIST variable exclude   CDATA #IMPLIED > <!-- comma-sep list of models that exclude this; must be empty or not for variable to be used -->
+
 
 <!-- variables come in a number of forms: -->
 <!--    decVal:          a decimal value is used, subject to mask and limit requirements -->
@@ -226,6 +229,8 @@
 <!ATTLIST ivariable minOut    CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST ivariable inOptions CDATA #IMPLIED > <!-- variable present if any of the options are present -->
 <!ATTLIST ivariable tooltip   CDATA #IMPLIED > <!-- variable-specific tooltip, see also programmer DTD -->
+<!ATTLIST ivariable include   CDATA #IMPLIED > <!-- comma-sep list of models that include this; must be empty or match for variable to be used -->
+<!ATTLIST ivariable exclude   CDATA #IMPLIED > <!-- comma-sep list of models that exclude this; must be empty or not for variable to be used -->
 
 
 
@@ -261,8 +266,8 @@
 <!ELEMENT ienumChoice EMPTY>
 <!ATTLIST ienumChoice choice   CDATA #REQUIRED >
 <!ATTLIST ienumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
-<!ATTLIST ienumChoice include  CDATA #IMPLIED >
-<!ATTLIST ienumChoice exclude  CDATA #IMPLIED >
+<!ATTLIST ienumChoice include   CDATA #IMPLIED > <!-- comma-sep list of models that include this; must be empty or match for variable to be used -->
+<!ATTLIST ienumChoice exclude   CDATA #IMPLIED > <!-- comma-sep list of models that exclude this; must be empty or not for variable to be used -->
 <!ATTLIST ienumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT compositeVal (compositeChoice*) >

@@ -15,7 +15,7 @@ import jmri.progdebugger.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class DecoderFileTest extends TestCase {
 
@@ -107,6 +107,62 @@ public class DecoderFileTest extends TestCase {
         Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getLabel(2));
     }
 
+    public void testIncludeCheck() {
+        Element e;
+        // test some examples
+        e = new Element("Test");
+        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")). setAttribute("include", "1");
+        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")).setAttribute("include", "2");
+        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")).setAttribute("include", "3");
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "1,2"));
+        
+        (e = new Element("Test")). setAttribute("include", "105");
+        Assert.assertTrue("105 in 105,205",DecoderFile.isIncluded(e, "105,205"));
+
+        (e = new Element("Test")). setAttribute("include", "105");
+        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "205,105"));
+
+        (e = new Element("Test")). setAttribute("include", "105");
+        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "1050,205"));
+
+        (e = new Element("Test")). setAttribute("include", "105");
+        Assert.assertTrue("105 not in 50,1050",!DecoderFile.isIncluded(e, "50,1050"));
+    }
+    
+    public void testExcludeCheck() {
+        Element e;
+        // test some examples
+        e = new Element("Test");
+        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")). setAttribute("exclude", "1");
+        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")).setAttribute("exclude", "2");
+        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "1,2"));
+
+        (e = new Element("Test")).setAttribute("exclude", "3");
+        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "1,2"));
+        
+        (e = new Element("Test")). setAttribute("exclude", "105");
+        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105,205"));
+
+        (e = new Element("Test")). setAttribute("exclude", "105");
+        Assert.assertTrue("105 in 205,105",!DecoderFile.isIncluded(e, "205,105"));
+
+        (e = new Element("Test")). setAttribute("exclude", "105");
+        Assert.assertTrue("105 not in 1050,205",DecoderFile.isIncluded(e, "1050,205"));
+
+        (e = new Element("Test")). setAttribute("exclude", "105");
+        Assert.assertTrue("105 not in 50,1050",DecoderFile.isIncluded(e, "50,1050"));
+    }
+    
     public void testMinOut() {
         setupDecoder();
 

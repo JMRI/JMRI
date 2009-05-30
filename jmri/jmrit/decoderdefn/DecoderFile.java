@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -161,14 +161,32 @@ public class DecoderFile extends XmlFile {
     }
 
     boolean isProductIDok(Element e) {
+        return isIncluded(e, _productID);
+    }
+    
+    public static boolean isIncluded(Element e, String productID) {
         if (e.getAttributeValue("include") != null) {
             String include = e.getAttributeValue("include");
-            String test = ","+include+",";
-            return test.contains(","+_productID+",");
+            if (isInList(include, productID) == false) {
+                if (log.isTraceEnabled()) log.trace("include not match: /"+include+"/ /"+productID+"/");
+                return false;
+            }
+        }
+        if (e.getAttributeValue("exclude") != null) {
+            String exclude = e.getAttributeValue("exclude");
+            if (isInList(exclude, productID) == true) {
+                if (log.isTraceEnabled()) log.trace("exclude match: "+exclude+" "+productID);
+                return false;
+            }
         }
         return true;
     }
-    
+
+    private static boolean isInList(String include, String productID) {
+        String test = ","+productID+",";
+        return test.contains(","+include+",");
+    }
+
     // use the decoder Element from the file to load a VariableTableModel for programming.
     public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
