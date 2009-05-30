@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -167,14 +167,14 @@ public class DecoderFile extends XmlFile {
     public static boolean isIncluded(Element e, String productID) {
         if (e.getAttributeValue("include") != null) {
             String include = e.getAttributeValue("include");
-            if (isInList(include, productID) == false) {
+            if (isInList(productID, include) == false) {
                 if (log.isTraceEnabled()) log.trace("include not match: /"+include+"/ /"+productID+"/");
                 return false;
             }
         }
         if (e.getAttributeValue("exclude") != null) {
             String exclude = e.getAttributeValue("exclude");
-            if (isInList(exclude, productID) == true) {
+            if (isInList(productID, exclude) == true) {
                 if (log.isTraceEnabled()) log.trace("exclude match: "+exclude+" "+productID);
                 return false;
             }
