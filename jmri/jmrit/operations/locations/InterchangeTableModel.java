@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of interchanges used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class InterchangeTableModel extends TrackTableModel {
 
@@ -35,7 +35,7 @@ public class InterchangeTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new InterchangeEditFrame();
-		String interchangeId = (String)tracksList.get(row);
+		String interchangeId = tracksList.get(row);
 		Track interchange = _location.getTrackById(interchangeId);
 		tef.initComponents(_location, interchange);
 		tef.setTitle(rb.getString("EditInterchange"));

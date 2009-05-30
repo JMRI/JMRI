@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of yards used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class YardTableModel extends TrackTableModel {
 
@@ -35,7 +35,7 @@ public class YardTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new YardEditFrame();
-		String yardId = (String)tracksList.get(row);
+		String yardId = tracksList.get(row);
 		Track yard = _location.getTrackById(yardId);
 		tef.initComponents(_location, yard);
 		tef.setTitle(rb.getString("EditYard"));

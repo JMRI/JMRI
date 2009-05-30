@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -87,9 +87,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      
     public Location getLocationByName(String name) {
     	Location l;
-    	Enumeration en =_locationHashTable.elements();
+    	Enumeration<Location> en =_locationHashTable.elements();
     	for (int i = 0; i < _locationHashTable.size(); i++){
-    		l = (Location)en.nextElement();
+    		l = en.nextElement();
     		if (l.getName().equals(name))
     			return l;
       	}
@@ -101,7 +101,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
  
     /**
-     * Finds an exsisting location or creates a new location if needed
+     * Finds an existing location or creates a new location if needed
      * requires location's name creates a unique id for this location
      * @param name
      * 
@@ -223,10 +223,10 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     private List<String> getList() {
         String[] arr = new String[_locationHashTable.size()];
         List<String> out = new ArrayList<String>();
-        Enumeration en = _locationHashTable.keys();
+        Enumeration<String> en = _locationHashTable.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         jmri.util.StringUtil.sort(arr);
@@ -237,9 +237,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	box.addItem("");
-		List locs = getLocationsByNameList();
+		List<String> locs = getLocationsByNameList();
 		for (int i = 0; i < locs.size(); i++){
-			String locId = (String)locs.get(i);
+			String locId = locs.get(i);
 			Location l = getLocationById(locId);
 			box.addItem(l);
 		}
@@ -249,25 +249,25 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-		List locs = getLocationsByNameList();
+		List<String> locs = getLocationsByNameList();
 		for (int i = 0; i < locs.size(); i++){
-			String locId = (String)locs.get(i);
+			String locId = locs.get(i);
 			Location l = getLocationById(locId);
 			box.addItem(l);
 		}
     }
     
     public void replaceType(String oldType, String newType){
-		List locs = getLocationsByIdList();
+		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
-			Location loc = getLocationById((String)locs.get(i));
+			Location loc = getLocationById(locs.get(i));
 			if (loc.acceptsTypeName(oldType)){
 				loc.deleteTypeName(oldType);
 				loc.addTypeName(newType);
 				// now adjust any track locations
-				List tracks = loc.getTracksByNameList(null);
+				List<String> tracks = loc.getTracksByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
-					Track track = loc.getTrackById((String)tracks.get(j));
+					Track track = loc.getTrackById(tracks.get(j));
 					if (track.acceptsTypeName(oldType)){
 						track.deleteTypeName(oldType);
 						track.addTypeName(newType);
@@ -278,13 +278,13 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
 	public void replaceRoad(String oldRoad, String newRoad){
-		List locs = getLocationsByIdList();
+		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
-			Location loc = getLocationById((String)locs.get(i));
+			Location loc = getLocationById(locs.get(i));
 			// now adjust any track locations
-			List tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTracksByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
-				Track track = loc.getTrackById((String)tracks.get(j));
+				Track track = loc.getTrackById(tracks.get(j));
 				if(track.containsRoadName(oldRoad)){
 					track.deleteRoadName(oldRoad);
 					if(newRoad != null)

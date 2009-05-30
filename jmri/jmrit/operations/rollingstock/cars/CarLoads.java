@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CarLoads implements java.beans.PropertyChangeListener {
 	
@@ -65,7 +65,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     public JComboBox getSelectComboBox(String type){
     	JComboBox box = new JComboBox();
     	box.addItem("");
-		List loads = getNames(type);
+		List<String> loads = getNames(type);
 		for (int i=0; i<loads.size(); i++){
 			box.addItem(loads.get(i));
 		}
@@ -83,7 +83,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     		box.addItem(getDefaultEmptyName());
     		box.addItem(getDefaultLoadName());
     	} else {
-    		List loads = getNames(type);
+    		List<String> loads = getNames(type);
     		for (int i=0; i<loads.size(); i++){
     			box.addItem(loads.get(i));
     		}
@@ -91,7 +91,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     	return box;
     }
     
-    public List getNames(String type){
+    public List<String> getNames(String type){
     	List<String> loads = list.get(type);
     	if (loads == null){
     		addType(type);
@@ -139,7 +139,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     
     public void updateComboBox(String type, JComboBox box) {
     	box.removeAllItems();
-   		List loads = getNames(type);
+   		List<String> loads = getNames(type);
 		for (int i=0; i<loads.size(); i++){
 			box.addItem(loads.get(i));
 		}

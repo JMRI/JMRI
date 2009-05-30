@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -68,12 +68,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++){
 //			log.debug("location ids: " + (String) sysList.get(i));
-			manager.getLocationById((String) sysList.get(i))
+			manager.getLocationById(sysList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
 
-	List sysList = null;
+	List<String> sysList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -145,7 +145,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		focusLef = false;
     		lef.requestFocus();
     	}
-    	String locId = (String)sysList.get(row);
+    	String locId = sysList.get(row);
     	Location l = manager.getLocationById(locId);
         switch (col) {
         case IDCOLUMN: return l.getId();
@@ -176,7 +176,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	if (lef != null)
     		lef.dispose();
     	lef = new LocationEditFrame();
-    	Location loc = manager.getLocationById((String)sysList.get(row));
+    	Location loc = manager.getLocationById(sysList.get(row));
      	lef.setTitle(rb.getString("TitleLocationEdit"));
     	lef.initComponents(loc);
     	focusLef = true;
@@ -201,7 +201,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Location l = manager.getLocationById((String) sysList.get(i));
+    			Location l = manager.getLocationById(sysList.get(i));
     			if (l != null)
     				l.removePropertyChangeListener(this);
     		}

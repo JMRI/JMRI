@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -68,12 +68,12 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++){
 //			log.debug("schedule ids: " + (String) sysList.get(i));
-			manager.getScheduleById((String) sysList.get(i))
+			manager.getScheduleById(sysList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
 
-	List sysList = null;
+	List<String> sysList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -143,7 +143,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     		focusSef = false;
     		sef.requestFocus();
     	}
-    	String id = (String)sysList.get(row);
+    	String id = sysList.get(row);
     	Schedule s = manager.getScheduleById(id);
         switch (col) {
         case IDCOLUMN: return s.getId();
@@ -151,7 +151,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case SCH_STATUSCOLUMN: return getScheduleStatus(row);
         case SIDINGSCOLUMN: {
         	JComboBox box = manager.getSidingsByScheduleComboBox(s);
-        	String index = comboSelect.get((String)sysList.get(row));
+        	String index = comboSelect.get(sysList.get(row));
         	if (index != null){
         		box.setSelectedIndex(Integer.parseInt(index));
         	}
@@ -180,7 +180,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Edit schedule");
     	if (sef != null)
     		sef.dispose();
-    	Schedule s = manager.getScheduleById((String)sysList.get(row));
+    	Schedule s = manager.getScheduleById(sysList.get(row));
     	LocationTrackPair ltp = getLocationTrackPair(row);
     	if (ltp == null){
     		log.debug("Need location track pair");
@@ -198,16 +198,16 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     protected Hashtable<String, String> comboSelect = new Hashtable<String, String>();
     private void selectJComboBox (Object value, int row){
-    	String id = (String)sysList.get(row);
+    	String id = sysList.get(row);
     	JComboBox box = (JComboBox)value;
     	comboSelect.put(id, Integer.toString(box.getSelectedIndex()));
     	fireTableRowsUpdated(row, row);
     }
     
     private LocationTrackPair getLocationTrackPair(int row){
-       	Schedule s = manager.getScheduleById((String)sysList.get(row));
+       	Schedule s = manager.getScheduleById(sysList.get(row));
        	JComboBox box = manager.getSidingsByScheduleComboBox(s);
-    	String index = comboSelect.get((String)sysList.get(row));
+    	String index = comboSelect.get(sysList.get(row));
     	LocationTrackPair ltp;
     	if (index != null){
     		ltp = (LocationTrackPair)box.getItemAt(Integer.parseInt(index));
@@ -218,7 +218,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
     
     private String getScheduleStatus(int row){
-    	Schedule sch = manager.getScheduleById((String)sysList.get(row));
+    	Schedule sch = manager.getScheduleById(sysList.get(row));
        	JComboBox box = manager.getSidingsByScheduleComboBox(sch); 
        	for (int i=0; i<box.getItemCount(); i++){
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
@@ -243,7 +243,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Schedule l = manager.getScheduleById((String) sysList.get(i));
+    			Schedule l = manager.getScheduleById(sysList.get(i));
     			if (l != null)
     				l.removePropertyChangeListener(this);
     		}

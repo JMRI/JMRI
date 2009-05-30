@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintTrainAction  extends AbstractAction {
 	
@@ -81,9 +81,9 @@ public class PrintTrainAction  extends AbstractAction {
         	writer.write(s, 0, s.length());
         	Route route = train.getRoute();
         	if (route != null){
-        		List locations = route.getLocationsBySequenceList();
+        		List<String> locations = route.getLocationsBySequenceList();
         		for (int i=0; i<locations.size(); i++){
-        			RouteLocation rl = route.getLocationById((String)locations.get(i));   
+        			RouteLocation rl = route.getLocationById(locations.get(i));   
         			s = "\t" + rl.getName() + newLine;
         			writer.write(s, 0, s.length());		
         		}

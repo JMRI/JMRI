@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class StagingTableModel extends TrackTableModel {
 
@@ -35,7 +35,7 @@ public class StagingTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new StagingEditFrame();
-		String stagingId = (String)tracksList.get(row);
+		String stagingId = tracksList.get(row);
 		Track staging = _location.getTrackById(stagingId);
 		tef.initComponents(_location, staging);
 		tef.setTitle(rb.getString("EditStaging"));

@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -68,7 +68,7 @@ public class LocationManagerXml extends XmlFile {
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
 	        LocationManager manager = LocationManager.instance();
-	        List locationList = manager.getLocationsByIdList();
+	        List<String> locationList = manager.getLocationsByIdList();
 	        
 	        for (int i=0; i<locationList.size(); i++){
 
@@ -76,7 +76,7 @@ public class LocationManagerXml extends XmlFile {
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String locationId = (String)locationList.get(i);
+	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	            String tempComment = loc.getComment();
 	            String xmlComment = new String();
@@ -97,10 +97,10 @@ public class LocationManagerXml extends XmlFile {
 	        // do the same for schedules
 	        
 	        ScheduleManager scheduleManager = ScheduleManager.instance();
-	        List scheduleList = scheduleManager.getSchedulesByIdList();
+	        List<String> scheduleList = scheduleManager.getSchedulesByIdList();
 	        
 	        for (int i=0; i<scheduleList.size(); i++){
-	        	String scheduleId = (String)scheduleList.get(i);
+	        	String scheduleId = scheduleList.get(i);
 	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
 	            String tempComment = sch.getComment();
 	            String xmlComment = new String();
@@ -123,7 +123,7 @@ public class LocationManagerXml extends XmlFile {
 	        root.addContent(values = new Element("locations"));
 	        // add entries
 	        for (int i=0; i<locationList.size(); i++) {
-	        	String locationId = (String)locationList.get(i);
+	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
  	            values.addContent(loc.store());
 	        }
@@ -131,7 +131,7 @@ public class LocationManagerXml extends XmlFile {
 	        root.addContent(values = new Element("schedules"));
 	        // add entries
 	        for (int i=0; i<scheduleList.size(); i++) {
-	        	String scheduleId = (String)scheduleList.get(i);
+	        	String scheduleId = scheduleList.get(i);
 	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
  	            values.addContent(sch.store());
 	        }
@@ -143,7 +143,7 @@ public class LocationManagerXml extends XmlFile {
 	        //Comment and Decoder comment fields, otherwise it can cause problems in
 	        //other parts of the program (e.g. in copying a roster)
 	        for (int i=0; i<locationList.size(); i++){
-	        	String locationId = (String)locationList.get(i);
+	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	            String xmlComment = loc.getComment();
 	            String tempComment = new String();
@@ -161,7 +161,7 @@ public class LocationManagerXml extends XmlFile {
 	        }
 	        
 	        for (int i=0; i<scheduleList.size(); i++){
-	        	String scheduleId = (String)scheduleList.get(i);
+	        	String scheduleId = scheduleList.get(i);
 	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
 	            String xmlComment = sch.getComment();
 	            String tempComment = new String();
@@ -210,7 +210,8 @@ public class LocationManagerXml extends XmlFile {
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    @SuppressWarnings("unchecked")
+	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
     	// suppress rootFromName(name) warning message by checking to see if file exists
     	if (findFile(name) == null) {
     		log.debug(name + " file could not be found");
@@ -233,18 +234,18 @@ public class LocationManagerXml extends XmlFile {
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("locations") != null) {
 
-    		List l = root.getChild("locations").getChildren("location");
+    		List<Element> l = root.getChild("locations").getChildren("location");
     		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
     		for (int i=0; i<l.size(); i++) {
-    			manager.register(new Location((Element)l.get(i)));
+    			manager.register(new Location(l.get(i)));
     		}
 
-    		List locationList = manager.getLocationsByIdList();
+    		List<String> locationList = manager.getLocationsByIdList();
     		//Scan the object to check the Comment and Decoder Comment fields for
     		//any <?p?> processor directives and change them to back \n characters
     		for (int i = 0; i < locationList.size(); i++) {
     			//Get a RosterEntry object for this index
-    			String locationId = (String)locationList.get(i);
+    			String locationId = locationList.get(i);
     			Location loc = manager.getLocationById(locationId);
 
     			//Extract the Comment field and create a new string for output
@@ -276,18 +277,18 @@ public class LocationManagerXml extends XmlFile {
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("schedules") != null) {
 
-    		List l = root.getChild("schedules").getChildren("schedule");
+    		List<Element> l = root.getChild("schedules").getChildren("schedule");
     		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
     		for (int i=0; i<l.size(); i++) {
-    			scheduleManager.register(new Schedule((Element)l.get(i)));
+    			scheduleManager.register(new Schedule(l.get(i)));
     		}
 
-    		List scheduleList = scheduleManager.getSchedulesByIdList();
+    		List<String> scheduleList = scheduleManager.getSchedulesByIdList();
     		//Scan the object to check the Comment and Decoder Comment fields for
     		//any <?p?> processor directives and change them to back \n characters
     		for (int i = 0; i < scheduleList.size(); i++) {
     			//Get a RosterEntry object for this index
-    			String scheduleId = (String)scheduleList.get(i);
+    			String scheduleId = scheduleList.get(i);
     			Schedule sch = scheduleManager.getScheduleById(scheduleId);
 
     			//Extract the Comment field and create a new string for output

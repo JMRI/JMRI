@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -29,7 +29,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     public static final int SORTBYID = 2;
 	
 	protected Location _location;
-	protected List tracksList = new ArrayList();
+	protected List<String> tracksList = new ArrayList<String>();
 	protected int _sort = SORTBYNAME;
 	protected String _trackType = "";
 	
@@ -69,8 +69,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 			tracksList = _location.getTracksByNameList(_trackType);
 		// and add them back in
 		for (int i = 0; i < tracksList.size(); i++){
-			log.debug("tracks ids: " + (String) tracksList.get(i));
-			_location.getTrackById((String) tracksList.get(i))
+			log.debug("tracks ids: " + tracksList.get(i));
+			_location.getTrackById(tracksList.get(i))
 					.addPropertyChangeListener(this);
 		}
 	}
@@ -156,7 +156,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     		focusEditFrame = false;
     		tef.requestFocus();
     	}
-    	String tracksId = (String)tracksList.get(row);
+    	String tracksId = tracksList.get(row);
     	Track track = _location.getTrackById(tracksId);
         switch (col) {
         case IDCOLUMN: return track.getId();
@@ -191,7 +191,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     		tef.dispose();
     	}
     	tef = new TrackEditFrame();
-		String tracksId = (String)tracksList.get(row);
+		String tracksId = tracksList.get(row);
     	Track tracks = _location.getTrackById(tracksId);
     	tef.initComponents(_location, tracks);
     	tef.setTitle(rb.getString("EditTrack"));
@@ -207,7 +207,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     protected void removePropertyChangeTracks() {
     	for (int i = 0; i < tracksList.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		Track y = _location.getTrackById((String) tracksList.get(i));
+    		Track y = _location.getTrackById(tracksList.get(i));
     		if (y != null)
     			y.removePropertyChangeListener(this);
     	}

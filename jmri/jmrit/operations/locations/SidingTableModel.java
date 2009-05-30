@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of sidings used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class SidingTableModel extends TrackTableModel {
 
@@ -35,7 +35,7 @@ public class SidingTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new SidingEditFrame();
-		String sidingId = (String)tracksList.get(row);
+		String sidingId = tracksList.get(row);
 		Track siding = _location.getTrackById(sidingId);
 		tef.initComponents(_location, siding);
 		tef.setTitle(rb.getString("EditSiding"));

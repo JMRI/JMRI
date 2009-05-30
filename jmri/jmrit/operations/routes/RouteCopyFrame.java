@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -118,7 +118,7 @@ public class RouteCopyFrame extends OperationsFrame {
 					int y = i-1;
 					if (y<0)
 						y=0;
-					copyRouteLocation(oldRoute, newRoute, (String)oldRouteLocations.get(i), (String)oldRouteLocations.get(y),invertCheckBox.isSelected());
+					copyRouteLocation(oldRoute, newRoute, oldRouteLocations.get(i), oldRouteLocations.get(y),invertCheckBox.isSelected());
 				}
 			}
 			RouteEditFrame f = new RouteEditFrame();

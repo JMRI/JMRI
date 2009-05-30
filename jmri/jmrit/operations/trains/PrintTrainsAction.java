@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintTrainsAction  extends AbstractAction {
 	
@@ -62,7 +62,7 @@ public class PrintTrainsAction  extends AbstractAction {
   
         // Loop through the Roster, printing as needed
        
-        List trains = panel.getSortByList();
+        List<String> trains = panel.getSortByList();
         
         try {
         	String s = rb.getString("Name") + "\t\t"
@@ -74,7 +74,7 @@ public class PrintTrainsAction  extends AbstractAction {
 					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<trains.size(); i++){
-        		Train train = manager.getTrainById((String)trains.get(i));
+        		Train train = manager.getTrainById(trains.get(i));
         		String name = train.getName();
         		name = truncate(name);
            		String desc = train.getDescription();
