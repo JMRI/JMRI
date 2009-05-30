@@ -12,9 +12,9 @@ import jmri.jmrix.srcp.SRCPTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class SRCPTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public SRCPTurnoutManagerXml() {
         super();

@@ -12,9 +12,9 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class RpsSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
+public class RpsSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public RpsSensorManagerXml() {
         super();

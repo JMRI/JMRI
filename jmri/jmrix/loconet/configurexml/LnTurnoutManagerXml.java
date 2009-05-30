@@ -11,9 +11,9 @@ import jmri.jmrix.loconet.LnTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
-public class LnTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public LnTurnoutManagerXml() {
         super();

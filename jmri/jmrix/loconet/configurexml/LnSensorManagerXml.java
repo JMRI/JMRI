@@ -12,9 +12,9 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
-public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
+public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public LnSensorManagerXml() {
         super();

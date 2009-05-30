@@ -10,9 +10,9 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class InternalTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class InternalTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public InternalTurnoutManagerXml() {
         super();

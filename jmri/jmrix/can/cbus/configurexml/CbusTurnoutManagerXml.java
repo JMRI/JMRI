@@ -11,10 +11,10 @@ import jmri.jmrix.can.cbus.CbusTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.3.1
  */
-public class CbusTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public CbusTurnoutManagerXml() {
         super();

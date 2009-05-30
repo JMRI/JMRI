@@ -12,9 +12,9 @@ import jmri.jmrix.maple.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public SerialTurnoutManagerXml() {
         super();

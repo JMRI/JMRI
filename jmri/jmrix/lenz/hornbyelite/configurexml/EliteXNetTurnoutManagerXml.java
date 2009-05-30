@@ -12,9 +12,9 @@ import jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager;
  * provides a load method here.
  *
  * @author Paul Bender Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class EliteXNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public EliteXNetTurnoutManagerXml() {
         super();

@@ -11,9 +11,9 @@ import jmri.jmrix.sprog.SprogTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
-public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public SprogTurnoutManagerXml() {
         super();

@@ -10,9 +10,9 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
+public class InternalSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public InternalSensorManagerXml() {
         super();

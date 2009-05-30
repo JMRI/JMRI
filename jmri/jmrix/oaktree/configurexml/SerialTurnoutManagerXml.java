@@ -11,9 +11,9 @@ import jmri.jmrix.oaktree.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public SerialTurnoutManagerXml() {
         super();

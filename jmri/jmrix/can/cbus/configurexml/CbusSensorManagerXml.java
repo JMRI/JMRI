@@ -12,10 +12,10 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.3.1
  */
-public class CbusSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
+public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public CbusSensorManagerXml() {
         super();

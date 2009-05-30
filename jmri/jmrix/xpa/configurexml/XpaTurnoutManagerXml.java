@@ -11,9 +11,9 @@ import jmri.jmrix.xpa.XpaTurnoutManager;
  * provides a load method here.
  *
  * @author Paul Bender Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class XpaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public XpaTurnoutManagerXml() {
         super();

@@ -12,9 +12,9 @@ import jmri.jmrix.maple.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class SerialSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
+public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public SerialSensorManagerXml() {
         super();

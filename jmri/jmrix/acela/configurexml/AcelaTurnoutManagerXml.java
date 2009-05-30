@@ -12,9 +12,9 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class AcelaTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public AcelaTurnoutManagerXml() {
         super();
