@@ -39,7 +39,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.Memory
  * @see             jmri.managers.AbstractMemoryManager
  * @see             jmri.InstanceManager
@@ -109,7 +109,7 @@ public interface MemoryManager extends Manager {
     /**
      * Get a list of all Memory objects' system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
 }
 

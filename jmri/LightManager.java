@@ -26,7 +26,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public interface LightManager extends Manager {
 
@@ -132,7 +132,7 @@ public interface LightManager extends Manager {
     /**
      * Get a list of all Light system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
     /**
      * Activate the control mechanism for each Light controlled by

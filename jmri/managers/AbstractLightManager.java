@@ -11,7 +11,7 @@ import jmri.implementation.AbstractManager;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -155,10 +155,10 @@ public abstract class AbstractLightManager extends AbstractManager
      */
     public void activateAllLights() {
         // Set up an iterator over all Lights contained in this manager
-        java.util.Iterator iter =
+        java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             if (systemName==null) { 
                 log.error("System name null during activation of Lights");
             }

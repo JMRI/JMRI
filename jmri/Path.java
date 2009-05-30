@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Path  {
 
@@ -102,7 +102,7 @@ public class Path  {
 		if (_beans.size()==0) return true;
         // check the status of all BeanSettings 
 		for (int i = 0;i<_beans.size();i++) {
-			if (!((BeanSetting)_beans.get(i)).check()) 
+			if (!(_beans.get(i)).check()) 
 				return false;
 		}
 		return true;

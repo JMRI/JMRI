@@ -2,7 +2,6 @@
 
 package jmri;
 
-import java.util.List;
 import jmri.implementation.AbstractManager;
 
 /**
@@ -30,7 +29,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

@@ -2,12 +2,6 @@
 
 package jmri;
 
-import java.util.Enumeration;
-
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
 
 /**
  * Execute a specific task before the program terminates.
@@ -16,7 +10,7 @@ import java.util.List;
  * case a later task aborts the shutdown.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public interface ShutDownTask {
 

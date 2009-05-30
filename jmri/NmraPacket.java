@@ -49,7 +49,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class NmraPacket {
 
@@ -69,13 +69,13 @@ public class NmraPacket {
             retVal = new byte[4];
             retVal[0] = (byte) (192+((address/256)&0x3F));
             retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
+            retVal[2] = arg1;
             retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
         } else {
             // short address form
             retVal = new byte[3];
             retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
+            retVal[1] = arg1;
             retVal[2] = (byte) (retVal[0]^retVal[1]);
         }
         return retVal;
@@ -97,15 +97,15 @@ public class NmraPacket {
             retVal = new byte[5];
             retVal[0] = (byte) (192+((address/256)&0x3F));
             retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
+            retVal[2] = arg1;
+            retVal[3] = arg2;
             retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
         } else {
             // short address form
             retVal = new byte[4];
             retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
+            retVal[1] = arg1;
+            retVal[2] = arg2;
             retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
         }
         return retVal;
@@ -127,17 +127,17 @@ public class NmraPacket {
             retVal = new byte[6];
             retVal[0] = (byte) (192+((address/256)&0x3F));
             retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) arg3;
+            retVal[2] = arg1;
+            retVal[3] = arg2;
+            retVal[4] = arg3;
             retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
         } else {
             // short address form
             retVal = new byte[5];
             retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) arg3;
+            retVal[1] = arg1;
+            retVal[2] = arg2;
+            retVal[3] = arg3;
             retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
         }
         return retVal;
@@ -159,19 +159,19 @@ public class NmraPacket {
             retVal = new byte[7];
             retVal[0] = (byte) (192+((address/256)&0x3F));
             retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) arg3;
-            retVal[5] = (byte) arg4;
+            retVal[2] = arg1;
+            retVal[3] = arg2;
+            retVal[4] = arg3;
+            retVal[5] = arg4;
             retVal[6] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]^retVal[5]);
         } else {
             // short address form
             retVal = new byte[6];
             retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) arg3;
-            retVal[4] = (byte) arg4;
+            retVal[1] = arg1;
+            retVal[2] = arg2;
+            retVal[3] = arg3;
+            retVal[4] = arg4;
             retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
         }
         return retVal;

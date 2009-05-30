@@ -35,7 +35,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -114,12 +114,12 @@ public class SectionManager extends AbstractManager
 	 * Validates all Sections 
 	 */
 	public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
-		List list = getSystemNameList();
+		List<String> list = getSystemNameList();
 		int numSections = 0;
 		int numErrors = 0;
 		if (list.size()<=0) return -2;
 		for (int i = 0; i<list.size(); i++) {
-			String s = getBySystemName((String)list.get(i)).validate(lePanel);
+			String s = getBySystemName(list.get(i)).validate(lePanel);
 			if (!s.equals("")) {
 				log.error(s);
 				numErrors ++;
@@ -140,12 +140,12 @@ public class SectionManager extends AbstractManager
 	 */
 	public int setupDirectionSensors(LayoutEditor lePanel) {
 		if (lePanel==null) return -1;
-		List list = getSystemNameList();
+		List<String> list = getSystemNameList();
 		int numSections = 0;
 		int numErrors = 0;
 		if (list.size()<=0) return -2;
 		for (int i = 0; i<list.size(); i++) {
-			int errors = getBySystemName((String)list.get(i)).placeDirectionSensors(lePanel);
+			int errors = getBySystemName(list.get(i)).placeDirectionSensors(lePanel);
 			numErrors = numErrors + errors;
 			numSections ++;
 		}
@@ -164,12 +164,12 @@ public class SectionManager extends AbstractManager
 	public int removeDirectionSensorsFromSSL(LayoutEditor lePanel) {
 		if (lePanel==null) return -1;
 		jmri.jmrit.display.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
-		List list = getSystemNameList();
+		List<String> list = getSystemNameList();
 		if (list.size()<=0) return -2;
 		int numErrors = 0;
-		ArrayList sensorList = new ArrayList<String>();
+		ArrayList<String> sensorList = new ArrayList<String>();
 		for (int i = 0; i<list.size(); i++) {
-			Section s = getBySystemName((String)list.get(i));
+			Section s = getBySystemName(list.get(i));
 			String name = s.getReverseBlockingSensorName();
 			if ( (name!=null) && (!name.equals("")) ) 
 				sensorList.add(name);
@@ -178,9 +178,9 @@ public class SectionManager extends AbstractManager
 				sensorList.add(name);
 		}
 		jmri.SignalHeadManager shManager = InstanceManager.signalHeadManagerInstance();
-		List signalList = shManager.getSystemNameList();
+		List<String> signalList = shManager.getSystemNameList();
 		for (int j=0; j<signalList.size(); j++) {
-			SignalHead sh = shManager.getBySystemName((String)signalList.get(j));
+			SignalHead sh = shManager.getBySystemName(signalList.get(j));
 			if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList,	sh)) numErrors ++;	
 		}
 		return numErrors;

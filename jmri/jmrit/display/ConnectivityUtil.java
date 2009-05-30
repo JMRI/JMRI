@@ -5,15 +5,11 @@ package jmri.jmrit.display;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
-import javax.swing.*;
-
 import jmri.Block;
 import jmri.InstanceManager;
-import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.EntryPoint;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.blockboss.BlockBossLogic;
 
 /**
@@ -37,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class ConnectivityUtil 
@@ -75,16 +71,16 @@ public class ConnectivityUtil
 	 *   and other settings set to CLOSED.
 	 * Returns an empty list if a connectivity anamoly is discovered--specified blocks are not connected.
 	 */
-	private ArrayList companion = null;
+	private ArrayList<Integer> companion = null;
 	private TrackSegment tr = null;
 	private int prevConnectType = 0;
 	private	Object prevConnectObject = null;
 	LayoutBlock lb = null;
 	LayoutBlock nlb = null;
 	LayoutBlock plb = null;
-	public ArrayList getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
-		ArrayList list = new ArrayList();
-		companion = new ArrayList();
+	public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
+		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
+		companion = new ArrayList<Integer>();
 		// initialize
 		lb = layoutBlockManager.getByUserName(block.getUserName());
 		if (prevBlock!=null) {
@@ -95,9 +91,9 @@ public class ConnectivityUtil
 		}
 		if ( (plb==null) || (nlb==null) ) {
 			// special search with partial information - not as good, order not assured
-			ArrayList allTurnouts = getAllTurnoutsThisBlock(lb);
+			ArrayList<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(lb);
 			for (int i = 0; i<allTurnouts.size(); i++) {
-				LayoutTurnout ltx = (LayoutTurnout)allTurnouts.get(i);
+				LayoutTurnout ltx = allTurnouts.get(i);
 				list.add(ltx);
 				int tTyp = ltx.getTurnoutType();
 				switch (tTyp) {
@@ -208,12 +204,12 @@ public class ConnectivityUtil
 			return list;
 		}
 			
-		ArrayList cList = auxTools.getConnectivityList(lb);
+		ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(lb);
 		int cType = 0;
 		// initialize the connectivity search, processing a turnout in this block if it is present
 		boolean notFound = true;
 		for (int i=0; (i<cList.size()) && notFound; i++) {
-			LayoutConnectivity lc = (LayoutConnectivity)cList.get(i);
+			LayoutConnectivity lc = cList.get(i);
 			if ( (lc.getXover() != null) && ( ((lc.getBlock1()==lb) && (lc.getBlock2()==plb)) || 
 						((lc.getBlock1()==plb) && (lc.getBlock2()==lb)) ) ) {
 				// have a block boundary in a crossover turnout, add turnout to the List
@@ -222,7 +218,7 @@ public class ConnectivityUtil
 				list.add(xt);
 				// determine setting and setup track segment if there is one
 				tr = null;
-				prevConnectObject = (Object)xt;
+				prevConnectObject = xt;
 				switch (lc.getXoverBoundaryType()) {
 					case LayoutConnectivity.XOVER_BOUNDARY_AB:
 						setting = Turnout.CLOSED;
@@ -275,7 +271,7 @@ public class ConnectivityUtil
 						}
 						break;
 				}
-				companion.add((Object) new Integer(setting));
+				companion.add(new Integer(setting));
 				notFound = false;
 			} 
 			else if ( (lc.getBlock1()==lb) && (lc.getBlock2()==plb) ) {
@@ -283,7 +279,7 @@ public class ConnectivityUtil
 				tr = lc.getTrackSegment();
 				if (lc.getConnectedType() == LayoutEditor.TRACK) {
 					prevConnectType = LayoutEditor.POS_POINT;
-					prevConnectObject = (Object)lc.getAnchor();					
+					prevConnectObject = lc.getAnchor();					
 				}
 				else {
 					prevConnectType = lc.getConnectedType();
@@ -297,7 +293,7 @@ public class ConnectivityUtil
 				if (cType == LayoutEditor.TRACK) {
 					tr = (TrackSegment)lc.getConnectedObject();
 					prevConnectType = LayoutEditor.POS_POINT;
-					prevConnectObject = (Object)lc.getAnchor();
+					prevConnectObject = lc.getAnchor();
 				}
 				// check for a level crossing
 				else if ( (cType>=LayoutEditor.LEVEL_XING_A) && (cType<=LayoutEditor.LEVEL_XING_D) ) {
@@ -308,7 +304,7 @@ public class ConnectivityUtil
 				// check for turnout
 				else if ( (cType>=LayoutEditor.TURNOUT_A) && (cType<=LayoutEditor.TURNOUT_D) ) {
 					// add turnout to list
-					list.add(lc.getConnectedObject());
+					list.add((LayoutTurnout)lc.getConnectedObject());
 					companion.add(getTurnoutSetting((LayoutTurnout)lc.getConnectedObject(), cType));
 				}
 				notFound = false;
@@ -400,19 +396,19 @@ public class ConnectivityUtil
 							}
 							else if (lt.getLayoutBlockB()==nlb) {
 								// exits Block at B
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockC()==nlb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// exits Block at C, either Double or RH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockB()==lb) {
 								// block continues at B
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectB();
 								prevConnectType = LayoutEditor.TURNOUT_B;
@@ -420,7 +416,7 @@ public class ConnectivityUtil
 							}
 							else if ( (lt.getLayoutBlockC()==lb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// block continues at C, either Double or RH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectC();
 								prevConnectType = LayoutEditor.TURNOUT_C;
@@ -439,19 +435,19 @@ public class ConnectivityUtil
 							}
 							else if (lt.getLayoutBlock()==nlb) {
 								// exits Block at A
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockD()==nlb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// exits Block at D, either Double or LH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlock()==lb) {
 								// block continues at A
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
@@ -459,7 +455,7 @@ public class ConnectivityUtil
 							}
 							else if ( (lt.getLayoutBlockD()==lb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// block continues at D, either Double or LH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectD();
 								prevConnectType = LayoutEditor.TURNOUT_D;
@@ -478,19 +474,19 @@ public class ConnectivityUtil
 							}
 							else if (lt.getLayoutBlockD()==nlb) {
 								// exits Block at D
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlock()==nlb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// exits Block at A, either Double or RH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockD()==lb) {
 								// block continues at D
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectD();
 								prevConnectType = LayoutEditor.TURNOUT_D;
@@ -498,7 +494,7 @@ public class ConnectivityUtil
 							}
 							else if ( (lt.getLayoutBlock()==lb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// block continues at A, either Double or RH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
@@ -517,19 +513,19 @@ public class ConnectivityUtil
 							}
 							else if (lt.getLayoutBlockC()==nlb) {
 								// exits Block at C
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockB()==nlb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// exits Block at B, either Double or LH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockC()==lb) {
 								// block continues at C
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectC();
 								prevConnectType = LayoutEditor.TURNOUT_C;
@@ -537,7 +533,7 @@ public class ConnectivityUtil
 							}
 							else if ( (lt.getLayoutBlockB()==lb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// block continues at B, either Double or LH
-								list.add(cObject);
+								list.add((LayoutTurnout)cObject);
 								companion.add( new Integer(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectB();
 								prevConnectType = LayoutEditor.TURNOUT_B;
@@ -560,7 +556,7 @@ public class ConnectivityUtil
 					}
 					else {
 						// turnout is inside current block, add it to the list 
-						list.add(cObject);
+						list.add((LayoutTurnout)cObject);
 						companion.add(getTurnoutSetting(lt, cType));
 					}
 				}
@@ -573,17 +569,17 @@ public class ConnectivityUtil
 	 *  the Block specified in 'getTurnoutList'.  Settings and Turnouts are in sync by position in 
 	 *  the returned list.
 	 */
-	public ArrayList getTurnoutSettingList() { return companion; }
+	public ArrayList<Integer> getTurnoutSettingList() { return companion; }
 	
 	/** 
 	 * Returns a list of all Blocks connected to a specified Block
 	 */
-	public ArrayList getConnectedBlocks(Block block) {	
-		ArrayList list = new ArrayList();
+	public ArrayList<Block> getConnectedBlocks(Block block) {	
+		ArrayList<Block> list = new ArrayList<Block>();
 		lb = layoutBlockManager.getByUserName(block.getUserName());
-		ArrayList cList = auxTools.getConnectivityList(lb);
+		ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(lb);
 		for (int i = 0; i<cList.size(); i++) {
-			LayoutConnectivity lc = (LayoutConnectivity)cList.get(i);
+			LayoutConnectivity lc = cList.get(i);
 			if (lc.getBlock1().getBlock()==block) {
 				list.add((lc.getBlock2()).getBlock());
 			}
@@ -597,15 +593,15 @@ public class ConnectivityUtil
 	/** 
 	 * Returns a list of all anchor point boundaries involving the specified Block
 	 */
-	public ArrayList getAnchorBoundariesThisBlock(Block block) {	
-		ArrayList list = new ArrayList();
+	public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {	
+		ArrayList<PositionablePoint> list = new ArrayList<PositionablePoint>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		for (int i = 0; i<layoutEditor.pointList.size(); i++) {
 			PositionablePoint p = (PositionablePoint)layoutEditor.pointList.get(i);
 			if (p.getConnect2()!=null) {
 				if ( (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) ||
 					(((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) ) {
-					list.add((Object)p);
+					list.add(p);
 				}
 			}
 		}
@@ -617,8 +613,8 @@ public class ConnectivityUtil
 	 *		four connections and all blocks must be assigned.  If any connection is missing, or if a block assignmnet 
 	 *		is missing, an error message is printed and the level crossing is not added to the list.
 	 */
-	public ArrayList getLevelCrossingsThisBlock(Block block) {	
-		ArrayList list = new ArrayList();
+	public ArrayList<LevelXing> getLevelCrossingsThisBlock(Block block) {	
+		ArrayList<LevelXing> list = new ArrayList<LevelXing>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		for (int i = 0; i<layoutEditor.xingList.size(); i++) {
 			LevelXing x = (LevelXing)layoutEditor.xingList.get(i);
@@ -638,7 +634,7 @@ public class ConnectivityUtil
 						(x.getConnectC()!=null) && (((TrackSegment)x.getConnectC()).getLayoutBlock()!=null) &&				
 						(x.getConnectD()!=null) && (((TrackSegment)x.getConnectD()).getLayoutBlock()!=null) &&
 						(x.getLayoutBlockAC()!=null) && (x.getLayoutBlockBD()!=null) ) {				
-					list.add((Object)x);
+					list.add(x);
 				}
 				else {
 					log.error("Missing connection or block assignment at Level Crossing in Block "+block.getUserName());
@@ -651,22 +647,22 @@ public class ConnectivityUtil
 	/** 
 	 * Returns a list of all layout turnouts involving the specified Block
 	 */
-	public ArrayList getLayoutTurnoutsThisBlock(Block block) {	
-		ArrayList list = new ArrayList();
+	public ArrayList<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {	
+		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		String lBlockName = block.getUserName();
 		for (int i = 0; i<layoutEditor.turnoutList.size(); i++) {
 			LayoutTurnout t = (LayoutTurnout)layoutEditor.turnoutList.get(i);
 			if ( (t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName)) || 
-					(t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName)) ) list.add((Object)t);
+					(t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName)) ) list.add(t);
 			else if ( (t.getConnectA()!=null) && (((TrackSegment)t.getConnectA()).getLayoutBlock()==lBlock) ) 
-				list.add((Object)t);
+				list.add(t);
 			else if ( (t.getConnectB()!=null) && (((TrackSegment)t.getConnectB()).getLayoutBlock()==lBlock) ) 
-				list.add((Object)t);
+				list.add(t);
 			else if ( (t.getConnectC()!=null) && (((TrackSegment)t.getConnectC()).getLayoutBlock()==lBlock) ) 
-				list.add((Object)t);
+				list.add(t);
 			else if ( (t.getConnectD()!=null) && (((TrackSegment)t.getConnectD()).getLayoutBlock()==lBlock) ) 
-				list.add((Object)t);
+				list.add(t);
 		}
 // debugging code - comment out when not debugging something involving this method
 //		String txt = "Turnouts for Block "+block.getUserName()+" - ";
@@ -823,18 +819,18 @@ public class ConnectivityUtil
 	 *   If no match is found, UNKNOWN is returned, indicating that the block boundary is internal to the 
 	 *		Section.
 	 */
-	public int getDirectionFromAnchor(ArrayList mForwardEntryPoints, ArrayList mReverseEntryPoints, 
+	public int getDirectionFromAnchor(ArrayList<EntryPoint> mForwardEntryPoints, ArrayList<EntryPoint> mReverseEntryPoints, 
 												PositionablePoint p) {
 		Block block1 = p.getConnect1().getLayoutBlock().getBlock();
 		Block block2 = p.getConnect2().getLayoutBlock().getBlock();
 		for (int i = 0; i<mForwardEntryPoints.size(); i++) {
-			EntryPoint ep = (EntryPoint)mForwardEntryPoints.get(i);
+			EntryPoint ep = mForwardEntryPoints.get(i);
 			if ( ((ep.getBlock()==block1) && (ep.getFromBlock()==block2)) ||
 					((ep.getBlock()==block2) && (ep.getFromBlock()==block1)) )
 				return EntryPoint.FORWARD;
 		}
 		for (int j = 0; j<mReverseEntryPoints.size(); j++) {
-			EntryPoint ep = (EntryPoint)mReverseEntryPoints.get(j);
+			EntryPoint ep = mReverseEntryPoints.get(j);
 			if ( ((ep.getBlock()==block1) && (ep.getFromBlock()==block2)) ||
 					((ep.getBlock()==block2) && (ep.getFromBlock()==block1)) )
 				return EntryPoint.REVERSE;
@@ -1009,7 +1005,7 @@ public class ConnectivityUtil
 	 * Returns 'false' if an error was found, and issues a message to the error log.
 	 * Returns 'true' if no error, whether any sensors were found or not.
 	 */
-	public boolean removeSensorsFromSignalHeadLogic(ArrayList names, SignalHead sh) {
+	public boolean removeSensorsFromSignalHeadLogic(ArrayList<String> names, SignalHead sh) {
 		if (sh==null) {
 			log.error("Null signal head on entry to removeSensorsFromSignalHeadLogic");
 			return false;
@@ -1024,7 +1020,7 @@ public class ConnectivityUtil
 			return false;
 		}
 		for (int i = 0; i<names.size(); i++) {
-			String name = (String)names.get(i);
+			String name = names.get(i);
 			if ( (bbLogic.getSensor1()!=null) && (bbLogic.getSensor1()).equals(name) )
 				bbLogic.setSensor1(null);
 			if ( (bbLogic.getSensor2()!=null) && (bbLogic.getSensor2()).equals(name) ) 
@@ -1522,8 +1518,8 @@ public class ConnectivityUtil
 	 * Initializes the setting (as an object), sets the new track segment (if in Block), and sets the
 	 *    prevConnectType. 
 	 */
-	private Object getTurnoutSetting(LayoutTurnout lt, int cType) {
-		prevConnectObject = (Object)lt;
+	private Integer getTurnoutSetting(LayoutTurnout lt, int cType) {
+		prevConnectObject = lt;
 		int setting = Turnout.THROWN;
 		switch (cType) {
 			case LayoutEditor.TURNOUT_A:
@@ -1575,7 +1571,7 @@ public class ConnectivityUtil
 			if (setting == Turnout.THROWN) setting = Turnout.CLOSED;
 			else if (setting == Turnout.CLOSED) setting = Turnout.THROWN;
 		}
-		return ((Object) new Integer(setting));
+		return (new Integer(setting));
 	}
 	private void setupOpposingTrackSegment(LevelXing x, int cType) {
 		switch (cType) {
@@ -1602,16 +1598,16 @@ public class ConnectivityUtil
 		}
 		else {
 			// track segment is in this block
-			prevConnectObject = (Object)x;
+			prevConnectObject = x;
 		}
 	}
-	public ArrayList getAllTurnoutsThisBlock(LayoutBlock lb) {
-		ArrayList list = new ArrayList();
+	public ArrayList<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock lb) {
+		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
 		for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
 			LayoutTurnout lt = (LayoutTurnout)layoutEditor.turnoutList.get(i);
 			if ( (lt.getLayoutBlock()==lb) || (lt.getLayoutBlockB()==lb) ||
 					(lt.getLayoutBlockC()==lb) || (lt.getLayoutBlockD()==lb) ) {
-				list.add((Object)lt);
+				list.add(lt);
 			}		
 		}		
 		return list;

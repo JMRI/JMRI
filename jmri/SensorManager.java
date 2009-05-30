@@ -21,7 +21,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public interface SensorManager extends Manager {
 
@@ -77,7 +77,7 @@ public interface SensorManager extends Manager {
     public Sensor getByUserName(String s);
     public Sensor getBySystemName(String s);
 
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 	
     /**
      * Requests status of all layout sensors under this Sensor Manager.

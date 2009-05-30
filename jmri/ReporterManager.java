@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @see             jmri.Reporter
  * @see             jmri.InstanceManager
  */
@@ -106,7 +106,7 @@ public interface ReporterManager extends Manager {
     /**
      * Get a list of all Reporter's system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
 }
 

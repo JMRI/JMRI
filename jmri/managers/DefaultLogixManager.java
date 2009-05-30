@@ -18,7 +18,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -82,11 +82,11 @@ public class DefaultLogixManager extends AbstractManager
 	 */
 	public void activateAllLogixs() {
 		// iterate thru all Logixs that exist
-		java.util.Iterator iter =
+		java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
 		while (iter.hasNext()) {
 			// get the next Logix
-			String sysName = (String)iter.next();
+			String sysName = iter.next();
 			if (sysName==null) {
 				log.error("System name null when activating Logixs");
 				break;

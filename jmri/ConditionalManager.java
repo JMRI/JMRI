@@ -24,7 +24,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public interface ConditionalManager extends Manager {
 
@@ -68,7 +68,7 @@ public interface ConditionalManager extends Manager {
 	/**
 	 * Get a list of all Conditional system names with the specified Logix parent
 	 */
-	public List getSystemNameListForLogix(Logix x);
+	public List<String> getSystemNameListForLogix(Logix x);
 	
     /** 
      * Delete Conditional by removing it from 

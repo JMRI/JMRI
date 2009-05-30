@@ -5,7 +5,7 @@
  *                        DccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $Revision: 1.8 $
+ * @version               $Revision: 1.9 $
  */
 
 
@@ -19,13 +19,13 @@ import jmri.ConsistListener;
 
 public class DccConsistManager implements ConsistManager{
 
-	private Hashtable ConsistTable = null;
+	private Hashtable<DccLocoAddress, DccConsist> ConsistTable = null;
 
-	private ArrayList ConsistList = null;
+	private ArrayList<DccLocoAddress> ConsistList = null;
 
 	public DccConsistManager(){
-	      ConsistTable = new Hashtable();
-	      ConsistList = new ArrayList();
+	      ConsistTable = new Hashtable<DccLocoAddress, DccConsist>();
+	      ConsistList = new ArrayList<DccLocoAddress>();
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class DccConsistManager implements ConsistManager{
 	 **/
 	public Consist getConsist(DccLocoAddress address){
 		if(ConsistTable.containsKey(address)) {
-			return((Consist)ConsistTable.get(address));
+			return(ConsistTable.get(address));
 		} else {
 			DccConsist consist;
 			consist = new DccConsist(address);
@@ -45,7 +45,7 @@ public class DccConsistManager implements ConsistManager{
 	
 	// remove the old Consist
 	public void delConsist(DccLocoAddress address){
-		((DccConsist)ConsistTable.get(address)).dispose();
+		(ConsistTable.get(address)).dispose();
 		ConsistTable.remove(address);
 		ConsistList.remove(address);
 	}
@@ -66,7 +66,7 @@ public class DccConsistManager implements ConsistManager{
 	/**
   	 *  Return the list of consists we know about.
 	 **/
-	public ArrayList getConsistList() { return ConsistList; }
+	public ArrayList<DccLocoAddress> getConsistList() { return ConsistList; }
 
 	public String decodeErrorCode(int ErrorCode){
 		StringBuffer buffer = new StringBuffer("");

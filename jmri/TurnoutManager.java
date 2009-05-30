@@ -40,7 +40,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  * @see             jmri.Turnout
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -110,7 +110,7 @@ public interface TurnoutManager extends Manager {
     /**
      * Get a list of all Turnouts' system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 	
 	/**
 	 * Get text to be used for the Turnout.CLOSED state in user communication.

@@ -35,7 +35,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutEditorAuxTools 
@@ -67,16 +67,16 @@ public class LayoutEditorAuxTools
 	 * This routine returns an ArrayList of BlockConnectivity objects involving the specified
 	 *		LayoutBlock.
 	 */
-	public ArrayList getConnectivityList(LayoutBlock blk) {
+	public ArrayList<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
 		if (!initialized) initializeBlockConnectivity();
 		if (blockConnectivityChanged) {
 			updateBlockConnectivity();
 		}
-		ArrayList retList = new ArrayList();
+		ArrayList<LayoutConnectivity> retList = new ArrayList<LayoutConnectivity>();
 		for (int i = 0;i<cList.size();i++) {
 			LayoutConnectivity lc = (LayoutConnectivity)cList.get(i);
 			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
-				retList.add((Object)lc);
+				retList.add(lc);
 			}
 		}
 		return (retList);

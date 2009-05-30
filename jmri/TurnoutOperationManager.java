@@ -21,8 +21,8 @@ import java.util.Iterator;
  */
 public class TurnoutOperationManager {
 
-	private HashMap turnoutOperations = new HashMap();
-	private List operationTypes = new LinkedList(); // array of the defining instances of each class, held in order of appearance
+	private HashMap<String,TurnoutOperation> turnoutOperations = new HashMap<String,TurnoutOperation>();
+	private List<TurnoutOperation> operationTypes = new LinkedList<TurnoutOperation>(); // array of the defining instances of each class, held in order of appearance
 	boolean doOperations = false;			// global on/off switch
 	static TurnoutOperationManager theInstance;
 	
@@ -34,8 +34,8 @@ public class TurnoutOperationManager {
     
 	public TurnoutOperation[] getTurnoutOperations() {
 		synchronized (this) {
-			Collection entries = turnoutOperations.values();
-			return (TurnoutOperation[])entries.toArray(new TurnoutOperation[0]); 
+			Collection<TurnoutOperation> entries = turnoutOperations.values();
+			return entries.toArray(new TurnoutOperation[0]); 
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class TurnoutOperationManager {
 			log.warn("null operation or name in addOperation");
 		} else {
 			synchronized (this) {
-				previous = (TurnoutOperation)turnoutOperations.put(op.getName(), op);
+				previous = turnoutOperations.put(op.getName(), op);
 				if (op.isDefinitive()) {
 					updateTypes(op);
 				}
@@ -80,7 +80,7 @@ public class TurnoutOperationManager {
 	 */
 	public TurnoutOperation getOperation(String name) {
 		synchronized (this) {
-			return (TurnoutOperation)turnoutOperations.get(name);
+			return turnoutOperations.get(name);
 		}
 	}
 	
@@ -91,11 +91,11 @@ public class TurnoutOperationManager {
 	 * @param op	new or updated operation
 	 */
 	private void updateTypes(TurnoutOperation op) {
-		LinkedList newTypes = new LinkedList();
-		Iterator iter = operationTypes.iterator();
+		LinkedList<TurnoutOperation> newTypes = new LinkedList<TurnoutOperation>();
+		Iterator<TurnoutOperation> iter = operationTypes.iterator();
 		boolean found = false;
 		while (iter.hasNext()) {
-			Object item = iter.next();
+			TurnoutOperation item = iter.next();
 			if (item.getClass()==op.getClass()) {
 				newTypes.add(op);
 				found = true;
@@ -158,7 +158,7 @@ public class TurnoutOperationManager {
 	 * @param apparentMode	mode(s) to be used when finding a matching operation
 	 */
 	public TurnoutOperation getMatchingOperationAlways(Turnout t, int apparentMode) {
-		Iterator iter = operationTypes.iterator();
+		Iterator<TurnoutOperation> iter = operationTypes.iterator();
                 TurnoutOperation currentMatch = null;
 		/* The loop below always returns the LAST operation 
                    that matches.  In the standard feedback modes, 
@@ -166,7 +166,7 @@ public class TurnoutOperationManager {
                    operation, since it is the last one added to 
                    operationTypes */
                 while (iter.hasNext()) {
-			TurnoutOperation oper = (TurnoutOperation)iter.next();
+			TurnoutOperation oper = iter.next();
 			if (oper.matchFeedbackMode(apparentMode)) {
 				currentMatch=oper;
 			}	
@@ -216,7 +216,7 @@ public class TurnoutOperationManager {
 	 * @return list reduced as described above
 	 */
 	static public String[] concatenateTypeLists(String[] types) {
-		List outTypes = new LinkedList();
+		List<String> outTypes = new LinkedList<String>();
 		boolean noFeedbackWanted = false;
 		for (int i=0; i<types.length; ++i) {
 			if (types[i] == "NoFeedback") {
@@ -230,7 +230,7 @@ public class TurnoutOperationManager {
 		if (noFeedbackWanted) {
 			outTypes.add("NoFeedback");
 		}
-		return (String[])outTypes.toArray(new String[0]);
+		return outTypes.toArray(new String[0]);
 	}
 	
 	/*

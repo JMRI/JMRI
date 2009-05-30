@@ -17,7 +17,7 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -43,8 +43,8 @@ abstract public class AbstractManager
         _tuser.clear();
     }
 
-    protected Hashtable _tsys = new Hashtable();   // stores known Turnout instances by system name
-    protected Hashtable _tuser = new Hashtable();   // stores known Turnout instances by user name
+    protected Hashtable<String, NamedBean> _tsys = new Hashtable<String, NamedBean>();   // stores known Turnout instances by system name
+    protected Hashtable<String, NamedBean> _tuser = new Hashtable<String, NamedBean>();   // stores known Turnout instances by user name
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -112,7 +112,7 @@ abstract public class AbstractManager
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // OldValue is actually system name
             String now = (String) e.getNewValue();
-            Object t = e.getSource();
+            NamedBean t = (NamedBean)e.getSource();
             if (old!= null) _tuser.remove(old);
             if (now!= null) _tuser.put(now, t);
         }
@@ -120,23 +120,23 @@ abstract public class AbstractManager
 
     public String[] getSystemNameArray() {
         String[] arr = new String[_tsys.size()];
-        Enumeration en = _tsys.keys();
+        Enumeration<String> en = _tsys.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         java.util.Arrays.sort(arr);
         return arr;
     }
 
-    public List getSystemNameList() {
+    public List<String> getSystemNameList() {
         String[] arr = new String[_tsys.size()];
-        List out = new ArrayList();
-        Enumeration en = _tsys.keys();
+        List<String> out = new ArrayList<String>();
+        Enumeration<String> en = _tsys.keys();
         int i=0;
         while (en.hasMoreElements()) {
-            arr[i] = (String)en.nextElement();
+            arr[i] = en.nextElement();
             i++;
         }
         jmri.util.StringUtil.sort(arr);

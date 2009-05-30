@@ -205,10 +205,10 @@ public abstract class TurnoutOperation implements Comparable {
 	public boolean isInUse() {
 		boolean result = false;
 		TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-		List turnouts = tm.getSystemNameList();
-		Iterator iter = turnouts.iterator();
+		List<String> turnouts = tm.getSystemNameList();
+		Iterator<String> iter = turnouts.iterator();
 		while (iter.hasNext()) {
-			Turnout t = tm.getBySystemName((String)iter.next());
+			Turnout t = tm.getBySystemName(iter.next());
 			if (t!=null && t.getTurnoutOperation() == this) {
 				result = true;
 				break;

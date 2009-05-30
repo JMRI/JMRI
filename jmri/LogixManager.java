@@ -25,7 +25,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public interface LogixManager extends Manager {
 
@@ -60,7 +60,7 @@ public interface LogixManager extends Manager {
     /**
      * Get a list of all Logix system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
     /** 
      * Delete Logix by removing it from 

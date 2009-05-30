@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003-2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public interface Consist {
 
@@ -68,7 +68,7 @@ public interface Consist {
 	public int sizeLimit();
 
 	// get a list of the locomotives in the consist
-	public ArrayList getConsistList();
+	public ArrayList<DccLocoAddress> getConsistList();
 	
 	// does the consist contain the specified locomotive address?
 	public boolean contains(DccLocoAddress address);

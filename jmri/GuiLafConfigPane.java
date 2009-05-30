@@ -27,11 +27,11 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class GuiLafConfigPane extends JPanel {
 
-    java.util.Hashtable installedLAFs;
+    java.util.Hashtable<String, String> installedLAFs;
     ButtonGroup LAFGroup;
     String selectedLAF;
 
@@ -46,15 +46,15 @@ public class GuiLafConfigPane extends JPanel {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-        installedLAFs = new java.util.Hashtable(plafs.length);
+        installedLAFs = new java.util.Hashtable<String, String>(plafs.length);
         for (int i = 0; i < plafs.length; i++){
             installedLAFs.put(plafs[i].getName(), plafs[i].getClassName());
         }
         // make the radio buttons
         LAFGroup = new ButtonGroup();
-        Enumeration LAFNames = installedLAFs.keys();
+        Enumeration<String> LAFNames = installedLAFs.keys();
         while (LAFNames.hasMoreElements()) {
-            String name = (String)LAFNames.nextElement();
+            String name = LAFNames.nextElement();
             JRadioButton jmi = new JRadioButton(name);
             panel.add(jmi);
             LAFGroup.add(jmi);

@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public interface SignalHeadManager extends Manager {
 
@@ -46,7 +46,7 @@ public interface SignalHeadManager extends Manager {
     /**
      * Get a list of all SignalHead system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
 }
 

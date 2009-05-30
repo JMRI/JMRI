@@ -43,7 +43,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public interface Manager {
 
@@ -69,7 +69,7 @@ public interface Manager {
     public void dispose();
 
     public String[] getSystemNameArray();
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
 	/**
 	 * At a minimum,

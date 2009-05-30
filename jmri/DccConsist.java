@@ -4,7 +4,6 @@ package jmri;
 
 import jmri.ConsistListener;
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 import java.util.Hashtable;
@@ -23,14 +22,14 @@ import java.util.ArrayList;
  */
 public class DccConsist implements Consist, ProgListener{
 
-	protected ArrayList ConsistList = null; // A List of Addresses in the consist
+	protected ArrayList<DccLocoAddress> ConsistList = null; // A List of Addresses in the consist
 
-	protected Hashtable ConsistDir = null; // A Hash table 
+	protected Hashtable<DccLocoAddress, Boolean> ConsistDir = null; // A Hash table 
                                         // containing the directions of 
 					// each locomotive in the consist, 
 					// keyed by Loco Address.
 
-	protected Hashtable ConsistPosition = null; // A Hash table 
+	protected Hashtable<DccLocoAddress, Integer> ConsistPosition = null; // A Hash table 
                                         // containing the position of 
 					// each locomotive in the consist, 
 					// keyed by Loco Address.
@@ -48,9 +47,9 @@ public class DccConsist implements Consist, ProgListener{
         // The Default consist type is an advanced consist 
 	public DccConsist(int address) {
 		ConsistAddress = new DccLocoAddress(address,false);
-		ConsistDir = new Hashtable();
-		ConsistList = new ArrayList();
-                ConsistPosition = new Hashtable();
+		ConsistDir = new Hashtable<DccLocoAddress, Boolean>();
+		ConsistList = new ArrayList<DccLocoAddress>();
+                ConsistPosition = new Hashtable<DccLocoAddress, Integer>();
 	        ConsistID = ConsistAddress.toString();
 	}
 
@@ -58,9 +57,9 @@ public class DccConsist implements Consist, ProgListener{
         // The Default consist type is an advanced consist
 	public DccConsist(DccLocoAddress address) {
 		ConsistAddress = address;
-		ConsistDir = new Hashtable();
-		ConsistList = new ArrayList();
-                ConsistPosition = new Hashtable();
+		ConsistDir = new Hashtable<DccLocoAddress, Boolean>();
+		ConsistList = new ArrayList<DccLocoAddress>();
+                ConsistPosition = new Hashtable<DccLocoAddress, Integer>();
 	        ConsistID = ConsistAddress.toString();
 	}
 
@@ -111,13 +110,13 @@ public class DccConsist implements Consist, ProgListener{
 
 
 	// get a list of the locomotives in the consist
-        public ArrayList getConsistList() { return ConsistList; }
+        public ArrayList<DccLocoAddress> getConsistList() { return ConsistList; }
 
 	// does the consist contain the specified address?
 	public boolean contains(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST) {
-		//String Address= Integer.toString(address);
-		return( (boolean) ConsistList.contains(address));
+		//String Address = Integer.toString(address);
+		return(ConsistList.contains(address));
 	   } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.NotImplemented);
@@ -130,7 +129,7 @@ public class DccConsist implements Consist, ProgListener{
 	public boolean getLocoDirection(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST) {
 		//String Address= Integer.toString(address);
-		Boolean Direction=(Boolean) ConsistDir.get(address);
+		Boolean Direction = ConsistDir.get(address);
 		return( Direction.booleanValue());
 	   } else {
 		log.error("Consist Type Not Supported");
@@ -259,7 +258,7 @@ public class DccConsist implements Consist, ProgListener{
          */
         public int getPosition(DccLocoAddress address){
              if(ConsistPosition.contains(address))
-		return(((Integer)(ConsistPosition.get(address))).intValue());
+		return(ConsistPosition.get(address).intValue());
              // if the consist order hasn't been set, we'll use default
              // positioning based on index in the arraylist.  Lead locomotive 
              // is position 0 in the list and the trail is the last locomtoive
@@ -274,7 +273,7 @@ public class DccConsist implements Consist, ProgListener{
 
 
 	// data member to hold the throttle listener objects
-	final private Vector listeners = new Vector();
+	final private Vector<ConsistListener> listeners = new Vector<ConsistListener>();
 	
 	/*
          * Add a Listener for consist events
@@ -322,10 +321,10 @@ public class DccConsist implements Consist, ProgListener{
          */
         protected void notifyConsistListeners(DccLocoAddress  LocoAddress, int ErrorCode){
  		// make a copy of the listener vector to  notify.
-        	Vector v;
+        	Vector<ConsistListener> v;
         	synchronized(this)
             	{
-                 	v = (Vector) listeners.clone();
+                 	v = (Vector)listeners.clone();
             	}
         	if (log.isDebugEnabled()) log.debug("Sending Status code: " +
 						ErrorCode + " to "  + 
@@ -335,7 +334,7 @@ public class DccConsist implements Consist, ProgListener{
         	// forward to all listeners
         	int cnt = v.size();
         	for (int i=0; i < cnt; i++) {
-            		ConsistListener client = (ConsistListener) v.elementAt(i);
+            		ConsistListener client = v.elementAt(i);
             		client.consistReply(LocoAddress,ErrorCode);
         	}
 	}

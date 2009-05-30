@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -126,7 +126,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     
     public int getState() {return _current;}
     
-    ArrayList paths = new ArrayList();
+    ArrayList<Path>paths = new ArrayList<Path>();
     public void addPath(Path p) {
         if (p==null) throw new IllegalArgumentException("Can't add null path");
         paths.add(p);
@@ -134,7 +134,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     public void removePath(Path p) {
 		int j = -1;
 		for (int i = 0; i<paths.size(); i++) {
-			if (p == (Path) paths.get(i))
+			if (p == paths.get(i))
 				j = i;
 		}
 		if (j>-1) paths.remove(j);
@@ -143,8 +143,8 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     /**
      * Get a copy of the list of Paths
      */
-    public List getPaths() {
-        return new ArrayList(paths);
+    public List<Path> getPaths() {
+        return new ArrayList<Path>(paths);
     }
     
     /**
@@ -237,7 +237,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         int count = 0;
         Path next = null;
         for (int i = 0; i<paths.size(); i++) {
-            Path p = (Path) paths.get(i);
+            Path p = paths.get(i);
             if (p.checkPathSet() && p.getBlock().getSensor() != null && p.getBlock().getSensor().getState()==Sensor.ACTIVE) {
                 count++;
                 next = p;
@@ -266,7 +266,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
             next = null;
             count = 0;
             for (int i = 0; i<paths.size(); i++) {
-                Path p = (Path) paths.get(i);
+                Path p = paths.get(i);
                 if (p.checkPathSet() && p.getBlock().getSensor() != null && p.getBlock().getSensor().getState()==Sensor.ACTIVE
                     && (p.getBlock().getDirection() == p.getFromBlockDirection())) {
                     count++;

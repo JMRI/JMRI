@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public interface RouteManager extends Manager {
 
@@ -59,7 +59,7 @@ public interface RouteManager extends Manager {
     /**
      * Get a list of all Route system names.
      */
-    public List getSystemNameList();
+    public List<String> getSystemNameList();
 
     /** 
      * Delete Route by removing it from 

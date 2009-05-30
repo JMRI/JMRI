@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.7 $      
+ * @version             $Revision: 1.8 $      
  */
 public interface  ConsistManager {
 	
@@ -51,7 +51,7 @@ public interface  ConsistManager {
 	 *    Get an ArrayList object containning the string representation 
 	 *    of the consist addresses we know about.
 	 */
-	public ArrayList getConsistList();
+	public ArrayList<DccLocoAddress> getConsistList();
 
 	/**
 	 *   Translate Error Codes recieved by a consistListener into

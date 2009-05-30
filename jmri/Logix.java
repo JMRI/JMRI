@@ -2,7 +2,6 @@
 
 package jmri;
 
-import java.util.ArrayList;
 /**
  * A Logix is a group of Conditionals that monitor one or more conditions 
  * (internal or on the layout).  It services these Conditionals by installing
