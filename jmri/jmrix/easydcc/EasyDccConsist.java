@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.5 $
+ * @version                     $Revision: 1.6 $
  */
 
 package jmri.jmrix.easydcc;
@@ -96,7 +96,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
      	 * Method for adding an Address to the internal consist list object.
 	 */
 	private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
-	        Boolean Direction = new Boolean(directionNormal);
+	        Boolean Direction = Boolean.valueOf(directionNormal);
 		if(!(ConsistList.contains(LocoAddress))) 
 					ConsistList.add(LocoAddress);
 		ConsistDir.put(LocoAddress,Direction);

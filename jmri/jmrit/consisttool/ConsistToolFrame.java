@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.24 $
+ * @version              $Revision: 1.25 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -568,11 +568,11 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 	if(log.isDebugEnabled()) log.debug("Consist Reply recieved for Locomotive "  +locoaddress.toString() + " with status " + status);
 	_status.setText(ConsistMan.decodeErrorCode(status));
 	// For some status codes, we want to trigger specific actions
-	if((status & jmri.ConsistListener.CONSIST_FULL)!=0) {
+	//if((status & jmri.ConsistListener.CONSIST_FULL)!=0) {
+	//	canAdd();
+	//} else {
 		canAdd();
-	} else {
-		canAdd();
-	}
+	//}
 	consistModel.fireTableDataChanged();
             try{
                consistFile.WriteFile(ConsistMan.getConsistList());

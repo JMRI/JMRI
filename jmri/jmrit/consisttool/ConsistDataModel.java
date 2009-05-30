@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of consist information.
  * 
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
@@ -115,7 +115,7 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
         		      RosterBox.insertItemAt("",0);
         		      RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
 	  		      return RosterBox;*/
-	      case DIRECTIONCOLUMN: return(new Boolean(_consist.getLocoDirection((DccLocoAddress)_consist.getConsistList().get(row))));
+	      case DIRECTIONCOLUMN: return(Boolean.valueOf(_consist.getLocoDirection((DccLocoAddress)_consist.getConsistList().get(row))));
 	      case DELCOLUMN: return "DEL";
 	      default: return("");
            }

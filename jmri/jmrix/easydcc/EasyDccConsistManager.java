@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.5 $
+ * @version               $Revision: 1.6 $
  */
 
 
@@ -59,7 +59,6 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
 
            // Storage for addresses
 	   int _lastAddress=0;
-           EasyDccConsist CurrentConsist = null;
 
            // Possible States
            final static int IDLE=0;

@@ -19,7 +19,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -261,9 +261,11 @@ class ConsistFile extends jmri.jmrit.XmlFile {
                java.io.File parentDir=file.getParentFile();
                if(!parentDir.exists())
                {
-                  parentDir.mkdir();
+                  if(!parentDir.mkdir())
+                      throw(new java.io.IOException());
                }
-               file.createNewFile();
+               if(!file.createNewFile())
+                  throw(new java.io.IOException());
            }
            writeXML(findFile(defaultConsistFilename()),doc);
            } catch(java.io.IOException ioe) {

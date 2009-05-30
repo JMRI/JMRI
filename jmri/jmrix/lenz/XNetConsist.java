@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.14 $
+ * @version                     $Revision: 2.15 $
  */
 
 package jmri.jmrix.lenz;
@@ -121,7 +121,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
      	 * Method for adding an Address to the internal consist list object.
 	 */
 	private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
-	        Boolean Direction = new Boolean(directionNormal);
+	        Boolean Direction = Boolean.valueOf(directionNormal);
 		if(!(ConsistList.contains(LocoAddress))) 
 					ConsistList.add(LocoAddress);
 		ConsistDir.put(LocoAddress,Direction);
@@ -357,7 +357,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		}
 		_state=IDLESTATE;
 	   } else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
-                text = new String("XpressNet MU+DH error: ") ;
+                text = "XpressNet MU+DH error: ";
                 switch(l.getElement(1)) {
                    case 0x81: text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
 			log.error(text);

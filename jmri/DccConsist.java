@@ -147,7 +147,7 @@ public class DccConsist implements Consist, ProgListener{
 	public void add(DccLocoAddress LocoAddress,boolean directionNormal) {
 	      if(ConsistType==ADVANCED_CONSIST) {
 		 //String Address= Integer.toString(LocoAddress);
-	         Boolean Direction = new Boolean(directionNormal);
+	         Boolean Direction = Boolean.valueOf(directionNormal);
 		 if(!(ConsistList.contains(LocoAddress))) ConsistList.add(LocoAddress);
 		 ConsistDir.put(LocoAddress,Direction);
 	         addToAdvancedConsist(LocoAddress, directionNormal);		
@@ -169,7 +169,7 @@ public class DccConsist implements Consist, ProgListener{
 	public void restore(DccLocoAddress LocoAddress,boolean directionNormal) {
 	      if(ConsistType==ADVANCED_CONSIST) {
 		 //String Address= Integer.toString(LocoAddress);
-	         Boolean Direction = new Boolean(directionNormal);
+	         Boolean Direction = Boolean.valueOf(directionNormal);
 		 if(!(ConsistList.contains(LocoAddress))) ConsistList.add(LocoAddress);
 		 ConsistDir.put(LocoAddress,Direction);
 	      }
@@ -249,7 +249,7 @@ public class DccConsist implements Consist, ProgListener{
          *         the consist.
          */
         public void setPosition(DccLocoAddress address,int position){
-                ConsistPosition.put(address,new Integer(position));
+                ConsistPosition.put(address,Integer.valueOf(position));
         }
 
         /*
