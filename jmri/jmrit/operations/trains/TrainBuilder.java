@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.44 $
+ * @version             $Revision: 1.45 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1123,9 +1123,13 @@ public class TrainBuilder extends TrainCommon{
 		return true;
 	}
 	
+	private boolean ignoreTrainDirectionIfLastLoc = false;
 	private boolean checkDropTrainDirection (PrintWriter file, Car car, RouteLocation rld, Location destination, Track track){
+		// local?
+		if (routeList.size()==1)
+			return true;
 		// is the destination the last location on the route? 
-		if (rld == train.getTrainTerminatesRouteLocation())
+		if (ignoreTrainDirectionIfLastLoc && rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
 		// this location only services trains with these directions
 		int serviceTrainDir = (destination.getTrainDirections() & track.getTrainDirections()); 
