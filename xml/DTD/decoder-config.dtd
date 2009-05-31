@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.52 $ -->
+<!-- $Revision: 1.53 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -221,8 +221,6 @@
 <!ATTLIST ivariable opsOnly   (yes | no) "no">
 <!ATTLIST ivariable writeOnly (yes | no) "no">
 <!ATTLIST ivariable default   CDATA #IMPLIED >
-<!ATTLIST ivariable include   CDATA #IMPLIED >
-<!ATTLIST ivariable exclude   CDATA #IMPLIED >
 <!ATTLIST ivariable comment   CDATA #IMPLIED >
 <!ATTLIST ivariable item      CDATA #IMPLIED > <!-- item name for this function if different -->
 <!ATTLIST ivariable minFn     CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
@@ -259,8 +257,6 @@
 <!ATTLIST enumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT ienumVal (ienumChoice*) >
-<!ATTLIST ienumVal include CDATA #IMPLIED >
-<!ATTLIST ienumVal exclude CDATA #IMPLIED >
 <!ATTLIST ienumVal comment CDATA #IMPLIED>
 
 <!ELEMENT ienumChoice EMPTY>
