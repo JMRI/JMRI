@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version         $Revision: 1.22 $
+ * @version         $Revision: 1.23 $
  */
 public class JmrixTest extends TestCase {
 
@@ -51,6 +51,7 @@ public class JmrixTest extends TestCase {
 		suite.addTest(jmri.jmrix.secsi.SerialTest.suite());
 		suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
 		suite.addTest(jmri.jmrix.acela.AcelaTest.suite());
+		suite.addTest(jmri.jmrix.xpa.XpaTest.suite());
 
 		return suite;
 
