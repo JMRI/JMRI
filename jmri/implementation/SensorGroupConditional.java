@@ -1,14 +1,8 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.Timebase;
-import jmri.jmrit.Sound;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Date;
-import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
-import javax.swing.Timer;
+
 
 /**
  * Conditional.java

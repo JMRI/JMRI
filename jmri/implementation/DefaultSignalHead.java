@@ -2,13 +2,12 @@
 
 package jmri.implementation;
 
-import jmri.*;
 
  /**
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 

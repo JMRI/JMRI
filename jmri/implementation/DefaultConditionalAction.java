@@ -3,10 +3,8 @@ package jmri.implementation;
 import jmri.*;
 import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
-import jmri.Timebase;
 import jmri.jmrit.beantable.LogixTableAction;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.Timer;
 /**
@@ -20,7 +18,7 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -482,7 +480,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DELAYED_SENSOR:
                     str = str + rbx.getString("After") + " ";
                     try {
-                        int t = Integer.parseInt(_actionString);
+                        //int t = Integer.parseInt(_actionString);
                         str = str + _actionString + " " + rbx.getString("Seconds")+ ".";
                     } catch (NumberFormatException nfe) { 
                         str = str + _actionString + " " + rbx.getString("ValueInMemory")
@@ -492,7 +490,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 case Conditional.ACTION_SET_LIGHT_INTENSITY:
                     try {
-                        int t = Integer.parseInt(_actionString);
+                        //int t = Integer.parseInt(_actionString);
                         str = str + " " + rbx.getString("to")+ " "+ _actionString + ".";
                     } catch (NumberFormatException nfe) { 
                         str = str + " " + rbx.getString("to") + " " + _actionString + " "

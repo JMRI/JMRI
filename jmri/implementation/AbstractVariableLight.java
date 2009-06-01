@@ -1,7 +1,6 @@
 // AbstractVariableLight.java
 
 package jmri.implementation;
-import javax.swing.Timer;
 import java.util.Date;
 import jmri.*;
 
@@ -37,7 +36,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -238,14 +237,14 @@ public abstract class AbstractVariableLight extends AbstractLight
     		if (log.isDebugEnabled()) {
     			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
-    		Date now = internalClock.getTime();
+    		//Date now = internalClock.getTime();
     		int steps = SerialTrafficController.instance().maxX10DimStep();
         	double stepsPerMinute = steps / mTransitionDuration;
-        	double minutesPerStep = 1 / stepsPerMinute;
-        	double timeUntilMinute = now.getSeconds() / 60.0;
-        	double absIntensityDiff = Math.abs(mTransitionTargetIntensity - mCurrentIntensity);
+        	//double minutesPerStep = 1 / stepsPerMinute;
+        	//double timeUntilMinute = now.getSeconds() / 60.0;
+        	//double absIntensityDiff = Math.abs(mTransitionTargetIntensity - mCurrentIntensity);
         	double stepSize = 1 / (double)steps;
-        	double stepsNeeded = absIntensityDiff / stepSize;
+        	//double stepsNeeded = absIntensityDiff / stepSize;
         	double intensityDiffPerMinute = stepSize * stepsPerMinute;
 //        	if (log.isDebugEnabled()) {
 //        		log.debug("step/min " + stepsPerMinute + " min/step " + minutesPerStep + " absDiff " + absIntensityDiff + " step " + stepSize + " steps " + stepsNeeded + " diff/min " + intensityDiffPerMinute);

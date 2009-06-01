@@ -1,13 +1,13 @@
 // AbstractSensor.java
 
 package jmri.implementation;
-import jmri.*;
+
 import jmri.Sensor;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 

@@ -10,17 +10,17 @@ import jmri.*;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
-    private AbstractNamedBean() {
-        mSystemName = null;
-        mUserName = null;
-        log.warn("Unexpected use of null ctor");
-        Exception e = new Exception();
-        e.printStackTrace();
-    }
+    //private AbstractNamedBean() {
+    //    mSystemName = null;
+    //    mUserName = null;
+    //    log.warn("Unexpected use of null ctor");
+    //    Exception e = new Exception();
+    //    e.printStackTrace();
+    //}
 
     public AbstractNamedBean(String sys) {
         mSystemName = sys.toUpperCase();

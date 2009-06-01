@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import jmri.*;
 
 /**

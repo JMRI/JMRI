@@ -19,7 +19,7 @@ import jmri.*;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TripleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -37,6 +37,7 @@ public class TripleTurnoutSignalHead extends DefaultSignalHead {
         mGreen = green;
     }
 	
+	@SuppressWarnings("fallthrough")
 	protected void updateOutput() {
 	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {

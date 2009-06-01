@@ -2,9 +2,7 @@
 
 package jmri.implementation;
 import jmri.*;
-import jmri.Timebase;
 import java.util.Date;
-import javax.swing.Timer;
 
  /**
  * Class providing default logic of the ClockControl interface.
@@ -17,7 +15,7 @@ import javax.swing.Timer;
  *	systems with no hardware fast clock.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultClockControl implements ClockControl {
 

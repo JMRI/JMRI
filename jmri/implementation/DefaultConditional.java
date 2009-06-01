@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.Timebase;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -27,7 +26,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -97,7 +96,7 @@ public class DefaultConditional extends AbstractNamedBean
     public ArrayList <ConditionalVariable> getCopyOfStateVariables() {
         ArrayList <ConditionalVariable> variableList = new ArrayList <ConditionalVariable> ();
 		for (int i = 0; i<_variableList.size(); i++) {
-            ConditionalVariable variable = (ConditionalVariable)_variableList.get(i);
+            ConditionalVariable variable = _variableList.get(i);
             ConditionalVariable clone = new ConditionalVariable();
             clone.setNegation(variable.isNegated());
             clone.setOpern(variable.getOpern());
@@ -315,7 +314,7 @@ public class DefaultConditional extends AbstractNamedBean
         int oper = OPERATOR_NONE;
         int k = -1;
         int i = 0;      // index of String s
-        int numArgs = 0;
+        //int numArgs = 0;
         if (s.charAt(i) == '(')  {
             dp = parseCalculate(s.substring(++i), variableList);
             leftArg = dp.result;
@@ -468,7 +467,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 * <P>
 	 * Only get here if a change in state has occurred when calculating this Conditional
 	 */
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "fallthrough" })
 	private void takeActionIfNeeded() {
         int actionCount = 0;
         int actionNeeded = 0;
@@ -539,9 +538,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
 						ConditionalManager cmg = jmri.InstanceManager.conditionalManagerInstance();
-						java.util.Iterator iter = cmg.getSystemNameList().iterator();
+						java.util.Iterator<String> iter = cmg.getSystemNameList().iterator();
 						while (iter.hasNext()) {
-							String sname = (String)iter.next();
+							String sname = iter.next();
 							if (sname==null) 
 								log.error("Conditional system name null during cancel turnput timers for "
 														+ action.getDeviceName());
@@ -694,9 +693,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
 						ConditionalManager cm = jmri.InstanceManager.conditionalManagerInstance();
-						java.util.Iterator itr = cm.getSystemNameList().iterator();
+						java.util.Iterator<String> itr = cm.getSystemNameList().iterator();
 						while (itr.hasNext()) {
-							String sname = (String)itr.next();
+							String sname = itr.next();
 							if (sname==null) 
 								log.error("Conditional system name null during cancel sensor timers for "
 														+ action.getDeviceName());
@@ -738,7 +737,7 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
 							try {
                                 value = getIntegerValue(action.getActionString());
-								lgt.setTargetIntensity(((double)value)/100.0);
+								lgt.setTargetIntensity((value)/100.0);
                                 actionCount++;
 							}
 							catch (IllegalArgumentException e) {
@@ -755,7 +754,7 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
 							try {
                                 value = getIntegerValue(action.getActionString());
-								lgt.setTransitionTime((double)value);
+								lgt.setTransitionTime(value);
                                 actionCount++;
 							}
 							catch (IllegalArgumentException e) {

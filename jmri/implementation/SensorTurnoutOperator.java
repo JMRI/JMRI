@@ -31,7 +31,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 	 * TurnoutOperatorException which just terminates the thread.
 	 */
 	public void run() {
-		long startTime = System.currentTimeMillis();
+		//long startTime = System.currentTimeMillis();
 		listener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
 				if (e.getPropertyName().equals("KnownState")) {

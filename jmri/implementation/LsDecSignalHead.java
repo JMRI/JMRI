@@ -92,7 +92,8 @@ public class LsDecSignalHead extends DefaultSignalHead {
         }    
     }
         
-    protected void updateOutput() {
+    @SuppressWarnings("fallthrough")
+	protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
 	if (mLit == false) {
             mDark.setCommandedState(mDarkState);

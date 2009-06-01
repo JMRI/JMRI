@@ -38,7 +38,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -466,7 +466,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
 	public void setState(int newState) {
         if (log.isDebugEnabled()) log.debug("setState "+newState+" was "+mState);
-	    int oldState = mState;
+	    //int oldState = mState;
 	    if ( newState != ON && newState != OFF) 
 	        throw new IllegalArgumentException("cannot set state value "+newState);
 	    double intensity = getTargetIntensity();

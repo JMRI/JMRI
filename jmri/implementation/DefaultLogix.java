@@ -14,7 +14,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -155,9 +155,9 @@ public class DefaultLogix extends AbstractNamedBean
 		}
         // check other Logix(es) for use of this conditional (systemName) for use as a
         // variable in one of their conditionals
-        Iterator iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+        Iterator<String> iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
         while (iter1.hasNext()) {
-            String sNameLogix = (String)iter1.next();
+            String sNameLogix = iter1.next();
             if (!sNameLogix.equals(getSystemName()) ) {
                 Logix x = InstanceManager.logixManagerInstance().getBySystemName(sNameLogix);
                 int numCond = x.getNumConditionals();
@@ -276,9 +276,9 @@ public class DefaultLogix extends AbstractNamedBean
             Conditional conditional = null;
 			conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
 			if (conditional!=null) {
-                ArrayList variableList = conditional.getCopyOfStateVariables();
+                ArrayList<ConditionalVariable> variableList = conditional.getCopyOfStateVariables();
                 for (int k = 0; k<variableList.size(); k++) {
-                    ConditionalVariable variable = (ConditionalVariable)variableList.get(k);
+                    ConditionalVariable variable = variableList.get(k);
                     // check if listening for a change has been suppressed
                     int varListenerType = 0;
                     String varName = variable.getName();

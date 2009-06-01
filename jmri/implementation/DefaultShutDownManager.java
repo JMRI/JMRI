@@ -5,7 +5,6 @@ package jmri.implementation;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 
-import java.util.Enumeration;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +30,7 @@ import java.util.ArrayList;
  * logging.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
@@ -70,7 +69,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     public void shutdown() {
         for (int i = tasks.size()-1; i>=0; i--) {
             try {
-                ShutDownTask t = (ShutDownTask)tasks.get(i);
+                ShutDownTask t = tasks.get(i);
                 boolean ok = t.execute();
                 if (!ok) {
                     log.info("Program termination aborted by "+t.name());
@@ -87,7 +86,7 @@ public class DefaultShutDownManager implements ShutDownManager {
         System.exit(0);
     }
     
-    ArrayList tasks = new ArrayList();
+    ArrayList<ShutDownTask> tasks = new ArrayList<ShutDownTask>();
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultShutDownManager.class.getName());
 }

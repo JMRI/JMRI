@@ -1,8 +1,6 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Date;
 import jmri.*;
 import jmri.Timebase;
@@ -86,7 +84,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener
     @SuppressWarnings("deprecation")
     public void propertyChange(PropertyChangeEvent evt) {
 		Date currentTime = _fastClock.getTime();
-		int oldMinutes = _currentMinutes;
+		//int oldMinutes = _currentMinutes;
 		_currentMinutes = (currentTime.getHours()*60) + currentTime.getMinutes();
 		// check if we have entered or left one of the ranges
         boolean[] newRangeList = new boolean[_rangeList.length];
