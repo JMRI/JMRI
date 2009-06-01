@@ -73,7 +73,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -184,8 +184,6 @@ public class LogixTableAction extends AbstractTableAction {
                         editPressed(sName);
                     } else if (rbx.getString("ButtonCopy").equals((String)value) ) {
                         copyPressed(sName);
-//                    } else if ( rbx.getString("ButtonMove").equals((String)value) ) {
-//                        movePressed(sName);
                     } else if ( rbx.getString("ButtonDelete").equals((String)value) ) {
                         deletePressed(sName);
                     } else
@@ -788,7 +786,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * creates and/or initializes the Edit Logix window
 	 */
 	void makeEditLogixWindow() {
-        log.debug("makeEditLogixWindow ");
+        //log.debug("makeEditLogixWindow ");
 		editUserName.setText(_curLogix.getUserName());
 		// clear conditional table if needed
 		if (conditionalTableModel != null) {
@@ -1164,8 +1162,14 @@ public class LogixTableAction extends AbstractTableAction {
         }
 		// make system name for new conditional
 		int num = _curLogix.getNumConditionals()+1;
-		String cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
-		_curConditional = _conditionalManager.createNewConditional(cName, "");
+        _curConditional = null;
+        String cName = null;
+        while (_curConditional == null)  {
+            cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
+            _curConditional = _conditionalManager.createNewConditional(cName, "");
+            num++;
+            if (num==1000) break;
+        }
 		if (_curConditional == null) {
 			// should never get here unless there is an assignment conflict
 			log.error("Failure to create Conditional with System Name: "
