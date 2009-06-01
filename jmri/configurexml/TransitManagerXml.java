@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -36,7 +36,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         setStoreElementClass(transits);
         TransitManager tm = (TransitManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not Transits to include
@@ -44,7 +44,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
             
             // store the Transit
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("Transit system name is "+sname);
                 Transit x = tm.getBySystemName(sname);
@@ -55,10 +55,10 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 storeCommon(x, elem);
                 
 				// save child transitsection entries
-				ArrayList tsList = x.getTransitSectionList();
+				ArrayList<TransitSection> tsList = x.getTransitSectionList();
 				Element tsElem = null;
 				for (int k = 0; k<tsList.size(); k++) {
-					TransitSection ts = (TransitSection)tsList.get(k);
+					TransitSection ts = tsList.get(k);
 					if (ts!=null) {						
 						tsElem = new Element ("transitsection");
 						tsElem.setAttribute("sectionname",ts.getSection().getSystemName());
@@ -107,31 +107,32 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * invoke this with the parent of the set of Transit elements.
      * @param transits Element containing the Transit elements to load.
      */
-    public void loadTransits(Element transits) {
-		List transitList = transits.getChildren("transit");
+    @SuppressWarnings("unchecked")
+	public void loadTransits(Element transits) {
+		List<Element> transitList = transits.getChildren("transit");
         if (log.isDebugEnabled()) log.debug("Found "+transitList.size()+" transits");
         TransitManager tm = InstanceManager.transitManagerInstance();
 
         for (int i=0; i<transitList.size(); i++) {
-            if ( ((Element)(transitList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(transitList.get(i)))+" "+
-										((Element)(transitList.get(i))).getAttributes());
+            if (transitList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+ transitList.get(i)+" "+
+										transitList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(transitList.get(i))).getAttribute("systemName").getValue();
+            String sysName = transitList.get(i).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(transitList.get(i))).getAttribute("userName") != null) {
-                userName = ((Element)(transitList.get(i))).getAttribute("userName").getValue();
+            if (transitList.get(i).getAttribute("userName") != null) {
+                userName = transitList.get(i).getAttribute("userName").getValue();
 			}
             Transit x = tm.createNewTransit(sysName, userName);
             if (x!=null) {
                 // load common part
-                loadCommon(x, ((Element)(transitList.get(i))));
+                loadCommon(x, transitList.get(i));
 
 				// load transitsection children
-               List transitTransitSectionList = ((Element)(transitList.get(i))).getChildren("transitsection");
+               List<Element> transitTransitSectionList = transitList.get(i).getChildren("transitsection");
 				for (int n = 0; n<transitTransitSectionList.size(); n++) {
-					Element elem = (Element)transitTransitSectionList.get(n);
+					Element elem = transitTransitSectionList.get(n);
 					int seq = 0;
 					int dir = Section.UNKNOWN;
 					int act = TransitSection.NONE;

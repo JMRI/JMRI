@@ -25,11 +25,11 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @since 2.1.2
  *
  */
-public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
+public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryManagerConfigXML {
 
     public BlockManagerXml() {
     }
@@ -55,7 +55,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
         setStoreElementClass(blocks);
         BlockManager tm = (BlockManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not blocks to include
@@ -63,9 +63,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             
             // write out first set of blocks without contents
              while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                Block b = tm.getBySystemName(sname);
+                //Block b = tm.getBySystemName(sname);
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
                 if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
@@ -77,7 +77,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             // write out again with contents
             iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 Block b = tm.getBySystemName(sname);
                 String uname = b.getUserName();
@@ -101,9 +101,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
                 }
                 
                 // then the paths
-                List paths = b.getPaths();
+                List<Path> paths = b.getPaths();
                 for (int i=0; i<paths.size(); i++)
-                    addPath(elem, (Path)paths.get(i));
+                    addPath(elem, paths.get(i));
                 // and put this element out
                 blocks.addContent(elem);
             }
@@ -118,10 +118,10 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
         pe.setAttribute("fromdir", ""+p.getFromBlockDirection());
         if (p.getBlock()!=null)
             pe.setAttribute("block", ""+p.getBlock().getSystemName());
-        List l = p.getSettings();
+        List<BeanSetting> l = p.getSettings();
         if (l!=null) {
             for (int i=0; i<l.size(); i++) {
-                addBeanSetting(pe, (BeanSetting)l.get(i));
+                addBeanSetting(pe, l.get(i));
             }
         }
         e.addContent(pe);
@@ -148,13 +148,14 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
      * 
      * @param blocks Element containing the block elements to load.
      */
-    public void load(Element blocks) {
-        List list = blocks.getChildren("block");
+    @SuppressWarnings("unchecked")
+	public void load(Element blocks) {
+        List<Element> list = blocks.getChildren("block");
         if (log.isDebugEnabled()) log.debug("Found "+list.size()+" objects");
-        BlockManager tm = InstanceManager.blockManagerInstance();
+        //BlockManager tm = InstanceManager.blockManagerInstance();
 
         for (int i=0; i<list.size(); i++) {
-            Element block = (Element)list.get(i);
+            Element block = list.get(i);
             loadBlock(block);
         }
     }
@@ -164,8 +165,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
      * 
      * @param element Element holding one block
      */
-    public void loadBlock(Element element) {
-            if ( element.getAttribute("systemName") == null) {
+    @SuppressWarnings("unchecked")
+	public void loadBlock(Element element) {
+            if (element.getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+element+" "+element.getAttributes());
                 return;
             }
@@ -194,21 +196,21 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             loadCommon(block, element);
             
             // load sensor if present
-            List sensors = element.getChildren("sensor");
+            List<Element> sensors = element.getChildren("sensor");
             if (sensors.size()>1) log.error("More than one sensor present: "+sensors.size());
             if (sensors.size()==1) {
                 // sensor
-                String name = ((Element)sensors.get(0)).getAttribute("systemName").getValue();
+                String name = sensors.get(0).getAttribute("systemName").getValue();
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
                 block.setSensor(sensor);
             }
             
             // load paths if present
-            List paths = element.getChildren("path");
+            List<Element> paths = element.getChildren("path");
             if (paths.size()>0 && block.getPaths().size()>0) 
                 log.warn("Adding "+paths.size()+" paths to block "+sysName+" that already has "+block.getPaths().size()+" blocks. Please report this as an error.");
             for (int i=0; i<paths.size(); i++) {
-                Element path = (Element)paths.get(i);
+                Element path = paths.get(i);
                 loadPath(block, path);
             }
     }
@@ -219,7 +221,8 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
      * @param block Block to receive path
      * @param element Element containing path information
      */
-    public void loadPath(Block block, Element element) {
+    @SuppressWarnings("unchecked")
+	public void loadPath(Block block, Element element) {
         // load individual path
         int toDir = 0;
         int fromDir = 0;
@@ -237,9 +240,9 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
         }
         Path path = new Path(toBlock, toDir, fromDir);
         
-        List settings = element.getChildren("beansetting");
+        List<Element> settings = element.getChildren("beansetting");
         for (int i=0; i<settings.size(); i++) {
-            Element setting = (Element)settings.get(i);
+            Element setting = settings.get(i);
             loadBeanSetting(path, setting);
         }
         
@@ -252,16 +255,17 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
      * @param path Path to receive BeanSetting
      * @param element Element containing beansetting information
      */
-    public void loadBeanSetting(Path path, Element element) {
+    @SuppressWarnings("unchecked")
+	public void loadBeanSetting(Path path, Element element) {
         int setting = 0;
         try {
             setting = element.getAttribute("setting").getIntValue();
         } catch (org.jdom.DataConversionException e) {
             log.error("Could not parse beansetting attribute");
         }
-        List turnouts = element.getChildren("turnout");
+        List<Element> turnouts = element.getChildren("turnout");
         if (turnouts.size()!=1) log.error("invalid number of turnout element children");
-        String name = ((Element)turnouts.get(0)).getAttribute("systemName").getValue();
+        String name = turnouts.get(0).getAttribute("systemName").getValue();
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         
         BeanSetting bs = new BeanSetting(t, setting);

@@ -29,17 +29,18 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
         log.error("Invalid method called");
     }
 
-    public void load(Element operationsElement) {
+    @SuppressWarnings("unchecked")
+	public void load(Element operationsElement) {
     	TurnoutOperationManager manager = TurnoutOperationManager.getInstance();
         if (operationsElement.getAttribute("automate") != null) {
         	try {
             	manager.setDoOperations(operationsElement.getAttribute("automate").getValue().equals("true"));        		
         	} catch(NumberFormatException ex) { };
         }
-    	List operationsList = operationsElement.getChildren("operation");
+    	List<Element> operationsList = operationsElement.getChildren("operation");
     	if (log.isDebugEnabled()) log.debug("Found "+operationsList.size()+" operations");
     	for (int i=0; i<operationsList.size(); i++) {
-    		TurnoutOperationXml.loadOperation((Element)operationsList.get(i));
+    		TurnoutOperationXml.loadOperation(operationsList.get(i));
     	}
     }
 

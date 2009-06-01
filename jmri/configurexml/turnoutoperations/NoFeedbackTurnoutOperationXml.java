@@ -8,6 +8,7 @@ import org.jdom.Element;
 //import java.lang.reflect.Constructor;
 import java.lang.Class;
 
+import jmri.CommonTurnoutOperation;
 import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
 //import jmri.configurexml.turnoutoperations.TurnoutOperationXml;

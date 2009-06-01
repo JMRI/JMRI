@@ -9,7 +9,6 @@ import jmri.Section;
 import jmri.SectionManager;
 
 import java.util.List;
-import java.util.ArrayList;
 import org.jdom.*;
 
 /**
@@ -18,7 +17,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -36,7 +35,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         setStoreElementClass(sections);
         SectionManager tm = (SectionManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not Sections to include
@@ -44,7 +43,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
             
             // store the Section
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("Section system name is "+sname);
                 Section x = tm.getBySystemName(sname);
@@ -80,11 +79,11 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
 					b = x.getBlockBySequenceNumber(index);
 				}
                 // save child entry points
-				ArrayList epList = (ArrayList)x.getEntryPointList();
+				List<EntryPoint> epList = x.getEntryPointList();
 				Element epElem = null;
 				EntryPoint ep = null;
 				for (int i = 0; i<epList.size(); i++) {
-					ep = (EntryPoint)epList.get(i);
+					ep = epList.get(i);
 					if (ep!=null) {
 						epElem = new Element ("entrypoint");						
 						// add some protection against a reading problem
@@ -149,56 +148,57 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * invoke this with the parent of the set of Section elements.
      * @param sections Element containing the Section elements to load.
      */
-    public void loadSections(Element sections) {
-		List sectionList = sections.getChildren("section");
+    @SuppressWarnings("unchecked")
+	public void loadSections(Element sections) {
+		List<Element> sectionList = sections.getChildren("section");
         if (log.isDebugEnabled()) log.debug("Found "+sectionList.size()+" sections");
         SectionManager tm = InstanceManager.sectionManagerInstance();
 
         for (int i=0; i<sectionList.size(); i++) {
-            if ( ((Element)(sectionList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(sectionList.get(i)))+" "+
-										((Element)(sectionList.get(i))).getAttributes());
+            if (sectionList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+sectionList.get(i)+" "+
+										(sectionList.get(i)).getAttributes());
                 break;
             }
-            String sysName = ((Element)(sectionList.get(i))).getAttribute("systemName").getValue();
+            String sysName = (sectionList.get(i)).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(sectionList.get(i))).getAttribute("userName") != null) {
-                userName = ((Element)(sectionList.get(i))).getAttribute("userName").getValue();
+            if (sectionList.get(i).getAttribute("userName") != null) {
+                userName = (sectionList.get(i)).getAttribute("userName").getValue();
 			}
             Section x = tm.createNewSection(sysName, userName);
             if (x!=null) {
                 // load common part
-                loadCommon(x, ((Element)(sectionList.get(i))));
+                loadCommon(x, (sectionList.get(i)));
 				
-				if ( ((Element)(sectionList.get(i))).getAttribute("fsensorname") != null) {
-					String forName = ((Element)(sectionList.get(i))).getAttribute("fsensorname").getValue();
+				if (sectionList.get(i).getAttribute("fsensorname") != null) {
+					String forName = (sectionList.get(i)).getAttribute("fsensorname").getValue();
 					x.delayedSetForwardBlockingSensorName(forName);
 				}
-				if ( ((Element)(sectionList.get(i))).getAttribute("rsensorname") != null) {
-					String revName = ((Element)(sectionList.get(i))).getAttribute("rsensorname").getValue();
+				if (sectionList.get(i).getAttribute("rsensorname") != null) {
+					String revName = sectionList.get(i).getAttribute("rsensorname").getValue();
 					x.delayedSetReverseBlockingSensorName(revName);
 				}
-				if ( ((Element)(sectionList.get(i))).getAttribute("fstopsensorname") != null) {
-					String forName = ((Element)(sectionList.get(i))).getAttribute("fstopsensorname").getValue();
+				if (sectionList.get(i).getAttribute("fstopsensorname") != null) {
+					String forName = sectionList.get(i).getAttribute("fstopsensorname").getValue();
 					x.delayedSetForwardStoppingSensorName(forName);
 				}
-				if ( ((Element)(sectionList.get(i))).getAttribute("rstopsensorname") != null) {
-					String revName = ((Element)(sectionList.get(i))).getAttribute("rstopsensorname").getValue();
+				if (sectionList.get(i).getAttribute("rstopsensorname") != null) {
+					String revName = sectionList.get(i).getAttribute("rstopsensorname").getValue();
 					x.delayedSetReverseStoppingSensorName(revName);
 				}
 				
 				// load block entry children
-                List sectionBlockList = ((Element)(sectionList.get(i))).getChildren("blockentry");
+                List<Element> sectionBlockList = sectionList.get(i).getChildren("blockentry");
 				for (int n = 0; n<sectionBlockList.size(); n++) {
-					Element elem = (Element)sectionBlockList.get(n);
+					Element elem = sectionBlockList.get(n);
 					x.delayedAddBlock(elem.getAttribute("sName").getValue());
 // insert code here to verify sequence number if needed in the future
 				}
 				
 				// load entry point children
-               List sectionEntryPointList = ((Element)(sectionList.get(i))).getChildren("entrypoint");
+               List<Element> sectionEntryPointList = sectionList.get(i).getChildren("entrypoint");
 				for (int n = 0; n<sectionEntryPointList.size(); n++) {
-					Element elem = (Element)sectionEntryPointList.get(n);
+					Element elem = sectionEntryPointList.get(n);
 					String blockName = elem.getAttribute("toblock").getValue();
 					String fromBlockName = elem.getAttribute("fromblock").getValue();
 					String fromBlockDirection = "";

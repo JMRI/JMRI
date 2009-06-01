@@ -11,9 +11,6 @@ import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -21,7 +18,7 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -62,7 +59,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     public Object findInstance(Class c, int index) {
-        ArrayList temp = new ArrayList(plist);
+        ArrayList<Object> temp = new ArrayList<Object>(plist);
         temp.addAll(clist);
         temp.addAll(tlist);
         temp.addAll(ulist);
@@ -133,10 +130,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ulist.remove(o);
     }
 
-    ArrayList plist = new ArrayList();
-    ArrayList clist = new ArrayList();
-    ArrayList tlist = new ArrayList();
-    ArrayList ulist = new ArrayList();
+    ArrayList<Object> plist = new ArrayList<Object>();
+    ArrayList<Object> clist = new ArrayList<Object>();
+    ArrayList<Object> tlist = new ArrayList<Object>();
+    ArrayList<Object> ulist = new ArrayList<Object>();
 
     /**
      * Find the name of the adapter class for an object.
@@ -210,7 +207,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
-            java.util.Map m = new java.util.HashMap();
+            java.util.Map<String,String> m = new java.util.HashMap<String,String>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation+"panelfile.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -293,15 +290,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
-    public boolean load(File fi) {
+    @SuppressWarnings("unchecked")
+	public boolean load(File fi) {
         boolean result = true;
         try {
             Element root = super.rootFromFile(fi);
             // get the objects to load
-            List items = root.getChildren();
+            List<Element> items = root.getChildren();
             for (int i = 0; i<items.size(); i++) {
                 // get the class, hence the adapter object to do loading
-                Element item = (Element)items.get(i);
+                Element item = items.get(i);
                 String adapterName = item.getAttribute("class").getValue();
                 log.debug("load via "+adapterName);
                 try {
