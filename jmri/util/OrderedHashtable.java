@@ -6,10 +6,10 @@ import java.util.*;
  * Hashtable that preserves order for later access.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
-public class OrderedHashtable extends Hashtable {
+public class OrderedHashtable extends Hashtable<Object,Object> {
 
     public Object put(Object key, Object value) {
         keys.add(key);
@@ -21,13 +21,13 @@ public class OrderedHashtable extends Hashtable {
         return super.remove(key);
     }
     
-    public Enumeration keys() {
+    public Enumeration<Object> keys() {
         return new LocalEnumeration();
     }
     
-    ArrayList keys = new ArrayList();
+    ArrayList<Object> keys = new ArrayList<Object>();
     
-    class LocalEnumeration implements Enumeration {
+    class LocalEnumeration implements Enumeration<Object> {
         public boolean hasMoreElements() {
             return (i<keys.size());
         }

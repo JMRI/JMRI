@@ -70,7 +70,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.20 $
+  * @version     $Revision: 1.21 $
   */
 
 public class NceBinaryCommand {
@@ -126,7 +126,7 @@ public class NceBinaryCommand {
         retVal[0] = (byte) (ACC_CMD); 	//NCE accessory command
         retVal[1] = (byte) (addr_h);	//high address
         retVal[2] = (byte) (addr_l);	//low address
-        retVal[3] = (byte) (op_1);		//command
+        retVal[3] = op_1;				//command
         retVal[4] = (byte) 0; 			//zero out last byte for acc
         
         return retVal;
@@ -340,8 +340,8 @@ public class NceBinaryCommand {
         retVal[0] = (byte) (LOCO_CMD); 		//NCE Loco command
         retVal[1] = (byte) (locoAddr_h);	//loco high address
         retVal[2] = (byte) (locoAddr_l);	//loco low address
-        retVal[3] = (byte) (locoSubCmd);	//sub command
-        retVal[4] = (byte) (locoData); 		//sub data
+        retVal[3] = locoSubCmd;				//sub command
+        retVal[4] = locoData; 				//sub data
 		
 		return retVal;
 	}

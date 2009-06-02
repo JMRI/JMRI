@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -44,7 +44,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     // data members to hold contact with the property listeners
-    protected Vector propListeners = new Vector();
+    protected Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
 
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered

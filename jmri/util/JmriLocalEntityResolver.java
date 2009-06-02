@@ -2,8 +2,6 @@
 
 package jmri.util;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.io.File;
 import java.net.URI;
 
@@ -21,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 import org.xml.sax.EntityResolver;

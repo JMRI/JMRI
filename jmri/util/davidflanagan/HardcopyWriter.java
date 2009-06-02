@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -60,7 +60,7 @@ public class HardcopyWriter extends Writer {
     protected Graphics previewedPage;
     protected Image previewImage;
     protected Graphics previewImagegr;
-    protected Vector pageImages = new Vector(3,3);
+    protected Vector<Image> pageImages = new Vector<Image>(3,3);
     protected JmriJFrame previewFrame;
     protected JPanel previewPanel;
     protected ImageIcon previewIcon = new ImageIcon();
@@ -201,7 +201,7 @@ public class HardcopyWriter extends Writer {
         nextButton.setEnabled(true);
         if (pagenum == pageImages.size())nextButton.setEnabled(false);
         if (pagenum == 1) previousButton.setEnabled(false);
-        previewImage = (Image) pageImages.elementAt(pagenum-1);
+        previewImage = pageImages.elementAt(pagenum-1);
         previewFrame.setVisible(false);
         previewIcon.setImage(previewImage);
         previewLabel.setIcon(previewIcon);
@@ -412,10 +412,10 @@ public class HardcopyWriter extends Writer {
 
         //D Miller: Scale the icon slightly smaller to make page layout easier and
         //position one character to left of right margin
-        int x = x0+width- ((int) c.getWidth(null)*2/3 + charwidth);
+        int x = x0+width- (c.getWidth(null)*2/3 + charwidth);
         int y = y0+(linenum*lineheight) + lineascent;
 
-        page.drawImage(c, x, y, (int)c.getWidth(null)*2/3, (int)c.getHeight(null)*2/3, null);
+        page.drawImage(c, x, y, c.getWidth(null)*2/3, c.getHeight(null)*2/3, null);
     }
 
     /** A Method to allow a JWindow to print itself at the current line position

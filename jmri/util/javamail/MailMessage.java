@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * 
  */
 
@@ -54,8 +54,6 @@ package jmri.util.javamail;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import java.io.*;
-import java.net.InetAddress;
 import java.util.Properties;
 import java.util.Date;
 

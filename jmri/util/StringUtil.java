@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class StringUtil {
@@ -290,9 +290,9 @@ public class StringUtil {
      * @param delimiter
      * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
      */
-    public static String join(Collection s, String delimiter) {
+    public static String join(Collection<String> s, String delimiter) {
         StringBuffer buffer = new StringBuffer();
-        Iterator iter = s.iterator();
+        Iterator<String> iter = s.iterator();
         while (iter.hasNext()) {
             buffer.append(iter.next());
             if (iter.hasNext()) {

@@ -2,11 +2,8 @@
 
 package jmri.util;
 
-import javax.comm.CommPortIdentifier; 
-import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPortEventListener;
+
 
 /**
  * Common utility methods for working with Serial Ports.
@@ -18,7 +15,7 @@ import javax.comm.SerialPortEventListener;
  * method, falling back to  JavaComm 2 if necessary.
  *
  * @author Paul Bender Copyright 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SerialUtil {

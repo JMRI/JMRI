@@ -15,14 +15,14 @@ import javax.swing.event.MenuEvent;
  * and allows to bring one in front
  * <P>
  * @author	Giorgio Terdina   Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * 18-Nov-2008 GT Replaced blank menu lines, due to untitled windows, with "Untitled" string
  */
 
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 
 	private JFrame parentFrame;	// Keep note of the window containing the menu
-	private List framesList;	// Keep the list of windows, in order to find out which window was selected
+	private List<JmriJFrame> framesList;	// Keep the list of windows, in order to find out which window was selected
 
     java.util.ResourceBundle rb;
     
@@ -51,7 +51,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 
 		int framesNumber = framesList.size();
 		for (int i = 0; i < framesNumber; i++) {
-			JmriJFrame iFrame = (JmriJFrame) framesList.get(i);
+			JmriJFrame iFrame = framesList.get(i);
 			windowName = iFrame.getTitle();
 			if(windowName.equals("")) windowName = "Untitled";
 			JCheckBoxMenuItem newItem = new JCheckBoxMenuItem(new AbstractAction(windowName) {
@@ -66,7 +66,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 							i -= firstItem;
 							// Retrieve the corresponding window
 							if(i < framesList.size()) {	// "i" should always be < framesList.size(), but it's better to make sure
-								((JmriJFrame)framesList.get(i)).setVisible(true);
+								framesList.get(i).setVisible(true);
 								return;
 							}
 						}

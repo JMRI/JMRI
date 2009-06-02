@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class JmriInsets {
 
@@ -31,7 +31,7 @@ public class JmriInsets {
     
     private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc";
     
-    private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
+    //private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
     
     private static final String OS_NAME = System.getProperty("os.name");
     
@@ -69,7 +69,7 @@ public class JmriInsets {
                 Process p = Runtime.getRuntime().exec("ps ax");
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 
-                java.util.List desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|"));
+                java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|"));
                 
                 String line = r.readLine();
                 while (line != null) {

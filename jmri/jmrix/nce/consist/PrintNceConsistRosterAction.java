@@ -20,7 +20,7 @@ import java.util.List;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintNceConsistRosterAction  extends AbstractAction {
 
@@ -58,11 +58,11 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
 
         // Loop through the Roster, printing as needed
         NceConsistRoster r = NceConsistRoster.instance();
-        List l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
+        List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
         int i=-1;
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {
-            ((NceConsistRosterEntry)l.get(i)).printEntry(writer);
+            l.get(i).printEntry(writer);
         }
 
         // and force completion of the printing

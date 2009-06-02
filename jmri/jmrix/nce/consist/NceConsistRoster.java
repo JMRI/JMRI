@@ -42,7 +42,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -82,7 +82,7 @@ public class NceConsistRoster extends XmlFile {
         int i = _list.size()-1;// Last valid index
         while (i>=0) {
             // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(((NceConsistRosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
+            if (e.getId().toUpperCase().compareTo(_list.get(i).getId().toUpperCase()) > 0 )
                 break; // I can never remember whether I want break or continue here
             i--;
         }
@@ -127,22 +127,22 @@ public class NceConsistRoster extends XmlFile {
 			String consistNumber, String eng1Address, String eng2Address,
 			String eng3Address, String eng4Address, String eng5Address,
 			String eng6Address, String id) {
-        List l = matchingList(roadName, roadNumber, consistNumber, eng1Address,
+        List<NceConsistRosterEntry> l = matchingList(roadName, roadNumber, consistNumber, eng1Address,
 				eng2Address, eng3Address, eng4Address, eng5Address,
 				eng6Address, id);
         JComboBox b = new JComboBox();
         for (int i = 0; i < l.size(); i++) {
-            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = _list.get(i);
             b.addItem(r.titleString());
         }
         return b;
     }
 
     public void updateComboBox(JComboBox box) {
-        List l = matchingList(null, null, null, null, null, null, null, null, null, null);
+        List<NceConsistRosterEntry> l = matchingList(null, null, null, null, null, null, null, null, null, null);
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
-            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = _list.get(i);
             box.addItem(r.titleString());
         }
     }
@@ -152,7 +152,7 @@ public class NceConsistRoster extends XmlFile {
      */
     public NceConsistRosterEntry entryFromTitle(String title ) {
         for (int i = 0; i < numEntries(); i++) {
-            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = _list.get(i);
             if (r.titleString().equals(title)) return r;
         }
         return null;
@@ -190,7 +190,7 @@ public class NceConsistRoster extends XmlFile {
 			String consistNumber, String loco1Address, String loco2Address,
 			String loco3Address, String loco4Address, String loco5Address,
 			String loco6Address, String id ) {
-        NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
+        NceConsistRosterEntry r = _list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
         if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
@@ -242,7 +242,7 @@ public class NceConsistRoster extends XmlFile {
             //Decoder Comment fields to change any \n characters to <?p?> processor
             //directives so they can be stored in the xml file and converted
             //back when the file is read.
-            NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = _list.get(i);
             String tempComment = r.getComment();
             String xmlComment = new String();
 
@@ -266,7 +266,7 @@ public class NceConsistRoster extends XmlFile {
         root.addContent(values = new Element("roster"));
         // add entries
         for (int i=0; i<numEntries(); i++) {
-            values.addContent(((NceConsistRosterEntry)_list.get(i)).store());
+            values.addContent(_list.get(i).store());
         }
         writeXML(file, doc);
 
@@ -275,7 +275,7 @@ public class NceConsistRoster extends XmlFile {
         //Comment and Decoder comment fields, otherwise it can cause problems in
         //other parts of the program (e.g. in copying a roster)
         for (int i=0; i<numEntries(); i++){
-            NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = _list.get(i);
             String xmlComment = r.getComment();
             String tempComment = new String();
 
@@ -300,7 +300,8 @@ public class NceConsistRoster extends XmlFile {
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    @SuppressWarnings("unchecked")
+	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
         // find root
         Element root = rootFromName(name);
         if (root==null) {
@@ -311,17 +312,17 @@ public class NceConsistRoster extends XmlFile {
 
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) {
-            List l = root.getChild("roster").getChildren("consist");
+            List<Element> l = root.getChild("roster").getChildren("consist");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
-                addEntry(new NceConsistRosterEntry((Element)l.get(i)));
+                addEntry(new NceConsistRosterEntry(l.get(i)));
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < numEntries(); i++) {
                 //Get a RosterEntry object for this index
-                NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry) _list.get(i);
+                NceConsistRosterEntry r = _list.get(i);
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = r.getComment();
@@ -421,7 +422,7 @@ public class NceConsistRoster extends XmlFile {
 
         // order may be wrong! Sort
         NceConsistRosterEntry[] rarray = new NceConsistRosterEntry[_list.size()];
-        for (int i=0; i<rarray.length; i++) rarray[i] =(NceConsistRosterEntry) (_list.get(i));
+        for (int i=0; i<rarray.length; i++) rarray[i] = _list.get(i);
         jmri.util.StringUtil.sortUpperCase(rarray);
         for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
 

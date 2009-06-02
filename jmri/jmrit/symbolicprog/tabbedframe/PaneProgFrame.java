@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.74 $
+ * @version   $Revision: 1.75 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -97,8 +97,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask = 
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
                                                                   rbt.getString("PromptQuitWindowNotWrittenDecoder"), 
-                                                                  (String)null, 
-                                                                  (java.awt.Component)this
+                                                                  (String)null, this
                                                                    ){
                                                 public boolean checkPromptNeeded() {
                                                     return !checkDirtyDecoder();
@@ -108,8 +107,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (fileDirtyTask == null) fileDirtyTask = 
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
                                                                   rbt.getString("PromptQuitWindowNotWrittenConfig"), 
-                                                                  rbt.getString("PromptSaveQuit"), 
-                                                                  (java.awt.Component)this
+                                                                  rbt.getString("PromptSaveQuit"), this
                                                                    ){
                                                 public boolean checkPromptNeeded() {
                                                     return !checkDirtyFile();
@@ -336,7 +334,8 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pProgrammerFile   Name of the programmer file to use
      * @param pProg             Programmer object to be used to access CVs
      */
-    public PaneProgFrame(DecoderFile pDecoderFile, RosterEntry pRosterEntry,
+    @SuppressWarnings("unchecked")
+	public PaneProgFrame(DecoderFile pDecoderFile, RosterEntry pRosterEntry,
                         String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
 
@@ -391,12 +390,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
              && a.getValue().equals("yes")) {
             if (decoderRoot != null) {
-                List paneList = decoderRoot.getChildren("pane");
+                List<Element> paneList = decoderRoot.getChildren("pane");
                 if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
                 for (int i=0; i<paneList.size(); i++) {
                     // load each pane
-                    String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-                    newPane( pname, ((Element)(paneList.get(i))), modelElem, true);  // show even if empty??
+                    String pname = paneList.get(i).getAttribute("name").getValue();
+                    newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
                 }
             }
         }
@@ -422,7 +421,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
         // locate a decoder like that.
-        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
         if (l.size() == 0) {
             log.debug("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
@@ -431,7 +430,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
         }
         if (l.size() > 0) {
-            DecoderFile d = (DecoderFile)l.get(0);
+            DecoderFile d = l.get(0);
             loadDecoderFile(d, r);
         } else {
             if (decoderModel.equals(""))
@@ -565,10 +564,10 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
-        List l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) log.debug("Removing "+l.size()+" <new loco> entries");
         while (l.size() > 0 ) {
-            Roster.instance().removeEntry((RosterEntry)l.get(0));
+            Roster.instance().removeEntry(l.get(0));
             l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
         }
         
@@ -587,7 +586,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         super.windowClosing(e);
     }
 
-    void readConfig(Element root, RosterEntry r) {
+    @SuppressWarnings("unchecked")
+	void readConfig(Element root, RosterEntry r) {
         // check for "programmer" element at start
         Element base;
         if ( (base = root.getChild("programmer")) == null) {
@@ -602,12 +602,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
 
         // for all "pane" elements in the programmer
-        List paneList = base.getChildren("pane");
+        List<Element> paneList = base.getChildren("pane");
         if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
         for (int i=0; i<paneList.size(); i++) {
             // load each pane
-            String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-            newPane( name, ((Element)(paneList.get(i))), modelElem, false);  // dont force showing if empty
+            String name = paneList.get(i).getAttribute("name").getValue();
+            newPane( name, paneList.get(i), modelElem, false);  // dont force showing if empty
         }
     }
 

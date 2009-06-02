@@ -55,7 +55,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -996,7 +996,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		return true;
 	}
 
-	protected List consistList = new ArrayList();
+	protected List<NceConsistRosterEntry> consistList = new ArrayList<NceConsistRosterEntry>();
 
 	/**
 	 * returns true if update successful
@@ -1025,7 +1025,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			}
 			cre = new NceConsistRosterEntry();
 			NceConsistRoster.instance().addEntry(cre);
-			// roster entry exsists, does it match?
+			// roster entry exists, does it match?
 		} else {
 			cre = NceConsistRoster.instance().entryFromTitle(id);
 			// if all of the loco addresses match, just update without telling user

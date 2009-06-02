@@ -2,7 +2,6 @@
 
 package jmri.util;
 
-import javax.help.CSH;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 
@@ -22,7 +21,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class HelpUtil {

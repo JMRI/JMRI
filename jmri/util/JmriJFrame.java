@@ -9,7 +9,6 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.KeyStroke;
 
 import java.awt.*;
@@ -52,7 +51,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  * GT 28-AUG-2008 Added window menu
  */
 
@@ -97,7 +96,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         // add Window menu
 		bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
 		// add Help menu
-        JMenu menu = jmri.util.HelpUtil.helpMenu(bar, this, ref, direct);
+        jmri.util.HelpUtil.helpMenu(bar, this, ref, direct);
         setJMenuBar(bar);
     }
     
@@ -224,9 +223,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * as to which is returned.
      */
     public static JmriJFrame getFrame(String name) {
-        java.util.List list = getFrameList();  // needed to get synch copy
+        java.util.List<JmriJFrame> list = getFrameList();  // needed to get synch copy
         for (int i=0; i<list.size(); i++) {
-            JmriJFrame j = (JmriJFrame)list.get(i);
+            JmriJFrame j = list.get(i);
             if (j.getTitle().equals(name)) return j;
         }
         return null;

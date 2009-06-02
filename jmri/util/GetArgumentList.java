@@ -2,7 +2,6 @@
 
 package jmri.util;
 
-import java.io.*;
 
 /**
  * Creates the classpath and library java arguments for JMRI
@@ -14,7 +13,7 @@ import java.io.*;
  * they don't need to start the JVM twice.
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class GetArgumentList {
 

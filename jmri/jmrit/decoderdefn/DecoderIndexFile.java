@@ -32,39 +32,39 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
 
     // fill in abstract members
 
-    protected List decoderList = new ArrayList();
+    protected List<DecoderFile> decoderList = new ArrayList<DecoderFile>();
     public int numDecoders() { return decoderList.size(); }
 
     int fileVersion = -1;
 
     // map mfg ID numbers from & to mfg names
-    protected Hashtable _mfgIdFromNameHash = new Hashtable();
-    protected Hashtable _mfgNameFromIdHash = new Hashtable();
+    protected Hashtable<String,String> _mfgIdFromNameHash = new Hashtable<String,String>();
+    protected Hashtable<String,String> _mfgNameFromIdHash = new Hashtable<String,String>();
 
-    protected ArrayList mMfgNameList = new ArrayList();
+    protected ArrayList<String> mMfgNameList = new ArrayList<String>();
 
-    public List getMfgNameList() { return mMfgNameList; }
+    public List<String> getMfgNameList() { return mMfgNameList; }
 
     public String mfgIdFromName(String name) {
-        return (String)_mfgIdFromNameHash.get(name);
+        return _mfgIdFromNameHash.get(name);
     }
 
     public String mfgNameFromId(String name) {
-        return (String)_mfgNameFromIdHash.get(name);
+        return _mfgNameFromIdHash.get(name);
     }
 
     /**
      *	Get a List of decoders matching some information
      */
-    public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
-        List l = new ArrayList();
+    public List<DecoderFile> matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
+        List<DecoderFile> l = new ArrayList<DecoderFile>();
         for (int i = 0; i < numDecoders(); i++) {
             if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model )) {
                 l.add(decoderList.get(i));
@@ -78,7 +78,7 @@ public class DecoderIndexFile extends XmlFile {
      * some information
      */
     public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
-        List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model );
+        List<DecoderFile> l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model );
         return jComboBoxFromList(l);
     }
 
@@ -86,7 +86,7 @@ public class DecoderIndexFile extends XmlFile {
      * Return a JComboBox made with the titles from a list of
      * DecoderFile entries
      */
-    static public JComboBox jComboBoxFromList(List l) {
+    static public JComboBox jComboBoxFromList(List<DecoderFile> l) {
         return new JComboBox(jComboBoxModelFromList(l));
     }
 
@@ -94,10 +94,10 @@ public class DecoderIndexFile extends XmlFile {
      * Return a new ComboBoxModel made with the titles from a list of
      * DecoderFile entries
      */
-    static public javax.swing.ComboBoxModel jComboBoxModelFromList(List l) {
+    static public javax.swing.ComboBoxModel jComboBoxModelFromList(List<DecoderFile> l) {
         javax.swing.DefaultComboBoxModel b = new javax.swing.DefaultComboBoxModel();
         for (int i = 0; i < l.size(); i++) {
-            DecoderFile r = (DecoderFile)l.get(i);
+            DecoderFile r = l.get(i);
             b.addElement(r.titleString());
         }
         return b;
@@ -108,7 +108,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     public DecoderFile fileFromTitle(String title ) {
         for (int i = numDecoders()-1; i >= 0; i--) {
-            DecoderFile r = (DecoderFile)decoderList.get(i);
+            DecoderFile r = decoderList.get(i);
             if (r.titleString().equals(title)) return r;
         }
         return null;
@@ -121,7 +121,7 @@ public class DecoderIndexFile extends XmlFile {
      *
      */
     public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String decoderProductID, String model) {
-        DecoderFile r = (DecoderFile)decoderList.get(i);
+        DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) return false;
         if (family != null && !family.equals(r.getFamily())) return false;
         if (mfgID != null && !mfgID.equals(r.getMfgID())) return false;
@@ -231,7 +231,7 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // create an array of file names from decoders dir in preferences, count entries
-        ArrayList al = new ArrayList();
+        ArrayList<String> al = new ArrayList<String>();
         String[] sp = null;
         int i=0;
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+DecoderFile.fileLocation);
@@ -308,7 +308,8 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    void readMfgSection(Element decoderIndex) {
+    @SuppressWarnings("unchecked")
+	void readMfgSection(Element decoderIndex) {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
 
@@ -318,11 +319,11 @@ public class DecoderIndexFile extends XmlFile {
             a = mfgList.getAttribute("updated");
             if (a!=null) updated = a.getValue();
             
-            List l = mfgList.getChildren("manufacturer");
+            List<Element> l = mfgList.getChildren("manufacturer");
             if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
                 // handle each entry
-                Element el = (Element)l.get(i);
+                Element el = l.get(i);
                 String mfg = el.getAttribute("mfg").getValue();
                 mMfgNameList.add(mfg);
                 Attribute attr = el.getAttribute("mfgID");
@@ -334,21 +335,23 @@ public class DecoderIndexFile extends XmlFile {
         } else log.warn("no mfgList found in decoderIndexFile");
     }
 
-    void readFamilySection(Element decoderIndex) {
+    @SuppressWarnings("unchecked")
+	void readFamilySection(Element decoderIndex) {
         Element familyList = decoderIndex.getChild("familyList");
         if (familyList != null) {
 
-            List l = familyList.getChildren("family");
+            List<Element> l = familyList.getChildren("family");
             if (log.isDebugEnabled()) log.debug("readFamilySection sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
                 // handle each entry
-                Element el = (Element)l.get(i);
+                Element el = l.get(i);
                 readFamily(el);
             }
         } else log.warn("no familyList found in decoderIndexFile");
     }
 
-    void readFamily(Element family) {
+    @SuppressWarnings("unchecked")
+	void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();
         String parentLowVersID = ((attr = family.getAttribute("lowVersionID"))     != null ? attr.getValue() : null );
@@ -357,14 +360,14 @@ public class DecoderIndexFile extends XmlFile {
         String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
         String mfgID   = mfgIdFromName(mfg);
 
-        List l = family.getChildren("model");
+        List<Element> l = family.getChildren("model");
         if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
         Element modelElement;
         if (l.size()<=0) {
             log.error("Did not find at least one model in the "+familyName+" family");
             modelElement = null;
         } else {
-            modelElement = (Element)l.get(0);
+            modelElement = l.get(0);
         }
 
         // Record the family as a specific model, which allows you to select the
@@ -381,7 +384,7 @@ public class DecoderIndexFile extends XmlFile {
         // record each of the decoders
         for (int i=0; i<l.size(); i++) {
             // handle each entry by creating a DecoderFile object containing all it knows
-            Element decoder = (Element)l.get(i);
+            Element decoder = l.get(i);
             String loVersID = ( (attr = decoder.getAttribute("lowVersionID"))     != null ? attr.getValue() : parentLowVersID);
             String hiVersID = ( (attr = decoder.getAttribute("highVersionID"))     != null ? attr.getValue() : parentHighVersID);
             int numFns   = ((attr = decoder.getAttribute("numFns"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
@@ -392,10 +395,10 @@ public class DecoderIndexFile extends XmlFile {
             // and store it
             decoderList.add(df);
             // if there are additional version numbers defined, handle them too
-            List vcodes = decoder.getChildren("versionCV");
+            List<Element> vcodes = decoder.getChildren("versionCV");
             for (int j=0; j<vcodes.size(); j++) {
                 // for each versionCV element
-                Element vcv = (Element)vcodes.get(j);
+                Element vcv = vcodes.get(j);
                 String vLoVersID = ( (attr = vcv.getAttribute("lowVersionID")) != null ? attr.getValue() : loVersID);
                 String vHiVersID = ( (attr = vcv.getAttribute("highVersionID"))!= null ? attr.getValue() : hiVersID);
                 df.setVersionRange(vLoVersID, vHiVersID);
@@ -414,7 +417,7 @@ public class DecoderIndexFile extends XmlFile {
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
-        java.util.Map m = new java.util.HashMap();
+        java.util.Map<String,String> m = new java.util.HashMap<String,String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation+"DecoderID.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -440,10 +443,10 @@ public class DecoderIndexFile extends XmlFile {
         mfg.setAttribute("mfgID","999");
         mfgList.addContent(mfg);
         // start working on the rest of the entries
-        Enumeration keys = oldIndex._mfgIdFromNameHash.keys();
-        List l = new ArrayList();
+        Enumeration<String> keys = oldIndex._mfgIdFromNameHash.keys();
+        List<String> l = new ArrayList<String>();
         while (keys.hasMoreElements()) {
-            l.add((String)keys.nextElement());
+            l.add(keys.nextElement());
         }
         Object[] s = l.toArray();
         // all of the above mess was to get something we can sort into alpha order
@@ -453,7 +456,7 @@ public class DecoderIndexFile extends XmlFile {
             if (!mfgName.equals("NMRA")){
                 mfg = new Element("manufacturer");
                 mfg.setAttribute("mfg",mfgName);
-                mfg.setAttribute("mfgID",(String)oldIndex._mfgIdFromNameHash.get(mfgName));
+                mfg.setAttribute("mfgID", oldIndex._mfgIdFromNameHash.get(mfgName));
                 mfgList.addContent(mfg);
             }
         }

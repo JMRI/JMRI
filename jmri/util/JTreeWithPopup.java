@@ -5,7 +5,6 @@ package jmri.util;
 import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.event.*;
-import java.awt.*;
 
 /**
  * JTree subclass that supports a popup menu.
@@ -13,7 +12,7 @@ import java.awt.*;
  * From the 
  * <A HREF="http://www.java-tips.org/java-se-tips/javax.swing/have-a-popup-attached-to-a-jtree.html">Java Tips</a> web site.
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 class JTreeWithPopup extends JTree implements ActionListener{
@@ -55,7 +54,7 @@ class JTreeWithPopup extends JTree implements ActionListener{
             node = new DefaultMutableTreeNode("children");
             dmtn.add(node);
             // thanks to Yong Zhang for the tip for refreshing the tree structure.
-            ((DefaultTreeModel )this.getModel()).nodeStructureChanged((TreeNode)dmtn);
+            ((DefaultTreeModel )this.getModel()).nodeStructureChanged(dmtn);
         }
         if (ae.getActionCommand().equals("remove")) {
             node = (DefaultMutableTreeNode)dmtn.getParent();
@@ -63,6 +62,6 @@ class JTreeWithPopup extends JTree implements ActionListener{
             int nodeIndex=node.getIndex(dmtn); // declare an integer to hold the selected nodes index
             dmtn.removeAllChildren();          // remove any children of selected node
             node.remove(nodeIndex);            // remove the selected node, retain its siblings
-            ((DefaultTreeModel )this.getModel()).nodeStructureChanged((TreeNode)dmtn);       }
+            ((DefaultTreeModel )this.getModel()).nodeStructureChanged(dmtn);       }
     }
 }

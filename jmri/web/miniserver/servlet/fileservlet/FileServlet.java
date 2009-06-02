@@ -19,7 +19,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -37,7 +37,7 @@ public class FileServlet extends AbstractServlet {
         PrintWriter out = res.getWriter();
         
         // get input        
-        String[] inputLines = getInputLines(in);
+        getInputLines(in);
         String filename = getFilename(getRequest().substring(1)); // drop leading /
         if (log.isDebugEnabled()) log.debug("resolve to filename: "+filename);
         
