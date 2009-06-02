@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -36,7 +36,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         setStoreElementClass(memories);
         MemoryManager tm = (MemoryManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not memories to include
@@ -44,7 +44,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             
             // store the memories
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Memory m = tm.getBySystemName(sname);
@@ -95,28 +95,29 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * invoke this with the parent of the set of Memory elements.
      * @param memories Element containing the Memory elements to load.
      */
-    public void loadMemories(Element memories) {
-        List memoryList = memories.getChildren("memory");
+    @SuppressWarnings("unchecked")
+	public void loadMemories(Element memories) {
+        List<Element> memoryList = memories.getChildren("memory");
         if (log.isDebugEnabled()) log.debug("Found "+memoryList.size()+" Memory objects");
         MemoryManager tm = InstanceManager.memoryManagerInstance();
 
         for (int i=0; i<memoryList.size(); i++) {
-            if ( ((Element)(memoryList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(memoryList.get(i)))+" "+((Element)(memoryList.get(i))).getAttributes());
+            if (memoryList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+(memoryList.get(i))+" "+(memoryList.get(i)).getAttributes());
                 break;
             }
-            String sysName = ((Element)(memoryList.get(i))).getAttribute("systemName").getValue();
+            String sysName = memoryList.get(i).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(memoryList.get(i))).getAttribute("userName") != null)
-                userName = ((Element)(memoryList.get(i))).getAttribute("userName").getValue();
+            if (memoryList.get(i).getAttribute("userName") != null)
+                userName = memoryList.get(i).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create Memory: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Memory m = tm.newMemory(sysName, userName);
-            if ( ((Element)(memoryList.get(i))).getAttribute("value") != null) {
-                String value = ((Element)(memoryList.get(i))).getAttribute("value").getValue();
+            if (memoryList.get(i).getAttribute("value") != null) {
+                String value = memoryList.get(i).getAttribute("value").getValue();
                 m.setValue(value);
             }
             // load common parts
-            loadCommon(m, ((Element)(memoryList.get(i))) );
+            loadCommon(m, memoryList.get(i));
         }
     }
 

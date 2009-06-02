@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -45,7 +45,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         setStoreElementClass(signalheads);
         SignalHeadManager sm = (SignalHeadManager) o;
         if (sm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     sm.getSystemNameList().iterator();
 
             // don't return an element if there are not signalheads to include
@@ -53,7 +53,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             
             // store the signalheads
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 SignalHead sub = sm.getBySystemName(sname);
@@ -103,15 +103,16 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * invoke this with the parent of the set of SignalHead elements.
      * @param signalheads Element containing the SignalHead elements to load.
      */
-    public void loadSignalHeads(Element signalheads) {
-        SignalHeadManager sm = InstanceManager.signalHeadManagerInstance();
+    @SuppressWarnings("unchecked")
+	public void loadSignalHeads(Element signalheads) {
+        InstanceManager.signalHeadManagerInstance();
 
         // load the contents
-        List items = signalheads.getChildren();
+        List<Element> items = signalheads.getChildren();
         if (log.isDebugEnabled()) log.debug("Found "+items.size()+" signal heads");
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via "+adapterName);
             try {

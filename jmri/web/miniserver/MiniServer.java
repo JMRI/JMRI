@@ -2,7 +2,6 @@ package jmri.web.miniserver;
 
 import java.net.*;
 import java.io.*;
-import java.util.StringTokenizer;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
@@ -30,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class MiniServer extends NetworkServer {

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -33,7 +33,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         setStoreElementClass(logixs);
         LogixManager tm = (LogixManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not Logix to include
@@ -41,7 +41,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             
             // store the Logix
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("logix system name is "+sname);
                 Logix x = tm.getBySystemName(sname);
@@ -105,33 +105,34 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * invoke this with the parent of the set of Logix elements.
      * @param logixs Element containing the Logix elements to load.
      */
-    public void loadLogixs(Element logixs) {
-		List logixList = logixs.getChildren("logix");
+    @SuppressWarnings("unchecked")
+	public void loadLogixs(Element logixs) {
+		List<Element> logixList = logixs.getChildren("logix");
         if (log.isDebugEnabled()) log.debug("Found "+logixList.size()+" logixs");
         LogixManager tm = InstanceManager.logixManagerInstance();
 
         for (int i=0; i<logixList.size(); i++) {
-            if ( ((Element)(logixList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(logixList.get(i)))+" "+
-										((Element)(logixList.get(i))).getAttributes());
+            if (logixList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+logixList.get(i)+" "+
+										logixList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(logixList.get(i))).getAttribute("systemName").getValue();
+            String sysName = ((logixList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
-			boolean enabled = true;
+			//boolean enabled = true;
 			String yesno = "";
-            if ( ((Element)(logixList.get(i))).getAttribute("userName") != null) {
-                userName = ((Element)(logixList.get(i))).getAttribute("userName").getValue();
+            if (logixList.get(i).getAttribute("userName") != null) {
+                userName = logixList.get(i).getAttribute("userName").getValue();
 			}
-            if ( ((Element)(logixList.get(i))).getAttribute("enabled") != null) {
-				yesno = ((Element)(logixList.get(i))).getAttribute("enabled").getValue();
+            if (logixList.get(i).getAttribute("enabled") != null) {
+				yesno = logixList.get(i).getAttribute("enabled").getValue();
 			}				
 			if (log.isDebugEnabled()) log.debug("create logix: ("+sysName+")("+
 										(userName==null?"<null>":userName)+")");
             Logix x = tm.createNewLogix(sysName, userName);
             if (x!=null) {
                 // load common part
-                loadCommon(x, ((Element)(logixList.get(i))));
+                loadCommon(x, logixList.get(i));
                 
 				// set enabled/disabled if attribute was present
 				if ( (yesno!=null) && (!yesno.equals("")) ) {
@@ -139,18 +140,18 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
 					else if (yesno.equals("no")) x.setEnabled(false);
 				}
 				// load conditionals, if there are any
-                List logixConditionalList = ((Element)(logixList.get(i))).getChildren("logixConditional");
+                List<Element> logixConditionalList = logixList.get(i).getChildren("logixConditional");
 				if (logixConditionalList.size()>0) {
 					// add conditionals
                     for (int n=0; n<logixConditionalList.size(); n++) {
-                        if ( ((Element)(logixConditionalList.get(n))).getAttribute("systemName") == null) {
-                            log.warn("unexpected null in systemName "+((Element)(logixConditionalList.get(n)))+
-                                                " "+((Element)(logixConditionalList.get(n))).getAttributes());
+                        if (logixConditionalList.get(n).getAttribute("systemName") == null) {
+                            log.warn("unexpected null in systemName "+logixConditionalList.get(n)+
+                                                " "+logixConditionalList.get(n).getAttributes());
                             break;
                         }
-                        String cSysName = ((Element)(logixConditionalList.get(n)))
+                        String cSysName = logixConditionalList.get(n)
                                                             .getAttribute("systemName").getValue();
-                        int cOrder = Integer.parseInt(((Element)(logixConditionalList.get(n)))
+                        int cOrder = Integer.parseInt(logixConditionalList.get(n)
                                                             .getAttribute("order").getValue());
 						// add conditional to logix
 						x.addConditional(cSysName,cOrder);

@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -37,14 +37,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         setStoreElementClass(conditionals);
         ConditionalManager tm = (ConditionalManager) o;
         if (tm!=null) {
-            java.util.Iterator iter = tm.getSystemNameList().iterator();
+            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
             
             // don't return an element if there are not conditionals to include
             if (!iter.hasNext()) return null;
             
             // store the conditionals
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("conditional system name is "+sname);
                 Conditional c = tm.getBySystemName(sname);
@@ -83,9 +83,9 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(vElem);
                 }
 				// save action information
-                ArrayList actionList = c.getCopyOfActions();
+                ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
 				for (int k=0; k < actionList.size(); k++) {
-                    ConditionalAction action = (ConditionalAction)actionList.get(k);
+                    ConditionalAction action = actionList.get(k);
 					Element aElem = new Element("conditionalAction");
 					aElem.setAttribute("option",Integer.toString(action.getOption()));
 					aElem.setAttribute("type",Integer.toString(action.getType()));
@@ -140,22 +140,23 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * invoke this with the parent of the set of Logix elements.
      * @param conditionals Element containing the Logix elements to load.
      */
-    public void loadConditionals(Element conditionals) {
-		List conditionalList = conditionals.getChildren("conditional");
+    @SuppressWarnings("unchecked")
+	public void loadConditionals(Element conditionals) {
+		List<Element> conditionalList = conditionals.getChildren("conditional");
         if (log.isDebugEnabled()) log.debug("Found "+conditionalList.size()+" conditionals");
         ConditionalManager tm = InstanceManager.conditionalManagerInstance();
 
         for (int i=0; i<conditionalList.size(); i++) {
-            if ( ((Element)(conditionalList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(conditionalList.get(i)))+
-									" "+((Element)(conditionalList.get(i))).getAttributes());
+            if (conditionalList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+conditionalList.get(i)+
+									" "+conditionalList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(conditionalList.get(i))).getAttribute("systemName").
+            String sysName = conditionalList.get(i).getAttribute("systemName").
 																				getValue();
             String userName = null;
-            if ( ((Element)(conditionalList.get(i))).getAttribute("userName") != null)
-                userName = ((Element)(conditionalList.get(i))).getAttribute("userName").
+            if (conditionalList.get(i).getAttribute("userName") != null)
+                userName = conditionalList.get(i).getAttribute("userName").
 																				getValue();
 				
 			if (log.isDebugEnabled()) log.debug("create conditional: ("+sysName+")("+
@@ -163,23 +164,23 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             Conditional c = tm.createNewConditional(sysName, userName);
             if (c!=null) {
                 // load common parts
-                loadCommon(c, (Element)(conditionalList.get(i)));
+                loadCommon(c, conditionalList.get(i));
 
                 String ant = "";
                 int logicType = Conditional.ALL_AND;
-                if (((Element)(conditionalList.get(i))).getAttribute("antecedent") != null)
+                if (conditionalList.get(i).getAttribute("antecedent") != null)
                 {
-                    ant = ((Element)(conditionalList.get(i))).getAttribute("antecedent").getValue();
+                    ant = conditionalList.get(i).getAttribute("antecedent").getValue();
                 }
-                if (((Element)(conditionalList.get(i))).getAttribute("logicType") != null)
+                if (conditionalList.get(i).getAttribute("logicType") != null)
                 {
                     logicType = Integer.parseInt(
-                        ((Element)(conditionalList.get(i))).getAttribute("logicType").getValue());
+                        conditionalList.get(i).getAttribute("logicType").getValue());
                 }
                 c.setLogicType(logicType, ant);
                 
 				// load state variables, if there are any
-                List conditionalVarList = ((Element)(conditionalList.get(i))).
+                List<Element> conditionalVarList = conditionalList.get(i).
 												getChildren("conditionalStateVariable");
 
 				if (conditionalVarList.size() == 0) {
@@ -189,11 +190,11 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 for (int n=0; n<conditionalVarList.size(); n++)
                 {
                     ConditionalVariable variable = new ConditionalVariable();
-                    if ( ((Element)(conditionalVarList.get(n))).getAttribute("operator") == null) {
-                        log.warn("unexpected null in operator "+((Element)(conditionalVarList.get(n)))+
-                            " "+((Element)(conditionalVarList.get(n))).getAttributes());
+                    if (conditionalVarList.get(n).getAttribute("operator") == null) {
+                        log.warn("unexpected null in operator "+conditionalVarList.get(n)+
+                            " "+conditionalVarList.get(n).getAttributes());
                     } else {
-                        int oper = Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                        int oper = Integer.parseInt(conditionalVarList.get(n)
                                                         .getAttribute("operator").getValue());
                         if (oper == Conditional.OPERATOR_AND_NOT) {
                             variable.setNegation(true);
@@ -204,32 +205,32 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         }
                         variable.setOpern(oper);
                     }
-                    if ( ((Element)(conditionalVarList.get(n))).getAttribute("negated") != null) {
-                        if ("yes".equals(((Element)(conditionalVarList.get(n)))
+                    if (conditionalVarList.get(n).getAttribute("negated") != null) {
+                        if ("yes".equals(conditionalVarList.get(n)
                                                 .getAttribute("negated").getValue()))
                             variable.setNegation(true);
                         else
                             variable.setNegation(false);
                      }
-                    variable.setType(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                    variable.setType(Integer.parseInt(conditionalVarList.get(n)
                                                     .getAttribute("type").getValue()));
-                    variable.setName(((Element)(conditionalVarList.get(n)))
+                    variable.setName(conditionalVarList.get(n)
                                                     .getAttribute("systemName").getValue());
-                    if (((Element)(conditionalVarList.get(n))).getAttribute("dataString") != null) {
-                        variable.setDataString(((Element)(conditionalVarList.get(n)))
+                    if (conditionalVarList.get(n).getAttribute("dataString") != null) {
+                        variable.setDataString(conditionalVarList.get(n)
                                                         .getAttribute("dataString").getValue());
                     }
-                    if (((Element)(conditionalVarList.get(n))).getAttribute("num1") != null) {
-                        variable.setNum1(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                    if (conditionalVarList.get(n).getAttribute("num1") != null) {
+                        variable.setNum1(Integer.parseInt(conditionalVarList.get(n)
                                                         .getAttribute("num1").getValue()));
                     }
-                    if (((Element)(conditionalVarList.get(n))).getAttribute("num2") != null) {
-                        variable.setNum2(Integer.parseInt(((Element)(conditionalVarList.get(n)))
+                    if (conditionalVarList.get(n).getAttribute("num2") != null) {
+                        variable.setNum2(Integer.parseInt(conditionalVarList.get(n)
                                                         .getAttribute("num2").getValue()));
                     }
                     variable.setTriggerActions(true);
-                    if (((Element)(conditionalVarList.get(n))).getAttribute("triggersCalc") != null) {
-                        if ("no".equals(((Element)(conditionalVarList.get(n)))
+                    if (conditionalVarList.get(n).getAttribute("triggersCalc") != null) {
+                        if ("no".equals(conditionalVarList.get(n)
                                                 .getAttribute("triggersCalc").getValue()))
                             variable.setTriggerActions(false);
                     }
@@ -238,7 +239,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 c.setStateVariables(variableList);
 
 				// load actions - there better be some
-                List conditionalActionList = ((Element)(conditionalList.get(i))).
+                List<Element> conditionalActionList = conditionalList.get(i).
 												getChildren("conditionalAction");
 
 				if (conditionalActionList.size() == 0) {
@@ -249,47 +250,47 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 for (int n=0; n<conditionalActionList.size(); n++)
                 {
                     ConditionalAction action = new DefaultConditionalAction();
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("option");
+                    attr = conditionalActionList.get(n).getAttribute("option");
                     if ( attr != null) {
                         action.setOption(Integer.parseInt(attr.getValue()));
                     }
                     else {
-                        log.warn("unexpected null in option "+((Element)(conditionalActionList.get(n)))+
-                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                        log.warn("unexpected null in option "+conditionalActionList.get(n)+
+                            " "+conditionalActionList.get(n).getAttributes());
                     }
                     // actionDelay is removed.  delay data is stored as a String to allow
                     // such data be referenced by internal memory.
                     // For backward compatibility, set delay "int" as a string
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("delay");
+                    attr = conditionalActionList.get(n).getAttribute("delay");
                     if (attr != null)
                     {
                         action.setActionString(attr.getValue());
                     }
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("type");
+                    attr = conditionalActionList.get(n).getAttribute("type");
                     if ( attr != null) {
                         action.setType(Integer.parseInt(attr.getValue()));
                     }
                     else {
-                        log.warn("unexpected null in type "+((Element)(conditionalActionList.get(n)))+
-                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                        log.warn("unexpected null in type "+conditionalActionList.get(n)+
+                            " "+conditionalActionList.get(n).getAttributes());
                     }
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("systemName");
+                    attr = conditionalActionList.get(n).getAttribute("systemName");
                     if ( attr != null) {
                         action.setDeviceName(attr.getValue());
                     }
                     else {
-                        log.warn("unexpected null in systemName "+((Element)(conditionalActionList.get(n)))+
-                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                        log.warn("unexpected null in systemName "+conditionalActionList.get(n)+
+                            " "+conditionalActionList.get(n).getAttributes());
                     }
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("data");
+                    attr = conditionalActionList.get(n).getAttribute("data");
                     if ( attr != null) {
                         action.setActionData(Integer.parseInt(attr.getValue()));
                     }
                     else {
-                        log.warn("unexpected null in action data "+((Element)(conditionalActionList.get(n)))+
-                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                        log.warn("unexpected null in action data "+conditionalActionList.get(n)+
+                            " "+conditionalActionList.get(n).getAttributes());
                     }
-                    attr = ((Element)(conditionalActionList.get(n))).getAttribute("string");
+                    attr = conditionalActionList.get(n).getAttribute("string");
                     if ( attr != null) {
                         String str = attr.getValue().trim();
                         if (str.length() > 0 )
@@ -298,8 +299,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         }
                     }
                     else {
-                        log.warn("unexpected null in action string "+((Element)(conditionalActionList.get(n)))+
-                            " "+((Element)(conditionalActionList.get(n))).getAttributes());
+                        log.warn("unexpected null in action string "+conditionalActionList.get(n)+
+                            " "+conditionalActionList.get(n).getAttributes());
                     }
                     actionList.add(action);
                 }

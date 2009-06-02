@@ -11,7 +11,7 @@ import java.io.BufferedReader;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 @SuppressWarnings("deprecation")
@@ -75,7 +75,7 @@ public class MiniServletRequest implements javax.servlet.ServletRequest {
         return -1;
     }
     
-    public java.util.Enumeration getAttributeNames() {
+    public java.util.Enumeration<String> getAttributeNames() {
         reportUnimplemented("getAttributeNames");
         return null;
     }
@@ -95,7 +95,7 @@ public class MiniServletRequest implements javax.servlet.ServletRequest {
         return null;
     }
     
-    public java.util.Enumeration getParameterNames() {
+    public java.util.Enumeration<String> getParameterNames() {
         reportUnimplemented("getParameterNames");
         return null;
     }
@@ -110,7 +110,7 @@ public class MiniServletRequest implements javax.servlet.ServletRequest {
         return null;
     }
     
-    public java.util.Enumeration getLocales() {
+    public java.util.Enumeration<String> getLocales() {
         reportUnimplemented("getLocales");
         return null;
     }

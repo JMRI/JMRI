@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -257,7 +257,6 @@ public class JmriJFrameServlet implements Servlet {
                                     frame.getContentPane().getHeight(), 
                                     BufferedImage.TYPE_INT_RGB);
             frame.getContentPane().paint(image.createGraphics());
-            File file;
             
             // send the image as a png, "jpg" also available
             ImageIO.write(image, "png", out);

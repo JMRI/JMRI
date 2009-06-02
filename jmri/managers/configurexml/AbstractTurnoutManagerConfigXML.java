@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -46,7 +46,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         	TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
         	Element opElem = tomx.store(TurnoutOperationManager.getInstance());
         	turnouts.addContent(opElem);
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not turnouts to include
@@ -54,7 +54,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             
             // store the turnouts
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Turnout t = tm.getBySystemName(sname);
@@ -153,21 +153,22 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * invoke this with the parent of the set of Turnout elements.
      * @param turnouts Element containing the Turnout elements to load.
      */
-    public void loadTurnouts(Element turnouts) {
-    	List operationList = turnouts.getChildren("operations");
+    @SuppressWarnings("unchecked")
+	public void loadTurnouts(Element turnouts) {
+    	List<Element> operationList = turnouts.getChildren("operations");
     	if (operationList.size()>1) {
     		log.warn("unexpected extra elements found in turnout operations list");
     	}
     	if (operationList.size()>0) {
     		TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-    		tomx.load((Element)operationList.get(0));
+    		tomx.load(operationList.get(0));
     	}
-    	List turnoutList = turnouts.getChildren("turnout");
+    	List<Element> turnoutList = turnouts.getChildren("turnout");
     	if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
     	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
 
         for (int i=0; i<turnoutList.size(); i++) {
-            Element elem = (Element)(turnoutList.get(i));
+            Element elem = turnoutList.get(i);
             if ( elem.getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+elem+" "+elem.getAttributes());
                 break;
@@ -203,13 +204,13 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             t.setInverted(getAttributeBool(elem, "inverted", false));
              
             // check for turnout decoder
-            a = ((Element)(turnoutList.get(i))).getAttribute("decoder");
+            a = turnoutList.get(i).getAttribute("decoder");
             if (a!=null) { 
             	t.setDecoderName(a.getValue());
             }
             
             // check for turnout lock mode
-			a = ((Element) (turnoutList.get(i))).getAttribute("lockMode");
+			a = turnoutList.get(i).getAttribute("lockMode");
 			if (a != null) {
 				if (a.getValue().equals("both"))
 					t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
@@ -224,13 +225,13 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			}
             
             // check for turnout locked
-            a = ((Element)(turnoutList.get(i))).getAttribute("locked");
+            a = turnoutList.get(i).getAttribute("locked");
             if (a!=null) { 
             	t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, a.getValue().equals("true"));
             }
  			
 			// number of bits, if present - if not, defaults to 1
-			a = ((Element)(turnoutList.get(i))).getAttribute("numBits");
+			a = turnoutList.get(i).getAttribute("numBits");
 			if (a==null) {
 				t.setNumberOutputBits(1);
 			}
@@ -246,7 +247,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			}
 			
 			// control type, if present - if not, defaults to 0
-			a = ((Element)(turnoutList.get(i))).getAttribute("controlType");
+			a = turnoutList.get(i).getAttribute("controlType");
 			if (a==null) {
 				t.setControlType(0);
 			}
@@ -262,15 +263,15 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			}
 			
             // operation stuff
-            List myOpList = ((Element)turnoutList.get(i)).getChildren("operation");
+            List<Element> myOpList = turnoutList.get(i).getChildren("operation");
             if (myOpList.size()>0) {
             	if (myOpList.size()>1) {
             		log.warn("unexpected extra elements found in turnout-specific operations");
             	}
-            	TurnoutOperation toper = TurnoutOperationXml.loadOperation((Element)myOpList.get(0));
+            	TurnoutOperation toper = TurnoutOperationXml.loadOperation(myOpList.get(0));
         		t.setTurnoutOperation(toper);
             } else {
-            	a = ((Element)(turnoutList.get(i))).getAttribute("automate");
+            	a = turnoutList.get(i).getAttribute("automate");
             	if (a!=null) {
             		String str = a.getValue();
             		if (str.equals("Off")) {

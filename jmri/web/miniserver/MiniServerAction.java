@@ -5,7 +5,6 @@ package jmri.web.miniserver;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 
@@ -13,7 +12,7 @@ import java.io.*;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class MiniServerAction extends AbstractAction {
 

@@ -19,13 +19,13 @@ import jmri.util.SystemNameComparator;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AbstractProxyManager implements Manager {
 
     public void dispose() {
         for (int i=0; i<mgrs.size(); i++)
-            ( (Manager)mgrs.get(i)).dispose();
+            mgrs.get(i).dispose();
         mgrs.clear();
     }
 
@@ -39,8 +39,8 @@ public class AbstractProxyManager implements Manager {
         char systemLetter = systemName.charAt(0);
 
         for (int i = 0; i<mgrs.size(); i++)
-             if ( systemLetter == ((Manager)mgrs.get(i)).systemLetter()) {
-                ((Manager)mgrs.get(i)).register(s);
+             if ( systemLetter == (mgrs.get(i)).systemLetter()) {
+                (mgrs.get(i)).register(s);
                 return;
             }
     }
@@ -55,19 +55,19 @@ public class AbstractProxyManager implements Manager {
         char systemLetter = systemName.charAt(0);
 
         for (int i = 0; i<mgrs.size(); i++)
-             if ( systemLetter == ((Manager)mgrs.get(i)).systemLetter()) {
-                ((Manager)mgrs.get(i)).deregister(s);
+             if ( systemLetter == (mgrs.get(i)).systemLetter()) {
+                (mgrs.get(i)).deregister(s);
                 return;
             }
     }
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i<mgrs.size(); i++)
-            ((Manager)mgrs.get(i)).addPropertyChangeListener(l);
+            (mgrs.get(i)).addPropertyChangeListener(l);
     }
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i<mgrs.size(); i++)
-            ((Manager)mgrs.get(i)).removePropertyChangeListener(l);
+            (mgrs.get(i)).removePropertyChangeListener(l);
     }
 
     /**
@@ -75,7 +75,7 @@ public class AbstractProxyManager implements Manager {
      */
     public char systemLetter() {
 	try {
-          return ((Manager)mgrs.get(0)).systemLetter();
+          return (mgrs.get(0)).systemLetter();
         } catch(IndexOutOfBoundsException ie) {
           return '\0';
         }
@@ -85,26 +85,26 @@ public class AbstractProxyManager implements Manager {
      * @return The type letter for turnouts
      */
     public char typeLetter() {
-        return ((Manager)mgrs.get(0)).typeLetter();
+        return (mgrs.get(0)).typeLetter();
     }
 
     /**
      * @return A system name from a user input, typically a number.
      */
     public String makeSystemName(String s) {
-        return ((Manager)mgrs.get(0)).makeSystemName(s);
+        return (mgrs.get(0)).makeSystemName(s);
     }
 
     public String[] getSystemNameArray() {
-        TreeSet ts = new TreeSet(new SystemNameComparator());
+        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
         for (int i = 0; i<mgrs.size(); i++) {
-            ts.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
+            ts.addAll( (mgrs.get(i)).getSystemNameList() );
         }
         String[] arr = new String[ts.size()];
-        Iterator it = ts.iterator();
+        Iterator<String> it = ts.iterator();
         int i=0;
         while(it.hasNext()) {
-            arr[i++] = (String)it.next();
+            arr[i++] = it.next();
         }
         return arr;
     }
@@ -112,15 +112,15 @@ public class AbstractProxyManager implements Manager {
     /**
      * Get a list of all system names.
      */
-    public List getSystemNameList() {
-        TreeSet ts = new TreeSet(new SystemNameComparator());
+    public List<String> getSystemNameList() {
+        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
         for (int i = 0; i<mgrs.size(); i++) {
-            ts.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
+            ts.addAll(mgrs.get(i).getSystemNameList());
         }
-        return new ArrayList(ts);
+        return new ArrayList<String>(ts);
     }
 
-    List mgrs = new ArrayList();
+    List<Manager> mgrs = new ArrayList<Manager>();
 
     public void addManager(Manager m) {
         mgrs.add(m);

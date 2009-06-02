@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.26 $
+ * @version         $Revision: 1.27 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -45,14 +45,14 @@ public class ProgDebugger implements Programmer  {
      */
     public int getCvVal(int cv) {
         // try to get something from hash table
-        Integer saw = ((Integer)mValues.get(new Integer(cv)));
+        Integer saw = (mValues.get(new Integer(cv)));
         if (saw!=null) return saw.intValue();
         log.warn("CV "+cv+" has no defined value");
         return -1;
     }
     
     // write CV values are remembered for later reads
-    Hashtable mValues = new Hashtable();
+    Hashtable<Integer,Integer> mValues = new Hashtable<Integer,Integer>();
 
     public String decodeErrorCode(int i) {
         log.debug("decoderErrorCode "+i);
@@ -93,7 +93,7 @@ public class ProgDebugger implements Programmer  {
         final ProgListener m = p;
         
         // guess by comparing current value in val to has table
-        Integer saw = ((Integer)mValues.get(new Integer(CV)));
+        Integer saw = mValues.get(new Integer(CV));
         int result = -1; // what was read
         if (saw!=null) { 
             result = saw.intValue();
@@ -125,7 +125,7 @@ public class ProgDebugger implements Programmer  {
         _lastReadCv = CV;
 
         // try to get something from hash table
-        Integer saw = ((Integer)mValues.get(new Integer(CV)));
+        Integer saw = mValues.get(new Integer(CV));
         if (saw!=null) _nextRead = saw.intValue();
 
         log.info("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
@@ -162,7 +162,7 @@ public class ProgDebugger implements Programmer  {
     public boolean getCanRead() { return true; }
 
     // data members to hold contact with the property listeners
-    private Vector propListeners = new Vector();
+    private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
 
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
@@ -179,15 +179,15 @@ public class ProgDebugger implements Programmer  {
 
     protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<PropertyChangeListener> v;
         synchronized(this)
             {
-                v = (Vector) propListeners.clone();
+                v = (Vector)propListeners.clone();
             }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }

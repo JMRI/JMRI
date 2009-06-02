@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -40,7 +40,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(lights);
         LightManager tm = (LightManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not lights to include
@@ -48,7 +48,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             
             // store the lights
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Light lgt = tm.getBySystemName(sname);
@@ -115,32 +115,33 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * invoke this with the parent of the set of Light elements.
      * @param lights Element containing the Light elements to load.
      */
-    public void loadLights(Element lights) {
-        List lightList = lights.getChildren("light");
+    @SuppressWarnings("unchecked")
+	public void loadLights(Element lights) {
+        List<Element> lightList = lights.getChildren("light");
         if (log.isDebugEnabled()) log.debug("Found "+lightList.size()+" lights");
         LightManager tm = InstanceManager.lightManagerInstance();
 
         for (int i=0; i<lightList.size(); i++) {
-            if ( ((Element)(lightList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(lightList.get(i)))+" "+((Element)(lightList.get(i))).getAttributes());
+            if (lightList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+ lightList.get(i)+" "+ lightList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(lightList.get(i))).getAttribute("systemName").getValue();
+            String sysName = lightList.get(i).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(lightList.get(i))).getAttribute("userName") != null)
-                userName = ((Element)(lightList.get(i))).getAttribute("userName").getValue();
+            if (lightList.get(i).getAttribute("userName") != null)
+                userName = lightList.get(i).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create light: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Light lgt = tm.newLight(sysName, userName);
             if (lgt!=null) {
                 // load common parts
-                loadCommon(lgt, ((Element)(lightList.get(i))));
+                loadCommon(lgt, lightList.get(i));
                 
-                String temString = ((Element)(lightList.get(i))).getAttribute("controlType").getValue();
+                String temString = lightList.get(i).getAttribute("controlType").getValue();
                 int type = Integer.parseInt(temString);
                 lgt.setControlType(type);
                 if (type==Light.SENSOR_CONTROL) {
-                    lgt.setControlSensor(((Element)(lightList.get(i))).
+                    lgt.setControlSensor(lightList.get(i).
                                             getAttribute("controlSensor").getValue() );
 					// check for valid sensor name
 					if (lgt.getControlSensorName().length()<1) {
@@ -148,23 +149,23 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 						log.warn ("invalid sensor name when loading light - "+sysName);
 					}
 					else {
-						lgt.setControlSensorSense( Integer.parseInt(((Element)(lightList.get(i))).
-                                                    getAttribute("sensorSense").getValue()) );
+						lgt.setControlSensorSense( Integer.parseInt(lightList.get(i).
+                                                    getAttribute("sensorSense").getValue()));
 					}
                 }
                 else if (type==Light.FAST_CLOCK_CONTROL) {
-                    int onHour = Integer.parseInt(((Element)(lightList.get(i))).
+                    int onHour = Integer.parseInt(lightList.get(i).
                                                 getAttribute("fastClockOnHour").getValue());
-                    int onMin = Integer.parseInt(((Element)(lightList.get(i))).
+                    int onMin = Integer.parseInt(lightList.get(i).
                                                 getAttribute("fastClockOnMin").getValue());
-                    int offHour = Integer.parseInt(((Element)(lightList.get(i))).
+                    int offHour = Integer.parseInt(lightList.get(i).
                                                 getAttribute("fastClockOffHour").getValue());
-                    int offMin = Integer.parseInt(((Element)(lightList.get(i))).
+                    int offMin = Integer.parseInt(lightList.get(i).
                                                 getAttribute("fastClockOffMin").getValue());
                     lgt.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
                 }
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    lgt.setControlTurnout(((Element)(lightList.get(i))).
+                    lgt.setControlTurnout(lightList.get(i).
                                             getAttribute("controlTurnout").getValue());
 					// check for valid turnout name
 					if (lgt.getControlTurnoutName().length()<1) {
@@ -172,39 +173,39 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 						log.warn ("invalid turnout name when loading light - "+sysName);
 					}
 					else {
-						lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
-                                                    getAttribute("turnoutState").getValue()) );
+						lgt.setControlTurnoutState(Integer.parseInt(lightList.get(i).
+                                                    getAttribute("turnoutState").getValue()));
 					}
                 }
                 else if (type==Light.TIMED_ON_CONTROL) {
-                    lgt.setControlTimedOnSensor(((Element)(lightList.get(i))).
-                                            getAttribute("timedControlSensor").getValue() );
+                    lgt.setControlTimedOnSensor(lightList.get(i).
+                                            getAttribute("timedControlSensor").getValue());
 					// check for valid sensor name
 					if (lgt.getControlTimedOnSensorName().length()<1) {
 						lgt.setControlType(Light.NO_CONTROL);
 						log.warn ("invalid timed on sensor name when loading light - "+sysName);
 					}
 					else {
-						lgt.setTimedOnDuration( Integer.parseInt(((Element)(lightList.get(i))).
-                                                    getAttribute("duration").getValue()) );
+						lgt.setTimedOnDuration( Integer.parseInt(lightList.get(i).
+                                                    getAttribute("duration").getValue()));
 					}
                 }
                 // variable intensity, transition attributes
                 double value = 0.0;
                 try {
-                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minIntensity").getValue());
+                    value = Double.parseDouble(lightList.get(i).getAttribute("minIntensity").getValue());
                 } catch (Exception e1) {}
                 lgt.setMinIntensity(value);
 
                 value = 1.0;
                 try {
-                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxIntensity").getValue());
+                    value = Double.parseDouble(lightList.get(i).getAttribute("maxIntensity").getValue());
                 } catch (Exception e2) {}
                 lgt.setMaxIntensity(value);
 
                 value = 0.0;
                 try {
-                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("transitionTime").getValue());
+                    value = Double.parseDouble(lightList.get(i).getAttribute("transitionTime").getValue());
                 } catch (Exception e2) {}
                 lgt.setTransitionTime(value);
                 

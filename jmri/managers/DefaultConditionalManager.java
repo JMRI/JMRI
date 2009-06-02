@@ -27,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -135,10 +135,10 @@ public class DefaultConditionalManager extends AbstractManager
     public Conditional getByUserName(String key) {
         if (key == null)  return null;
         jmri.LogixManager logixManager = InstanceManager.logixManagerInstance();
-        Iterator iter = logixManager.getSystemNameList().iterator();
+        Iterator<String> iter = logixManager.getSystemNameList().iterator();
         while (iter.hasNext()) {
             // get the next Logix
-            String sName = (String)iter.next();     //sName a logix nams
+            String sName = iter.next();     //sName a logix nams
 			Logix x = logixManager.getBySystemName(sName);
             if (x == null) {
 				break;
@@ -182,7 +182,7 @@ public class DefaultConditionalManager extends AbstractManager
 	/**
 	 * Get a list of all Conditional system names with the specified Logix parent
 	 */
-	public List getSystemNameListForLogix(Logix x) {
+	public List<String> getSystemNameListForLogix(Logix x) {
 		log.error("getSystemNameListForLogix - Not implemented yet.");
 		return null;
 	}

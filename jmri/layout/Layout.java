@@ -4,13 +4,13 @@ import java.util.TreeMap;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class Layout implements LayoutEventListener, LayoutEventInterface
 {
-    private TreeMap         mElementMap = new TreeMap() ;
-    private LayoutElement   mRootElement = new LayoutElement( "Layouts", null ) ;
+    private TreeMap<String,LayoutElement> mElementMap = new TreeMap<String,LayoutElement>() ;
+    private LayoutElement mRootElement = new LayoutElement( "Layouts", null ) ;
 
     public Layout( String pHostname )
     {
@@ -32,7 +32,7 @@ public class Layout implements LayoutEventListener, LayoutEventInterface
     public void message( LayoutEventData pLayoutEvent )
     {
         LayoutAddress vAddress = pLayoutEvent.getLayoutAddress() ;
-        LayoutElement vElement = (LayoutElement)mElementMap.get( vAddress ) ;
+        LayoutElement vElement = mElementMap.get( vAddress ) ;
         if( vElement == null )
         {
             LayoutElement vParentElement = mRootElement ;

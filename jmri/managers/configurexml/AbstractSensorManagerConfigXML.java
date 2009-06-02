@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -37,7 +37,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         setStoreElementClass(sensors);
         SensorManager tm = (SensorManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not sensors to include
@@ -45,7 +45,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             
             // store the sensors
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Sensor s = tm.getBySystemName(sname);
@@ -88,32 +88,33 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * invoke this with the parent of the set of Sensor elements.
      * @param sensors Element containing the Sensor elements to load.
      */
-    public void loadSensors(Element sensors) {
-        List sensorList = sensors.getChildren("sensor");
+    @SuppressWarnings("unchecked")
+	public void loadSensors(Element sensors) {
+        List<Element> sensorList = sensors.getChildren("sensor");
         if (log.isDebugEnabled()) log.debug("Found "+sensorList.size()+" sensors");
         SensorManager tm = InstanceManager.sensorManagerInstance();
 
         for (int i=0; i<sensorList.size(); i++) {
-            if ( ((Element)(sensorList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(sensorList.get(i)))+" "+((Element)(sensorList.get(i))).getAttributes());
+            if (sensorList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+sensorList.get(i)+" "+sensorList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(sensorList.get(i))).getAttribute("systemName").getValue();
+            String sysName = sensorList.get(i).getAttribute("systemName").getValue();
             boolean inverted = false;
             
             String userName = null;
-            if ( ((Element)(sensorList.get(i))).getAttribute("userName") != null)
-                userName = ((Element)(sensorList.get(i))).getAttribute("userName").getValue();
+            if (sensorList.get(i).getAttribute("userName") != null)
+                userName = sensorList.get(i).getAttribute("userName").getValue();
 
-            if ( ((Element)(sensorList.get(i))).getAttribute("inverted") != null)
-                if (((Element)(sensorList.get(i))).getAttribute("inverted").getValue().equals("true"))
+            if (sensorList.get(i).getAttribute("inverted") != null)
+                if (sensorList.get(i).getAttribute("inverted").getValue().equals("true"))
                     inverted = true;
 
             if (log.isDebugEnabled()) log.debug("create sensor: ("+sysName+")");
             Sensor s = tm.newSensor(sysName, userName);
 
             // load common parts
-            loadCommon(s, ((Element)(sensorList.get(i))));
+            loadCommon(s, sensorList.get(i));
             
             s.setInverted(inverted);
         }

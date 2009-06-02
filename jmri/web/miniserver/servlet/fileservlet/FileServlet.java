@@ -1,9 +1,7 @@
 package jmri.web.miniserver.servlet.fileservlet;
 
 import java.io.*;
-import java.util.StringTokenizer;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -21,7 +19,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class FileServlet extends AbstractServlet {

@@ -4,7 +4,6 @@ package jmri;
 
 import java.io.File;
 
-import jmri.jmrix.ConnectionConfig;
 
 /**
  * Provide load/store capabilities for general configuration.
@@ -45,7 +44,7 @@ import jmri.jmrix.ConnectionConfig;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */

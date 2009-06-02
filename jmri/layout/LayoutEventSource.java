@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 /**
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutEventSource implements LayoutEventInterface
 {
-    private ArrayList   mListeners = new ArrayList() ;
+    private ArrayList<LayoutEventListener> mListeners = new ArrayList<LayoutEventListener>() ;
 
     public LayoutEventSource()
     {

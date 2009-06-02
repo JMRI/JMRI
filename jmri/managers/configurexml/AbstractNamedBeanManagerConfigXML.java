@@ -17,7 +17,7 @@ import org.jdom.Attribute;
  * to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML implements jmri.configurexml.XmlAdapter {
@@ -84,8 +84,8 @@ public abstract class AbstractNamedBeanManagerConfigXML implements jmri.configur
      * @param beanList List, where each entry is an Element
      * @param i index of Element in list to examine
      */
-    String getUserName(List beanList, int i) {
-        return getUserName((Element)(beanList.get(i)));
+    String getUserName(List<Element> beanList, int i) {
+        return getUserName(beanList.get(i));
     }
     
     /**
@@ -107,8 +107,8 @@ public abstract class AbstractNamedBeanManagerConfigXML implements jmri.configur
      * @param beanList List, where each entry is an Element
      * @param i index of Element in list to examine
      */
-    void loadComment(NamedBean t, List beanList, int i) {
-        loadComment(t, (Element)(beanList.get(i)));
+    void loadComment(NamedBean t, List<Element> beanList, int i) {
+        loadComment(t, beanList.get(i));
     }
     
     /**

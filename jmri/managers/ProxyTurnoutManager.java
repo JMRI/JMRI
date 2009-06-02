@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -267,12 +267,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * all the valid operation types
 	 */
 	public String[] getValidOperationTypes() {
-		List typeList = new LinkedList();
+		List<String> typeList = new LinkedList<String>();
 		for (int i=0; i<mgrs.size(); ++i) {
 			String[] thisTypes = ((TurnoutManager)mgrs.get(i)).getValidOperationTypes();
 			typeList.addAll(Arrays.asList(thisTypes));
 		}
-		return TurnoutOperationManager.concatenateTypeLists((String[])typeList.toArray(new String[0]));
+		return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
 	}
 	
 

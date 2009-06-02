@@ -4,7 +4,6 @@ import java.io.*;
 
 import java.util.StringTokenizer;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -21,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class EchoServlet extends AbstractServlet {

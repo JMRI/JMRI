@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -36,7 +36,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not reporters to include
@@ -44,7 +44,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             
             // store the reporters
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 Reporter r = tm.getBySystemName(sname);
@@ -82,23 +82,24 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * invoke this with the parent of the set of Reporter elements.
      * @param reporters Element containing the Reporter elements to load.
      */
-    public void loadReporters(Element reporters) {
-        List reporterList = reporters.getChildren("reporter");
+    @SuppressWarnings("unchecked")
+	public void loadReporters(Element reporters) {
+        List<Element> reporterList = reporters.getChildren("reporter");
         if (log.isDebugEnabled()) log.debug("Found "+reporterList.size()+" reporters");
         ReporterManager tm = InstanceManager.reporterManagerInstance();
 
         for (int i=0; i<reporterList.size(); i++) {
-            if ( ((Element)(reporterList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+((Element)(reporterList.get(i)))+" "+((Element)(reporterList.get(i))).getAttributes());
+            if (reporterList.get(i).getAttribute("systemName") == null) {
+                log.warn("unexpected null in systemName "+reporterList.get(i)+" "+reporterList.get(i).getAttributes());
                 break;
             }
-            String sysName = ((Element)(reporterList.get(i))).getAttribute("systemName").getValue();
+            String sysName = reporterList.get(i).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(reporterList.get(i))).getAttribute("userName") != null)
-            userName = ((Element)(reporterList.get(i))).getAttribute("userName").getValue();
+            if (reporterList.get(i).getAttribute("userName") != null)
+            userName = reporterList.get(i).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create Reporter: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Reporter r = tm.newReporter(sysName, userName);
-            loadCommon(r, ((Element)(reporterList.get(i))));
+            loadCommon(r, reporterList.get(i));
         }
     }
 

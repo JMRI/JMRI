@@ -1,6 +1,5 @@
 package jmri.managers.configurexml;
 
-import jmri.configurexml.*;
 import jmri.managers.DefaultMemoryManager;
 
 import org.jdom.Element;
@@ -10,7 +9,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -34,7 +33,7 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      */
     public void load(Element memories) {
         // create the master object
-        DefaultMemoryManager mgr = DefaultMemoryManager.instance();
+        DefaultMemoryManager.instance();
         // load individual routes
         loadMemories(memories);
 
