@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.44 $ -->
+<!-- Revision $Revision: 1.45 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -37,6 +37,10 @@
   
     <!-- JRE version (1.5 as of JMRI 2.5.1) -->
     <property name="jre_version" value="1.5" />
+		
+		<!-- Set this to the directory where Findbugs is installed if you don't 
+		want to use the command line arguments -->
+		<!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
     
   <!-- You can specify a DecoderPro/PanelPro config file at runtime -->
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
@@ -75,7 +79,33 @@
     <pathelement location="../lib/jakarta-regexp-1.5.jar" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
-
+  
+	<!-- the classpath used by FindBugs when checking the JMRI jar -->
+	<path id="findbugs.aux.class.path">
+    <pathelement location="../lib/MRJAdapter.jar" />
+    <pathelement location="../lib/RXTXcomm.jar" />
+    <pathelement location="../lib/Serialio.jar" />
+    <pathelement location="../lib/ch.ntb.usb.jar" />
+    <pathelement location="../lib/comm-rxtx.jar" />
+    <pathelement location="../lib/comm.jar" />
+    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/javacsv.jar" />
+    <pathelement location="../lib/jdom.jar" />
+    <pathelement location="../lib/jhall.jar" />
+    <pathelement location="../lib/jinput.jar" />
+    <pathelement location="../lib/jython.jar" />
+    <pathelement location="../lib/log4j.jar" />
+    <pathelement location="../lib/servlet.jar" />
+    <pathelement location="../lib/vecmath.jar" />
+    <pathelement location="../lib/activation.jar" />
+    <pathelement location="../lib/mailapi.jar" />
+    <pathelement location="../lib/smtp.jar" />
+    <pathelement location="../lib/ExternalLinkContentViewerUI.jar" />
+    <pathelement location="../lib/junit.jar" />
+    <pathelement location="../lib/jfcunit.jar" />
+    <pathelement location="../lib/jakarta-regexp-1.5.jar" />
+  </path>
+	
   <target name="init" description="create needed directories">
     <!-- Create the time stamp -->
     <tstamp/>
@@ -424,7 +454,25 @@
  <!-- Note production builds should use compile, not debug, prereq  -->
  <target name="dist" depends="clean, init, debug, rmic, jar"
  		 description="create a distribution jar file"/>
+	
+ <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+    onerror="ignore"/>
+ 	
+ <target name="findbugs" depends="dist">
+ 	<findbugs home="${findbugs.home}"
+  	      	output="html"
+						outputFile="${jartarget}/jmri-fb.html" 
+						jvmargs="-Xmx1024m"
+						timeout="12000000">
+		<auxClasspath refid="findbugs.aux.class.path" />
+		<sourcePath path="${source}/" />
+	  <class location="${jartarget}/jmri.jar" />
+	</findbugs>
+ </target>
+		 
 
 </project>
 
 
+
+ 	  	 
