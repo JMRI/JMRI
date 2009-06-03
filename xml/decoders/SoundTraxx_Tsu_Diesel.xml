@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel_EMD567.xml,v 1.1 2009-05-25 17:33:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.1 2009-06-03 23:55:26 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,27 +17,29 @@
 
 <decoder-config>
 
-	<version author="Michael Mosher" version="1" lastUpdated="20080813"/>
-	<version author="Jack Shall lcrr@bellsouth.net" version="2" lastUpdated="20090428"/>
+	<version author="Jack Shall lcrr@bellsouth.net" version="1" lastUpdated="20090602"/>
 
-	<!-- This file contains the EMD 567 engine -->
+	<!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
-	<!-- version 1	Based on "diesel" file	-->
-	<!-- version 2	Added many tooltips, a bit of organization, fixed a couple bugs,	-->
-	<!--			added missing CVs, added TSU-AT1000 and TSU-GN1000 models, attempt	-->
-	<!--			at making terminology more closely resemble factory usage.			-->
-	<!--			Renamed file from "SoundTraxx_Tsu_1EMD567" to aid indexing.			-->
+	<!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.				-->
+	<!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley	-->
+	<!--			for their assistance, and Marc Fournier for getting the ball rolling.			-->
+	<!--			This file incorporates the "include" attribute to allow proper display of		-->
+	<!--			various elements based on their pertinence to a particular model.  When adding	-->
+	<!--			models, the productID must be attached to the proper sets of horn selections.	-->
 
+
+<!-- Decoder Model information follows -->
 
 <decoder>
 	<family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)">
-		<model model="TSU-1000 EMD 567" numOuts="4" numFns="14" connector="9pin"
-			comment="Model 827101">
+		<model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other"
+			productID="827004" comment="Model 827004">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
-			<output name="3" label="FX5"/>
-			<output name="4" label="FX6"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
 			<output name="Dynamics"/>
 			<output name="Short Horn"/>
 			<output name="Fans(+)"/>
@@ -47,11 +49,253 @@
 			<output name="Brakes"/>
 			<output name="Coupler"/>
 		</model>
-		<model model="TSU-750 EMD 567" numOuts="2" numFns="14"
-			comment="Model 827001">
+		<model model="TSU-750 EMD 567" numOuts="2" numFns="14" connector="other"
+			productID="827001" comment="Model 827001">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other"
+			productID="827008" comment="Model 827008">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" connector="other"
+			productID="827010" comment="Model 827010">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Alco 244" numOuts="4" numFns="14" connector="9pin"
+			productID="827104" comment="Model 827104">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="9pin"
+			productID="827105" comment="Model 827105">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="9pin"
+			productID="827106" comment="Model 827106">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 EMD 567" numOuts="4" numFns="14" connector="9pin"
+			productID="827101" comment="Model 827101">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 EMD 645" numOuts="4" numFns="14" connector="9pin"
+			productID="827102" comment="Model 827102">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="9pin"
+			productID="827109" comment="Model 827109">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 EMD 710" numOuts="4" numFns="14" connector="9pin"
+			productID="827103" comment="Model 827103">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="9pin"
+			productID="827108" comment="Model 827108">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin"
+			productID="827107" comment="Model 827107">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Galloping Goose" numOuts="4" numFns="14" connector="9pin"
+			productID="827110" comment="Model 827110">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" connector="other"
+			productID="828043" comment="Model 828043">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="other"
+			productID="828044" comment="Model 828044">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other"
+			productID="828045" comment="Model 828045">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
 			<output name="Dynamics"/>
 			<output name="Short Horn"/>
 			<output name="Fans(+)"/>
@@ -62,12 +306,92 @@
 			<output name="Coupler"/>
 		</model>
 		<model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other"
-			comment="Model 828040">
+			productID="828040" comment="Model 828040">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
-			<output name="3" label="FX5"/>
-			<output name="4" label="FX6"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 EMD 645" numOuts="4" numFns="14" connector="other"
+			productID="828041" comment="Model 828041">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="other"
+			productID="828048" comment="Model 828048">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 EMD 710" numOuts="4" numFns="14" connector="other"
+			productID="828042" comment="Model 828042">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="other"
+			productID="828047" comment="Model 828047">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other"
+			productID="828046" comment="Model 828046">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
 			<output name="Dynamics"/>
 			<output name="Short Horn"/>
 			<output name="Fans(+)"/>
@@ -78,12 +402,60 @@
 			<output name="Coupler"/>
 		</model>
 		<model model="TSU-GN1000 EMD 567" numOuts="4" numFns="14" connector="other"
-			comment="Model 828050">
+			productID="828050" comment="Model 828050">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
-			<output name="3" label="FX5"/>
-			<output name="4" label="FX6"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" connector="other"
+			productID="828051" comment="Model 828051">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-GN1000 EMD 710" numOuts="4" numFns="14" connector="other"
+			productID="828052" comment="Model 828052">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" connector="other"
+			productID="828056" comment="Model 828056">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
 			<output name="Dynamics"/>
 			<output name="Short Horn"/>
 			<output name="Fans(+)"/>
@@ -96,6 +468,9 @@
 	</family>
 
 	<programming direct="yes" paged="yes" register="yes" ops="yes"></programming>
+
+
+<!-- Configuration Variable (CV) information follows -->
 
 	<variables>
 
@@ -233,7 +608,7 @@
 		</variable>
 
 		<variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV"
-			default="1"
+			default="0"
 			tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
@@ -242,7 +617,7 @@
 		</variable>
 
 		<variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX"
-			default="1"
+			default="0"
 			tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
@@ -578,12 +953,12 @@
 		</variable>
 
 		<variable label="FL(f) controls output FX5" CV="33" mask="XXXVXXXX" 
-			item="FL(f) controls output 3" minOut="3" default="0">
+			item="FL(f) controls output 3" minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="FL(f) controls output FX6" CV="33" mask="XXVXXXXX" 
-			item="FL(f) controls output 4" minOut="4" default="0">
+			item="FL(f) controls output 4" minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -619,12 +994,12 @@
 		</variable>
 
 		<variable label="FL(r) controls output FX5" CV="34" mask="XXXVXXXX" 
-			item="FL(r) controls output 3" minOut="3" default="0">
+			item="FL(r) controls output 3" minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="FL(r) controls output FX6" CV="34" mask="XXVXXXXX" 
-			item="FL(r) controls output 4" minOut="4" default="0">
+			item="FL(r) controls output 4" minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -660,12 +1035,12 @@
 		</variable>
 
 		<variable label="F1 controls output FX5" CV="35" mask="XXXVXXXX" 
-			item="F1 controls output 3"	minOut="3" default="0">
+			item="F1 controls output 3"	minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F1 controls output FX6" CV="35" mask="XXVXXXXX" 
-			item="F1 controls output 4"	minOut="4" default="0">
+			item="F1 controls output 4"	minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -701,12 +1076,12 @@
 		</variable>
 
 		<variable label="F2 controls output FX5" CV="36" mask="XXXVXXXX" 
-			item="F2 controls output 3"	minOut="3" default="0">
+			item="F2 controls output 3"	minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F2 controls output FX6" CV="36" mask="XXVXXXXX" 
-			item="F2 controls output 4"	minOut="4" default="0">
+			item="F2 controls output 4"	minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -727,12 +1102,12 @@
 		</variable>
 
 		<variable label="F3 controls output FX5" CV="37" mask="XXXXXXVX" 
-			item="F3 controls output 3"	minOut="3" default="0">
+			item="F3 controls output 3"	minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F3 controls output FX6" CV="37" mask="XXXXXVXX" 
-			item="F3 controls output 4"	minOut="4" default="0">
+			item="F3 controls output 4"	minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -763,12 +1138,12 @@
 		</variable>
 
 		<variable label="F4 controls output FX5" CV="38" mask="XXXXXXVX" 
-			item="F4 controls output 3"	minOut="3" default="0">
+			item="F4 controls output 3"	minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F4 controls output FX6" CV="38" mask="XXXXXVXX" 
-			item="F4 controls output 4"	minOut="4" default="0">
+			item="F4 controls output 4"	minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -799,12 +1174,12 @@
 		</variable>
 
 		<variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX" 
-			item="F5 controls output 3"	minOut="3" default="1">
+			item="F5 controls output 3"	minOut="1" default="1">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" 
-			item="F5 controls output 4"	minOut="4" default="0">
+			item="F5 controls output 4"	minOut="2" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -835,12 +1210,12 @@
 		</variable>
 
 		<variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX" 
-			item="F6 controls output 3"	minOut="3" default="0">
+			item="F6 controls output 3"	minOut="1" default="0">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
 		<variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" 
-			item="F6 controls output 4"	minOut="4" default="1">
+			item="F6 controls output 4"	minOut="2" default="1">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 
@@ -1211,7 +1586,8 @@
 		</variable>
 
 		<variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV"
-			item="Function 1 effect generated" default="1"
+			item="Function 1 effect generated" default="1" minOut="3"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Determines the effect generated from the FX5 light output">
 			<enumVal>
 				<enumChoice choice="On/Off"/>
@@ -1234,7 +1610,8 @@
 		</variable>
 
 		<variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX"
-			item="Function 1 options"
+			item="Function 1 options" minOut="3"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
 			<enumVal>
 				<enumChoice choice="Use phase A (normal)"/>
@@ -1243,7 +1620,8 @@
 		</variable>
 
 		<variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX"
-			item="Function 1 option 2"
+			item="Function 1 option 2" minOut="3"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
@@ -1252,7 +1630,8 @@
 		</variable>
 
 		<variable label="FX5 Light Type" CV="51" mask="VXXXXXXX"
-			item="Function 1 option 4"
+			item="Function 1 option 4" minOut="3"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
 			<enumVal>
 				<enumChoice choice="Incandescent lamp"/>
@@ -1261,7 +1640,8 @@
 		</variable>
 
 		<variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV"
-			item="Function 2 effect generated" default="1"
+			item="Function 2 effect generated" default="1" minOut="4"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Determines the effect generated from the FX6 light output">
 			<enumVal>
 				<enumChoice choice="On/Off"/>
@@ -1284,7 +1664,8 @@
 		</variable>
 
 		<variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX"
-			item="Function 2 options"
+			item="Function 2 options" minOut="4"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
 			<enumVal>
 				<enumChoice choice="Use phase A (normal)"/>
@@ -1293,7 +1674,8 @@
 		</variable>
 
 		<variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX"
-			item="Function 2 option 2"
+			item="Function 2 option 2" minOut="4"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
@@ -1302,7 +1684,8 @@
 		</variable>
 
 		<variable label="FX6 Light Type" CV="52" mask="VXXXXXXX"
-			item="Function 2 option 4"
+			item="Function 2 option 4" minOut="4"
+			comment="Don't show this for the TSU-750 models"
 			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
 			<enumVal>
 				<enumChoice choice="Incandescent lamp"/>
@@ -1421,9 +1804,14 @@
 			tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
 			<decVal max="15"/>
 		</variable>
-			
+
+
+<!-- Airhorn Selection follows -->
+
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
 			item="Sound Option 6" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
 			tooltip="Selects which airhorn to use">
 			<enumVal>
 				<enumChoice choice="Wabco A2"/>
@@ -1433,10 +1821,10 @@
 				<enumChoice choice="Leslie A125+A200"/>
 				<enumChoice choice="Leslie S2M"/>
 				<enumChoice choice="Leslie S3L"/>
-				<enumChoice choice="Leslie S3LR"/>
 				<enumChoice choice="Leslie S5T"/>
 				<enumChoice choice="Nathan K3L"/>
 				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
 				<enumChoice choice="Nathan P3"/>
 				<enumChoice choice="Nathan P5 (early)"/>
 				<enumChoice choice="Holden M3H"/>
@@ -1447,6 +1835,8 @@
 
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
 			item="Sound Option 7" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
 			<enumVal>
 				<enumChoice choice="Short horn blast"/>
@@ -1456,15 +1846,199 @@
 				<enumChoice choice="Leslie A125+A200"/>
 				<enumChoice choice="Leslie S2M"/>
 				<enumChoice choice="Leslie S3L"/>
-				<enumChoice choice="Leslie S3LR"/>
 				<enumChoice choice="Leslie S5T"/>
 				<enumChoice choice="Nathan K3L"/>
 				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
 				<enumChoice choice="Nathan P3"/>
 				<enumChoice choice="Nathan P5 (early)"/>
 				<enumChoice choice="Holden M3H"/>
 				<enumChoice choice="Holden K5H"/>
 				<enumChoice choice="Hancock Air Whistle"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
+			item="Sound Option 6" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827105,828044"
+			tooltip="Selects which airhorn to use">
+			<enumVal>
+				<enumChoice choice="Wabco A2"/>
+				<enumChoice choice="Wabco E2"/>
+				<enumChoice choice="Leslie A200"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Leslie S2M"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (early)"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+				<enumChoice choice="Hancock Air Whistle"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
+			item="Sound Option 7" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827105,828044"
+			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+			<enumVal>
+				<enumChoice choice="Short horn blast"/>
+				<enumChoice choice="Wabco E2"/>
+				<enumChoice choice="Leslie A200"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Leslie S2M"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (early)"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+				<enumChoice choice="Hancock Air Whistle"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
+			item="Sound Option 6" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827102,827107,827109,828041,828046,828048,828051,828056"
+			tooltip="Selects which airhorn to use">
+			<enumVal>
+				<enumChoice choice="Wabco E2"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Leslie RS5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan K3LA"/>
+				<enumChoice choice="Nathan K5LA"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (early)"/>
+				<enumChoice choice="Nathan P5A"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
+			item="Sound Option 7" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827102,827107,827109,828041,828046,828048,828051,828056"
+			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+			<enumVal>
+				<enumChoice choice="Short Horn"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Leslie RS5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan K3LA"/>
+				<enumChoice choice="Nathan K5LA"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (early)"/>
+				<enumChoice choice="Nathan P5A"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
+			item="Sound Option 6" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827103,828042,828052"
+			tooltip="Selects which airhorn to use">
+			<enumVal>
+				<enumChoice choice="Wabco E2"/>
+				<enumChoice choice="Leslie S2M"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Leslie RS5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan K3LA"/>
+				<enumChoice choice="Nathan K5LA"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (Modern)"/>
+				<enumChoice choice="Nathan P5A"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
+			item="Sound Option 7" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827103,828042,828052"
+			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+			<enumVal>
+				<enumChoice choice="Short Horn"/>
+				<enumChoice choice="Leslie S2M"/>
+				<enumChoice choice="Leslie S3L"/>
+				<enumChoice choice="Leslie RS3L"/>
+				<enumChoice choice="Leslie S5T"/>
+				<enumChoice choice="Leslie RS5T"/>
+				<enumChoice choice="Nathan K3L"/>
+				<enumChoice choice="Nathan K3LA"/>
+				<enumChoice choice="Nathan K5LA"/>
+				<enumChoice choice="Nathan M3"/>
+				<enumChoice choice="Nathan M5"/>
+				<enumChoice choice="Nathan P3"/>
+				<enumChoice choice="Nathan P5 (Modern)"/>
+				<enumChoice choice="Nathan P5A"/>
+				<enumChoice choice="Holden M3H"/>
+				<enumChoice choice="Holden K5H"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Horn Select" CV="115" mask="XXXXVVVV"
+			item="Sound Option 6" default="0"
+			include="827010,827110"
+			comment="These are the horns for the Galloping Goose"
+			tooltip="Selects which horn to use">
+			<enumVal>
+				<enumChoice choice="RGS Goose #5"/>
+				<enumChoice choice="Modern Auto Horn"/>
+				<enumChoice choice="Model T Aah-oogah"/>
+				<enumChoice choice="Leslie A125"/>
+				<enumChoice choice="Leslie A200"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Hancock Air Whistle"/>
+				<enumChoice choice="Branta Canadensis"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Alternate Horn Select" CV="115" mask="VVVVXXXX"
+			item="Sound Option 7" default="0"
+			include="827010,827110"
+			comment="These are the horns for the Galloping Goose"
+			tooltip="Choose an alternate horn or a short blast of the primary horn">
+			<enumVal>
+				<enumChoice choice="Short Horn"/>
+				<enumChoice choice="Modern Auto Horn"/>
+				<enumChoice choice="Model T Aah-oogah"/>
+				<enumChoice choice="Leslie A125"/>
+				<enumChoice choice="Leslie A200"/>
+				<enumChoice choice="Leslie A125+A200"/>
+				<enumChoice choice="Hancock Air Whistle"/>
+				<enumChoice choice="Branta Canadensis"/>
 			</enumVal>
 		</variable>
 
@@ -2022,9 +2596,6 @@
 	</column>
 </pane>
 
-
 </decoder-config>
-
- 	  	 
 
  	  	 
