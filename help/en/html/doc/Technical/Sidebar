@@ -54,6 +54,7 @@
 			<LI><a href="I8N.shtml">Internationalization</a>
 			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
+			<LI><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
 			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
 			<LI><a href="StartUpScripts.shtml">How the startup scripts work</a>
 			</ul>
