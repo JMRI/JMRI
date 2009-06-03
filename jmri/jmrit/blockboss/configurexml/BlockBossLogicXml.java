@@ -25,7 +25,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -49,13 +49,13 @@ public class BlockBossLogicXml implements XmlAdapter {
      */
     public Element store(Object o) {
 
-        Enumeration e = BlockBossLogic.entries();
+        Enumeration<BlockBossLogic> e = BlockBossLogic.entries();
         if (!e.hasMoreElements()) return null;  // nothing to write!
         Element blocks = new Element("signalelements");
         blocks.setAttribute("class", this.getClass().getName());
 
         while ( e.hasMoreElements()) {
-            BlockBossLogic p = (BlockBossLogic) e.nextElement();
+            BlockBossLogic p = e.nextElement();
             Element block = new Element("signalelement");
             block.setAttribute("signal", p.getDrivenSignal());
             block.setAttribute("mode", ""+p.getMode());
@@ -127,8 +127,9 @@ public class BlockBossLogicXml implements XmlAdapter {
      * Update static data from XML file
      * @param element Top level blocks Element to unpack.
       */
-    public void load(Element element) {
-        List l = element.getChildren("signalelement");
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        List<Element> l = element.getChildren("signalelement");
         
         // try old format if there are no new entries
         // this is for backward compatibility only
@@ -137,17 +138,17 @@ public class BlockBossLogicXml implements XmlAdapter {
             
         // process each item
         for (int i = 0; i<l.size(); i++) {
-            Element block = (Element)l.get(i);
+            Element block = l.get(i);
             BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
             if (block.getAttribute("approachsensor1")!=null)
                 bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
             if (block.getAttribute("watchedsensor")!=null)   // for older XML files
                 bb.setSensor1(block.getAttributeValue("watchedsensor"));
-            List sl = block.getChildren("sensor");
-            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(((Element)sl.get(0)).getAttributeValue("systemName"));
-            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(((Element)sl.get(1)).getAttributeValue("systemName"));
-            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(((Element)sl.get(2)).getAttributeValue("systemName"));
-            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(((Element)sl.get(3)).getAttributeValue("systemName"));
+            List<Element> sl = block.getChildren("sensor");
+            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1((sl.get(0)).getAttributeValue("systemName"));
+            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2((sl.get(1)).getAttributeValue("systemName"));
+            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3((sl.get(2)).getAttributeValue("systemName"));
+            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4((sl.get(3)).getAttributeValue("systemName"));
 
             try {
                 bb.setMode(block.getAttribute("mode").getIntValue());

@@ -2,7 +2,6 @@
 
 package jmri.jmrit.beantable;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -34,7 +33,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 

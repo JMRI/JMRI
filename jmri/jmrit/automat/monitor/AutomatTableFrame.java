@@ -2,11 +2,9 @@
 
 package jmri.jmrit.automat.monitor;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 
@@ -16,7 +14,7 @@ import jmri.util.JTableUtil;
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 

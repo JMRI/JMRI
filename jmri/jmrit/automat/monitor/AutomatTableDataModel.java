@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -78,7 +78,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
 	 * Note that this returns String even for
 	 * columns that contain buttons
 	 */
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case NAMECOL:
         case KILLCOL:

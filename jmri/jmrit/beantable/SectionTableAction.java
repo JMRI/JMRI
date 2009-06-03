@@ -11,7 +11,6 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.Sensor;
 import jmri.Path;
-import jmri.Transit;
 
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
@@ -21,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.*;
 
 import jmri.util.JmriJFrame;
@@ -46,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SectionTableAction extends AbstractTableAction {
@@ -105,21 +103,21 @@ public class SectionTableAction extends AbstractTableAction {
 
     		public Object getValueAt(int row, int col) {
 	   			if (col==BEGINBLOCKCOL) {
-            		Section z = (Section)getBySystemName((String)sysNameList.get(row));
+            		Section z = (Section)getBySystemName(sysNameList.get(row));
                     if (z != null) {
 						return z.getBeginBlockName();
                     }
 					return "  ";
 				}
 	   			else if (col==ENDBLOCKCOL) {
-            		Section z = (Section)getBySystemName((String)sysNameList.get(row));
+            		Section z = (Section)getBySystemName(sysNameList.get(row));
                     if (z != null) {
 						return z.getEndBlockName();
                     }
 					return "  ";
     			}
 				else if (col==VALUECOL) {
-            		Section z = (Section)getBySystemName((String)sysNameList.get(row));
+            		Section z = (Section)getBySystemName(sysNameList.get(row));
                     if (z == null) {
 						return "";
 					}
@@ -154,7 +152,7 @@ public class SectionTableAction extends AbstractTableAction {
         		return super.getColumnName(col);
         	}
 
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
 				if (col==VALUECOL) return String.class;  // not a button
     			if (col==BEGINBLOCKCOL) return String.class;  // not a button
     			if (col==ENDBLOCKCOL) return String.class;  // not a button
@@ -202,7 +200,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 	
 	// instance variables
-	ArrayList blockList = new ArrayList();
+	ArrayList<Block> blockList = new ArrayList<Block>();
 	BlockTableModel blockTableModel = null;
 	EntryPointTableModel entryPointTableModel = null;
 	SectionManager sectionManager = null;
@@ -210,16 +208,16 @@ public class SectionTableAction extends AbstractTableAction {
 	boolean editMode = false;
 	Section curSection = null;
 	boolean addCreateActive = true;
-	ArrayList lePanelList = null;
+	ArrayList<LayoutEditor> lePanelList = null;
 	LayoutEditor curLayoutEditor = null;
-	ArrayList blockBoxList = new ArrayList();
+	ArrayList<Block> blockBoxList = new ArrayList<Block>();
 	Block beginBlock = null;
 	Block endBlock = null;
 	Sensor fSensor = null;
 	Sensor rSensor = null;
 	Sensor fStopSensor = null;
 	Sensor rStopSensor = null;
-	ArrayList entryPointList = new ArrayList();
+	ArrayList<EntryPoint> entryPointList = new ArrayList<EntryPoint>();
 	boolean manualEntryPoints = true;
 	
 	// add/create variables
@@ -490,7 +488,7 @@ public class SectionTableAction extends AbstractTableAction {
 		int i = 0;
 		while (curSection.getBlockBySequenceNumber(i)!=null) {
 			Block b = curSection.getBlockBySequenceNumber(i);
-			blockList.add((Object)b);
+			blockList.add(b);
 			i++;
 			if (blockList.size()==1) {
 				beginBlock = b;
@@ -501,13 +499,13 @@ public class SectionTableAction extends AbstractTableAction {
 		reverseSensorField.setText(curSection.getReverseBlockingSensorName());		
 		forwardStopSensorField.setText(curSection.getForwardStoppingSensorName());
 		reverseStopSensorField.setText(curSection.getReverseStoppingSensorName());		
-		ArrayList list = (ArrayList)curSection.getForwardEntryPointList();
+		ArrayList<EntryPoint> list = (ArrayList<EntryPoint>)curSection.getForwardEntryPointList();
 		if (list.size()>0) {
 			for (int j = 0; j<list.size(); j++) {
 				entryPointList.add(list.get(j));
 			}
 		}
-		list = (ArrayList)curSection.getReverseEntryPointList();
+		list = (ArrayList<EntryPoint>)curSection.getReverseEntryPointList();
 		if (list.size()>0) {
 			for (int j = 0; j<list.size(); j++) {
 				entryPointList.add(list.get(j));
@@ -583,7 +581,7 @@ public class SectionTableAction extends AbstractTableAction {
 		// check entry points
 		boolean unknownPresent = false;
 		for (int i = 0; i<entryPointList.size(); i++) {
-			if ( ((EntryPoint)entryPointList.get(i)).isUnknownType() ) {
+			if (entryPointList.get(i).isUnknownType() ) {
 				unknownPresent = true;
 			}
 		}
@@ -678,7 +676,7 @@ public class SectionTableAction extends AbstractTableAction {
 	private boolean setSectionInformation() {
 		curSection.removeAllBlocksFromSection();
 		for (int i = 0; i<blockList.size(); i++) {
-			if (!curSection.addBlock((Block)blockList.get(i))) {
+			if (!curSection.addBlock(blockList.get(i))) {
 				javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
 						.getString("Message4"), rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);			
@@ -689,7 +687,7 @@ public class SectionTableAction extends AbstractTableAction {
 		curSection.setForwardStoppingSensorName(forwardStopSensorField.getText());		
 		curSection.setReverseStoppingSensorName(reverseStopSensorField.getText());
 		for (int j = 0; j<entryPointList.size(); j++) {
-			EntryPoint ep = (EntryPoint)entryPointList.get(j);
+			EntryPoint ep = entryPointList.get(j);
 			if (ep.isForwardType()) curSection.addToForwardList(ep);
 			else if (ep.isReverseType()) curSection.addToReverseList(ep);
 		}
@@ -711,9 +709,9 @@ public class SectionTableAction extends AbstractTableAction {
 			return;		
 		}
 		int index = blockBox.getSelectedIndex();
-		Block b = (Block)blockBoxList.get(index);
+		Block b = blockBoxList.get(index);
 		if (b!=null) {
-			blockList.add((Object)b);
+			blockList.add(b);
 			if (blockList.size()==1) {
 				beginBlock = b;
 			}
@@ -730,7 +728,7 @@ public class SectionTableAction extends AbstractTableAction {
 		box.removeAllItems();
 		box.addItem(rbx.getString("None"));
 		for (int i=0; i<lePanelList.size(); i++) {
-			box.addItem(((LayoutEditor)lePanelList.get(i)).getTitle());
+			box.addItem(lePanelList.get(i).getTitle());
 		}
 		box.setSelectedIndex(1);
 		return true;
@@ -738,36 +736,36 @@ public class SectionTableAction extends AbstractTableAction {
 	private void layoutEditorSelectionChanged() {
 		int i = layoutEditorBox.getSelectedIndex();
 		if ( (i<=0) || (i>lePanelList.size()) ) curLayoutEditor = null;
-		else curLayoutEditor = (LayoutEditor)lePanelList.get(i-1);
+		else curLayoutEditor = lePanelList.get(i-1);
 	}
 	private void initializeBlockCombo() {
-		ArrayList allBlocks = (ArrayList)blockManager.getSystemNameList();
+		ArrayList<String> allBlocks = (ArrayList<String>)blockManager.getSystemNameList();
 		blockBox.removeAllItems();
 		for (int j=blockBoxList.size(); j>0; j--) blockBoxList.remove(j-1);
 		if (blockList.size()==0) {
 			// No blocks selected, all blocks are eligible
 			for (int i=0; i<allBlocks.size(); i++) {
-				String bName = (String)allBlocks.get(i);
+				String bName = allBlocks.get(i);
 				Block b = blockManager.getBySystemName(bName);
 				if (b!=null) {
 					if ( (b.getUserName()!=null) && (!b.getUserName().equals("")) )
 						bName = bName+"( "+b.getUserName()+" )";
 					blockBox.addItem(bName);
-				    blockBoxList.add((Object)b);
+				    blockBoxList.add(b);
 				}
 			}
 		}
 		else {
 			// limit to Blocks bonded to the current block that are not already in the Section
 			for (int i=0; i<allBlocks.size(); i++) {
-				String bName = (String)allBlocks.get(i);
+				String bName = allBlocks.get(i);
 				Block b = blockManager.getBySystemName(bName);
 				if (b!=null) {
 					if ( (!inSection(b)) && connected(b,endBlock) ) {
 						if ( (b.getUserName()!=null) && (!b.getUserName().equals("")) )
 							bName = bName+"( "+b.getUserName()+" )";
 						blockBox.addItem(bName);
-						blockBoxList.add((Object)b);
+						blockBoxList.add(b);
 					}
 				}
 			}
@@ -775,31 +773,31 @@ public class SectionTableAction extends AbstractTableAction {
 	}
 	private boolean inSection(Block b) {
 		for (int i = 0; i<blockList.size(); i++) {
-			if (blockList.get(i) == (Object)b) return true;
+			if (blockList.get(i) == b) return true;
 		}
 		return false;
 	}
 	private boolean connected(Block b1, Block b2) {
 		if ( (b1!=null) && (b2!=null) ) {
-			ArrayList paths = (ArrayList)b1.getPaths();
+			ArrayList<Path> paths = (ArrayList<Path>)b1.getPaths();
 			for (int i = 0; i<paths.size(); i++) {
-				if (((Path)paths.get(i)).getBlock() == b2) return true;
+				if (paths.get(i).getBlock() == b2) return true;
 			}
 		}
 		return false;
 	}
 	private void initializeEntryPoints() {
 		// Copy old Entry Point List, if there are entries, and clear it.
-		ArrayList oldList = new ArrayList();
+		ArrayList<EntryPoint> oldList = new ArrayList<EntryPoint>();
 		for (int i = 0; i<entryPointList.size(); i++) oldList.add(entryPointList.get(i));
 		entryPointList.clear();
 		if (blockList.size()>0) {
 			// cycle through Blocks to find Entry Points
 			for (int i = 0; i<blockList.size(); i++) {
-				Block sb = (Block)blockList.get(i);
-				ArrayList paths = (ArrayList)sb.getPaths();
+				Block sb = blockList.get(i);
+				ArrayList<Path> paths = (ArrayList<Path>)sb.getPaths();
 				for (int j = 0; j<paths.size(); j++) {
-					Path p = (Path)paths.get(j);
+					Path p = paths.get(j);
 					if (!inSection(p.getBlock())) {
 						// this is path to an outside block, so need an Entry Point
 						String pbDir = Path.decodeDirection(p.getFromBlockDirection());
@@ -810,43 +808,43 @@ public class SectionTableAction extends AbstractTableAction {
 				}
 			}
 			// Set directions where possible
-			ArrayList epList = getBlockEntryPointsList(beginBlock);
+			ArrayList<EntryPoint> epList = getBlockEntryPointsList(beginBlock);
 			if ( (epList.size()==2) && (blockList.size()==1) ) {
-				if ( (((EntryPoint)epList.get(0)).isUnknownType()) &&
-							(((EntryPoint)epList.get(1)).isUnknownType()) ) {
-					((EntryPoint)epList.get(0)).setTypeForward();
-					((EntryPoint)epList.get(1)).setTypeReverse();
+				if ( ((epList.get(0)).isUnknownType()) &&
+							((epList.get(1)).isUnknownType()) ) {
+					(epList.get(0)).setTypeForward();
+					(epList.get(1)).setTypeReverse();
 				}
 			}
 			else if (epList.size()==1) {
-				((EntryPoint)epList.get(0)).setTypeForward();
+				(epList.get(0)).setTypeForward();
 			}
 			epList = getBlockEntryPointsList(endBlock);
 			if (epList.size()==1) {
-				((EntryPoint)epList.get(0)).setTypeReverse();
+				(epList.get(0)).setTypeReverse();
 			}
 		}
 // here add code to use Layout Editor connectivity if desired in the future	
 		entryPointTableModel.fireTableDataChanged();			
 	}
-	private EntryPoint getEntryPointInList(ArrayList list, Block b, Block pb, String pbDir) {
+	private EntryPoint getEntryPointInList(ArrayList<EntryPoint> list, Block b, Block pb, String pbDir) {
 		for (int i = 0; i<list.size(); i++) {
-			EntryPoint ep = (EntryPoint)list.get(i);
+			EntryPoint ep = list.get(i);
 			if ( (ep.getBlock()==b) && (ep.getFromBlock()==pb) && 
 							(pbDir.equals(ep.getFromBlockDirection())) ) return ep;
 		}
 		return null;
 	}
-	private ArrayList getBlockEntryPointsList(Block b) {
-		ArrayList list = new ArrayList();
+	private ArrayList<EntryPoint> getBlockEntryPointsList(Block b) {
+		ArrayList<EntryPoint> list = new ArrayList<EntryPoint>();
 		for (int i = 0; i<entryPointList.size(); i++) {
-			EntryPoint ep = (EntryPoint)entryPointList.get(i);
-			if (ep.getBlock()==b) list.add((Object)ep);
+			EntryPoint ep = entryPointList.get(i);
+			if (ep.getBlock()==b) list.add(ep);
 		}
 		return list;
 	}
 	
-    private boolean noWarn = false;
+    //private boolean noWarn = false;
     
     /**
      * Add the Tools menu item
@@ -933,7 +931,7 @@ public class SectionTableAction extends AbstractTableAction {
 	LayoutEditor panel = null;
 	private boolean initializeLayoutEditor(boolean required) {
 		// Get a Layout Editor panel. Choose Layout Editor panel if more than one.
-		ArrayList layoutEditorList = 
+		ArrayList<LayoutEditor> layoutEditorList = 
 					jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
 		if ( (panel==null) || (layoutEditorList.size()>1) ) {
 			if (layoutEditorList.size()>1) {
@@ -941,13 +939,13 @@ public class SectionTableAction extends AbstractTableAction {
 				Object choices[] = new Object[layoutEditorList.size()];
 				int index = 0;
 				for (int i = 0; i<layoutEditorList.size(); i++) {
-					String txt = ((LayoutEditor)layoutEditorList.get(i)).getTitle();
-					choices[i] = (Object)txt;
-					if ((Object)panel==layoutEditorList.get(i)) index = i;
+					String txt = layoutEditorList.get(i).getTitle();
+					choices[i] = txt;
+					if (panel==layoutEditorList.get(i)) index = i;
 				}
 				// choose between Layout Editors
 				Object panelName = JOptionPane.showInputDialog(frame, 
-					(Object)(rbx.getString("Message11")), rbx.getString("ChoiceTitle"), 
+					(rbx.getString("Message11")), rbx.getString("ChoiceTitle"), 
 					JOptionPane.QUESTION_MESSAGE, null, choices, choices[index]);
 				if ( (panelName==null) && required) {
 					JOptionPane.showMessageDialog(frame, rbx.getString("Message12"));
@@ -956,14 +954,14 @@ public class SectionTableAction extends AbstractTableAction {
 				}
 				for (int j = 0; j<layoutEditorList.size(); j++) {
 					if (panelName.equals(choices[j])) {
-						panel = (LayoutEditor)layoutEditorList.get(j);
+						panel = layoutEditorList.get(j);
 						return true;
 					}
 				}
 				return false;
 			}
 			else if (layoutEditorList.size() == 1) {
-				panel = (LayoutEditor)layoutEditorList.get(0);
+				panel = layoutEditorList.get(0);
 				return true;
 			}
 			else {
@@ -977,8 +975,8 @@ public class SectionTableAction extends AbstractTableAction {
 		return true;
 	}
 
-	private void validateAllSections(ActionEvent e) {
-	}
+	//private void validateAllSections(ActionEvent e) {
+	//}
 	/**
 	 * Table model for Blocks in Create/Edit Section window
 	 */
@@ -1001,7 +999,7 @@ public class SectionTableAction extends AbstractTableAction {
 			}
 		}
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 			return String.class;
 		}
 
@@ -1046,9 +1044,9 @@ public class SectionTableAction extends AbstractTableAction {
 			}
 			switch (c) {
 				case SNAME_COLUMN:
-					return ((Block)(blockList.get(rx))).getSystemName();
+					return blockList.get(rx).getSystemName();
 				case UNAME_COLUMN: //
-					return ((Block)(blockList.get(rx))).getUserName();
+					return blockList.get(rx).getUserName();
 				default:
 					return rbx.getString("Unknown");
 			}
@@ -1072,7 +1070,7 @@ public class SectionTableAction extends AbstractTableAction {
 			super();
 		}
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 			if (c == DIRECTION_COLUMN)
 				return JComboBox.class;
 			return String.class;
@@ -1091,7 +1089,7 @@ public class SectionTableAction extends AbstractTableAction {
 				if ( !manualEntryPoints )
 					return (false);
 				else if (r<entryPointList.size()) {
-					return (!((EntryPoint)entryPointList.get(r)).isFixed());
+					return (!entryPointList.get(r).isFixed());
 				}
 				return (true);
 			}
@@ -1124,12 +1122,12 @@ public class SectionTableAction extends AbstractTableAction {
 			}
 			switch (c) {
 				case BLOCK_COLUMN:
-					return ((EntryPoint)(entryPointList.get(rx))).getFromBlockName();
+					return entryPointList.get(rx).getFromBlockName();
 				case DIRECTION_COLUMN: //
-					if ( ((EntryPoint)(entryPointList.get(rx))).isForwardType() ) {
+					if (entryPointList.get(rx).isForwardType()) {
 						return rbx.getString("SectionForward");
 					}
-					else if ( ((EntryPoint)(entryPointList.get(rx))).isReverseType() ) {
+					else if (entryPointList.get(rx).isReverseType()) {
 						return rbx.getString("SectionReverse");
 					}
 					else {
@@ -1142,13 +1140,13 @@ public class SectionTableAction extends AbstractTableAction {
 		public void setValueAt(Object value, int row, int col) {
 			if (col==DIRECTION_COLUMN) {
 				if (((String)value).equals(rbx.getString("SectionForward"))) {
-					((EntryPoint)(entryPointList.get(row))).setTypeForward();
+					entryPointList.get(row).setTypeForward();
 				}
 				else if (((String)value).equals(rbx.getString("SectionReverse"))) {
-					((EntryPoint)(entryPointList.get(row))).setTypeReverse();
+					entryPointList.get(row).setTypeReverse();
 				}
 				else if (((String)value).equals(rbx.getString("Unknown"))) {
-					((EntryPoint)(entryPointList.get(row))).setTypeUnknown();
+					entryPointList.get(row).setTypeUnknown();
 				}
 			}
 			return;

@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,7 +24,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -87,7 +86,7 @@ public class SensorTableAction extends AbstractTableAction {
     			if (col==INVERTCOL) return "Inverted";
     			else return super.getColumnName(col);
 		    }
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==INVERTCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
@@ -102,7 +101,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     		public Object getValueAt(int row, int col) {
     			if (col==INVERTCOL) {
-    				String name = (String)sysNameList.get(row);
+    				String name = sysNameList.get(row);
     				boolean val = InstanceManager.sensorManagerInstance().getBySystemName(name).getInverted();
 					return new Boolean(val);
     			} else return super.getValueAt(row, col);
@@ -110,7 +109,7 @@ public class SensorTableAction extends AbstractTableAction {
 			
     		public void setValueAt(Object value, int row, int col) {
     			if (col==INVERTCOL) {
-    				String name = (String)sysNameList.get(row);
+    				String name = sysNameList.get(row);
     				boolean b = ((Boolean)value).booleanValue();
     				InstanceManager.sensorManagerInstance().getBySystemName(name).setInverted(b);
     			} else super.setValueAt(value, row, col);

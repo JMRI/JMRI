@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -838,18 +838,18 @@ public class BlockBossLogic extends Siglet {
         return;
     }
     
-    static Hashtable umap = null;
-    static Hashtable smap = null;
+    static Hashtable<String,BlockBossLogic> umap = null;
+    static Hashtable<String,BlockBossLogic> smap = null;
     
-    public static Enumeration entries() {
+    public static Enumeration<BlockBossLogic> entries() {
         setup(); // ensure we've been registered
         return smap.elements();
     }
     
     private static void setup() {
         if (smap == null) {
-            smap = new Hashtable();
-            umap = new Hashtable();
+            smap = new Hashtable<String,BlockBossLogic>();
+            umap = new Hashtable<String,BlockBossLogic>();
             InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic());
         }
     }
@@ -873,10 +873,10 @@ public class BlockBossLogic extends Siglet {
         BlockBossLogic b = null;
         setup(); // ensure we've been registered
         if (smap.containsKey(signal)) {
-            b = (BlockBossLogic)smap.get(signal);
+            b = smap.get(signal);
         }
         else if (umap.containsKey(signal)) {
-            b = (BlockBossLogic)umap.get(signal);
+            b = umap.get(signal);
         }
         if (b != null) {
             // found an existing one, remove it from the map and stop its thread
@@ -904,9 +904,9 @@ public class BlockBossLogic extends Siglet {
         BlockBossLogic b;
         setup(); // ensure we've been registered
         if (smap.containsKey(signal)) {
-            b = (BlockBossLogic)smap.get(signal);
+            b = smap.get(signal);
         } else if (umap.containsKey(signal)) {
-            b = (BlockBossLogic)umap.get(signal);
+            b = umap.get(signal);
         } else {
             b = new BlockBossLogic(signal);
         }

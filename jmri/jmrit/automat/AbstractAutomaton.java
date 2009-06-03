@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -630,7 +630,6 @@ public class AbstractAutomaton implements Runnable {
     }
 
     private volatile int cvReturnValue;
-    private volatile int cvReturnStatus;
 
     /**
      * Read a CV on the service track, including waiting for completion.
@@ -648,7 +647,6 @@ public class AbstractAutomaton implements Runnable {
             programmer.readCV(CV, new ProgListener() {
                 public void programmingOpReply(int value, int status) {
                     cvReturnValue = value;
-                    cvReturnStatus = status;
                     synchronized (self) { 
                         self.notifyAll(); // should be only one thread waiting, but just in case
                     }

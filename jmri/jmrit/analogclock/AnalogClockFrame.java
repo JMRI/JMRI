@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.16 $
+ * @version                    $Revision: 1.17 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -185,13 +185,13 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Calculation mimics the AffineTransform class calculations in Graphics2D
             // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
             for (int i = 0; i < scaledMinuteX.length; i++) {
-                rotatedMinuteX[i] = (int) ((double)scaledMinuteX[i]*Math.cos(toRadians(minuteAngle))-(double)scaledMinuteY[i]*Math.sin(toRadians(minuteAngle)));
-                rotatedMinuteY[i] = (int) ((double)scaledMinuteX[i]*Math.sin(toRadians(minuteAngle))+(double)scaledMinuteY[i]*Math.cos(toRadians(minuteAngle)));
+                rotatedMinuteX[i] = (int) (scaledMinuteX[i]*Math.cos(toRadians(minuteAngle))- scaledMinuteY[i]*Math.sin(toRadians(minuteAngle)));
+                rotatedMinuteY[i] = (int) (scaledMinuteX[i]*Math.sin(toRadians(minuteAngle))+ scaledMinuteY[i]*Math.cos(toRadians(minuteAngle)));
             }
             scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
             for (int i = 0; i < scaledHourX.length; i++) {
-                rotatedHourX[i] = (int) ((double)scaledHourX[i]*Math.cos(toRadians(hourAngle))-(double)scaledHourY[i]*Math.sin(toRadians(hourAngle)));
-                rotatedHourY[i] = (int) ((double)scaledHourX[i]*Math.sin(toRadians(hourAngle))+(double)scaledHourY[i]*Math.cos(toRadians(hourAngle)));
+                rotatedHourX[i] = (int) (scaledHourX[i]*Math.cos(toRadians(hourAngle))- scaledHourY[i]*Math.sin(toRadians(hourAngle)));
+                rotatedHourY[i] = (int) (scaledHourX[i]*Math.sin(toRadians(hourAngle))+ scaledHourY[i]*Math.cos(toRadians(hourAngle)));
             }
             scaledHourHand = new Polygon(rotatedHourX, rotatedHourY, rotatedHourX.length);
             
@@ -199,7 +199,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             g.fillPolygon(scaledMinuteHand);
             
             // Draw AM/PM indicator in slightly smaller font than hour digits
-            int amPmFontSize = (int) ((double) fontSize*.75);
+            int amPmFontSize = (int) (fontSize*.75);
             if (amPmFontSize < 1) amPmFontSize = 1;
             Font amPmSizedFont = new Font("Serif", Font.PLAIN, amPmFontSize);
             g.setFont(amPmSizedFont);
@@ -240,18 +240,18 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Had trouble getting the proper sizes when using Images by themselves so
             // use the NamedIcon as a source for the sizes
             int logoScaleWidth = faceSize/6;
-            int logoScaleHeight = (int) ((float)logoScaleWidth * (float)jmriIcon.getIconHeight()/(float)jmriIcon.getIconWidth());
+            int logoScaleHeight = (int) ((float)logoScaleWidth * (float)jmriIcon.getIconHeight()/jmriIcon.getIconWidth());
             scaledLogo = logo.getScaledInstance(logoScaleWidth, logoScaleHeight, Image.SCALE_SMOOTH);
             scaledIcon.setImage(scaledLogo);
             logoWidth = scaledIcon.getIconWidth();
             logoHeight = scaledIcon.getIconHeight();
             
-            scaleRatio=(double)faceSize/2.7/(double)minuteHeight;
+            scaleRatio=faceSize/2.7/minuteHeight;
             for (int i = 0; i < minuteX.length; i++) {
-                scaledMinuteX[i] =(int) ((double)minuteX[i]*scaleRatio);
-                scaledMinuteY[i] = (int) ((double)minuteY[i]*scaleRatio);
-                scaledHourX[i] = (int) ((double)hourX[i]*scaleRatio);
-                scaledHourY[i] = (int) ((double)hourY[i]*scaleRatio);
+                scaledMinuteX[i] =(int) (minuteX[i]*scaleRatio);
+                scaledMinuteY[i] = (int) (minuteY[i]*scaleRatio);
+                scaledHourX[i] = (int) (hourX[i]*scaleRatio);
+                scaledHourY[i] = (int) (hourY[i]*scaleRatio);
             }
             scaledHourHand = new Polygon(scaledHourX, scaledHourY, scaledHourX.length);
             scaledMinuteHand = new Polygon(scaledMinuteX, scaledMinuteY, scaledMinuteX.length);
@@ -268,8 +268,8 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         Date now = clock.getTime();
         int hours = now.getHours();
         int minutes = now.getMinutes();
-        minuteAngle = (double) minutes*6.;
-        hourAngle = (double) hours*30. + 30.*minuteAngle/360.;
+        minuteAngle = minutes*6.;
+        hourAngle = hours*30. + 30.*minuteAngle/360.;
         if (hours < 12) {
             amPm = "AM ";
         }

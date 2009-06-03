@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -72,7 +71,7 @@ public class MemoryTableAction extends AbstractTableAction {
             }
     		public void setValueAt(Object value, int row, int col) {
         		if (col==VALUECOL) {
-            		Memory t = (Memory)getBySystemName((String)sysNameList.get(row));
+            		Memory t = (Memory)getBySystemName(sysNameList.get(row));
 					t.setValue(value);
             		fireTableRowsUpdated(row,row);
         		} else super.setValueAt(value, row, col);
@@ -81,7 +80,7 @@ public class MemoryTableAction extends AbstractTableAction {
         		if (col==VALUECOL) return "Value";
         		return super.getColumnName(col);
         	}
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==VALUECOL) return String.class;
     			else return super.getColumnClass(col);
 		    }
@@ -147,7 +146,7 @@ public class MemoryTableAction extends AbstractTableAction {
         String sName = sysName.getText().toUpperCase();
         InstanceManager.memoryManagerInstance().newMemory(sName, user);
     }
-    private boolean noWarn = false;
+    //private boolean noWarn = false;
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTableAction.class.getName());
 }

@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class Maintenance
@@ -89,9 +89,9 @@ public class Maintenance
         Vector <String> display = new Vector<String>();
         Vector <String> names = new Vector<String>();
 
-        Iterator iter = InstanceManager.sensorManagerInstance().getSystemNameList().iterator();
+        Iterator<String> iter = InstanceManager.sensorManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null) && !name.equals("ISCLOCKRUNNING")) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -100,7 +100,7 @@ public class Maintenance
         }
         iter = InstanceManager.turnoutManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -109,7 +109,7 @@ public class Maintenance
         }
         iter = InstanceManager.signalHeadManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -118,7 +118,7 @@ public class Maintenance
         }
         iter = InstanceManager.lightManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -127,7 +127,7 @@ public class Maintenance
         }
         iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -136,7 +136,7 @@ public class Maintenance
         }
         iter = InstanceManager.sectionManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -145,7 +145,7 @@ public class Maintenance
         }
         iter = InstanceManager.blockManagerInstance().getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             if (!search(name, null)) {
                 display.add(MessageFormat.format(rbm.getString("OrphanName"), 
                                                            (Object[])getTypeAndNames(name)));
@@ -164,8 +164,8 @@ public class Maintenance
 
         class SearchListener implements ActionListener {
              JList l;
-             Vector n;
-             SearchListener(JList list, Vector name) {
+             Vector<String> n;
+             SearchListener(JList list, Vector<String> name) {
                  l = list;
                  n = name;
              }
@@ -181,7 +181,7 @@ public class Maintenance
                  int min =l.getMinSelectionIndex();
                  DefaultListModel model = (DefaultListModel)l.getModel();
                  while (index>=min) {
-                     String[] names = getTypeAndNames((String)n.get(index));
+                     String[] names = getTypeAndNames(n.get(index));
                      if (names[0].equals("Sensor")) {
                          Sensor s = InstanceManager.sensorManagerInstance().getBySystemName(names[2]);
                          if (s == null) {
@@ -252,10 +252,10 @@ public class Maintenance
         Vector <String> names = new Vector<String>();
 
         System.out.println("findEmptyPressed");
-        Iterator iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
+        Iterator<String> iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
         jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
         while (iter.hasNext()) {
-            String name = (String)iter.next();
+            String name = iter.next();
             Conditional c = cm.getBySystemName(name);
             if (c != null) {
                 ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
@@ -279,8 +279,8 @@ public class Maintenance
 
         class EmptyListener implements ActionListener {
              JList l;
-             Vector n;
-             EmptyListener(JList list, Vector name) {
+             Vector<String> n;
+             EmptyListener(JList list, Vector<String> name) {
                  l = list;
                  n = name;
              }
@@ -296,7 +296,7 @@ public class Maintenance
                  int min =l.getMinSelectionIndex();
                  DefaultListModel model = (DefaultListModel)l.getModel();
                  while (index>=min) {
-                     String[] names = getTypeAndNames((String)n.get(index));
+                     String[] names = getTypeAndNames(n.get(index));
                      model.remove(index);
                      Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
                      if (c != null) {
@@ -471,10 +471,10 @@ public class Maintenance
         boolean found = false;
         boolean empty = true;
         // search for references
-		Iterator iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+		Iterator<String> iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
 		while (iter1.hasNext()) {
 			// get the next Logix
-			String sName = (String)iter1.next();
+			String sName = iter1.next();
 			Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
 			if (x==null) {
 				log.error("Error getting Logix  - " + sName);
@@ -548,7 +548,7 @@ public class Maintenance
         iter1 = routeManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Route r = routeManager.getBySystemName(sName);
             if (r==null) {
                 log.error("Error getting Route  - "+sName);
@@ -631,7 +631,7 @@ public class Maintenance
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Transit transit = transitManager.getBySystemName(sName);
             if (transit==null) {
                 log.error("Error getting Transit - "+sName);
@@ -641,9 +641,9 @@ public class Maintenance
             tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
                             new Object[] { " ", rbm.getString("Transit"), uName,  sName});
             empty = false;
-            ArrayList sectionList = transit.getTransitSectionList();
+            ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
             for (int i=0; i<sectionList.size(); i++) {
-                jmri.TransitSection transitSection = (jmri.TransitSection)sectionList.get(i);
+                jmri.TransitSection transitSection = sectionList.get(i);
                 jmri.Section section = transitSection.getSection();
                 uName = section.getUserName();
                 sName = section.getSystemName();
@@ -678,10 +678,10 @@ public class Maintenance
                     found = true;
                     referenceCount++;
                 }
-                ArrayList blockList = section.getBlockList();
+                ArrayList<jmri.Block> blockList = section.getBlockList();
 
                 for (int k=0; k<blockList.size(); k++) {
-                    jmri.Block block = (jmri.Block)blockList.get(k);
+                    jmri.Block block = blockList.get(k);
                     if (block==null) {
                         log.error("Error getting Block - "+sName);
                     } else {
@@ -725,18 +725,18 @@ public class Maintenance
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
-        java.util.List sysNameList = sectionManager.getSystemNameList();
+        java.util.List<String> sysNameList = sectionManager.getSystemNameList();
         
         transitManager = InstanceManager.transitManagerInstance();
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Transit transit = transitManager.getBySystemName(sName);
             if (transit!=null) {
-                ArrayList sectionList = transit.getTransitSectionList();
+                ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
                 for (int i=0; i<sectionList.size(); i++) {
-                    jmri.TransitSection transitSection = (jmri.TransitSection)sectionList.get(i);
+                    jmri.TransitSection transitSection = sectionList.get(i);
                     jmri.Section section = transitSection.getSection();
                     sysNameList.remove(section.getSystemName());
                 }
@@ -745,7 +745,7 @@ public class Maintenance
         iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section==null) {
                 log.error("Error getting Section - "+sName);
@@ -786,9 +786,9 @@ public class Maintenance
                 referenceCount++;
             }
 
-            ArrayList blockList = section.getBlockList();
+            ArrayList<jmri.Block> blockList = section.getBlockList();
             for (int k=0; k<blockList.size(); k++) {
-                jmri.Block block = (jmri.Block)blockList.get(k);
+                jmri.Block block = blockList.get(k);
                 if (block==null) {
                     log.error("Error getting Block - "+sName);
                 } else {
@@ -835,7 +835,7 @@ public class Maintenance
         iter1 = sectionManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section!=null) {
                 sysNameList.remove(section.getBlockList());
@@ -844,7 +844,7 @@ public class Maintenance
         iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Block b = blockManager.getBySystemName(sName);
             if (b==null) {
                 log.error("Error getting Block - "+sName);
@@ -876,7 +876,7 @@ public class Maintenance
         iter1 = lbm.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.jmrit.display.LayoutBlock lb = lbm.getBySystemName(sName);
             if (lb==null) {
                 log.error("Error getting LayoutBlock - "+sName);
@@ -911,10 +911,10 @@ public class Maintenance
         tempText = null;
         found = false;
         empty = true;
-        java.util.Enumeration enumeration = BlockBossLogic.entries();
+        java.util.Enumeration<BlockBossLogic> enumeration = BlockBossLogic.entries();
         while (enumeration.hasMoreElements()) {
             // get the next Logix
-            BlockBossLogic bbl = (BlockBossLogic)enumeration.nextElement();
+            BlockBossLogic bbl = enumeration.nextElement();
             String sName = bbl.getName();
             String uName = bbl.getDrivenSignal();
             tempText = MessageFormat.format(rbm.getString("ReferenceTitle"),
@@ -1046,7 +1046,7 @@ public class Maintenance
         sysNameList = conditionalManager.getSystemNameList();
         iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
         while (iter1.hasNext()) {
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
 			Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
             for (int i=0; i<x.getNumConditionals(); i++)  {
                 sName = x.getConditionalByNumberOrder(i);
@@ -1056,7 +1056,7 @@ public class Maintenance
         iter1 = sysNameList.iterator();
         while (iter1.hasNext()) {
             // get the next Logix
-            String sName = (String)iter1.next();
+            String sName = iter1.next();
             jmri.Conditional c = conditionalManager.getBySystemName(sName);
             if (c==null) {
                 log.error("Error getting Condition - "+sName);
@@ -1109,9 +1109,9 @@ public class Maintenance
         }
         found = false;
         empty = true;
-        ArrayList panelList = jmri.jmrit.display.PanelMenu.instance().getPanelEditorPanelList();
+        ArrayList<jmri.jmrit.display.PanelEditor> panelList = jmri.jmrit.display.PanelMenu.instance().getPanelEditorPanelList();
         for (int i=0; i<panelList.size(); i++) {
-            jmri.jmrit.display.PanelEditor panelEditor = (jmri.jmrit.display.PanelEditor)panelList.get(i);
+            jmri.jmrit.display.PanelEditor panelEditor = panelList.get(i);
             name = ((JFrame) panelEditor.getTarget().getTopLevelAncestor()).getTitle();
             if (text != null) {
                 text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
@@ -1169,9 +1169,9 @@ public class Maintenance
                 }
             }
         }
-        panelList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        for (int i=0; i<panelList.size(); i++) {
-            jmri.jmrit.display.LayoutEditor layoutEditor = (jmri.jmrit.display.LayoutEditor)panelList.get(i);
+        ArrayList<jmri.jmrit.display.LayoutEditor> layoutList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        for (int i=0; i<layoutList.size(); i++) {
+            jmri.jmrit.display.LayoutEditor layoutEditor = layoutList.get(i);
             name = layoutEditor.getLayoutName();
             if (text != null) {
                 text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),

@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -26,7 +25,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.25 $
+ * @version		$Revision: 1.26 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -51,7 +50,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         if (sysNameList != null) {
             for (int i = 0; i< sysNameList.size(); i++) {
                 // if object has been deleted, it's not here; ignore it
-                NamedBean b = getBySystemName((String)sysNameList.get(i));
+                NamedBean b = getBySystemName(sysNameList.get(i));
                 if (b!=null)
                     b.removePropertyChangeListener(this);
             }
@@ -59,10 +58,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         sysNameList = getManager().getSystemNameList();
         // and add them back in
         for (int i = 0; i< sysNameList.size(); i++)
-            getBySystemName((String)sysNameList.get(i)).addPropertyChangeListener(this);
+            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this);
     }
 
-    List sysNameList = null;
+    List<String> sysNameList = null;
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
@@ -110,7 +109,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case SYSNAMECOL:
         case USERNAMECOL:
@@ -143,12 +142,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             return sysNameList.get(row);
         case USERNAMECOL:  // return user name
             // sometimes, the TableSorter invokes this on rows that no longer exist, so we check
-            b = getBySystemName((String)sysNameList.get(row));
+            b = getBySystemName(sysNameList.get(row));
             return (b!=null) ? b.getUserName() : null;
         case VALUECOL:  //
-            return getValue((String)sysNameList.get(row));
+            return getValue(sysNameList.get(row));
         case COMMENTCOL:
-            b = getBySystemName((String)sysNameList.get(row));
+            b = getBySystemName(sysNameList.get(row));
             return (b!=null) ? b.getComment() : null;
         case DELETECOL:  //
             return AbstractTableAction.rb.getString("ButtonDelete");
@@ -187,7 +186,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         	// check to see if user name already exists
             NamedBean nB = getByUserName((String)value);
             if (nB == null) {
-				getBySystemName((String) sysNameList.get(row)).setUserName(
+				getBySystemName(sysNameList.get(row)).setUserName(
 						(String) value);
 				fireTableRowsUpdated(row, row);
 			}else{
@@ -201,12 +200,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 						JOptionPane.ERROR_MESSAGE);
 			}
         } else if (col==COMMENTCOL) {
-            getBySystemName((String) sysNameList.get(row)).setComment(
+            getBySystemName(sysNameList.get(row)).setComment(
                     (String) value);
             fireTableRowsUpdated(row, row);
         } else if (col==VALUECOL) {
             // button fired, swap state
-            NamedBean t = getBySystemName((String)sysNameList.get(row));
+            NamedBean t = getBySystemName(sysNameList.get(row));
             clickOn(t);
         } else if (col==DELETECOL) {
             // button fired, delete Bean
@@ -215,7 +214,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     void deleteBean(int row, int col) {
-        NamedBean t = getBySystemName((String)sysNameList.get(row));
+        NamedBean t = getBySystemName(sysNameList.get(row));
         int count = t.getNumPropertyChangeListeners()-1; // one is this table
         if (log.isDebugEnabled()) log.debug("Delete with "+count);
         if (!noWarnDelete) {
@@ -308,7 +307,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        TableColumnModel tcm = table.getColumnModel();
+        //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
 		table.setDefaultRenderer(JButton.class,buttonRenderer);
@@ -324,7 +323,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
             for (int i = 0; i< sysNameList.size(); i++) {
-                NamedBean b = getBySystemName((String)sysNameList.get(i));
+                NamedBean b = getBySystemName(sysNameList.get(i));
                 if (b!=null) b.removePropertyChangeListener(this);
             }
         }

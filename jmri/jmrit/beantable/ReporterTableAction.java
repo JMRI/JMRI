@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -26,7 +25,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -72,7 +71,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
     		public void setValueAt(Object value, int row, int col) {
         		if (col==VALUECOL) {
-            		Reporter t = (Reporter)getBySystemName((String)sysNameList.get(row));
+            		Reporter t = (Reporter)getBySystemName(sysNameList.get(row));
 					t.setReport(value);
             		fireTableRowsUpdated(row,row);
         		} else super.setValueAt(value, row, col);
@@ -81,7 +80,7 @@ public class ReporterTableAction extends AbstractTableAction {
         		if (col==VALUECOL) return "Report";
         		return super.getColumnName(col);
         	}
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==VALUECOL) return String.class;
     			else return super.getColumnClass(col);
 		    }
@@ -147,7 +146,7 @@ public class ReporterTableAction extends AbstractTableAction {
         String sName = sysName.getText().toUpperCase();
         InstanceManager.reporterManagerInstance().newReporter(sName, user);
     }
-    private boolean noWarn = false;
+    //private boolean noWarn = false;
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterTableAction.class.getName());
 }

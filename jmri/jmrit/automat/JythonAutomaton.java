@@ -12,7 +12,7 @@ import jmri.InstanceManager;
  * read the code, the "non-reflection" statements are in the comments
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class JythonAutomaton extends AbstractAutomaton {
     Object interp;
@@ -38,7 +38,7 @@ public class JythonAutomaton extends AbstractAutomaton {
 
         try {
             // PySystemState.initialize();
-            Class cs = Class.forName("org.python.core.PySystemState");
+            Class<?> cs = Class.forName("org.python.core.PySystemState");
             java.lang.reflect.Method initialize =
                         cs.getMethod("initialize",(Class[])null);
             initialize.invoke(null, (Object[])null);

@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.59 $
+ * @version     $Revision: 1.60 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -130,7 +130,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     
                     else return super.getColumnName(col);
                 }
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
                     if (col==INVERTCOL) return Boolean.class;
                     else if (col==LOCKCOL) return Boolean.class;
                     else if (col==KNOWNCOL && showFeedback) return String.class;
@@ -156,7 +156,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else return super.getPreferredWidth(col);
                 }
     		public boolean isCellEditable(int row, int col) {
-                    String name = (String)sysNameList.get(row);
+                    String name = sysNameList.get(row);
                     TurnoutManager manager = InstanceManager.turnoutManagerInstance();
                     Turnout t = manager.getBySystemName(name);
                     if (col==INVERTCOL) return t.canInvert();
@@ -173,7 +173,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }    		
                 
     		public Object getValueAt(int row, int col) {
-                    String name = (String)sysNameList.get(row);
+                    String name = sysNameList.get(row);
                     TurnoutManager manager = InstanceManager.turnoutManagerInstance();
                     Turnout t = manager.getBySystemName(name);
                     if (col==INVERTCOL) {
@@ -238,7 +238,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }    		
 		
     		public void setValueAt(Object value, int row, int col) {
-                    String name = (String)sysNameList.get(row);
+                    String name = sysNameList.get(row);
                     TurnoutManager manager = InstanceManager.turnoutManagerInstance();
                     Turnout t = manager.getBySystemName(name);
                     if (col == INVERTCOL) {
@@ -526,7 +526,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     	if (op != null) {
             if (!op.isNonce()) op = op.makeNonce(t);
-    	    TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
+    	    new TurnoutOperationEditor(this, f, op, t, box);
     	} else {
             JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
                                           "No operation type", JOptionPane.ERROR_MESSAGE);
@@ -648,7 +648,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         opsMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    TurnoutOperationFrame tof = new TurnoutOperationFrame(finalF);
+                    new TurnoutOperationFrame(finalF);
         	}
             });
     }

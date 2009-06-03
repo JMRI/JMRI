@@ -30,7 +30,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
-import java.awt.MenuBar;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
@@ -50,7 +49,6 @@ import javax.swing.table.*;
 //import java.util.List;
 
 import jmri.util.JmriJFrame;
-import jmri.Route;
 
 /**
  * Swing action to create and register a Logix Table.
@@ -73,7 +71,7 @@ import jmri.Route;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -131,7 +129,7 @@ public class LogixTableAction extends AbstractTableAction {
 					return super.getColumnName(col);
 			}
 
-			public Class getColumnClass(int col) {
+			public Class<?> getColumnClass(int col) {
 				if (col == EDITCOL)
 					return String.class;
 				if (col == ENABLECOL)
@@ -180,11 +178,11 @@ public class LogixTableAction extends AbstractTableAction {
 				if (col == EDITCOL) {
 					// set up to edit
 					String sName = (String) getValueAt(row, SYSNAMECOL);
-                    if ( rbx.getString("ButtonEdit").equals((String)value) ) {
+                    if ( rbx.getString("ButtonEdit").equals(value) ) {
                         editPressed(sName);
-                    } else if (rbx.getString("ButtonCopy").equals((String)value) ) {
+                    } else if (rbx.getString("ButtonCopy").equals(value) ) {
                         copyPressed(sName);
-                    } else if ( rbx.getString("ButtonDelete").equals((String)value) ) {
+                    } else if ( rbx.getString("ButtonDelete").equals(value) ) {
                         deletePressed(sName);
                     } else
                         log.debug("Logix table setValueAt column "+EDITCOL+" = "+value);
@@ -1838,7 +1836,8 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
 
-    boolean logicTypeChanged(ActionEvent e) {
+    @SuppressWarnings("fallthrough")
+	boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
                 return false;
@@ -2422,7 +2421,8 @@ public class LogixTableAction extends AbstractTableAction {
     /**
     * set display to show current state variable (curVariable) parameters
     */
-    void initializeStateVariables() {
+    @SuppressWarnings("fallthrough")
+	void initializeStateVariables() {
         int type = _curVariable.getType();
         switch (type)  {
             case Conditional.TYPE_MEMORY_EQUALS:
@@ -2474,6 +2474,7 @@ public class LogixTableAction extends AbstractTableAction {
     /**
     * set display to show current action (curAction) parameters
     */
+	@SuppressWarnings("fallthrough")
 	void initializeActionVariables() {
         _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
         _actionNameField.setText(_curAction.getDeviceName());
@@ -2560,7 +2561,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Set button in the Edit Action window action section.
 	 */
 	void setFileLocation(ActionEvent e) {
-        ConditionalAction action = (ConditionalAction)_actionList.get(_curActionRowNumber);
+        ConditionalAction action = _actionList.get(_curActionRowNumber);
         JFileChooser currentChooser;
         int actionType = action.getType();
         if (actionType == Conditional.ACTION_PLAY_SOUND) {
@@ -2609,6 +2610,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to a change in an Action Type Box of Edit Action Window
 	 * Set components visible for the selected type
 	 */
+	@SuppressWarnings("fallthrough")
 	void actionTypeChanged(boolean fromTypeBox) {
         int type = _actionTypeBox.getSelectedIndex() + 1;
         if (fromTypeBox) {
@@ -3062,6 +3064,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * false immediately after finding an error, even if there might be more
 	 * errors.
 	 */
+	@SuppressWarnings("fallthrough")
 	boolean validateAction() {
         int type = _actionTypeBox.getSelectedIndex() + 1;
         if (type != _curAction.getType()) {
@@ -3965,7 +3968,7 @@ public class LogixTableAction extends AbstractTableAction {
 					.getPropertyName().indexOf("Appearance") >= 0);
 		}
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 			if (c == BUTTON_COLUMN) {
 				return JButton.class;
 			} else {
@@ -4135,7 +4138,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 		public static final int DELETE_COLUMN = 7;
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
             switch (c)
             {
                 case ROWNUM_COLUMN:
@@ -4314,7 +4317,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 		public static final int DELETE_COLUMN = 2;
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
             if (c == EDIT_COLUMN || c ==DELETE_COLUMN )
             {
                 return JButton.class;
@@ -4362,7 +4365,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
 			switch (col) {
                 case DESCRIPTION_COLUMN:
-                    ConditionalAction action = (ConditionalAction)_actionList.get(row);
+                    ConditionalAction action = _actionList.get(row);
                     return action.toString();
                 case EDIT_COLUMN:
                     return rbx.getString("ButtonEdit");

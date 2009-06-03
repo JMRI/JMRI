@@ -36,7 +36,6 @@ import javax.swing.JSeparator;
 
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
-import jmri.jmrix.acela.AcelaSignalHead;
 import jmri.util.JmriJFrame;
 
 /**
@@ -45,7 +44,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -82,7 +81,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				else if (col==EDITCOL) return ""; // no heading on "Edit"
     			else return super.getColumnName(col);
 		    }
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==LITCOL) return Boolean.class;
     			else if (col==HELDCOL) return Boolean.class;
 				else if (col==EDITCOL) return JButton.class;
@@ -101,7 +100,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			else return super.isCellEditable(row,col);
 			}
     		public Object getValueAt(int row, int col) {
-    		    String name = (String)sysNameList.get(row);
+    		    String name = sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
                 if (s==null) return new Boolean(false); // if due to race condition, the device is going away
     			if (col==LITCOL) {
@@ -116,7 +115,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				else return super.getValueAt(row, col);
 			}
     		public void setValueAt(Object value, int row, int col) {
-    			String name = (String)sysNameList.get(row);
+    			String name = sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
                 if (s==null) return;  // device is going away anyway
     			if (col==LITCOL) {
@@ -644,7 +643,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             String inputusername = name.getText();
             String inputsysname = to1.getText();
             int headnumber;
-            int aspecttype;
+            //int aspecttype;
 
             if (inputsysname.length() == 0) {
                 log.warn("must supply a signalhead number (i.e. AH23)");
@@ -768,8 +767,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
 		} else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
-			String addrStr = name.getText() ;
-			int number ;
 			if (checkBeforeCreating(name.getText())) {            
 				s = new jmri.implementation.DccSignalHead(name.getText());
 				InstanceManager.signalHeadManagerInstance().register(s);

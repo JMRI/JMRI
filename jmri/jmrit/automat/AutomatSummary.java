@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class AutomatSummary  {
 
@@ -28,7 +28,7 @@ public class AutomatSummary  {
 		return self;
 	}
 
-	private ArrayList automats = new ArrayList();
+	private ArrayList<AbstractAutomaton> automats = new ArrayList<AbstractAutomaton>();
 
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
@@ -75,7 +75,7 @@ public class AutomatSummary  {
 	    AbstractAutomaton retval;
 	    
 	    synchronized (automats) {
-		    retval = (AbstractAutomaton)automats.get(i);
+		    retval = automats.get(i);
 		}
 		
 		return retval;
@@ -92,7 +92,7 @@ public class AutomatSummary  {
 	    AbstractAutomaton a;
 	    synchronized (automats) {
             for (int i=0; i<length(); i++) {
-                a = (AbstractAutomaton)automats.get(i);
+                a = automats.get(i);
                 if (a.getName().equals(name)) return a;
             }
         }

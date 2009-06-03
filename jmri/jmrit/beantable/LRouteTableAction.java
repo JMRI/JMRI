@@ -10,7 +10,6 @@ import jmri.Turnout;
 import jmri.Sensor;
 import jmri.Light;
 import jmri.SignalHead;
-import jmri.implementation.DefaultConditional;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
@@ -26,10 +25,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
@@ -119,16 +115,16 @@ public class LRouteTableAction extends AbstractTableAction {
             if (sysNameList != null) {
                 for (int i = 0; i< sysNameList.size(); i++) {
                     // if object has been deleted, it's not here; ignore it
-                    NamedBean b = getBySystemName((String)sysNameList.get(i));
+                    NamedBean b = getBySystemName(sysNameList.get(i));
                     if (b!=null)
                         b.removePropertyChangeListener(this);
                 }
             }
-            List list = getManager().getSystemNameList();
-            sysNameList = new ArrayList();
+            List<String> list = getManager().getSystemNameList();
+            sysNameList = new ArrayList<String>();
             // and add them back in
             for (int i = 0; i< list.size(); i++) {
-                String sysName = (String)list.get(i);
+                String sysName = list.get(i);
                 if (sysName.startsWith(LOGIX_SYS_NAME)) {
                     sysNameList.add(sysName);
                     getBySystemName(sysName).addPropertyChangeListener(this);
@@ -147,7 +143,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
         }
 
-        public Class getColumnClass(int col) {
+        public Class<?> getColumnClass(int col) {
             if (col == EDITCOL)
                 return JButton.class;
             if (col == ENABLECOL)
@@ -331,10 +327,10 @@ public class LRouteTableAction extends AbstractTableAction {
         //TreeSet <RouteInputElement>inputTS = new TreeSet<RouteInputElement>();
         //TreeSet <RouteOutputElement>outputTS = new TreeSet<RouteOutputElement>();
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List systemNameList = tm.getSystemNameList();
-        Iterator iter = systemNameList.iterator();
+        List<String> systemNameList = tm.getSystemNameList();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = tm.getBySystemName(systemName).getUserName();
             inputTS.add(new RouteInputTurnout(systemName, userName));
             outputTS.add(new RouteOutputTurnout(systemName, userName));
@@ -345,7 +341,7 @@ public class LRouteTableAction extends AbstractTableAction {
         systemNameList = sm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = sm.getBySystemName(systemName).getUserName();
             inputTS.add(new RouteInputSensor(systemName, userName));
             outputTS.add(new RouteOutputSensor(systemName, userName));
@@ -356,7 +352,7 @@ public class LRouteTableAction extends AbstractTableAction {
         systemNameList = lm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = lm.getBySystemName(systemName).getUserName();
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
@@ -365,7 +361,7 @@ public class LRouteTableAction extends AbstractTableAction {
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = shm.getBySystemName(systemName).getUserName();
             inputTS.add(new RouteInputSignal(systemName, userName));
             outputTS.add(new RouteOutputSignal(systemName, userName));
@@ -378,9 +374,9 @@ public class LRouteTableAction extends AbstractTableAction {
         _outputMap = new HashMap <String, RouteOutputElement>(outputTS.size());
         _inputUserMap = new HashMap <String, RouteInputElement> (); 
         _outputUserMap = new HashMap <String, RouteOutputElement> (); 
-        Iterator it = inputTS.iterator();
+        Iterator<RouteInputElement> it = inputTS.iterator();
         while(it.hasNext()) {
-            RouteInputElement elt = (RouteInputElement)it.next();
+            RouteInputElement elt = it.next();
             _inputList.add(elt);
             String key = elt.getType()+elt.getSysName();
             _inputMap.put(key, elt);
@@ -390,9 +386,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 _inputUserMap.put(key, elt);
             }
         }
-        it = outputTS.iterator();
-        while(it.hasNext()) {
-            RouteOutputElement elt = (RouteOutputElement)it.next();
+        Iterator<RouteOutputElement> itOut = outputTS.iterator();
+        while(itOut.hasNext()) {
+            RouteOutputElement elt = itOut.next();
             _outputList.add(elt);
             String key = elt.getType()+elt.getSysName();
             _outputMap.put(key, elt);
@@ -406,9 +402,9 @@ public class LRouteTableAction extends AbstractTableAction {
         _alignList = new ArrayList <AlignElement> (alignTS.size());
         _alignMap = new HashMap <String, AlignElement>(alignTS.size());
         _alignUserMap = new HashMap <String, AlignElement>();
-        it = alignTS.iterator();
-        while(it.hasNext()) {
-            AlignElement elt = (AlignElement)it.next();
+        Iterator<AlignElement> itAlign = alignTS.iterator();
+        while(itAlign.hasNext()) {
+            AlignElement elt = itAlign.next();
             _alignList.add(elt);
             String key = elt.getType()+elt.getSysName();
             _alignMap.put(key, elt);
@@ -547,7 +543,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 String name = action.getDeviceName();
                 String key = type+name;
-                RouteOutputElement elt = (RouteOutputElement)_outputUserMap.get(key);
+                RouteOutputElement elt = _outputUserMap.get(key);
                 if (elt == null) {
                     key = key.toUpperCase();
                     elt = _outputMap.get(key);
@@ -575,7 +571,7 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k=0; k<varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
-                boolean negated = variable.isNegated(); 
+                //boolean negated = variable.isNegated(); 
                 int type = 0;
                 switch (testState) {
                     case Conditional.TYPE_SENSOR_ACTIVE:
@@ -629,7 +625,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 }
                 String name = variable.getName();
                 String key = type+name;
-                RouteInputElement elt = (RouteInputElement)_inputUserMap.get(key);
+                RouteInputElement elt = _inputUserMap.get(key);
                 if (elt == null) {
                     key = key.toUpperCase();
                     elt = _inputMap.get(key);
@@ -1032,7 +1028,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
             _inputModel = new RouteInputModel();
             JTable routeInputTable = new JTable(_inputModel);
-            ROW_HEIGHT = routeInputTable.getRowHeight();
+            //ROW_HEIGHT = routeInputTable.getRowHeight();
             _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
             tab3.add(_inputScrollPane,BorderLayout.CENTER);
             tab3.setVisible(true);
@@ -1573,7 +1569,7 @@ public class LRouteTableAction extends AbstractTableAction {
         cSystemName = sName+"L";
         removeConditionals(cSystemName, logix);
 
-        String cUserName = null;
+        //String cUserName = null;
         int numConds = 1;
         if (_newRouteType) {
             numConds = makeRouteConditional(numConds, /*false,*/ actionList, oneTriggerList, 
@@ -1984,8 +1980,8 @@ public class LRouteTableAction extends AbstractTableAction {
         {
             //RouteElementModel model = (RouteElementModel)((jmri.util.com.sun.TableSorter)table.getModel()).getTableModel();
             RouteElementModel model = (RouteElementModel)table.getModel();
-            ArrayList <RouteElement> elementList = null;
-            int type = 0;
+            //ArrayList <RouteElement> elementList = null;
+            //int type = 0;
             RouteElement elt = null;
             String[] items = null;
             if (model.isInput())
@@ -2022,7 +2018,7 @@ public class LRouteTableAction extends AbstractTableAction {
     {
         abstract public boolean isInput();
 
-        public Class getColumnClass(int c) {
+        public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -2276,7 +2272,7 @@ public class LRouteTableAction extends AbstractTableAction {
 	public static final int SET_SIGNAL_DARK = Conditional.ACTION_SET_SIGNAL_DARK + OFFSET;
 	public static final int SET_SIGNAL_LIT  = Conditional.ACTION_SET_SIGNAL_LIT + OFFSET;
 
-    private static int ROW_HEIGHT;
+    //private static int ROW_HEIGHT;
 
     private static String ALIGN_SENSOR      = rbx.getString("AlignSensor");
     private static String ALIGN_TURNOUT     = rbx.getString("AlignTurnout");

@@ -19,7 +19,7 @@ import jmri.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class JythonSiglet extends Siglet {
     Object interp;
@@ -45,7 +45,7 @@ public class JythonSiglet extends Siglet {
 
         try {
             // PySystemState.initialize();
-            Class cs = Class.forName("org.python.core.PySystemState");
+            Class<?> cs = Class.forName("org.python.core.PySystemState");
             java.lang.reflect.Method initialize =
                         cs.getMethod("initialize",(Class[])null);
             initialize.invoke(null, (Object[])null);

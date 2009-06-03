@@ -14,7 +14,6 @@ import java.text.DecimalFormat;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -101,7 +100,7 @@ public class BlockTableAction extends AbstractTableAction {
      		}
 
     		public Object getValueAt(int row, int col) {
-				Block b = (Block)getBySystemName((String)sysNameList.get(row));
+				Block b = (Block)getBySystemName(sysNameList.get(row));
 				if (b == null) {
 					super.log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
 					return "(no Block)";
@@ -129,7 +128,7 @@ public class BlockTableAction extends AbstractTableAction {
 			}    		
 
     		public void setValueAt(Object value, int row, int col) {
-				Block b = (Block)getBySystemName((String)sysNameList.get(row));
+				Block b = (Block)getBySystemName(sysNameList.get(row));
         		if (col==VALUECOL) {
 					b.setValue(value);
             		fireTableRowsUpdated(row,row);
@@ -161,7 +160,7 @@ public class BlockTableAction extends AbstractTableAction {
         		return super.getColumnName(col);
         	}
 
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==DIRECTIONCOL) return String.class;
     			if (col==VALUECOL) return String.class;  // not a button
 				if (col==CURVECOL) return JComboBox.class;

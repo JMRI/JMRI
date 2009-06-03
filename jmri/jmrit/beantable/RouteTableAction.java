@@ -8,7 +8,6 @@ import jmri.NamedBean;
 import jmri.Route;
 import jmri.Turnout;
 import jmri.Sensor;
-import jmri.implementation.DefaultConditional;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
@@ -21,8 +20,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
@@ -46,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -95,7 +92,7 @@ public class RouteTableAction extends AbstractTableAction {
     			if (col==LOCKCOL) return "Locked";
     			else return super.getColumnName(col);
 		    }
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==SETCOL) return JButton.class;
     			if (col==ENABLECOL) return Boolean.class;
     			if (col==LOCKCOL) return Boolean.class;
@@ -318,11 +315,11 @@ public class RouteTableAction extends AbstractTableAction {
 			cancelEdit();
 		}
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List systemNameList = tm.getSystemNameList();
+        List<String> systemNameList = tm.getSystemNameList();
         _turnoutList = new ArrayList <RouteTurnout> (systemNameList.size());
-        Iterator iter = systemNameList.iterator();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = tm.getBySystemName(systemName).getUserName();
             _turnoutList.add(new RouteTurnout(systemName, userName));
         }
@@ -332,7 +329,7 @@ public class RouteTableAction extends AbstractTableAction {
         _sensorList = new ArrayList <RouteSensor> (systemNameList.size());
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = sm.getBySystemName(systemName).getUserName();
             _sensorList.add(new RouteSensor(systemName, userName));
         }
@@ -1095,7 +1092,7 @@ public class RouteTableAction extends AbstractTableAction {
     void updatePressed(ActionEvent e, boolean newRoute ) {
         // Check if the User Name has been changed
         String uName = _userName.getText();
-        String sName = _systemName.getText().toUpperCase();
+        //String sName = _systemName.getText().toUpperCase();
         Route g = checkNamesOK();
         if (g == null) {
             return;
@@ -1109,8 +1106,8 @@ public class RouteTableAction extends AbstractTableAction {
         g.clearRouteSensors();
         // add those indicated in the window
         initializeIncludedList();
-        int numTurnoutIncluded = setTurnoutInformation(g);
-        int numSensorIncluded = setSensorInformation(g);
+        setTurnoutInformation(g);
+        setSensorInformation(g);
         // set the current values of the filenames
         g.setOutputScriptName(scriptFile.getText());
         g.setOutputSoundName(soundFile.getText());
@@ -1227,7 +1224,7 @@ public class RouteTableAction extends AbstractTableAction {
         ///// Construct 'AND' clause from 'VETO' controls ////////
         ArrayList <ConditionalVariable> vetoList = new ArrayList<ConditionalVariable>();
 
-        String andClause = null;
+        // String andClause = null;
         ConditionalVariable cVar = makeCtrlSensorVar(sensor1, sensor1mode, true, false);
         if (cVar != null) {
             vetoList.add(cVar);
@@ -1276,7 +1273,7 @@ public class RouteTableAction extends AbstractTableAction {
         String cUserName = null;
 
         ///////////////// Make Trigger Conditionals //////////////////////
-        ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
+        //ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
 
         int numConds = 1;
         numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false, 
@@ -1357,7 +1354,7 @@ public class RouteTableAction extends AbstractTableAction {
                 cSystemName = logixSystemName+"1L";
                 cUserName = turnoutLockSystemName+"L "+uName;
                 ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
-                String devName = cTurnout.getText();
+                //String devName = cTurnout.getText();
                 int mode = turnoutModeFromBox(cTurnoutStateBox);
                 int type = Conditional.TYPE_TURNOUT_CLOSED;
                 if (mode == Route.ONTHROWN) {
@@ -1659,7 +1656,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     public abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener
     {
-        public Class getColumnClass(int c) {
+        public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
             }
@@ -1836,7 +1833,7 @@ public class RouteTableAction extends AbstractTableAction {
     private static String[] lockTurnoutInputModes = new String[]{"On "+InstanceManager.turnoutManagerInstance().getClosedText(),
                                             "On "+InstanceManager.turnoutManagerInstance().getThrownText(),
                                             "On Change"};
-    private static int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};    
+    //private static int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};    
 
     private ArrayList <RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList <RouteTurnout> _includedTurnoutList; 

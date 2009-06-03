@@ -12,7 +12,6 @@ import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.Block;
-import jmri.BlockManager;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -44,7 +43,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -107,7 +106,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     		public Object getValueAt(int row, int col) {
 				if (col==VALUECOL) {
-            		Transit z = (Transit)getBySystemName((String)sysNameList.get(row));
+            		Transit z = (Transit)getBySystemName(sysNameList.get(row));
                     if (z == null) {
 						return "";
 					}
@@ -143,7 +142,7 @@ public class TransitTableAction extends AbstractTableAction {
         		return super.getColumnName(col);
         	}
 
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
 				if (col==VALUECOL) return String.class;  // not a button
  				if (col==EDITCOL) return JButton.class;
  				if (col==DUPLICATECOL) return JButton.class;
@@ -199,16 +198,16 @@ public class TransitTableAction extends AbstractTableAction {
 	private SectionManager sectionManager = InstanceManager.sectionManagerInstance();
 	private Transit curTransit = null;
 	private SectionTableModel sectionTableModel = null;
-	private ArrayList sectionList = new ArrayList();
+	private ArrayList<Section> sectionList = new ArrayList<Section>();
 	private int[] direction = new int[50];
 	private int[] sequence = new int[50];
 	private int[] action = new int[50];
 	private int[] data = new int[50];
 	private boolean[] alternate = new boolean[50];
 	private int maxSections = 50;  // must be equal to the dimension of the above arrays
-	private ArrayList primarySectionBoxList = new ArrayList();
+	private ArrayList<Section> primarySectionBoxList = new ArrayList<Section>();
 	private int[] priSectionDirection = new int[100];
-	private ArrayList alternateSectionBoxList = new ArrayList();
+	private ArrayList<Section> alternateSectionBoxList = new ArrayList<Section>();
 	private int[] altSectionDirection = new int[100];
 	private Section curSection = null;
 	private int curSectionDirection = 0;
@@ -424,11 +423,11 @@ public class TransitTableAction extends AbstractTableAction {
 		prevSectionDirection = 0;
 		if (curTransit!=null) {		
 			userName.setText(curTransit.getUserName());
-			ArrayList tsList = curTransit.getTransitSectionList();
+			ArrayList<TransitSection> tsList = curTransit.getTransitSectionList();
 			for (int i = 0; i<tsList.size(); i++) {
-				TransitSection ts = (TransitSection)tsList.get(i);
+				TransitSection ts = tsList.get(i);
 				if (ts!=null) {
-					sectionList.add((Object)ts.getSection());
+					sectionList.add(ts.getSection());
 					sequence[i] = ts.getSequenceNumber();
 					direction[i] = ts.getDirection();
 					action[i] = ts.getAction();
@@ -439,13 +438,13 @@ public class TransitTableAction extends AbstractTableAction {
 			int index = sectionList.size()-1;
 			while (alternate[index] && (index>0)) index--;
 			if (index>=0) {
-				curSection = (Section)sectionList.get(index);
+				curSection = sectionList.get(index);
 				curSequenceNum = sequence[index];
 				if (index>0) curSectionDirection = direction[index];
 				index --;
 				while (alternate[index] && (index>=0)) index--;
 				if (index>=0) {
-					prevSection = (Section)sectionList.get(index);
+					prevSection = sectionList.get(index);
 					prevSectionDirection = direction[index];
 				}
 			}
@@ -483,10 +482,10 @@ public class TransitTableAction extends AbstractTableAction {
 			return;		
 		}
 		int index = primarySectionBox.getSelectedIndex();
-		Section s = (Section)primarySectionBoxList.get(index);
+		Section s = primarySectionBoxList.get(index);
 		if (s!=null) {
 			int j = sectionList.size();
-			sectionList.add((Object)s);
+			sectionList.add(s);
 			direction[j] = priSectionDirection[index];
 			curSequenceNum ++;
 			sequence[j] = curSequenceNum;
@@ -523,10 +522,10 @@ public class TransitTableAction extends AbstractTableAction {
 			return;		
 		}
 		int index = alternateSectionBox.getSelectedIndex();
-		Section s = (Section)alternateSectionBoxList.get(index);
+		Section s = alternateSectionBoxList.get(index);
 		if (s!=null) {
 			int j = sectionList.size();
-			sectionList.add((Object)s);
+			sectionList.add(s);
 			direction[j] = altSectionDirection[index];
 			sequence[j] = curSequenceNum;
 			action[j] = TransitSection.NONE;
@@ -600,7 +599,7 @@ public class TransitTableAction extends AbstractTableAction {
 		if (curTransit==null) return false;
 		curTransit.removeAllSections();
 		for (int i = 0; i<sectionList.size(); i++) {
-			TransitSection ts = new TransitSection((Section)sectionList.get(i),
+			TransitSection ts = new TransitSection(sectionList.get(i),
 				sequence[i], direction[i], action[i], data[i], alternate[i]);
 			if (ts==null) {
 				log.error("Trouble creating TransitSection");
@@ -611,7 +610,7 @@ public class TransitTableAction extends AbstractTableAction {
 		return true;
 	}
 	private void initializeSectionCombos() {
-		ArrayList allSections = (ArrayList)sectionManager.getSystemNameList();
+		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
 		primarySectionBox.removeAllItems();
 		alternateSectionBox.removeAllItems();
 		primarySectionBoxList.clear();
@@ -619,13 +618,13 @@ public class TransitTableAction extends AbstractTableAction {
 		if (sectionList.size()==0) {
 			// no Sections currently in Transit - all Sections and all Directions OK
 			for (int i = 0; i<allSections.size(); i++) {
-				String sName = (String)allSections.get(i);
+				String sName = allSections.get(i);
 				Section s = sectionManager.getBySystemName(sName);
 				if (s!=null) {
 					if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
 						sName = sName+"( "+s.getUserName()+" )";
 					primarySectionBox.addItem(sName);
-				    primarySectionBoxList.add((Object)s);
+				    primarySectionBoxList.add(s);
 					priSectionDirection[primarySectionBoxList.size()-1] = Section.FORWARD;
 				}
 			}
@@ -633,21 +632,21 @@ public class TransitTableAction extends AbstractTableAction {
 		else {
 			// limit to Sections that connect to the current Section and are not the previous Section
 			for (int i = 0; i<allSections.size(); i++) {
-				String sName = (String)allSections.get(i);
+				String sName = allSections.get(i);
 				Section s = sectionManager.getBySystemName(sName);
 				if (s!=null) {
 					if ( (s!=prevSection) && (forwardConnected(s,curSection,curSectionDirection)) ) {
 						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
 							sName = sName+"( "+s.getUserName()+" )";
 						primarySectionBox.addItem(sName);
-						primarySectionBoxList.add((Object)s);
+						primarySectionBoxList.add(s);
 						priSectionDirection[primarySectionBoxList.size()-1] = Section.FORWARD;
 					}
 					else if ( (s!=prevSection) && (reverseConnected(s,curSection,curSectionDirection)) ) {
 						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
 							sName = sName+"( "+s.getUserName()+" )";
 						primarySectionBox.addItem(sName);
-						primarySectionBoxList.add((Object)s);
+						primarySectionBoxList.add(s);
 						priSectionDirection[primarySectionBoxList.size()-1] = Section.REVERSE;
 					}
 				}
@@ -655,7 +654,7 @@ public class TransitTableAction extends AbstractTableAction {
 			// check if there are any alternate Section choices
 			if ( prevSection!=null ) {
 				for (int i = 0; i<allSections.size(); i++) {
-					String sName = (String)allSections.get(i);
+					String sName = allSections.get(i);
 					Section s = sectionManager.getBySystemName(sName);
 					if (s!=null) {
 						if ( (notIncludedWithSeq(s,curSequenceNum)) && 
@@ -663,7 +662,7 @@ public class TransitTableAction extends AbstractTableAction {
 							if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
 								sName = sName+"( "+s.getUserName()+" )";
 							alternateSectionBox.addItem(sName);
-							alternateSectionBoxList.add((Object)s);							
+							alternateSectionBoxList.add(s);							
 							altSectionDirection[alternateSectionBoxList.size()-1] = Section.FORWARD;
 						}
 						else if ( notIncludedWithSeq(s,curSequenceNum) && 
@@ -671,7 +670,7 @@ public class TransitTableAction extends AbstractTableAction {
 							if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
 								sName = sName+"( "+s.getUserName()+" )";
 							alternateSectionBox.addItem(sName);
-							alternateSectionBoxList.add((Object)s);							
+							alternateSectionBoxList.add(s);							
 							altSectionDirection[alternateSectionBoxList.size()-1] = Section.REVERSE;
 						}
 					}
@@ -679,14 +678,15 @@ public class TransitTableAction extends AbstractTableAction {
 			}							
 		}
 	}
+	@SuppressWarnings("unused")
 	private boolean connected(Section s1, Section s2) {
 		if ( (s1!=null) && (s2!=null) ) {
-			ArrayList s1Entries = (ArrayList)s1.getEntryPointList();
-			ArrayList s2Entries = (ArrayList)s2.getEntryPointList();
+			ArrayList<EntryPoint> s1Entries = (ArrayList<EntryPoint>)s1.getEntryPointList();
+			ArrayList<EntryPoint> s2Entries = (ArrayList<EntryPoint>)s2.getEntryPointList();
 			for (int i = 0; i<s1Entries.size(); i++) {
-				Block b = ((EntryPoint)s1Entries.get(i)).getFromBlock();
+				Block b = s1Entries.get(i).getFromBlock();
 				for (int j = 0; j<s2Entries.size(); j++) {
-					if (b == ((EntryPoint)s2Entries.get(j)).getBlock()) {
+					if (b == s2Entries.get(j).getBlock()) {
 						return true;
 					}
 				}
@@ -696,23 +696,23 @@ public class TransitTableAction extends AbstractTableAction {
 	}
 	private boolean forwardConnected(Section s1, Section s2, int restrictedDirection) {
 		if ( (s1!=null) && (s2!=null) ) {
-			ArrayList s1ForwardEntries = (ArrayList)s1.getForwardEntryPointList();
-			ArrayList s2Entries = new ArrayList();
+			ArrayList<EntryPoint> s1ForwardEntries = (ArrayList<EntryPoint>)s1.getForwardEntryPointList();
+			ArrayList<EntryPoint> s2Entries = new ArrayList<EntryPoint>();
 			if ( restrictedDirection == Section.FORWARD ) {
-				s2Entries = (ArrayList)s2.getReverseEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getReverseEntryPointList();
 			}
 			else if ( restrictedDirection == Section.REVERSE ) {
-				s2Entries = (ArrayList)s2.getForwardEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getForwardEntryPointList();
 			}
 			else {
-				s2Entries = (ArrayList)s2.getEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getEntryPointList();
 			}
 			for (int i = 0; i<s1ForwardEntries.size(); i++) {
-				Block b1 = ((EntryPoint)s1ForwardEntries.get(i)).getFromBlock();
+				Block b1 = s1ForwardEntries.get(i).getFromBlock();
 				for (int j = 0; j<s2Entries.size(); j++) {
-					Block b2 = ((EntryPoint)s2Entries.get(j)).getFromBlock();
-					if ( (b1 == ((EntryPoint)s2Entries.get(j)).getBlock()) &&
-							(b2 == ((EntryPoint)s1ForwardEntries.get(i)).getBlock()) ) {
+					Block b2 = s2Entries.get(j).getFromBlock();
+					if ( (b1 == s2Entries.get(j).getBlock()) &&
+							(b2 == s1ForwardEntries.get(i).getBlock()) ) {
 						return true;
 					}
 				}
@@ -722,23 +722,23 @@ public class TransitTableAction extends AbstractTableAction {
 	}
 	private boolean reverseConnected(Section s1, Section s2, int restrictedDirection) {
 		if ( (s1!=null) && (s2!=null) ) {
-			ArrayList s1ReverseEntries = (ArrayList)s1.getReverseEntryPointList();
-			ArrayList s2Entries = new ArrayList();
+			ArrayList<EntryPoint> s1ReverseEntries = (ArrayList<EntryPoint>)s1.getReverseEntryPointList();
+			ArrayList<EntryPoint> s2Entries = new ArrayList<EntryPoint>();
 			if ( restrictedDirection == Section.FORWARD ) {
-				s2Entries = (ArrayList)s2.getReverseEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getReverseEntryPointList();
 			}
 			else if ( restrictedDirection == Section.REVERSE ) {
-				s2Entries = (ArrayList)s2.getForwardEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getForwardEntryPointList();
 			}
 			else {
-				s2Entries = (ArrayList)s2.getEntryPointList();
+				s2Entries = (ArrayList<EntryPoint>)s2.getEntryPointList();
 			}
 			for (int i = 0; i<s1ReverseEntries.size(); i++) {
-				Block b1 = ((EntryPoint)s1ReverseEntries.get(i)).getFromBlock();
+				Block b1 = s1ReverseEntries.get(i).getFromBlock();
 				for (int j = 0; j<s2Entries.size(); j++) {
-					Block b2 = ((EntryPoint)s2Entries.get(j)).getFromBlock();
-					if ( (b1 == ((EntryPoint)s2Entries.get(j)).getBlock()) &&
-							(b2 == ((EntryPoint)s1ReverseEntries.get(i)).getBlock()) ) {
+					Block b2 = s2Entries.get(j).getFromBlock();
+					if ( (b1 == s2Entries.get(j).getBlock()) &&
+							(b2 == s1ReverseEntries.get(i).getBlock()) ) {
 						return true;
 					}
 				}
@@ -748,12 +748,12 @@ public class TransitTableAction extends AbstractTableAction {
 	}
 	private boolean notIncludedWithSeq(Section s, int seq) {
 		for (int i = 0; i<sectionList.size(); i++) {
-			if ( (sectionList.get(i)==(Object)s) && (seq==sequence[i]) ) return false;
+			if ( (sectionList.get(i)==s) && (seq==sequence[i]) ) return false;
 		}
 		return true;
 	}
 	
-    private boolean noWarn = false;
+    //private boolean noWarn = false;
 	
 	/**
 	 * Table model for Sections in Create/Edit Transit window
@@ -780,7 +780,7 @@ public class TransitTableAction extends AbstractTableAction {
 			}
 		}
 
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 			if ( c==ACTION_COLUMN ) 
 				return JComboBox.class;
 			return String.class;
@@ -846,8 +846,8 @@ public class TransitTableAction extends AbstractTableAction {
 				case SEQUENCE_COLUMN:
 					return (""+sequence[rx]);
 				case SECTIONNAME_COLUMN:
-					String s = ((Section)(sectionList.get(rx))).getSystemName();
-					String u = ((Section)(sectionList.get(rx))).getUserName();
+					String s = sectionList.get(rx).getSystemName();
+					String u = sectionList.get(rx).getUserName();
 					if ( (u!=null) && (!u.equals("")) ) {
 						return (s+"( "+u+" )");
 					}
@@ -859,6 +859,7 @@ public class TransitTableAction extends AbstractTableAction {
 						return rbx.getString("Pause");
 					else if ( action[rx]==TransitSection.WAIT )
 						return rbx.getString("Wait");
+					return ("Error");
 				case DATA_COLUMN:
 					if ( action[rx]==TransitSection.PAUSE )
 						return (""+data[rx]);

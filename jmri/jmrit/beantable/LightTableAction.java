@@ -21,12 +21,11 @@ import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JCheckBox;
 
 import jmri.util.JmriJFrame;
 
@@ -37,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -79,7 +78,7 @@ public class LightTableAction extends AbstractTableAction {
     			if (col==ENABLECOL) return enabledString;
     			else return super.getColumnName(col);
 		    }
-    		public Class getColumnClass(int col) {
+    		public Class<?> getColumnClass(int col) {
     			if (col==EDITCOL) return JButton.class;
     			if (col==INTENSITYCOL) return Double.class;
     			if (col==ENABLECOL) return Boolean.class;
