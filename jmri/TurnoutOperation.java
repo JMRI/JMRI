@@ -83,7 +83,7 @@ import jmri.implementation.AbstractTurnout;
  * @author John Harper	Copyright 2005
  *
  */
-public abstract class TurnoutOperation implements Comparable {
+public abstract class TurnoutOperation implements Comparable<Object> {
 	
 	String name;
 	int feedbackModes = 0;

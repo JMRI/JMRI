@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.50 $
+ * @version	$Revision: 1.51 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -137,7 +137,7 @@ public class JmrixConfigPane extends JPanel {
                     modeBox.addItem(config.name());
                     modeBox.setSelectedItem(config.name());
                 } else {
-                    Class cl = Class.forName(classNameList[i]);
+                    Class<?> cl = Class.forName(classNameList[i]);
                     config = (ConnectionConfig)cl.newInstance();
                     modeBox.addItem(config.name());
                 }

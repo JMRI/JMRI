@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.27 $
+ * @version         $Revision: 1.28 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -182,7 +182,7 @@ public class ProgDebugger implements Programmer  {
         Vector<PropertyChangeListener> v;
         synchronized(this)
             {
-                v = (Vector)propListeners.clone();
+                v = (Vector<PropertyChangeListener>)propListeners.clone();
             }
         // forward to all listeners
         int cnt = v.size();

@@ -8,7 +8,6 @@ import org.jdom.Element;
 //import java.lang.reflect.Constructor;
 import java.lang.Class;
 
-import jmri.CommonTurnoutOperation;
 import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
 //import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
@@ -27,7 +26,7 @@ public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
 	 */
 	public TurnoutOperation loadOne(Element e) {
 		try {
-			Class myOpClass = Class.forName("jmri.NoFeedbackTurnoutOperation");
+			Class<?> myOpClass = Class.forName("jmri.NoFeedbackTurnoutOperation");
 			return super.loadOne(e, myOpClass.getConstructor(new Class[]{String.class, int.class, int.class}),
 					NoFeedbackTurnoutOperation.getDefaultIntervalStatic(),
 					NoFeedbackTurnoutOperation.getDefaultMaxTriesStatic());

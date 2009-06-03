@@ -78,7 +78,7 @@ public class TableSorter extends AbstractTableModel {
 
     public static final Comparator<Object> COMPARABLE_COMAPRATOR = new Comparator<Object>() {
         public int compare(Object o1, Object o2) {
-            return ((Comparable) o1).compareTo(o2);
+            return ((Comparable<Object>) o1).compareTo(o2);
         }
     };
     public static final Comparator<Object> LEXICAL_COMPARATOR = new Comparator<Object>() {
@@ -205,7 +205,7 @@ public class TableSorter extends AbstractTableModel {
         sortingStatusChanged();
     }
 
-    public void setColumnComparator(Class type, Comparator<Object> comparator) {
+    public void setColumnComparator(Class<?> type, Comparator<Object> comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
         } else {
@@ -214,7 +214,7 @@ public class TableSorter extends AbstractTableModel {
     }
 
     protected Comparator<Object> getComparator(int column) {
-        Class columnType = tableModel.getColumnClass(column);
+        Class<?> columnType = tableModel.getColumnClass(column);
         Comparator<Object> comparator = columnComparators.get(columnType);
         if (comparator != null) {
             return comparator;
@@ -269,7 +269,7 @@ public class TableSorter extends AbstractTableModel {
         return tableModel.getColumnName(column);
     }
 
-    public Class getColumnClass(int column) {
+    public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 

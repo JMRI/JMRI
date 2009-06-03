@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -57,8 +57,9 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * Create a DoubleTurnoutSignalHead
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
-        List l = element.getChildren("turnout");
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        List<Element> l = element.getChildren("turnout");
         Turnout green = loadTurnout(l.get(0));
         Turnout red = loadTurnout(l.get(1));
         // put it together

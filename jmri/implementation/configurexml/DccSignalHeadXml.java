@@ -3,11 +3,8 @@
 package jmri.implementation.configurexml;
 
 import jmri.InstanceManager;
-import jmri.SignalHead;
 import jmri.implementation.DccSignalHead;
-import jmri.Turnout;
 
-import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -28,7 +25,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

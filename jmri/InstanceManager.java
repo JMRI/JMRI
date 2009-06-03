@@ -37,14 +37,13 @@ import jmri.managers.DefaultRouteManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.42 $
+ * @version			$Revision: 1.43 $
  */
 public class InstanceManager {
 
     static private HashMap<Class,ArrayList> managerLists;
     
     static public <T> void store(T val, Class<T> type) {
-        @SuppressWarnings("unchecked")
         ArrayList<T> l = managerLists.get(type);
         if (l==null) {
             l = new ArrayList<T>();

@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TripleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -58,8 +58,9 @@ public class TripleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * Create a TripleTurnoutSignalHead
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
-        List l = element.getChildren("turnout");
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        List<Element> l = element.getChildren("turnout");
         Turnout green = loadTurnout(l.get(0));
         Turnout yellow = loadTurnout(l.get(1));
         Turnout red = loadTurnout(l.get(2));

@@ -19,13 +19,13 @@ import java.util.List;
  * Used in PaneProgFrame to control cursor operations during programming.
  *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class BusyGlassPane extends JComponent {
 
     CBListener listener;
 
-    public BusyGlassPane(List components, List rectangles, Container contentPane, JFrame parent) {
+    public BusyGlassPane(List<JComponent> components, List<Rectangle> rectangles, Container contentPane, JFrame parent) {
         listener = new CBListener(components, rectangles, this, contentPane, parent);
         addMouseListener(listener);
         addMouseMotionListener(listener);
@@ -43,13 +43,13 @@ public class BusyGlassPane extends JComponent {
  */
 class CBListener extends MouseInputAdapter {
     JFrame parentFrame;
-    List liveComponents;
-    List liveRectangles;
+    List<JComponent> liveComponents;
+    List<Rectangle> liveRectangles;
     BusyGlassPane glassPane;
     Container contentPane;
     boolean inDrag = false;
 
-    public CBListener(List objects, List rectangles,
+    public CBListener(List<JComponent> objects, List<Rectangle> rectangles,
                       BusyGlassPane glassPane, Container contentPane, JFrame parent) {
         this.parentFrame = parent;
         this.liveComponents = objects;
@@ -125,7 +125,7 @@ class CBListener extends MouseInputAdapter {
         }
 
         for (int i = 0; i < liveRectangles.size(); i++) {
-            if (((Rectangle)liveRectangles.get(i)).contains(containerPoint)) {
+            if (liveRectangles.get(i).contains(containerPoint)) {
                 inButton = true;
                 testForDrag(eventID);
             }

@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -58,7 +58,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         plist.clear();
     }
 
-    public Object findInstance(Class c, int index) {
+    public Object findInstance(Class<?> c, int index) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         temp.addAll(clist);
         temp.addAll(tlist);

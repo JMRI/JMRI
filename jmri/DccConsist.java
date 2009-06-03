@@ -324,7 +324,7 @@ public class DccConsist implements Consist, ProgListener{
         	Vector<ConsistListener> v;
         	synchronized(this)
             	{
-                 	v = (Vector)listeners.clone();
+                 	v = (Vector<ConsistListener>)listeners.clone();
             	}
         	if (log.isDebugEnabled()) log.debug("Sending Status code: " +
 						ErrorCode + " to "  + 

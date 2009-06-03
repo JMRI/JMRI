@@ -44,7 +44,7 @@ import java.io.File;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -74,7 +74,7 @@ public interface ConfigureManager {
      * @param index a 1-based index of the object to return
      * @return an object of class c or null
      */
-    public Object findInstance(Class c, int index);
+    public Object findInstance(Class<?> c, int index);
 
     /**
      * Stores prefs, config, tools and user information.

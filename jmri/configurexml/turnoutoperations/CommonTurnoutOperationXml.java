@@ -32,7 +32,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 	 * called for a newly-constructed object to load it from an XML element
 	 * @param e the XML element of type "turnoutOperation"
 	 */
-	public TurnoutOperation loadOne(Element e, Constructor<CommonTurnoutOperation> constr, int di, int dmt) {
+	public TurnoutOperation loadOne(Element e, Constructor<?> constr, int di, int dmt) {
 		int interval = di;
 		int maxTries = dmt;
 //		boolean noDelete = false;
@@ -55,7 +55,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         // constructor takes care of enrolling the new operation
         try {
         	result =
-        		constr.newInstance(new Object[]{name, new Integer(interval), new Integer(maxTries)});
+        		(TurnoutOperation)constr.newInstance(new Object[]{name, new Integer(interval), new Integer(maxTries)});
         } catch (Exception except) {			// too many to list!
         	log.warn("failed to create instance of "+constr.getDeclaringClass().getName()+" for \""+name+"\"");
         }

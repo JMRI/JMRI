@@ -25,7 +25,7 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
 	 */
 	public TurnoutOperation loadOne(Element e) {
 		try {
-			Class myOpClass = Class.forName("jmri.RawTurnoutOperation");
+			Class<?> myOpClass = Class.forName("jmri.RawTurnoutOperation");
 			return super.loadOne(e, myOpClass.getConstructor(new Class[]{String.class, int.class, int.class}),
 					RawTurnoutOperation.getDefaultIntervalStatic(),
 					RawTurnoutOperation.getDefaultMaxTriesStatic());

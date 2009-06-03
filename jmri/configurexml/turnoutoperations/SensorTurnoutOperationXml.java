@@ -26,7 +26,7 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
 	 */
 	public TurnoutOperation loadOne(Element e) {
 		try {
-			Class myOpClass = Class.forName("jmri.SensorTurnoutOperation");
+			Class<?> myOpClass = Class.forName("jmri.SensorTurnoutOperation");
 			return super.loadOne(e, myOpClass.getConstructor(new Class[]{String.class, int.class, int.class}),
 					NoFeedbackTurnoutOperation.getDefaultIntervalStatic(),
 					NoFeedbackTurnoutOperation.getDefaultMaxTriesStatic());

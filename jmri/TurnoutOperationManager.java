@@ -143,8 +143,8 @@ public class TurnoutOperationManager {
 				log.warn("null operation name in loadOperationTypes");
 			} else if (getOperation(validTypes[i]) == null) {
 				try {
-					Class thisClass = Class.forName(thisClassName);
-					TurnoutOperation to = (TurnoutOperation)thisClass.newInstance();
+					Class<?> thisClass = Class.forName(thisClassName);
+					thisClass.newInstance();
 					if (log.isDebugEnabled()) { log.debug("loaded TurnoutOperation class "+thisClassName); };
 				} catch (Exception e) { }
 			}

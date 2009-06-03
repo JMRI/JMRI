@@ -39,7 +39,7 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
 			log.error("class name missing in turnout operation \""+e+"\"");
 		} else {
 			try {
-				Class adapterClass = Class.forName(className);
+				Class<?> adapterClass = Class.forName(className);
 				if (adapterClass != null) {
 					TurnoutOperationXml adapter = (TurnoutOperationXml)adapterClass.newInstance();
 					result = adapter.loadOne(e);
@@ -91,7 +91,7 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
     		fullOpNameComponents[fullOpNameComponents.length-1];
     	String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
     	try {
-    		Class configClass = Class.forName(fullConfigName);
+    		Class<?> configClass = Class.forName(fullConfigName);
     		adapter = (TurnoutOperationXml)configClass.newInstance();
     	} catch (Throwable e) {
     	};		// too many to list!

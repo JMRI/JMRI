@@ -28,7 +28,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -84,8 +84,9 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
      * Create a LsDecSignalHead
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
-        List l = element.getChildren("turnout");
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        List<Element> l = element.getChildren("turnout");
         Turnout green = loadTurnout(l.get(0));
         Turnout yellow = loadTurnout(l.get(1));
         Turnout red = loadTurnout(l.get(2));

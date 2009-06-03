@@ -3,10 +3,10 @@ package jmri.layout;
 /**
  * Define an address consisting of a layout name, a type, and an offset number.
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
-public class LayoutAddress implements Comparable
+public class LayoutAddress implements Comparable<Object>
 {
     public static final int ELEMENT_TYPE_FIRST = 0 ;
     public static final int ELEMENT_TYPE_SENSOR = ELEMENT_TYPE_FIRST ;
