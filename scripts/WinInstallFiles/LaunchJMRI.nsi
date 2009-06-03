@@ -22,6 +22,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.6.0
+; - correct bug that caused crash when launching with single quote in path
+; -------------------------------------------------------------------------
 ; - Version 0.1.5.0
 ; - modified delay in window minimising routine to help with problems seen
 ; - on slower machines (change from 10ms to 60ms delay)
@@ -55,7 +58,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR   "Matt Harris"     ; Author name
 !define APP      "LaunchJMRI"      ; Application name
-!define VER      "0.1.5.0"         ; Launcher version
+!define VER      "0.1.6.0"         ; Launcher version
 !define PNAME    "${APP}"          ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON     "decpro5.ico"     ; Launcher icon
@@ -237,7 +240,7 @@ Section "Main"
   ; -- create PROCESS_INFORMATION structure
   System::Call /NOUNLOAD '*(i, i, i, i)i .r6'
   ; -- create the process
-  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t '$EXESTRING', i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
+  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`$EXESTRING$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
   System::Call /NOUNLOAD '*$6(i,i,i .r7,i)'
   DetailPrint "ProcessID: $7"
   System::Free /NOUNLOAD $5
