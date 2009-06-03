@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via XnTcp interface and comm port
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 Frame by Bob Jacobsen, Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class XnTcpFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -19,7 +19,6 @@ public class XnTcpFrame extends jmri.jmrix.SerialPortFrame {
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
 		if ((String) portBox.getSelectedItem() != null) {
 			// connect to the port
-			adapter.configureBaudRate((String)baudBox.getSelectedItem());
 			adapter.configureOption1((String)opt1Box.getSelectedItem());
 			adapter.configureOption2((String)opt2Box.getSelectedItem());
 			String errCode = adapter.openPort((String) portBox.getSelectedItem(),"XnTcpFrame");

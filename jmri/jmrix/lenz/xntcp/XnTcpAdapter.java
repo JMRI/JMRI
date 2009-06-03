@@ -16,7 +16,7 @@ import jmri.jmrix.ConnectionStatus;
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  */
@@ -216,9 +216,11 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
         public boolean okToSend() {
 			// If a communication error occurred, return always "true" in order to avoid program hang-up while quitting
 			if(!opened) return true;
-			// Return "true" if the maximum number of commands queued has not been reached
-			log.debug("XnTcpAdapter.okToSend = " + (pendingPackets < MAX_PENDING_PACKETS) + " (pending packets =" + pendingPackets + ")");
-			return pendingPackets < MAX_PENDING_PACKETS;
+                        synchronized(this) {
+			  // Return "true" if the maximum number of commands queued has not been reached
+			  log.debug("XnTcpAdapter.okToSend = " + (pendingPackets < MAX_PENDING_PACKETS) + " (pending packets =" + pendingPackets + ")");
+			  return pendingPackets < MAX_PENDING_PACKETS;
+                         }
         }
 
 	/**
@@ -260,6 +262,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	/**
 	 * Local method to do specific configuration
 	 */
+
 	/* Get an array of valid baud rates. We support only one communication speed	*/
 	public String[] validBaudRates() {return new String[]{""};}
     public String getCurrentBaudRate() {return null;}

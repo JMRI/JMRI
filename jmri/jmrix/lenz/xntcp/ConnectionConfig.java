@@ -5,13 +5,14 @@ package jmri.jmrix.lenz.xntcp;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 
 /**
  * Handle configuring an XPressNet layout connection
@@ -21,7 +22,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -29,8 +30,6 @@ import javax.swing.JTextField;
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
 
-    protected JComboBox portBox = new JComboBox();
-    protected jmri.jmrix.SerialPortAdapter adapter = null;
 	protected JTextField ipField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
 	protected JTextField portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
 	protected boolean manualInput = false;
@@ -69,11 +68,31 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
                 if(manualInput) adapter.configureOption1(ipField.getText());
             }
         });
-		portField.addActionListener(new ActionListener() {
+        ipField.addKeyListener( new KeyListener() {
+             public void keyPressed(KeyEvent keyEvent) {
+             }
+             public void keyReleased(KeyEvent keyEvent) {
+                if(manualInput) adapter.configureOption1(ipField.getText());
+             }
+             public void keyTyped(KeyEvent keyEvent) {
+             }
+         });
+
+
+	portField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                if(manualInput) adapter.configureOption2(portField.getText());
              }
         });
+        portField.addKeyListener( new KeyListener() {
+             public void keyPressed(KeyEvent keyEvent) {
+             }
+             public void keyReleased(KeyEvent keyEvent) {
+                if(manualInput) adapter.configureOption2(portField.getText());
+             }
+             public void keyTyped(KeyEvent keyEvent) {
+             }
+         });
 		
         init = true;
     }
@@ -112,7 +131,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         portBox.removeAllItems();
 		String oldName = adapter.getCurrentPortName();
 		int indSel = -1;
-		if(oldName == null) oldName = new String("(none)");
+		if(oldName == null) oldName = "(none)";
         for (int i=0; i<v.size(); i++) {
 			if(((String)v.elementAt(i)).equals(oldName)) indSel = i;
 			portBox.addItem(v.elementAt(i));
@@ -148,4 +167,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 			adapter.configureOption2("");
 		}
 	}
+
+static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfig.class.getName());
+
 }
