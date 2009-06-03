@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.25 $
+ * @version              $Revision: 1.26 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -247,7 +247,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     }
 
     private void initializeConsistBox() {
-        ArrayList existingConsists = ConsistMan.getConsistList();
+        ArrayList<DccLocoAddress> existingConsists = ConsistMan.getConsistList();
         if(!existingConsists.isEmpty()) {
            consistAdrBox.removeAllItems();
            for(int i=0; i<existingConsists.size(); i++) {
@@ -296,10 +296,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 	DccLocoAddress address=adrSelector.getAddress();
 	Consist tempConsist = ConsistMan.getConsist(address);
 	/* get the list of locomotives to delete */
-	ArrayList addressList = tempConsist.getConsistList();
+	ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
 
 	for(int i=(addressList.size()-1);i>=0;i--) {
-		DccLocoAddress locoaddress=(DccLocoAddress)addressList.get(i);
+		DccLocoAddress locoaddress=addressList.get(i);
 		if(log.isDebugEnabled()) log.debug("Deleting Locomotive: " + address.toString());
 		try {
 			tempConsist.remove(locoaddress);
@@ -346,8 +346,8 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
           /* get the lead locomotive from the list of locomotives so we can 
              register function button bindings in the throttle. */
           Consist tempConsist = ConsistMan.getConsist(address);
-          ArrayList addressList = tempConsist.getConsistList();
-          DccLocoAddress locoaddress=(DccLocoAddress)addressList.get(0);
+          ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
+          DccLocoAddress locoaddress=addressList.get(0);
           if(address!=locoaddress){
                 if(log.isDebugEnabled()) log.debug("Consist Address " + 
                                                     address.toString() +

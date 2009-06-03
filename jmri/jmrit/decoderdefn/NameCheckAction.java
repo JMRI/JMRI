@@ -15,7 +15,7 @@ import org.jdom.*;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -29,7 +29,8 @@ public class NameCheckAction extends AbstractAction {
     
     JPanel _who;
     
-    public void actionPerformed(ActionEvent e) {
+    @SuppressWarnings("unchecked")
+	public void actionPerformed(ActionEvent e) {
         if (fci==null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
         }
@@ -50,14 +51,14 @@ public class NameCheckAction extends AbstractAction {
                     log.warn("Does not appear to be a decoder file");
                     return;
                 }
-                List varList = root.getChild("decoder").getChild("variables").getChildren("variable");
+                List<Element> varList = root.getChild("decoder").getChild("variables").getChildren("variable");
                 if (log.isDebugEnabled()) log.debug("found "+varList.size()+" variables");
                 jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
                 
                 String warnings = "";
                 
                 for (int i=0; i<varList.size(); i++) {
-                    Element varElement = (Element)(varList.get(i));
+                    Element varElement = varList.get(i);
                     // for each variable, see if can find in names file
                     Attribute labelAttr = varElement.getAttribute("label");
                     String label = null;

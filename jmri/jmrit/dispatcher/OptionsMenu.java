@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -100,7 +100,7 @@ public class OptionsMenu extends JMenu {
 	Container optionsPane = null;
 	JCheckBox useConnectivityCheckBox = new JCheckBox(rb.getString("UseConnectivity"));
 	JComboBox layoutEditorBox = new JComboBox();
-	ArrayList layoutEditorList = new ArrayList();
+	ArrayList<LayoutEditor> layoutEditorList = new ArrayList<LayoutEditor>();
 	JCheckBox autoAllocateCheckBox = new JCheckBox(rb.getString("AutoAllocateBox"));
 	JCheckBox autoTurnoutsCheckBox = new JCheckBox(rb.getString("AutoTurnoutsBox"));
 	JRadioButton trainsFromRoster = new JRadioButton(rb.getString("TrainsFromRoster"));
@@ -215,7 +215,7 @@ public class OptionsMenu extends JMenu {
 	private void applyOptions(ActionEvent e) {
 		if (layoutEditorList.size()>0) {
 			int index = layoutEditorBox.getSelectedIndex();
-			dispatcher.setLayoutEditor((LayoutEditor)layoutEditorList.get(index));
+			dispatcher.setLayoutEditor(layoutEditorList.get(index));
 			dispatcher.setUseConnectivity(useConnectivityCheckBox.isSelected());
 		}
 		dispatcher.setTrainsFromRoster(trainsFromRoster.isSelected());
@@ -228,7 +228,7 @@ public class OptionsMenu extends JMenu {
 		autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
 		if (autoTurnoutsCheckBox.isSelected() && ( (layoutEditorList.size()==0) ||
 								(!useConnectivityCheckBox.isSelected()) ) ) {
-			JOptionPane.showMessageDialog(optionsFrame,(Object)rb.getString(
+			JOptionPane.showMessageDialog(optionsFrame,rb.getString(
 				"AutoTurnoutsWarn"),rb.getString("WarningTitle"),JOptionPane.WARNING_MESSAGE);
 		}
 		dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
@@ -262,12 +262,12 @@ public class OptionsMenu extends JMenu {
 		if (layoutEditorList.size()==0) return false;
 		layoutEditorBox.removeAllItems();
 		for (int i=0; i<layoutEditorList.size(); i++) {
-			layoutEditorBox.addItem(((LayoutEditor)layoutEditorList.get(i)).getTitle());
+			layoutEditorBox.addItem(layoutEditorList.get(i).getTitle());
 		}
 		if (layoutEditorList.size()>1) {
 			LayoutEditor le = dispatcher.getLayoutEditor();
 			for (int j=0; j<layoutEditorList.size(); j++) {
-				if (le == (LayoutEditor)layoutEditorList.get(j)) {
+				if (le == layoutEditorList.get(j)) {
 					layoutEditorBox.setSelectedIndex(j);
 				}
 			}

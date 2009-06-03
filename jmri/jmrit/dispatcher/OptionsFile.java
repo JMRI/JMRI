@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.Attribute;
 
 /**
  * Handles reading and writing of Dispatcher options to disk as an XML file
@@ -38,7 +37,7 @@ import org.jdom.Attribute;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -76,7 +75,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						// there is a layout editor name selected
 						String leName = options.getAttribute("lename").getValue();
 						// get list of Layout Editor panels
-						ArrayList layoutEditorList = jmri.jmrit.display.
+						ArrayList<LayoutEditor> layoutEditorList = jmri.jmrit.display.
 												PanelMenu.instance().getLayoutEditorPanelList();
 						if (layoutEditorList.size()==0) {
 							log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
@@ -84,9 +83,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						else {
 							boolean found = false;
 							for (int i = 0; i<layoutEditorList.size(); i++) {
-								if (leName.equals(((LayoutEditor)layoutEditorList.get(i)).getTitle())) {
+								if (leName.equals(layoutEditorList.get(i).getTitle())) {
 									found = true;
-									dispatcher.setLayoutEditor((LayoutEditor)layoutEditorList.get(i));
+									dispatcher.setLayoutEditor(layoutEditorList.get(i));
 								}
 							}
 							if (!found) {
@@ -162,7 +161,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		doc = newDocument(root, dtdLocation+"dispatcher-options.dtd");
 		// add XSLT processing instruction
 		// <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
-		java.util.Map m = new java.util.HashMap();
+		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 		m.put("type", "text/xsl");
 		m.put("href", xsltLocation+"dispatcheroptions.xsl");
 		org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);

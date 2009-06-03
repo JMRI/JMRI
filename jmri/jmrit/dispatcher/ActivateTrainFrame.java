@@ -4,7 +4,6 @@ package jmri.jmrit.dispatcher;
 
 import jmri.*;
 import jmri.util.*;
-import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.operations.trains.Train;
@@ -39,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 
@@ -59,30 +58,30 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 	private boolean _TrainsFromUser = false;
 	private boolean _TrainsFromRoster = true;
 	private boolean _TrainsFromTrains = false;
-	private ArrayList _ActiveTrainsList = null;
+	private ArrayList<ActiveTrain> _ActiveTrainsList = null;
 	private TransitManager _TransitManager = InstanceManager.transitManagerInstance();
 	
 	// initiate train window variables
 	private Transit selectedTransit = null;
-	private String selectedTrain = "";
+	//private String selectedTrain = "";
 	private JmriJFrame initiateFrame=null;
 	private Container initiatePane = null;
 	private JComboBox transitSelectBox = new JComboBox();
-	private ArrayList transitBoxList = new ArrayList();
+	private ArrayList<Transit> transitBoxList = new ArrayList<Transit>();
 	private JLabel trainBoxLabel = new JLabel("     "+rb.getString("TrainBoxLabel")+":");
 	private JComboBox trainSelectBox = new JComboBox();
-	private ArrayList trainBoxList = new ArrayList();
+	private ArrayList<RosterEntry> trainBoxList = new ArrayList<RosterEntry>();
 	private JLabel trainFieldLabel = new JLabel(rb.getString("TrainBoxLabel")+":");
 	private JTextField trainNameField = new JTextField(10);
 	private JLabel dccAddressFieldLabel = new JLabel("     "+rb.getString("DccAddressFieldLabel")+":");
 	private JTextField dccAddressField = new JTextField(6);
 	private JCheckBox inTransitBox = new JCheckBox(rb.getString("TrainInTransit"));
 	private JComboBox startingBlockBox = new JComboBox();
-	private ArrayList startingBlockBoxList = new ArrayList();
-	private ArrayList startingBlockSeqList = new ArrayList();
+	private ArrayList<Block> startingBlockBoxList = new ArrayList<Block>();
+	private ArrayList<Integer> startingBlockSeqList = new ArrayList<Integer>();
 	private JComboBox destinationBlockBox = new JComboBox();
-	private ArrayList destinationBlockBoxList = new ArrayList();
-	private ArrayList destinationBlockSeqList = new ArrayList();
+	private ArrayList<Block> destinationBlockBoxList = new ArrayList<Block>();
+	private ArrayList<Integer> destinationBlockSeqList = new ArrayList<Integer>();
 	private JButton addNewTrainButton = null;
 	private JButton loadButton = null;
 	private JButton saveButton = null;
@@ -256,7 +255,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 	private void handleTransitSelectionChanged(ActionEvent e) {
 		int index = transitSelectBox.getSelectedIndex();
 		if (index<0) return;
-		Transit t = (Transit)transitBoxList.get(index);
+		Transit t = transitBoxList.get(index);
 		if ( (t!=null) && (t!=selectedTransit) ) {
 			selectedTransit = t;
 			initializeStartingBlockCombo();
@@ -307,12 +306,12 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		String trainName = "";
 		int index = startingBlockBox.getSelectedIndex();
 		if (index<0) return;
-		String startBlockName = ((Block)startingBlockBoxList.get(index)).getSystemName();
-		int startBlockSeq = ((Integer)startingBlockSeqList.get(index)).intValue();
+		String startBlockName = startingBlockBoxList.get(index).getSystemName();
+		int startBlockSeq = startingBlockSeqList.get(index).intValue();
 		index = destinationBlockBox.getSelectedIndex();
 		if (index<0) return;
-		String endBlockName = ((Block)destinationBlockBoxList.get(index)).getSystemName();
-		int endBlockSeq = ((Integer)destinationBlockSeqList.get(index)).intValue();
+		String endBlockName = destinationBlockBoxList.get(index).getSystemName();
+		int endBlockSeq = destinationBlockSeqList.get(index).intValue();
 		boolean autoRun = autoRunBox.isSelected();
 		boolean resetWhenDone = resetWhenDoneBox.isSelected();
 		int tSource = 0;
@@ -327,7 +326,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 				return;
 			}				
 			trainName = (String)trainSelectBox.getSelectedItem();
-			RosterEntry r = (RosterEntry)trainBoxList.get(index);
+			RosterEntry r = trainBoxList.get(index);
 			dccAddress = r.getDccAddress();
 			tSource = ActiveTrain.ROSTER;
 		}
@@ -403,19 +402,19 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		_dispatcher.newTrainDone();
 	}	
 	private void initializeFreeTransitsCombo() {
-		ArrayList allTransits = (ArrayList)_TransitManager.getSystemNameList();
+		ArrayList<String> allTransits = (ArrayList<String>)_TransitManager.getSystemNameList();
 		transitSelectBox.removeAllItems();
 		transitBoxList.clear();
 		for (int i = 0; i<allTransits.size(); i++) {
-			String tName = (String)allTransits.get(i);
+			String tName = allTransits.get(i);
 			Transit t = _TransitManager.getBySystemName(tName);
 			boolean free = true;
 			for (int j = 0; j<_ActiveTrainsList.size(); j++) {
-				ActiveTrain at = (ActiveTrain)_ActiveTrainsList.get(j);
+				ActiveTrain at = _ActiveTrainsList.get(j);
 				if (t == at.getTransit()) free = false;
 			}
 			if (free) {
-				transitBoxList.add((Object)t);
+				transitBoxList.add(t);
 				if ( (t.getUserName()!=null) && (!t.getUserName().equals("")) )
 					tName = tName+"( "+t.getUserName()+" )";
 				transitSelectBox.addItem(tName);
@@ -423,7 +422,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}
 		if (transitBoxList.size()>0) {
 			transitSelectBox.setSelectedIndex(0);
-			selectedTransit = (Transit)transitBoxList.get(0);
+			selectedTransit = transitBoxList.get(0);
 		}
 		else {
 			selectedTransit = null;
@@ -434,13 +433,13 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		trainBoxList.clear();
 		if (_TrainsFromRoster) {
 			// initialize free trains from roster
-			List l = Roster.instance().matchingList(null, null, null, null, null, null, null );
+			List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, null );
 			if (l.size()>0) {
 				for (int i = 0; i<l.size(); i++) {
-					RosterEntry r = (RosterEntry)l.get(i);
+					RosterEntry r = l.get(i);
 					String rName = r.titleString();
 					if (isTrainFree(rName)) {
-						trainBoxList.add((Object)r);
+						trainBoxList.add(r);
 						trainSelectBox.addItem(rName);
 					}
 				}
@@ -448,10 +447,10 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}
 		else if (_TrainsFromTrains) {
 			// initialize free trains from operations
-			List l = TrainManager.instance().getTrainsByNameList();
+			List<String> l = TrainManager.instance().getTrainsByNameList();
 			if (l.size()>0) {
 				for (int i = 0; i<l.size(); i++) {
-					String rName = (String)l.get(i);
+					String rName = l.get(i);
 					Train t = TrainManager.instance().getTrainByName(rName);
 					if (t!=null) {
 						if (isTrainFree(rName)) {
@@ -463,15 +462,12 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}
 		if (trainBoxList.size()>0) {
 			trainSelectBox.setSelectedIndex(0);
-			selectedTrain = (String)trainSelectBox.getSelectedItem();
-		}
-		else {
-			selectedTrain = "";
 		}
 	}
+	
 	private boolean isTrainFree (String rName) {
 		for (int j = 0; j<_ActiveTrainsList.size(); j++) {
-			ActiveTrain at = (ActiveTrain)_ActiveTrainsList.get(j);
+			ActiveTrain at = _ActiveTrainsList.get(j);
 			if (rName.equals(at.getTrainName())) return false;
 		}
 		return true;
@@ -488,8 +484,8 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}
 		startingBlockSeqList = selectedTransit.getBlockSeqList();
 		for (int i = 0; i<startingBlockBoxList.size(); i++) {
-			Block b = (Block)startingBlockBoxList.get(i);
-			int seq = ((Integer)startingBlockSeqList.get(i)).intValue();
+			Block b = startingBlockBoxList.get(i);
+			int seq = startingBlockSeqList.get(i).intValue();
 			startingBlockBox.addItem(getBlockName(b)+"-"+seq);
 		}
 	}
@@ -498,15 +494,15 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		destinationBlockBoxList.clear();
 		int index = startingBlockBox.getSelectedIndex();
 		if (index<0) return;
-		Block startBlock = (Block)startingBlockBoxList.get(index);
+		Block startBlock = startingBlockBoxList.get(index);
 		destinationBlockBoxList = selectedTransit.getDestinationBlocksList(
 					startBlock, inTransitBox.isSelected());
 		destinationBlockSeqList = selectedTransit.getDestBlocksSeqList();
 		for (int i = 0; i<destinationBlockBoxList.size(); i++) {
-			Block b = (Block)destinationBlockBoxList.get(i);
+			Block b = destinationBlockBoxList.get(i);
 			String bName = getBlockName(b);
 			if (selectedTransit.getBlockCount(b)>1) {
-				int seq = ((Integer)destinationBlockSeqList.get(i)).intValue();
+				int seq = destinationBlockSeqList.get(i).intValue();
 				bName = bName+"-"+seq;
 			}
 			destinationBlockBox.addItem(bName);
@@ -536,8 +532,8 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		TrainInfo info = null;
 		if (names.length > 0) {
 			Object selName = JOptionPane.showInputDialog(initiateFrame, 
-					(Object)rb.getString("LoadTrainChoice"), rb.getString("LoadTrainTitle"), 
-						JOptionPane.QUESTION_MESSAGE, null, (Object[])names, (Object)names[0]);
+					rb.getString("LoadTrainChoice"), rb.getString("LoadTrainTitle"), 
+						JOptionPane.QUESTION_MESSAGE, null, names, names[0]);
 			if ( (selName == null) || (((String)selName).equals("")) ) return;
 			try {
 				info = _tiFile.readTrainInfo((String)selName);
@@ -601,7 +597,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			log.warn("Transit "+info.getTransitName()+" from file not in Transit menu");
 			JOptionPane.showMessageDialog(initiateFrame,
 					java.text.MessageFormat.format(rb.getString("TransitWarn"),
-						new Object[]{(Object)info.getTransitName()}), 
+						new Object[]{info.getTransitName()}), 
 							null,JOptionPane.WARNING_MESSAGE);
 		}
 		_TrainsFromRoster = info.getTrainFromRoster();
@@ -613,7 +609,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 				log.warn("Train "+info.getTrainName()+" from file not in Train menu");
 				JOptionPane.showMessageDialog(initiateFrame,
 					java.text.MessageFormat.format(rb.getString("TrainWarn"),
-						new Object[]{(Object)info.getTrainName()}), 
+						new Object[]{info.getTrainName()}), 
 							null,JOptionPane.WARNING_MESSAGE);
 			}
 		}
@@ -674,7 +670,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 	private boolean setComboBox(JComboBox box, String txt) {
 		boolean found = false;
 		for (int i = 0; i<box.getItemCount(); i++) {
-			if (txt.equals((String)box.getItemAt(i))) {
+			if (txt.equals(box.getItemAt(i))) {
 				box.setSelectedIndex(i);
 				found = true;
 			}

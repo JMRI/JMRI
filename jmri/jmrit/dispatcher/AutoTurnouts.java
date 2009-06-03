@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class AutoTurnouts {
@@ -157,8 +157,8 @@ public class AutoTurnouts {
 				}
 			}
 		}
-		ArrayList turnoutList = null;
-		ArrayList settingsList = null;		
+		ArrayList<LayoutTurnout> turnoutList = null;
+		ArrayList<Integer> settingsList = null;		
 		// get turnouts by Block
 		boolean turnoutsOK = true;
 		while (curBlock!=null) {
@@ -166,8 +166,8 @@ public class AutoTurnouts {
 			settingsList = ct.getTurnoutSettingList();
 			// loop over turnouts checking and optionally setting turnouts
 			for (int i = 0; i<turnoutList.size(); i++) {
-				Turnout to = ((LayoutTurnout)turnoutList.get(i)).getTurnout();
-				int setting = ((Integer)settingsList.get(i)).intValue();
+				Turnout to = turnoutList.get(i).getTurnout();
+				int setting = settingsList.get(i).intValue();
 				// test current setting
 				if (to.getKnownState()!=setting) {
 					// turnout is not set correctly

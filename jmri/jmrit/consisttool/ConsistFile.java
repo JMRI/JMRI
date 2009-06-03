@@ -4,11 +4,9 @@ package jmri.jmrit.consisttool;
 
 import jmri.jmrit.XmlFile;
 import jmri.DccLocoAddress;
-import jmri.ConsistManager;
 import jmri.Consist;
 import java.io.File;
 
-import java.util.List;
 import java.util.ArrayList;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -19,7 +17,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -39,6 +37,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          * Load a Consist from the consist elements in the file.
          * @param consist a JDOM element containing a consist
          */
+	@SuppressWarnings("unchecked")
 	private void ConsistFromXML(Element consist){
                 org.jdom.Attribute type,cnumber,isCLong,cID;
                 jmri.Consist newConsist = null;
@@ -91,11 +90,11 @@ class ConsistFile extends jmri.jmrit.XmlFile {
 
                 // read each child of locomotive in the consist from the file
                 // and restore it's information to memory.
-                java.util.Iterator childIterator=consist.getDescendants(new org.jdom.filter.ElementFilter("loco"));
+                java.util.Iterator<Element> childIterator=consist.getDescendants(new org.jdom.filter.ElementFilter("loco"));
                 try {
                    org.jdom.Element e;
                    do {
-		        e=(org.jdom.Element)childIterator.next();
+		        e=childIterator.next();
                         org.jdom.Attribute number,isLong,direction,position;
                         number=e.getAttribute("dccLocoAddress");
                         isLong=e.getAttribute("longAddress");
@@ -169,11 +168,11 @@ class ConsistFile extends jmri.jmrit.XmlFile {
               e.setAttribute("longAddress",consist.getConsistAddress()
                                                 .isLongAddress()?"yes":"no");
               e.setAttribute("type",consist.getConsistType()==jmri.Consist.ADVANCED_CONSIST?"DAC":"CSAC");
-              ArrayList addressList = consist.getConsistList();
+              ArrayList<DccLocoAddress> addressList = consist.getConsistList();
 
 	      for(int i=0;i<addressList.size();i++)
               {
-                 DccLocoAddress locoaddress=(DccLocoAddress)addressList.get(i);
+                 DccLocoAddress locoaddress=addressList.get(i);
                  org.jdom.Element eng = new org.jdom.Element("loco");
                  eng.setAttribute("dccLocoAddress",""+locoaddress.getNumber());
                  eng.setAttribute("longAddress",locoaddress.isLongAddress()?"yes":"no");
@@ -199,6 +198,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          * @throws java.io.FileNotFoundException
          * @param consistList an ArrayList of consist IDs to write to the file
          */
+	@SuppressWarnings("unchecked")
 	public void ReadFile() throws org.jdom.JDOMException, java.io.IOException {
            if(checkFile(defaultConsistFilename()))
            {
@@ -213,11 +213,11 @@ class ConsistFile extends jmri.jmrit.XmlFile {
 	  	   if(log.isDebugEnabled()) log.debug("consist file does not contain a roster entry");
                    return;
               }
-              java.util.Iterator consistIterator=root.getDescendants(new org.jdom.filter.ElementFilter("consist"));
+              java.util.Iterator<Element> consistIterator=root.getDescendants(new org.jdom.filter.ElementFilter("consist"));
               try {
                  org.jdom.Element consist;
                  do {
-                    consist=(org.jdom.Element)consistIterator.next();
+                    consist=consistIterator.next();
                     ConsistFromXML(consist);
                  } while(consist!=null);
               } catch(java.util.NoSuchElementException nde){
@@ -233,13 +233,13 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          * @throws org.jdom.JDOMException
          * @param consistList an ArrayList of consist IDs to write to the file
  	 */
-	public void WriteFile(ArrayList consistList) throws org.jdom.JDOMException, java.io.IOException {
+	public void WriteFile(ArrayList<jmri.DccLocoAddress> consistList) throws org.jdom.JDOMException, java.io.IOException {
            // create root element
            Element root = new Element("consist-roster-config");
            Document doc = newDocument(root, dtdLocation+"consist-roster-config.dtd");
 
            // add XSLT processing instruction
-           java.util.Map m = new java.util.HashMap();
+           java.util.Map<String,String> m = new java.util.HashMap<String,String>();
            m.put("type", "text/xsl");
            m.put("href", xsltLocation+"consistRoster.xsl");
            org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
@@ -249,7 +249,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
 
            for(int i=0; i<consistList.size();i++)
            {
-                jmri.Consist newConsist=ConsistMan.getConsist((jmri.DccLocoAddress)consistList.get(i));
+                jmri.Consist newConsist=ConsistMan.getConsist(consistList.get(i));
 		roster.addContent(ConsistToXML(newConsist));
            }
            root.addContent(roster);

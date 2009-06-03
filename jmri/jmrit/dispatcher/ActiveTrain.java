@@ -78,7 +78,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ActiveTrain {
 
@@ -127,7 +127,7 @@ public class ActiveTrain {
 	private int mTrainSource = ROSTER;
 	private int mStatus = WAITING;
 	private int mMode = DISPATCHED;
-	private java.util.ArrayList mAllocatedSections = new java.util.ArrayList();
+	private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
 	private jmri.Section mLastAllocatedSection = null;
 	private jmri.Section mSecondAllocatedSection = null;
 	private jmri.Section mNextSectionToAllocate = null;
@@ -209,7 +209,7 @@ public class ActiveTrain {
 	}	
 	public void addAllocatedSection (AllocatedSection as) {
 		if (as!=null) {
-			mAllocatedSections.add((Object)as);
+			mAllocatedSections.add(as);
 			if (as.getSection() == mNextSectionToAllocate) {
 				// this  is the next Section in the Transit, update pointers
 				mLastAllocatedSection = as.getSection();
@@ -237,7 +237,7 @@ public class ActiveTrain {
 		}
 		int index = -1;
 		for (int i = 0; i<mAllocatedSections.size(); i++) {
-			if ((Object)as == mAllocatedSections.get(i)) index = i;
+			if (as == mAllocatedSections.get(i)) index = i;
 		}
 		if (index<0) {
 			log.error("Attempt to remove an unallocated Section");
@@ -247,20 +247,20 @@ public class ActiveTrain {
 		if (as.getSection() == mLastAllocatedSection) {
 			mLastAllocatedSection = null;
 			if (mAllocatedSections.size()>0) {
-				mLastAllocatedSection = ((AllocatedSection)mAllocatedSections.get(
-								mAllocatedSections.size()-1)).getSection();
+				mLastAllocatedSection = mAllocatedSections.get(
+								mAllocatedSections.size()-1).getSection();
 			}
 		}
 		if ( (mResetWhenDone) && (mAllocatedSections.size()==1) && (mNextSectionToAllocate==null) ) {
-			AllocatedSection las = (AllocatedSection)mAllocatedSections.get(0);
+			AllocatedSection las = mAllocatedSections.get(0);
 			las.resetToBeginning();
 			mNextSectionToAllocate = mSecondAllocatedSection;
 			mNextSectionSeqNumber = 2;
 			mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(mNextSectionToAllocate,2);
 		}	
 	}
-	public java.util.ArrayList getAllocatedSectionList() {
-		ArrayList list = new ArrayList();
+	public java.util.ArrayList<AllocatedSection> getAllocatedSectionList() {
+		ArrayList<AllocatedSection> list = new ArrayList<AllocatedSection>();
 		for (int i = 0; i<mAllocatedSections.size(); i++) {
 			list.add(mAllocatedSections.get(i));
 		}
@@ -337,7 +337,7 @@ public class ActiveTrain {
 				mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null);	
 		if (ar==null) log.error("Allocation request failed for first allocation of "+getActiveTrainName());
 		if (DispatcherFrame.instance().getShortNameInBlock()) {
-			mStartBlock.setValue((Object)mTrainName);
+			mStartBlock.setValue(mTrainName);
 		}
 // here add code to start a throttle and start running the train if it is in autoRun
 		return ar;

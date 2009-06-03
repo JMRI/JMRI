@@ -2,21 +2,17 @@
 
 package jmri.jmrit.decoderdefn;
 
-import jmri.jmrit.*;
-import java.awt.event.*;
 import java.io.*;
 
 import javax.swing.*;
 import java.net.URL;
 
-import java.util.*;
-import org.jdom.*;
 
 /**
  * Install decoder definition from local file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {

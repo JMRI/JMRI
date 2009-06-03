@@ -3,15 +3,12 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.display.LayoutEditor;
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.Attribute;
 
 /**
  * Handles reading and writing of TrainInfo files to disk as an XML file
@@ -36,7 +33,7 @@ import org.jdom.Attribute;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -164,7 +161,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		doc = newDocument(root, dtdLocation+"dispatcher-traininfo.dtd");
 		// add XSLT processing instruction
 		// <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
-		java.util.Map m = new java.util.HashMap();
+		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 		m.put("type", "text/xsl");
 		m.put("href", xsltLocation+"dispatcher-traininfo.xsl");
 		org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);

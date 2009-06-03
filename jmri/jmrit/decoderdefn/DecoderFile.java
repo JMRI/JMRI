@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -188,15 +188,16 @@ public class DecoderFile extends XmlFile {
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    public void loadVariableModel(Element decoderElement,
+    @SuppressWarnings("unchecked")
+	public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
         // find decoder id, assuming first decoder is fine for now (e.g. one per file)
-        Element decoderID = decoderElement.getChild("id");
+        //Element decoderID = decoderElement.getChild("id");
 
         // load variables to table
-        List varList = decoderElement.getChild("variables").getChildren("variable");
+        List<Element> varList = decoderElement.getChild("variables").getChildren("variable");
         for (int i=0; i<varList.size(); i++) {
-            Element e = (Element)(varList.get(i));
+            Element e = varList.get(i);
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -218,9 +219,9 @@ public class DecoderFile extends XmlFile {
             variableModel.setRow(i, e);
         }
         // load constants to table
-        List consList = decoderElement.getChild("variables").getChildren("constant");
+        List<Element> consList = decoderElement.getChild("variables").getChildren("constant");
         for (int i=0; i<consList.size(); i++) {
-            Element e = (Element)(consList.get(i));
+            Element e = consList.get(i);
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -242,10 +243,10 @@ public class DecoderFile extends XmlFile {
             variableModel.setConstant(e);
         }
         int row = 0;
-        List iVarList = decoderElement.getChild("variables").getChildren("ivariable");
+        List<Element> iVarList = decoderElement.getChild("variables").getChildren("ivariable");
         log.debug("iVarList has "+iVarList.size()+" entries, now row = "+row);
         for (int i=0; i<iVarList.size(); i++) {
-            Element e = (Element)(iVarList.get(i));
+            Element e = iVarList.get(i);
             try {
                 if (log.isDebugEnabled()) log.debug("process iVar "+e.getAttribute("CVname"));
                 // if its associated with an inconsistent number of functions,
@@ -280,17 +281,18 @@ public class DecoderFile extends XmlFile {
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    public void loadResetModel(Element decoderElement,
+    @SuppressWarnings("unchecked")
+	public void loadResetModel(Element decoderElement,
                                ResetTableModel resetModel) {
         if (decoderElement.getChild("resets") != null) {
-            List resetList = decoderElement.getChild("resets").getChildren("factReset");
+            List<Element> resetList = decoderElement.getChild("resets").getChildren("factReset");
             for (int i=0; i<resetList.size(); i++) {
-                Element e = (Element)(resetList.get(i));
+                Element e = resetList.get(i);
                 resetModel.setRow(i,e);
             }
-            List iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
+            List<Element> iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
             for (int i=0; i<iresetList.size(); i++) {
-                Element e = (Element)(iresetList.get(i));
+                Element e = iresetList.get(i);
                 resetModel.setIndxRow(i,e);
             }
         }
