@@ -400,4 +400,10 @@
   <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
+ <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
+
+ <indexitem text="JUnit " target="html.doc.Technical.JUnit"/>
+
+ <indexitem text="Internationalization " target="html.doc.Technical.I8N"/>
+
 </index>

@@ -686,9 +686,9 @@
 
 <mapID target="manual.Comp_PrintData_Print" url="manual/Comp_PrintData.shtml#Print"/>
 
-<mapID target="Acknowledgements_H" url="Acknowledgements.shtml#H"/>
-
 <mapID target="manual.Main_Roster_CreateRoster" url="manual/Main_Roster.shtml#CreateRoster"/>
+
+<mapID target="Acknowledgements_H" url="Acknowledgements.shtml#H"/>
 
 <mapID target="manual.Basic_Programming_ServiceMode" url="manual/Basic_Programming.shtml#ServiceMode"/>
 
@@ -1021,6 +1021,8 @@
 <mapID target="manual.Main_Panels_PanelEditor" url="manual/Main_Panels.shtml#PanelEditor"/>
 
 <mapID target="html.tools.fastclock.LocoNetClock" url="html/tools/fastclock/LocoNetClock.shtml"/>
+
+<mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
 <mapID target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame" url="package/jmri/jmrix/powerline/serialmon/SerialMonFrame.shtml"/>
 
