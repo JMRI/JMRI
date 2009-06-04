@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.3 2009-06-03 14:55:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.4 2009-06-04 00:01:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,7 +69,18 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(none yet)
+This version introduces reorganized definitions for 
+SoundTraxx Tsunami Diesel definitions.  Several definition files have been
+removed, and are replaced by one common file.  
+If you haven't modified your Tsunami XML files, you don't have to read
+the rest of this paragraph.
+If you have modified or replaced the Tsunami definitions in 
+the program directory in a previous
+copy of JMRI, you should back up the modified files before installing
+JMRI 2.5.4. This version removes the old files, so if you have modifications,
+you'll have to put them back manually afterwards.  In general, it's better
+to put local modifications in the preference directory, not the program directory,
+so you won't have to do this in the future.
 
 <h3>Warnings from older versions:</h3>
 
@@ -154,11 +165,20 @@ Fixed a problem preventing the "exclude" option in decoder definitions
 from working when "include" was also in use.
 
 <p>
+Simon White added support for
+<a href="http://jmri.org/help/en/doc/Technical/FindBugs.shtml">FindBugs</a>
+to our software build process.
+
+<p>
 Dan Boudreau updated the code to remove some Java 1.5 generics warnings.
 
 <p>
 Paul Bender improved the consisting performance and added code to handle
 certain kinds of I/O errors.
+
+<p>
+Jack Shall has updated the SoundTraxx Tsunami diesel definitions so that they
+now live in a single file, and share definitions of most CVs.
 
 <!--#include virtual="/Footer" -->
 
