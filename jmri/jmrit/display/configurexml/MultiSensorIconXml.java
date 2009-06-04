@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -68,7 +68,8 @@ public class MultiSensorIconXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  PanelEditor or LayoutEditor as an Object
      */
-    public void load(Element element, Object o) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element, Object o) {
 		// get object class and determine editor being used
 		String className = o.getClass().getName();
 		int lastDot = className.lastIndexOf(".");
@@ -125,10 +126,10 @@ public class MultiSensorIconXml implements XmlAdapter {
             l.setForceControlOff(false);
             
         // get the icon pairs & load
-        List items = element.getChildren();
+        List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String sensor = item.getAttribute("sensor").getValue();
             String icon = item.getAttribute("icon").getValue();
             NamedIcon nicon = CatalogPane.getIconByName(icon);

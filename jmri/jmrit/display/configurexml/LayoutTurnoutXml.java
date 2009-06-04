@@ -10,17 +10,14 @@ import jmri.jmrit.display.TrackSegment;
 // import jmri.Sensor;
 import jmri.Turnout;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
-import java.util.List;
-import java.awt.Color;
 import java.awt.geom.*;
 
 /**
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutTurnoutXml implements XmlAdapter {
 

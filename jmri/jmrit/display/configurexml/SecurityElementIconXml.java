@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SecurityElementIconXml implements XmlAdapter {
 
@@ -56,7 +56,6 @@ public class SecurityElementIconXml implements XmlAdapter {
     public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        String name;
 
         SecurityElementIcon l = new SecurityElementIcon();
 

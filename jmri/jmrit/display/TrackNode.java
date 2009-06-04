@@ -33,7 +33,7 @@ import jmri.*;
  *		Type, are not returned.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TrackNode {
 
@@ -102,7 +102,7 @@ public class TrackNode {
 		return null;
 	}
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TrackNode.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(TrackNode.class.getName());
 }
 
 /* @(#)TrackNode.java */

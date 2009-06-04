@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
-import java.util.ArrayList;
-
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -37,7 +35,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LevelXing 
@@ -262,7 +260,7 @@ public class LevelXing
 	}
 	double round (double x) {
 		int i = (int)(x+0.5);
-		return ((double)i);
+		return i;
 	}
 		
 	// initialization instance variables (used when loading a LayoutEditor)
@@ -279,10 +277,10 @@ public class LevelXing
 	 *        TrackSegment objects.
 	 */
 	public void setObjects(LayoutEditor p) {
-		connectA = (Object)p.findTrackSegmentByName(connectAName);
-		connectB = (Object)p.findTrackSegmentByName(connectBName);
-		connectC = (Object)p.findTrackSegmentByName(connectCName);
-		connectD = (Object)p.findTrackSegmentByName(connectDName);
+		connectA = p.findTrackSegmentByName(connectAName);
+		connectB = p.findTrackSegmentByName(connectBName);
+		connectC = p.findTrackSegmentByName(connectCName);
+		connectD = p.findTrackSegmentByName(connectDName);
 		if (tBlockNameAC.length()>0) {
 			blockAC = p.getLayoutBlock(tBlockNameAC);
 			if (blockAC!=null) {

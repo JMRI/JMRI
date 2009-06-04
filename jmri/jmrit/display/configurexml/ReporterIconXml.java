@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.ReporterIcon;
 
@@ -10,7 +9,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -55,7 +54,6 @@ public class ReporterIconXml extends PositionableLabelXml {
     public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        String name;
         ReporterIcon l = new ReporterIcon();
 
         loadTextInfo(l, element);

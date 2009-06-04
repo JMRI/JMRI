@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutTurnout
@@ -210,7 +210,7 @@ public class LayoutTurnout
 	}
 	private double round (double x) {
 		int i = (int)(x+0.5);
-		return ((double)i);
+		return i;
 	}
 		
 	private void rotateCoords(double rot) {
@@ -816,10 +816,10 @@ public class LayoutTurnout
 	 *        TrackSegment objects.
 	 */
 	public void setObjects(LayoutEditor p) {
-		connectA = (Object)p.findTrackSegmentByName(connectAName);
-		connectB = (Object)p.findTrackSegmentByName(connectBName);
-		connectC = (Object)p.findTrackSegmentByName(connectCName);
-		connectD = (Object)p.findTrackSegmentByName(connectDName);
+		connectA = p.findTrackSegmentByName(connectAName);
+		connectB = p.findTrackSegmentByName(connectBName);
+		connectC = p.findTrackSegmentByName(connectCName);
+		connectD = p.findTrackSegmentByName(connectDName);
 		if (tBlockName.length()>0) {
 			block = p.getLayoutBlock(tBlockName);
 			if (block!=null) {

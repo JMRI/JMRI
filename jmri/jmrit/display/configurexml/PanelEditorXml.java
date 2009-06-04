@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -73,7 +73,8 @@ public class PanelEditorXml implements XmlAdapter {
      * register and fill it, then pop it in a JFrame
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
         // find coordinates
         int x = 0;
         int y = 0;
@@ -105,10 +106,10 @@ public class PanelEditorXml implements XmlAdapter {
         panel.setTitle();
 
         // load the contents
-        List items = element.getChildren();
+        List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via "+adapterName);
             try {

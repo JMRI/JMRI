@@ -5,20 +5,17 @@ package jmri.jmrit.display;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 
 import jmri.util.JmriJFrame;
-
-import java.io.*;
 
 /**
  * Displays and allows user to modify x & y coordinates of
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -187,7 +184,7 @@ public class CoordinateEdit extends JmriJFrame {
 			}
 		}
 		if (l < 1) {
-			l = l;
+			l = 1;
 		} else if (l > 10) {
 				l = 10;
 		}

@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class ConnectivityUtil 
@@ -597,7 +597,7 @@ public class ConnectivityUtil
 		ArrayList<PositionablePoint> list = new ArrayList<PositionablePoint>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		for (int i = 0; i<layoutEditor.pointList.size(); i++) {
-			PositionablePoint p = (PositionablePoint)layoutEditor.pointList.get(i);
+			PositionablePoint p = layoutEditor.pointList.get(i);
 			if (p.getConnect2()!=null) {
 				if ( (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) ||
 					(((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) ) {
@@ -617,7 +617,7 @@ public class ConnectivityUtil
 		ArrayList<LevelXing> list = new ArrayList<LevelXing>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		for (int i = 0; i<layoutEditor.xingList.size(); i++) {
-			LevelXing x = (LevelXing)layoutEditor.xingList.get(i);
+			LevelXing x = layoutEditor.xingList.get(i);
 			boolean found = false;
 			if ( (x.getLayoutBlockAC()==lBlock) || (x.getLayoutBlockBD()==lBlock) ) found = true;
 			else if ( (x.getConnectA()!=null) && (((TrackSegment)x.getConnectA()).getLayoutBlock()==lBlock) )
@@ -652,7 +652,7 @@ public class ConnectivityUtil
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		String lBlockName = block.getUserName();
 		for (int i = 0; i<layoutEditor.turnoutList.size(); i++) {
-			LayoutTurnout t = (LayoutTurnout)layoutEditor.turnoutList.get(i);
+			LayoutTurnout t = layoutEditor.turnoutList.get(i);
 			if ( (t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName)) || 
 					(t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName)) ) list.add(t);
 			else if ( (t.getConnectA()!=null) && (((TrackSegment)t.getConnectA()).getLayoutBlock()==lBlock) ) 
@@ -1094,6 +1094,7 @@ public class ConnectivityUtil
 		int nodeType = LayoutEditor.NONE;
 		TrackSegment track = null;
 		boolean hitEnd = false;
+		@SuppressWarnings("unused")
 		int pType = cNodeType;
 		Object pObject = cNode;
 		TrackSegment tTrack = null;
@@ -1604,7 +1605,7 @@ public class ConnectivityUtil
 	public ArrayList<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock lb) {
 		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
 		for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
-			LayoutTurnout lt = (LayoutTurnout)layoutEditor.turnoutList.get(i);
+			LayoutTurnout lt = layoutEditor.turnoutList.get(i);
 			if ( (lt.getLayoutBlock()==lb) || (lt.getLayoutBlockB()==lb) ||
 					(lt.getLayoutBlockC()==lb) || (lt.getLayoutBlockD()==lb) ) {
 				list.add(lt);

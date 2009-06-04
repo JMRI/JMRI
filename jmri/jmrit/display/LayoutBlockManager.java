@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -123,9 +123,9 @@ public class LayoutBlockManager extends AbstractManager {
 	 *    has the Sensor assigned.
 	 */
 	public LayoutBlock getBlockWithSensorAssigned(Sensor s) {
-		java.util.Iterator iter = getSystemNameList().iterator();
+		java.util.Iterator<String> iter = getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String sName = (String)iter.next();
+            String sName = iter.next();
             if (sName==null) { 
                 log.error("System name null during scan of LayoutBlocks");
             }
@@ -144,9 +144,9 @@ public class LayoutBlockManager extends AbstractManager {
 	 */
 	public void initializeLayoutBlockPaths() {
 		// cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
-		java.util.Iterator iter = getSystemNameList().iterator();
+		java.util.Iterator<String> iter = getSystemNameList().iterator();
 		while (iter.hasNext()) {
-			String sName = (String)iter.next();
+			String sName = iter.next();
 			if (sName==null) log.error("System name null during 1st initialization of LayoutBlocks");
 			LayoutBlock b = getBySystemName(sName); 
 			b.initializeLayoutBlock();
@@ -155,7 +155,7 @@ public class LayoutBlockManager extends AbstractManager {
 		badBeanErrors = 0;
 		iter = getSystemNameList().iterator();
 		while (iter.hasNext()) {
-			String sName = (String)iter.next();
+			String sName = iter.next();
 			if (sName==null) log.error("System name null during 2nd initialization of LayoutBlocks");
 			log.debug("LayoutBlock initialization - system name = "+sName);
 			LayoutBlock b = getBySystemName(sName); 
@@ -210,12 +210,12 @@ public class LayoutBlockManager extends AbstractManager {
 		}
 		// input has corresponding LayoutBlocks - does it correspond to a block boundary?
 		LayoutEditor panel = fLayoutBlock.getMaxConnectedPanel();
-		ArrayList c = panel.auxTools.getConnectivityList(fLayoutBlock);
+		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
 		LayoutConnectivity lc = null;
 		int i = 0;
 		boolean facingIsBlock1 = true;
 		while ((i<c.size()) && (lc==null)) {
-			LayoutConnectivity tlc = (LayoutConnectivity)c.get(i);
+			LayoutConnectivity tlc = c.get(i);
 			if ( (tlc.getBlock1()==fLayoutBlock) && (tlc.getBlock2()==pLayoutBlock) ) {
 				lc = tlc;
 			}

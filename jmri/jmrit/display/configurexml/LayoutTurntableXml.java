@@ -4,22 +4,18 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.PositionablePoint;
 import jmri.jmrit.display.LayoutTurntable;
 import jmri.jmrit.display.TrackSegment;
-import jmri.Sensor;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 import java.util.List;
-import java.awt.Color;
 import java.awt.geom.*;
 
 /**
  * This module handles configuration for display.LayoutTurntable objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutTurntableXml implements XmlAdapter {
 
@@ -69,7 +65,8 @@ public class LayoutTurntableXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  LayoutEditor as an Object
      */
-    public void load(Element element, Object o) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor)o;
 		
@@ -89,12 +86,12 @@ public class LayoutTurntableXml implements XmlAdapter {
         LayoutTurntable l = new LayoutTurntable(name,new Point2D.Double(x,y),p);
 		l.setRadius (radius);
 		// load ray tracks 
-		List rayTrackList = element.getChildren("raytrack");
+		List<Element> rayTrackList = element.getChildren("raytrack");
 		if (rayTrackList.size() > 0) {
 			for (int i = 0; i < rayTrackList.size(); i++) {
 				double angle = 0.0;
 				int index = 0;
-				Element relem = (Element)rayTrackList.get(i);
+				Element relem = rayTrackList.get(i);
 				try {
 					angle = (relem.getAttribute("angle")).getFloatValue();
 					index = (relem.getAttribute("index")).getIntValue();

@@ -1,21 +1,18 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.MemoryIcon;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 import java.util.List;
-import java.awt.Color;
 
 /**
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -49,12 +46,12 @@ public class MemoryIconXml extends PositionableLabelXml {
             element.setAttribute("defaulticon", p.getDefaultIcon().getName());
 
 		// include contents
-		java.util.HashMap map = p.getMap();
+		java.util.HashMap<String, NamedIcon> map = p.getMap();
 		if (map!=null) {
-		    java.util.Iterator iterator = map.keySet().iterator();
+		    java.util.Iterator<String> iterator = map.keySet().iterator();
     	    while (iterator.hasNext()) {
     		    String key = iterator.next().toString();
-    		    String value = ((NamedIcon)map.get(key)).getName();
+    		    String value = map.get(key).getName();
     		    Element e2 = new Element("memorystate");
     		    e2.setAttribute("value", key);
     		    e2.setAttribute("icon", value);
@@ -75,10 +72,10 @@ public class MemoryIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o  PanelEditor as an Object
      */
-    public void load(Element element, Object o) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        String name;
         MemoryIcon l = new MemoryIcon();
 
         l.setMemory(element.getAttribute("memory").getValue());
@@ -93,10 +90,10 @@ public class MemoryIconXml extends PositionableLabelXml {
         loadTextInfo(l, element);
         
         // get the icon pairs
-        List items = element.getChildren();
+        List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String icon = item.getAttribute("icon").getValue();
             String keyValue = item.getAttribute("value").getValue();
         	l.addKeyAndIcon(CatalogPane.getIconByName(icon), keyValue);

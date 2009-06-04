@@ -8,7 +8,6 @@ import jmri.BlockManager;
 import jmri.Block;
 
 import java.util.List;
-import java.util.ArrayList;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Attribute;
@@ -18,7 +17,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -39,9 +38,10 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 	 *  If the file containing block values does not exist this routine returns quietly.
 	 *  If a Block named in the file does not exist currently, that entry is quietly ignored.
 	 */
+	@SuppressWarnings("unchecked")
 	public void readBlockValues() throws org.jdom.JDOMException, java.io.IOException {
 		log.debug("entered readBlockValues");
-		List blocks = blockManager.getSystemNameList();
+		List<String> blocks = blockManager.getSystemNameList();
 		// check if file exists
 		if (checkFile(defaultFileName)) {
 			// file is present, 
@@ -51,26 +51,26 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 				Element blockvalues = root.getChild("blockvalues");
 				if (blockvalues!=null) {	
 					// there are values defined, read and set block values if Block exists.
-					List blockList = blockvalues.getChildren("block");
+					List<Element> blockList = blockvalues.getChildren("block");
 					for (int i=0; i<blockList.size(); i++) {
-						if ( ((Element)(blockList.get(i))).getAttribute("systemname") == null) {
+						if ((blockList.get(i)).getAttribute("systemname") == null) {
 							log.warn("unexpected null in systemName "+
-									((Element)(blockList.get(i)))+" "+
-										((Element)(blockList.get(i))).getAttributes());
+									blockList.get(i)+" "+
+										blockList.get(i).getAttributes());
 							break;
 						}
-						String sysName = ((Element)(blockList.get(i))).
+						String sysName = blockList.get(i).
 												getAttribute("systemname").getValue();
 						// get Block - ignore entry if block not found
 						Block b = blockManager.getBySystemName(sysName);
 						if (b!=null) {
 							// Block was found, set its value
-							String v = ((Element)(blockList.get(i))).
+							String v = blockList.get(i).
 												getAttribute("value").getValue();
 							b.setValue(v);
 							// set direction if there is one
 							int dd = jmri.Path.NONE;
-							Attribute a = ((Element)(blockList.get(i))).getAttribute("dir");
+							Attribute a = blockList.get(i).getAttribute("dir");
 							if (a!=null) {
 								try {
 									dd = a.getIntValue();
@@ -94,7 +94,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 	 */
 	public void writeBlockValues() throws org.jdom.JDOMException, java.io.IOException {
 		log.debug("entered writeBlockValues");
-		List blocks = blockManager.getSystemNameList();
+		List<String> blocks = blockManager.getSystemNameList();
 		if (blocks.size()>0) {
 			// there are blocks defined, create root element
 			root = new Element("block_values");
@@ -103,7 +103,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 			
 			// add XSLT processing instruction
 			// <?xml-stylesheet type="text/xsl" href="XSLT/block-values.xsl"?>
-			java.util.Map m = new java.util.HashMap();
+			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", xsltLocation+"blockValues.xsl");
 			org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
@@ -112,7 +112,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 			// save block values in xml format
 			Element values = new Element("blockvalues");
 			for (int i = 0; i<blocks.size(); i++) {
-				String sname = (String)blocks.get(i);
+				String sname = blocks.get(i);
 				Block b = blockManager.getBySystemName(sname);
 				if (b!=null) {
 					Object o = b.getValue();

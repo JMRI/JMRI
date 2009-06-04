@@ -5,20 +5,15 @@ package jmri.jmrit.display.configurexml;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.PositionablePoint;
-import jmri.jmrit.display.TrackSegment;
-import jmri.Sensor;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
-import java.util.List;
-import java.awt.Color;
 import java.awt.geom.*;
 
 /**
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PositionablePointXml implements XmlAdapter {
 
@@ -44,10 +39,10 @@ public class PositionablePointXml implements XmlAdapter {
 		element.setAttribute("x", ""+coords.getX());
 		element.setAttribute("y", ""+coords.getY());
 		if (p.getConnect1() != null) {
-			element.setAttribute("connect1name", ((TrackSegment)p.getConnect1()).getID());
+			element.setAttribute("connect1name", p.getConnect1().getID());
 		}
 		if (p.getConnect2() != null) {
-			element.setAttribute("connect2name", ((TrackSegment)p.getConnect2()).getID());
+			element.setAttribute("connect2name", p.getConnect2().getID());
 		}
 		if ( (p.getEastBoundSignal()!=null) && (p.getEastBoundSignal().length()>0) ) {
 			element.setAttribute("eastboundsignal", p.getEastBoundSignal());
@@ -76,7 +71,6 @@ public class PositionablePointXml implements XmlAdapter {
 		
 		// get attributes
         String name = element.getAttribute("ident").getValue();
-		Point2D coords;
 		int type = PositionablePoint.ANCHOR;
 		double x = 0.0;
 		double y = 0.0;

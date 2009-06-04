@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * @see jmri.InstanceManager
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  */
 
@@ -459,7 +459,7 @@ public class LayoutSignalHeadIcon extends LayoutPositionableLabel implements jav
         }
     }
 
-    private static boolean warned = false;
+    //private static boolean warned = false;
 
     public void dispose() {
         mHead.removePropertyChangeListener(this);

@@ -5,15 +5,12 @@ package jmri.jmrit.display;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 
 import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
-
-import java.io.*;
 
 /**
  * Displays and allows user to modify x & y coordinates of
@@ -23,7 +20,7 @@ import java.io.*;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Dave Duchamp (LayoutEditor version);
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutCoordinateEdit extends JmriJFrame 

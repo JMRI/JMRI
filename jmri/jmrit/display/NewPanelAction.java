@@ -5,11 +5,7 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-
-import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
 
@@ -21,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author	Dave Duchamp   Copyright (C) 2007
  * @author	Bob Jacobsen   Copyright (C) 2008 
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NewPanelAction extends AbstractAction {
 

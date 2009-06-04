@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutReporterIcon;
 
@@ -10,7 +9,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutReporterIcon objects.
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
 
@@ -55,7 +54,6 @@ public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor)o;
-        String name;
         LayoutReporterIcon l = new LayoutReporterIcon();
 
         loadTextInfo(l, element);

@@ -50,7 +50,7 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @version $Revision: 1.97 $
+ * @version $Revision: 1.98 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1055,7 +1055,7 @@ public class PanelEditor extends JmriJFrame {
     public void dispose() {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().deregister(this);
-		jmri.jmrit.display.PanelMenu.instance().deletePanel((Object)self);
+		jmri.jmrit.display.PanelMenu.instance().deletePanel(self);
 		setVisible(false);
 		frame.setVisible(false);		
         // clean up local links to push GC
@@ -1313,9 +1313,9 @@ public class PanelEditor extends JmriJFrame {
             }
             public Component add(Component c, int i) {
                 if (log.isDebugEnabled()) log.debug("size was "+w+","+h);
-                int hnew = (int)Math.max(h,
+                int hnew = Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = (int)Math.max(w,
+                int wnew = Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
                 return super.add(c, i);
@@ -1324,9 +1324,9 @@ public class PanelEditor extends JmriJFrame {
                 if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
                 super.add(c, o);
                 if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
-                int hnew = (int)Math.max(h,
+                int hnew = Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = (int)Math.max(w,
+                int wnew = Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }

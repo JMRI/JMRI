@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import jmri.util.JmriJFrame;
 
 /**
  * Create the default "Panels" menu for use in a menubar.
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -53,7 +54,7 @@ public class PanelMenu extends JMenu {
 	// operational variables
 	private JMenu panelsSubMenu	= null;
 	static private PanelMenu thisMenu = null;
-    private ArrayList panelsList = new ArrayList();  
+    private ArrayList<JmriJFrame> panelsList = new ArrayList<JmriJFrame>();  
 		
 	/** 
 	 * Provide method to reference this panel menu
@@ -88,9 +89,9 @@ public class PanelMenu extends JMenu {
 	 * Add LayoutEditor type panel to Show Panels sub menu
 	 */
     public void addLayoutEditorPanel(final LayoutEditor panel) {
-		panelsList.add((Object)panel);
+		panelsList.add(panel);
         ActionListener a = new ActionListener() {
-				final LayoutEditor thisPanel = panel;
+				//final LayoutEditor thisPanel = panel;
 				public void actionPerformed(ActionEvent e) {
 					panel.setVisible(true);
 					panel.repaint();
@@ -112,7 +113,7 @@ public class PanelMenu extends JMenu {
 		boolean found = false;
 		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
 			Object o = panelsList.get(i);
-			if (o == (Object)panel) {
+			if (o == panel) {
 				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				if (panel.isVisible()) r.setSelected(false);
@@ -129,7 +130,7 @@ public class PanelMenu extends JMenu {
 		boolean found = false;
 		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
 			Object o = panelsList.get(i);
-			if (o == (Object)panel) {
+			if (o == panel) {
 				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				r.setText(panel.getTitle());
@@ -141,9 +142,9 @@ public class PanelMenu extends JMenu {
 	 * Add PanelEditor type panel to Show Panels sub menu
 	 */
     public void addPanelEditorPanel(final PanelEditor panel) {
-		panelsList.add((Object)panel);
+		panelsList.add(panel);
         ActionListener a = new ActionListener() {
-				final PanelEditor thisPanel = panel;
+				//final PanelEditor thisPanel = panel;
 				public void actionPerformed(ActionEvent e) {
 					panel.getFrame().setVisible(true);
 //					panel.repaint();
@@ -166,7 +167,7 @@ public class PanelMenu extends JMenu {
 		boolean found = false;
 		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
 			Object o = panelsList.get(i);
-			if (o == (Object)panel) {
+			if (o == panel) {
 				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				if (panel.getFrame().isVisible()) r.setSelected(false);
@@ -183,7 +184,7 @@ public class PanelMenu extends JMenu {
 		boolean found = false;
 		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
 			Object o = panelsList.get(i);
-			if (o == (Object)panel) {
+			if (o == panel) {
 				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				r.setText(panel.getFrame().getTitle());

@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -9,7 +8,7 @@ import javax.swing.AbstractAction;
  * Start a LayoutEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class LayoutEditorAction extends AbstractAction {

@@ -4,13 +4,10 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
-import jmri.Path;
 
 import java.awt.*;
-import java.awt.geom.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
@@ -60,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -78,9 +75,9 @@ public class LayoutBlock extends AbstractNamedBean
 	private Sensor occupancySensor = null;
 	private jmri.Memory memory = null;
 	private jmri.Block block = null;
-	private int maxBlockNumber = 0;
+	//private int maxBlockNumber = 0;
 	private LayoutBlock _instance = null;
-    private ArrayList panels = new ArrayList();  // panels using this block
+    private ArrayList<LayoutEditor> panels = new ArrayList<LayoutEditor>();  // panels using this block
 	private java.beans.PropertyChangeListener mBlockListener = null;
 	private	int jmriblknum = 1;
 
@@ -164,7 +161,7 @@ public class LayoutBlock extends AbstractNamedBean
 		// add to the panels list if not already there
 		if (panels.size()>0) {
 			for (int i=0;i<panels.size();i++) {
-				LayoutEditor ed = (LayoutEditor)panels.get(i);
+				LayoutEditor ed = panels.get(i);
 				// simply return if already in list
 				if (ed == panel) return;
 			}
@@ -176,7 +173,7 @@ public class LayoutBlock extends AbstractNamedBean
 		// remove from the panels list if there
 		if (panels.size()>0) {
 			for (int i=0;i<panels.size();i++) {
-				LayoutEditor ed = (LayoutEditor)panels.get(i);
+				LayoutEditor ed = panels.get(i);
 				if (ed == panel) {
 					panels.remove(i);
 					return;
@@ -188,7 +185,7 @@ public class LayoutBlock extends AbstractNamedBean
 		// returns true if this Layout Block is used on panel
 		if (panels.size()>0) {
 			for (int i=0;i<panels.size();i++) {
-				LayoutEditor ed = (LayoutEditor)panels.get(i);
+				LayoutEditor ed = panels.get(i);
 				if (ed == panel) {
 					return true;
 				}
@@ -203,7 +200,7 @@ public class LayoutBlock extends AbstractNamedBean
 	public void redrawLayoutBlockPanels() {
 		if (panels.size()>0) {
 			for (int i=0;i<panels.size();i++) {
-				((LayoutEditor)panels.get(i)).redrawPanel();
+				panels.get(i).redrawPanel();
 			}
 		}
 	}
@@ -235,7 +232,7 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 		// ensure that this sensor is unique among defined Layout Blocks
 		Sensor savedSensor = occupancySensor;
-		String savedName = occupancySensorName;
+		//String savedName = occupancySensorName;
 		occupancySensor = null;
 		LayoutBlock b = InstanceManager.layoutBlockManagerInstance().
 											getBlockWithSensorAssigned(s);
@@ -382,14 +379,14 @@ public class LayoutBlock extends AbstractNamedBean
 		if ( (block!=null) && (panels.size()>0) ) {
 			// a block is attached and this LayoutBlock is used
 			// initialize connectivity as defined in first Layout Editor panel
-			panel = (LayoutEditor)panels.get(0);
-			ArrayList c = panel.auxTools.getConnectivityList(_instance);
+			panel = panels.get(0);
+			ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 			// if more than one panel, find panel with the highest connectivity
 			if (panels.size()>1) {
 				for (int i = 1;i < panels.size();i++) {
-					if (c.size()<((LayoutEditor)panels.get(i)).auxTools.
+					if (c.size()<panels.get(i).auxTools.
 										getConnectivityList(_instance).size()) {
-						panel = (LayoutEditor)panels.get(i);
+						panel = panels.get(i);
 						c = panel.auxTools.getConnectivityList(_instance);
 					}
 				}
@@ -408,20 +405,20 @@ public class LayoutBlock extends AbstractNamedBean
 		if ( (block!=null) && (panels.size()>0) ) {
 			// a block is attached and this LayoutBlock is used
 			// initialize connectivity as defined in first Layout Editor panel
-			LayoutEditor panel = (LayoutEditor)panels.get(0);
-			ArrayList c = panel.auxTools.getConnectivityList(_instance);
+			LayoutEditor panel = panels.get(0);
+			ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 			// if more than one panel, find panel with the highest connectivity
 			if (panels.size()>1) {
 				for (int i = 1;i < panels.size();i++) {
-					if (c.size()<((LayoutEditor)panels.get(i)).auxTools.
+					if (c.size()<panels.get(i).auxTools.
 										getConnectivityList(_instance).size()) {
-						panel = (LayoutEditor)panels.get(i);
+						panel = panels.get(i);
 						c = panel.auxTools.getConnectivityList(_instance);
 					}
 				}
 				// check that this connectivity is compatible with that of other panels.
 				for (int j = 0;j < panels.size();j++) {
-					LayoutEditor tPanel = (LayoutEditor)panels.get(j);
+					LayoutEditor tPanel = panels.get(j);
 					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
 								warn() && ( !compareConnectivity(c,
 										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
@@ -448,7 +445,7 @@ public class LayoutBlock extends AbstractNamedBean
 	 *		connectivity in the specified Layout Editor panel.
 	 */
 	public void updatePathsUsingPanel(LayoutEditor panel) {
-		ArrayList c = panel.auxTools.getConnectivityList(_instance);
+		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 		if (panel==null) {
 			log.error("Null panel in call to updatePathsUsingPanel");
 		}
@@ -456,21 +453,21 @@ public class LayoutBlock extends AbstractNamedBean
 			updateBlockPaths(c, panel);
 		}
 	}		
-	private void updateBlockPaths(ArrayList c, LayoutEditor panel) {
+	private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
 		LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
-		java.util.List paths = block.getPaths();
+		java.util.List<jmri.Path> paths = block.getPaths();
 		boolean[] used = new boolean[c.size()];
 		int[] need = new int[paths.size()];
 		for (int j=0;j<c.size();j++) {used[j] = false;}
 		for (int j=0;j<paths.size();j++) {need[j] = -1;}
 		// cycle over existing Paths, checking against LayoutConnectivity
 		for (int i = 0;i<paths.size();i++) {
-			jmri.Path p = (jmri.Path)paths.get(i);
+			jmri.Path p = paths.get(i);
 			// cycle over LayoutConnectivity matching to this Path
 			for (int j = 0;((j<c.size())&&(need[i]==-1));j++) {
 				if (!used[j]) {
 					// this LayoutConnectivity not used yet
-					LayoutConnectivity lc = (LayoutConnectivity)c.get(j);
+					LayoutConnectivity lc = c.get(j);
 					if ( (lc.getBlock1().getBlock()==p.getBlock()) ||
 								(lc.getBlock2().getBlock()==p.getBlock()) ) {
 						// blocks match - record
@@ -483,8 +480,8 @@ public class LayoutBlock extends AbstractNamedBean
 		// update needed Paths
 		for (int i = 0;i<paths.size();i++) {
 			if (need[i]>=0) {
-				jmri.Path p = (jmri.Path)paths.get(i);
-				LayoutConnectivity lc = (LayoutConnectivity)c.get(need[i]);
+				jmri.Path p = paths.get(i);
+				LayoutConnectivity lc = c.get(need[i]);
 				if (lc.getBlock1()==_instance) {
 					p.setToBlockDirection(lc.getDirection());
 					p.setFromBlockDirection(lc.getReverseDirection());
@@ -499,14 +496,14 @@ public class LayoutBlock extends AbstractNamedBean
 		// delete unneeded Paths
 		for (int i = 0;i<paths.size();i++) {
 			if (need[i]<0) {				
-				block.removePath((jmri.Path)paths.get(i));
+				block.removePath(paths.get(i));
 			}
 		}	
 		// add Paths as required
 		for (int j = 0;j<c.size();j++) {
 			if (!used[j]) {
 				// there is no corresponding Path, add one.
-				LayoutConnectivity lc = (LayoutConnectivity)c.get(j);
+				LayoutConnectivity lc = c.get(j);
 				jmri.Path newp = null;
 				if (lc.getBlock1()==_instance) {
 					newp = new jmri.Path(lc.getBlock2().getBlock(),lc.getDirection(),
@@ -536,14 +533,14 @@ public class LayoutBlock extends AbstractNamedBean
 		} */
 // end debugging
 	}
-	private boolean compareConnectivity(ArrayList main, ArrayList test) {
+	private boolean compareConnectivity(ArrayList<LayoutConnectivity> main, ArrayList<LayoutConnectivity> test) {
 		// loop over connectivities in test list 
 		for (int i = 0;i<test.size();i++) {
-			LayoutConnectivity lc = (LayoutConnectivity)test.get(i);
+			LayoutConnectivity lc = test.get(i);
 			// loop over main list to make sure the same blocks are connected
 			boolean found = false;
 			for (int j = 0;(j<main.size())&&!found;j++) {
-				LayoutConnectivity mc = (LayoutConnectivity)main.get(j);
+				LayoutConnectivity mc = main.get(j);
 				if ( ((lc.getBlock1()==mc.getBlock1()) && (lc.getBlock2()==mc.getBlock2())) ||
 					((lc.getBlock1()==mc.getBlock2()) && (lc.getBlock2()==mc.getBlock1())) )
 					found = true;

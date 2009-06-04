@@ -17,7 +17,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -29,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class PositionableLabel extends JLabel
@@ -338,7 +337,7 @@ public class PositionableLabel extends JLabel
         
     void addColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
-            final String desiredName = name;
+            //final String desiredName = name;
             final Color desiredColor = color;
             public void actionPerformed(ActionEvent e) { setForeground(desiredColor); }
         };
@@ -494,7 +493,7 @@ public class PositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     public void remove() {
-		if (layoutPanel!=null) layoutPanel.removeObject((Object)this);
+		if (layoutPanel!=null) layoutPanel.removeObject(this);
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();

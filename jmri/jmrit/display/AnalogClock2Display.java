@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
     Timebase clock;
@@ -71,7 +71,7 @@ public class AnalogClock2Display extends PositionableJComponent {
     int centreY;
 
     public AnalogClock2Display(JmriJFrame parentFrame) {
-        super((JmriJFrame)parentFrame);
+        super(parentFrame);
         clock = InstanceManager.timebaseInstance();
 
         rate = (int) clock.userGetRate();
@@ -182,25 +182,25 @@ public class AnalogClock2Display extends PositionableJComponent {
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Grpahics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
         for (int i = 0; i < scaledMinuteX.length; i++) {
-            rotatedMinuteX[i] = (int) ( (double) scaledMinuteX[i] *
+            rotatedMinuteX[i] = (int) ( scaledMinuteX[i] *
                                        Math.cos(toRadians(minuteAngle)) -
-                                       (double) scaledMinuteY[i] *
+                                       scaledMinuteY[i] *
                                        Math.sin(toRadians(minuteAngle)));
-            rotatedMinuteY[i] = (int) ( (double) scaledMinuteX[i] *
+            rotatedMinuteY[i] = (int) ( scaledMinuteX[i] *
                                        Math.sin(toRadians(minuteAngle)) +
-                                       (double) scaledMinuteY[i] *
+                                       scaledMinuteY[i] *
                                        Math.cos(toRadians(minuteAngle)));
         }
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY,
                                        rotatedMinuteX.length);
         for (int i = 0; i < scaledHourX.length; i++) {
-            rotatedHourX[i] = (int) ( (double) scaledHourX[i] *
+            rotatedHourX[i] = (int) ( scaledHourX[i] *
                                      Math.cos(toRadians(hourAngle)) -
-                                     (double) scaledHourY[i] *
+                                     scaledHourY[i] *
                                      Math.sin(toRadians(hourAngle)));
-            rotatedHourY[i] = (int) ( (double) scaledHourX[i] *
+            rotatedHourY[i] = (int) ( scaledHourX[i] *
                                      Math.sin(toRadians(hourAngle)) +
-                                     (double) scaledHourY[i] *
+                                     scaledHourY[i] *
                                      Math.cos(toRadians(hourAngle)));
         }
         scaledHourHand = new Polygon(rotatedHourX, rotatedHourY,
@@ -210,7 +210,7 @@ public class AnalogClock2Display extends PositionableJComponent {
         g.fillPolygon(scaledMinuteHand);
 
         // Draw AM/PM indicator in slightly smaller font than hour digits
-        int amPmFontSize = (int) ( (double) faceSize * .075);
+        int amPmFontSize = (int) ( faceSize * .075);
         if (amPmFontSize < 1) {
             amPmFontSize = 1;
         }
@@ -259,19 +259,19 @@ public class AnalogClock2Display extends PositionableJComponent {
         int logoScaleWidth = faceSize / 6;
         int logoScaleHeight = (int) ( (float) logoScaleWidth *
                                      (float) jmriIcon.getIconHeight() /
-                                     (float) jmriIcon.getIconWidth());
+                                     jmriIcon.getIconWidth());
         scaledLogo = logo.getScaledInstance(logoScaleWidth, logoScaleHeight,
                                             Image.SCALE_SMOOTH);
         scaledIcon.setImage(scaledLogo);
         logoWidth = scaledIcon.getIconWidth();
         logoHeight = scaledIcon.getIconHeight();
 
-        scaleRatio = (double) faceSize / 2.7 / (double) minuteHeight;
+        scaleRatio = faceSize / 2.7 / minuteHeight;
         for (int i = 0; i < minuteX.length; i++) {
-            scaledMinuteX[i] = (int) ( (double) minuteX[i] * scaleRatio);
-            scaledMinuteY[i] = (int) ( (double) minuteY[i] * scaleRatio);
-            scaledHourX[i] = (int) ( (double) hourX[i] * scaleRatio);
-            scaledHourY[i] = (int) ( (double) hourY[i] * scaleRatio);
+            scaledMinuteX[i] = (int) ( minuteX[i] * scaleRatio);
+            scaledMinuteY[i] = (int) ( minuteY[i] * scaleRatio);
+            scaledHourX[i] = (int) ( hourX[i] * scaleRatio);
+            scaledHourY[i] = (int) ( hourY[i] * scaleRatio);
         }
         scaledHourHand = new Polygon(scaledHourX, scaledHourY,
                                      scaledHourX.length);
@@ -311,8 +311,8 @@ public class AnalogClock2Display extends PositionableJComponent {
         }
         int hours = now.getHours();
         int minutes = now.getMinutes();
-        minuteAngle = (double) minutes * 6.;
-        hourAngle = (double) hours * 30. + 30. * minuteAngle / 360.;
+        minuteAngle = minutes * 6.;
+        hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
             amPm = "AM " + (int) clock.userGetRate() + ":1";
         }

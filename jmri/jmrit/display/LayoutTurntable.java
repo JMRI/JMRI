@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutTurntable
@@ -61,7 +61,7 @@ public class LayoutTurntable
 	private String ident = "";
 	private double radius = 25.0;
 	private Point2D center = new Point2D.Double(50.0,50.0);	
-	private ArrayList rayList = new ArrayList(); // list of Ray Track objects.
+	private ArrayList<RayTrack> rayList = new ArrayList<RayTrack>(); // list of Ray Track objects.
     
 	/** 
 	 * constructor method
@@ -96,7 +96,7 @@ public class LayoutTurntable
 			index ++;
 			found = false;
 			for (int i = 0; (i<rayList.size()) && !found; i++) {
-				if (index==((RayTrack)rayList.get(i)).getConnectionIndex()) 
+				if (index==rayList.get(i).getConnectionIndex()) 
 					found = true;
 			}
 		}
@@ -113,7 +113,7 @@ public class LayoutTurntable
 	public TrackSegment getRayConnectIndexed(int index) {
 		RayTrack ray = null;
 		for (int i=0; (i<rayList.size()) && (ray==null); i++) {
-			RayTrack r = (RayTrack)rayList.get(i);
+			RayTrack r = rayList.get(i);
 			if (r.getConnectionIndex() == index) ray = r;
 		}
 		if (ray==null) return null;
@@ -121,14 +121,14 @@ public class LayoutTurntable
 	}
 	public TrackSegment getRayConnectOrdered(int i) {
 		if (i>=rayList.size()) return null;
-		RayTrack ray = (RayTrack)rayList.get(i);
+		RayTrack ray = rayList.get(i);
 		if (ray==null) return null;
 		return ray.getConnect();
 	}
 	public void setRayConnect(TrackSegment tr, int index) {
 		RayTrack ray = null;
 		for (int i=0; (i<rayList.size()) && (ray==null); i++) {
-			RayTrack r = (RayTrack)rayList.get(i);
+			RayTrack r = rayList.get(i);
 			if (r.getConnectionIndex() == index) ray = r;
 		}
 		if (ray==null) return;
@@ -137,18 +137,18 @@ public class LayoutTurntable
 	public int getNumberRays() {return rayList.size();}
 	public int getRayIndex(int i) {
 		if (i>=rayList.size()) return 0; 
-		RayTrack ray = (RayTrack)rayList.get(i);
+		RayTrack ray = rayList.get(i);
 		return ray.getConnectionIndex();
 	}
 	public double getRayAngle(int i) {
 		if (i>=rayList.size()) return 0.0; 
-		RayTrack ray = (RayTrack)rayList.get(i);
+		RayTrack ray = rayList.get(i);
 		return ray.getAngle();
 	}		
 	public Point2D getRayCoordsIndexed(int index) {
 		RayTrack ray = null;
 		for (int i=0; (i<rayList.size()) && (ray==null); i++) {
-			RayTrack r = (RayTrack)rayList.get(i);
+			RayTrack r = rayList.get(i);
 			if (r.getConnectionIndex() == index) ray = r;
 		}
 		if (ray==null) return new Point2D.Double(0.0,0.0);
@@ -160,7 +160,7 @@ public class LayoutTurntable
 	}
 	public Point2D getRayCoordsOrdered(int i) {
 		if (i>=rayList.size()) return new Point2D.Double(0.0,0.0); 
-		RayTrack ray = (RayTrack)rayList.get(i);;
+		RayTrack ray = rayList.get(i);;
 		if (ray==null) return new Point2D.Double(0.0,0.0);
 		double angle = (ray.getAngle()/180.0)*Math.PI;
 		// calculate coordinates
@@ -171,7 +171,7 @@ public class LayoutTurntable
 	public void setRayCoordsIndexed(double x, double y, int index) {
 		RayTrack ray = null;
 		for (int i=0; (i<rayList.size()) && (ray==null); i++) {
-			RayTrack r = (RayTrack)rayList.get(i);
+			RayTrack r = rayList.get(i);
 			if (r.getConnectionIndex() == index) ray = r;
 		}
 		if (ray==null) {
@@ -205,7 +205,7 @@ public class LayoutTurntable
 	public boolean isMainlineIndexed(int index) {
 		RayTrack ray = null;
 		for (int i=0; (i<rayList.size()) && (ray==null); i++) {
-			RayTrack r = (RayTrack)rayList.get(i);
+			RayTrack r = rayList.get(i);
 			if (r.getConnectionIndex() == index) ray = r;
 		}
 		if (ray==null) return false;
@@ -215,7 +215,7 @@ public class LayoutTurntable
 	}
 	public boolean isMainlineOrdered(int i) {
 		if (rayList.size()<=i) return false;
-		RayTrack ray = (RayTrack)rayList.get(i);
+		RayTrack ray = rayList.get(i);
 		if (ray==null) return false;
 		TrackSegment tr = ray.getConnect();
 		if (tr==null) return false;
@@ -235,7 +235,7 @@ public class LayoutTurntable
 	}
 	double round (double x) {
 		int i = (int)(x+0.5);
-		return ((double)i);
+		return i;
 	}
 		
 	/**
@@ -247,7 +247,7 @@ public class LayoutTurntable
 	 */
 	public void setObjects(LayoutEditor p) {
 		for (int i = 0; i<rayList.size(); i++) {
-			RayTrack ray = (RayTrack)rayList.get(i);
+			RayTrack ray = rayList.get(i);
 			ray.setConnect(p.findTrackSegmentByName(ray.connectName));
 		}
 	}
@@ -407,10 +407,10 @@ public class LayoutTurntable
 		int closestIndex = -1;
 		double bestDel = 360.0;
 		for (int i = 0; i<rayList.size(); i++) {
-			double del = diffAngle(((RayTrack)rayList.get(i)).getAngle(),ang);
+			double del = diffAngle((rayList.get(i)).getAngle(),ang);
 			if (del<bestDel) {
 				bestDel = del;
-				closest = (RayTrack)rayList.get(i);
+				closest = rayList.get(i);
 				closestIndex = i;
 			}
 		}

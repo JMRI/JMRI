@@ -19,7 +19,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
 
@@ -42,7 +41,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -321,7 +320,7 @@ public class LayoutPositionableLabel extends JLabel
         
     void addColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
-            final String desiredName = name;
+            //final String desiredName = name;
             final Color desiredColor = color;
             public void actionPerformed(ActionEvent e) { setForeground(desiredColor); }
         };
@@ -479,7 +478,7 @@ public class LayoutPositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     void remove() {
-		if (layoutPanel!=null) layoutPanel.removeObject((Object)this);
+		if (layoutPanel!=null) layoutPanel.removeObject(this);
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();

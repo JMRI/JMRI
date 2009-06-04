@@ -3,8 +3,6 @@ package jmri.jmrit.display;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.lang.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -31,7 +29,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrackSegment 

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -126,8 +126,8 @@ public class PositionableLabelXml implements XmlAdapter {
         // find coordinates
         int x = 0;
         int y = 0;
-        int height = 10;
-        int width = 10;
+        //int height = 10;
+        //int width = 10;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();

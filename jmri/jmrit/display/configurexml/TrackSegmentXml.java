@@ -4,21 +4,15 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.PositionablePoint;
 import jmri.jmrit.display.TrackSegment;
-import jmri.Sensor;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
-import java.util.List;
-import java.awt.Color;
-import java.awt.geom.*;
 
 /**
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
