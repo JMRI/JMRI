@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.4 2009-06-04 00:01:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.5 2009-06-04 16:08:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -179,6 +179,16 @@ certain kinds of I/O errors.
 <p>
 Jack Shall has updated the SoundTraxx Tsunami diesel definitions so that they
 now live in a single file, and share definitions of most CVs.
+
+<p>
+Matt Harris fixed a bug in the startup code that could prevent JMRI applications
+from starting up on Windows.
+
+<p>
+Paul Bender improved how the connection configuration dialog works.
+
+<p>
+Peter Cressman fixed a problem with Conditional names.
 
 <!--#include virtual="/Footer" -->
 
