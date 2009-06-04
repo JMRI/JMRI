@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -24,6 +24,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
 
      private int cmdStationType = -1;
      private float cmdStationSoftwareVersion = -1;
+     private int cmdStationSoftwareVersionBCD = -1;
 
     /**
      * return the CS Type
@@ -55,9 +56,16 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
      public float getCommandStationSoftwareVersion() { return cmdStationSoftwareVersion; }
 
     /**
+     * return the CS Software Version in BCD (for use in comparisons)
+     **/
+     public float getCommandStationSoftwareVersionBCD() { return cmdStationSoftwareVersionBCD; }
+
+    /**
      * set the CS Software Version
      **/
-     public void setCommandStationSoftwareVersion(float v) { cmdStationSoftwareVersion = v; }
+     public void setCommandStationSoftwareVersion(float v) { 
+                 cmdStationSoftwareVersion = v; 
+     }
 
     /**
      * Set the CS Software Version based on an XPressNet Message
@@ -69,6 +77,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
               {
                 cmdStationSoftwareVersion=(l.getElementBCD(2).floatValue())/10;
+                cmdStationSoftwareVersionBCD=l.getElement(2);
               }
        }
     }

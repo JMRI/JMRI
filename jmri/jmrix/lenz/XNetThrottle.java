@@ -5,12 +5,14 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
+import java.util.LinkedList;
+
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.22 $
+ * @version    $Revision: 2.23 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -63,6 +65,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
                                                          XNetInterface.CS_INFO |
                                                          XNetInterface.THROTTLE, this);
+        requestList = new LinkedList<requestMessage>();
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
@@ -73,12 +76,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup1()
     {
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 1 change ignored");
-		return;
-       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
@@ -110,10 +107,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -122,12 +117,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup2()
     {
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 2 change ignored");
-		return;
-       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
@@ -155,10 +144,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -167,12 +154,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup3()
     {
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 3 change ignored");
-		return;
-       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
@@ -200,10 +181,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
 
     /**
@@ -214,19 +193,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
+                               .getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
                                .getCommandStationSoftwareVersion());
            return;
         } 
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 4 change ignored");
-		return;
-       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP4);
@@ -270,10 +243,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -284,19 +255,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
+                               .getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
                                .getCommandStationSoftwareVersion());
            return;
         } 
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 5 change ignored");
-		return;
-       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP5);
@@ -340,10 +305,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -360,12 +323,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		log.debug("Command station does not support Momentary functions");
                 return;
        }
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 1 momentary status change ignored");
-		return;
-       }  
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
@@ -397,10 +354,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -417,12 +372,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		log.debug("Command station does not support Momentary functions");
                 return;
        }
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 2 momentary status change ignored");
-		return;
-            }
         XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group2);
@@ -450,10 +399,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-          requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -469,12 +416,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
                 return;
-       }
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 3 momentary status change ignored");
-		return;
        }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
@@ -503,10 +444,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-         requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -517,7 +456,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
+                               .getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
@@ -531,12 +470,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
                 return;
-       }
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 4 momentary status change ignored");
-		return;
        }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
@@ -581,10 +514,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-         requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /**
@@ -595,7 +526,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
+                               .getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
@@ -609,12 +540,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
                 return;
-       }
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-       {
-                log.warn("Outstanding request, Function Group 5 momentary status change ignored");
-		return;
        }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
@@ -659,10 +584,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
        msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
-       // now, we send the message to the command station
-       XNetTrafficController.instance().sendXNetMessage(msg,this);
-       if(!isAvailable) 
-         requestState=THROTTLEFUNCSENT;
+       // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLEFUNCSENT);
     }
     
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
@@ -678,12 +601,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
 					  " Current step mode is: " + this.speedStepMode );
 
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
-		==THROTTLESTATSENT) 
-        {
-                log.warn("Outstanding request, Speed/Direction Setting Change ignored");
-		return;
-            }
         this.speedSetting = speed;
 	if (speed<0)
             {
@@ -755,10 +672,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         msg.setElement(4,element4value);
         msg.setParity(); // Set the parity bit
 
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        if (!isAvailable) 
-	   requestState=THROTTLESPEEDSENT;
+        // now, queue the message for sending to the command station
+       queueMessage(msg,THROTTLESPEEDSENT);
 	}
     }
     
@@ -775,10 +690,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         msg.setElement(2,this.getDccAddressLow()); // set to the lower byte
         //of the DCC address
         msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        if(!isAvailable) 
-            requestState=THROTTLESPEEDSENT;
+        // now, queue the message for sending to the command station
+        queueMessage(msg,THROTTLESPEEDSENT);
     }
 
     /** direction
@@ -843,19 +756,20 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // and function status from the command station
     synchronized protected void sendStatusInformationRequest()
     {
-        if(requestState==THROTTLESTATSENT){
-           if(log.isDebugEnabled()){
-              log.debug("Status Information Requested when request outstanding, Timeout?");
-           }
-           requestState=THROTTLEIDLE;
-        }
+        //if(requestState==THROTTLESTATSENT){
+        //   if(log.isDebugEnabled()){
+        //      log.debug("Status Information Requested when request outstanding, Timeout?");
+        //   }
+           //requestState=THROTTLEIDLE;
+        //}
         /* Send the request for status */
         XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(this.address);
         msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
         // traffic controller to do this for us.
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLESTATSENT;     
+        //XNetTrafficController.instance().sendXNetMessage(msg,this);
+        //requestState=THROTTLESTATSENT;     
+       queueMessage(msg,THROTTLESTATSENT);
         return;
     }
 
@@ -875,8 +789,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLESTATSENT;
+        // XNetTrafficController.instance().sendXNetMessage(msg,this);
+        //requestState=THROTTLESTATSENT;
+        queueMessage(msg,THROTTLESTATSENT);
         return;
     }
     
@@ -886,8 +801,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
-           log.warn("Functions F13-F28 unavailable in CS software version " +
+                               .getCommandStationSoftwareVersionBCD()<0x36){
+           log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
                                .getCommandStationSoftwareVersion());
@@ -897,8 +812,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLESTATSENT;
+        //XNetTrafficController.instance().sendXNetMessage(msg,this);
+        //requestState=THROTTLESTATSENT;
+        queueMessage(msg,THROTTLESTATSENT);
         return;
     }
 
@@ -908,8 +824,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
-                               .getCommandStationSoftwareVersion()>=3.6){
-           log.warn("Functions F13-F28 unavailable in CS software version " +
+                               .getCommandStationSoftwareVersionBCD()<0x36){
+           log.info("Functions F13-F28 unavailable in CS software version " +
                     XNetTrafficController.instance()
                                .getCommandStation()
                                .getCommandStationSoftwareVersion());
@@ -927,8 +843,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLESTATSENT;
+        //XNetTrafficController.instance().sendXNetMessage(msg,this);
+        //requestState=THROTTLESTATSENT;
+        queueMessage(msg,THROTTLESTATSENT);
         return;
     }
     
@@ -1010,18 +927,22 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     // "isAvailable reflects we are in control
                     setIsAvailable(true);
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                 } else if(l.isCommErrorMessage()) {
                     /* this is a communications error */
                     log.error("Communications error occured - message recieved was: " + l);
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                 } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                           l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
                     /* The Command Station does not support this command */
                     log.error("Unsupported Command Sent to command station");
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                 } else {
                     /* this is an unknown error */
                     requestState=THROTTLEIDLE;                        
+                    sendQueuedMessage();
                     log.warn("Received unhandled response: " + l);
                 }
 	} else if(requestState==THROTTLESTATSENT) {
@@ -1038,6 +959,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                    parseFunctionHighMomentaryInformation(b3,b4);
                    //We've processed this request, so set the status to Idle.
                    requestState=THROTTLEIDLE;
+                   sendQueuedMessage();
                 } else {
                    if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_NORMAL_UNIT"); }
                    /* there is no address sent with this information */
@@ -1052,6 +974,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                    
                    //We've processed this request, so set the status to Idle.
                    requestState=THROTTLEIDLE;
+                   sendQueuedMessage();
                    // And then we want to request the Function Momentary Status
                    sendFunctionStatusInformationRequest();
                    return;
@@ -1073,6 +996,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 
                 // We've processed this request, so set the status to Idle.
                 requestState=THROTTLEIDLE;
+                sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
@@ -1095,6 +1019,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 
                 // We've processed this request, so set the status to Idle.
                 requestState=THROTTLEIDLE;
+                sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
@@ -1109,6 +1034,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 
                 //We've processed this request, so set the status to Idle.
                 requestState=THROTTLEIDLE;
+                sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
@@ -1123,6 +1049,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     }
                     // We've processed this request, so set the status to Idle.
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                 } else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
                     /* Bytes 3 and 4 contain function momentary status information */
                     int b3=l.getElement(2);
@@ -1130,6 +1057,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     parseFunctionMomentaryInformation(b3,b4);
                     // We've processed this request, so set the status to Idle.
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                     // And then we want to request the Function Status for F13-F28
                     sendFunctionHighInformationRequest();
 
@@ -1140,6 +1068,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     parseFunctionHighInformation(b3,b4);
                     //We've processed this request, so set the status to Idle.
                     requestState=THROTTLEIDLE;
+                    sendQueuedMessage();
                     // And then we want to request the Function Momentary Status
                     // for functions F13-F28
                     sendFunctionHighMomentaryStatusRequest();
@@ -1148,14 +1077,17 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 /* this is a communications error */
                 log.error("Communications error occured - message received was: " + l);
                 requestState=THROTTLEIDLE;
+                sendQueuedMessage();
             } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                       l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 requestState=THROTTLEIDLE;
+                sendQueuedMessage();
 	    }
 	}
 	//requestState=THROTTLEIDLE;
+        //sendQueuedMessage();
     }
     
     // listen for the messages to the LI100/LI101
@@ -1952,6 +1884,58 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, XNetThrottleManager.isLongAddress(address));
     }
+
+
+    //A queue to hold outstanding messages
+    protected LinkedList<requestMessage> requestList = null;
+
+    //function to send message from queue.
+    synchronized protected void sendQueuedMessage(){
+
+        requestMessage msg = null;
+        // check to see if the queue has a message in it, and if it does,
+        // remove the first message
+        if(requestList.size()!=0){
+           if(log.isDebugEnabled()) log.debug("sending message to message queue");
+           // if the queue is not empty, remove the first message
+           // from the queue, send the message, and set the state machine 
+           // to the requried state.
+           msg=requestList.removeFirst();
+           XNetTrafficController.instance().sendXNetMessage(msg.getMsg(),this);
+           requestState=msg.getState();
+        } else {
+          if(log.isDebugEnabled()) log.debug("message queue empty");
+          // if the queue is empty, set the state to idle.
+          requestState=THROTTLEIDLE;
+        }
+    }
+
+    //function to queue a message
+    synchronized protected void queueMessage(XNetMessage m,int s){
+        if(log.isDebugEnabled()) log.debug("adding message to message queue");
+        // put the message in the queue
+        requestMessage msg=new requestMessage(m,s);
+        requestList.addLast(msg);        
+        // if the state is idle, trigger the message send
+        if(requestState==THROTTLEIDLE) sendQueuedMessage();
+    }
+
+    // internal class to hold a request message, along with the associated
+    // throttle state.
+    protected class requestMessage{
+            private int state;
+            private XNetMessage msg;
+           
+            requestMessage(XNetMessage m,int s){
+               state=s;
+               msg=m;
+            }
+
+            int getState(){ return state;}
+            XNetMessage getMsg(){ return msg;}
+
+    }
+
     
     // register for notification
     
