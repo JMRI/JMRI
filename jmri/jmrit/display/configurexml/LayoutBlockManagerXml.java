@@ -9,7 +9,6 @@ import jmri.jmrit.display.LayoutBlockManager;
 import jmri.Sensor;
 import java.util.List;
 import org.jdom.Element;
-import org.jdom.DataConversionException;
 import org.jdom.Attribute;
 import java.awt.Color;
 
@@ -19,7 +18,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutBlockManagerXml implements XmlAdapter {
 
@@ -37,13 +36,13 @@ public class LayoutBlockManagerXml implements XmlAdapter {
         setStoreElementClass(layoutblocks);
         LayoutBlockManager tm = (LayoutBlockManager) o;
         if (tm!=null) {
-            java.util.Iterator iter = tm.getSystemNameList().iterator();
+            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
             
             // don't return an element if there is nothing to include
             if (!iter.hasNext()) return null;
             
             while (iter.hasNext()) {
-                String sname = (String)iter.next();
+                String sname = iter.next();
                 if (sname==null) log.error("System name null during LayoutBlock store");
                 log.debug("layoutblock system name is "+sname);
                 LayoutBlock b = tm.getBySystemName(sname);
@@ -102,49 +101,50 @@ public class LayoutBlockManagerXml implements XmlAdapter {
      * invoke this with the parent of the set of layoutblock elements.
      * @param layoutblocks Element containing the layoutblock elements to load.
      */
-    public void loadLayoutBlocks(Element layoutblocks) {
-		List layoutblockList = layoutblocks.getChildren("layoutblock");
+    @SuppressWarnings("unchecked")
+	public void loadLayoutBlocks(Element layoutblocks) {
+		List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
         if (log.isDebugEnabled()) log.debug("Found "+layoutblockList.size()+" layoutblocks");
         LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
 
         for (int i=0; i<layoutblockList.size(); i++) {
-            if ( ((Element)(layoutblockList.get(i))).getAttribute("systemName") == null) {
+            if ( ((layoutblockList.get(i))).getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+
-							((Element)(layoutblockList.get(i)))+" "+
-									((Element)(layoutblockList.get(i))).getAttributes());
+							((layoutblockList.get(i)))+" "+
+									((layoutblockList.get(i))).getAttributes());
                 break;
             }
-            String sysName = ((Element)(layoutblockList.get(i))).
+            String sysName = ((layoutblockList.get(i))).
 												getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(layoutblockList.get(i))).getAttribute("userName") != null) {
-                userName = ((Element)(layoutblockList.get(i))).
+            if ( ((layoutblockList.get(i))).getAttribute("userName") != null) {
+                userName = ((layoutblockList.get(i))).
 												getAttribute("userName").getValue();
 			}
             LayoutBlock b = tm.createNewLayoutBlock(sysName, userName);
             if (b!=null) {
 				// set attributes
-				Color color = b.stringToColor(((Element)(layoutblockList.get(i))).
+				Color color = b.stringToColor(((layoutblockList.get(i))).
 												getAttribute("trackcolor").getValue());
 				b.setBlockTrackColor(color);
-				color = b.stringToColor(((Element)(layoutblockList.get(i)))
+				color = b.stringToColor(((layoutblockList.get(i)))
 											.getAttribute("occupiedcolor").getValue());
 				b.setBlockOccupiedColor(color);
-				Attribute a = ((Element)(layoutblockList.get(i)))
+				Attribute a = ((layoutblockList.get(i)))
 											.getAttribute("occupancysensor");
 				if (a!=null) {
 					b.setOccupancySensorName(a.getValue());
 				}
-				a = ((Element)(layoutblockList.get(i)))
+				a = ((layoutblockList.get(i)))
 											.getAttribute("memory");
 				if (a!=null) {
 					b.setMemoryName(a.getValue());
 				}
-				a = ((Element)(layoutblockList.get(i))).
+				a = ((layoutblockList.get(i))).
 											getAttribute("occupancysensorsense");
 				int sense = Sensor.ACTIVE;
 				try {
-					sense = ((Element)(layoutblockList.get(i))).
+					sense = ((layoutblockList.get(i))).
 											getAttribute("occupiedsense").getIntValue();
 				}		
 				catch (org.jdom.DataConversionException e) {

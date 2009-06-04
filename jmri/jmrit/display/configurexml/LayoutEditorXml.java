@@ -3,10 +3,6 @@ package jmri.jmrit.display.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.LayoutBlock;
-
-import java.awt.Dimension;
-import java.awt.Point;
 
 import java.util.List;
 import org.jdom.*;
@@ -17,7 +13,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -174,7 +170,8 @@ public class LayoutEditorXml implements XmlAdapter {
      * register and fill it, then pop it in a JFrame
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
 		Attribute a;
         // find coordinates
         int x = 0;
@@ -221,7 +218,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("xscale");
 		if (a!=null) {
 			try {
-				xScale = (double)(Float.parseFloat(a.getValue()));
+				xScale = (Float.parseFloat(a.getValue()));
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
 			}
@@ -229,7 +226,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("yscale");
 		if (a!=null) {
 			try {
-				yScale = (double)(Float.parseFloat(a.getValue()));
+				yScale = (Float.parseFloat(a.getValue()));
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
 			}
@@ -255,7 +252,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("turnoutbx");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setTurnoutBX(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -264,7 +261,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("turnoutcx");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setTurnoutCX(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -273,7 +270,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("turnoutwid");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setTurnoutWid(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -282,7 +279,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("xoverlong");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setXOverLong(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -291,7 +288,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("xoverhwid");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setXOverHWid(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -300,7 +297,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		a = element.getAttribute("xovershort");
 		if (a!=null) {
 			try {
-				sz = (double)(Float.parseFloat(a.getValue()));
+				sz = (Float.parseFloat(a.getValue()));
 				panel.setXOverShort(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
@@ -308,10 +305,10 @@ public class LayoutEditorXml implements XmlAdapter {
 		}
  
         // load the contents
-        List items = element.getChildren();
+        List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via "+adapterName);
             try {

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 import java.util.ResourceBundle;
 
-import java.text.MessageFormat;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be
@@ -50,7 +49,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -101,23 +100,23 @@ public class LayoutEditor extends JmriJFrame {
 	final public static  int MARKER = 17;
 	final public static  int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 	// dashed line parameters
-	private static int minNumDashes = 3;
-	private static double maxDashLength = 10;
+	//private static int minNumDashes = 3;
+	//private static double maxDashLength = 10;
 	
     // Operational instance variables - not saved to disk
-    private jmri.TurnoutManager tm = null;
+    //private jmri.TurnoutManager tm = null;
 	private LayoutEditor thisPanel = null;
 	private LayoutPane targetPanel = null;
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
 	protected boolean skipIncludedTurnout = false;
-    public ArrayList backgroundImage = new ArrayList();  // background images
-    public ArrayList sensorImage = new ArrayList();  // sensor images
-    public ArrayList signalHeadImage = new ArrayList();  // signal head images
-	public ArrayList markerImage = new ArrayList(); // marker images
-	public ArrayList labelImage = new ArrayList(); // layout positionable label images
-	public ArrayList clocks = new ArrayList();  // fast clocks
-	public ArrayList multiSensors = new ArrayList(); // multi-sensor images
+    public ArrayList<LayoutPositionableLabel> backgroundImage = new ArrayList<LayoutPositionableLabel>();  // background images
+    public ArrayList<LayoutSensorIcon> sensorImage = new ArrayList<LayoutSensorIcon>();  // sensor images
+    public ArrayList<LayoutSignalHeadIcon> signalHeadImage = new ArrayList<LayoutSignalHeadIcon>();  // signal head images
+	public ArrayList<LocoIcon> markerImage = new ArrayList<LocoIcon>(); // marker images
+	public ArrayList<LayoutPositionableLabel> labelImage = new ArrayList<LayoutPositionableLabel>(); // layout positionable label images
+	public ArrayList<AnalogClock2Display> clocks = new ArrayList<AnalogClock2Display>();  // fast clocks
+	public ArrayList<MultiSensorIcon> multiSensors = new ArrayList<MultiSensorIcon>(); // multi-sensor images
 	
 	public LayoutEditorAuxTools auxTools = null;
 	private ConnectivityUtil conTools = null;
@@ -175,11 +174,11 @@ public class LayoutEditor extends JmriJFrame {
 	private boolean delayedPopupTrigger = false;
 	private Point2D currentPoint = new Point2D.Double(100.0,100.0);
 	private Point2D dLoc = new Point2D.Double(0.0,0.0);
-	private int savedMSX = 0;
-	private int savedMSY = 0;
+	//private int savedMSX = 0;
+	//private int savedMSY = 0;
     private int height = 100;
     private int width = 100;
-    private int numTurnouts = 0;
+    //private int numTurnouts = 0;
 	private TrackSegment newTrack = null;
 	private boolean panelChanged = false;
 	private double zoomScale = 1.0;
@@ -210,24 +209,25 @@ public class LayoutEditor extends JmriJFrame {
 	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
 	private JCheckBoxMenuItem antialiasingOnItem = null;
 	private JCheckBoxMenuItem skipTurnoutItem = null;
-	private ButtonGroup bkColorButtonGroup = null;
+	//private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
 	private int trackColorCount = 0;
 	
 	// Selected point information
-    private final static int TURNOUT = 1;      // possible object types
-    private final static int LEVEL_XING = 2;
-    private final static int POINT = 3;
+    //private final static int TURNOUT = 1;      // possible object types
+    //private final static int LEVEL_XING = 2;
+    //private final static int POINT = 3;
 	private Point2D startDel = new Point2D.Double(0.0,0.0); // starting delta coordinates
 	private Object selectedObject = null; // selected object, null if nothing selected
 	private Object prevSelectedObject = null; // previous selected object, for undo
 	private int selectedPointType = 0;   // connection type within the selected object
-	private boolean selectedNeedsConnect = false; // true if selected object is unconnected
+	//private boolean selectedNeedsConnect = false; // true if selected object is unconnected
 	private Object foundObject = null; // found object, null if nothing found
 	private Point2D foundLocation = new Point2D.Double(0.0,0.0);  // location of found object
 	private int foundPointType = 0;   // connection type within the found object
+	@SuppressWarnings("unused")
 	private boolean foundNeedsConnect = false; // true if found point needs a connection
 	private Object beginObject = null; // begin track segment connection object, null if none
 	private Point2D beginLocation = new Point2D.Double(0.0,0.0);  // location of begin object
@@ -244,12 +244,12 @@ public class LayoutEditor extends JmriJFrame {
 	
 	// Lists of items that describe the Layout, and allow it to be drawn
 	//		Each of the items must be saved to disk over sessions
-    public ArrayList contents = new ArrayList();  // icons and labels
-	public ArrayList turnoutList = new ArrayList();  // LayoutTurnouts
-	public ArrayList trackList = new ArrayList();  // TrackSegment list
-	public ArrayList pointList = new ArrayList();  // PositionablePoint list
-	public ArrayList xingList = new ArrayList();  // LevelXing list
-	public ArrayList turntableList = new ArrayList(); // Turntable list
+    public ArrayList<Component> contents = new ArrayList<Component>();  // icons and labels
+	public ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();  // LayoutTurnouts
+	public ArrayList<TrackSegment> trackList = new ArrayList<TrackSegment>();  // TrackSegment list
+	public ArrayList<PositionablePoint> pointList = new ArrayList<PositionablePoint>();  // PositionablePoint list
+	public ArrayList<LevelXing> xingList = new ArrayList<LevelXing>();  // LevelXing list
+	public ArrayList<LayoutTurntable> turntableList = new ArrayList<LayoutTurntable>(); // Turntable list
 	// counts used to determine unique internal names
 	private int numAnchors = 0;
 	private int numEndBumpers = 0;
@@ -258,8 +258,8 @@ public class LayoutEditor extends JmriJFrame {
 	private int numLayoutTurnouts = 0;
 	private int numLayoutTurntables = 0;
 	// Lists of items that facilitate tools and drawings
-	public ArrayList signalList = new ArrayList();  // Signal Head Icons
-	public ArrayList memoryLabelList = new ArrayList(); // Memory Label List
+	public ArrayList<LayoutSignalHeadIcon> signalList = new ArrayList<LayoutSignalHeadIcon>();  // Signal Head Icons
+	public ArrayList<LayoutMemoryIcon> memoryLabelList = new ArrayList<LayoutMemoryIcon>(); // Memory Label List
         
     // persistent instance variables - saved to disk with Save Panel
 	private int windowWidth = 0;
@@ -1059,17 +1059,17 @@ public class LayoutEditor extends JmriJFrame {
 		zoomScale = factor;
 		// set scroll pane size
 		Dimension dim = targetPanel.getSize();
-		int tpWidth = (int)(((double)dim.width)*ratio);
-		int tpHeight = (int)(((double)dim.height)*ratio);
+		int tpWidth = (int)((dim.width)*ratio);
+		int tpHeight = (int)((dim.height)*ratio);
 		targetPanel.setSize(tpWidth,tpHeight);
 		// compute new scroll bar positions in order to keep image centered
 		int hScroll = horScroll.getVisibleAmount()/2;
-		hScroll = (int)((double)(horScroll.getValue() + hScroll) * ratio) - hScroll;
+		hScroll = (int)((horScroll.getValue() + hScroll) * ratio) - hScroll;
 		int vScroll = vertScroll.getVisibleAmount()/2;
-		vScroll = (int)((double)(vertScroll.getValue() + vScroll) * ratio) - vScroll;
+		vScroll = (int)((vertScroll.getValue() + vScroll) * ratio) - vScroll;
 		// set scrollbars maximum range (otherwise setValue may fail);
-		horScroll.setMaximum((int)(((double)horScroll.getMaximum())*ratio));
-		vertScroll.setMaximum((int)(((double)vertScroll.getMaximum())*ratio));
+		horScroll.setMaximum((int)((horScroll.getMaximum())*ratio));
+		vertScroll.setMaximum((int)((vertScroll.getMaximum())*ratio));
 		// set scroll bar positions
 		horScroll.setValue(hScroll);
 		vertScroll.setValue(vScroll);
@@ -1088,7 +1088,7 @@ public class LayoutEditor extends JmriJFrame {
 		SwingUtilities.convertPointFromScreen(pt, targetPanel);
 		pt.x /= zoomScale;
 		pt.y /= zoomScale;
-		return (Point2D)pt;
+		return pt;
 	}
 	private void setupMarkerMenu(JMenuBar menuBar) {
         JMenu markerMenu = new JMenu(rbx.getString("MenuMarker"));
@@ -1114,7 +1114,7 @@ public class LayoutEditor extends JmriJFrame {
      */
     private void removeMarkers() {
 		for (int i = markerImage.size(); i >0 ; i--) {
-			LocoIcon il = (LocoIcon) markerImage.get(i-1);
+			LocoIcon il = markerImage.get(i-1);
 			if ( (il != null) && (il.isActive()) ) {
 				markerImage.remove(i-1);
 				il.remove();
@@ -1202,7 +1202,7 @@ public class LayoutEditor extends JmriJFrame {
     public void inputLoco() {
     	String nameID = locoId.getText();
 		if ( (nameID!=null) && !(nameID.trim().equals("")) ) {			
-			LocoIcon l = addLocoIcon(nameID.trim());
+			addLocoIcon(nameID.trim());
 		}
 		else {
 			JOptionPane.showMessageDialog(locoFrame,rb.getString("ErrorEnterLocoID"),
@@ -1441,7 +1441,7 @@ public class LayoutEditor extends JmriJFrame {
 					JOptionPane.ERROR_MESSAGE);
             return;
 		}
-		if ( ( xx<=0) || (xx>(int)dim.width) ) {
+		if ( ( xx<=0) || (xx>dim.width) ) {
 			JOptionPane.showMessageDialog(enterReporterFrame,
 					java.text.MessageFormat.format(rb.getString("Error2a"),
 					new Object[]{" "+xx+" "}),rb.getString("Error"),
@@ -1461,7 +1461,7 @@ public class LayoutEditor extends JmriJFrame {
 					JOptionPane.ERROR_MESSAGE);
             return;
 		}
-		if ( ( yy<=0) || (yy>(int)dim.height) ) {
+		if ( ( yy<=0) || (yy>dim.height) ) {
 			JOptionPane.showMessageDialog(enterReporterFrame,
 					java.text.MessageFormat.format(rb.getString("Error2a"),
 					new Object[]{" "+yy+" "}),rb.getString("Error"),
@@ -1692,25 +1692,25 @@ public class LayoutEditor extends JmriJFrame {
 	boolean translateTrack (float xDel, float yDel) {
 		// loop over all defined turnouts
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout t = turnoutList.get(i);
 			Point2D center = t.getCoordsCenter();
 			t.setCoordsCenter(new Point2D.Double(center.getX()+xDel,center.getY()+yDel));
 		}
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
+			LevelXing x = xingList.get(i);
 			Point2D center = x.getCoordsCenter();
 			x.setCoordsCenter(new Point2D.Double(center.getX()+xDel,center.getY()+yDel));
 		}
 		// loop over all defined turntables
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable x = turntableList.get(i);
 			Point2D center = x.getCoordsCenter();
 			x.setCoordsCenter(new Point2D.Double(center.getX()+xDel,center.getY()+yDel));
 		}
 		// loop over all defined Anchor Points and End Bumpers
 		for (int i = 0; i<pointList.size();i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			Point2D coord = p.getCoords();
 			p.setCoords(new Point2D.Double(coord.getX()+xDel,coord.getY()+yDel));
 		}
@@ -1719,22 +1719,22 @@ public class LayoutEditor extends JmriJFrame {
 	boolean scaleTrack (float xFactor, float yFactor) {
 		// loop over all defined turnouts
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout t = turnoutList.get(i);
 			t.scaleCoords(xFactor,yFactor);
 		}
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
+			LevelXing x = xingList.get(i);
 			x.scaleCoords(xFactor,yFactor);
 		}
 		// loop over all defined turntables
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable x = turntableList.get(i);
 			x.scaleCoords(xFactor,yFactor);
 		}
 		// loop over all defined Anchor Points and End Bumpers
 		for (int i = 0; i<pointList.size();i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			Point2D coord = p.getCoords();
 			p.setCoords(new Point2D.Double(round(coord.getX()*xFactor),
 										round(coord.getY()*yFactor)));
@@ -1746,7 +1746,7 @@ public class LayoutEditor extends JmriJFrame {
 	}
 	double round (double x) {
 		int i = (int)(x+0.5);
-		return ((double)i);
+		return (i);
 	}
 
 	// operational variables for move selection pane
@@ -1872,7 +1872,7 @@ public class LayoutEditor extends JmriJFrame {
 			canUndoMoveSelection = true;
 			// apply translation to icon items within the selection
 			for (int i = 0; i<contents.size(); i++) {
-				Component c = (Component)contents.get(i);
+				Component c = contents.get(i);
 				Point2D upperLeft = c.getLocation();
 				if (selectRect.contains(upperLeft)) {
 					int xNew = (int)(upperLeft.getX()+xTranslation);
@@ -1882,7 +1882,7 @@ public class LayoutEditor extends JmriJFrame {
  			}
 			// loop over all defined turnouts
 			for (int i = 0; i<turnoutList.size();i++) {
-				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+				LayoutTurnout t = turnoutList.get(i);
 				Point2D center = t.getCoordsCenter();
 				if (selectRect.contains(center)) {
 					t.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
@@ -1891,7 +1891,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			// loop over all defined level crossings
 			for (int i = 0; i<xingList.size();i++) {
-				LevelXing x = (LevelXing)xingList.get(i);
+				LevelXing x = xingList.get(i);
 				Point2D center = x.getCoordsCenter();
 				if (selectRect.contains(center)) {
 					x.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
@@ -1900,7 +1900,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			// loop over all defined turntables
 			for (int i = 0; i<turntableList.size();i++) {
-				LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+				LayoutTurntable x = turntableList.get(i);
 				Point2D center = x.getCoordsCenter();
 				if (selectRect.contains(center)) {
 					x.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
@@ -1909,7 +1909,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			// loop over all defined Anchor Points and End Bumpers
 			for (int i = 0; i<pointList.size();i++) {
-				PositionablePoint p = (PositionablePoint)pointList.get(i);
+				PositionablePoint p = pointList.get(i);
 				Point2D coord = p.getCoords();
 				if (selectRect.contains(coord)) {
 					p.setCoords(new Point2D.Double(coord.getX()+xTranslation,
@@ -1934,7 +1934,7 @@ public class LayoutEditor extends JmriJFrame {
 	void undoMoveSelection() {
 		if (canUndoMoveSelection) {
 			for (int i = 0; i<contents.size(); i++) {
-				Component c = (Component)contents.get(i);
+				Component c = contents.get(i);
 				Point2D upperLeft = c.getLocation();
 				if (undoRect.contains(upperLeft)) {
 					int xNew = (int)(upperLeft.getX()+undoDeltaX);
@@ -1943,7 +1943,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
  			}
 			for (int i = 0; i<turnoutList.size();i++) {
-				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+				LayoutTurnout t = turnoutList.get(i);
 				Point2D center = t.getCoordsCenter();
 				if (undoRect.contains(center)) {
 					t.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
@@ -1951,7 +1951,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			}
 			for (int i = 0; i<xingList.size();i++) {
-				LevelXing x = (LevelXing)xingList.get(i);
+				LevelXing x = xingList.get(i);
 				Point2D center = x.getCoordsCenter();
 				if (undoRect.contains(center)) {
 					x.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
@@ -1959,7 +1959,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			}
 			for (int i = 0; i<turntableList.size();i++) {
-				LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+				LayoutTurntable x = turntableList.get(i);
 				Point2D center = x.getCoordsCenter();
 				if (undoRect.contains(center)) {
 					x.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
@@ -1967,7 +1967,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			}
 			for (int i = 0; i<pointList.size();i++) {
-				PositionablePoint p = (PositionablePoint)pointList.get(i);
+				PositionablePoint p = pointList.get(i);
 				Point2D coord = p.getCoords();
 				if (undoRect.contains(coord)) {
 					p.setCoords(new Point2D.Double(coord.getX()+undoDeltaX,
@@ -1999,7 +1999,7 @@ public class LayoutEditor extends JmriJFrame {
 
     void addTrackColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
-				final String desiredName = name;
+				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
 					if (defaultTrackColor!=desiredColor) {
@@ -2134,9 +2134,9 @@ public class LayoutEditor extends JmriJFrame {
 	 * Get mouse coordinates and adjust for zoom
 	 */
 	private void calcLocation(MouseEvent event, int dX, int dY) {
-		xLoc = (int)((double)(event.getX() + dX)/zoomScale);
-		yLoc = (int)((double)(event.getY() + dY)/zoomScale);
-		dLoc.setLocation((double)xLoc,(double)yLoc);
+		xLoc = (int)((event.getX() + dX)/zoomScale);
+		yLoc = (int)((event.getY() + dY)/zoomScale);
+		dLoc.setLocation(xLoc,yLoc);
 	}
 	
 	/**
@@ -2170,57 +2170,57 @@ public class LayoutEditor extends JmriJFrame {
 				if (checkSelect(dLoc, false)) {
 					selectedObject = foundObject;
 					selectedPointType = foundPointType;
-					selectedNeedsConnect = foundNeedsConnect;
+					//selectedNeedsConnect = foundNeedsConnect;
 					startDel.setLocation(foundLocation.getX()-dLoc.getX(), foundLocation.getY()-dLoc.getY());
 					foundObject = null;
 				}
 				else {
-					selectedObject = (Object)checkMarkers(dLoc);
+					selectedObject = checkMarkers(dLoc);
 					if (selectedObject!=null) {
 						selectedPointType = MARKER;
 						startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
 												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
-						selectedNeedsConnect = false;
+						//selectedNeedsConnect = false;
 					}
 					else {
-						selectedObject = (Object)checkClocks(dLoc);
+						selectedObject = checkClocks(dLoc);
 						if (selectedObject!=null) {
 							selectedPointType = LAYOUT_POS_JCOMP;
 							startDel.setLocation((((PositionableJComponent)selectedObject).getX()-dLoc.getX()), 
 												(((PositionableJComponent)selectedObject).getY()-dLoc.getY()));
-							selectedNeedsConnect = false;
+							//selectedNeedsConnect = false;
 						}
 						else {
-							selectedObject = (Object)checkMultiSensors(dLoc);
+							selectedObject = checkMultiSensors(dLoc);
 							if (selectedObject!=null) {
 								selectedPointType = MULTI_SENSOR;
 								startDel.setLocation((((MultiSensorIcon)selectedObject).getX()-dLoc.getX()), 
 												(((MultiSensorIcon)selectedObject).getY()-dLoc.getY()));
-								selectedNeedsConnect = false;
+								//selectedNeedsConnect = false;
 							}
 						}
 					}
 					if (selectedObject==null) {
-						selectedObject = (Object)checkSensorIcons(dLoc);
+						selectedObject = checkSensorIcons(dLoc);
 						if (selectedObject==null) {
-							selectedObject = (Object)checkSignalHeadIcons(dLoc);
+							selectedObject = checkSignalHeadIcons(dLoc);
 							if (selectedObject==null) {
-								selectedObject = (Object)checkLabelImages(dLoc);
+								selectedObject = checkLabelImages(dLoc);
 							}
 						}
 						if (selectedObject!=null) {
 							selectedPointType = LAYOUT_POS_LABEL;
 							startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
 												(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
-							selectedNeedsConnect = false;
+							//selectedNeedsConnect = false;
 						}
 						else {
-							selectedObject = (Object)checkBackgrounds(dLoc);
+							selectedObject = checkBackgrounds(dLoc);
 							if (selectedObject!=null) {
 								selectedPointType = LAYOUT_POS_LABEL;
 								startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
 													(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
-								selectedNeedsConnect = false;
+								//selectedNeedsConnect = false;
 							}
 						}
 					}					
@@ -2247,14 +2247,14 @@ public class LayoutEditor extends JmriJFrame {
 					// check if mouse is on a turnout 
 					selectedObject = null;
 					for (int i = 0; i<turnoutList.size();i++) {
-						LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+						LayoutTurnout t = turnoutList.get(i);
 						// check the center point
 						Point2D pt = t.getCoordsCenter();
 						Rectangle2D r = new Rectangle2D.Double(
 								pt.getX()-SIZE2,pt.getY()-SIZE2,2.0*SIZE2,2.0*SIZE2);
 						if (r.contains(dLoc)) {
 							// mouse was pressed on this turnout
-							selectedObject = (Object)t;
+							selectedObject = t;
 							selectedPointType = TURNOUT_CENTER;
 							break;
 						}
@@ -2275,14 +2275,14 @@ public class LayoutEditor extends JmriJFrame {
 			// not in edit mode - check if mouse is on a turnout (using wider search range)
 			selectedObject = null;
 			for (int i = 0; i<turnoutList.size();i++) {
-				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+				LayoutTurnout t = turnoutList.get(i);
 				// check the center point
 				Point2D pt = t.getCoordsCenter();
 				Rectangle2D r = new Rectangle2D.Double(
 						pt.getX()-(SIZE2*2.0),pt.getY()-(SIZE2*2.0),4.0*SIZE2,4.0*SIZE2);
 				if (r.contains(dLoc)) {
 					// mouse was pressed on this turnout
-					selectedObject = (Object)t;
+					selectedObject = t;
 					selectedPointType = TURNOUT_CENTER;
 					break;
 				}
@@ -2291,12 +2291,12 @@ public class LayoutEditor extends JmriJFrame {
 		else if ( (event.isMetaDown() || event.isAltDown()) &&
 							(!event.isShiftDown()) && (!event.isControlDown()) ) {
 			// not in edit mode - check if moving a marker if there are any
-			selectedObject = (Object)checkMarkers(dLoc);
+			selectedObject = checkMarkers(dLoc);
 			if (selectedObject!=null) {
 				selectedPointType = MARKER;
 				startDel.setLocation((((LocoIcon)selectedObject).getX()-dLoc.getX()), 
 												(((LocoIcon)selectedObject).getY()-dLoc.getY()));
-				selectedNeedsConnect = false;
+				//selectedNeedsConnect = false;
 			}
 		}
 		else if ( event.isPopupTrigger() && (!event.isShiftDown()) ) {
@@ -2309,8 +2309,8 @@ public class LayoutEditor extends JmriJFrame {
 	private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
 		// check positionable points, if any
 		for (int i = 0; i<pointList.size();i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
-			if ( ((Object)p!=selectedObject) && !requireUnconnected || 
+			PositionablePoint p = pointList.get(i);
+			if ( (p!=selectedObject) && !requireUnconnected || 
 					(p.getConnect1()==null) || 
 					((p.getType()!=PositionablePoint.END_BUMPER) && 
 												(p.getConnect2()==null)) ) {
@@ -2320,7 +2320,7 @@ public class LayoutEditor extends JmriJFrame {
 				if (r.contains(loc)) {
 					// mouse was pressed on this connection point
 					foundLocation = pt;
-					foundObject = (Object)p;
+					foundObject = p;
 					foundPointType = POS_POINT;
 					foundNeedsConnect = ((p.getConnect1()==null)||(p.getConnect2()==null));
 					return true;
@@ -2329,8 +2329,8 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// check turnouts, if any
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
-			if ((Object)t!=selectedObject) {
+			LayoutTurnout t = turnoutList.get(i);
+			if (t!=selectedObject) {
 				if (!requireUnconnected) {
 					// check the center point
 					Point2D pt = t.getCoordsCenter();
@@ -2339,7 +2339,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)t;
+						foundObject = t;
 						foundPointType = TURNOUT_CENTER;
 						foundNeedsConnect = false;
 						return true;
@@ -2353,7 +2353,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)t;
+						foundObject = t;
 						foundPointType = TURNOUT_A;
 						foundNeedsConnect = (t.getConnectA()==null);
 						return true;
@@ -2367,7 +2367,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)t;
+						foundObject = t;
 						foundPointType = TURNOUT_B;
 						foundNeedsConnect = (t.getConnectB()==null);
 						return true;
@@ -2381,7 +2381,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)t;
+						foundObject = t;
 						foundPointType = TURNOUT_C;
 						foundNeedsConnect = (t.getConnectC()==null);
 						return true;
@@ -2398,7 +2398,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)t;
+						foundObject = t;
 						foundPointType = TURNOUT_D;
 						foundNeedsConnect = (t.getConnectD()==null);
 						return true;
@@ -2409,8 +2409,8 @@ public class LayoutEditor extends JmriJFrame {
 				
 		// check level Xings, if any
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
-			if ((Object)x!=selectedObject) {
+			LevelXing x = xingList.get(i);
+			if (x!=selectedObject) {
 				if (!requireUnconnected) {
 					// check the center point
 					Point2D pt = x.getCoordsCenter();
@@ -2419,7 +2419,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = LEVEL_XING_CENTER;
 						foundNeedsConnect = false;
 						return true;
@@ -2433,7 +2433,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = LEVEL_XING_A;
 						foundNeedsConnect = (x.getConnectA()==null);
 						return true;
@@ -2447,7 +2447,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = LEVEL_XING_B;
 						foundNeedsConnect = (x.getConnectB()==null);
 						return true;
@@ -2461,7 +2461,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = LEVEL_XING_C;
 						foundNeedsConnect = (x.getConnectC()==null);
 						return true;
@@ -2475,7 +2475,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this connection point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = LEVEL_XING_D;
 						foundNeedsConnect = (x.getConnectD()==null);
 						return true;
@@ -2485,8 +2485,8 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// check turntables, if any
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
-			if ((Object)x!=selectedObject) {
+			LayoutTurntable x = turntableList.get(i);
+			if (x!=selectedObject) {
 				if (!requireUnconnected) {
 					// check the center point
 					Point2D pt = x.getCoordsCenter();
@@ -2495,7 +2495,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (r.contains(loc)) {
 						// mouse was pressed on this center point
 						foundLocation = pt;
-						foundObject = (Object)x;
+						foundObject = x;
 						foundPointType = TURNTABLE_CENTER;
 						foundNeedsConnect = false;
 						return true;
@@ -2510,7 +2510,7 @@ public class LayoutEditor extends JmriJFrame {
 						if (r.contains(loc)) {
 							// mouse was pressed on this connection point
 							foundLocation = pt;
-							foundObject = (Object)x;
+							foundObject = x;
 							foundPointType = TURNTABLE_RAY_OFFSET+x.getRayIndex(k);
 							foundNeedsConnect = (x.getRayConnectOrdered(k)==null);
 							return true;
@@ -2528,7 +2528,7 @@ public class LayoutEditor extends JmriJFrame {
 	private TrackSegment checkTrackSegments(Point2D loc) {
 		// check Track Segments, if any
 		for (int i = 0; i<trackList.size(); i++) {
-			TrackSegment tr = (TrackSegment)trackList.get(i);
+			TrackSegment tr = trackList.get(i);
 			Object o = tr.getConnect1();
 			int type = tr.getType1();
 			// get coordinates of first end point
@@ -2554,7 +2554,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutPositionableLabel checkBackgrounds(Point2D loc) {
 		// check background images, if any
 		for (int i=backgroundImage.size()-1; i>=0; i--) {
-			LayoutPositionableLabel b = (LayoutPositionableLabel)backgroundImage.get(i);
+			LayoutPositionableLabel b = backgroundImage.get(i);
 			double x = b.getX();
 			double y = b.getY();
 			double w = b.maxWidth();
@@ -2572,7 +2572,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutSensorIcon checkSensorIcons(Point2D loc) {
 		// check sensor images, if any
 		for (int i=sensorImage.size()-1; i>=0; i--) {
-			LayoutSensorIcon s = (LayoutSensorIcon)sensorImage.get(i);
+			LayoutSensorIcon s = sensorImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -2590,7 +2590,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutSignalHeadIcon checkSignalHeadIcons(Point2D loc) {
 		// check signal head images, if any
 		for (int i=signalHeadImage.size()-1; i>=0; i--) {
-			LayoutSignalHeadIcon s = (LayoutSignalHeadIcon)signalHeadImage.get(i);
+			LayoutSignalHeadIcon s = signalHeadImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -2609,7 +2609,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutPositionableLabel checkLabelImages(Point2D loc) {
 		// check label images, if any
 		for (int i=labelImage.size()-1; i>=0; i--) {
-			LayoutPositionableLabel s = (LayoutPositionableLabel)labelImage.get(i);
+			LayoutPositionableLabel s = labelImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = 10.0;
@@ -2635,7 +2635,7 @@ public class LayoutEditor extends JmriJFrame {
 	private AnalogClock2Display checkClocks(Point2D loc) {
 		// check clocks, if any
 		for (int i=clocks.size()-1; i>=0; i--) {
-			AnalogClock2Display s = (AnalogClock2Display)clocks.get(i);
+			AnalogClock2Display s = clocks.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.getFaceWidth();
@@ -2653,7 +2653,7 @@ public class LayoutEditor extends JmriJFrame {
 	private MultiSensorIcon checkMultiSensors(Point2D loc) {
 		// check multi sensor icons, if any
 		for (int i=multiSensors.size()-1; i>=0; i--) {
-			MultiSensorIcon s = (MultiSensorIcon)multiSensors.get(i);
+			MultiSensorIcon s = multiSensors.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -2671,7 +2671,7 @@ public class LayoutEditor extends JmriJFrame {
 	private LocoIcon checkMarkers(Point2D loc) {
 		// check marker icons, if any
 		for (int i=markerImage.size()-1; i>=0; i--) {
-			LocoIcon l = (LocoIcon)markerImage.get(i);
+			LocoIcon l = markerImage.get(i);
 			double x = l.getX();
 			double y = l.getY();
 			double w = l.maxWidth();
@@ -2723,7 +2723,7 @@ public class LayoutEditor extends JmriJFrame {
             yLabel.setText(Integer.toString(yLoc));
             if ((!event.isPopupTrigger()) && (!event.isMetaDown()) && (!event.isAltDown()) 
 												&& event.isShiftDown()) {
-				currentPoint = new Point2D.Double((double)xLoc, (double)yLoc);
+				currentPoint = new Point2D.Double(xLoc, yLoc);
 				if (snapToGridOnAdd) {
 					xLoc = ((xLoc+4)/10)*10;
 					yLoc = ((yLoc+4)/10)*10;
@@ -3127,6 +3127,7 @@ public class LayoutEditor extends JmriJFrame {
         }
     }
 
+	@SuppressWarnings("unused")
 	private void updateLocation(Object o,int pointType,Point2D newPos) {
 		switch (pointType) {
 			case TURNOUT_A:
@@ -3380,7 +3381,7 @@ public class LayoutEditor extends JmriJFrame {
 		// ensure that this turnout is unique among Layout Turnouts
 		LayoutTurnout t = null;
 		for (int i=0;i<turnoutList.size();i++) {
-			t = (LayoutTurnout)turnoutList.get(i);
+			t = turnoutList.get(i);
 			log.debug("LT '"+t.getName()+"', Turnout tested '"+t.getTurnoutName()+"' ");
 			Turnout to = t.getTurnout();
 			if (to!=null) {
@@ -3628,8 +3629,8 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
 		// remove from selection information
-		if (selectedObject==(Object)o) selectedObject = null;
-		if (prevSelectedObject==(Object)o) prevSelectedObject = null;
+		if (selectedObject==o) selectedObject = null;
+		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = o.getConnect1();
 		if (t!=null) removeTrackSegment(t);
@@ -3637,7 +3638,7 @@ public class LayoutEditor extends JmriJFrame {
 		if (t!=null) removeTrackSegment(t);
 		// delete from array
 		for (int i = 0; i<pointList.size();i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			if (p==o) {
 				// found object
 				pointList.remove(i);
@@ -3669,8 +3670,8 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
 		// remove from selection information
-		if (selectedObject==(Object)o) selectedObject = null;
-		if (prevSelectedObject==(Object)o) prevSelectedObject = null;
+		if (selectedObject==o) selectedObject = null;
+		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = (TrackSegment)o.getConnectA();
 		if (t!=null) removeTrackSegment(t);
@@ -3696,7 +3697,7 @@ public class LayoutEditor extends JmriJFrame {
 		}	
 		// delete from array
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout lt = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout lt = turnoutList.get(i);
 			if (lt==o) {
 				// found object
 				turnoutList.remove(i);
@@ -3728,8 +3729,8 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
 		// remove from selection information
-		if (selectedObject==(Object)o) selectedObject = null;
-		if (prevSelectedObject==(Object)o) prevSelectedObject = null;
+		if (selectedObject==o) selectedObject = null;
+		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		TrackSegment t = (TrackSegment)o.getConnectA();
 		if (t!=null) removeTrackSegment(t);
@@ -3746,7 +3747,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( (lbx != null) && (lbx!=lb) ) lb.decrementUse();
 		// delete from array
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing lx = (LevelXing)xingList.get(i);
+			LevelXing lx = xingList.get(i);
 			if (lx==o) {
 				// found object
 				xingList.remove(i);
@@ -3779,8 +3780,8 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
 		// remove from selection information
-		if (selectedObject==(Object)o) selectedObject = null;
-		if (prevSelectedObject==(Object)o) prevSelectedObject = null;
+		if (selectedObject==o) selectedObject = null;
+		if (prevSelectedObject==o) prevSelectedObject = null;
 		// remove connections if any
 		for (int j = 0; j<o.getNumberRays();j++) {
 			TrackSegment t = o.getRayConnectOrdered(j);
@@ -3788,7 +3789,7 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// delete from array
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable lx = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable lx = turntableList.get(i);
 			if (lx==o) {
 				// found object
 				turntableList.remove(i);
@@ -3842,7 +3843,7 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// delete from array
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			if (t==o) {
 				// found object
 				trackList.remove(i);
@@ -4061,7 +4062,7 @@ public class LayoutEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
-		memoryLabelList.add((Object)l);
+		memoryLabelList.add(l);
 		setDirty(true);
         putLabel(l);
     }
@@ -4177,7 +4178,7 @@ public class LayoutEditor extends JmriJFrame {
 		int left = 0;
 		// place to right of background images, if any
 		for (int i=0; i<backgroundImage.size(); i++) {
-			LayoutPositionableLabel b = (LayoutPositionableLabel)backgroundImage.get(i);
+			LayoutPositionableLabel b = backgroundImage.get(i);
 			int test = b.getX() + b.maxWidth();
 			if (test>left) left = test;
 		}
@@ -4189,7 +4190,7 @@ public class LayoutEditor extends JmriJFrame {
 	 */
 	protected void removeBackground(LayoutPositionableLabel b) {
 		for (int i=0; i<backgroundImage.size(); i++) {
-			if (b == (LayoutPositionableLabel)backgroundImage.get(i)) {
+			if (b == backgroundImage.get(i)) {
 				backgroundImage.remove(i);
 				setDirty(true);
 				return;
@@ -4281,7 +4282,7 @@ public class LayoutEditor extends JmriJFrame {
 		
 		// delete panel - deregister the panel for saving 
         InstanceManager.configureManagerInstance().deregister(this);
-		jmri.jmrit.display.PanelMenu.instance().deletePanel((Object)this);
+		jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
 		setVisible(false);		
 		// clean up local links
         contents.clear();
@@ -4559,31 +4560,31 @@ public class LayoutEditor extends JmriJFrame {
 		// initialize TrackSegments if any
 		if (trackList.size()>0) {
 			for (int i = 0; i<trackList.size(); i++) {
-				((TrackSegment)trackList.get(i)).setObjects(this);
+				(trackList.get(i)).setObjects(this);
 			}
 		}
 		// initialize PositionablePoints if any
 		if (pointList.size()>0) {
 			for (int i = 0; i<pointList.size(); i++) {
-				((PositionablePoint)pointList.get(i)).setObjects(this);
+				(pointList.get(i)).setObjects(this);
 			}
 		}
 		// initialize LevelXings if any
 		if (xingList.size()>0) {
 			for (int i = 0; i<xingList.size(); i++) {
-				((LevelXing)xingList.get(i)).setObjects(this);
+				(xingList.get(i)).setObjects(this);
 			}
 		}
 		// initialize LayoutTurntables if any
 		if (turntableList.size()>0) {
 			for (int i = 0; i<turntableList.size(); i++) {
-				((LayoutTurntable)turntableList.get(i)).setObjects(this);
+				(turntableList.get(i)).setObjects(this);
 			}
 		}
 		// initialize LayoutTurnouts if any
 		if (turnoutList.size()>0) {
 			for (int i = 0; i<turnoutList.size(); i++) {
-				((LayoutTurnout)turnoutList.get(i)).setObjects(this);
+				(turnoutList.get(i)).setObjects(this);
 			}
 		}
 		auxTools.initializeBlockConnectivity();
@@ -4630,7 +4631,7 @@ public class LayoutEditor extends JmriJFrame {
 	public TrackSegment findTrackSegmentByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<trackList.size(); i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			if (t.getID().equals(name)) {
 				return t;
 			}
@@ -4640,7 +4641,7 @@ public class LayoutEditor extends JmriJFrame {
 	public PositionablePoint findPositionablePointByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<pointList.size(); i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			if (p.getID().equals(name)) {
 				return p;
 			}
@@ -4649,7 +4650,7 @@ public class LayoutEditor extends JmriJFrame {
 	}
 	public PositionablePoint findPositionablePointAtTrackSegments(TrackSegment tr1, TrackSegment tr2) {
 		for (int i = 0; i<pointList.size(); i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			if ( ( (p.getConnect1()==tr1) && (p.getConnect2()==tr2) ) ||
 					( (p.getConnect1()==tr2) && (p.getConnect2()==tr1) ) ) {
 				return p;
@@ -4660,7 +4661,7 @@ public class LayoutEditor extends JmriJFrame {
 	public LayoutTurnout findLayoutTurnoutByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<turnoutList.size(); i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout t = turnoutList.get(i);
 			if (t.getName().equals(name)) {
 				return t;
 			}
@@ -4670,7 +4671,7 @@ public class LayoutEditor extends JmriJFrame {
 	public LevelXing findLevelXingByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<xingList.size(); i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
+			LevelXing x = xingList.get(i);
 			if (x.getID().equals(name)) {
 				return x;
 			}
@@ -4680,7 +4681,7 @@ public class LayoutEditor extends JmriJFrame {
 	public LayoutTurntable findLayoutTurntableByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<turntableList.size(); i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable x = turntableList.get(i);
 			if (x.getID().equals(name)) {
 				return x;
 			}
@@ -4693,22 +4694,22 @@ public class LayoutEditor extends JmriJFrame {
 			case NONE:
 				return null;
 			case POS_POINT:
-				return (Object)findPositionablePointByName(name);
+				return findPositionablePointByName(name);
 			case TURNOUT_A:
 			case TURNOUT_B:
 			case TURNOUT_C:
 			case TURNOUT_D:
-				return (Object)findLayoutTurnoutByName(name);
+				return findLayoutTurnoutByName(name);
 			case LEVEL_XING_A:
 			case LEVEL_XING_B:
 			case LEVEL_XING_C:
 			case LEVEL_XING_D:
-				return (Object)findLevelXingByName(name);
+				return findLevelXingByName(name);
 			case TRACK:
-				return (Object)findTrackSegmentByName(name);
+				return findTrackSegmentByName(name);
 			default:
 				if (type>=TURNTABLE_RAY_OFFSET)
-					return (Object)findLayoutTurntableByName(name);
+					return findLayoutTurntableByName(name);
 		}
 		log.error("did not find Object '"+name+"' of type "+type);
 		return null;
@@ -4773,10 +4774,10 @@ public class LayoutEditor extends JmriJFrame {
 		
 	protected void drawTurnouts(Graphics2D g2)
 	{
-		float trackWidth = sideTrackWidth;
+		//float trackWidth = sideTrackWidth;
 		// loop over all defined turnouts
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout t = turnoutList.get(i);
 			LayoutBlock b = t.getLayoutBlock();
 			if (b!=null) {
 				g2.setColor(b.getBlockColor());
@@ -5247,7 +5248,7 @@ public class LayoutEditor extends JmriJFrame {
 	{
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
+			LevelXing x = xingList.get(i);
 			if ( x.isMainlineBD() && (!x.isMainlineAC()) ) {
 				drawXingAC(g2,x);
 				drawXingBD(g2,x);
@@ -5291,7 +5292,7 @@ public class LayoutEditor extends JmriJFrame {
 	{
 		// loop over all defined turnouts
 		for (int i = 0; i<turnoutList.size();i++) {
-			LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+			LayoutTurnout t = turnoutList.get(i);
 			Point2D pt = t.getCoordsCenter();
 			g2.setColor(defaultTrackColor);
 			g2.draw(new Ellipse2D.Double (
@@ -5344,7 +5345,7 @@ public class LayoutEditor extends JmriJFrame {
 		// loop over all defined layout turntables
 		if (turntableList.size()<=0) return;
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable x = turntableList.get(i);
 			// draw turntable circle - default track color, side track width
 			setTrackStrokeWidth(g2,false);
 			Point2D c = x.getCoordsCenter();
@@ -5377,7 +5378,7 @@ public class LayoutEditor extends JmriJFrame {
 	{
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
-			LevelXing x = (LevelXing)xingList.get(i);
+			LevelXing x = xingList.get(i);
 			Point2D pt = x.getCoordsCenter();
 			g2.setColor(defaultTrackColor);
 			g2.draw(new Ellipse2D.Double (
@@ -5425,7 +5426,7 @@ public class LayoutEditor extends JmriJFrame {
 	{
 		// loop over all defined turntables
 		for (int i = 0; i<turntableList.size();i++) {
-			LayoutTurntable x = (LayoutTurntable)turntableList.get(i);
+			LayoutTurntable x = turntableList.get(i);
 			Point2D pt = x.getCoordsCenter();
 			g2.setColor(defaultTrackColor);
 			g2.draw(new Ellipse2D.Double (
@@ -5447,7 +5448,7 @@ public class LayoutEditor extends JmriJFrame {
 	private void drawHiddenTrack(Graphics2D g2)
 	{
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			if (editMode && t.getHidden()) {
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
@@ -5462,7 +5463,7 @@ public class LayoutEditor extends JmriJFrame {
 	private void drawDashedTrack(Graphics2D g2, boolean mainline)
 	{
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			if ( (!t.getHidden()) && t.getDashed() && (mainline == t.getMainline()) ) {		
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
@@ -5475,10 +5476,10 @@ public class LayoutEditor extends JmriJFrame {
 				double cLength = Math.sqrt( (delX*delX) + (delY*delY) );
 				// note: The preferred dimension of a dash (solid + blank space) is 
 				//         5 * the track width - about 60% solid and 40% blank.
-				int nDashes = (int)( cLength / (((double)trackWidth)*5.0) );
+				int nDashes = (int)( cLength / ((trackWidth)*5.0) );
 				if (nDashes < 3) nDashes = 3;
-				double delXDash = -delX/( ((double)nDashes) - 0.5 );
-				double delYDash = -delY/( ((double)nDashes) - 0.5 );
+				double delXDash = -delX/( (nDashes) - 0.5 );
+				double delYDash = -delY/( (nDashes) - 0.5 );
 				double begX = end1.getX();
 				double begY = end1.getY();
 				for (int k = 0; k<nDashes; k++) {
@@ -5493,7 +5494,7 @@ public class LayoutEditor extends JmriJFrame {
 	private void drawSolidTrack(Graphics2D g2, boolean mainline)
 	{
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			if ( (!t.getHidden()) && (!t.getDashed()) && (mainline == t.getMainline()) ) {		
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
@@ -5519,7 +5520,7 @@ public class LayoutEditor extends JmriJFrame {
 		// loop over all defined track segments
 		g2.setColor(defaultTrackColor);
 		for (int i = 0; i<trackList.size();i++) {
-			TrackSegment t = (TrackSegment)trackList.get(i);
+			TrackSegment t = trackList.get(i);
 			Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
 			Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
 			double cX = (pt1.getX() + pt2.getX())/2.0D;
@@ -5531,7 +5532,7 @@ public class LayoutEditor extends JmriJFrame {
 	private void drawPoints(Graphics2D g2)
 	{
 		for (int i = 0; i<pointList.size();i++) {
-			PositionablePoint p = (PositionablePoint)pointList.get(i);
+			PositionablePoint p = pointList.get(i);
 			switch (p.getType()) {
 				case PositionablePoint.ANCHOR:
 					// nothing to draw unless in edit mode
@@ -5582,7 +5583,7 @@ public class LayoutEditor extends JmriJFrame {
 		g2.setColor(defaultTrackColor);
 		g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND));
 		for (int i = 0;i<memoryLabelList.size();i++) {
-			LayoutMemoryIcon l = (LayoutMemoryIcon) memoryLabelList.get(i);
+			LayoutMemoryIcon l = memoryLabelList.get(i);
 			g2.draw(new Rectangle2D.Double (l.getX(), l.getY(), l.getSize().width, l.getSize().height));
 		}
 	}

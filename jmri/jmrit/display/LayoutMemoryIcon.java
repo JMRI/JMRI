@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -64,7 +64,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 	}
 	
 	private void setMap() {
-        if (map==null) map = new java.util.HashMap();
+        if (map==null) map = new java.util.HashMap<String,NamedIcon>();
 	}
 	
 	NamedIcon defaultIcon = null;
@@ -74,7 +74,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     Memory memory = null;
     
     // the map of icons
-    java.util.HashMap map = null;
+    java.util.HashMap<String,NamedIcon> map = null;
 
     /**
      * Attached a named Memory to this display item
@@ -98,7 +98,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 
     public Memory getMemory() { return memory; }
     
-    public java.util.HashMap getMap() { return map; }
+    public java.util.HashMap<String,NamedIcon> getMap() { return map; }
 
     // display icons
 
@@ -106,12 +106,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         if (map == null) setMap(); // initialize if needed
     	map.put(keyValue, icon);
     	// drop size cache
-    	height = -1;
-    	width = -1;
+    	//height = -1;
+    	//width = -1;
         displayState(); // in case changed
     }
 
-    private int height = -1;
+    //private int height = -1;
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
@@ -120,7 +120,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
     }
     
-    private int width = -1;
+    //private int width = -1;
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
@@ -183,9 +183,9 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     // rotate all the icons, a real PITA
-                    java.util.Iterator iterator = map.values().iterator();
+                    java.util.Iterator<NamedIcon> iterator = map.values().iterator();
                     while (iterator.hasNext()) {
-                        NamedIcon next = (NamedIcon) iterator.next();
+                        NamedIcon next = iterator.next();
                         next.setRotation(next.getRotation()+1, ours);
                     }
                     displayState();
@@ -222,10 +222,10 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         if (selectable) {
             popup.add(new JSeparator());
     
-            java.util.Iterator iterator = map.keySet().iterator();
+            java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
                 String key = iterator.next().toString();
-                String value = ((NamedIcon)map.get(key)).getName();
+                //String value = map.get(key).getName();
                 popup.add(new AbstractAction(key) {
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
@@ -271,7 +271,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
                 } else log.warn("can't display current value of "+memory.getSystemName());
 		    } else {
 		        // map exists, use it
-			    NamedIcon newicon = (NamedIcon) map.get(key.toString());
+			    NamedIcon newicon = map.get(key.toString());
 			    if (newicon!=null) {
                     setText(null);
 				    super.setIcon(newicon);
@@ -299,8 +299,8 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     }
 
     public void updateSize() {
-    	height = -1;
-    	width = -1;
+    	//height = -1;
+    	//width = -1;
         super.updateSize();
     }
     

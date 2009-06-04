@@ -20,7 +20,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -60,12 +60,12 @@ public class LayoutMemoryIconXml implements XmlAdapter {
             element.setAttribute("defaulticon", p.getDefaultIcon().getName());
 
 		// include contents
-		java.util.HashMap map = p.getMap();
+		java.util.HashMap<String,NamedIcon> map = p.getMap();
 		if (map!=null) {
-		    java.util.Iterator iterator = map.keySet().iterator();
+		    java.util.Iterator<String> iterator = map.keySet().iterator();
     	    while (iterator.hasNext()) {
     		    String key = iterator.next().toString();
-    		    String value = ((NamedIcon)map.get(key)).getName();
+    		    String value = map.get(key).getName();
     		    Element e2 = new Element("memorystate");
     		    e2.setAttribute("value", key);
     		    e2.setAttribute("icon", value);
@@ -86,12 +86,12 @@ public class LayoutMemoryIconXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  LayoutEditor as an Object
      */
-    public void load(Element element, Object o) {
+    @SuppressWarnings("unchecked")
+	public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor)o;
-        String name;
         LayoutMemoryIcon l = new LayoutMemoryIcon();
-		p.memoryLabelList.add((Object)l);
+		p.memoryLabelList.add(l);
 
         l.setMemory(element.getAttribute("memory").getValue());
 
@@ -116,10 +116,10 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         }
         
         // get the icon pairs
-        List items = element.getChildren();
+        List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
-            Element item = (Element)items.get(i);
+            Element item = items.get(i);
             String icon = item.getAttribute("icon").getValue();
             String keyValue = item.getAttribute("value").getValue();
         	l.addKeyAndIcon(CatalogPane.getIconByName(icon), keyValue);
