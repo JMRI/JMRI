@@ -50,6 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.5.0
+; - Incorporated new routine to delete obsolete decoder definitions.
+; - At the moment, it is purely done by deleting specified files from the
+; - xml\decoders directory.
+; -------------------------------------------------------------------------
 ; - Version 0.1.4.0
 ; - For a post-2.5.2 upgrade, defaulted the backup of preference and roster
 ; - files to be selected and also made this optional. Current behaviour
@@ -113,7 +118,7 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.5.4"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.4.0"                     ; Installer version
+!define INST_VER  "0.1.5.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -132,6 +137,7 @@ Var JREINSTALLER ; holds the path to the location of the JRE installer
 Var OFFLINEINSTALL ; a flag determining if this is an offline install
 Var JREINSTALLCOUNT ; a counter holding times around the JRE install loop
 Var REMOVEOLDINSTALL ; a flag to determine if old installer to be removed
+Var REMOVEOLDJMRI.BACKUPONLY ; a flag to determine if we should back-up
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -337,9 +343,17 @@ SectionGroup "JMRI Core Files" SEC_CORE
   
   Section "XML files" SEC_XML
     SectionIn RO  ; This section always selected
-    ; -- XML files here
-    SetOutPath "$INSTDIR\xml"
-    File /a /r "${SRCDIR}\xml\*.*"
+    ; -- Check to see if we've been previously installed with the new installer
+    ; -- and if so, remove obsolete decoder definitions
+    StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" RemoveObsolete InstallXML
+    
+    RemoveObsolete:
+      Call RemoveObsoleteDecoderDefinitions
+
+    InstallXML:
+      ; -- XML files here
+      SetOutPath "$INSTDIR\xml"
+      File /a /r "${SRCDIR}\xml\*.*"
   SectionEnd ; SEC_XML
   
   Section "Web files" SEC_WEB
@@ -809,8 +823,6 @@ Function nsDialogRemoveOldJMRI
   Push $2
   Push $3
   
-  Var /GLOBAL REMOVEOLDJMRI.BACKUPONLY
-
   ; -- First check if JMRI has been installed (Current User first, then All Users)
   ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayName"
   StrCmp $0 "" 0 CheckOld
@@ -1175,4 +1187,22 @@ Function un.GetParent
     Pop $1
     Exch $0
 
+FunctionEnd
+
+Function RemoveObsoleteDecoderDefinitions
+; -------------------------------------------------------------------------
+; - Remove obsolete decoder definition files
+; - input:  none
+; - output: none
+; -------------------------------------------------------------------------
+  ; -- For now, doing this the 'quick & dirty way (TM)'
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_1Diesel.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_1EMD567.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_1EMD645.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_ALCO1.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_ALCO2.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_EMD567.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_EMD645.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_EMD710.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_FM1.xml"
 FunctionEnd
