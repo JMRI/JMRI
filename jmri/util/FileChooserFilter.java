@@ -13,7 +13,7 @@ import java.util.*;
  * Except in that case, files without extensions fail.
  *
  * @author Alex Shepherd
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
@@ -30,7 +30,7 @@ public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
     allowedExtensions.add( ext.toLowerCase() ) ;
   }
 
-  private String getFileExtension(File f) {
+  public static String getFileExtension(File f) {
     if(f != null) {
       String filename = f.getName();
       int i = filename.lastIndexOf( '.' );
