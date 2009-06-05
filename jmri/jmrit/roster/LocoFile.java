@@ -24,7 +24,7 @@ import org.jdom.ProcessingInstruction;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -79,11 +79,11 @@ class LocoFile extends XmlFile {
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 int cv = Integer.valueOf(name).intValue();
-                cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+                cvObject = (cvModel.allCvVector().elementAt(cv));
                 if (cvObject == null) {
                     log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
                     cvModel.addCV(name, false, false, false);
-                    cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+                    cvObject = (cvModel.allCvVector().elementAt(cv));
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
@@ -109,7 +109,7 @@ class LocoFile extends XmlFile {
                 String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
-                // cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                // cvObject = (iCvModel.allIndxCvVector().elementAt(i));
                 cvObject = iCvModel.getMatchingIndexedCV(name);
                 if (log.isDebugEnabled())
                     log.debug("Matched name "+name+" with CV "+cvObject);
@@ -118,7 +118,7 @@ class LocoFile extends XmlFile {
                     log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
                     log.debug("attempt to add "+i+" "+name+" "+piCv+" "+piVal+" "+siCv+" "+siVal+" "+iCv);
                     iCvModel.addIndxCV(i, name, piCv, piVal, siCv, siVal, iCv, false, false, false);
-                    cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                    cvObject = (iCvModel.allIndxCvVector().elementAt(i));
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 if ( cvObject.getInfoOnly() ) {
@@ -132,7 +132,7 @@ class LocoFile extends XmlFile {
         // ugly hack - set CV17 back to fromFile if present
         // this is here because setting CV17, then CV18 seems to set
         // CV17 to Edited.  This needs to be understood & fixed.
-        cvObject = (CvValue)(cvModel.allCvVector().elementAt(17));
+        cvObject = (cvModel.allCvVector().elementAt(17));
         if (cvObject!=null) cvObject.setState(CvValue.FROMFILE);
     }
 

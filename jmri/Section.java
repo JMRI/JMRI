@@ -98,7 +98,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -1699,7 +1699,7 @@ public class Section extends AbstractNamedBean
 		if (t==null) return null;
 		LayoutTurnout lt = null;
 		for (int i=0; i<panel.turnoutList.size(); i++) {
-			lt = (LayoutTurnout)panel.turnoutList.get(i);
+			lt = panel.turnoutList.get(i);
 			if (lt.getTurnout()==t) return lt;
 		}
 		return null;

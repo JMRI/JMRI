@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.28 $
+ * @version         $Revision: 1.29 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -177,7 +177,8 @@ public class ProgDebugger implements Programmer  {
         }
     }
 
-    protected void notifyPropertyChange(String name, int oldval, int newval) {
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized(this)

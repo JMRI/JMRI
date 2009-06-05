@@ -319,7 +319,8 @@ public class DccConsist implements Consist, ProgListener{
          * @param ErrorCode is the status code to send to the 
          *       consistListener objects
          */
-        protected void notifyConsistListeners(DccLocoAddress  LocoAddress, int ErrorCode){
+        @SuppressWarnings("unchecked")
+		protected void notifyConsistListeners(DccLocoAddress  LocoAddress, int ErrorCode){
  		// make a copy of the listener vector to  notify.
         	Vector<ConsistListener> v;
         	synchronized(this)
