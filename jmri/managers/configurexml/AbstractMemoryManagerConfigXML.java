@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -53,14 +53,13 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                             
                 // store common part
                 storeCommon(m, elem);
-                // store value
-                String value = " ";
+                // store value if non-null; null values omitted
                 Object obj = m.getValue();
                 if (obj != null)
                 {
-                    value = (String)obj;
+                    String value = (String)obj;
+                    elem.setAttribute("value", value);
                 }
-                elem.setAttribute("value", value);
 
                 log.debug("store Memory "+sname);
                 memories.addContent(elem);
