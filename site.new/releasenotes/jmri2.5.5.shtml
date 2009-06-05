@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.5 2009-06-04 16:08:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.6 2009-06-05 16:00:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -77,7 +77,7 @@ the rest of this paragraph.
 If you have modified or replaced the Tsunami definitions in 
 the program directory in a previous
 copy of JMRI, you should back up the modified files before installing
-JMRI 2.5.4. This version removes the old files, so if you have modifications,
+JMRI 2.5.5. This version removes the old files, so if you have modifications,
 you'll have to put them back manually afterwards.  In general, it's better
 to put local modifications in the preference directory, not the program directory,
 so you won't have to do this in the future.
@@ -132,13 +132,13 @@ are using a Linux computer.
 <p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.4.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.4.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.5.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.5.dmg?download</a>
 
 <p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.4.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.4.exe?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.5.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.5.exe?download</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.4.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.4.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.5.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.5.tgz?download</a>
 
 
 
@@ -189,6 +189,12 @@ Paul Bender improved how the connection configuration dialog works.
 
 <p>
 Peter Cressman fixed a problem with Conditional names.
+
+<p>
+In the JMRI 2.5 series, the values of Memory objects are stored in panel
+files and restored when the file is reloaded.  This version fixes a problem
+with replacing "empty" (null) values with a space character; in JMRI
+2.5.5, empty values are restored as empty, not as a space character.
 
 <!--#include virtual="/Footer" -->
 
