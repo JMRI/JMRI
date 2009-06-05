@@ -4,7 +4,6 @@ import jmri.configurexml.XmlAdapter;
 import jmri.Timebase;
 import jmri.InstanceManager;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 

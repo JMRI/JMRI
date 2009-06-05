@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -23,7 +23,7 @@ public class ConstantValue extends VariableValue {
     public ConstantValue(String name, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly,  boolean opsOnly,
                          int cvNum, String mask, int minVal, int maxVal,
-                         Vector v, JLabel status, String stdname) {
+                         Vector<CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -117,8 +117,8 @@ public class ConstantValue extends VariableValue {
         }
     }
 
-    List comboCBs = new ArrayList();
-    List comboRBs = new ArrayList();
+    List<JCheckBox> comboCBs = new ArrayList<JCheckBox>();
+    List<JRadioButton> comboRBs = new ArrayList<JRadioButton>();
 
     // implement an abstract member to set colors
     void setColor(Color c) {

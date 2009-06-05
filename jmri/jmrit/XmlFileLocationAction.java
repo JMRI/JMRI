@@ -7,7 +7,6 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-import java.awt.*;
 import javax.swing.*;
 
 /**
@@ -22,7 +21,7 @@ import javax.swing.*;
  *</ul>
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004, 2007
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class XmlFileLocationAction extends AbstractAction {
     

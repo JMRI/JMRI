@@ -11,7 +11,7 @@ import javax.swing.*;
  * User interface for sending a problem report via email
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ReportPanel extends JPanel {
 
@@ -94,7 +94,8 @@ public class ReportPanel extends JPanel {
 
     }
    
-    public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+    @SuppressWarnings("unchecked")
+	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.debug("start send");
         // create message
         MailMessage msg = new MailMessage(
@@ -117,9 +118,9 @@ public class ReportPanel extends JPanel {
         // add the log if OK
         if (checkLog.isSelected()) {
             // search for an appender that stores a file
-            for (java.util.Enumeration en = log.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
+            for (java.util.Enumeration<org.apache.log4j.Appender> en = log.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
                 // does this have a file?
-                org.apache.log4j.Appender a = (org.apache.log4j.Appender)en.nextElement();
+                org.apache.log4j.Appender a = en.nextElement();
                 // see if it's one of the ones we know
                 if (log.isDebugEnabled()) log.debug("check appender "+a);
                 try {

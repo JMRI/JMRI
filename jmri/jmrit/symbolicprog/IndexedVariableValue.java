@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -31,7 +31,7 @@ public class IndexedVariableValue extends VariableValue
     public IndexedVariableValue(int row, String name, String comment, String cvName,
                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                 int cvNum, String mask, int minVal, int maxVal,
-                                Vector v, JLabel status, String stdname) {
+                                Vector<CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         if (log.isDebugEnabled())
             log.debug("ctor with cvName "+cvName+", cvNum "+cvNum);
@@ -40,7 +40,7 @@ public class IndexedVariableValue extends VariableValue
         _minVal = minVal;
         _value = new JTextField("0", 3);
         _defaultColor = _value.getBackground();
-        CvValue cv = ((CvValue)_cvVector.elementAt(_row));
+        CvValue cv = (_cvVector.elementAt(_row));
         if (log.isDebugEnabled())
             log.debug("cv found as "+cv);        
         cv.addPropertyChangeListener(this);
@@ -66,7 +66,7 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public CvValue[] usesCVs() {
-        return new CvValue[]{(CvValue)_cvVector.elementAt(_row)};
+        return new CvValue[]{_cvVector.elementAt(_row)};
     }
 
     public Object rangeVal() {
@@ -92,7 +92,7 @@ public class IndexedVariableValue extends VariableValue
     void updatedTextField() {
         if (log.isDebugEnabled()) log.debug("enter updatedTextField");
         // called for new values - set the Indexed CV as needed
-        CvValue cv = (CvValue)_cvVector.elementAt(_row);
+        CvValue cv = _cvVector.elementAt(_row);
         if (log.isDebugEnabled())
             log.debug("updatedTextField refs CV "+cv);
         //
@@ -169,7 +169,7 @@ public class IndexedVariableValue extends VariableValue
                 b.setSnapToTicks(true);   // like it should, we fake it here
             }
             b.setSize(b.getWidth(),28);
-            Hashtable labelTable = new Hashtable();
+            Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
             labelTable.put( new Integer( 0 ), new JLabel("Off") );
             if ( _maxVal == 63 ) {   // this if for the QSI mute level, not very universal, needs work
                 labelTable.put( new Integer( _maxVal/2 ), new JLabel("25%") );
@@ -195,7 +195,7 @@ public class IndexedVariableValue extends VariableValue
         }
     }
 
-    ArrayList sliders = new ArrayList();
+    ArrayList<IndexedVarSlider> sliders = new ArrayList<IndexedVarSlider>();
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int WRITING_PI4R = 1;
@@ -251,23 +251,23 @@ public class IndexedVariableValue extends VariableValue
      * @param state
      */
     public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(_row)).setState(state);
+        (_cvVector.elementAt(_row)).setState(state);
     }
 
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly()) state = false;
-        ((CvValue)_cvVector.elementAt(_row)).setToRead(state);
+        (_cvVector.elementAt(_row)).setToRead(state);
     }
-    public boolean isToRead() { return ((CvValue)_cvVector.elementAt(_row)).isToRead(); }
+    public boolean isToRead() { return (_cvVector.elementAt(_row)).isToRead(); }
 
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) state = false;
-        ((CvValue)_cvVector.elementAt(_row)).setToWrite(state);
+        (_cvVector.elementAt(_row)).setToWrite(state);
     }
-    public boolean isToWrite() { return ((CvValue)_cvVector.elementAt(_row)).isToWrite(); }
+    public boolean isToWrite() { return (_cvVector.elementAt(_row)).isToWrite(); }
 
     public boolean isChanged() {
-        CvValue cv = ((CvValue)_cvVector.elementAt(_row));
+        CvValue cv = (_cvVector.elementAt(_row));
         return considerChanged(cv);
     }
 
@@ -284,7 +284,7 @@ public class IndexedVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         // lets skip the SI step if SI is not used
-        if (((CvValue)_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
             _progState = WRITING_PI4R;
         } else {
             _progState = WRITING_SI4R;
@@ -292,7 +292,7 @@ public class IndexedVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
         // to read any indexed CV we must write the PI
-        ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
+        (_cvVector.elementAt(_row)).writePI(_status);
     }
 
     public void writeAll() {
@@ -303,7 +303,7 @@ public class IndexedVariableValue extends VariableValue
         setToWrite(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         // lets skip the SI step if SI is not used
-        if (((CvValue)_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
             _progState = WRITING_PI4W;
         } else {
             _progState = WRITING_SI4W;
@@ -311,7 +311,7 @@ public class IndexedVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
         // to write any indexed CV we must write the PI
-        ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
+        (_cvVector.elementAt(_row)).writePI(_status);
     }
     
     public void confirmAll() {
@@ -319,7 +319,7 @@ public class IndexedVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         // lets skip the SI step if SI is not used
-        if (((CvValue)_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
             _progState = WRITING_PI4C;
         } else {
             _progState = WRITING_SI4C;
@@ -327,7 +327,7 @@ public class IndexedVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV confirm");
         // to read any indexed CV we must write the PI
-        ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
+        (_cvVector.elementAt(_row)).writePI(_status);
     }
 
     // handle incoming parameter notification
@@ -347,11 +347,11 @@ public class IndexedVariableValue extends VariableValue
 
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( ((CvValue)_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
+                    (_cvVector.elementAt(_row)).writePI(_status);
                     return;
                 }
                 // success, move on to next
@@ -363,7 +363,7 @@ public class IndexedVariableValue extends VariableValue
                 	_progState = WRITING_SI4C;
                 else
                 	_progState = WRITING_SI4W;
-                ((CvValue)_cvVector.elementAt(_row)).writeSI(_status);
+                (_cvVector.elementAt(_row)).writeSI(_status);
                 return;
             case WRITING_SI4R:  // have written the SI if needed, now read or write CV
             case WRITING_SI4C:
@@ -372,24 +372,24 @@ public class IndexedVariableValue extends VariableValue
 
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( ((CvValue)_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    ((CvValue)_cvVector.elementAt(_row)).writeSI(_status);
+                    (_cvVector.elementAt(_row)).writeSI(_status);
                     return;
                 }
                 // success, move on to next
                 retries = 0;
                 if (_progState == WRITING_SI4R ) {
                     _progState = READING_CV;
-                    ((CvValue)_cvVector.elementAt(_row)).readIcV(_status);
+                    (_cvVector.elementAt(_row)).readIcV(_status);
                 } else if (_progState == WRITING_SI4C ) {
                     _progState = COMPARE_CV;
-                    ((CvValue)_cvVector.elementAt(_row)).confirmIcV(_status);
+                    (_cvVector.elementAt(_row)).confirmIcV(_status);
                  } else {
                     _progState = WRITING_CV;
-                    ((CvValue)_cvVector.elementAt(_row)).writeIcV(_status);
+                    (_cvVector.elementAt(_row)).writeIcV(_status);
                 }
                 return;
             case READING_CV:  // now done with the read request
@@ -397,11 +397,11 @@ public class IndexedVariableValue extends VariableValue
 
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( ((CvValue)_cvVector.elementAt(_row)).getState() != CvValue.READ) ) {
+                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.READ) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    ((CvValue)_cvVector.elementAt(_row)).readIcV(_status);
+                    (_cvVector.elementAt(_row)).readIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -414,14 +414,14 @@ public class IndexedVariableValue extends VariableValue
 
                 // check for success SAME or DIFF?
                 if ((retries < RETRY_MAX)
-						&& (((CvValue) _cvVector.elementAt(_row))
+						&& (( _cvVector.elementAt(_row))
 								.getState() != CvValue.SAME)
-						&& (((CvValue) _cvVector.elementAt(_row))
+						&& (( _cvVector.elementAt(_row))
 								.getState() != CvValue.DIFF)) {
 					// need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    ((CvValue)_cvVector.elementAt(_row)).confirmIcV(_status);
+                    (_cvVector.elementAt(_row)).confirmIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -435,11 +435,11 @@ public class IndexedVariableValue extends VariableValue
 
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( ((CvValue)_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    ((CvValue)_cvVector.elementAt(_row)).writeIcV(_status);
+                    (_cvVector.elementAt(_row)).writeIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -455,12 +455,12 @@ public class IndexedVariableValue extends VariableValue
             }
         }
         else if (e.getPropertyName().equals("State")) {
-            CvValue cv = (CvValue)_cvVector.elementAt(_row);
+            CvValue cv = _cvVector.elementAt(_row);
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv = (CvValue)_cvVector.elementAt(_row);
+            CvValue cv = _cvVector.elementAt(_row);
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
@@ -475,7 +475,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.14 $
+     * @version     $Revision: 1.15 $
      */
     public class VarTextField extends JTextField {
 
@@ -533,7 +533,7 @@ public class IndexedVariableValue extends VariableValue
            _value.removePropertyChangeListener(this);
            _value = null;
        }
-       ((CvValue)_cvVector.elementAt(_row)).removePropertyChangeListener(this);
+       (_cvVector.elementAt(_row)).removePropertyChangeListener(this);
    }
 
    // initialize logging

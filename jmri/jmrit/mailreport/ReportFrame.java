@@ -2,17 +2,13 @@
 
 package jmri.jmrit.mailreport;
 
-import jmri.*;
-import jmri.util.*;
-import java.awt.*;
-
 import javax.swing.*;
 
 /**
  * Frame for sending a problem report
  * 
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ReportFrame extends jmri.util.JmriJFrame {
 

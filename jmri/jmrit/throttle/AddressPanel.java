@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -35,7 +35,7 @@ public class AddressPanel extends JInternalFrame {
 	private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
 	private DccLocoAddress currentAddress;
 	private DccLocoAddress consistAddress;
-	private ArrayList listeners;
+	private ArrayList<AddressListener> listeners;
 
 	private JButton releaseButton;
 	private JButton dispatchButton;
@@ -68,7 +68,7 @@ public class AddressPanel extends JInternalFrame {
 	 */
 	public void addAddressListener(AddressListener l) {
 		if (listeners == null) {
-			listeners = new ArrayList(2);
+			listeners = new ArrayList<AddressListener>(2);
 		}
 		if (!listeners.contains(l)) {
 			listeners.add(l);
@@ -304,7 +304,7 @@ public class AddressPanel extends JInternalFrame {
 		// send notification of new address
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {
-				AddressListener l = (AddressListener) listeners.get(i);
+				AddressListener l = listeners.get(i);
 				if (log.isDebugEnabled()) {
 					log.debug("Notify address listener " + l);
 				}
@@ -373,7 +373,7 @@ public class AddressPanel extends JInternalFrame {
 	private void notifyListenersOfThrottleRelease() {
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {
-				AddressListener l = (AddressListener) listeners.get(i);
+				AddressListener l = listeners.get(i);
 				if (log.isDebugEnabled()) {
 					log.debug("Notify address listener " + l);
 				}
@@ -395,9 +395,9 @@ public class AddressPanel extends JInternalFrame {
 	 */
 	public Element getXml() {
 		Element me = new Element("AddressPanel");
-		Element window = new Element("window");
+		//Element window = new Element("window");
 		WindowPreferences wp = new WindowPreferences();
-		java.util.ArrayList children = new java.util.ArrayList(1);
+		java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
 		children.add(wp.getPreferences(this));
 		children.add((new jmri.configurexml.LocoAddressXml())
 				.store(addrSelector.getAddress()));
@@ -414,6 +414,7 @@ public class AddressPanel extends JInternalFrame {
 	 * @param e
 	 *            The Element containing prefs as defined in DTD/throttle-config
 	 */
+	@SuppressWarnings("unchecked")
 	public void setXml(Element e) {
 		Element window = e.getChild("window");
 		WindowPreferences wp = new WindowPreferences();
@@ -428,16 +429,16 @@ public class AddressPanel extends JInternalFrame {
 			changeOfAddress();
 		}
 		
-		List elementList = e.getChildren("locoaddress");
+		List<Element> elementList = e.getChildren("locoaddress");
 		if (elementList.size() > 0){
 			log.debug("found " + elementList.size() +" locoaddress");
 			addrSelector.setAddress((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
-					.getAddress((Element)elementList.get(0)));
+					.getAddress(elementList.get(0)));
 			consistAddress = null;
 			// if there are two locoaddress, the second is the consist address
 			if (elementList.size() > 1){
 				consistAddress = ((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
-						.getAddress((Element)elementList.get(1)));
+						.getAddress(elementList.get(1)));
 			}
 			changeOfAddress();
 		}

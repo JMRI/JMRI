@@ -14,7 +14,6 @@ import javax.swing.WindowConstants;
 
 import org.jdom.Element;
 
-import javax.swing.JDesktopPane;
 import jmri.jmrit.roster.RosterEntry;
 
 
@@ -390,7 +389,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.44 $
+	 * @version $Revision: 1.45 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -535,10 +534,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     public Element getXml()
     {
         Element me = new Element("FunctionPanel");
-        Element window = new Element("window");
+        //Element window = new Element("window");
         WindowPreferences wp = new WindowPreferences();
-        java.util.ArrayList children =
-                new java.util.ArrayList(1);
+        java.util.ArrayList<Element> children =
+                new java.util.ArrayList<Element>(1);
         children.add(wp.getPreferences(this));
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
@@ -556,20 +555,21 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
      * </ul>
      * @param e The Element for this object.
      */
-    public void setXml(Element e)
+    @SuppressWarnings("unchecked")
+	public void setXml(Element e)
     {
         Element window = e.getChild("window");
         WindowPreferences wp = new WindowPreferences();
         wp.setPreferences(this, window);
 
-        java.util.List buttonElements =
+        java.util.List<Element> buttonElements =
                 e.getChildren("FunctionButton");
 
         int i = 0;
-        for (java.util.Iterator iter =
+        for (java.util.Iterator<Element> iter =
              buttonElements.iterator(); iter.hasNext();)
         {
-            Element buttonElement = (Element)iter.next();
+            Element buttonElement = iter.next();
             functionButton[i++].setXml(buttonElement);
         }
     }

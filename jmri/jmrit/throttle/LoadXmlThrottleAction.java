@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -18,7 +17,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class LoadXmlThrottleAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle
@@ -91,15 +90,16 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 *
 	 * @param  f  The XML file containing throttles.
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean loadThrottles(java.io.File f) throws java.io.IOException {
 		try {
 			ThrottlePrefs prefs = new ThrottlePrefs();
 			Element root = prefs.rootFromFile(f);
-			List throttles = root.getChildren("ThrottleFrame");
-			for (java.util.Iterator i = throttles.iterator(); i.hasNext();) {
+			List<Element> throttles = root.getChildren("ThrottleFrame");
+			for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
 				ThrottleFrame tf = ThrottleFrameManager.instance()
 						.createThrottleFrame();
-				tf.setXml((Element) i.next());
+				tf.setXml(i.next());
 				tf.setVisible(true);
 			}
 
@@ -114,7 +114,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.19 $
+	 * @version $Revision: 1.20 $
 	 */
 	class ThrottlePrefs extends XmlFile {
 

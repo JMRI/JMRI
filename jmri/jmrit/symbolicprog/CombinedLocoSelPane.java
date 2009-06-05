@@ -15,7 +15,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -51,7 +50,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -195,7 +194,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Initialize the GUI
      */
     protected void init() {
-        JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel pane2a = layoutRosterSelection();
@@ -305,15 +303,15 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // raise the button again
         idloco.setSelected(false);
         // locate that loco
-        List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
                                                 null, null, null, null);
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
-            RosterEntry r = (RosterEntry)l.get(0);
+            RosterEntry r = l.get(0);
             String id = r.getId();
             if (log.isDebugEnabled()) log.debug("Loco id is "+id);
             for (int i = 0; i<locoBox.getItemCount(); i++) {
-                if (id.equals((String)locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
+                if (id.equals(locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
             }
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");
@@ -334,7 +332,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // raise the button again
         iddecoder.setSelected(false);
         // locate a decoder like that.
-        List temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+        List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
         if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.size()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         if (temp.size() > 0) {
@@ -353,7 +351,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     /**
      * Decoder identify has matched one or more specific types
      */
-    void updateForDecoderTypeID(List pList) {
+    void updateForDecoderTypeID(List<DecoderFile> pList) {
         decoderBox.setModel(DecoderIndexFile.jComboBoxModelFromList(pList));
         decoderBox.insertItemAt("<from locomotive settings>",0);
         decoderBox.setSelectedIndex(1);

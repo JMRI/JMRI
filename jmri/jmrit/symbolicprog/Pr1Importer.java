@@ -27,7 +27,7 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
@@ -56,7 +56,7 @@ public class Pr1Importer {
     // Have a look at the values and see if there are any entries with values
     // greater out of the range 0..255. If they are found then also assume PR1WIN
     else {
-      Enumeration cvKeys = m_CVs.keys();
+      Enumeration<Object> cvKeys = m_CVs.keys();
 
       while( cvKeys.hasMoreElements() ) {
         String cvKey = (String)cvKeys.nextElement() ;
@@ -75,7 +75,7 @@ public class Pr1Importer {
   }
 
   public void setCvTable( CvTableModel pCvTable ){
-    Enumeration keyIterator = m_CVs.keys();
+    Enumeration<Object> keyIterator = m_CVs.keys();
     while( keyIterator.hasMoreElements()){
       String key = (String)keyIterator.nextElement() ;
       if( key.startsWith( CV_PREFIX ) )

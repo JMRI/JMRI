@@ -10,7 +10,7 @@ import java.util.Iterator;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.13 $
+ * @version    $Revision: 1.14 $
  */
 public class ThrottleFrameManager
 {
@@ -23,7 +23,7 @@ public class ThrottleFrameManager
 	private int activeFrame;
 	private ThrottleCyclingKeyListener throttleCycler;
 
-	private ArrayList throttleFrames;
+	private ArrayList<ThrottleFrame> throttleFrames;
 	private FunctionButtonPropertyEditor functionButtonEditor;
 	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 
@@ -34,7 +34,7 @@ public class ThrottleFrameManager
 	public ThrottleFrameManager()
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
-		throttleFrames = new ArrayList(0);
+		throttleFrames = new ArrayList<ThrottleFrame>(0);
 	}
 
 	/**
@@ -84,12 +84,12 @@ public class ThrottleFrameManager
 
 	public void requestAllThrottleFramesDestroyed()
 	{
-		for (Iterator i = throttleFrames.iterator(); i.hasNext();)
+		for (Iterator<ThrottleFrame> i = throttleFrames.iterator(); i.hasNext();)
 		{
-			ThrottleFrame frame = (ThrottleFrame)i.next();
+			ThrottleFrame frame = i.next();
 			destroyThrottleFrame(frame);
 		}
-		throttleFrames = new ArrayList(0);
+		throttleFrames = new ArrayList<ThrottleFrame>(0);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ThrottleFrameManager
 	 *
 	 * @return    The Iterator on the list of ThrottleFrames.
 	 */
-	public Iterator getThrottleFrames()
+	public Iterator<ThrottleFrame> getThrottleFrames()
 	{
 		return throttleFrames.iterator();
 	}
@@ -145,7 +145,7 @@ public class ThrottleFrameManager
 	private void requestFocusForNextFrame()
 	{
 		activeFrame = (activeFrame + 1) % throttleFrames.size();
-		ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
+		ThrottleFrame tf = throttleFrames.get(activeFrame);
 		tf.requestFocus();
 	}
 
@@ -156,7 +156,7 @@ public class ThrottleFrameManager
 		{
 			activeFrame = throttleFrames.size() - 1;
 		}
-		ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
+		ThrottleFrame tf = throttleFrames.get(activeFrame);
 		tf.requestFocus();
 	}
 

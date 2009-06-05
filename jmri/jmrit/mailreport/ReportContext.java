@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class ReportContext {
 
@@ -124,7 +124,7 @@ public class ReportContext {
         }
         
         // look at context
-        Rectangle virtualBounds = new Rectangle();
+        //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             addString("Environment max bounds: "+ge.getMaximumWindowBounds());

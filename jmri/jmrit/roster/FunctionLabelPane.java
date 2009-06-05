@@ -6,14 +6,12 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;

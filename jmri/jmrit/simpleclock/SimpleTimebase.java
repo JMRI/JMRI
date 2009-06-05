@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -56,7 +56,7 @@ public class SimpleTimebase implements Timebase {
     	if (pauseTime!=null) return new Date(pauseTime.getTime()); // to ensure not modified outside
     	// clock running
     	long elapsedMSec = (new Date()).getTime() - startAtTime.getTime();
-    	long nowMSec = setTimeValue.getTime()+(long)(mFactor*(double)elapsedMSec);
+    	long nowMSec = setTimeValue.getTime()+(long)(mFactor*elapsedMSec);
     	return new Date(nowMSec);
     }    	
     public void setTime(Date d) {
@@ -420,6 +420,7 @@ public class SimpleTimebase implements Timebase {
 	private Date setTimeValue;
 	private Date pauseTime;   // null value indicates clock is running
 	private Sensor clockSensor = null;   // active when clock is running, inactive when stopped
+	@SuppressWarnings("unused")
 	private java.beans.PropertyChangeListener clockSensorListener = null;
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master

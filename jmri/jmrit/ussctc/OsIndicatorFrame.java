@@ -2,10 +2,6 @@
 
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-import jmri.util.*;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -13,7 +9,7 @@ import javax.swing.*;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 

@@ -14,21 +14,21 @@ import jmri.implementation.DefaultRoute;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SensorGroup {
 
     /**
      * Nobody can build an anonymous object
      */
-    private SensorGroup() {
-    }
+    //private SensorGroup() {
+    //}
 
     private final static String namePrefix  = "SENSOR GROUP:";  // should be upper case
     private final static String nameDivider = ":";
         
     String name;
-    ArrayList sensorList;
+    ArrayList<String> sensorList;
     
     /**
      * Create one, looking up an existing one if present
@@ -38,12 +38,12 @@ public class SensorGroup {
         // find suitable 
         RouteManager rm = InstanceManager.routeManagerInstance();
         String group = name.toUpperCase();
-        List l = rm.getSystemNameList();
+        List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix+group+nameDivider).toUpperCase();
         
-        sensorList = new ArrayList();
+        sensorList = new ArrayList<String>();
         for (int i = 0; i<l.size(); i++) {
-            String routeName = (String) l.get(i);
+            String routeName = l.get(i);
             if (routeName.startsWith(prefix)) {
                 String sensor = routeName.substring(prefix.length());
                 // remember that sensor
@@ -58,14 +58,14 @@ public class SensorGroup {
         String group = name.toUpperCase();
         
         // remove the old routes
-        List l = rm.getSystemNameList();     
+        List<String> l = rm.getSystemNameList();     
         String prefix = (namePrefix+group+nameDivider).toUpperCase();
         
         for (int i = 0; i<l.size(); i++) {
-            String routeName = (String) l.get(i);
+            String routeName = l.get(i);
             if (routeName.startsWith(prefix)) {
                 // OK, kill this one
-                Route r = rm.getBySystemName((String)l.get(i));
+                Route r = rm.getBySystemName(l.get(i));
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }
@@ -73,14 +73,14 @@ public class SensorGroup {
 
         // add the new routes
         for (int i = 0; i<sensorList.size(); i++) {
-            String sensor = (String) sensorList.get(i);
+            String sensor = sensorList.get(i);
             String routeName = namePrefix+group+nameDivider+sensor;
             Route r = new DefaultRoute(routeName);
             // add the control sensor
             r.addSensorToRoute(sensor, Route.ONACTIVE);
             // add the output sensors
             for (int j=0; j<sensorList.size(); j++) {
-                String outSensor = (String) sensorList.get(j);
+                String outSensor = sensorList.get(j);
                 int mode = Sensor.INACTIVE;
                 if (i==j) mode = Sensor.ACTIVE;
                 r.addOutputSensor(outSensor, mode);

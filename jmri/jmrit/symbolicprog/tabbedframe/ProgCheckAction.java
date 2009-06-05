@@ -16,7 +16,7 @@ import java.util.regex.*;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -55,11 +55,12 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Find all of the display elements descending from this element
      */
-    static protected void expandElement(Element el, List<Element> list) {
+    @SuppressWarnings("unchecked")
+	static protected void expandElement(Element el, List<Element> list) {
         // get the leaves here
-        list.addAll((java.util.Collection<Element>)el.getChildren("display"));
+        list.addAll(el.getChildren("display"));
         
-        List<Element> children = (List<Element>)el.getChildren();
+        List<Element> children = el.getChildren();
         for (int i=0; i<children.size(); i++)
             expandElement(children.get(i), list);
     }
@@ -158,7 +159,7 @@ public class ProgCheckAction extends AbstractAction {
                 if (functionMapName(s)) continue;
                 boolean found = false;
                 for (int i=0; i<varList.size(); i++) {
-                    Element varElement = (Element)(varList.get(i));
+                    Element varElement = varList.get(i);
                     // for each variable, see if can find in names file
                     Attribute nameAttr = varElement.getAttribute("item");
                     String name = null;

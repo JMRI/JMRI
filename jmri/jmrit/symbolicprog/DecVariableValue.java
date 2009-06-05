@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -31,7 +31,7 @@ public class DecVariableValue extends VariableValue
     public DecVariableValue(String name, String comment, String cvName,
                             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                             int cvNum, String mask, int minVal, int maxVal,
-                            Vector v, JLabel status, String stdname) {
+                            Vector<CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -41,7 +41,7 @@ public class DecVariableValue extends VariableValue
         // connect to the JTextField value, cv
         _value.addActionListener(this);
         _value.addFocusListener(this);
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv = _cvVector.elementAt(getCvNum());
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
     }
@@ -55,7 +55,7 @@ public class DecVariableValue extends VariableValue
     int _minVal;
 
     public CvValue[] usesCVs() {
-        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+        return new CvValue[]{_cvVector.elementAt(getCvNum())};
     }
 
     public Object rangeVal() {
@@ -87,7 +87,7 @@ public class DecVariableValue extends VariableValue
     void updatedTextField() {
         if (log.isDebugEnabled()) log.debug("updatedTextField");
         // called for new values - set the CV as needed
-        CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+        CvValue cv = _cvVector.elementAt(getCvNum());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal;
@@ -167,7 +167,7 @@ public class DecVariableValue extends VariableValue
         }
     }
 
-    ArrayList sliders = new ArrayList();
+    ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
 
     /**
      * Set a new value, including notification as needed.  This does the
@@ -202,11 +202,11 @@ public class DecVariableValue extends VariableValue
      * @param state
      */
     public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        _cvVector.elementAt(getCvNum()).setState(state);
     }
 
     public boolean isChanged() {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv = _cvVector.elementAt(getCvNum());
         if (log.isDebugEnabled()) log.debug("isChanged for "+getCvNum()+" state "+cv.getState());
         return considerChanged(cv);
     }
@@ -223,7 +223,7 @@ public class DecVariableValue extends VariableValue
         setToRead(false);
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
-        ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
+        _cvVector.elementAt(getCvNum()).read(_status);
     }
 
     public void writeAll() {
@@ -232,7 +232,7 @@ public class DecVariableValue extends VariableValue
             log.error("unexpected write operation when readOnly is set");
         }
         setBusy(true);  // will be reset when value changes
-        ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
+        _cvVector.elementAt(getCvNum()).write(_status);
     }
 
     // handle incoming parameter notification
@@ -247,14 +247,14 @@ public class DecVariableValue extends VariableValue
             }
         }
         else if (e.getPropertyName().equals("State")) {
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            CvValue cv = _cvVector.elementAt(getCvNum());
             if (cv.getState() == STORED) setToWrite(false);
             if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            CvValue cv = _cvVector.elementAt(getCvNum());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
@@ -323,7 +323,7 @@ public class DecVariableValue extends VariableValue
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
-        ((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+        _cvVector.elementAt(getCvNum()).removePropertyChangeListener(this);
 
         _value = null;
         // do something about the VarTextField

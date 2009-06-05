@@ -25,7 +25,6 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +51,7 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.65 $
+ * @version    $Revision: 1.66 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -67,12 +66,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JRadioButton SpeedStep28Button;
     private JRadioButton SpeedStep27Button;
     private JRadioButton SpeedStep14Button;
-    private GridBagConstraints sliderConstraints;
+    //private GridBagConstraints sliderConstraints;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
     private JButton idleButton;
     private JPanel buttonPanel;
-    private int speedIncrement;
+    //private int speedIncrement;
     private boolean internalAdjust = false;
     
     private JPopupMenu propertiesPopup;
@@ -286,7 +285,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setMaximum(MAX_SPEED);
         speedSlider.setValue((int)(oldSpeed * MAX_SPEED));
         speedSlider.setMajorTickSpacing(MAX_SPEED/2);
-        java.util.Hashtable labelTable = new java.util.Hashtable();
+        java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
         labelTable.put(new Integer(0), new JLabel(rb.getString("LabelStop")));
@@ -328,7 +327,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *	SLIDERDISPLAY  = use speed slider display
      *      STEPDISPLAY = use speed step display
      */
-    public void setSpeedController(int displaySlider) {
+    @SuppressWarnings("fallthrough")
+	public void setSpeedController(int displaySlider) {
         switch(displaySlider) {
         case STEPDISPLAY: {
             if (speedSpinner!=null) {
@@ -384,7 +384,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public void setSpeedValues(int speedIncrement, int speed)
     {
-        this.speedIncrement = speedIncrement;
+        //this.speedIncrement = speedIncrement;
         speedSlider.setValue(speed * speedIncrement);
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)
@@ -428,7 +428,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedControlPanel.add(sliderPanel);
         speedSlider.setOrientation(JSlider.VERTICAL);
         speedSlider.setMajorTickSpacing(MAX_SPEED/2);
-        java.util.Hashtable labelTable = new java.util.Hashtable();
+        java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
         labelTable.put(new Integer(0), new JLabel(rb.getString("LabelStop")));
@@ -711,7 +711,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         if(speedvalue.intValue()<((Integer)speedSpinnerModel.getMaximum()).intValue())
                             speedSpinner.setValue(speedvalue);
                         else
-                            speedSpinner.setValue(((Integer)speedSpinnerModel.getMaximum()));
+                            speedSpinner.setValue(speedSpinnerModel.getMaximum());
                     }
             }
     }
@@ -746,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         if(speedvalue.intValue()>((Integer)speedSpinnerModel.getMinimum()).intValue())
                             speedSpinner.setValue(speedvalue);
                         else
-                            speedSpinner.setValue(((Integer)speedSpinnerModel.getMinimum()));
+                            speedSpinner.setValue(speedSpinnerModel.getMinimum());
                     }
             }
     }
@@ -755,7 +755,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.65 $
+     * @version    $Revision: 1.66 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -942,10 +942,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         me.setAttribute("speedMode",String.valueOf(this._speedStepMode));
         me.setAttribute("trackSlider", String.valueOf(this.trackSlider));
         me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
-        Element window = new Element("window");
+        //Element window = new Element("window");
         WindowPreferences wp = new WindowPreferences();
-        java.util.ArrayList children =
-            new java.util.ArrayList(1);
+        java.util.ArrayList<Element> children =
+            new java.util.ArrayList<Element>(1);
         children.add(wp.getPreferences(this));
         me.setContent(children);
         return me;

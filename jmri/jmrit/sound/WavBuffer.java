@@ -1,16 +1,11 @@
 package jmri.jmrit.sound;
 
-import java.applet.AudioClip;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import javax.sound.sampled.*;
 
 /**
  * Wrap a byte array to provide WAV file functionality
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class WavBuffer {

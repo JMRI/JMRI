@@ -14,7 +14,7 @@ import jmri.implementation.DefaultConditionalAction;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class OsIndicator implements Constants {
 
@@ -22,7 +22,7 @@ public class OsIndicator implements Constants {
     /**
      * Nobody can build anonymous object
      */
-    private OsIndicator() {}
+    //private OsIndicator() {}
     
     
     /**

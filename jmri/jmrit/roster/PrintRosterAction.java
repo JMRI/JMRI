@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
@@ -57,11 +57,11 @@ public class PrintRosterAction  extends AbstractAction {
 
         // Loop through the Roster, printing as needed
         Roster r = Roster.instance();
-        List l = r.matchingList(null, null, null, null, null, null, null); // take all
+        List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         int i=-1;
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {
-            ((RosterEntry)l.get(i)).printEntry(writer);
+            l.get(i).printEntry(writer);
         }
 
         // and force completion of the printing

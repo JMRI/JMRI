@@ -10,13 +10,9 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 
 import java.util.List;
-import java.util.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
@@ -28,7 +24,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -48,7 +44,8 @@ class LocoFile extends XmlFile {
      *                 the CVs from the loco Element appended.  It is
      *                 intended, but not required, that this be empty.
      */
-    public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel){
+    @SuppressWarnings("unchecked")
+	public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel){
         CvValue cvObject;
         // get the CVs and load
         Element values = loco.getChild("values");
@@ -57,28 +54,28 @@ class LocoFile extends XmlFile {
         // locomotive element, instead of in a nested values element
         if (values == null) {
             // check for non-nested content, in which case use loco element
-            List elementList = loco.getChildren("CVvalue");
+            List<Element> elementList = loco.getChildren("CVvalue");
             if (elementList != null) values = loco;
         }
         
         if (values != null) {
             // get the CV values and load
-            List elementList = values.getChildren("CVvalue");
+            List<Element> elementList = values.getChildren("CVvalue");
             if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
 
             for (int i=0; i<elementList.size(); i++) {
                 // locate the row
-                if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                if ( ((elementList.get(i))).getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
                     break;
                 }
-                if ( ((Element)(elementList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                if ( ((elementList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
                     break;
                 }
 
-                String name = ((Element)(elementList.get(i))).getAttribute("name").getValue();
-                String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
+                String name = ((elementList.get(i))).getAttribute("name").getValue();
+                String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 int cv = Integer.valueOf(name).intValue();
@@ -94,22 +91,22 @@ class LocoFile extends XmlFile {
             elementList = values.getChildren("indexedCVvalue");
             if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" indexedCVvalues");
             for (int i=0; i<elementList.size(); i++) {
-                if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                if ( ((elementList.get(i))).getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
                     break;
                 }
-                if ( ((Element)(elementList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                if ( ((elementList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
                     break;
                 }
 
-                String name  = ((Element)(elementList.get(i))).getAttribute("name").getValue();
-                int piCv  = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("piCv").getValue()).intValue();
-                int piVal = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("piVal").getValue()).intValue();
-                int siCv  = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("siCv").getValue()).intValue();
-                int siVal = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("siVal").getValue()).intValue();
-                int iCv   = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("iCv").getValue()).intValue();
-                String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
+                String name  = ((elementList.get(i))).getAttribute("name").getValue();
+                int piCv  = Integer.valueOf(((elementList.get(i))).getAttribute("piCv").getValue()).intValue();
+                int piVal = Integer.valueOf(((elementList.get(i))).getAttribute("piVal").getValue()).intValue();
+                int siCv  = Integer.valueOf(((elementList.get(i))).getAttribute("siCv").getValue()).intValue();
+                int siVal = Integer.valueOf(((elementList.get(i))).getAttribute("siVal").getValue()).intValue();
+                int iCv   = Integer.valueOf(((elementList.get(i))).getAttribute("iCv").getValue()).intValue();
+                String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 // cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
@@ -161,7 +158,7 @@ class LocoFile extends XmlFile {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map m = new java.util.HashMap();
+            java.util.Map<String,String> m = new java.util.HashMap<String,String>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation+"locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -229,11 +226,11 @@ class LocoFile extends XmlFile {
             for (int i = 0; i < iCvModel.getRowCount(); i++) {
                 values.addContent(new Element("indexedCVvalue")
                                   .setAttribute("name", iCvModel.getName(i))
-                                  .setAttribute("piCv", ""+((CvValue)iCvModel.getCvByRow(i)).piCv())
-                                  .setAttribute("piVal", ""+((CvValue)iCvModel.getCvByRow(i)).piVal())
-                                  .setAttribute("siCv", ""+((CvValue)iCvModel.getCvByRow(i)).siCv())
-                                  .setAttribute("siVal", ""+((CvValue)iCvModel.getCvByRow(i)).siVal())
-                                  .setAttribute("iCv", ""+((CvValue)iCvModel.getCvByRow(i)).iCv())
+                                  .setAttribute("piCv", ""+(iCvModel.getCvByRow(i)).piCv())
+                                  .setAttribute("piVal", ""+(iCvModel.getCvByRow(i)).piVal())
+                                  .setAttribute("siCv", ""+(iCvModel.getCvByRow(i)).siCv())
+                                  .setAttribute("siVal", ""+(iCvModel.getCvByRow(i)).siVal())
+                                  .setAttribute("iCv", ""+(iCvModel.getCvByRow(i)).iCv())
                                   .setAttribute("value", iCvModel.getValString(i))
                     );
             }

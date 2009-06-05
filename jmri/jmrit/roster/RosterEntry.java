@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -224,12 +224,13 @@ public class RosterEntry {
      * Loads function names from a 
      * JDOM element.  Does not change values that are already present!
      */
-    public void loadFunctions(Element e3) {
+    @SuppressWarnings("unchecked")
+	public void loadFunctions(Element e3) {
         if (e3 != null)  {
             // load function names
-            java.util.List l = e3.getChildren("functionlabel");
+            java.util.List<Element> l = e3.getChildren("functionlabel");
             for (int i = 0; i < l.size(); i++) {
-                Element fn = (Element)l.get(i);
+                Element fn = l.get(i);
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
                 String val = fn.getText();
@@ -476,19 +477,19 @@ public class RosterEntry {
             //method and print it
             if (!(_comment.equals("")))
             {
-              Vector commentVector = wrapComment(_comment, textSpace);
+              Vector<String> commentVector = wrapComment(_comment, textSpace);
 
               //Now have a vector of text pieces and line feeds that will all
               //fit in the allowed space. Print each piece, prefixing the first one
               //with the label and indenting any remainding.
               int k = 0;
               w.write(newLine,0,1);
-              s = "   Comment:           " + (String)commentVector.elementAt(k);
+              s = "   Comment:           " + commentVector.elementAt(k);
               w.write(s,0,s.length());
               k++;
               while (k < commentVector.size())
               {
-                String token = (String) commentVector.elementAt(k);
+                String token = commentVector.elementAt(k);
                 if (!token.equals("\n")) s = indent + token;
                 else s = token;
                 w.write(s,0,s.length());
@@ -512,19 +513,19 @@ public class RosterEntry {
             //If there is a decoderComment field, need to wrap it
             if (!(_decoderComment.equals("")))
             {
-              Vector decoderCommentVector = wrapComment(_decoderComment, textSpace);
+              Vector<String> decoderCommentVector = wrapComment(_decoderComment, textSpace);
 
                 //Now have a vector of text pieces and line feeds that will all
                 //fit in the allowed space. Print each piece, prefixing the first one
                 //with the label and indenting the remainder.
                 int k = 0;
                 w.write(newLine,0,1);
-                s = "   Decoder Comment:   " + (String)decoderCommentVector.elementAt(k);
+                s = "   Decoder Comment:   " + decoderCommentVector.elementAt(k);
                 w.write(s,0,s.length());
                 k++;
                 while (k < decoderCommentVector.size())
                 {
-                  String token = (String) decoderCommentVector.elementAt(k);
+                  String token = decoderCommentVector.elementAt(k);
                   if (!token.equals("\n")) s = indent + token;
                   else s = token;
                   w.write(s,0,s.length());
@@ -544,12 +545,12 @@ public class RosterEntry {
      * textSpace is the width of the space to print for wrapping purposes.
      * The comment is wrapped on a word wrap basis
      */
-    public Vector wrapComment(String comment, int textSpace)
+    public Vector<String> wrapComment(String comment, int textSpace)
     {
       //Tokenize the string using \n to separate the text on mulitple lines
       //and create a vector to hold the processed text pieces
       StringTokenizer commentTokens = new StringTokenizer (comment,"\n",true);
-      Vector textVector = new Vector(commentTokens.countTokens());
+      Vector<String> textVector = new Vector<String>(commentTokens.countTokens());
       String newLine = "\n";
       while (commentTokens.hasMoreTokens())
       {

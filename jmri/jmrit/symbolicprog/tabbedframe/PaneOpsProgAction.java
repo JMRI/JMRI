@@ -5,8 +5,6 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.KnownLocoSelPane;
 import jmri.util.JmriJFrame;
@@ -34,7 +32,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -79,7 +77,6 @@ public class PaneOpsProgAction 	extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // known loco on main track
-        JLabel last;
         JPanel pane1 = new KnownLocoSelPane(false){  // no ident in ops mode yet
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,

@@ -2,11 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.InstanceManager;
-import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.KnownLocoSelPane;
 import jmri.util.JmriJFrame;
@@ -30,7 +26,7 @@ import javax.swing.JPanel;
  *
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PaneEditAction 	extends AbstractAction {
 
@@ -64,7 +60,6 @@ public class PaneEditAction 	extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // known entry, no programmer
-        JLabel last;
         JPanel pane1 = new KnownLocoSelPane(false){  // not programming
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {

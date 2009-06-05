@@ -13,7 +13,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 
@@ -98,7 +98,8 @@ public class ProgOpsModePane extends javax.swing.JPanel {
     }
 
     // set the programmer to the current mode
-    private void setProgrammerMode(int mode) {
+    @SuppressWarnings("unused")
+	private void setProgrammerMode(int mode) {
         log.debug("Setting programmer to mode "+mode);
         if (InstanceManager.programmerManagerInstance() != null
             && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)

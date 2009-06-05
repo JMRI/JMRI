@@ -2,8 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.util.*;
-
 import javax.swing.*;
 
 import java.util.Vector;
@@ -22,7 +20,7 @@ import java.util.Vector;
  * so that the DP values are forced to be the correct ones.
  * 
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -30,7 +28,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
     public ShortAddrVariableValue(String name, String comment, String cvName,
                                   boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                   int cvNum, String mask,
-                                  Vector v, JLabel status, String stdname) {
+                                  Vector<CvValue> v, JLabel status, String stdname) {
         // specify min, max value explicitly
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
 
@@ -59,7 +57,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
      */
     private void updateCvForAddrChange() {
         for (int i=0; i<firstFreeSpace; i++) {
-            CvValue cv = ((CvValue)_cvVector.elementAt(cvNumbers[i]));
+            CvValue cv = _cvVector.elementAt(cvNumbers[i]);
             if (cv == null) continue;  // if CV not present this decoder...
             if (cvNumbers[i]!=cv.number())
                 log.error("CV numbers don't match: "
@@ -81,7 +79,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
         // and change the value of this one
-        ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
+        _cvVector.elementAt(getCvNum()).write(_status);
     }
 
     public void writeAll() {
@@ -90,7 +88,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
         // and change the value of this one
-        ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
+        _cvVector.elementAt(getCvNum()).write(_status);
     }
 
     // clean up connections when done

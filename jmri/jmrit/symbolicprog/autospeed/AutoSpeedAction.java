@@ -23,7 +23,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class AutoSpeedAction 			extends AbstractAction {
 
@@ -58,7 +58,6 @@ public class AutoSpeedAction 			extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // known loco on main track
-        JLabel last;
         JPanel pane1 = new KnownLocoSelPane(false){  // no ident in ops mode yet
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,

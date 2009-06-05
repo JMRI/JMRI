@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -55,7 +55,7 @@ public class ComboRadioButtons extends JPanel {
         });
 
         // set initial value
-        ((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
+        v.elementAt(_box.getSelectedIndex()).setSelected(true);
     }
 
     /**
@@ -81,7 +81,7 @@ public class ComboRadioButtons extends JPanel {
             v.addElement(b = new JRadioButton("Reserved value "+v.size()));
             g.add(b);
         }
-        ((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
+        v.elementAt(_box.getSelectedIndex()).setSelected(true);
     }
 
     void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
@@ -94,7 +94,7 @@ public class ComboRadioButtons extends JPanel {
 
     protected void setColor() {
         for (int i = 0; i<v.size(); i++) {
-            ((JRadioButton)(v.elementAt(i))).setBackground(_var._value.getBackground());
+            v.elementAt(i).setBackground(_var._value.getBackground());
         }
     }
 
@@ -117,7 +117,7 @@ public class ComboRadioButtons extends JPanel {
 
     EnumVariableValue _var = null;
     JComboBox _box = null;
-    Vector v = new Vector();
+    Vector<JRadioButton> v = new Vector<JRadioButton>();
 
     public void dispose() {
         for (int i = 0; i<l1.length; i++) {

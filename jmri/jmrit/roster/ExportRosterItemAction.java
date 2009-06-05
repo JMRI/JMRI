@@ -5,7 +5,6 @@ package jmri.jmrit.roster;
 import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 import javax.swing.Action;
 
@@ -35,7 +34,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.roster.ImportRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -62,7 +61,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file
-        File f = new File(mFullFromFilename);
+        //File f = new File(mFullFromFilename);
 
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary

@@ -2,24 +2,21 @@
 
 package jmri.jmrit.symbolicprog.symbolicframe;
 
-import jmri.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
-import java.awt.*;
 import java.io.*;
 
 import javax.swing.*;
 
 import java.util.List;   // resolve ambiguity with java.awt.List
-import java.util.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -287,7 +284,8 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         xf.loadVariableModel(decoderElem, variableModel);
     }
 
-    void processLocoFile(Element loco) {
+    @SuppressWarnings("unchecked")
+	void processLocoFile(Element loco) {
         // load the name et al
         locoRoadName.setText(loco.getAttributeValue("roadName"));
         locoRoadNumber.setText(loco.getAttributeValue("roadNumber"));
@@ -309,22 +307,22 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         Element values = loco.getChild("values");
         if (values != null) {
             // get the CV values and load
-            List varList = values.getChildren("CVvalue");
+            List<Element> varList = values.getChildren("CVvalue");
             if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" CVvalues");
 
             for (int i=0; i<varList.size(); i++) {
                 // locate the row
-                if ( ((Element)(varList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i)))+" "+((Element)(varList.get(i))).getAttributes());
+                if ( ((varList.get(i))).getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i)))+" "+((varList.get(i))).getAttributes());
                     break;
                 }
-                if ( ((Element)(varList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(varList.get(i)))+" "+((Element)(varList.get(i))).getAttributes());
+                if ( ((varList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((varList.get(i)))+" "+((varList.get(i))).getAttributes());
                     break;
                 }
 
-                String name = ((Element)(varList.get(i))).getAttribute("name").getValue();
-                String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
+                String name = ((varList.get(i))).getAttribute("name").getValue();
+                String value = ((varList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 int cv = Integer.valueOf(name).intValue();
@@ -338,27 +336,27 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         // get the variable values and load
         Element decoderDef = values.getChild("decoderDef");
         if (decoderDef != null) {
-            List varList = decoderDef.getChildren("varValue");
+            List<Element> varList = decoderDef.getChildren("varValue");
             if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" varValues");
 
             for (int i=0; i<varList.size(); i++) {
                 // locate the row
                 Attribute itemAttr = null;
-                if ( (itemAttr = ((Element)(varList.get(i))).getAttribute("item")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
+                if ( (itemAttr = ((varList.get(i))).getAttribute("item")) == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i))));
                     break;
                 }
-                if ( itemAttr == null &&  (itemAttr = ((Element)(varList.get(i))).getAttribute("name")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
+                if ( itemAttr == null &&  (itemAttr = ((varList.get(i))).getAttribute("name")) == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i))));
                     break;
                 }
                 String item = itemAttr.getValue();
 
-                if ( ((Element)(varList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(varList.get(i))));
+                if ( ((varList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((varList.get(i))));
                     break;
                 }
-                String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
+                String value = ((varList.get(i))).getAttribute("value").getValue();
 
                 if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+item+" value: "+value);
 
@@ -398,7 +396,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map m = new java.util.HashMap();
+            java.util.Map<String,String> m = new java.util.HashMap<String,String>();
             m.put("type", "text/xsl");
             m.put("href", jmri.jmrit.XmlFile.xsltLocation+"locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);

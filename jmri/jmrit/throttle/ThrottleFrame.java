@@ -47,7 +47,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.45 $
+ * @version    $Revision: 1.46 $
  */
 /**
  * @author DSM
@@ -621,8 +621,8 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
             bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI)controlPanel.getUI()).getNorthPane().getPreferredSize();
             me.setAttribute("border",Integer.toString(bDim.height));
         }
-        java.util.ArrayList children =
-            new java.util.ArrayList(1);
+        java.util.ArrayList<Element> children =
+            new java.util.ArrayList<Element>(1);
         WindowPreferences wp = new WindowPreferences();
         
         children.add(wp.getPreferences(this));

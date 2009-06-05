@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -150,10 +150,10 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         DefaultListModel groupModel = new DefaultListModel();
         // Look for Sensor group in Route table 
         RouteManager rm = InstanceManager.routeManagerInstance();
-        List routeList = rm.getSystemNameList();
+        List<String> routeList = rm.getSystemNameList();
         int i = 0;
         while (i < routeList.size()) {
-            String name = (String)routeList.get(i);
+            String name = routeList.get(i);
             if (name.startsWith(namePrefix)) {
                 name = name.substring(namePrefix.length());
                 String group = name.substring(0, name.indexOf(nameDivider));
@@ -163,7 +163,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     if (i >= routeList.size()) {
                         break;
                     }
-                    name = (String)routeList.get(i);
+                    name = routeList.get(i);
                 } while (name.startsWith(prefix));
                 groupModel.addElement(group);
             }
@@ -256,12 +256,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         _nameField.setText(group);
         // Look for Sensor group in Route table 
         RouteManager rm = InstanceManager.routeManagerInstance();
-        List l = rm.getSystemNameList();
+        List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix+group+nameDivider).toUpperCase();
         boolean isRoute = false;
         int setRow = 0;
         for (int i = 0; i<l.size(); i++) {
-            String name = (String) l.get(i);
+            String name = l.get(i);
             if (name.startsWith(prefix)) {
                 isRoute = true;
                 String sensor = name.substring(prefix.length());
@@ -280,7 +280,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             String cSystemName = (ConditionalSystemPrefix+group).toUpperCase();
             String cUserName = ConditionalUserPrefix+group;
             for (int i = 0; i<logix.getNumConditionals(); i++) {
-                String name = (String)logix.getConditionalByNumberOrder(i);
+                String name = logix.getConditionalByNumberOrder(i);
                 if (cSystemName.equals(name) || cUserName.equals(name)) {
                     Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(name);
                     if (c == null) {
@@ -336,13 +336,13 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 
         // remove the old routes
         RouteManager rm = InstanceManager.routeManagerInstance();
-        List l = rm.getSystemNameList();     
+        List<String> l = rm.getSystemNameList();     
         
         for (int i = 0; i<l.size(); i++) {
-            String name = (String) l.get(i);
+            String name = l.get(i);
             if (name.startsWith(prefix)) {
                 // OK, kill this one
-                Route r = rm.getBySystemName((String)l.get(i));
+                Route r = rm.getBySystemName(l.get(i));
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }
@@ -351,7 +351,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         String cUserName = ConditionalUserPrefix+group;
         Logix logix = getSystemLogix();
         for (int i = 0; i<logix.getNumConditionals(); i++) {
-            String name = (String)logix.getConditionalByNumberOrder(i);
+            String name = logix.getConditionalByNumberOrder(i);
             if (cSystemName.equals(name) || cUserName.equals(name)) {
                 Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(name);
                 if (c == null) {

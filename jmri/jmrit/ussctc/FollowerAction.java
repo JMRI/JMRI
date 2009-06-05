@@ -2,15 +2,12 @@
 
 package jmri.jmrit.ussctc;
 
-import java.awt.event.*;
-
-import javax.swing.*;
 
 /**
  * JmriJFrameAction to create and register a FollowerFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class FollowerAction extends jmri.util.JmriJFrameAction {
 

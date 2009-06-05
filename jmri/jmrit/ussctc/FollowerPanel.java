@@ -2,22 +2,15 @@
 
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-import jmri.util.*;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableColumn;
-
-import java.util.List;
 
 /**
  * User interface frame for creating and editing "Follower" logic
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class FollowerPanel extends BasePanel {
 

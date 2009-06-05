@@ -4,11 +4,6 @@ package jmri.jmrit.sensorgroup;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Sensor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.beans.PropertyChangeListener;
 /**
@@ -17,7 +12,7 @@ import java.beans.PropertyChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener

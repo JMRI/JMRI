@@ -16,7 +16,7 @@ import java.util.Vector;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -24,7 +24,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public EnumVariableValue(String name, String comment, String cvName,
                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                              int cvNum, String mask, int minVal, int maxVal,
-                             Vector v, JLabel status, String stdname) {
+                             Vector<CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -36,7 +36,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public EnumVariableValue() {}
 
     public CvValue[] usesCVs() {
-        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+        return new CvValue[]{_cvVector.elementAt(getCvNum())};
     }
 
     public void nItems(int n) {
@@ -77,7 +77,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv = _cvVector.elementAt(getCvNum());
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
     }
@@ -116,7 +116,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         int oldVal = getIntValue();
         
         // called for new values - set the CV as needed
-        CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+        CvValue cv = _cvVector.elementAt(getCvNum());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal = getIntValue();
@@ -231,9 +231,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         }
     }
 
-    private List comboCBs = new ArrayList();
-    private List comboVars = new ArrayList();
-    private List comboRBs = new ArrayList();
+    private List<ComboCheckBox> comboCBs = new ArrayList<ComboCheckBox>();
+    private List<VarComboBox> comboVars = new ArrayList<VarComboBox>();
+    private List<ComboRadioButtons> comboRBs = new ArrayList<ComboRadioButtons>();
 
     // implement an abstract member to set colors
     void setColor(Color c) {
@@ -247,11 +247,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * @param state
      */
     public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        _cvVector.elementAt(getCvNum()).setState(state);
     }
 
     public boolean isChanged() {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv = _cvVector.elementAt(getCvNum());
         return considerChanged(cv);
     }
 
@@ -270,14 +270,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public void readAll() {
         setToRead(false);
         setBusy(true);  // will be reset when value changes
-        ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
+        _cvVector.elementAt(getCvNum()).read(_status);
     }
 
     public void writeAll() {
         setToWrite(false);
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
-        ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
+        _cvVector.elementAt(getCvNum()).write(_status);
     }
 
     // handle incoming parameter notification
@@ -290,13 +290,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 setBusy(false);
             }
         } else if (e.getPropertyName().equals("State")) {
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            CvValue cv = _cvVector.elementAt(getCvNum());
             if (cv.getState() == STORED) setToWrite(false);
             if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            CvValue cv = _cvVector.elementAt(getCvNum());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.24 $
+     * @version         $Revision: 1.25 $
      */
     public class VarComboBox extends JComboBox {
 
@@ -351,7 +351,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         if (log.isDebugEnabled()) log.debug("dispose");
         
         // remove connection to CV
-        ((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+        _cvVector.elementAt(getCvNum()).removePropertyChangeListener(this);
 
         // remove connection to graphical representation
         disposeReps();
@@ -361,13 +361,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     void disposeReps() {
         if (_value != null) _value.removeActionListener(this);
         for (int i = 0; i<comboCBs.size(); i++) {
-            ((ComboCheckBox)comboCBs.get(i)).dispose();
+            comboCBs.get(i).dispose();
         }
         for (int i = 0; i<comboVars.size(); i++) {
-            ((VarComboBox)comboVars.get(i)).dispose();
+            comboVars.get(i).dispose();
         }
         for (int i = 0; i<comboRBs.size(); i++) {
-            ((ComboRadioButtons)comboRBs.get(i)).dispose();
+            comboRBs.get(i).dispose();
         }
     }
     

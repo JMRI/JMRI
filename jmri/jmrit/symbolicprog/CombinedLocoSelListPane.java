@@ -36,7 +36,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -136,18 +136,18 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         if (mMfgListener!=null) mMfgList.removeListSelectionListener(mMfgListener);
         String currentValue = (String)mMfgList.getSelectedValue();
 
-        List allMfgList = DecoderIndexFile.instance().getMfgNameList();
-        List theMfgList = new ArrayList();
+        List<String> allMfgList = DecoderIndexFile.instance().getMfgNameList();
+        List<String> theMfgList = new ArrayList<String>();
 
         for (int i=0; i<allMfgList.size(); i++) {
             // see if this qualifies; either a non-zero set of decoders, or
             // matches the specific name
-            if ( (specific != null && ((String)allMfgList.get(i)==specific))
+            if ( (specific != null && (allMfgList.get(i)==specific))
                 || (0!=DecoderIndexFile.instance()
-                            .matchingDecoderList((String)allMfgList.get(i),null,null,null,null,null)
+                            .matchingDecoderList(allMfgList.get(i),null,null,null,null,null)
                             .size() )
                 )
-                    theMfgList.add((String)allMfgList.get(i));
+                    theMfgList.add(allMfgList.get(i));
         }
         mMfgList.setListData(theMfgList.toArray());
 
@@ -187,7 +187,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     /**
      * Decoder identify has matched one or more specific types
      */
-    void updateForDecoderTypeID(List pModelList) {
+    void updateForDecoderTypeID(List<DecoderFile> pModelList) {
             // use a DefaultComboBoxModel to get the efficient ctor
                         mDecoderList.setModel(DecoderIndexFile.jComboBoxModelFromList(pModelList));
                         mDecoderList.setSelectedIndex(0);

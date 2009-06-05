@@ -2,15 +2,12 @@
 
 package jmri.jmrit.ussctc;
 
-import java.awt.event.*;
-
-import javax.swing.*;
 
 /**
  * Swing action to create and register a OsIndicatorFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OsIndicatorAction extends jmri.util.JmriJFrameAction {
 

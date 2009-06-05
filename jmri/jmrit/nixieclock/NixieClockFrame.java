@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -129,7 +129,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
       int frameWidth = this.getContentPane().getSize().width;
       if (frameWidth/frameHeight > aspect) {
         iconHeight = frameHeight;
-        iconWidth = (int) (iconAspect * (float) iconHeight);
+        iconWidth = (int) (iconAspect * iconHeight);
       }
       else {
         //this DOES NOT allow space for the Run/Stop button, if it is

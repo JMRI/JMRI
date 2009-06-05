@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -21,7 +20,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class MemoryFrameAction extends AbstractAction {
 

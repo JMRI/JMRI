@@ -3,7 +3,6 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.jmrit.XmlFile;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +20,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class NameFile extends XmlFile {
 
@@ -80,13 +79,14 @@ public class NameFile extends XmlFile {
 		readNames(root);
 	}
 
+	@SuppressWarnings("unchecked")
 	void readNames(Element root) {
 
-		List l = root.getChildren("definition");
+		List<Element> l = root.getChildren("definition");
 		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" direct children");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry
-			Element el = (Element)l.get(i);
+			Element el = l.get(i);
 			storeDefinition(el);
 		}
         // now recurse with "definitiongroup" children
@@ -94,7 +94,7 @@ public class NameFile extends XmlFile {
 		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" groups");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry
-			Element el = (Element)l.get(i);
+			Element el = l.get(i);
 			readNames(el);
 		}
 

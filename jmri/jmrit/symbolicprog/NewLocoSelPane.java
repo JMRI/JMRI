@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */
@@ -132,14 +132,14 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
         // locate a decoder like that.
-        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
         if (l.size() > 0) {
-            DecoderFile d = (DecoderFile)l.get(0);
+            DecoderFile d = l.get(0);
             String title = d.titleString();
             if (log.isDebugEnabled()) log.debug("Decoder file title "+title);
             for (int i = 0; i<decoderBox.getItemCount(); i++) {
-                if (title.equals((String)decoderBox.getItemAt(i))) decoderBox.setSelectedIndex(i);
+                if (title.equals(decoderBox.getItemAt(i))) decoderBox.setSelectedIndex(i);
             }
         } else {
             log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");

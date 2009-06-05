@@ -2,9 +2,7 @@
 
 package jmri.jmrit.sensorgroup;
 
-import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -12,11 +10,11 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public abstract class BeanTableModel extends AbstractTableModel {
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
         if (c == INCLUDE_COLUMN) {
             return Boolean.class;
         }

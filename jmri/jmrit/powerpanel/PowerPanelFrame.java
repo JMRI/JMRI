@@ -2,10 +2,7 @@
 
  package jmri.jmrit.powerpanel;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
-
-import javax.swing.JMenuBar;
 
 import jmri.util.JmriJFrame;
 
@@ -13,7 +10,7 @@ import jmri.util.JmriJFrame;
  * Frame for controlling layout power via a PowerManager.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class PowerPanelFrame extends JmriJFrame {
 

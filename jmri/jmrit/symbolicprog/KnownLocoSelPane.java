@@ -26,7 +26,7 @@ import java.util.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -47,7 +47,6 @@ public class KnownLocoSelPane extends LocoSelPane  {
     JComboBox programmerBox;
 
     protected void init() {
-        JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
@@ -120,15 +119,15 @@ public class KnownLocoSelPane extends LocoSelPane  {
 
     protected void selectLoco(int dccAddress) {
         // locate that loco
-        List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
                                                 null, null, null, null);
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
-            RosterEntry r = (RosterEntry)l.get(0);
+            RosterEntry r = l.get(0);
             String id = r.getId();
             if (log.isDebugEnabled()) log.debug("Loco id is "+id);
             for (int i = 0; i<locoBox.getItemCount(); i++) {
-                if (id.equals((String)locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
+                if (id.equals(locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
             }
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");

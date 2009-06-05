@@ -1,15 +1,9 @@
 package jmri.jmrit.sound;
 
-import java.applet.AudioClip;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import java.io.ByteArrayInputStream; 
 import java.io.ByteArrayOutputStream; 
 import java.io.File; 
 
 import javax.sound.sampled.*;
-import javax.sound.*;
 
 /**
  * Provide simple way to load and play Java 2 sounds in JMRI.
@@ -21,7 +15,7 @@ import javax.sound.*;
  *
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SoundUtil  {
 
@@ -73,7 +67,7 @@ public class SoundUtil  {
         // Get the type of the source file. We need this information 
         // later to write the audio data to a file of the same type. 
         AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(sourceFile); 
-        AudioFileFormat.Type targetFileType = fileFormat.getType(); 
+        //AudioFileFormat.Type targetFileType = fileFormat.getType(); 
         AudioFormat audioFormat = fileFormat.getFormat(); 
 
         // get desired output format

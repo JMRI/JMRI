@@ -27,7 +27,7 @@ import java.util.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -274,10 +274,10 @@ public class RosterEntryPane extends javax.swing.JPanel  {
      */
     boolean checkDuplicate() {
         // check its not a duplicate
-        List l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
         for (int i=0; i<l.size(); i++) {
-            if (re != (RosterEntry)l.get(i)) oops = true;
+            if (re != l.get(i)) oops = true;
         }
         return oops;
     }

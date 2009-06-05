@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.40 $
+ * @version	$Revision: 1.41 $
  */
 public abstract class XmlFile {
 
@@ -340,10 +340,11 @@ public abstract class XmlFile {
      * Diagnostic printout of as much as we can find
      * @param name Element to print, should not be null
      */
-    static public void dumpElement(Element name) {
-        List l = name.getChildren();
+    @SuppressWarnings("unchecked")
+	static public void dumpElement(Element name) {
+        List<Element> l = name.getChildren();
         for (int i = 0; i<l.size(); i++) {
-            System.out.println(" Element: "+((Element)l.get(i)).getName()+" ns: "+((Element)l.get(i)).getNamespace());
+            System.out.println(" Element: "+l.get(i).getName()+" ns: "+l.get(i).getNamespace());
         }
     }
 
@@ -454,7 +455,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.40 2009-04-14 15:19:14 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.41 2009-06-05 04:29:24 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -577,7 +578,7 @@ public abstract class XmlFile {
     }
         
     // initialize SAXbuilder
-    static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
+    //static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
 
     // initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFile.class.getName());

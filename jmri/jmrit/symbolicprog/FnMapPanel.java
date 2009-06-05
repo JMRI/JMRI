@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -189,7 +189,8 @@ public class FnMapPanel extends JPanel {
      * to configure the number of outputs and set up any that
      * are named instead of numbered.
      */
-    protected void configOutputs(Element model) {
+    @SuppressWarnings("unchecked")
+	protected void configOutputs(Element model) {
         if (model==null) {
             log.debug("configOutputs was given a null model");
             return;
@@ -203,10 +204,10 @@ public class FnMapPanel extends JPanel {
         catch (Exception e) {log.error("error handling decoder's numFns value");}
         if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numFn+","+numOut);
         // take all "output" children
-        List elemList = model.getChildren("output");
+        List<Element> elemList = model.getChildren("output");
         if (log.isDebugEnabled()) log.debug("output scan starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
-            Element e = (Element)(elemList.get(i));
+            Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
             // if this a number, or a character name?
             try {

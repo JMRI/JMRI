@@ -10,21 +10,21 @@ import javax.swing.JLabel;
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class HexVariableValue extends DecVariableValue {
 
         public HexVariableValue(String name, String comment, String cvName,
                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                 int cvNum, String mask, int minVal, int maxVal,
-                                Vector v, JLabel status, String stdname) {
+                                Vector<CvValue> v, JLabel status, String stdname) {
             super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         }
 
         void updatedTextField() {
                 if (log.isDebugEnabled()) log.debug("updatedTextField");
                 // called for new values - set the CV as needed
-                CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+                CvValue cv = _cvVector.elementAt(getCvNum());
                 // compute new cv value by combining old and request
                 int oldCv = cv.getValue();
                 int newVal;

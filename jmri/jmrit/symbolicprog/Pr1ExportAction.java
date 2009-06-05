@@ -19,7 +19,7 @@ import javax.swing.JFrame;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class Pr1ExportAction  extends AbstractAction {
 
@@ -63,7 +63,7 @@ public class Pr1ExportAction  extends AbstractAction {
                 str.println("[DecoderData]");
                 for (int i=1; i<=256; i++) {
                     int lowCvIndex = i;
-                    CvValue cv1 = (CvValue)mModel.allCvVector().elementAt(lowCvIndex);
+                    CvValue cv1 = mModel.allCvVector().elementAt(lowCvIndex);
                     int value1 = (cv1!=null) ? cv1.getValue() : 0;
 
                     str.println("CV"+i+"="+value1);

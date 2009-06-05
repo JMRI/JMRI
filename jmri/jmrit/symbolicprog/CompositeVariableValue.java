@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -56,7 +56,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     public CompositeVariableValue(String name, String comment, String cvName,
                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                              int cvNum, String mask, int minVal, int maxVal,
-                             Vector v, JLabel status, String stdname) {
+                             Vector<CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -72,19 +72,19 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     public CvValue[] usesCVs() {
-        HashSet cvSet = new HashSet(20);  // 20 is arbitrary
-        Iterator i = variables.iterator();
+        HashSet<CvValue> cvSet = new HashSet<CvValue>(20);  // 20 is arbitrary
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             CvValue[] cvs = v.usesCVs();
             for (int k=0; k<cvs.length; k++)
                 cvSet.add(cvs[k]);
         }
         CvValue[] retval = new CvValue[cvSet.size()];
-        Iterator j = cvSet.iterator();
+        Iterator<CvValue> j = cvSet.iterator();
         int index = 0;
         while (j.hasNext()) {
-            retval[index++] = (CvValue)j.next();
+            retval[index++] = j.next();
         }
         return retval;
     }
@@ -118,7 +118,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Defines a list of Setting objects.
      * <P> Serves as a home for various service methods
      */
-    class SettingList extends ArrayList {
+    class SettingList extends ArrayList<Setting> {
         public SettingList() {
             super();
             if (log.isDebugEnabled()) log.debug("New setting list");
@@ -131,13 +131,13 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         void setValues() {
             if (log.isDebugEnabled()) log.debug(" setValues in length "+size());
             for (int i = 0; i<this.size(); i++) {
-                Setting s = (Setting)this.get(i);
+                Setting s = this.get(i);
                 s.setValue();
             }
         }
         boolean match() {
             for (int i = 0; i<size(); i++) {
-                if ( ! ((Setting)this.get(i)).match()) {
+                if (!this.get(i).match()) {
                     if (log.isDebugEnabled()) log.debug("      No match in setting list of length "+size()+" at position "+i);
                     return false;
                 }
@@ -147,8 +147,8 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         }
     }
     
-    Hashtable choiceHash = new Hashtable(); // String, String
-    HashSet   variables = new HashSet(20);  // VariableValue; 20 is an arbitrary guess
+    Hashtable<String,SettingList> choiceHash = new Hashtable<String,SettingList>(); 
+    HashSet<VariableValue>   variables = new HashSet<VariableValue>(20);  // VariableValue; 20 is an arbitrary guess
     
     /**
      * Create a new possible selection.
@@ -164,7 +164,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Add a setting to an existing choice.
      */
     public void addSetting(String choice, String varName, VariableValue variable, String value) {
-        SettingList s = (SettingList)choiceHash.get(choice);
+        SettingList s = choiceHash.get(choice);
         s.addSetting(varName, variable, value);
 
         if (variable!=null) {
@@ -186,9 +186,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         findValue();
                 
         // connect to all variables to hear changes
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v==null) log.error("Variable found as null in last item");
             // connect
             v.addPropertyChangeListener(this);
@@ -245,7 +245,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         
         // locate SettingList for that number
         String choice = (String)_value.getItemAt(value);
-        SettingList sl = (SettingList)choiceHash.get(choice);
+        SettingList sl = choiceHash.get(choice);
         sl.setValues();
         
     }
@@ -270,17 +270,17 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * @param state
      */
     public void setCvState(int state) {
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             v.setCvState(state);
         }
     }
 
     public boolean isChanged() {
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v.isChanged()) return true;
         }
         return false;
@@ -288,9 +288,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
 
     public void setToRead(boolean state) {
 
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             v.setToRead(state);
         }
     }
@@ -300,9 +300,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * variables needs to be read.
      */
     public boolean isToRead() {
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v.isToRead()) return true;
         }
         return false;
@@ -311,9 +311,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     public void setToWrite(boolean state) {
         if (log.isDebugEnabled()) log.debug("Start setToWrite with "+state);
         
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             v.setToWrite(state);
         }
         log.debug("End setToWrite");
@@ -324,9 +324,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * variables needs to be written.
      */
     public boolean isToWrite() {
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v.isToWrite()) return true;
         }
         return false;
@@ -363,9 +363,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         // search for something to do
         if (log.isDebugEnabled()) log.debug("Start continueRead");
         
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v.isToRead() && (!readingChanges || v.isChanged())) {
                 // something to do!
                 amReading = true; // should be set already
@@ -398,9 +398,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         // search for something to do
         if (log.isDebugEnabled()) log.debug("Start continueWrite");
         
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             if (v.isToWrite() && (!writingChanges || v.isChanged())) {
                 // something to do!
                 amWriting = true; // should be set already
@@ -451,7 +451,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         if (log.isDebugEnabled()) log.debug("findValue invoked on "+label());
         for (int i=0; i<_value.getItemCount(); i++) {
             String choice = (String)_value.getItemAt(i);
-            SettingList sl = (SettingList) choiceHash.get(choice);
+            SettingList sl = choiceHash.get(choice);
             if (sl.match()) {
                 if (log.isDebugEnabled()) log.debug("  match in "+i);
                 _value.setSelectedItem(choice);
@@ -465,9 +465,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
 
-        Iterator i = variables.iterator();
+        Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
-            VariableValue v = (VariableValue) i.next();
+            VariableValue v = i.next();
             v.removePropertyChangeListener(this);
         }
 

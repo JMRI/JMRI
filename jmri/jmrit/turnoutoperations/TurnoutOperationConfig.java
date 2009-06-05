@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TurnoutOperationConfig extends JPanel {
 
@@ -39,16 +39,17 @@ public class TurnoutOperationConfig extends JPanel {
 	 * @param op	operation for which configurator is required
 	 * @return	the configurator
 	 */
+	@SuppressWarnings("unchecked")
 	static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
 		TurnoutOperationConfig config = null;
 		String[] path = jmri.util.StringUtil.split(op.getClass().getName(), ".");
 		String configName = "jmri.jmrit.turnoutoperations." + path[path.length-1] + "Config";
 		try {
-			Class configClass = Class.forName(configName);
-			Constructor[] constrs = configClass.getConstructors();
+			Class<?> configClass = Class.forName(configName);
+			Constructor<TurnoutOperationConfig>[] constrs = configClass.getConstructors();
 			if (constrs.length==1) {
 				try {
-					config = (TurnoutOperationConfig)constrs[0].newInstance(new Object[]{op});
+					config = constrs[0].newInstance(new Object[]{op});
 				} catch (Throwable e) { };		// too many to list!
 			}
 		} catch (ClassNotFoundException e) { };

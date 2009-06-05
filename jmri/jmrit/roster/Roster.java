@@ -47,7 +47,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.40 $
+ * @version	$Revision: 1.41 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -85,7 +85,7 @@ public class Roster extends XmlFile {
         int i = _list.size()-1;// Last valid index
         while (i>=0) {
             // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
+            if (e.getId().toUpperCase().compareTo(_list.get(i).getId().toUpperCase()) > 0 )
                 break; // I can never remember whether I want break or continue here
             i--;
         }
@@ -131,20 +131,20 @@ public class Roster extends XmlFile {
      */
     public JComboBox matchingComboBox(String roadName, String roadNumber, String dccAddress,
                                       String mfg, String decoderMfgID, String decoderVersionID, String id ) {
-        List l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
+        List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
         JComboBox b = new JComboBox();
         for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = (RosterEntry)_list.get(i);
+            RosterEntry r = _list.get(i);
             b.addItem(r.titleString());
         }
         return b;
     }
 
     public void updateComboBox(JComboBox box) {
-        List l = matchingList(null, null, null, null, null, null, null );
+        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null );
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = (RosterEntry)_list.get(i);
+            RosterEntry r = _list.get(i);
             box.addItem(r.titleString());
         }
     }
@@ -154,7 +154,7 @@ public class Roster extends XmlFile {
      */
     public RosterEntry entryFromTitle(String title ) {
         for (int i = 0; i < numEntries(); i++) {
-            RosterEntry r = (RosterEntry)_list.get(i);
+            RosterEntry r = _list.get(i);
             if (r.titleString().equals(title)) return r;
         }
         return null;
@@ -200,7 +200,7 @@ public class Roster extends XmlFile {
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
                               String mfg, String decoderModel, String decoderFamily,
                               String id ) {
-        RosterEntry r = (RosterEntry)_list.get(i);
+        RosterEntry r = _list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
         if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
@@ -250,7 +250,7 @@ public class Roster extends XmlFile {
             //Decoder Comment fields to change any \n characters to <?p?> processor
             //directives so they can be stored in the xml file and converted
             //back when the file is read.
-            RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
+            RosterEntry r = _list.get(i);
             String tempComment = r.getComment();
             String xmlComment = new String();
 
@@ -290,7 +290,7 @@ public class Roster extends XmlFile {
         root.addContent(values = new Element("roster"));
         // add entries
         for (int i=0; i<numEntries(); i++) {
-            values.addContent(((RosterEntry)_list.get(i)).store());
+            values.addContent(_list.get(i).store());
         }
         writeXML(file, doc);
 
@@ -299,7 +299,7 @@ public class Roster extends XmlFile {
         //Comment and Decoder comment fields, otherwise it can cause problems in
         //other parts of the program (e.g. in copying a roster)
         for (int i=0; i<numEntries(); i++){
-            RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
+            RosterEntry r = _list.get(i);
             String xmlComment = r.getComment();
             String tempComment = new String();
 
@@ -365,7 +365,8 @@ public class Roster extends XmlFile {
      * Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    @SuppressWarnings("unchecked")
+	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
         // find root
         Element root = rootFromName(name);
         if (root==null) {
@@ -376,17 +377,17 @@ public class Roster extends XmlFile {
 
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) {
-            List l = root.getChild("roster").getChildren("locomotive");
+            List<Element> l = root.getChild("roster").getChildren("locomotive");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
-                addEntry(new RosterEntry((Element)l.get(i)));
+                addEntry(new RosterEntry(l.get(i)));
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < numEntries(); i++) {
                 //Get a RosterEntry object for this index
-                RosterEntry r = (RosterEntry) (RosterEntry) _list.get(i);
+                RosterEntry r = _list.get(i);
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = r.getComment();
@@ -538,7 +539,7 @@ public class Roster extends XmlFile {
 
         // order may be wrong! Sort
         RosterEntry[] rarray = new RosterEntry[_list.size()];
-        for (int i=0; i<rarray.length; i++) rarray[i] =(RosterEntry) (_list.get(i));
+        for (int i=0; i<rarray.length; i++) rarray[i] =_list.get(i);
         jmri.util.StringUtil.sortUpperCase(rarray);
         for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
 

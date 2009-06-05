@@ -28,7 +28,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -54,7 +54,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file
-        File f = new File(mFullFromFilename);
+        //File f = new File(mFullFromFilename);
 
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary

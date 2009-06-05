@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",
@@ -28,10 +28,10 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                                 "CV", "Value",
                                 "Write", "State"};
 
-    private Vector rowVector   = new Vector(); // vector of Reset items
-    private Vector labelVector = new Vector(); // vector of related labels
+    private Vector<CvValue> rowVector   = new Vector<CvValue>(); // vector of Reset items
+    private Vector<String> labelVector = new Vector<String>(); // vector of related labels
 
-    private Vector _writeButtons = new Vector();
+    private Vector<JButton> _writeButtons = new Vector<JButton>();
 
     private CvValue _iCv = null;
     private JLabel _status = null;
@@ -55,7 +55,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
-        CvValue cv = (CvValue) rowVector.elementAt(row);
+        CvValue cv = rowVector.elementAt(row);
         if (headers[col].equals("Label"))
             return "" + labelVector.elementAt(row);
         else if (headers[col].equals("Name"))
@@ -151,7 +151,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     protected void performReset(int row) {
-        CvValue cv = (CvValue)rowVector.elementAt(row);
+        CvValue cv = rowVector.elementAt(row);
         if (cv.piCv() > 0 && cv.iCv() > 0) {
             _iCv = cv;
             indexedWrite();
@@ -227,7 +227,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
         // remove buttons
         for (int i = 0; i<_writeButtons.size(); i++) {
-            ((JButton)_writeButtons.elementAt(i)).removeActionListener(this);
+            _writeButtons.elementAt(i).removeActionListener(this);
         }
 
         _writeButtons.removeAllElements();
@@ -235,7 +235,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
         // remove variables listeners
         for (int i = 0; i<rowVector.size(); i++) {
-            CvValue cv = (CvValue)rowVector.elementAt(i);
+            CvValue cv = rowVector.elementAt(i);
             cv.dispose();
         }
         rowVector.removeAllElements();

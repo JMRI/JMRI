@@ -11,7 +11,7 @@ import jmri.implementation.DefaultRoute;
  * 
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Follower implements Constants {
 
@@ -19,7 +19,7 @@ public class Follower implements Constants {
     /**
      * Nobody can build anonymous object
      */
-    private Follower() {}
+    //private Follower() {}
     
     
     /**

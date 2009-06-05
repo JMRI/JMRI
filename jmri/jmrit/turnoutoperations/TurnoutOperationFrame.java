@@ -106,8 +106,8 @@ public class TurnoutOperationFrame extends JDialog {
 		TurnoutOperation[] operations = TurnoutOperationManager.getInstance().getTurnoutOperations();
 		Component firstPane = null;
 		tabPane.removeAll();
-		Vector definitiveOperations = new Vector(10);
-		Vector namedOperations = new Vector(50);
+		Vector<TurnoutOperation> definitiveOperations = new Vector<TurnoutOperation>(10);
+		Vector<TurnoutOperation> namedOperations = new Vector<TurnoutOperation>(50);
 		for (int i=0; i<operations.length; ++i) {
 			if (operations[i].isDefinitive()) {
 				definitiveOperations.addElement(operations[i]);
@@ -120,7 +120,7 @@ public class TurnoutOperationFrame extends JDialog {
     	TurnoutOperationConfig pane;
     	TurnoutOperation op;
 		for (int j=0; j<definitiveOperations.size(); ++j) {
-			op = (TurnoutOperation)definitiveOperations.elementAt(j);
+			op = definitiveOperations.elementAt(j);
 			pane = TurnoutOperationConfig.getConfigPanel(op);
 			if (pane != null) {
 				if (firstPane == null) {
@@ -133,7 +133,7 @@ public class TurnoutOperationFrame extends JDialog {
 			}
 		}
 		for (int k=0; k<namedOperations.size(); ++k) {
-			op = (TurnoutOperation)namedOperations.elementAt(k);
+			op = namedOperations.elementAt(k);
 			pane = TurnoutOperationConfig.getConfigPanel(op);
 			if (pane != null) {
 				tabPane.add(op.getName(), pane);

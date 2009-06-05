@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class MemoryContents {
 
@@ -76,7 +76,7 @@ public class MemoryContents {
 
         // start reading the file
         try {
-            byte bval;
+            //byte bval;
             int ival;
             String s;
             while ( (s = fileStream.readLine()) != null) {

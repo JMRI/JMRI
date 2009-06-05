@@ -3,8 +3,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
 import jmri.util.JmriJFrame;
@@ -36,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -91,7 +89,6 @@ public class PaneProgAction 			extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
-        JLabel last;
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {

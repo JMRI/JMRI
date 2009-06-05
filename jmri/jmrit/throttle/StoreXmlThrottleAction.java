@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -56,17 +56,17 @@ public class StoreXmlThrottleAction extends AbstractAction {
 
 			// add XSLT processing instruction
 			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-			java.util.Map m = new java.util.HashMap();
+			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle.xsl");
 			ProcessingInstruction p = new ProcessingInstruction(
 					"xml-stylesheet", m);
 			doc.addContent(0, p);
 
-			java.util.ArrayList children = new java.util.ArrayList(5);
-			for (Iterator i = ThrottleFrameManager.instance()
+			java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(5);
+			for (Iterator<ThrottleFrame> i = ThrottleFrameManager.instance()
 					.getThrottleFrames(); i.hasNext();) {
-				ThrottleFrame f = (ThrottleFrame) i.next();
+				ThrottleFrame f = i.next();
 				Element throttleElement = f.getXml();
 				children.add(throttleElement);
 			}

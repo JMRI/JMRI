@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -57,8 +57,8 @@ public class DeleteRosterItemAction extends AbstractAction {
         Roster roster = Roster.instance();
 
         // get parent object if there is one
-        Component parent = null;
-        if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
+        //Component parent = null;
+        //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
         // create a dialog to select the roster entry
         JComboBox selections = roster.fullRosterComboBox();

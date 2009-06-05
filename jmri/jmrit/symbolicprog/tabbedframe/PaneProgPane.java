@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.68 $
+ * @version   $Revision: 1.69 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -103,7 +103,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param varModel Already existing TableModel containing the variable definitions
      * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
      */
-    public PaneProgPane(PaneProgFrame parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
+    @SuppressWarnings("unchecked")
+	public PaneProgPane(PaneProgFrame parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
 
             
         _parentFrame = parent;
@@ -133,16 +134,16 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle the xml definition
         // for all "column" elements ...
-        List colList = pane.getChildren("column");
+        List<Element> colList = pane.getChildren("column");
         for (int i=0; i<colList.size(); i++) {
             // load each column
-            p.add(newColumn( ((Element)(colList.get(i))), showItem, modelElem));
+            p.add(newColumn( ((colList.get(i))), showItem, modelElem));
         }
         // for all "row" elements ...
-        List rowList = pane.getChildren("row");
+        List<Element> rowList = pane.getChildren("row");
         for (int i=0; i<rowList.size(); i++) {
             // load each row
-            p.add(newRow( ((Element)(rowList.get(i))), showItem, modelElem));
+            p.add(newRow( ((rowList.get(i))), showItem, modelElem));
         }
 
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
@@ -405,7 +406,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @return the same set as the parameter, for convenient
      *      chaining of operations.
      */
-    public Set makeOpsNeededSet(boolean read, boolean changes, Set<Integer> set) {
+    public Set<Integer> makeOpsNeededSet(boolean read, boolean changes, Set<Integer> set) {
 
         // scan the variable list
         for (int i =0; i<varList.size(); i++) {
@@ -719,7 +720,7 @@ public class PaneProgPane extends javax.swing.JPanel
             indexedCvListIndex++;
             if (iCv.isToRead() || indxState == VariableValue.UNKNOWN) {
                 String sz = "start read of indexed cv " +
-                    ((CvValue)_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
+                    (_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
                 setBusy(true);
                 if (_programmingIndexedCV != null) log.error(
@@ -788,7 +789,7 @@ public class PaneProgPane extends javax.swing.JPanel
             indexedCvListIndex++;
             if (iCv.isToRead()) {
                 String sz = "start confirm of indexed cv " +
-                    ((CvValue)_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
+                    (_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
                 setBusy(true);
                 if (_programmingIndexedCV != null) log.error(
@@ -915,7 +916,7 @@ public class PaneProgPane extends javax.swing.JPanel
             indexedCvListIndex++;
             if (iCv.isToWrite() || indxState == VariableValue.UNKNOWN) {
                 String sz = "start write of indexed cv " +
-                    ( (CvValue) _indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
+                    (  _indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
 
                 setBusy(true);
@@ -1087,7 +1088,7 @@ public class PaneProgPane extends javax.swing.JPanel
             return;
         } else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy"))
-                log.debug("ignoring change of Busy "+((Boolean)e.getNewValue())
+                log.debug("ignoring change of Busy "+e.getNewValue()
                           +" "+( ((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
             return;
         }
@@ -1151,7 +1152,8 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Create a single column from the JDOM column Element
      */
-    public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
+    @SuppressWarnings("unchecked")
+	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         JPanel c = new JPanel();
@@ -1162,7 +1164,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle the xml definition
         // for all elements in the column or row
-        List elemList = element.getChildren();
+        List<Element> elemList = element.getChildren();
         if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
 
@@ -1170,7 +1172,7 @@ public class PaneProgPane extends javax.swing.JPanel
             cs.gridy++;
             cs.gridx = 0;
 
-            Element e = (Element)(elemList.get(i));
+            Element e = (elemList.get(i));
             String name = e.getName();
             if (log.isDebugEnabled()) log.debug("newColumn processing "+name+" element");
             // decode the type
@@ -1296,7 +1298,8 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Create a single row from the JDOM column Element
      */
-    public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
+    @SuppressWarnings("unchecked")
+	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
         JPanel c = new JPanel();
@@ -1307,7 +1310,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle the xml definition
         // for all elements in the column or row
-        List elemList = element.getChildren();
+        List<Element> elemList = element.getChildren();
         if (log.isDebugEnabled()) log.debug("newRow starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
 
@@ -1315,7 +1318,7 @@ public class PaneProgPane extends javax.swing.JPanel
             cs.gridy = 0;
             cs.gridx++;
 
-            Element e = (Element)(elemList.get(i));
+            Element e = elemList.get(i);
             String name = e.getName();
             if (log.isDebugEnabled()) log.debug("newRow processing "+name+" element");
             // decode the type
@@ -1588,14 +1591,14 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // dispose of any panels
         for (int i=0; i<panelList.size(); i++) {
-            ((JPanel)(panelList.get(i))).removeAll();
+            panelList.get(i).removeAll();
         }
         panelList.clear();
         panelList = null;
 
         // dispose of any fnMaps
         for (int i=0; i<fnMapList.size(); i++) {
-            ((FnMapPanel)(fnMapList.get(i))).dispose();
+            fnMapList.get(i).dispose();
         }
         fnMapList.clear();
         fnMapList = null;

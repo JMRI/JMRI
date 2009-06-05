@@ -3,19 +3,16 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
-import org.jdom.output.XMLOutputter;
 
 
 /**
@@ -23,7 +20,7 @@ import org.jdom.output.XMLOutputter;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SaveThrottlePreferencesAction extends AbstractAction {
 
@@ -83,14 +80,14 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 			Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"throttle-config.dtd");
 			// add XSLT processing instruction
 			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-			java.util.Map m = new java.util.HashMap();
+			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
 			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 
-			Iterator i = ThrottleFrameManager.instance().getThrottleFrames();
-			ThrottleFrame f = (ThrottleFrame)i.next();
+			Iterator<ThrottleFrame> i = ThrottleFrameManager.instance().getThrottleFrames();
+			ThrottleFrame f = i.next();
 			Element throttleElement = f.getXml();
 			// don't save the loco address or consist address
 			throttleElement.getChild("AddressPanel").removeChild("locoaddress");

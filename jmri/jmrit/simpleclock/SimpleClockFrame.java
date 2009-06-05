@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -31,8 +31,8 @@ public class SimpleClockFrame extends JmriJFrame
 
     private Timebase clock;
 	private String hardwareName = null;
-	private boolean synchronize = true;
-	private boolean correct = true;
+	//private boolean synchronize = true;
+	//private boolean correct = true;
 	private boolean changed = false;
     protected boolean showTime = false;
     DecimalFormat threeDigits = new DecimalFormat("0.000");	// 3 digit precision for speedup factor
@@ -369,7 +369,7 @@ public class SimpleClockFrame extends JmriJFrame
 			return;
 		}
 		if (InstanceManager.clockControlInstance().requiresIntegerRate()) {
-			double frac = rate-(double)((int)rate);
+			double frac = rate-(int)rate;
 			if (frac > 0.001) {
 				JOptionPane.showMessageDialog(this,rb.getString("NonIntegerError"),
                     rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);

@@ -5,12 +5,10 @@ package jmri.jmrit.simplelightctrl;
 import jmri.InstanceManager;
 import jmri.Light;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 /**
@@ -20,16 +18,13 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simplelightctrl.SimpleLightCtrlBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     
-	private static final String LOCKED = "Locked";
-	private static final String UNLOCKED = "Normal";
-
     DecimalFormat threeDigits = new DecimalFormat("000");
     DecimalFormat oneDigits = new DecimalFormat("0");
     DecimalFormat oneDotTwoDigits = new DecimalFormat("0.00");
