@@ -3,12 +3,12 @@
  *
  * Description:	    test implementation of XNetListener
  * @author			Bob Jacobsen
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 
 package jmri.jmrix.lenz;
 
-class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
+public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 		public XNetListenerScaffold() {
 			rcvdMsg = null;
 			rcvdRply = null;
