@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.6 2009-06-05 16:00:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.7 2009-06-05 16:03:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -79,7 +79,7 @@ the program directory in a previous
 copy of JMRI, you should back up the modified files before installing
 JMRI 2.5.5. This version removes the old files, so if you have modifications,
 you'll have to put them back manually afterwards.  In general, it's better
-to put local modifications in the preference directory, not the program directory,
+to put local modifications in the preferences directory, not the program directory,
 so you won't have to do this in the future.
 
 <h3>Warnings from older versions:</h3>
