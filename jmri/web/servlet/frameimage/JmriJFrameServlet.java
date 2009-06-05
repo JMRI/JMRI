@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -275,7 +275,8 @@ public class JmriJFrameServlet implements Servlet {
      *  http://www.coreservlets.com/.
      *  &copy; 2000 Marty Hall; may be freely used or adapted.
      */
-    private void copyImage(OutputStream out) throws IOException {
+    @SuppressWarnings("unused")
+	private void copyImage(OutputStream out) throws IOException {
         BufferedInputStream in =
             new BufferedInputStream(new FileInputStream("resources/decoderpro.gif"));
         int imageByte;

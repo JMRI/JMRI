@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -214,7 +214,7 @@ public class BlockTableAction extends AbstractTableAction {
 	 * Add the checkboxes
 	 */
 	public void addToFrame(BeanTableFrame f) {
-		final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
+		//final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
 		f.addToBottomBox (inchBox);
 		inchBox.setToolTipText(rb.getString("InchBoxToolTip"));
 		inchBox.addActionListener(new ActionListener() {
@@ -283,7 +283,7 @@ public class BlockTableAction extends AbstractTableAction {
         String sName = sysName.getText().toUpperCase();
         InstanceManager.blockManagerInstance().createNewBlock(sName, user);
     }
-    private boolean noWarn = false;
+    //private boolean noWarn = false;
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
 }

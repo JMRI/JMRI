@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class Maintenance
@@ -1229,7 +1229,7 @@ public class Maintenance
                 }
             }
             for (int k=0; k<layoutEditor.turnoutList.size(); k++) {
-                name  = ((jmri.jmrit.display.LayoutTurnout)layoutEditor.turnoutList.get(k)).getTurnoutName();
+                name  = layoutEditor.turnoutList.get(k).getTurnoutName();
                 if (name.equals(sysName) || name.equals(userName))
                 {
                     if (text != null) {

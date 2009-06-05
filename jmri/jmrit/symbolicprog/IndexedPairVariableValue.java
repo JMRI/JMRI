@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.10 $
+ * @version  $Revision: 1.11 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -406,20 +406,20 @@ public class IndexedPairVariableValue extends VariableValue
                     }
                     return;
                 case COMPARE_CV:  // now done with the read request
-                    if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV for compare");
+                	if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV for compare");
 
-                    // check for success SAME or DIFF?
-                    if ((retries < RETRY_MAX)
-    						&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
-    								.getState() != CvValue.SAME)
-    						&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
-    								.getState() != CvValue.DIFF)) {
-    					// need to retry on error; leave progState as it was
-                        log.debug("retry");
-                        retries++;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).confirmIcV(_status);
-                        return;
-                    }
+                	// check for success SAME or DIFF?
+                	if ((retries < RETRY_MAX)
+                			&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
+                					.getState() != CvValue.SAME)
+                					&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
+                							.getState() != CvValue.DIFF)) {
+                		// need to retry on error; leave progState as it was
+                		log.debug("retry");
+                		retries++;
+                		(_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).confirmIcV(_status);
+                	}
+                	return;
                 case WRITING_CV:  // now done with the write request
                     if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
 
@@ -494,7 +494,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.10 $
+     * @version     $Revision: 1.11 $
      */
     public class VarTextField extends JTextField {
 

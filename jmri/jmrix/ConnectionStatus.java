@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 public class ConnectionStatus {
 
@@ -80,7 +80,7 @@ public class ConnectionStatus {
 		if (portNames.contains(portName)){
 			for (int i=0; i<portNames.size(); i++){
 				if (portName.equals(portNames.get(i))){
-					stateText = (String) portStatus.get(i);
+					stateText = portStatus.get(i);
 					break;
 				}
 			}

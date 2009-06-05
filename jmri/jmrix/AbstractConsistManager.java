@@ -14,17 +14,17 @@ import jmri.DccLocoAddress;
  * system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.8 $
+ * @version               $Revision: 1.9 $
  */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
-	protected Hashtable ConsistTable = null;
+	protected Hashtable<DccLocoAddress,Consist> ConsistTable = null;
     
-	protected ArrayList ConsistList = null;
+	protected ArrayList<DccLocoAddress> ConsistList = null;
 
 	public AbstractConsistManager(){
-	      ConsistTable = new Hashtable();
-	      ConsistList = new ArrayList();
+	      ConsistTable = new Hashtable<DccLocoAddress,Consist>();
+	      ConsistList = new ArrayList<DccLocoAddress>();
 	}
 
 	/**
@@ -32,7 +32,7 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	 **/
 	public Consist getConsist(DccLocoAddress address){
 		if(ConsistTable.containsKey(address)) {
-			return((Consist)ConsistTable.get(address));
+			return(ConsistTable.get(address));
 		} else {
 			return(addConsist(address));
 		}
@@ -45,7 +45,7 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	
 	// remove the old Consist
 	public void delConsist(DccLocoAddress address){
-		((Consist)ConsistTable.get(address)).dispose();
+		ConsistTable.get(address).dispose();
 		ConsistTable.remove(address);
 		ConsistList.remove(address);
 	}
@@ -64,7 +64,7 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	/**
   	 *  Return the list of consists we know about.
 	 **/
-	public ArrayList getConsistList() { return ConsistList; }
+	public ArrayList<DccLocoAddress> getConsistList() { return ConsistList; }
 
 	public String decodeErrorCode(int ErrorCode){
 		StringBuffer buffer = new StringBuffer("");

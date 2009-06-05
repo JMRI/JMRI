@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -314,13 +314,14 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Trigger the notification of all PropertyChangeListeners
      */
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         if (oldValue.equals(newValue)) log.error("notifyPropertyChangeListener without change");
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<PropertyChangeListener> v;
         synchronized(this)
             {
-                v = (Vector) listeners.clone();
+                v = (Vector<PropertyChangeListener>) listeners.clone();
             }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" listeners about property "
@@ -328,14 +329,14 @@ abstract public class AbstractThrottle implements DccThrottle {
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
         }
     }
 
 
     // data members to hold contact with the property listeners
-    final private Vector listeners = new Vector();
+    final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
     /**
      * Dispose when finished with this object.  After this, further usage of

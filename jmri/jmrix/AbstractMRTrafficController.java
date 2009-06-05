@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.64 $
+ * @version         $Revision: 1.65 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -50,7 +50,7 @@ abstract public class AbstractMRTrafficController {
     
     // The methods to implement the abstract Interface
     
-    protected Vector cmdListeners = new Vector();
+    protected Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
     
     protected synchronized void addListener(AbstractMRListener l) {
         // add only if not already registered
@@ -73,17 +73,18 @@ abstract public class AbstractMRTrafficController {
      * @param notMe One (optional) listener to be skipped, usually
      *              because it's the originating object.
      */
-    protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
+    @SuppressWarnings("unchecked")
+	protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<AbstractMRListener> v;
         synchronized(this)
             {
-                v = (Vector) cmdListeners.clone();
+                v = (Vector<AbstractMRListener>) cmdListeners.clone();
             }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            AbstractMRListener client = (AbstractMRListener) v.elementAt(i);
+            AbstractMRListener client = v.elementAt(i);
             if (notMe != client) {
                 if (log.isDebugEnabled()) log.debug("notify client: "+client);
                 try {
@@ -167,16 +168,17 @@ abstract public class AbstractMRTrafficController {
      * @param dest One (optional) listener to be skipped, usually
      *              because it's the originating object.
      */
-    protected void notifyReply(AbstractMRReply r, AbstractMRListener dest) {
+    @SuppressWarnings("unchecked")
+	protected void notifyReply(AbstractMRReply r, AbstractMRListener dest) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
-        Vector v;
+        Vector<AbstractMRListener> v;
         synchronized(this) {
-            v = (Vector) cmdListeners.clone();
+            v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            AbstractMRListener client = (AbstractMRListener) v.elementAt(i);
+            AbstractMRListener client = v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
                 //skip dest for now, we'll send the message to there last.
@@ -200,8 +202,8 @@ abstract public class AbstractMRTrafficController {
     /**
      * Messages to be transmitted
      */
-    LinkedList msgQueue = new LinkedList();
-    LinkedList listenerQueue = new LinkedList();
+    LinkedList<AbstractMRMessage> msgQueue = new LinkedList<AbstractMRMessage>();
+    LinkedList<AbstractMRListener> listenerQueue = new LinkedList<AbstractMRListener>();
     
     /**
      * This is invoked with messages to be forwarded to the port.
@@ -233,9 +235,9 @@ abstract public class AbstractMRTrafficController {
             synchronized(selfLock) {
                 if (msgQueue.size()!=0) {
                     // yes, something to do
-                    m = (AbstractMRMessage)msgQueue.getFirst();
+                    m = msgQueue.getFirst();
                     msgQueue.removeFirst();
-                    l = (AbstractMRListener)listenerQueue.getFirst();
+                    l = listenerQueue.getFirst();
                     listenerQueue.removeFirst();
                     mCurrentState = WAITMSGREPLYSTATE;
                     log.debug("transmit loop has something to do: "+m);

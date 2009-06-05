@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -326,7 +326,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 int cv = Integer.valueOf(name).intValue();
-                CvValue cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+                CvValue cvObject = cvModel.allCvVector().elementAt(cv);
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
             }

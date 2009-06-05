@@ -2,13 +2,12 @@
 
 package jmri.jmrix;
 
-import jmri.util.StringUtil;
 
 /**
  * Add description of class here.
  *
  * @author Bob Jacobsen  Copyright 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public abstract class AbstractMessage implements Message {
     

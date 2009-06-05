@@ -14,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -27,7 +26,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -316,7 +315,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             boolean loggingNow = (logStream != null);
             stopLogButtonActionPerformed(e);  // stop before changing file
-            File file = logFileChooser.getSelectedFile();
+            //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
             if (loggingNow) startLogButtonActionPerformed(e);
         }

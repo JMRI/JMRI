@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 
@@ -36,7 +36,7 @@ abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 		portBox.setVisible(true);
 		portBox.setToolTipText("Select the port to use");
 		portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		Vector v = adapter.getPortNames();
+		Vector<String> v = adapter.getPortNames();
 		for (int i=0; i<v.size(); i++)
 			portBox.addItem(v.elementAt(i));
 
@@ -94,7 +94,7 @@ abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 	}
 
 	public void getNamesButtonActionPerformed(java.awt.event.ActionEvent e) {
-		Vector v = adapter.getPortNames();
+		Vector<String> v = adapter.getPortNames();
 		portBox.removeAllItems();
 		for (int i=0; i<v.size(); i++)
 			portBox.addItem(v.elementAt(i));

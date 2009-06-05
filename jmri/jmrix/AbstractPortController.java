@@ -24,7 +24,7 @@ import jmri.util.SystemType;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -135,14 +135,15 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     }    
     
     Vector<String> portNameVector = null;
-    public Vector getPortNames() {
+    @SuppressWarnings("unchecked")
+	public Vector<String> getPortNames() {
     	reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+            CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL)
             	// accumulate the names in a vector

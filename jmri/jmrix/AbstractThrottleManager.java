@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -24,7 +24,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 	 * objects.  This allows more than one to request a throttle
 	 * at a time, but @see{singleUse}.
 	 */
-    private HashMap throttleListeners;
+    private HashMap<DccLocoAddress,ArrayList<ThrottleListener>> throttleListeners;
 
 	/**
 	 * Does this DCC system allow a Throttle (e.g. an address) to be used
@@ -45,16 +45,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
         boolean throttleFree = true;
         if (throttleListeners == null) {
-            throttleListeners = new HashMap(5);
+            throttleListeners = new HashMap<DccLocoAddress,ArrayList<ThrottleListener>>(5);
         }
 
 		// put the list in if not present
 		DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
 		if (!throttleListeners.containsKey(la))
-			throttleListeners.put(la, new ArrayList());
+			throttleListeners.put(la, new ArrayList<ThrottleListener>());
 
 		// get the corresponding list to check length
-		ArrayList a = (ArrayList)throttleListeners.get(la);
+		ArrayList<ThrottleListener> a = throttleListeners.get(la);
 		
 		if (log.isDebugEnabled()) log.debug("After request in ATM: "+a.size());
 		// check length
@@ -105,7 +105,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         if (throttleListeners != null) {
             Integer addressKey = new Integer(address);
-			ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+			ArrayList<ThrottleListener> a = throttleListeners.get(addressKey);
 			if (a==null) return;
 			for (int i = 0; i<a.size(); i++) {
 				if (l == a.get(i))
@@ -137,13 +137,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for "+addr);
-		ArrayList a = (ArrayList)throttleListeners.get(addr);
+		ArrayList<ThrottleListener> a = throttleListeners.get(addr);
 		if (a==null) {
 		    log.warn("notifyThrottleKnown with zero-length listeners: "+addr);
 		    return;
 		}
 		for (int i = 0; i<a.size(); i++) {
-      	 	ThrottleListener l = (ThrottleListener)a.get(i);
+      	 	ThrottleListener l = a.get(i);
             log.debug("Notify listener");
             l.notifyThrottleFound(throttle);
         }
