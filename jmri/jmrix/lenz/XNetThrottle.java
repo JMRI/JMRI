@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.23 $
+ * @version    $Revision: 2.24 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -65,7 +65,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
                                                          XNetInterface.CS_INFO |
                                                          XNetInterface.THROTTLE, this);
-        requestList = new LinkedList<requestMessage>();
+        requestList = new LinkedList<RequestMessage>();
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
@@ -591,7 +591,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
      */
-    public float getSpeedSetting()
+    synchronized public float getSpeedSetting()
     {
         return speedSetting;
     }
@@ -989,7 +989,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 // Element 5 is the consist address, it can only be in the 
                 // range 1-99
                 int b5=l.getElement(5);
-                
+               
+                if(log.isDebugEnabled()) log.debug("Locomotive " + getDccAddress() + "in consist " + b5);
+ 
                 parseSpeedandAvailability(b1);
                 parseSpeedandDirection(b2);
                 parseFunctionInformation(b3,b4);
@@ -1012,6 +1014,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 // in the DH
                 int b5=l.getElement(5);		
                 int b6=l.getElement(6);		
+               
+                if(log.isDebugEnabled()){
+                   int address2 = (b5==0x00)?b6:((b5*256)&0xFF00)+(b6&0xFF)-0xC000;
+                   log.debug("Locomotive " + getDccAddress() + 
+                             "in Double Header with " + address2);
+                }
                 
                 parseSpeedandAvailability(b1);
                 parseSpeedandDirection(b2);
@@ -1118,29 +1126,29 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode27)
                     notifyPropertyChangeListener("SpeedSteps",
-                                                 new Integer(this.speedStepMode),
-                                                 new Integer(this.speedStepMode=DccThrottle.SpeedStepMode27));
+                                                 Integer.valueOf(this.speedStepMode),
+                                                 Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode27));
             } else if((b1 & 0x02)==0x02) {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 28"); }
                 this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode28)
                     notifyPropertyChangeListener("SpeedSteps",
-                                                 new Integer(this.speedStepMode),
-                                                 new Integer(this.speedStepMode=DccThrottle.SpeedStepMode28));
+                                                 Integer.valueOf(this.speedStepMode),
+                                                 Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode28));
             } else if((b1 & 0x04)==0x04) {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
                 this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode128)
                     notifyPropertyChangeListener("SpeedSteps",
-                                                 new Integer(this.speedStepMode),
-                                                 new Integer(this.speedStepMode=DccThrottle.SpeedStepMode128));
+                                                 Integer.valueOf(this.speedStepMode),
+                                                 Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode128));
             } else {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 14"); }
                 this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode14)
                     notifyPropertyChangeListener("SpeedSteps",
-                                                 new Integer(this.speedStepMode),
-                                                 new Integer(this.speedStepMode=DccThrottle.SpeedStepMode14));
+                                                 Integer.valueOf(this.speedStepMode),
+                                                 Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode14));
             }
     }
     
@@ -1152,16 +1160,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if ((b2 & 0x80)==0x80 && this.isForward==false) {
             if (log.isDebugEnabled ()) { log.debug("Throttle - Direction Forward Locomotive:" +address); }
             notifyPropertyChangeListener("IsForward",
-                                         new Boolean(this.isForward),
-                                         new Boolean(this.isForward=true));
+                                         Boolean.valueOf(this.isForward),
+                                         Boolean.valueOf(this.isForward=true));
             if(this.isForward==true) {
 		if(log.isDebugEnabled()) { log.debug("Throttle - Changed direction to Forward Locomotive:"+address); }
             }
 	} else if ((b2 & 0x80)==0x00 && this.isForward==true) {
             if(log.isDebugEnabled()) { log.debug("Throttle - Direction Reverse Locomotive:" +address); }
             notifyPropertyChangeListener("IsForward",
-                                         new Boolean(this.isForward),
-                                         new Boolean(this.isForward=false));
+                                         Boolean.valueOf(this.isForward),
+                                         Boolean.valueOf(this.isForward=false));
             if(this.isForward==false) {
 		if(log.isDebugEnabled()) { log.debug("Throttle - Changed direction to Reverse Locomotive:" +address);}
             }
@@ -1236,134 +1244,134 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 3 is the status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && getF0()==false) {
             notifyPropertyChangeListener("F0",
-                                         new Boolean(this.f0),
-                                         new Boolean(this.f0 = true));
+                                         Boolean.valueOf(this.f0),
+                                         Boolean.valueOf(this.f0 = true));
 	} else if ((b3 &0x10)==0x00 && getF0()==true) {
             notifyPropertyChangeListener("F0",
-                                         new Boolean(this.f0),
-                                         new Boolean(this.f0 = false));
+                                         Boolean.valueOf(this.f0),
+                                         Boolean.valueOf(this.f0 = false));
 	}
         
 	if((b3 & 0x01)==0x01 && getF1()==false) {
             notifyPropertyChangeListener("F1",
-                                         new Boolean(this.f1),
-                                         new Boolean(this.f1 = true));
+                                         Boolean.valueOf(this.f1),
+                                         Boolean.valueOf(this.f1 = true));
 	} else if ((b3 &0x01)==0x00 && getF1()==true) {
             notifyPropertyChangeListener("F1",
-                                         new Boolean(this.f1),
-                                         new Boolean(this.f1 = false));
+                                         Boolean.valueOf(this.f1),
+                                         Boolean.valueOf(this.f1 = false));
 	}
         
 	if((b3 & 0x02)==0x02 && getF2()==false) {
             notifyPropertyChangeListener("F2",
-                                         new Boolean(this.f2),
-                                         new Boolean(this.f2 = true));
+                                         Boolean.valueOf(this.f2),
+                                         Boolean.valueOf(this.f2 = true));
 	} else if ((b3 &0x02)==0x00 && getF2()==true) {
             notifyPropertyChangeListener("F2",
-                                         new Boolean(this.f2),
-                                         new Boolean(this.f2 = false));
+                                         Boolean.valueOf(this.f2),
+                                         Boolean.valueOf(this.f2 = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && getF3()==false) {
             notifyPropertyChangeListener("F3",
-                                         new Boolean(this.f3),
-                                         new Boolean(this.f3 = true));
+                                         Boolean.valueOf(this.f3),
+                                         Boolean.valueOf(this.f3 = true));
 	} else if ((b3 &0x04)==0x00 && getF3()==true) {
             notifyPropertyChangeListener("F3",
-                                         new Boolean(this.f3),
-                                         new Boolean(this.f3 = false));
+                                         Boolean.valueOf(this.f3),
+                                         Boolean.valueOf(this.f3 = false));
 	}
         
 	if((b3 & 0x08)==0x08 && getF4()==false) {
             notifyPropertyChangeListener("F4",
-                                         new Boolean(this.f4),
-                                         new Boolean(this.f4 = true));
+                                         Boolean.valueOf(this.f4),
+                                         Boolean.valueOf(this.f4 = true));
 	} else if ((b4 &0x08)==0x00 && getF4()==true) {
             notifyPropertyChangeListener("F4",
-                                         new Boolean(this.f4),
-                                         new Boolean(this.f4 = false));
+                                         Boolean.valueOf(this.f4),
+                                         Boolean.valueOf(this.f4 = false));
 	}
         
 	/* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
         
 	if((b4 & 0x01)==0x01 && getF5()==false)	{
             notifyPropertyChangeListener("F5",
-                                         new Boolean(this.f5),
-                                         new Boolean(this.f5 = true));
+                                         Boolean.valueOf(this.f5),
+                                         Boolean.valueOf(this.f5 = true));
 	} else if ((b4 &0x01)==0x00 && getF5()==true) {
             notifyPropertyChangeListener("F5",
-                                         new Boolean(this.f5),
-                                         new Boolean(this.f5 = false));
+                                         Boolean.valueOf(this.f5),
+                                         Boolean.valueOf(this.f5 = false));
 	}
         
 	if((b4 & 0x02)==0x02 && getF6()==false) {
             notifyPropertyChangeListener("F6",
-                                         new Boolean(this.f6),
-                                         new Boolean(this.f6 = true));
+                                         Boolean.valueOf(this.f6),
+                                         Boolean.valueOf(this.f6 = true));
 	} else if ((b4 &0x02)==0x00 && getF6()==true) {
             notifyPropertyChangeListener("F6",
-                                         new Boolean(this.f6),
-                                         new Boolean(this.f6 = false));
+                                         Boolean.valueOf(this.f6),
+                                         Boolean.valueOf(this.f6 = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && getF7()==false) {
             notifyPropertyChangeListener("F7",
-                                         new Boolean(this.f7),
-                                         new Boolean(this.f7 = true));
+                                         Boolean.valueOf(this.f7),
+                                         Boolean.valueOf(this.f7 = true));
 	} else if ((b4 &0x04)==0x00 && getF7()==true) {
             notifyPropertyChangeListener("F7",
-                                         new Boolean(this.f7),
-                                         new Boolean(this.f7 = false));
+                                         Boolean.valueOf(this.f7),
+                                         Boolean.valueOf(this.f7 = false));
 	}
         
 	if((b4 & 0x08)==0x08 && getF8()==false) {
             notifyPropertyChangeListener("F8",
-                                         new Boolean(this.f8),
-                                         new Boolean(this.f8 = true));
+                                         Boolean.valueOf(this.f8),
+                                         Boolean.valueOf(this.f8 = true));
 	} else if ((b4 &0x08)==0x00 && getF8()==true) {
             notifyPropertyChangeListener("F8",
-                                         new Boolean(this.f8),
-                                         new Boolean(this.f8 = false));
+                                         Boolean.valueOf(this.f8),
+                                         Boolean.valueOf(this.f8 = false));
 	}
         
 	if((b4 & 0x10)==0x10 && getF9()==false) {
             notifyPropertyChangeListener("F9",
-                                         new Boolean(this.f9),
-                                         new Boolean(this.f9 = true));
+                                         Boolean.valueOf(this.f9),
+                                         Boolean.valueOf(this.f9 = true));
 	} else if ((b4 &0x10)==0x00 && getF9()==true) {
             notifyPropertyChangeListener("F9",
-                                         new Boolean(this.f9),
-                                         new Boolean(this.f9 = false));
+                                         Boolean.valueOf(this.f9),
+                                         Boolean.valueOf(this.f9 = false));
 	}
         
 	if((b4 & 0x20)==0x20 && getF10()==false) {
             notifyPropertyChangeListener("F10",
-                                         new Boolean(this.f10),
-                                         new Boolean(this.f10 = true));
+                                         Boolean.valueOf(this.f10),
+                                         Boolean.valueOf(this.f10 = true));
 	} else if ((b4 &0x20)==0x00 && getF10()==true) {
             notifyPropertyChangeListener("F10",
-                                         new Boolean(this.f10),
-                                         new Boolean(this.f10 = false));
+                                         Boolean.valueOf(this.f10),
+                                         Boolean.valueOf(this.f10 = false));
 	}
         
 	if((b4 & 0x40)==0x40 && getF11()==false) {
             notifyPropertyChangeListener("F11",
-                                         new Boolean(this.f11),
-                                         new Boolean(this.f11 = true));
+                                         Boolean.valueOf(this.f11),
+                                         Boolean.valueOf(this.f11 = true));
 	} else if ((b4 &0x40)==0x00 && getF11()==true) {
             notifyPropertyChangeListener("F11",
-                                         new Boolean(this.f11),
-                                         new Boolean(this.f11 = false));
+                                         Boolean.valueOf(this.f11),
+                                         Boolean.valueOf(this.f11 = false));
 	}
         
 	if((b4 & 0x80)==0x80 && getF12()==false) {
             notifyPropertyChangeListener("F12",
-                                         new Boolean(this.f12),
-                                         new Boolean(this.f12 = true));
+                                         Boolean.valueOf(this.f12),
+                                         Boolean.valueOf(this.f12 = true));
 	} else if ((b4 &0x80)==0x00 && getF12()==true) {
             notifyPropertyChangeListener("F12",
-                                         new Boolean(this.f12),
-                                         new Boolean(this.f12 = false));
+                                         Boolean.valueOf(this.f12),
+                                         Boolean.valueOf(this.f12 = false));
 	}
     }
     
@@ -1373,163 +1381,163 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
 	if((b3 & 0x01)==0x01 && getF13()==false) {
             notifyPropertyChangeListener("F13",
-                                         new Boolean(this.f13),
-                                         new Boolean(this.f13 = true));
+                                         Boolean.valueOf(this.f13),
+                                         Boolean.valueOf(this.f13 = true));
 	} else if ((b3 &0x01)==0x00 && getF14()==true) {
             notifyPropertyChangeListener("F14",
-                                         new Boolean(this.f13),
-                                         new Boolean(this.f13 = false));
+                                         Boolean.valueOf(this.f13),
+                                         Boolean.valueOf(this.f13 = false));
 	}
         
 	if((b3 & 0x02)==0x02 && getF14()==false) {
             notifyPropertyChangeListener("F14",
-                                         new Boolean(this.f14),
-                                         new Boolean(this.f14 = true));
+                                         Boolean.valueOf(this.f14),
+                                         Boolean.valueOf(this.f14 = true));
 	} else if ((b3 &0x02)==0x00 && getF14()==true) {
             notifyPropertyChangeListener("F14",
-                                         new Boolean(this.f14),
-                                         new Boolean(this.f14 = false));
+                                         Boolean.valueOf(this.f14),
+                                         Boolean.valueOf(this.f14 = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && getF15()==false) {
             notifyPropertyChangeListener("F15",
-                                         new Boolean(this.f15),
-                                         new Boolean(this.f15 = true));
+                                         Boolean.valueOf(this.f15),
+                                         Boolean.valueOf(this.f15 = true));
 	} else if ((b3 &0x04)==0x00 && getF15()==true) {
             notifyPropertyChangeListener("F15",
-                                         new Boolean(this.f15),
-                                         new Boolean(this.f15 = false));
+                                         Boolean.valueOf(this.f15),
+                                         Boolean.valueOf(this.f15 = false));
 	}
         
 	if((b3 & 0x08)==0x08 && getF16()==false) {
             notifyPropertyChangeListener("F16",
-                                         new Boolean(this.f16),
-                                         new Boolean(this.f16 = true));
+                                         Boolean.valueOf(this.f16),
+                                         Boolean.valueOf(this.f16 = true));
 	} else if ((b4 &0x08)==0x00 && getF16()==true) {
             notifyPropertyChangeListener("F16",
-                                         new Boolean(this.f16),
-                                         new Boolean(this.f16 = false));
+                                         Boolean.valueOf(this.f16),
+                                         Boolean.valueOf(this.f16 = false));
 	}
 
 	if((b3 & 0x10)==0x10 && getF17()==false) {
             notifyPropertyChangeListener("F17",
-                                         new Boolean(this.f17),
-                                         new Boolean(this.f17 = true));
+                                         Boolean.valueOf(this.f17),
+                                         Boolean.valueOf(this.f17 = true));
 	} else if ((b4 &0x10)==0x00 && getF17()==true) {
             notifyPropertyChangeListener("F17",
-                                         new Boolean(this.f17),
-                                         new Boolean(this.f17 = false));
+                                         Boolean.valueOf(this.f17),
+                                         Boolean.valueOf(this.f17 = false));
 	}
         
 	if((b3 & 0x20)==0x20 && getF18()==false) {
             notifyPropertyChangeListener("F18",
-                                         new Boolean(this.f18),
-                                         new Boolean(this.f18 = true));
+                                         Boolean.valueOf(this.f18),
+                                         Boolean.valueOf(this.f18 = true));
 	} else if ((b4 &0x20)==0x00 && getF18()==true) {
             notifyPropertyChangeListener("F18",
-                                         new Boolean(this.f18),
-                                         new Boolean(this.f18 = false));
+                                         Boolean.valueOf(this.f18),
+                                         Boolean.valueOf(this.f18 = false));
 	}
 	
         if((b3 & 0x40)==0x40 && getF19()==false) {
             notifyPropertyChangeListener("F19",
-                                         new Boolean(this.f19),
-                                         new Boolean(this.f19 = true));
+                                         Boolean.valueOf(this.f19),
+                                         Boolean.valueOf(this.f19 = true));
 	} else if ((b4 &0x40)==0x00 && getF19()==true) {
             notifyPropertyChangeListener("F19",
-                                         new Boolean(this.f19),
-                                         new Boolean(this.f19 = false));
+                                         Boolean.valueOf(this.f19),
+                                         Boolean.valueOf(this.f19 = false));
 	}
         
         if((b3 & 0x80)==0x80 && getF20()==false) {
             notifyPropertyChangeListener("F20",
-                                         new Boolean(this.f20),
-                                         new Boolean(this.f20 = true));
+                                         Boolean.valueOf(this.f20),
+                                         Boolean.valueOf(this.f20 = true));
 	} else if ((b4 &0x80)==0x00 && getF20()==true) {
             notifyPropertyChangeListener("F20",
-                                         new Boolean(this.f20),
-                                         new Boolean(this.f20 = false));
+                                         Boolean.valueOf(this.f20),
+                                         Boolean.valueOf(this.f20 = false));
 	}
 	/* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
         
 	if((b4 & 0x01)==0x01 && getF21()==false)	{
             notifyPropertyChangeListener("F21",
-                                         new Boolean(this.f21),
-                                         new Boolean(this.f21 = true));
+                                         Boolean.valueOf(this.f21),
+                                         Boolean.valueOf(this.f21 = true));
 	} else if ((b4 &0x01)==0x00 && getF21()==true) {
             notifyPropertyChangeListener("F21",
-                                         new Boolean(this.f21),
-                                         new Boolean(this.f21 = false));
+                                         Boolean.valueOf(this.f21),
+                                         Boolean.valueOf(this.f21 = false));
 	}
         
 	if((b4 & 0x02)==0x02 && getF22()==false) {
             notifyPropertyChangeListener("F22",
-                                         new Boolean(this.f22),
-                                         new Boolean(this.f22 = true));
+                                         Boolean.valueOf(this.f22),
+                                         Boolean.valueOf(this.f22 = true));
 	} else if ((b4 &0x02)==0x00 && getF22()==true) {
             notifyPropertyChangeListener("F22",
-                                         new Boolean(this.f22),
-                                         new Boolean(this.f22 = false));
+                                         Boolean.valueOf(this.f22),
+                                         Boolean.valueOf(this.f22 = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && getF23()==false) {
             notifyPropertyChangeListener("F23",
-                                         new Boolean(this.f23),
-                                         new Boolean(this.f23 = true));
+                                         Boolean.valueOf(this.f23),
+                                         Boolean.valueOf(this.f23 = true));
 	} else if ((b4 &0x04)==0x00 && getF23()==true) {
             notifyPropertyChangeListener("F23",
-                                         new Boolean(this.f23),
-                                         new Boolean(this.f23 = false));
+                                         Boolean.valueOf(this.f23),
+                                         Boolean.valueOf(this.f23 = false));
 	}
         
 	if((b4 & 0x08)==0x08 && getF24()==false) {
             notifyPropertyChangeListener("F24",
-                                         new Boolean(this.f24),
-                                         new Boolean(this.f24 = true));
+                                         Boolean.valueOf(this.f24),
+                                         Boolean.valueOf(this.f24 = true));
 	} else if ((b4 &0x08)==0x00 && getF24()==true) {
             notifyPropertyChangeListener("F24",
-                                         new Boolean(this.f24),
-                                         new Boolean(this.f24 = false));
+                                         Boolean.valueOf(this.f24),
+                                         Boolean.valueOf(this.f24 = false));
 	}
         
 	if((b4 & 0x10)==0x10 && getF25()==false) {
             notifyPropertyChangeListener("F25",
-                                         new Boolean(this.f25),
-                                         new Boolean(this.f25 = true));
+                                         Boolean.valueOf(this.f25),
+                                         Boolean.valueOf(this.f25 = true));
 	} else if ((b4 &0x10)==0x00 && getF25()==true) {
             notifyPropertyChangeListener("F25",
-                                         new Boolean(this.f25),
-                                         new Boolean(this.f25 = false));
+                                         Boolean.valueOf(this.f25),
+                                         Boolean.valueOf(this.f25 = false));
 	}
         
 	if((b4 & 0x20)==0x20 && getF26()==false) {
             notifyPropertyChangeListener("F26",
-                                         new Boolean(this.f26),
-                                         new Boolean(this.f26 = true));
+                                         Boolean.valueOf(this.f26),
+                                         Boolean.valueOf(this.f26 = true));
 	} else if ((b4 &0x20)==0x00 && getF26()==true) {
             notifyPropertyChangeListener("F26",
-                                         new Boolean(this.f26),
-                                         new Boolean(this.f26 = false));
+                                         Boolean.valueOf(this.f26),
+                                         Boolean.valueOf(this.f26 = false));
 	}
         
 	if((b4 & 0x40)==0x40 && getF27()==false) {
             notifyPropertyChangeListener("F27",
-                                         new Boolean(this.f27),
-                                         new Boolean(this.f27 = true));
+                                         Boolean.valueOf(this.f27),
+                                         Boolean.valueOf(this.f27 = true));
 	} else if ((b4 &0x40)==0x00 && getF27()==true) {
             notifyPropertyChangeListener("F27",
-                                         new Boolean(this.f27),
-                                         new Boolean(this.f27 = false));
+                                         Boolean.valueOf(this.f27),
+                                         Boolean.valueOf(this.f27 = false));
 	}
         
 	if((b4 & 0x80)==0x80 && getF28()==false) {
             notifyPropertyChangeListener("F28",
-                                         new Boolean(this.f28),
-                                         new Boolean(this.f28 = true));
+                                         Boolean.valueOf(this.f28),
+                                         Boolean.valueOf(this.f28 = true));
 	} else if ((b4 &0x80)==0x00 && getF28()==true) {
             notifyPropertyChangeListener("F28",
-                                         new Boolean(this.f28),
-                                         new Boolean(this.f28 = false));
+                                         Boolean.valueOf(this.f28),
+                                         Boolean.valueOf(this.f28 = false));
 	}
     }
     
@@ -1539,134 +1547,134 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && this.f0Momentary==false) {
             notifyPropertyChangeListener("F0Momentary",
-                                         new Boolean(this.f0Momentary),
-                                         new Boolean(this.f0Momentary = true));
+                                         Boolean.valueOf(this.f0Momentary),
+                                         Boolean.valueOf(this.f0Momentary = true));
 	} else if ((b3 &0x10)==0x00 && this.f0Momentary==true) {
             notifyPropertyChangeListener("F0Momentary",
-                                         new Boolean(this.f0Momentary),
-                                         new Boolean(this.f0Momentary = false));
+                                         Boolean.valueOf(this.f0Momentary),
+                                         Boolean.valueOf(this.f0Momentary = false));
 	}
         
 	if((b3 & 0x01)==0x01 && this.f1Momentary==false) {
             notifyPropertyChangeListener("F1Momentary",
-                                         new Boolean(this.f1Momentary),
-                                         new Boolean(this.f1Momentary = true));
+                                         Boolean.valueOf(this.f1Momentary),
+                                         Boolean.valueOf(this.f1Momentary = true));
 	} else if ((b3 &0x01)==0x00 && this.f1Momentary==true) {
             notifyPropertyChangeListener("F1Momentary",
-                                         new Boolean(this.f1Momentary),
-                                         new Boolean(this.f1Momentary = false));
+                                         Boolean.valueOf(this.f1Momentary),
+                                         Boolean.valueOf(this.f1Momentary = false));
 	}
         
 	if((b3 & 0x02)==0x02 && this.f2Momentary==false) {
             notifyPropertyChangeListener("F2Momentary",
-                                         new Boolean(this.f2Momentary),
-                                         new Boolean(this.f2Momentary = true));
+                                         Boolean.valueOf(this.f2Momentary),
+                                         Boolean.valueOf(this.f2Momentary = true));
 	} else if ((b3 &0x02)==0x00 && this.f2Momentary==true) {
             notifyPropertyChangeListener("F2Momentary",
-                                         new Boolean(this.f2Momentary),
-                                         new Boolean(this.f2Momentary = false));
+                                         Boolean.valueOf(this.f2Momentary),
+                                         Boolean.valueOf(this.f2Momentary = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && this.f3Momentary==false) {
             notifyPropertyChangeListener("F3Momentary",
-                                         new Boolean(this.f3Momentary),
-                                         new Boolean(this.f3Momentary = true));
+                                         Boolean.valueOf(this.f3Momentary),
+                                         Boolean.valueOf(this.f3Momentary = true));
 	} else if ((b3 &0x04)==0x00 && this.f3Momentary==true) {
             notifyPropertyChangeListener("F3Momentary",
-                                         new Boolean(this.f3Momentary),
-                                         new Boolean(this.f3Momentary = false));
+                                         Boolean.valueOf(this.f3Momentary),
+                                         Boolean.valueOf(this.f3Momentary = false));
 	}
         
 	if((b3 & 0x08)==0x08 && this.f4Momentary==false) {
             notifyPropertyChangeListener("F4Momentary",
-                                         new Boolean(this.f4Momentary),
-                                         new Boolean(this.f4Momentary = true));
+                                         Boolean.valueOf(this.f4Momentary),
+                                         Boolean.valueOf(this.f4Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f4Momentary==true) {
             notifyPropertyChangeListener("F4Momentary",
-                                         new Boolean(this.f4Momentary),
-                                         new Boolean(this.f4Momentary = false));
+                                         Boolean.valueOf(this.f4Momentary),
+                                         Boolean.valueOf(this.f4Momentary = false));
 	}
         
 	/* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
         
 	if((b4 & 0x01)==0x01 && this.f5Momentary==false)	{
             notifyPropertyChangeListener("F5Momentary",
-                                         new Boolean(this.f5Momentary),
-                                         new Boolean(this.f5Momentary = true));
+                                         Boolean.valueOf(this.f5Momentary),
+                                         Boolean.valueOf(this.f5Momentary = true));
 	} else if ((b4 &0x01)==0x00 && this.f5Momentary==true) {
             notifyPropertyChangeListener("F5Momentary",
-                                         new Boolean(this.f5Momentary),
-                                         new Boolean(this.f5Momentary = false));
+                                         Boolean.valueOf(this.f5Momentary),
+                                         Boolean.valueOf(this.f5Momentary = false));
 	}
         
 	if((b4 & 0x02)==0x02 && this.f6Momentary==false) {
             notifyPropertyChangeListener("F6Momentary",
-                                         new Boolean(this.f6Momentary),
-                                         new Boolean(this.f6Momentary = true));
+                                         Boolean.valueOf(this.f6Momentary),
+                                         Boolean.valueOf(this.f6Momentary = true));
 	} else if ((b4 &0x02)==0x00 && this.f6Momentary==true) {
             notifyPropertyChangeListener("F6Momentary",
-                                         new Boolean(this.f6Momentary),
-                                         new Boolean(this.f6Momentary = false));
+                                         Boolean.valueOf(this.f6Momentary),
+                                         Boolean.valueOf(this.f6Momentary = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && this.f7Momentary==false) {
             notifyPropertyChangeListener("F7Momentary",
-                                         new Boolean(this.f7Momentary),
-                                         new Boolean(this.f7Momentary = true));
+                                         Boolean.valueOf(this.f7Momentary),
+                                         Boolean.valueOf(this.f7Momentary = true));
 	} else if ((b4 &0x04)==0x00 && this.f7Momentary==true) {
             notifyPropertyChangeListener("F7Momentary",
-                                         new Boolean(this.f7Momentary),
-                                         new Boolean(this.f7Momentary = false));
+                                         Boolean.valueOf(this.f7Momentary),
+                                         Boolean.valueOf(this.f7Momentary = false));
 	}
         
 	if((b4 & 0x08)==0x08 && this.f8Momentary==false) {
             notifyPropertyChangeListener("F8Momentary",
-                                         new Boolean(this.f8Momentary),
-                                         new Boolean(this.f8Momentary = true));
+                                         Boolean.valueOf(this.f8Momentary),
+                                         Boolean.valueOf(this.f8Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f8Momentary==true) {
             notifyPropertyChangeListener("F8Momentary",
-                                         new Boolean(this.f8Momentary),
-                                         new Boolean(this.f8Momentary = false));
+                                         Boolean.valueOf(this.f8Momentary),
+                                         Boolean.valueOf(this.f8Momentary = false));
 	}
         
 	if((b4 & 0x10)==0x10 && this.f9Momentary==false) {
             notifyPropertyChangeListener("F9Momentary",
-                                         new Boolean(this.f9Momentary),
-                                         new Boolean(this.f9Momentary = true));
+                                         Boolean.valueOf(this.f9Momentary),
+                                         Boolean.valueOf(this.f9Momentary = true));
 	} else if ((b4 &0x10)==0x00 && this.f9Momentary==true) {
             notifyPropertyChangeListener("F9Momentary",
-                                         new Boolean(this.f9Momentary),
-                                         new Boolean(this.f9Momentary = false));
+                                         Boolean.valueOf(this.f9Momentary),
+                                         Boolean.valueOf(this.f9Momentary = false));
 	}
         
 	if((b4 & 0x20)==0x20 && this.f10Momentary==false) {
             notifyPropertyChangeListener("F10Momentary",
-                                         new Boolean(this.f10Momentary),
-                                         new Boolean(this.f10Momentary = true));
+                                         Boolean.valueOf(this.f10Momentary),
+                                         Boolean.valueOf(this.f10Momentary = true));
 	} else if ((b4 &0x20)==0x00 && this.f10Momentary==true) {
             notifyPropertyChangeListener("F10Momentary",
-                                         new Boolean(this.f10Momentary),
-                                         new Boolean(this.f10Momentary = false));
+                                         Boolean.valueOf(this.f10Momentary),
+                                         Boolean.valueOf(this.f10Momentary = false));
 	}
         
 	if((b4 & 0x40)==0x40 && this.f11Momentary==false) {
             notifyPropertyChangeListener("F11Momentary",
-                                         new Boolean(this.f11Momentary),
-                                         new Boolean(this.f11Momentary = true));
+                                         Boolean.valueOf(this.f11Momentary),
+                                         Boolean.valueOf(this.f11Momentary = true));
 	} else if ((b4 &0x40)==0x00 && this.f11Momentary==true) {
             notifyPropertyChangeListener("F11Momentary",
-                                         new Boolean(this.f11Momentary),
-                                         new Boolean(this.f11Momentary = false));
+                                         Boolean.valueOf(this.f11Momentary),
+                                         Boolean.valueOf(this.f11Momentary = false));
 	}
         
 	if((b4 & 0x80)==0x80 && this.f12Momentary==false) {
             notifyPropertyChangeListener("F12Momentary",
-                                         new Boolean(this.f12Momentary),
-                                         new Boolean(this.f12Momentary = true));
+                                         Boolean.valueOf(this.f12Momentary),
+                                         Boolean.valueOf(this.f12Momentary = true));
 	} else if ((b4 &0x80)==0x00 && this.f12Momentary==true) {
             notifyPropertyChangeListener("F12Momentary",
-                                         new Boolean(this.f12Momentary),
-                                         new Boolean(this.f12Momentary = false));
+                                         Boolean.valueOf(this.f12Momentary),
+                                         Boolean.valueOf(this.f12Momentary = false));
 	}
     }
 
@@ -1677,164 +1685,164 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         
 	if((b3 & 0x01)==0x01 && this.f13Momentary==false) {
             notifyPropertyChangeListener("F13Momentary",
-                                         new Boolean(this.f13Momentary),
-                                         new Boolean(this.f13Momentary = true));
+                                         Boolean.valueOf(this.f13Momentary),
+                                         Boolean.valueOf(this.f13Momentary = true));
 	} else if ((b3 &0x01)==0x00 && this.f13Momentary==true) {
             notifyPropertyChangeListener("F13Momentary",
-                                         new Boolean(this.f13Momentary),
-                                         new Boolean(this.f13Momentary = false));
+                                         Boolean.valueOf(this.f13Momentary),
+                                         Boolean.valueOf(this.f13Momentary = false));
 	}
         
 	if((b3 & 0x02)==0x02 && this.f2Momentary==false) {
             notifyPropertyChangeListener("F14Momentary",
-                                         new Boolean(this.f14Momentary),
-                                         new Boolean(this.f14Momentary = true));
+                                         Boolean.valueOf(this.f14Momentary),
+                                         Boolean.valueOf(this.f14Momentary = true));
 	} else if ((b3 &0x02)==0x00 && this.f14Momentary==true) {
             notifyPropertyChangeListener("F14Momentary",
-                                         new Boolean(this.f14Momentary),
-                                         new Boolean(this.f14Momentary = false));
+                                         Boolean.valueOf(this.f14Momentary),
+                                         Boolean.valueOf(this.f14Momentary = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && this.f15Momentary==false) {
             notifyPropertyChangeListener("F15Momentary",
-                                         new Boolean(this.f15Momentary),
-                                         new Boolean(this.f15Momentary = true));
+                                         Boolean.valueOf(this.f15Momentary),
+                                         Boolean.valueOf(this.f15Momentary = true));
 	} else if ((b3 &0x04)==0x00 && this.f15Momentary==true) {
             notifyPropertyChangeListener("F15Momentary",
-                                         new Boolean(this.f15Momentary),
-                                         new Boolean(this.f15Momentary = false));
+                                         Boolean.valueOf(this.f15Momentary),
+                                         Boolean.valueOf(this.f15Momentary = false));
 	}
         
 	if((b3 & 0x08)==0x08 && this.f16Momentary==false) {
             notifyPropertyChangeListener("F16Momentary",
-                                         new Boolean(this.f16Momentary),
-                                         new Boolean(this.f16Momentary = true));
+                                         Boolean.valueOf(this.f16Momentary),
+                                         Boolean.valueOf(this.f16Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f16Momentary==true) {
             notifyPropertyChangeListener("F16Momentary",
-                                         new Boolean(this.f16Momentary),
-                                         new Boolean(this.f16Momentary = false));
+                                         Boolean.valueOf(this.f16Momentary),
+                                         Boolean.valueOf(this.f16Momentary = false));
 	}
 	
         if((b3 & 0x10)==0x10 && this.f17Momentary==false) {
             notifyPropertyChangeListener("F17Momentary",
-                                         new Boolean(this.f17Momentary),
-                                         new Boolean(this.f17Momentary = true));
+                                         Boolean.valueOf(this.f17Momentary),
+                                         Boolean.valueOf(this.f17Momentary = true));
 	} else if ((b3 &0x10)==0x00 && this.f17Momentary==true) {
             notifyPropertyChangeListener("F17Momentary",
-                                         new Boolean(this.f17Momentary),
-                                         new Boolean(this.f17Momentary = false));
+                                         Boolean.valueOf(this.f17Momentary),
+                                         Boolean.valueOf(this.f17Momentary = false));
 	}
 
         if((b3 & 0x20)==0x20 && this.f18Momentary==false) {
             notifyPropertyChangeListener("F18Momentary",
-                                         new Boolean(this.f18Momentary),
-                                         new Boolean(this.f18Momentary = true));
+                                         Boolean.valueOf(this.f18Momentary),
+                                         Boolean.valueOf(this.f18Momentary = true));
 	} else if ((b3 &0x20)==0x00 && this.f18Momentary==true) {
             notifyPropertyChangeListener("F18Momentary",
-                                         new Boolean(this.f18Momentary),
-                                         new Boolean(this.f18Momentary = false));
+                                         Boolean.valueOf(this.f18Momentary),
+                                         Boolean.valueOf(this.f18Momentary = false));
 	}
 
         if((b3 & 0x40)==0x40 && this.f19Momentary==false) {
             notifyPropertyChangeListener("F19Momentary",
-                                         new Boolean(this.f19Momentary),
-                                         new Boolean(this.f19Momentary = true));
+                                         Boolean.valueOf(this.f19Momentary),
+                                         Boolean.valueOf(this.f19Momentary = true));
 	} else if ((b3 &0x40)==0x00 && this.f19Momentary==true) {
             notifyPropertyChangeListener("F19Momentary",
-                                         new Boolean(this.f19Momentary),
-                                         new Boolean(this.f19Momentary = false));
+                                         Boolean.valueOf(this.f19Momentary),
+                                         Boolean.valueOf(this.f19Momentary = false));
 	}
         
         if((b3 & 0x80)==0x80 && this.f20Momentary==false) {
             notifyPropertyChangeListener("F20Momentary",
-                                         new Boolean(this.f20Momentary),
-                                         new Boolean(this.f20Momentary = true));
+                                         Boolean.valueOf(this.f20Momentary),
+                                         Boolean.valueOf(this.f20Momentary = true));
 	} else if ((b3 &0x80)==0x00 && this.f20Momentary==true) {
             notifyPropertyChangeListener("F20Momentary",
-                                         new Boolean(this.f20Momentary),
-                                         new Boolean(this.f20Momentary = false));
+                                         Boolean.valueOf(this.f20Momentary),
+                                         Boolean.valueOf(this.f20Momentary = false));
 	}
 
 	/* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
         
 	if((b4 & 0x01)==0x01 && this.f21Momentary==false)	{
             notifyPropertyChangeListener("F5Momentary",
-                                         new Boolean(this.f21Momentary),
-                                         new Boolean(this.f21Momentary = true));
+                                         Boolean.valueOf(this.f21Momentary),
+                                         Boolean.valueOf(this.f21Momentary = true));
 	} else if ((b4 &0x01)==0x00 && this.f21Momentary==true) {
             notifyPropertyChangeListener("F21Momentary",
-                                         new Boolean(this.f21Momentary),
-                                         new Boolean(this.f21Momentary = false));
+                                         Boolean.valueOf(this.f21Momentary),
+                                         Boolean.valueOf(this.f21Momentary = false));
 	}
         
 	if((b4 & 0x02)==0x02 && this.f22Momentary==false) {
             notifyPropertyChangeListener("F22Momentary",
-                                         new Boolean(this.f22Momentary),
-                                         new Boolean(this.f22Momentary = true));
+                                         Boolean.valueOf(this.f22Momentary),
+                                         Boolean.valueOf(this.f22Momentary = true));
 	} else if ((b4 &0x02)==0x00 && this.f22Momentary==true) {
             notifyPropertyChangeListener("F22Momentary",
-                                         new Boolean(this.f22Momentary),
-                                         new Boolean(this.f22Momentary = false));
+                                         Boolean.valueOf(this.f22Momentary),
+                                         Boolean.valueOf(this.f22Momentary = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && this.f23Momentary==false) {
             notifyPropertyChangeListener("F23Momentary",
-                                         new Boolean(this.f23Momentary),
-                                         new Boolean(this.f23Momentary = true));
+                                         Boolean.valueOf(this.f23Momentary),
+                                         Boolean.valueOf(this.f23Momentary = true));
 	} else if ((b4 &0x04)==0x00 && this.f23Momentary==true) {
             notifyPropertyChangeListener("F23Momentary",
-                                         new Boolean(this.f23Momentary),
-                                         new Boolean(this.f23Momentary = false));
+                                         Boolean.valueOf(this.f23Momentary),
+                                         Boolean.valueOf(this.f23Momentary = false));
 	}
         
 	if((b4 & 0x08)==0x08 && this.f24Momentary==false) {
             notifyPropertyChangeListener("F24Momentary",
-                                         new Boolean(this.f24Momentary),
-                                         new Boolean(this.f24Momentary = true));
+                                         Boolean.valueOf(this.f24Momentary),
+                                         Boolean.valueOf(this.f24Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f24Momentary==true) {
             notifyPropertyChangeListener("F24Momentary",
-                                         new Boolean(this.f24Momentary),
-                                         new Boolean(this.f24Momentary = false));
+                                         Boolean.valueOf(this.f24Momentary),
+                                         Boolean.valueOf(this.f24Momentary = false));
 	}
         
 	if((b4 & 0x10)==0x10 && this.f25Momentary==false) {
             notifyPropertyChangeListener("F25Momentary",
-                                         new Boolean(this.f25Momentary),
-                                         new Boolean(this.f25Momentary = true));
+                                         Boolean.valueOf(this.f25Momentary),
+                                         Boolean.valueOf(this.f25Momentary = true));
 	} else if ((b4 &0x10)==0x00 && this.f25Momentary==true) {
             notifyPropertyChangeListener("F25Momentary",
-                                         new Boolean(this.f25Momentary),
-                                         new Boolean(this.f25Momentary = false));
+                                         Boolean.valueOf(this.f25Momentary),
+                                         Boolean.valueOf(this.f25Momentary = false));
 	}
         
 	if((b4 & 0x20)==0x20 && this.f26Momentary==false) {
             notifyPropertyChangeListener("F26Momentary",
-                                         new Boolean(this.f26Momentary),
-                                         new Boolean(this.f26Momentary = true));
+                                         Boolean.valueOf(this.f26Momentary),
+                                         Boolean.valueOf(this.f26Momentary = true));
 	} else if ((b4 &0x20)==0x00 && this.f26Momentary==true) {
             notifyPropertyChangeListener("F26Momentary",
-                                         new Boolean(this.f26Momentary),
-                                         new Boolean(this.f26Momentary = false));
+                                         Boolean.valueOf(this.f26Momentary),
+                                         Boolean.valueOf(this.f26Momentary = false));
 	}
         
 	if((b4 & 0x40)==0x40 && this.f27Momentary==false) {
             notifyPropertyChangeListener("F27Momentary",
-                                         new Boolean(this.f27Momentary),
-                                         new Boolean(this.f27Momentary = true));
+                                         Boolean.valueOf(this.f27Momentary),
+                                         Boolean.valueOf(this.f27Momentary = true));
 	} else if ((b4 &0x40)==0x00 && this.f27Momentary==true) {
             notifyPropertyChangeListener("F27Momentary",
-                                         new Boolean(this.f27Momentary),
-                                         new Boolean(this.f27Momentary = false));
+                                         Boolean.valueOf(this.f27Momentary),
+                                         Boolean.valueOf(this.f27Momentary = false));
 	}
         
 	if((b4 & 0x80)==0x80 && this.f28Momentary==false) {
             notifyPropertyChangeListener("F28Momentary",
-                                         new Boolean(this.f28Momentary),
-                                         new Boolean(this.f28Momentary = true));
+                                         Boolean.valueOf(this.f28Momentary),
+                                         Boolean.valueOf(this.f28Momentary = true));
 	} else if ((b4 &0x80)==0x00 && this.f28Momentary==true) {
             notifyPropertyChangeListener("F28Momentary",
-                                         new Boolean(this.f28Momentary),
-                                         new Boolean(this.f28Momentary = false));
+                                         Boolean.valueOf(this.f28Momentary),
+                                         Boolean.valueOf(this.f28Momentary = false));
 	}
     }
     
@@ -1844,8 +1852,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void setIsAvailable(boolean Available) {
         if(this.isAvailable!=Available) {
             notifyPropertyChangeListener("IsAvailable",
-                                         new Boolean(this.isAvailable),
-                                         new Boolean(this.isAvailable = Available));
+                                         Boolean.valueOf(this.isAvailable),
+                                         Boolean.valueOf(this.isAvailable = Available));
         }
         /* if we're setting this to true, stop the timer,
            otherwise start the timer. */
@@ -1887,12 +1895,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 
     //A queue to hold outstanding messages
-    protected LinkedList<requestMessage> requestList = null;
+    protected LinkedList<RequestMessage> requestList = null;
 
     //function to send message from queue.
     synchronized protected void sendQueuedMessage(){
 
-        requestMessage msg = null;
+        RequestMessage msg = null;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         if(requestList.size()!=0){
@@ -1914,7 +1922,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     synchronized protected void queueMessage(XNetMessage m,int s){
         if(log.isDebugEnabled()) log.debug("adding message to message queue");
         // put the message in the queue
-        requestMessage msg=new requestMessage(m,s);
+        RequestMessage msg=new RequestMessage(m,s);
         requestList.addLast(msg);        
         // if the state is idle, trigger the message send
         if(requestState==THROTTLEIDLE) sendQueuedMessage();
@@ -1922,11 +1930,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     // internal class to hold a request message, along with the associated
     // throttle state.
-    protected class requestMessage{
+    protected static class RequestMessage{
             private int state;
             private XNetMessage msg;
            
-            requestMessage(XNetMessage m,int s){
+            RequestMessage(XNetMessage m,int s){
                state=s;
                msg=m;
             }
