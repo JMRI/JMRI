@@ -10,13 +10,14 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
     public void testCtor() {
         LI100XNetProgrammer p = new LI100XNetProgrammer();
         Assert.assertTrue(p != null);
+        jmri.util.JUnitAppender.assertErrorMessage("Creating too many XNetProgrammer objects");
     }
 
 	// from here down is testing infrastructure
@@ -38,8 +39,14 @@ public class LI100XNetProgrammerTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetProgrammerTest.class.getName());
 
