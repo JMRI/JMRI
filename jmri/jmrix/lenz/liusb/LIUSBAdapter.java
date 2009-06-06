@@ -23,7 +23,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005, Portions
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -205,7 +205,7 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = (AbstractMRTrafficController) (new LIUSBXNetPacketizer(new LenzCommandStation()));
+        AbstractMRTrafficController packets = new LIUSBXNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation

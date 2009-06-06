@@ -2,8 +2,6 @@ package jmri.jmrix.lenz.hornbyelite.configurexml;
 
 import org.jdom.Element;
 
-import jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager;
-
 /**
  * Provides load and store functionality for
  * configuring XNetTurnoutManagers.
@@ -12,7 +10,7 @@ import jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager;
  * provides a load method here.
  *
  * @author Paul Bender Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,7 +28,7 @@ public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.Abstr
 
     public void load(Element turnouts) {
         // create the master object
-        jmri.jmrix.lenz.XNetTurnoutManager mgr = jmri.jmrix.lenz.XNetTurnoutManager.instance();
+        jmri.jmrix.lenz.XNetTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

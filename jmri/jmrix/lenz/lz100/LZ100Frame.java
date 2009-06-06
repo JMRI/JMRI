@@ -4,7 +4,6 @@ package jmri.jmrix.lenz.lz100;
 
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.ResourceBundle;
 
 /**
  * Frame displaying the LZ100 configuration utility
@@ -13,11 +12,11 @@ import java.util.ResourceBundle;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
+    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
 
     public LZ100Frame() {
 	    this("LZ100 Configuration Utility");

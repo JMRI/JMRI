@@ -6,12 +6,11 @@
  *                      See XNetTurnout for further documentation.
  * </P>
  * @author			Paul Bender Copyright (C) 2008 
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
 
-import jmri.implementation.AbstractTurnout;
 
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 

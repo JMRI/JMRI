@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -151,7 +151,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 	     msg.setElement(1,XNetConstants.LI101_REQUEST_BAUD);
              /* For element 2, we need to figure out what address to send based
              on user selections */
-	     msg.setElement(2,(int)speedBox.getSelectedIndex()+1);
+	     msg.setElement(2,speedBox.getSelectedIndex()+1);
              msg.setParity(); // Set the parity bit
              //Then send to the controller
              XNetTrafficController.instance().sendXNetMessage(msg,this);

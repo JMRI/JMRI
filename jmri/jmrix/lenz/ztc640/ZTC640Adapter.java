@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -205,7 +205,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = (AbstractMRTrafficController) (new ZTC640XNetPacketizer(new LenzCommandStation()));
+        AbstractMRTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation

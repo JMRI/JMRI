@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -74,7 +74,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      */
     String mSystemName = "";     // system name 
     protected int mState = OFF;  // current state of this light
-    private int mOldState =mState; // save the old state
+    //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
 
     /* Internal State Machine states. */
@@ -101,7 +101,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
         }
 
         // find the command station
-        LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
+        //LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mAddress,
                                                   (newState & ON)!=0,
@@ -143,7 +143,7 @@ l);
           } else if(l.isOkMessage()) {
             /* the command was successfully recieved */
             synchronized(this) {
-               mOldState=mState;
+               //mOldState=mState;
                InternalState=IDLE;
             }
             return;
@@ -186,7 +186,7 @@ l);
             
             // Set the known state to the commanded state.
             synchronized(this) {
-               mOldState=mState; 
+               //mOldState=mState; 
                InternalState = OFFSENT;
             }
     }

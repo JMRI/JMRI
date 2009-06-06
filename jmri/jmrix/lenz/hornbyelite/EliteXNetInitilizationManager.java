@@ -11,16 +11,18 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 
     protected void init() {
 	if(log.isDebugEnabled()) log.debug("Init called");
-        float CSSoftwareVersion = XNetTrafficController.instance()
+        @SuppressWarnings("unused")
+		float CSSoftwareVersion = XNetTrafficController.instance()
                                        .getCommandStation()
                                        .getCommandStationSoftwareVersion();
-        int CSType = XNetTrafficController.instance()
+        @SuppressWarnings("unused")
+		int CSType = XNetTrafficController.instance()
                                           .getCommandStation()
                                           .getCommandStationType();
 

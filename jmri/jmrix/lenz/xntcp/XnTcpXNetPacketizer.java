@@ -4,8 +4,6 @@
 
 package jmri.jmrix.lenz.xntcp;
 
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
 
@@ -15,7 +13,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  * @author		Giorgio Terdina Copyright (C) 2008, based on LIUSB packetizer by Paul Bender, Copyright (C) 2005
- * @version 	$Revision: 1.2 $
+ * @version 	$Revision: 1.3 $
  *
  */
 public class XnTcpXNetPacketizer extends XNetPacketizer {

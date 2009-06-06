@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -22,7 +21,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -113,7 +112,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     	
         setInstance();
 
-        Vector v;
+        Vector<String> v;
         try {
             v = adapter.getPortNames();
     	    if (log.isDebugEnabled()) {
@@ -133,7 +132,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 		int indSel = -1;
 		if(oldName == null) oldName = "(none)";
         for (int i=0; i<v.size(); i++) {
-			if(((String)v.elementAt(i)).equals(oldName)) indSel = i;
+			if(v.elementAt(i).equals(oldName)) indSel = i;
 			portBox.addItem(v.elementAt(i));
         }
         portBox.addItem("Manual");

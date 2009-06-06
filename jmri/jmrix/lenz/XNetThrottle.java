@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.24 $
+ * @version    $Revision: 2.25 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -609,7 +609,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             }
 	else
 	{
-        if(speed>(float)1)
+        if(speed>1)
 		speed=(float)1.0;
 	/* we're sending a speed to the locomotive */
        	 XNetMessage msg=new XNetMessage(6);

@@ -23,7 +23,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via the Hornby Elite's built in USB port.
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003,2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class EliteAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -206,7 +206,7 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = (AbstractMRTrafficController) (new XNetPacketizer(new HornbyEliteCommandStation()));
+        AbstractMRTrafficController packets = new XNetPacketizer(new HornbyEliteCommandStation());
         packets.connectPort(this);
         
         // start operation

@@ -10,12 +10,12 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.10 $
+ * @version               $Revision: 2.11 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
-        private Thread initThread = null;
+        //private Thread initThread = null;
 
         /**
          *  Constructor - call the constructor for the superclass, and 
@@ -25,7 +25,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
         public XNetConsistManager(){
               super();
               // Initilize the consist reader thread.
-	      initThread = new Thread(new XNetConsistReader());
+	      new Thread(new XNetConsistReader());
         }
 
 	/**
@@ -49,7 +49,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
                         consist = new XNetConsist(address);
                         ConsistTable.put(address,consist);
                         ConsistList.add(address);
-                        return((Consist)consist);
+                        return(consist);
 	}
 
         // Internal class to read consists from the command station

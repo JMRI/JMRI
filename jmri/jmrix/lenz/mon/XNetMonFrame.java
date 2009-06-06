@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2009
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.25 $
+ * @version         $Revision: 2.26 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -435,7 +435,8 @@ import jmri.jmrix.lenz.XNetConstants;
 	}
 
  	// listen for the messages to the LI100/LI101
-    	public synchronized void message(XNetMessage l) {
+    	@SuppressWarnings("fallthrough")
+		public synchronized void message(XNetMessage l) {
 		// display the raw data if requested
 		String raw = "packet: ";
 		if ( rawCheckBox.isSelected() ) {
@@ -560,6 +561,7 @@ import jmri.jmrix.lenz.XNetConstants;
 					   +" For Decoder Address "
 					   +calcLocoAddress(l.getElement(2),l.getElement(3)));
 				}
+				//fall through
 		  default:
 			text = l.toString();
 		  }

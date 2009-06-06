@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.21 $
+ * @version $Revision: 2.22 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -113,16 +113,17 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	// notify property listeners - see AbstractProgrammer for more
 
+	@SuppressWarnings("unchecked")
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<PropertyChangeListener> v;
 		synchronized(this) {
-			v = (Vector) propListeners.clone();
+			v = (Vector<PropertyChangeListener>) propListeners.clone();
 		}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+			PropertyChangeListener client = v.elementAt(i);
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
 		}
 	}

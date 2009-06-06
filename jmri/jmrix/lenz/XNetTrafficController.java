@@ -17,12 +17,12 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.13 $
+ * @version 		$Revision: 2.14 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
 
-    protected Hashtable mListenerMasks;
+    protected Hashtable<XNetListener,Integer> mListenerMasks;
 
     /**
 	 * static function returning the TrafficController instance to use.
@@ -51,7 +51,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
 	setAllowUnexpectedReply(true);
-	mListenerMasks = new Hashtable();
+	mListenerMasks = new Hashtable<XNetListener,Integer>();
     }
 
     // Abstract methods for the XNetInterface
@@ -85,7 +85,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                     log.warn("Ignore packet with bad checksum: "+((XNetReply)m).toString());
 		} else {
                    try {
-		   int mask = ((Integer)mListenerMasks.get((XNetListener)client)).intValue();
+		   int mask = (mListenerMasks.get(client)).intValue();
 		   if(mask==XNetInterface.ALL) {
 		   	((XNetListener)client).message((XNetReply)m);		   
 		   } else if ((mask&XNetInterface.COMMINFO)==

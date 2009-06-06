@@ -13,12 +13,8 @@ import jmri.jmrix.AbstractMRTrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 /**
  * Provide access to a simulated XPressNet system.
@@ -34,7 +30,7 @@ import java.io.InputStreamReader;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -94,7 +90,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = (AbstractMRTrafficController) (new XNetPacketizer(new LenzCommandStation()));
+        AbstractMRTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation
@@ -128,8 +124,6 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
     public String[] validBaudRates() {
         return null;
     }
-    
-    private boolean opened = false;
     
     static public XNetSimulatorAdapter instance() {
         if (mInstance == null) mInstance = new XNetSimulatorAdapter();
@@ -166,7 +160,8 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
 
     // generateReply is the heart of the simulation.  It translates an 
     // incoming XNetMessage into an outgoing XNetReply.
-    private XNetReply generateReply(XNetMessage m){
+    @SuppressWarnings("fallthrough")
+	private XNetReply generateReply(XNetMessage m){
             XNetReply reply = new XNetReply();
             switch(m.getElement(0)){
 
@@ -203,6 +198,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
                            reply=notSupportedReply();
                            break;
                        }
+                    // fall through
                case XNetConstants.EMERGENCY_STOP:
                case XNetConstants.ACC_OPER_REQ:
                    reply=okReply();

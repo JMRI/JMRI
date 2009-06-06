@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -192,7 +192,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      **/
      public int getTurnoutStatus(int turnout) {
         if (this.isFeedbackMessage()) {
-            int a1 = this.getElement(1);
+            //int a1 = this.getElement(1);
             int a2 = this.getElement(2);
             int messagetype=this.getFeedbackMessageType();
 	    if ( messagetype == 0 || messagetype == 1) {
@@ -242,7 +242,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      **/
      public int getTurnoutStatus(int startByte,int turnout) {
         if (this.isFeedbackBroadcastMessage()) {
-            int a1 = this.getElement(startByte);
+            //int a1 = this.getElement(startByte);
             int a2 = this.getElement(startByte+1);
             int messagetype=this.getFeedbackMessageType();
 	    if ( messagetype == 0 || messagetype == 1) {

@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI101 on an attached serial comm port.
  * Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.13 $
+ * @version			$Revision: 2.14 $
  */
 
 public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -206,7 +206,7 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = (AbstractMRTrafficController) (new XNetPacketizer(new LenzCommandStation()));
+        AbstractMRTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation

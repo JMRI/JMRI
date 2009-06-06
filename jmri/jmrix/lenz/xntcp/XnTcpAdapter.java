@@ -10,13 +10,12 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import javax.swing.JOptionPane;
 import jmri.jmrix.ConnectionStatus;
 
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  */
@@ -31,8 +30,8 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	static final int READ_TIMEOUT = 8000;
 	// Increasing MAX_PENDING_PACKETS makes output to CS faster, but may delay reception of unexpected notifications from CS
 	static final int MAX_PENDING_PACKETS = 15;	// Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
-	private  Vector hostNameVector = null;		// Contains the list of interfaces found on the LAN
-	private  Vector HostAddressVector = null;	// Contains their IP and port numbers
+	private  Vector<String> hostNameVector = null;		// Contains the list of interfaces found on the LAN
+	private  Vector<HostAddress> HostAddressVector = null;	// Contains their IP and port numbers
 	private  Socket tcpSocket = null;
 	private boolean opened = false;
 	private  InputStream inTcpStream = null;
@@ -51,7 +50,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 		}
 	}
 	
-	public Vector getPortNames() {
+	public Vector<String> getPortNames() {
 		findInterfaces();
 		// return the list of interfaces found
 		return hostNameVector;
@@ -76,7 +75,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 			outName = portName;
 			if(hostNameVector == null) findInterfaces();
 			if((ind = hostNameVector.indexOf(portName)) < 0) return "XpressNet/TCP interface "+portName+" not found";
-			hostNumber = (HostAddress)HostAddressVector.get(ind);
+			hostNumber = HostAddressVector.get(ind);
 		}
 		try {
 			// Connect!
@@ -122,8 +121,8 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 
 		DatagramSocket	udpSocket = null;
 		
-		hostNameVector = new Vector(10, 1);
-		HostAddressVector = new Vector(10, 1);
+		hostNameVector = new Vector<String>(10, 1);
+		HostAddressVector = new Vector<HostAddress>(10, 1);
 		
 		try {
 			byte[] udpBuffer = new byte[UDP_LENGTH];
@@ -147,7 +146,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 					hostNameVector.addElement((new String(udpBuffer, 0, 16, "US-ASCII")).trim());
 					// Retrieve the IP and port numbers of the interface
 					HostAddressVector.addElement(new HostAddress(cleanIP((udpPacket.getAddress()).getHostAddress()), 
-												(((int)udpBuffer[16]) & 0xff)*256 + (((int)udpBuffer[17]) & 0xff)));
+												((udpBuffer[16]) & 0xff)*256 + ((udpBuffer[17]) & 0xff)));
 				}
 			}
 		}
@@ -228,7 +227,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	 */
 	public void configure() {
             // connect to a packetizing traffic controller
-            AbstractMRTrafficController packets = (AbstractMRTrafficController) (new XnTcpXNetPacketizer(new LenzCommandStation()));
+            AbstractMRTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
 
             new XNetInitilizationManager();
@@ -336,7 +335,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 			// if called at the same time by different threads
 			synchronized(tcpOut) {
 				while (len-- > 0) {
-					write(((int)b[off++]) & 0xff);
+					write((b[off++]) & 0xff);
 				}
 			}
      	}

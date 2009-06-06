@@ -13,9 +13,9 @@ import jmri.jmrix.lenz.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class XNetLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
+public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public XNetLightManagerXml() {
         super();
@@ -31,7 +31,7 @@ public class XNetLightManagerXml extends jmri.configurexml.AbstractLightManagerC
 
     public void load(Element lights) {
         // create the master object
-        XNetLightManager mgr = XNetLightManager.instance();
+        XNetLightManager.instance();
         // load individual lights
         loadLights(lights);
     }

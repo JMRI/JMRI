@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.15 $
+ * @version                     $Revision: 2.16 $
  */
 
 package jmri.jmrix.lenz;
@@ -96,7 +96,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	// does the consist contain the specified address?
 	public boolean contains(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-		return( (boolean) ConsistList.contains(address));
+		return(ConsistList.contains(address));
 	   } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(address,ConsistListener.NotImplemented);
@@ -108,7 +108,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	// locomotive in the consist
 	public boolean getLocoDirection(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-		Boolean Direction=(Boolean) ConsistDir.get(address);
+		Boolean Direction=ConsistDir.get(address);
 		return( Direction.booleanValue());
 	   } else {
 		log.error("Consist Type Not Supported");
@@ -300,7 +300,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
            if(ConsistList.size()==2 &&
                      ConsistList.contains(LocoAddress)) {
               XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(
-                           ((DccLocoAddress)ConsistList.get(0)).getNumber());  
+                           ConsistList.get(0).getNumber());  
               XNetTrafficController.instance().sendXNetMessage(msg,this);
            }
 
@@ -308,7 +308,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
            // In order to do this, we have to pull up both throttles,
            // and check that the direction of the trailing locomotive
            // is correct relative to the lead locomotive.
-           DccLocoAddress address = (DccLocoAddress)ConsistList.get(0);
+           DccLocoAddress address = ConsistList.get(0);
            XNetThrottle lead= new XNetThrottle(address);
 		
 	   XNetThrottle trail = new XNetThrottle(LocoAddress);
@@ -339,7 +339,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
-		XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(((DccLocoAddress)ConsistList.get(0)).getNumber());
+		XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(ConsistList.get(0).getNumber());
 		XNetTrafficController.instance().sendXNetMessage(msg,this);
 		_state=REMOVEREQUESTSENTSTATE; 
 	}

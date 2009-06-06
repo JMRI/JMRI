@@ -99,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.19 $
+ * @version			$Revision: 2.20 $
  */
 
 package jmri.jmrix.lenz;
@@ -188,7 +188,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
              return;
         }
         // find the command station
-        LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
+        //LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   (s & CLOSED)!=0,

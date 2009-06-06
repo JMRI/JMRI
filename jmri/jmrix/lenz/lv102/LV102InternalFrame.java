@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -548,10 +548,10 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     private class progReplyListener implements Runnable, jmri.ProgListener {
 
-    private Object parent = null;
+    //private Object parent = null;
 
     progReplyListener(Object Parent) {
-	parent = Parent;	
+	//parent = Parent;	
     }
 
     public void run(){

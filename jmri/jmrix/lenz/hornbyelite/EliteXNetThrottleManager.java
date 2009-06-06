@@ -3,13 +3,10 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 
-import jmri.jmrix.AbstractThrottleManager;
-import jmri.jmrix.lenz.XNetThrottleManager;
-
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2008
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 
 public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager implements ThrottleManager

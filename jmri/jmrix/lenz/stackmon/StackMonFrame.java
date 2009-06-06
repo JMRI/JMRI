@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -226,7 +226,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     /*
      * Request the status of the current address
      */    
-    private void requestStatus()
+    @SuppressWarnings("unused")
+	private void requestStatus()
     {
 	int address=0;
 	if(!adrTextField.getText().equals(""))
@@ -241,7 +242,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * Request the momentary/continuous status of functions for the 
      * current address.
      */
-    private void requestFunctionStatus()
+    @SuppressWarnings("unused")
+	private void requestFunctionStatus()
     {
 	int address=0;
 	if(!adrTextField.getText().equals(""))

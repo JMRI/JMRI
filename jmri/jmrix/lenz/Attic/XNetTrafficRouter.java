@@ -13,7 +13,7 @@ package jmri.jmrix.lenz;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.6 $
+ * @version 		$Revision: 2.7 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -89,7 +89,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      * @param m Message to forward. Listeners should not modify it!
 	 */
 	protected void notify(XNetReply m) {
-		notifyReply((jmri.jmrix.AbstractMRReply)m,lastSender);
+		notifyReply(m,lastSender);
 	        lastSender=null;
 	}
 

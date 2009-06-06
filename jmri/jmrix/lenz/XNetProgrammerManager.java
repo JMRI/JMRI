@@ -10,15 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.4 $
+ * @version	$Revision: 2.5 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 
-    private Programmer mProgrammer;
+   // private Programmer mProgrammer;
 
     public XNetProgrammerManager(Programmer pProgrammer) {
         super(pProgrammer);
-	mProgrammer=pProgrammer;
+	//mProgrammer=pProgrammer;
     }
 
     /**

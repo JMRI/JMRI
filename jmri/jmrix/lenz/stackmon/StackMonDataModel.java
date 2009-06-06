@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.stackmon;
 
 import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 import jmri.util.table.ButtonEditor;
@@ -17,13 +16,13 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         static private final int ADDRCOLUMN = 0;    // Locomotive address
         static private final int TYPECOLUMN = 1;    // Type of Database Entry
-        static private final int PLACEHODLER = 2;   // 
+        //static private final int PLACEHODLER = 2;   // 
         static private final int DELCOLUMN = 3;     // Remove Button
 
         static private final int NUMCOLUMN = 4;
@@ -32,8 +31,8 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         StackMonFrame _stackFrame;
 
         // internal data structures used to store stack info
-        java.util.ArrayList _addressList;  // Store the addresses
-        java.util.Hashtable _typeList;     // Store the entry type
+        java.util.ArrayList<Integer> _addressList;  // Store the addresses
+        java.util.Hashtable<Integer,String> _typeList;     // Store the entry type
 
         // Construct a new instance
         StackMonDataModel(int row, int column) {
@@ -68,7 +67,7 @@ JButton());
            }
         }
 
-        public Class getColumnClass(int col) {
+        public Class<?> getColumnClass(int col) {
            switch(col) {
               case ADDRCOLUMN: return(Integer.class);
               case DELCOLUMN: return(javax.swing.JButton.class);
@@ -85,8 +84,8 @@ JButton());
         public Object getValueAt(int row, int col) {
            log.debug("getValueAt called for row: " +row +" column: " +col);
            switch(col) {
-              case ADDRCOLUMN: return (Integer)(_addressList.get(row));
-              case TYPECOLUMN: return(_typeList.get((Integer)_addressList.get(row)));
+              case ADDRCOLUMN: return (_addressList.get(row));
+              case TYPECOLUMN: return(_typeList.get(_addressList.get(row)));
               case DELCOLUMN: return "DEL";
               default: return("");
            }
@@ -98,7 +97,7 @@ JButton());
               case DELCOLUMN:   log.debug("Delete Called for row " +row);
                                 fireTableRowsDeleted(row,row);
                                 // delete address from table
-                                XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg(((Integer)_addressList.get(row)).intValue());
+                                XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg((_addressList.get(row)).intValue());
                                 XNetTrafficController.instance().sendXNetMessage(msg,_stackFrame);
                                 _typeList.remove(_addressList.get(row));
                                 _addressList.remove(row);
@@ -114,10 +113,10 @@ JButton());
     public void updateData(Integer address,String type){
       if(_addressList==null){
         // initilize the address list
-        _addressList=new java.util.ArrayList();
-        _typeList=new java.util.Hashtable();
+        _addressList=new java.util.ArrayList<Integer>();
+        _typeList=new java.util.Hashtable<Integer,String>();
       }
-      if(!((boolean)_addressList.contains(address))) {
+      if(!_addressList.contains(address)) {
            _addressList.add(address);
            _typeList.put(address,type);
        } else {
@@ -130,8 +129,8 @@ JButton());
      * Update the internal data structures for a specified address
      */
     public void clearData(){
-       _addressList=new java.util.ArrayList();
-       _typeList=new java.util.Hashtable();
+       _addressList=new java.util.ArrayList<Integer>();
+       _typeList=new java.util.Hashtable<Integer,String>();
        fireTableDataChanged();
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger
