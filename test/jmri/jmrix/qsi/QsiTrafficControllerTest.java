@@ -23,14 +23,15 @@ public class QsiTrafficControllerTest extends TestCase {
 
 	public void testCreate() {
 		QsiTrafficController m = new QsiTrafficController();
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testSendAscii() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
-            public void receiveLoop() {}
-            protected void portWarn(Exception e) {}
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            //public void receiveLoop() {}
+            //protected void portWarn(Exception e) {}
         };
 
 		// connect to iostream via port controller
@@ -58,9 +59,9 @@ public class QsiTrafficControllerTest extends TestCase {
 	public void testMonitor() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
-            public void receiveLoop() {}
-            protected void portWarn(Exception e) {}
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            //public void receiveLoop() {}
+            //protected void portWarn(Exception e) {}
         };
 
 		// connect to iostream via port controller
@@ -95,9 +96,9 @@ public class QsiTrafficControllerTest extends TestCase {
 	public void testRcvReply() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
-            public void receiveLoop() {}
-            protected void portWarn(Exception e) {}
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            //public void receiveLoop() {}
+            //protected void portWarn(Exception e) {}
         };
 
 		// connect to iostream via port controller
@@ -157,7 +158,7 @@ public class QsiTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a QsiPortController
 	class QsiPortControllerScaffold extends QsiPortController {
-            public Vector getPortNames() { return null; }
+            public Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

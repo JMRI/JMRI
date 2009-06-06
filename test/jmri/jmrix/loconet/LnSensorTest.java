@@ -8,13 +8,14 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LnSensorTest extends TestCase {
 
     public void testLnSensorCreate() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        Assert.assertNotNull("exists", lnis );
 
         LnSensor t = new LnSensor("LS042");
 
@@ -54,6 +55,8 @@ public class LnSensorTest extends TestCase {
     public void testLnSensorSetState() throws jmri.JmriException {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        Assert.assertNotNull("exists", lnis );
+        
 
         LnSensor t = new LnSensor("LS043");
 
@@ -65,7 +68,8 @@ public class LnSensorTest extends TestCase {
     public void testLnSensorStatusRequest() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
+        Assert.assertNotNull("exists", lnis );
+        
         LnSensor t = new LnSensor("LS042");
 
         t.requestUpdateFromLayout();

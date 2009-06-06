@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz.ztc640;
 
-import javax.swing.JFrame;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -10,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ZTC640XNetPacketizerTest extends TestCase {
 

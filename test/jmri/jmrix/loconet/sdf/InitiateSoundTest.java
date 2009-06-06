@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.sdf;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class InitiateSoundTest extends TestCase {
 

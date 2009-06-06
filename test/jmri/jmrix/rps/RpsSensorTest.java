@@ -14,12 +14,13 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the RPS Sensor class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class RpsSensorTest extends TestCase {
 
     public void testCtor() {
         Sensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        Assert.assertNotNull("exists", s );
     }
     
     public void testPoints() {
@@ -83,6 +84,7 @@ public class RpsSensorTest extends TestCase {
         // create sensor
         RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         // check for Region
+        Assert.assertNotNull("exists", s );
         Assert.assertTrue("1 region",Model.instance().getRegions().size()==1);
         Assert.assertTrue("equal",
             new Region("(0,0,0);(1,0,0);(1,1,0);(0,1,0)").equals(

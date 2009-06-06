@@ -12,14 +12,15 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
     public void testLnSensorCreate() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
+        Assert.assertNotNull("exists", lnis );
+        
         // create and register the manager object
         LnSensorManager l = new LnSensorManager();
         jmri.InstanceManager.setSensorManager(l);
@@ -29,7 +30,8 @@ public class LnSensorManagerTest extends TestCase  {
     public void testByAddress() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
+        Assert.assertNotNull("exists", lnis );
+        
 		// create and register the manager object in a new instance manager
 		new jmri.InstanceManager() {
 		    protected void init() { super.init(); root = null; }
@@ -47,11 +49,13 @@ public class LnSensorManagerTest extends TestCase  {
     public void testMisses() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        Assert.assertNotNull("exists", lnis );
 		// create and register the manager object
 		LnSensorManager l = new LnSensorManager();
 
 		// sample turnout object
 		Sensor t = l.newSensor("LS22", "test");
+		Assert.assertNotNull("exists", t );
 
 		// try to get nonexistant turnouts
 		Assert.assertTrue(null == l.getByUserName("foo"));

@@ -12,6 +12,7 @@ import jmri.*;
 
 import java.util.*;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,6 +23,7 @@ public class QsiMonFrameTest extends TestCase {
 
 	public void testCreate() {
 		QsiMonFrame f = new QsiMonFrame();
+		Assert.assertNotNull("exists", f );
 	}
 
 // Following are not reliable, apparently time-sensitive, so commented out
@@ -56,7 +58,7 @@ public class QsiMonFrameTest extends TestCase {
 	public void testWrite() throws JmriException {
 
 		// infrastructure objects
-		QsiInterfaceScaffold t = new QsiInterfaceScaffold();
+		//QsiInterfaceScaffold t = new QsiInterfaceScaffold();
 
 	}
 
@@ -73,7 +75,7 @@ public class QsiMonFrameTest extends TestCase {
 		/**
 	 	* record messages sent, provide access for making sure they are OK
 	 	*/
-		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+		public Vector<QsiMessage> outbound = new Vector<QsiMessage>();  // public OK here, so long as this is a test class
 		public void sendQsiMessage(QsiMessage m, QsiListener l) {
 			if (log.isDebugEnabled()) log.debug("sendQsiMessage ["+m+"]");
 			// save a copy

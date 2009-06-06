@@ -14,12 +14,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
         SerialTrafficController m = new SerialTrafficController();
+        Assert.assertNotNull("exists", m );
     }
     
     private boolean waitForReply() {
@@ -162,7 +163,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
-            public java.util.Vector getPortNames() { return null; }
+            public java.util.Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Transform class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TransformTest extends TestCase {
 

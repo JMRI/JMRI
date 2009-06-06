@@ -2,14 +2,13 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.*;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -21,6 +20,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 		tcis = new SerialTrafficControlScaffold();
 		n = new SerialNode();
 		t = new SerialTurnout("PT4","t4");
+		Assert.assertNotNull("exists", n );
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

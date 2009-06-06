@@ -2,13 +2,12 @@
 
 package jmri.jmrix.loconet.locomon;
 
-import apps.tests.*;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locomon package
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LocoMonTest extends TestCase {
 

@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SerialTrafficControlScaffold extends SerialTrafficController {
@@ -25,7 +25,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 	/**
 	 * record messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 	public void sendSerialMessage(SerialMessage m, SerialListener reply) {
 		if (log.isDebugEnabled()) log.debug("sendSerialMessage ["+m+"]");
 		// save a copy

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -19,6 +19,10 @@ public class LnSensorAddressTest extends TestCase {
         LnSensorAddress a2 = new LnSensorAddress("LS001A");
         LnSensorAddress a3 = new LnSensorAddress("LS001C3");
         LnSensorAddress a4 = new LnSensorAddress(0x15, 0x60); // LS043
+        Assert.assertNotNull("exists", a1 );
+        Assert.assertNotNull("exists", a2 );
+        Assert.assertNotNull("exists", a3 );
+        Assert.assertNotNull("exists", a4 );
     }
 
     public void testLnSensorInvalid() {

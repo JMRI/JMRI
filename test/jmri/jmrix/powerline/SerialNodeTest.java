@@ -12,11 +12,11 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class SerialNodeTest extends TestCase {
 		
-    private SerialNode a = new SerialNode(1,SerialNode.DAUGHTER);
+    //private SerialNode a = new SerialNode(1,SerialNode.DAUGHTER);
 
     SerialNode b = new SerialNode();
        

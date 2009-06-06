@@ -10,12 +10,13 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class LnReporterTest extends TestCase {
 
     public void testLnReporterCreate() {
         LnReporter a1 = new LnReporter(1);
+        Assert.assertNotNull("exists", a1 );
     }
 
     public void testTranspond3Enter146() {

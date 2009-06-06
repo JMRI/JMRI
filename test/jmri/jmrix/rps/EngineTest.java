@@ -10,12 +10,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Engine class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EngineTest extends TestCase {
 
 	public void testCtor() {
 	    Engine e = new Engine();
+	    Assert.assertNotNull("exists", e );
 	}
 
 	public void testNumReceivers() {

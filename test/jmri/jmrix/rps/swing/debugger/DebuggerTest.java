@@ -4,7 +4,6 @@ package jmri.jmrix.rps.swing.debugger;
 
 import jmri.jmrix.rps.*;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +13,7 @@ import javax.vecmath.Point3d;
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class DebuggerTest extends TestCase {
 

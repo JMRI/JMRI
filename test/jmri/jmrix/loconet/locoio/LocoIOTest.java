@@ -2,13 +2,12 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import apps.tests.*;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LocoIOTest extends TestCase {
 

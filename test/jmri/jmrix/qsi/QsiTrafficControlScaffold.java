@@ -25,7 +25,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
 	/**
 	 * record messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<QsiMessage> outbound = new Vector<QsiMessage>();  // public OK here, so long as this is a test class
 	public void sendQsiMessage(QsiMessage m, QsiListener reply) {
 		if (log.isDebugEnabled()) log.debug("sendQsiMessage ["+m+"]");
 		// save a copy

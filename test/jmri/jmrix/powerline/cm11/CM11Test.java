@@ -2,7 +2,6 @@
 
 package jmri.jmrix.powerline.cm11;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.powerline.cm11 package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class CM11Test extends TestCase {
 

@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * tests for the Jmri package LnPowerManager
  * @author	Bob Jacobsen   Copyright 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 
@@ -37,12 +37,12 @@ public class LnPowerManagerTest extends AbstractPowerManagerTest {
 
 	protected boolean outboundOnOK(int index) {
 	    return LnConstants.OPC_GPON ==
-                    ((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
+                    controller.outbound.elementAt(index).getOpCode();
 	}
 
 	protected boolean outboundOffOK(int index) {
             return LnConstants.OPC_GPOFF ==
-                ((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
+                controller.outbound.elementAt(index).getOpCode();
 	}
 
 	// setup a default interface

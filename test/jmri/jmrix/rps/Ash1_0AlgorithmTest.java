@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * is (0,0,12)
  * 
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Ash1_0AlgorithmTest extends TestCase {
         
@@ -49,7 +49,7 @@ public class Ash1_0AlgorithmTest extends TestCase {
 	public void testCalc4_not1() {
 	    Reading r = new Reading("21", new double[]{13./vs, 13./vs, 13./vs, 3./vs});
 	    
-	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
+	    //Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
 	    Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
 	    Point3d s4 = new Point3d(5.0f,  0.0f, 0.0f);
@@ -69,7 +69,7 @@ public class Ash1_0AlgorithmTest extends TestCase {
 	    Reading r = new Reading("21", new double[]{7./vs, 13./vs, 13./vs, 3./vs});
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
-	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
+	    //Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
 	    Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
 	    Point3d s4 = new Point3d(5.0f,  0.0f, 0.0f);
 	    Point3d s5 = new Point3d(0.0f,  0.0f, 15.0f);
@@ -89,7 +89,7 @@ public class Ash1_0AlgorithmTest extends TestCase {
 	    
 	    Point3d s1 = new Point3d(0.0f,  0.0f, 5.0f);
 	    Point3d s2 = new Point3d(-3.0f, 4.0f, 0.0f);
-	    Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
+	    //Point3d s3 = new Point3d(-3.0f,-4.0f, 0.0f);
 	    Point3d s4 = new Point3d(5.0f,  0.0f, 0.0f);
 	    Point3d s5 = new Point3d(0.0f,  0.0f, 15.0f);
 	    Point3d s[] = new Point3d[]{s1,s2,s4,s5};

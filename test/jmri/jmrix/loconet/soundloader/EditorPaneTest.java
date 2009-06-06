@@ -1,19 +1,16 @@
 // EditorPaneTest.java
 package jmri.jmrix.loconet.soundloader;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.loconet.LocoNetMessage;
 
 
 /**
  * Tests for the jmri.jmrix.loconet.soundloader.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class EditorPaneTest extends TestCase {
 

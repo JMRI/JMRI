@@ -10,13 +10,14 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps.csvinput package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class CsvTest extends TestCase {
 
 
     public void testCreateReader() throws java.io.IOException {
         Object o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
+        Assert.assertNotNull("exists", o );
     }
     
     public void testReading() throws java.io.IOException {

@@ -14,11 +14,11 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SerialNodeTest extends TestCase {
 		
-    private SerialNode a = new SerialNode(1,SerialNode.IO48);
+    //private SerialNode a = new SerialNode(1,SerialNode.IO48);
 
     SerialNode b = new SerialNode();
        

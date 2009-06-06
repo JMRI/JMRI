@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the QsiMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.qsi;
@@ -17,6 +17,7 @@ public class QsiMessageTest extends TestCase {
 
 	public void testCreate() {
 		QsiMessage m = new QsiMessage(1);
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testToASCIIString() {

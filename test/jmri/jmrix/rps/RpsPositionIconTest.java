@@ -2,7 +2,6 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Reading class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RpsPositionIconTest extends TestCase {
 

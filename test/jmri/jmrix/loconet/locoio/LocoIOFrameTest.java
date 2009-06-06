@@ -13,19 +13,21 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class LocoIOFrameTest extends TestCase {
 
     public void testFrameCreate() {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         new LocoIOFrame();
+        Assert.assertNotNull("exists", lnis );
     }
 
     public void testDispose() {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         LocoIOFrame f = new LocoIOFrame();
         f.dispose();
+        Assert.assertNotNull("exists", lnis );
     }
 
     public void testReadAll() {
@@ -39,7 +41,7 @@ public class LocoIOFrameTest extends TestCase {
 
         // check first message of ReadAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = lnis.outbound.elementAt(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
         Assert.assertEquals("message bytes", "E5 10 50 51 01 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
@@ -64,7 +66,7 @@ public class LocoIOFrameTest extends TestCase {
 
         // check first message of readAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = lnis.outbound.elementAt(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
         Assert.assertEquals("message bytes", "E5 10 50 34 01 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
@@ -89,7 +91,7 @@ public class LocoIOFrameTest extends TestCase {
 
         // check first message of readAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = lnis.outbound.elementAt(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
         Assert.assertEquals("message bytes", "E5 10 50 00 01 00 01 01 00 34 10 00 00 00 00 00", msg.toString());

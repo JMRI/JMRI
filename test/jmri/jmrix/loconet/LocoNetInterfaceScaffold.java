@@ -29,7 +29,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 	/**
 	 * record LocoNet messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<LocoNetMessage> outbound = new Vector<LocoNetMessage>();  // public OK here, so long as this is a test class
 	public void sendLocoNetMessage(LocoNetMessage m) {
 		if (log.isDebugEnabled()) log.debug("sendLocoNetMessage ["+m+"]");
 		// save a copy
@@ -46,7 +46,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
      * Forward a message that came from unit under test
      */
     void forwardMessage(int i) {
-        sendTestMessage((LocoNetMessage)outbound.elementAt(i));
+        sendTestMessage(outbound.elementAt(i));
     }
 
 	/**

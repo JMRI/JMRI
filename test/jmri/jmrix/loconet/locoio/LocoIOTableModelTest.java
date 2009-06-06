@@ -2,23 +2,15 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import apps.tests.Log4JFixture;
-
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.LocoNetMessage;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.util.StringUtil;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class LocoIOTableModelTest extends TestCase {
 

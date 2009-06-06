@@ -13,7 +13,7 @@ import jmri.util.JUnitAppender;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -116,6 +116,8 @@ public class SerialAddressTest extends TestCase {
 	public void testValidSystemNameConfig() {
             SerialNode d = new SerialNode(4,SerialNode.DAUGHTER);
             SerialNode c = new SerialNode(10,SerialNode.DAUGHTER);
+            Assert.assertNotNull("exists", d );
+            Assert.assertNotNull("exists", c );
             Assert.assertTrue("valid config PL4007",  SerialAddress.validSystemNameConfig("PL4007",'L') );
             Assert.assertTrue("valid config PL4B7",   SerialAddress.validSystemNameConfig("PL4B7",'L') );
             Assert.assertTrue("valid config PS10007", SerialAddress.validSystemNameConfig("PS10007",'S') );

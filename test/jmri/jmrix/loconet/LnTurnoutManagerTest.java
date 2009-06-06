@@ -41,6 +41,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  
 	public void testMisses() {
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress("LT22", "user");
+		Assert.assertNotNull("exists", a );
 
 		// try to get nonexistant turnouts
 		Assert.assertTrue(null == l.getByUserName("foo"));
@@ -71,7 +72,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  
 		Assert.assertTrue(null != l.getBySystemName("LT22"));
 
         // check the list
-        List testList = new ArrayList(2);
+        List<String> testList = new ArrayList<String>(2);
         testList.add("LT21");
         testList.add("LT22");
         Assert.assertEquals("system name list", testList, l.getSystemNameList());

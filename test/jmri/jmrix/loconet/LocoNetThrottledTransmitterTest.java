@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LocoNetThrottledTransmitterTest extends TestCase {
 
@@ -38,6 +38,8 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         LocoNetThrottledTransmitter.Memo m200a = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
         LocoNetThrottledTransmitter.Memo m200b = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
         
+        Assert.assertNotNull("exists", m100b );
+        Assert.assertNotNull("exists", m200b );
         Assert.assertEquals("same object", 0, m100a.compareTo(m100a));
         Assert.assertEquals("same object", 0, m100a.compareTo(m100a));
 

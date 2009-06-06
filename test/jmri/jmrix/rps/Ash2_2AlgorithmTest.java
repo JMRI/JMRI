@@ -2,9 +2,7 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import javax.vecmath.Point3d;
@@ -16,7 +14,7 @@ import javax.vecmath.Point3d;
  * three sensors, so we test with four and more.
  * 
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Ash2_2AlgorithmTest extends AbstractAlgorithmTest {
         

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.rps.rpsmon;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps.rpsmon package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class RpsMonTest extends TestCase {
 

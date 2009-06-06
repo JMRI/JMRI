@@ -2,14 +2,13 @@
 
 package jmri.jmrix.maple;
 
-import jmri.*;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.maple.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -21,6 +20,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 		tcis = new SerialTrafficControlScaffold();
         n = new SerialNode(0,SerialNode.SMINI);
 		t = new SerialTurnout("KT4","t4");
+		Assert.assertNotNull("exists", n );
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

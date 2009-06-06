@@ -2,21 +2,16 @@
 
 package jmri.jmrix.loconet.locomon;
 
-import apps.tests.Log4JFixture;
-
 import jmri.jmrix.loconet.LocoNetMessage;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.util.StringUtil;
-
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LlnmonTest extends TestCase {
 

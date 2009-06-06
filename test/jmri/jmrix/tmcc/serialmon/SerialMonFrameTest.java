@@ -12,6 +12,7 @@ import jmri.*;
 
 import java.util.*;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -80,6 +81,7 @@ public class SerialMonFrameTest extends TestCase {
         
         // infrastructure objects
         SerialInterfaceScaffold t = new SerialInterfaceScaffold();
+        Assert.assertNotNull("exists", t );
         
     }
     
@@ -96,7 +98,7 @@ public class SerialMonFrameTest extends TestCase {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+        public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
         public void sendSerialMessage(SerialMessage m, jmri.jmrix.tmcc.SerialListener l) {
             if (log.isDebugEnabled()) log.debug("sendMessage ["+m+"]");
             // save a copy

@@ -4,7 +4,6 @@ package jmri.jmrix.loconet;
 
 import junit.framework.*;
 
-import apps.tests.*;
 import jmri.*;
 
 /**
@@ -13,7 +12,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SecurityElementTest extends TestCase {
 

@@ -12,12 +12,13 @@ import jmri.jmrix.powerline.SerialMessage;
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SpecificMessageTest extends TestCase {
 
 	public void testCreate() {
 		SerialMessage m = new SpecificMessage(4);
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testBytesToString() {

@@ -2,9 +2,7 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import javax.vecmath.Point3d;
@@ -14,7 +12,7 @@ import javax.vecmath.Point3d;
  * 
  * 
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
         

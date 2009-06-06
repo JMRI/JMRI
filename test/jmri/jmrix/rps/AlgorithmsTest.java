@@ -2,7 +2,6 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +13,7 @@ import junit.framework.TestSuite;
  * not all the package tests.
  *
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class AlgorithmsTest extends TestCase {
 

@@ -2,19 +2,18 @@
 
 package jmri.jmrix.oaktree;
 
-import jmri.*;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
 	private SerialTrafficControlScaffold tcis = null;
-        private SerialNode n = new SerialNode();
+    //private SerialNode n = new SerialNode();
 
 	public void setUp() {
 		// prepare an interface

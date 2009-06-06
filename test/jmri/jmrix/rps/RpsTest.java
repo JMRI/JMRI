@@ -2,7 +2,6 @@
 
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class RpsTest extends TestCase {
 

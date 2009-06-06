@@ -2,12 +2,9 @@
 
 package jmri.jmrix.rps.trackingpanel;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import javax.swing.*;
 
 import jmri.jmrix.rps.*;
 
@@ -16,7 +13,7 @@ import javax.vecmath.Point3d;
 /**
  * JUnit tests for the rps.RpsTrackingFrame class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RpsTrackingFrameTest extends TestCase {
 

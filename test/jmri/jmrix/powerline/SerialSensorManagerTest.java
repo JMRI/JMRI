@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -22,7 +22,8 @@ public class SerialSensorManagerTest extends TestCase {
 	            return this;
 	        }
          }.test();
-
+         Assert.assertNotNull("exists", t );
+         
         // construct nodes
         SerialNode n0 = new SerialNode(0,SerialNode.DAUGHTER);
         SerialNode n1 = new SerialNode(1,SerialNode.DAUGHTER);

@@ -2,13 +2,10 @@
 
 package jmri.jmrix.qsi;
 
-import apps.tests.Log4JFixture;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.util.JUnitAppender;
 
 import jmri.jmrix.qsi.QsiReply;
 
@@ -16,7 +13,7 @@ import jmri.jmrix.qsi.QsiReply;
  * JUnit tests for the QsiReplyclass
  * @author			Bob Jacobsen Copyright 2006, 2007
  *
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class QsiReplyTest extends TestCase {
 

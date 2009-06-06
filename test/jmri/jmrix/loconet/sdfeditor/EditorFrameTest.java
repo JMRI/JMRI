@@ -1,7 +1,6 @@
 // EditorFrameTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +11,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class EditorFrameTest extends TestCase {
 
