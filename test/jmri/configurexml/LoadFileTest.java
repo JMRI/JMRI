@@ -3,11 +3,7 @@
 package jmri.configurexml;
 
 import jmri.jmrit.XmlFile;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -22,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LoadFileTest extends TestCase {
 
@@ -43,7 +39,7 @@ public class LoadFileTest extends TestCase {
         
     }
     
-    public void testLoadStoreOne() {
+    public void testLoadStoreOne() throws Exception {
         // load manager
         java.io.File inFile = new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml");
         
@@ -57,10 +53,21 @@ public class LoadFileTest extends TestCase {
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);
         
-        // compare lengths
-        Assert.assertEquals("length", inFile.length(), outFile.length());
+        // compare files, except for certain special lines
+        BufferedReader inFileStream = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(inFile)));
+        BufferedReader outFileStream = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(outFile)));
+        String inLine;
+        String outLine;
+        while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
+            if (!inLine.startsWith("  <!--Written by JMRI version"))
+                Assert.assertEquals(inLine, outLine);
+        }
     }
-    
+        
     // from here down is testing infrastructure
 
     public LoadFileTest(String s) {
