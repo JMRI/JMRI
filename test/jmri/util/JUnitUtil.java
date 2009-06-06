@@ -34,7 +34,7 @@ import jmri.managers.InternalTurnoutManager;
 </pre></code>
 
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.5.3
  */
 
@@ -84,14 +84,23 @@ public class JUnitUtil {
 
     public static void initInternalTurnoutManager() {
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(
+                InstanceManager.turnoutManagerInstance());
     }
 
     public static void initInternalLightManager() {
-        InstanceManager.setLightManager(new InternalLightManager());
+        InternalLightManager m = new InternalLightManager();
+        InstanceManager.setLightManager(m);
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(m);
     }
 
     public static void initInternalSensorManager() {
-        InstanceManager.setSensorManager(new InternalSensorManager());
+        InternalSensorManager m = new InternalSensorManager();
+        InstanceManager.setSensorManager(m);
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(m);
     }
 
 }
