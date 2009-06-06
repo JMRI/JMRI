@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.5.4 on Mon May 25 10:39:43 PDT 2009 $Id: decoderIndex.xml,v 1.140 2009-05-25 17:41:24 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.4 on Fri Jun 05 19:45:10 PDT 2009 $Id: decoderIndex.xml,v 1.141 2009-06-06 02:48:25 jacobsen Exp $-->
   <decoderIndex version="164">
     <mfgList nmraListDate="2009-01-15" updated="2009-02-18">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3263,30 +3263,13 @@
           <output name="Mute" connection="unspecified" />
         </model>
       </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_1Diesel.xml">
-        <model model="Tsunami Diesel" numOuts="4" numFns="14" connector="9pin" comment="827101 EMD 567 (1st Generation)" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <versionCV lowVersionID="64" />
-          <output name="Bell" connection="unspecified" />
-          <output name="Air Horn" connection="unspecified" />
-          <output name="Short Horn" connection="unspecified" />
-          <output name="Dynamic Brake" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Mute" connection="unspecified" />
-          <output name="Fans" connection="unspecified" />
-          <output name="Air Compressor" connection="unspecified" />
-          <output name="Brake Squeal/Release" connection="unspecified" />
-          <output name="Coupler" connection="unspecified" />
-        </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_ALCO1.xml">
-        <model model="TSU-1000 Alco 244" numOuts="4" numFns="14" connector="9pin" comment="Model 827104" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel.xml">
+        <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3296,10 +3279,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" comment="Model 827004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-750 EMD 567" numOuts="2" numFns="14" connector="other" productID="827001" comment="Model 827001" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3309,12 +3294,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" connector="other" comment="Model 828043" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other" productID="827008" comment="Model 827008" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3324,12 +3309,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="9pin" comment="Model 827106" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" connector="other" productID="827010" comment="Model 827010" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3339,12 +3324,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other" comment="Model 828045" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 Alco 244" numOuts="4" numFns="14" connector="9pin" productID="827104" comment="Model 827104" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3354,14 +3339,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_ALCO2.xml">
-        <model model="TSU-1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="9pin" comment="Model 827105" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="9pin" productID="827105" comment="Model 827105" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3371,12 +3354,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="other" comment="Model 828044" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="9pin" productID="827106" comment="Model 827106" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3386,14 +3369,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_EMD567.xml">
-        <model model="TSU-1000 EMD 567" numOuts="4" numFns="14" connector="9pin" comment="Model 827101" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 EMD 567" numOuts="4" numFns="14" connector="9pin" productID="827101" comment="Model 827101" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3403,10 +3384,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 EMD 567" numOuts="2" numFns="14" comment="Model 827001" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-1000 EMD 645" numOuts="4" numFns="14" connector="9pin" productID="827102" comment="Model 827102" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3416,12 +3399,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other" comment="Model 828040" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="9pin" productID="827109" comment="Model 827109" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3431,12 +3414,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-GN1000 EMD 567" numOuts="4" numFns="14" connector="other" comment="Model 828050" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 EMD 710" numOuts="4" numFns="14" connector="9pin" productID="827103" comment="Model 827103" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3446,14 +3429,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_EMD645.xml">
-        <model model="TSU-1000 EMD 645" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="9pin" productID="827108" comment="Model 827108" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3463,10 +3444,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 EMD 645" numOuts="2" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin" productID="827107" comment="Model 827107" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3476,12 +3459,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 EMD 645" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-1000 Galloping Goose" numOuts="4" numFns="14" connector="9pin" productID="827110" comment="Model 827110" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3491,12 +3474,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" connector="other" productID="828043" comment="Model 828043" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3506,12 +3489,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-AT1000 Alco 251 (V12)" numOuts="4" numFns="14" connector="other" productID="828044" comment="Model 828044" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3521,10 +3504,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 EMD 645 (Non-Turbo)" numOuts="2" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other" productID="828045" comment="Model 828045" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3534,12 +3519,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828040" comment="Model 828040" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3549,12 +3534,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-AT1000 EMD 645" numOuts="4" numFns="14" connector="other" productID="828041" comment="Model 828041" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3564,10 +3549,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 GE FDL-16" numOuts="2" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="other" productID="828048" comment="Model 828048" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3577,12 +3564,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 EMD 710" numOuts="4" numFns="14" connector="other" productID="828042" comment="Model 828042" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3592,12 +3579,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-AT1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="other" productID="828047" comment="Model 828047" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3607,14 +3594,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_EMD710.xml">
-        <model model="TSU-1000 EMD 710" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828046" comment="Model 828046" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3624,10 +3609,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-750 EMD 710" numOuts="2" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-GN1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828050" comment="Model 828050" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3637,12 +3624,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-AT1000 EMD 710" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" connector="other" productID="828051" comment="Model 828051" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3652,12 +3639,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-        <model model="TSU-GN1000 EMD 710" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-GN1000 EMD 710" numOuts="4" numFns="14" connector="other" productID="828052" comment="Model 828052" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
@@ -3667,42 +3654,12 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
-      </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel_FM1.xml">
-        <model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="9pin" comment="Model 827108" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828056" comment="Model 828056" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
-          <output name="Dynamics" connection="unspecified" />
-          <output name="Short Horn" connection="unspecified" />
-          <output name="Fans(+)" connection="unspecified" />
-          <output name="Dimming" connection="unspecified" />
-          <output name="Mute" connection="unspecified" />
-          <output name="Comp(-)" connection="unspecified" />
-          <output name="Brakes" connection="unspecified" />
-          <output name="Coupler" connection="unspecified" />
-        </model>
-        <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other" comment="Model 827008" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <versionCV lowVersionID="64" />
-          <output name="Air Horn" connection="unspecified" />
-          <output name="Bell" connection="unspecified" />
-          <output name="Dynamics" connection="unspecified" />
-          <output name="Short Horn" connection="unspecified" />
-          <output name="Fans(+)" connection="unspecified" />
-          <output name="Dimming" connection="unspecified" />
-          <output name="Mute" connection="unspecified" />
-          <output name="Comp(-)" connection="unspecified" />
-          <output name="Brakes" connection="unspecified" />
-          <output name="Coupler" connection="unspecified" />
-        </model>
-        <model model="TSU-AT1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="other" comment="Model 828047" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <versionCV lowVersionID="64" />
-          <output name="Air Horn" connection="unspecified" />
-          <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
           <output name="Dynamics" connection="unspecified" />
           <output name="Short Horn" connection="unspecified" />
           <output name="Fans(+)" connection="unspecified" />
