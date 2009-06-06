@@ -21,12 +21,13 @@ import jmri.jmrix.nce.NcePortController;
 /**
  * JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen Copyright 2003, 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class NceTrafficControllerTest extends TestCase {
 
 	public void testCreate() {
 		NceTrafficController m = new NceTrafficController();
+		Assert.assertNotNull("exists", m );
 	}
 
     /**
@@ -199,7 +200,7 @@ public class NceTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a NcePortController
 	class NcePortControllerScaffold extends NcePortController {
-            public java.util.Vector getPortNames() { return null; }
+            public java.util.Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

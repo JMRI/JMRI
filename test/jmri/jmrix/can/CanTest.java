@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class CanTest extends TestCase {
 

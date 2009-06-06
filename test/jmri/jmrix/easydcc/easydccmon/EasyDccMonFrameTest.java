@@ -12,6 +12,7 @@ import jmri.*;
 
 import java.util.*;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,6 +23,7 @@ public class EasyDccMonFrameTest extends TestCase {
 
 	public void testCreate() {
 		EasyDccMonFrame f = new EasyDccMonFrame();
+		Assert.assertNotNull("exists", f );
 	}
 
 // Following are not reliable, apparently time-sensitive, so commented out
@@ -57,6 +59,7 @@ public class EasyDccMonFrameTest extends TestCase {
 
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
+		Assert.assertNotNull("exists", t );
 
 	}
 
@@ -73,7 +76,7 @@ public class EasyDccMonFrameTest extends TestCase {
 		/**
 	 	* record messages sent, provide access for making sure they are OK
 	 	*/
-		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+		public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 		public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener l) {
 			if (log.isDebugEnabled()) log.debug("sendEasyDccMessage ["+m+"]");
 			// save a copy

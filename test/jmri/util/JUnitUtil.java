@@ -34,7 +34,7 @@ import jmri.managers.InternalTurnoutManager;
 </pre></code>
 
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.5.3
  */
 
@@ -71,16 +71,16 @@ public class JUnitUtil {
 	    releaseThread(self, DEFAULTDELAY);
     }
 
-    public static void resetInstanceManager() {    
-        // create a new instance manager
-        InstanceManager i = new InstanceManager(){
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-    }
+	public static void resetInstanceManager() {    
+		// create a new instance manager
+		new InstanceManager(){
+			protected void init() {
+				root = null;
+				super.init();
+				root = this;
+			}
+		};
+	}
 
     public static void initInternalTurnoutManager() {
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());

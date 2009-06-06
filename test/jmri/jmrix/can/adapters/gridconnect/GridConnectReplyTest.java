@@ -3,7 +3,6 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanMessage;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -14,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectReply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class GridConnectReplyTest extends TestCase {
     

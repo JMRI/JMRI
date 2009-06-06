@@ -2,7 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,7 +19,7 @@ public class DecVariableValueTest extends VariableValueTest {
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
-                          Vector v, JLabel status, String item) {
+                          Vector<CvValue> v, JLabel status, String item) {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 

@@ -16,7 +16,7 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.10 $
+ * @version          $Revision: 1.11 $
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -42,7 +42,7 @@ public class NceProgrammerTest extends TestCase {
         // correct message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "P010 020",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         t.sendTestReply(r, p);
@@ -63,7 +63,7 @@ public class NceProgrammerTest extends TestCase {
         // correct message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "A0 00 0A 14",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         t.sendTestReply(r, p);
@@ -87,7 +87,7 @@ public class NceProgrammerTest extends TestCase {
         // check "prog mode" message sent
         Assert.assertEquals("write message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "S3 012",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         t.sendTestReply(r, p);
@@ -111,7 +111,7 @@ public class NceProgrammerTest extends TestCase {
         // check "prog mode" message sent
         Assert.assertEquals("write message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "A6 03 0C",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         t.sendTestReply(r, p);
@@ -133,7 +133,7 @@ public class NceProgrammerTest extends TestCase {
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "R010",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         r.setElement(0, '0');
@@ -159,7 +159,7 @@ public class NceProgrammerTest extends TestCase {
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "A1 00 0A",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         r.setElement(0, '0');
@@ -188,7 +188,7 @@ public class NceProgrammerTest extends TestCase {
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "V3",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         r.setElement(0, '0');
@@ -217,7 +217,7 @@ public class NceProgrammerTest extends TestCase {
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "A7 03",
-                            ((NceMessage)(t.outbound.elementAt(0))).toString());
+                            ((t.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply();
         r.setElement(0, '0');
@@ -259,7 +259,7 @@ public class NceProgrammerTest extends TestCase {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+        public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             if (this.log.isDebugEnabled()) this.log.debug("sendNceMessage ["+m+"]");
             // save a copy

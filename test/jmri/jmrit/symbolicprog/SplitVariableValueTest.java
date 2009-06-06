@@ -13,7 +13,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 
@@ -26,7 +26,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
-                          Vector v, JLabel status, String item) {
+                          Vector<CvValue> v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+offset, p);
         cvNext.setValue(0);
@@ -67,7 +67,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     public void testWriteSynch2() {}        // programmer synch is different
 
     public void testSplitAddressFromCV1() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         cv1.setValue(2);
@@ -94,7 +94,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV2() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         cv1.setValue(0xFF);
@@ -121,7 +121,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV3() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         cv1.setValue(0xFF);
@@ -148,7 +148,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV4() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         cv1.setValue(0xFF);
@@ -177,13 +177,13 @@ public class SplitVariableValueTest extends VariableValueTest {
 
 
 
-    List evtList = null;  // holds a list of ParameterChange events
+    List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
     public void testSplitAddressRead1() {
         log.debug("testSplitAddressRead starts");
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         v.setElementAt(cv1, lowCV);
@@ -200,7 +200,7 @@ public class SplitVariableValueTest extends VariableValueTest {
                         log.debug("Busy false seen in test");
                 }
             };
-        evtList = new ArrayList();
+        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
         var.addPropertyChangeListener(listen);
 
         // set to specific value
@@ -223,7 +223,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
-            java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
+            java.beans.PropertyChangeEvent e = evtList.get(k);
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -238,7 +238,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     // check a long address write operation
     public void testSplitAddressWrite1() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
         v.setElementAt(cv1, lowCV);
@@ -273,8 +273,8 @@ public class SplitVariableValueTest extends VariableValueTest {
         // how do you check separation of the two writes?  State model?
     }
 
-    protected Vector createCvVector() {
-        Vector v = new Vector(512);
+    protected Vector<CvValue> createCvVector() {
+        Vector<CvValue> v = new Vector<CvValue>(512);
         for (int i=0; i < 512; i++) v.addElement(null);
         return v;
     }

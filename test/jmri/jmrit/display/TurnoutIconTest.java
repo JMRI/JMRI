@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
 import javax.swing.*;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +13,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class TurnoutIconTest extends TestCase {
 
@@ -31,6 +33,7 @@ public class TurnoutIconTest extends TestCase {
                 addTurnoutManager(new jmri.managers.InternalTurnoutManager());
             }
         };
+        Assert.assertNotNull("Instance exists", i );
         to.setTurnout("IT1");
 
         // test buttons

@@ -5,6 +5,7 @@ import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileWriter;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PanelEditorTest extends TestCase {
 
@@ -39,6 +40,7 @@ public class PanelEditorTest extends TestCase {
                 root = this;
             }
         };
+        Assert.assertNotNull("Instance exists", i );
 	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
 	    };
 	    

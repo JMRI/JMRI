@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -27,7 +27,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
-                          Vector v, JLabel status, String item) {
+                          Vector<CvValue> v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+1,p);
         cvNext.setValue(0);
@@ -109,7 +109,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         Assert.assertEquals("composite index when set to first via CV", 0, ((JComboBox)testVar.getValue()).getSelectedIndex());
     }
 
-    List evtList = null;  // holds a list of ParameterChange events
+    List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     public void testRead() {
 
@@ -126,7 +126,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
                         log.debug("=============== Busy false seen in test scaffold =================");
                 }
             };
-        evtList = new ArrayList();
+        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
         testVar.addPropertyChangeListener(listen);
 
         // execute the test read
@@ -149,7 +149,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
-            java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
+            java.beans.PropertyChangeEvent e = evtList.get(k);
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -180,7 +180,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
                         log.debug("Busy false seen in test");
                 }
             };
-        evtList = new ArrayList();
+        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
         testVar.addPropertyChangeListener(listen);
 
         testVar.setToWrite(true);
@@ -197,7 +197,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
-            java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
+            java.beans.PropertyChangeEvent e = evtList.get(k);
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -244,7 +244,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         ProgDebugger p = new ProgDebugger();
 
         // create 3 CVs
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         cv17 = new CvValue(17, p);
         cv18 = new CvValue(18, p);
         cv19 = new CvValue(19, p);
@@ -284,8 +284,8 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return testVar;
     }
     
-    protected Vector createCvVector() {
-        Vector v = new Vector(512);
+    protected Vector<CvValue> createCvVector() {
+        Vector<CvValue> v = new Vector<CvValue>(512);
         for (int i=0; i < 512; i++) v.addElement(null);
         return v;
     }

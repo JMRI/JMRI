@@ -219,6 +219,7 @@ public class AcelaNodeTest extends TestCase {
             }
         };
 
+        Assert.assertNotNull("exists", i );
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
 

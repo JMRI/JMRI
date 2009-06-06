@@ -4,9 +4,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.Sensor;
 
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TrafficController;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -17,14 +15,14 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CbusSensorTest extends TestCase {
 
     public void testIncomingChange() {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
-
+        Assert.assertNotNull("exists", t );
         CbusSensor s = new CbusSensor("MS+1;-1");
         
         // message for Active and Inactive

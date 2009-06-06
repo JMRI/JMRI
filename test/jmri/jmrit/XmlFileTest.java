@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -104,6 +104,7 @@ public class XmlFileTest extends TestCase {
             }
         };
         Element e = x.rootFromName("temp"+File.separator+"prefs"+File.separator+"test.xml");
+        Assert.assertNotNull("exists", e );
         log.debug("returns "+testFlag);
         Assert.assertTrue("Error handler invoked OK", testFlag);
     }

@@ -2,7 +2,7 @@
 
 package jmri.implementation.swing;
 
-import junit.framework.Assert;
+//import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SwingShutDownTaskTest extends TestCase {
 

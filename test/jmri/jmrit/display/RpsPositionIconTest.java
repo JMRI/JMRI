@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 
 import javax.swing.*;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +15,7 @@ import jmri.jmrix.rps.*;
  * Tests for the RpsIcon class.
  *
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class RpsPositionIconTest extends TestCase {
 
@@ -34,6 +35,7 @@ public class RpsPositionIconTest extends TestCase {
                 addTurnoutManager(new jmri.managers.InternalTurnoutManager());
             }
         };
+        Assert.assertNotNull("Instance exists", i );
 
         // test buttons
         JButton originButton = new JButton("Set 0,0");

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,12 +10,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceAIU class.
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NceSensorManagerTest extends TestCase {
 
     public void testCtor() {
         NceSensorManager s = new NceSensorManager();
+        Assert.assertNotNull("exists", s );
     }
 
     // from here down is testing infrastructure

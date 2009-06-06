@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -28,7 +28,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
-                          Vector v, JLabel status, String item) {
+                          Vector<CvValue> v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+1,p);
         cvNext.setValue(0);
@@ -66,7 +66,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     public void testWriteSynch2() {}        // programmer synch is different
     // can we create long address , then manipulate the variable to change the CV?
     public void testLongAddressCreate() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv17 = new CvValue(17, p);
         CvValue cv18 = new CvValue(18, p);
         cv17.setValue(2);
@@ -88,7 +88,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
     // can we change both CVs and see the result in the Variable?
     public void testLongAddressFromCV() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv17 = new CvValue(17, p);
         CvValue cv18 = new CvValue(18, p);
         cv17.setValue(2);
@@ -108,14 +108,14 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         Assert.assertTrue(cv18.getValue() == 189);
     }
 
-    List evtList = null;  // holds a list of ParameterChange events
+    List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
     public void testLongAddressRead() {
         log.debug("testLongAddressRead starts");
         // initialize the system
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv17 = new CvValue(17, p);
         CvValue cv18 = new CvValue(18, p);
         v.setElementAt(cv17, 17);
@@ -130,7 +130,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
                         log.debug("Busy false seen in test");
                 }
             };
-        evtList = new ArrayList();
+        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
         var.addPropertyChangeListener(listen);
 
         // set to specific value
@@ -151,7 +151,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
-            java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
+            java.beans.PropertyChangeEvent e = evtList.get(k);
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -167,7 +167,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     public void testLongAddressWrite() {
         // initialize the system
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv17 = new CvValue(17, p);
         CvValue cv18 = new CvValue(18, p);
         v.setElementAt(cv17, 17);
@@ -199,8 +199,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         // how do you check separation of the two writes?  State model?
     }
 
-    protected Vector createCvVector() {
-        Vector v = new Vector(512);
+    protected Vector<CvValue> createCvVector() {
+        Vector<CvValue> v = new Vector<CvValue>(512);
         for (int i=0; i < 512; i++) v.addElement(null);
         return v;
     }

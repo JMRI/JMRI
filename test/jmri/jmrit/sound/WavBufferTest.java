@@ -2,18 +2,10 @@
 
 package jmri.jmrit.sound;
 
-import java.io.File;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.jdom.Element;
-import org.jdom.Document;
-import org.jdom.DocType;
-
-import java.io.InputStream;
 
 /**
  * Tests for the WavBuffer class.
@@ -21,7 +13,7 @@ import java.io.InputStream;
  * Note:  This makes noise!
  *
  * @author	    Bob Jacobsen  Copyright 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class WavBufferTest extends TestCase {
 
@@ -90,6 +82,6 @@ public class WavBufferTest extends TestCase {
     0x31,0x30, 0x20,0x70, 0x61,0x73, 0x73,0x69, 0x6e,0x67, 0x20,0x63, 0x61,0x70, 0x74,0x75,
     0x72,0x65, 0x00,0x00 
     };
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBufferTest.class.getName());
+    //static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBufferTest.class.getName());
 
 }

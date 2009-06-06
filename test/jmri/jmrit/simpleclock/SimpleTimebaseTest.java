@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Tests for the SimpleTimebase class
  * @author	Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -26,6 +26,7 @@ public class SimpleTimebaseTest extends TestCase {
 	// test creation
 	public void testCreate() {
 		SimpleTimebase p = new SimpleTimebase();
+		Assert.assertNotNull("exists", p );
 	}
 
 	// test quick access (should be quite close to zero)

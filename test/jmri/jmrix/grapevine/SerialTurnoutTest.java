@@ -2,7 +2,6 @@
 
 package jmri.jmrix.grapevine;
 
-import jmri.*;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
@@ -10,12 +9,11 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
 	private SerialTrafficControlScaffold tcis = null;
-        private SerialNode n = new SerialNode();
 
 	public void setUp() {
 		// prepare an interface

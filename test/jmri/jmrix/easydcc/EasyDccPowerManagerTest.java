@@ -33,7 +33,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 		/**
 	 	* record messages sent, provide access for making sure they are OK
 	 	*/
-		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+		public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 		public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener l) {
 			// save a copy
 			outbound.addElement(m);
@@ -92,11 +92,11 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 	}
 	
 	protected boolean outboundOnOK(int index) {
-		return 'E' == ((EasyDccMessage)(controller.outbound.elementAt(index))).getOpCode();
+		return 'E' == ((controller.outbound.elementAt(index))).getOpCode();
 	}
 
 	protected boolean outboundOffOK(int index) {
-		return 'K' == ((EasyDccMessage)(controller.outbound.elementAt(index))).getOpCode();
+		return 'K' == ((controller.outbound.elementAt(index))).getOpCode();
 	}
 
 	// setup a default EasyDccTrafficController interface

@@ -3,12 +3,11 @@
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 
 package jmri.jmrix.easydcc;
 
-import apps.tests.Log4JFixture;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;

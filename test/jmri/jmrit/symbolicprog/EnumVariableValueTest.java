@@ -2,7 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
@@ -15,7 +14,7 @@ import java.util.Vector;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
@@ -24,7 +23,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
-                          Vector v, JLabel status, String item) {
+                          Vector<CvValue> v, JLabel status, String item) {
         EnumVariableValue v1 = new EnumVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                                                      cvNum, mask, minVal, maxVal,
                                                      v, status, item);
@@ -69,7 +68,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     // too many casts in it to work.
     public void testVariableSynch() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -140,7 +139,7 @@ public class EnumVariableValueTest extends VariableValueTest {
 
     public EnumVariableValue createOutOfSequence() {
         // prepare
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);

@@ -10,12 +10,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialMessage class.
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialMessageTest extends TestCase {
 
 	public void testCreate() {
 		SerialMessage m = new SerialMessage(1);
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testToBinaryString() {

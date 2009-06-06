@@ -1,10 +1,7 @@
 package jmri.util;
 
-import junit.framework.*;
-
 import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
+
 
 /**
  * Provide Swing context for JUnit test classes.
@@ -14,7 +11,7 @@ import junit.extensions.jfcunit.eventdata.*;
  * been bypassed for now.
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @since 2.5.3
  */
  

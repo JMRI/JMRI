@@ -2,9 +2,7 @@ package jmri.util;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ErrorCode;
-import org.apache.log4j.Layout;
-import org.apache.log4j.helpers.LogLog;
+
 
 import junit.framework.Assert;
 
@@ -12,7 +10,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {

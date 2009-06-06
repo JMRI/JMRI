@@ -7,7 +7,6 @@ import junit.framework.*;
 
 import junit.extensions.jfcunit.*;
 import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
 
 import java.util.ResourceBundle;
 
@@ -47,11 +46,12 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         _lRouteTable._alignList.get(5).setIncluded(true);
         _lRouteTable.createPressed(null);
 
-        _lRouteTable.m.setValueAt((Object)rbx.getString("ButtonEdit"), 0, 
+        _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, 
                                   LRouteTableAction.LBeanTableDataModel.EDITCOL);
     }
     
-    public void XtestPrompt() {
+    @SuppressWarnings("unchecked")
+	public void XtestPrompt() {
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");    
@@ -75,9 +75,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         
         // cancel the Reminder dialog
         DialogFinder dFinder = new DialogFinder( "Reminder" );
-        java.util.List showingDialogs = dFinder.findAll();
+        java.util.List<JDialog> showingDialogs = dFinder.findAll();
         Assert.assertEquals( "Number of dialogs showing is wrong", 1, showingDialogs.size( ) );
-        JDialog dialog = ( JDialog )showingDialogs.get( 0 );
+        JDialog dialog = showingDialogs.get( 0 );
         Assert.assertEquals( "Wrong dialog showing up", "Reminder", dialog.getTitle( ) );
         getHelper().disposeWindow( dialog, this );
     }

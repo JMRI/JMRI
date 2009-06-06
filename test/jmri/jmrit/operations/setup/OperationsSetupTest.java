@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -493,6 +493,7 @@ public class OperationsSetupTest extends TestCase {
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
+		Assert.assertNotNull("exists", s );
 
 		// read it
 		ox.readFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());

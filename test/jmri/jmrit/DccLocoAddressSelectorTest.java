@@ -16,13 +16,14 @@ import javax.swing.*;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class DccLocoAddressSelectorTest extends TestCase {
 
 	public void testCtor() {
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
+        Assert.assertNotNull("exists", sel );
 	}
         
     // you can ask for the text field, and set the number using it
@@ -83,6 +84,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox b = sel.getSelector();
+        Assert.assertNotNull("exists", b );
         f.setText("2023");
         Assert.assertEquals("check number ", 2023,sel.getAddress().getNumber());
         Assert.assertEquals("check type  ", true,sel.getAddress().isLongAddress());
@@ -92,6 +94,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox b = sel.getSelector();
+        Assert.assertNotNull("exists", b );
         f.setText("23");
         Assert.assertEquals("check number ", 23,sel.getAddress().getNumber());
         Assert.assertEquals("check type  ", false,sel.getAddress().isLongAddress());

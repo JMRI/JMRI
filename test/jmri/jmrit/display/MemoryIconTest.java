@@ -1,17 +1,18 @@
 package jmri.jmrit.display;
 
 import javax.swing.*;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.beans.PropertyChangeEvent;
 
 /**
  * MemoryIconTest.java
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class MemoryIconTest extends TestCase {
 
@@ -30,6 +31,7 @@ public class MemoryIconTest extends TestCase {
                 root = this;
             }
         };
+        Assert.assertNotNull("Instance exists", i );
         to.setMemory("IM1");
         jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue("data");
 

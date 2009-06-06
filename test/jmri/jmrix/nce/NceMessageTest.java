@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class NceMessageTest extends TestCase {
@@ -28,6 +28,7 @@ public class NceMessageTest extends TestCase {
     
 	public void testCreate() {
 		NceMessage m = new NceMessage(1);
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testToBinaryString() {

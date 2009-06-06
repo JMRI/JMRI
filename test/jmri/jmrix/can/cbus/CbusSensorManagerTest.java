@@ -2,10 +2,6 @@
 
 package jmri.jmrix.can.cbus;
 
-import jmri.Sensor;
-import jmri.jmrix.can.CanMessage;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CbusSensorManagerTest extends TestCase {
 

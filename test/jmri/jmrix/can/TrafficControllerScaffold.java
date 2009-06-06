@@ -16,7 +16,7 @@ import java.util.Vector;
  * Stands in for the can.TrafficController class
  * 
  * @author			Bob Jacobsen 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TrafficControllerScaffold extends TrafficController {
     public TrafficControllerScaffold() {
@@ -63,7 +63,7 @@ public class TrafficControllerScaffold extends TrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+    public Vector<CanMessage> outbound = new Vector<CanMessage>();  // public OK here, so long as this is a test class
     public void sendCanMessage(CanMessage m, CanListener l) {
         if (this.log.isDebugEnabled()) this.log.debug("sendCanMessage ["+m+"]");
         // save a copy

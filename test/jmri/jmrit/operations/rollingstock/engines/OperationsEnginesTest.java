@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -55,12 +55,14 @@ public class OperationsEnginesTest extends TestCase {
         // test EngineLengths creation
 	public void testEngineLengthsCreate() {
 		EngineLengths el1 = new EngineLengths();
+		Assert.assertNotNull("exists", el1 );
 	}
 
         // test EngineLengths public constants
 	public void testEngineLengthsConstants() {
 		EngineLengths el1 = new EngineLengths();
-
+		
+		Assert.assertNotNull("exists", el1 );
 		Assert.assertEquals("EngineTypes ENGINELENGTHS_CHANGED_PROPERTY", "EngineLengths", EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY);
 	}
 
@@ -88,12 +90,14 @@ public class OperationsEnginesTest extends TestCase {
         // test EngineTypes creation
 	public void testEngineTypesCreate() {
 		EngineTypes et1 = new EngineTypes();
+		Assert.assertNotNull("exists", et1 );
 	}
 
         // test EngineTypes public constants
 	public void testEngineTypesConstants() {
 		EngineTypes et1 = new EngineTypes();
 
+		Assert.assertNotNull("exists", et1 );
 		Assert.assertEquals("EngineTypes ENGINETYPES_LENGTH_CHANGED_PROPERTY", "EngineTypes Length", EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY);
 		Assert.assertEquals("EngineTypes ENGINETYPES_NAME_CHANGED_PROPERTY", "EngineTypes Name", EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY);
 	}
@@ -126,12 +130,14 @@ public class OperationsEnginesTest extends TestCase {
         // test EngineModels creation
 	public void testEngineModelsCreate() {
 		EngineModels em1 = new EngineModels();
+		Assert.assertNotNull("exists", em1 );
 	}
 
         // test EngineModels public constants
 	public void testEngineModelsConstants() {
 		EngineModels em1 = new EngineModels();
 
+		Assert.assertNotNull("exists", em1 );
 		Assert.assertEquals("EngineModels ENGINEMODELS_CHANGED_PROPERTY", "EngineModels", EngineModels.ENGINEMODELS_CHANGED_PROPERTY);
 	}
 
@@ -473,7 +479,7 @@ public class OperationsEnginesTest extends TestCase {
 	public void testXMLCreate() throws Exception {
 
                 EngineManager manager = EngineManager.instance();
-                List tempengineList = manager.getEnginesByIdList();
+                List<String> tempengineList = manager.getEnginesByIdList();
 
                 Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
                 manager.newEngine("CP", "Test Number 1");
@@ -660,9 +666,9 @@ public class OperationsEnginesTest extends TestCase {
 
         // Need to clear out EngineManager global variables
         EngineManager manager = EngineManager.instance();
-        List tempconsistList = manager.getConsistNameList();
+        List<String> tempconsistList = manager.getConsistNameList();
         for (int i = 0; i < tempconsistList.size(); i++) {
-            String consistId = (String)tempconsistList.get(i);
+            String consistId = tempconsistList.get(i);
             manager.deleteConsist(consistId);
         }
         EngineModels.instance().dispose();

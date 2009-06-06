@@ -2,14 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.jmrit.*;
-import java.awt.event.*;
 import java.io.*;
-
-import javax.swing.*;
-
-import java.util.*;
-import org.jdom.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;
@@ -20,7 +13,7 @@ import junit.framework.TestSuite;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see jmri.jmrit.XmlFile
  */
 public class CheckProgrammerNames extends TestCase {

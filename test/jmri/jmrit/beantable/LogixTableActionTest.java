@@ -7,8 +7,6 @@ import junit.framework.*;
 import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
-import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
 import jmri.Conditional;
 import jmri.Light;
 import jmri.Memory;
@@ -57,7 +55,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         _logixTable.createPressed(null);
         _logixTable.donePressed(null);
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
-        _logixTable.m.setValueAt((Object)rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
+        _logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
         _logixTable.newConditionalPressed(null);
         //_logixTable.helpPressed(null);
         _logixTable.conditionalUserName.setText("TestConditional");
@@ -96,7 +94,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         _logixTable.donePressed(null);
 
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
-        _logixTable.m.setValueAt((Object)rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
+        _logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
         _logixTable.conditionalUserName.setText("FirstConditional");
         assertEquals( 

@@ -65,7 +65,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -458,7 +458,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		l1.addTrack("North End 1", Track.STAGING);
 		l1.addTrack("North End 2", Track.STAGING);
-		List templist1 = l1.getTracksByNameList("");
+		List<String> templist1 = l1.getTracksByNameList("");
 		for (int i = 0; i < templist1.size(); i++){
 			if (i == 0) {
 				Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i));
@@ -543,7 +543,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		l3.addTrack("South End 1", Track.STAGING);
 		l3.addTrack("South End 2", Track.STAGING);
-		List templist3 = l3.getTracksByNameList("");
+		List<String> templist3 = l3.getTracksByNameList("");
 		for (int i = 0; i < templist3.size(); i++){
 			if (i == 0) {
 				Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i));
@@ -3445,7 +3445,7 @@ public class OperationsTrainsTest extends TestCase {
 	public void testXMLCreate() throws Exception {
 
 		TrainManager manager = TrainManager.instance();
-		List temptrainList = manager.getTrainsByIdList();
+		List<String> temptrainList = manager.getTrainsByIdList();
 
 		Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
 		manager.newTrain("Test Number 1");

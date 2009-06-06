@@ -19,12 +19,13 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
         SerialTrafficController m = new SerialTrafficController();
+        Assert.assertNotNull("exists", m );
     }
     
     byte[] testBuffer;
@@ -366,6 +367,7 @@ public class SerialTrafficControllerTest extends TestCase {
         SerialNode g = new SerialNode(5,SerialNode.NODE2002V1);
         Assert.assertTrue("must Send", g.mustSend() );
         g.resetMustSend();
+        Assert.assertNotNull("exists", a );
         Assert.assertTrue("must Send off", !(g.mustSend()) );
         c.setSerialOutput("GL5B2",false);
         c.setSerialOutput("GL5B1",false);
@@ -384,7 +386,8 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("packet type", 17, m.getElement(1) );  // 'T'        
     }
 
-    private boolean waitForReply() {
+    @SuppressWarnings("unused")
+	private boolean waitForReply() {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( rcvdReply == null && i++ < 100  )  {
@@ -413,7 +416,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
-            public java.util.Vector getPortNames() { return null; }
+            public java.util.Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

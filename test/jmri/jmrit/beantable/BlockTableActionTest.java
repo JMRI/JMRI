@@ -4,15 +4,13 @@ package jmri.jmrit.beantable;
 
 import junit.framework.*;
 
-import javax.swing.JComboBox;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class BlockTableActionTest extends TestCase {
 

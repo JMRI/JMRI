@@ -10,8 +10,6 @@ import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
 
 import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.InternalSensorManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
@@ -19,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class BlockBossLogicTest extends TestCase {
 	
@@ -172,6 +170,8 @@ public class BlockBossLogicTest extends TestCase {
                 root = this;
             }
         };
+        
+       	Assert.assertNotNull("Instance exists", i );
         
         // reset InstanceManager
         JUnitUtil.resetInstanceManager();

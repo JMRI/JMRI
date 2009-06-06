@@ -13,7 +13,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -22,7 +22,7 @@ public abstract class VariableValueTest extends TestCase {
     abstract VariableValue makeVar(String label, String comment, String cvName,
                                    boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                    int cvNum, String mask, int minVal, int maxVal,
-                                   Vector v, JLabel status, String item);
+                                   Vector<CvValue> v, JLabel status, String item);
 
     abstract void setValue(VariableValue var, String value);
     abstract void checkValue(VariableValue var, String comment, String value);
@@ -35,7 +35,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // check label, item from ctor
     public void testVariableNaming() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -47,7 +47,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // can we create one, then manipulate the variable to change the CV?
     public void testVariableValueCreate() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -68,7 +68,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // can we change the CV and see the result in the Variable?
     public void testVariableFromCV() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -86,7 +86,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // Do we get the right return from a readOnly == true DecVariable?
     public void testVariableReadOnly() {
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -101,7 +101,7 @@ public abstract class VariableValueTest extends TestCase {
     public void testVariableValueRead() {
         log.debug("testVariableValueRead base starts");
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -130,7 +130,7 @@ public abstract class VariableValueTest extends TestCase {
     public void testVariableValueWrite() {
         log.debug("testVariableValueWrite base starts");
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -159,7 +159,7 @@ public abstract class VariableValueTest extends TestCase {
     public void testVariableCvWrite() {
         if (log.isDebugEnabled()) log.debug("start testVariableCvWrite test");
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -190,7 +190,7 @@ public abstract class VariableValueTest extends TestCase {
     // check the state diagram
     public void testVariableValueStates() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -205,7 +205,7 @@ public abstract class VariableValueTest extends TestCase {
     // check the state <-> color connection for value
     public void testVariableValueStateColor() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -219,7 +219,7 @@ public abstract class VariableValueTest extends TestCase {
     // check the state <-> color connection for rep when var changes
     public void testVariableRepStateColor() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -244,7 +244,7 @@ public abstract class VariableValueTest extends TestCase {
     // check the state <-> color connection for var when rep changes
     public void testVariableVarChangeColorRep() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -272,7 +272,7 @@ public abstract class VariableValueTest extends TestCase {
     // check synchonization of value, representations
     public void testVariableSynch() {
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -312,7 +312,7 @@ public abstract class VariableValueTest extends TestCase {
     public void testWriteSynch2() {
         if (log.isDebugEnabled()) log.debug("start testWriteSynch2 test");
 
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
@@ -345,12 +345,13 @@ public abstract class VariableValueTest extends TestCase {
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
     public void XtestSpaceUsage() {  // leading X prevents test from being called
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
         DecVariableValue var = new DecVariableValue("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        Assert.assertNotNull("exists", var );
         System.out.println("free, total memory at start = "+Runtime.getRuntime().freeMemory()
                            +" "+Runtime.getRuntime().totalMemory());
         Runtime.getRuntime().gc();
@@ -364,8 +365,10 @@ public abstract class VariableValueTest extends TestCase {
             JTextField j = new JTextField(doc,"",3);
             //JTextField temp = ((JTextField)var.getValue());
             //Assert.assertTrue(temp != null);
+            Assert.assertNotNull("exists", j );
         }
         long freeAfter = Runtime.getRuntime().freeMemory();
+        Assert.assertNotNull("exists", freeAfter );
         System.out.println("free, total memory after loop = "+Runtime.getRuntime().freeMemory()
                            +" "+Runtime.getRuntime().totalMemory());
         long usedAfter = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
@@ -377,8 +380,8 @@ public abstract class VariableValueTest extends TestCase {
         System.out.println("used & kept = "+(usedAfterGC-usedStart)+" used before reclaim = "+(usedAfter-usedStart));
     }
 
-    protected Vector createCvVector() {
-        Vector v = new Vector(512);
+    protected Vector<CvValue> createCvVector() {
+        Vector<CvValue> v = new Vector<CvValue>(512);
         for (int i=0; i < 512; i++) v.addElement(null);
         return v;
     }

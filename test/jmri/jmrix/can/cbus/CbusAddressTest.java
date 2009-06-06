@@ -5,7 +5,6 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanMessage;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CbusAddressTest extends TestCase {
 

@@ -2,14 +2,13 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.*;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -21,6 +20,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 		tcis = new SerialTrafficControlScaffold();
         n = new SerialNode(0,SerialNode.SMINI);
 		t = new SerialTurnout("CT4","t4");
+		Assert.assertNotNull("exists", n );
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

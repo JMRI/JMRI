@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -119,7 +119,7 @@ public class InstanceManagerTest extends TestCase {
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     private void resetInstanceManager() {
-        jmri.InstanceManager i = new jmri.InstanceManager(){
+        new jmri.InstanceManager(){
             protected void init() {
                 super.init();
                 root = this;

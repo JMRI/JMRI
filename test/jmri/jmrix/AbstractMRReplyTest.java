@@ -2,8 +2,6 @@
 
 package jmri.jmrix;
 
-import java.beans.PropertyChangeListener;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,7 +11,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class AbstractMRReplyTest extends TestCase {
     AbstractMRReply testMsg;

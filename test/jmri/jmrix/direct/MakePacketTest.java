@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MakePacketTest class
  * @author		Bob Jacobsen  Copyright 2004
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class MakePacketTest extends TestCase {
     
@@ -32,6 +32,7 @@ public class MakePacketTest extends TestCase {
          * in hex
          * 55 55 55 c6 c6 c6 c6 c6 c6 c6 c6 96 c6 c6 c6 5c
          */
+        Assert.assertTrue(test_retval);
         Assert.assertEquals("Simple lenght",16,result[0]);
         Assert.assertEquals("Simple 0", 85, result[1]);
         Assert.assertEquals("Simple 1 ", 85, result[2]);
@@ -91,6 +92,7 @@ public class MakePacketTest extends TestCase {
         byte buffer[] = new byte [3];
         boolean test_retval;
         test_retval = MakePacket.setPreambleLength(15);
+        Assert.assertTrue(test_retval);
         
         for (i=-128;i<127;i++)
             for (j=-128;j<127;j++)
@@ -125,6 +127,7 @@ public class MakePacketTest extends TestCase {
         Direction = true; /*Set direction to forwards */
         
         test_retval = MakePacket.setPreambleLength(15);
+        Assert.assertTrue(test_retval);
         
         for (addressRange=0;addressRange<10239;addressRange++)
             for (speedRange=0;speedRange<127;speedRange++)
@@ -173,6 +176,7 @@ public class MakePacketTest extends TestCase {
         boolean test_retval;
         
         test_retval = MakePacket.setPreambleLength(15);
+        Assert.assertTrue(test_retval);
         
         for (addressRange=0;addressRange<10239;addressRange++)
             for (cvNum=2;cvNum<512;cvNum++)

@@ -83,6 +83,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress(getSystemName(getNumToTest2()), "user");
 
+		Assert.assertTrue("real object returned ", a != null);
 		// try to get nonexistant turnouts
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
@@ -91,7 +92,8 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 	public void testUpperLower() {
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
-
+		Assert.assertTrue("real object returned ", a != null);
+		
 		Turnout t = l.provideTurnout(""+getNumToTest2());
 		String name = t.getSystemName();
 		Assert.assertTrue(t.equals(l.getTurnout(name.toLowerCase())));

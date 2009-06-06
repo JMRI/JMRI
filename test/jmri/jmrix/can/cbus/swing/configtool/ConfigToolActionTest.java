@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.configtool package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class ConfigToolActionTest extends TestCase {
 
@@ -26,6 +26,7 @@ public class ConfigToolActionTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         new ConfigToolAction().actionPerformed(null);
+        Assert.assertNotNull("exists", t );
     }
 
     // Main entry point

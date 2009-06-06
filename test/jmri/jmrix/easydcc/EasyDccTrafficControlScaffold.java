@@ -24,7 +24,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 	/**
 	 * record messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 	public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
 		if (log.isDebugEnabled()) log.debug("sendEasyDccMessage ["+m+"]");
 		// save a copy

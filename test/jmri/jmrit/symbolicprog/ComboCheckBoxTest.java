@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
 
 /**
  * @author			Bob Jacobsen Copyright 2005
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class ComboCheckBoxTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class ComboCheckBoxTest extends TestCase {
 
     public void testToOriginal() {
         // create an enum variable pointed at CV 81 and connect
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -57,7 +57,7 @@ public class ComboCheckBoxTest extends TestCase {
 
     public void testFromOriginal() {
         // create an enum variable pointed at CV 81 and connect
-        Vector v = createCvVector();
+        Vector<CvValue> v = createCvVector();
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
@@ -93,8 +93,8 @@ public class ComboCheckBoxTest extends TestCase {
         var.lastItem();
     }
 
-    protected Vector createCvVector() {
-        Vector v = new Vector(512);
+    protected Vector<CvValue> createCvVector() {
+        Vector<CvValue> v = new Vector<CvValue>(512);
         for (int i=0; i < 512; i++) v.addElement(null);
         return v;
     }

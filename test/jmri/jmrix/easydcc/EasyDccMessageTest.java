@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 
 package jmri.jmrix.easydcc;
@@ -17,6 +17,7 @@ public class EasyDccMessageTest extends TestCase {
 
 	public void testCreate() {
 		EasyDccMessage m = new EasyDccMessage(1);
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testToASCIIString() {

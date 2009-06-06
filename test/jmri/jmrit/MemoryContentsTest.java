@@ -7,14 +7,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
-
-import javax.swing.*;
-
 /**
  * Test simple functioning of MemoryContents
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class MemoryContentsTest extends TestCase {

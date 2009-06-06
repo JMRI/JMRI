@@ -31,7 +31,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -95,6 +95,7 @@ public class OperationsRoutesTest extends TestCase {
 		Location l1 = new Location("TESTLOCATIONID1", "TESTLOCATIONNAME1");
 
 		RouteLocation rl1 = new RouteLocation("TESTROUTELOCATIONID", l1);
+		Assert.assertNotNull("exists", rl1 );
 
 		Assert.assertEquals("Route Id", "TESTROUTEID", r1.getId());
 		Assert.assertEquals("Route Name", "TESTROUTENAME", r1.getName());
@@ -200,6 +201,8 @@ public class OperationsRoutesTest extends TestCase {
 
 		Location l3 = new Location("TESTLOCATIONID3", "TESTLOCATIONNAME3");
 		rladd = r1.addLocation(l3);
+		
+		Assert.assertNotNull("exists", rladd);
 
 		RouteLocation rl1test;
 
@@ -213,9 +216,9 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Add Location 3", "TESTLOCATIONNAME3", rl1test.getName());
 
 		//  Check that locations are in the expected order
-		List list = r1.getLocationsBySequenceList();
+		List<String> list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById((String) (list.get(i)));
+			rl1test = r1.getLocationById(list.get(i));
 			if (i == 0) {			
 				Assert.assertEquals("List Location 1 before", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -239,7 +242,7 @@ public class OperationsRoutesTest extends TestCase {
 
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById((String) (list.get(i)));
+			rl1test = r1.getLocationById(list.get(i));
 			if (i == 0) {			
 				Assert.assertEquals("List Location 1 after", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -263,7 +266,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.moveLocationUp(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById((String) (list.get(i)));
+			rl1test = r1.getLocationById(list.get(i));
 			if (i == 0) {			
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -288,7 +291,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.moveLocationDown(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById((String) (list.get(i)));
+			rl1test = r1.getLocationById(list.get(i));
 			if (i == 0) {			
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -312,7 +315,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.deleteLocation(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById((String) (list.get(i)));
+			rl1test = r1.getLocationById(list.get(i));
 			if (i == 0) {			
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -490,7 +493,7 @@ public class OperationsRoutesTest extends TestCase {
 	public void testXMLCreate() throws Exception {
 
                 RouteManager manager = RouteManager.instance();
-                List temprouteList = manager.getRoutesByIdList();
+                List<String> temprouteList = manager.getRoutesByIdList();
 
                 Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
                 manager.newRoute("Test Number 1");

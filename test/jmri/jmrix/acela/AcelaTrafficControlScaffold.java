@@ -23,7 +23,7 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 	/**
 	 * record messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<AcelaMessage> outbound = new Vector<AcelaMessage>();  // public OK here, so long as this is a test class
     @Override
 	public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
 		if (log.isDebugEnabled()) log.debug("sendAcelaMessage ["+m+"]");

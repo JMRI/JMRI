@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect package.
  * @author      Bob Jacobsen  Copyright 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class GridConnectTest extends TestCase {
 

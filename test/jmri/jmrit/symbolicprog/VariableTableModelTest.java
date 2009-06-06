@@ -6,16 +6,15 @@ import javax.swing.*;
 
 import jmri.progdebugger.*;
 import junit.framework.*;
-import org.jdom.*;
 
-import java.util.Vector;
+import org.jdom.*;
 
 /**
  * VariableTableModelTest.java
  *
  * Description:
  * @author			Bob Jacobsen Copyright 2005
- * @version    $Revision: 1.12 $
+ * @version    $Revision: 1.13 $
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -36,6 +35,7 @@ public class VariableTableModelTest extends TestCase {
     public void testVarTableCreate() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null, null);  // CvTableModel ref is null for this test
+        Assert.assertNotNull("exists", t );
     }
 
     // Check column count member fn, column names
@@ -126,7 +126,7 @@ public class VariableTableModelTest extends TestCase {
         doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 
         // add some elements
-        Element el0, el1;
+        Element el0;
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")
@@ -209,7 +209,7 @@ public class VariableTableModelTest extends TestCase {
         doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 
         // add some elements
-        Element el0, el1;
+        Element el0;
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")

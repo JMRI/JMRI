@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -35,7 +35,7 @@ public class OrderedHashtableTest extends TestCase {
         oht.put("3", t3);
         
         // check order
-        Enumeration en = oht.keys();
+        Enumeration<Object> en = oht.keys();
         String t;
         
         Assert.assertTrue(en.hasMoreElements());
@@ -75,7 +75,7 @@ public class OrderedHashtableTest extends TestCase {
         oht.remove("3");
         
         // check order
-        Enumeration en = oht.keys();
+        Enumeration<Object> en = oht.keys();
         String t;
         
         Assert.assertTrue(en.hasMoreElements());

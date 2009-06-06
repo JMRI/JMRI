@@ -3,7 +3,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.*;
-import java.util.Vector;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.Assert;
@@ -17,7 +16,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -44,7 +43,7 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
                 public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
             };
-
+        assertNotNull("exists", p );
         assertEquals("column count", 2, colCount);
     }
 
@@ -69,7 +68,7 @@ public class PaneProgPaneTest extends TestCase {
                 public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
                 { varCount++; }
             };
-
+        assertNotNull("exists", p );
         assertEquals("variable defn count", 7, varCount);
     }
 
@@ -299,7 +298,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
 
         // mark some as needing to be written
-        ((CvValue)cvModel.allCvVector().elementAt(1)).setValue(12);
+        (cvModel.allCvVector().elementAt(1)).setValue(12);
 
         Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true,false));
         Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false,false));
@@ -307,7 +306,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
         Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
 
-        ((CvValue)cvModel.allCvVector().elementAt(69)).setValue(12);
+        (cvModel.allCvVector().elementAt(69)).setValue(12);
             // careful - might change more than one CV!
 
         Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));

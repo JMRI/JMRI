@@ -37,7 +37,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -203,10 +203,10 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("1 First schedule name", "new schedule", s1.getName());
 		Assert.assertEquals("1 First schedule name", "newer schedule", s2.getName());
 		
-		List names = sm.getSchedulesByNameList();
+		List<String> names = sm.getSchedulesByNameList();
 		Assert.assertEquals("There should be 2 schedules", 2, names.size());
-		Schedule sch1 = sm.getScheduleById((String)names.get(0));
-		Schedule sch2 = sm.getScheduleById((String)names.get(1));
+		Schedule sch1 = sm.getScheduleById(names.get(0));
+		Schedule sch2 = sm.getScheduleById(names.get(1));
 		Assert.assertEquals("2 First schedule name", "new schedule", sch1.getName());
 		Assert.assertEquals("2 First schedule name", "newer schedule", sch2.getName());
 		Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
@@ -1012,7 +1012,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.setLocationEditFrame(frame);
 		
 		// now load locations
-		List locationList = manager.getLocationsByIdList();
+		List<String> locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 		Location l1 = manager.newLocation("Test Location 2");
 		Location l2 = manager.newLocation("Test Location 1");
@@ -1066,9 +1066,9 @@ public class OperationsLocationsTest extends TestCase {
 		s2i1.setComment("Schedule 2 Item 1 Comment");
 
 		locationList = manager.getLocationsByIdList();
-		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById((String)locationList.get(0)).getName());
-		Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById((String)locationList.get(1)).getName());
-		Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById((String)locationList.get(2)).getName());
+		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById(locationList.get(0)).getName());
+		Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById(locationList.get(1)).getName());
+		Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById(locationList.get(2)).getName());
 
 		Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
 		Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
@@ -1109,7 +1109,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
 		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = (String)locationList.get(i);
+			String locationId = locationList.get(i);
 			Location loc = manager.getLocationById(locationId);
 			String locname = loc.getName();
 			if (i == 0) {
@@ -1127,7 +1127,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
 		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = (String)locationList.get(i);
+			String locationId = locationList.get(i);
 			Location loc = manager.getLocationById(locationId);
 			String locname = loc.getName();
 			if (i == 0) {
@@ -1155,7 +1155,7 @@ public class OperationsLocationsTest extends TestCase {
 	// test location Xml read support preparation
 	public void testXMLReadPrep() {
 		LocationManager manager = LocationManager.instance();
-		List locationList = manager.getLocationsByIdList();
+		List<String> locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
 		//  Revert the main xml file back to the backup file.
@@ -1170,7 +1170,7 @@ public class OperationsLocationsTest extends TestCase {
 	// test location Xml read support
 	public void testXMLRead() throws Exception  {
 		LocationManager manager = LocationManager.instance();
-		List locationList = manager.getLocationsByNameList();
+		List<String> locationList = manager.getLocationsByNameList();
 		
 		CarTypes ct = CarTypes.instance();
 		ct.addName("Boxcar");
@@ -1198,7 +1198,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
 
 		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = (String)locationList.get(i);
+			String locationId = locationList.get(i);
 			Location loc = manager.getLocationById(locationId);
 
 			if (i == 0) {
@@ -1210,9 +1210,9 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("Boxcar"));
-				List list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTracksByNameList(null);
 				Assert.assertEquals("Location 1 has n tracks", 1, list.size());
-				Track t = loc.getTrackById((String)list.get(0));
+				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
 				Assert.assertEquals("Location 1 track road option", Track.EXCLUDEROADS, t.getRoadOption());
 				Assert.assertEquals("Location 1 track road", true, t.acceptsRoadName("Track 1 Road"));
@@ -1228,16 +1228,16 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
 		
-				List list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTracksByNameList(null);
 				Assert.assertEquals("Location 2 has n tracks", 2, list.size());
-				Track t = loc.getTrackById((String)list.get(0));
+				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
 				Assert.assertEquals("Location 2 track 1 road option", Track.ALLROADS, t.getRoadOption());
 				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 2 track 1 type", true, t.acceptsTypeName("Track 2 Type"));
 				Assert.assertEquals("Location 2 track 1 type", false, t.acceptsTypeName("Track 4 Type"));
-				t = loc.getTrackById((String)list.get(1));
+				t = loc.getTrackById(list.get(1));
 				Assert.assertEquals("Location 2 2nd track name", "A Yard", t.getName());
 				Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDEROADS, t.getRoadOption());
 				Assert.assertEquals("Location 2 track 2 road", true, t.acceptsRoadName("Track 1 Road"));
@@ -1256,9 +1256,9 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("Boxcar"));
 		
-				List list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTracksByNameList(null);
 				Assert.assertEquals("Location 3 has n tracks", 1, list.size());
-				Track t = loc.getTrackById((String)list.get(0));
+				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());
 				Assert.assertEquals("Location 3 track 1 road option", Track.ALLROADS, t.getRoadOption());
 				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 1 Road"));

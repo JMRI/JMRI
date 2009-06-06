@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.13 $
+ * @version		$Revision: 1.14 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -88,6 +88,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        Assert.assertNotNull("exists", s4 );
         r.setElement(0, 128+98);
         r.setElement(1, 0x0F);
         r.setElement(2, 128+98);
@@ -118,6 +119,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        Assert.assertNotNull("exists", s4 );
         r.setElement(0, 128+98);
         r.setElement(1, 0x0F);
         r.setElement(2, 128+98);
@@ -840,6 +842,8 @@ public class SerialNodeTest extends TestCase {
 		SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
         // install a grapevine sensor manager
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager());
+        Assert.assertNotNull("exists", i );
+        Assert.assertNotNull("exists", tcis );
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     

@@ -4,13 +4,12 @@ package jmri.jmrit.beantable;
 
 import junit.framework.*;
 
-import javax.swing.JComboBox;
 
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RouteTableActionTest extends TestCase {
 

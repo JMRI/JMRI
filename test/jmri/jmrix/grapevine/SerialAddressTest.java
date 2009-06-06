@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -235,6 +235,8 @@ public class SerialAddressTest extends TestCase {
 	public void testValidSystemNameConfig() {
             SerialNode d = new SerialNode(4,SerialNode.NODE2002V6);
             SerialNode c = new SerialNode(10,SerialNode.NODE2002V1);
+            Assert.assertNotNull("exists", d );
+            Assert.assertNotNull("exists", c );
             Assert.assertTrue("valid config GL4107",  SerialAddress.validSystemNameConfig("GL4107",'L') );
             Assert.assertTrue("valid config GL4B307",   SerialAddress.validSystemNameConfig("GL4B307",'L') );
             Assert.assertTrue("valid config GS10007", SerialAddress.validSystemNameConfig("GS10007",'S') );

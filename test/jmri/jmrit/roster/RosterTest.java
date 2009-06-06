@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class RosterTest extends TestCase {
 
@@ -122,6 +122,7 @@ public class RosterTest extends TestCase {
     public void testReadWrite() throws Exception {
         // create a test roster & store in file
         Roster r = createTestRoster();
+        Assert.assertNotNull("exists", r );
 
         // create new roster & read
         Roster t = new Roster();

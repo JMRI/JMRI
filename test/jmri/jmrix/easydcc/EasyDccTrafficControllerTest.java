@@ -17,12 +17,13 @@ import java.util.Vector;
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 
 	public void testCreate() {
 		EasyDccTrafficController m = new EasyDccTrafficController();
+		Assert.assertNotNull("exists", m );
 	}
 
 	public void testSendAscii() throws Exception {
@@ -119,7 +120,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a EasyDccPortController
 	class EasyDccPortControllerScaffold extends EasyDccPortController {
-            public Vector getPortNames() { return null; }
+            public Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

@@ -3,11 +3,10 @@ package jmri.jmrit.symbolicprog;
 
 import javax.swing.*;
 
-import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
 import junit.framework.*;
 
-// Revision: $Revision: 1.11 $
+// Revision: $Revision: 1.12 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 

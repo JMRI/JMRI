@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Tests for the Jmri package
  * @author	Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PowerPaneTest extends TestCase {
 
@@ -40,6 +40,7 @@ public class PowerPaneTest extends TestCase {
 	// test creation
 	public void testCreate() {
 		PowerPane p = new PowerPane();
+		Assert.assertNotNull("exists", p );
 	}
 
 	// test on button routine

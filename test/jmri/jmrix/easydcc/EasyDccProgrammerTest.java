@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 
 package jmri.jmrix.easydcc;
@@ -34,7 +34,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// check write message sent
 		Assert.assertEquals("write message sent", 1, t.outbound.size());
 		Assert.assertEquals("write message contents", "P 00A 14",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
+			((t.outbound.elementAt(0))).toString());
 	}
 
 	public void testWriteRegisterSequence() throws JmriException {
@@ -53,7 +53,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// check write message sent
 		Assert.assertEquals("write message sent", 1, t.outbound.size());
 		Assert.assertEquals("write message contents", "S3 0C",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
+			((t.outbound.elementAt(0))).toString());
 	}
 
 	public void testReadSequence() throws JmriException {
@@ -69,7 +69,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());
 		Assert.assertEquals("read message contents", "R 00A",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
+			((t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
 		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'C');
@@ -100,7 +100,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());
 		Assert.assertEquals("read message contents", "V3",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
+			((t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
 		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'V');
@@ -131,7 +131,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());
 		Assert.assertEquals("read message contents", "R 00A",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
+			((t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
 		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'C');
@@ -175,7 +175,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		/**
 	 	* record messages sent, provide access for making sure they are OK
 	 	*/
-		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+		public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 		public void sendEasyDccMessage(EasyDccMessage m, jmri.jmrix.easydcc.EasyDccListener l) {
 			if (this.log.isDebugEnabled()) this.log.debug("sendEasyDccMessage ["+m+"]");
 			// save a copy

@@ -12,6 +12,7 @@ import jmri.*;
 
 import java.util.*;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -24,6 +25,7 @@ public class NceMonFrameTest extends TestCase {
     
     public void testCreate() {
         NceMonFrame f = new NceMonFrame();
+        Assert.assertNotNull("exists", f );
     }
     
     
@@ -62,7 +64,7 @@ public class NceMonFrameTest extends TestCase {
         
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
-        
+        Assert.assertNotNull("exists", t );
     }
     
     // service internal class to handle transmit/receive for tests
@@ -78,7 +80,7 @@ public class NceMonFrameTest extends TestCase {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+        public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             if (log.isDebugEnabled()) log.debug("sendNceMessage ["+m+"]");
             // save a copy

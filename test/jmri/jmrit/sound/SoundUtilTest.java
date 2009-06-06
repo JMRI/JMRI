@@ -2,18 +2,10 @@
 
 package jmri.jmrit.sound;
 
-import java.io.File;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.jdom.Element;
-import org.jdom.Document;
-import org.jdom.DocType;
-
-import java.io.InputStream;
 
 /**
  * Tests for the SoundUtil class.
@@ -21,7 +13,7 @@ import java.io.InputStream;
  * Note:  This makes noise!
  *
  * @author	    Bob Jacobsen  Copyright 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SoundUtilTest extends TestCase {
 

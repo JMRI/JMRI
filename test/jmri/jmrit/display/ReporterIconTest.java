@@ -1,10 +1,11 @@
 package jmri.jmrit.display;
 
 import javax.swing.*;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.beans.PropertyChangeEvent;
 
 /**
  * Test the ReporterIcon.
@@ -14,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ReporterIconTest extends TestCase {
 
@@ -34,7 +35,7 @@ public class ReporterIconTest extends TestCase {
                 root = this;
             }
         };
-        
+        Assert.assertNotNull("Instance exists", i );
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
         new jmri.jmrix.loconet.LocoNetInterfaceScaffold();

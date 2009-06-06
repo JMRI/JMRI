@@ -19,12 +19,13 @@ import jmri.util.JUnitAppender;
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
         SerialTrafficController m = new SerialTrafficController();
+        Assert.assertNotNull("exists", m );
     }
     
     public void testSerialNodeEnumeration() {
@@ -59,7 +60,8 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("no more Nodes after del2", null, c.getNode(2) );        
     }
 
-    private boolean waitForReply() {
+    @SuppressWarnings("unused")
+	private boolean waitForReply() {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( rcvdReply == null && i++ < 100  )  {
@@ -88,7 +90,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
-            public Vector getPortNames() { return null; }
+            public Vector<String> getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

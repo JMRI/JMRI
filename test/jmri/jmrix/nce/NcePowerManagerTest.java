@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
@@ -33,7 +33,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+        public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             // save a copy
             outbound.addElement(m);
@@ -92,11 +92,11 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
     }
 
     protected boolean outboundOnOK(int index) {
-        return ((NceMessage)(controller.outbound.elementAt(index))).isEnableMain();
+        return controller.outbound.elementAt(index).isEnableMain();
     }
 
     protected boolean outboundOffOK(int index) {
-        return ((NceMessage)(controller.outbound.elementAt(index))).isKillMain();
+        return controller.outbound.elementAt(index).isKillMain();
     }
 
     // setup a default NceTrafficController interface

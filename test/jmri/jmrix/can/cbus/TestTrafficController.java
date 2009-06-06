@@ -2,15 +2,13 @@
 
 package jmri.jmrix.can.cbus;
 
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficController;
 
 /**
  * Test scaffold to replace the TrafficController
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class TestTrafficController extends TrafficController {

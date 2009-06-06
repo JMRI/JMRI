@@ -4,14 +4,13 @@ package jmri.util;
 
 import javax.swing.*;
 import junit.framework.*;
-import junit.extensions.jfcunit.*;
 import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 
 /**
  * Tests for the jmri.util.SwingTestCase class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SwingTestCaseTest extends SwingTestCase {
 
