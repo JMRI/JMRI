@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * Implement CommandStation for SPROG communications.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SprogCommandStation implements CommandStation {
 
@@ -33,7 +33,7 @@ public class SprogCommandStation implements CommandStation {
         // add each byte of the input message
         for (j=0; j<packet.length; j++) {
             m.setElement(i++,' ');
-            String s = Integer.toHexString((int)packet[j]&0xFF).toUpperCase();
+            String s = Integer.toHexString(packet[j]&0xFF).toUpperCase();
             if (s.length() == 1) {
                 m.setElement(i++, '0');
                 m.setElement(i++, s.charAt(0));

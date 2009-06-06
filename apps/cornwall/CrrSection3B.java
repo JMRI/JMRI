@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class CrrSection3B extends CrrSection {
 
@@ -26,7 +26,7 @@ public class CrrSection3B extends CrrSection {
     void setOutput() {
         boolean bo2  = ( bo[ 2].getKnownState() == Sensor.ACTIVE);
         boolean bo3  = ( bo[ 3].getKnownState() == Sensor.ACTIVE);
-        boolean bo13 = ( bo[13].getKnownState() == Sensor.ACTIVE);
+        //boolean bo13 = ( bo[13].getKnownState() == Sensor.ACTIVE);
         boolean bo14 = ( bo[14].getKnownState() == Sensor.ACTIVE);
         boolean bo18 = ( bo[18].getKnownState() == Sensor.ACTIVE);
 

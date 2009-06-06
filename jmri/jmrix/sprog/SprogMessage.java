@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -166,7 +166,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       int i=0;
       // Create new message to hold the framed one
       SprogMessage f = new SprogMessage(MAXSIZE);
-      f.setElement(0, (int)':');
+      f.setElement(0, ':');
       // copy existing message adding CRLF
       for (i = 1; i <= _nDataChars; i++) {
         f.setElement(i, _dataChars[i-1]);
@@ -187,7 +187,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
-                s+="<"+(int)_dataChars[i]+">";
+                s+="<"+_dataChars[i]+">";
             }
         }
         return s;
@@ -424,7 +424,8 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     }
 
     // [AC] 11/09/2002
-    private static String addIntAsTwo(int val, SprogMessage m, int offset) {
+    @SuppressWarnings("unused")
+	private static String addIntAsTwo(int val, SprogMessage m, int offset) {
         String s = ""+val;
         if (s.length() != 2) s = "0"+s;  // handle <10
         m.setElement(offset,s.charAt(0));

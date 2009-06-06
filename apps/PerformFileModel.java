@@ -10,7 +10,7 @@ import java.util.List;
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see PerformFilePanel
  */
 public class PerformFileModel {
@@ -32,10 +32,10 @@ public class PerformFileModel {
     static public void rememberObject(PerformFileModel m) {
         l.add(m);
     }
-    static public List rememberedObjects() {
+    static public List<PerformFileModel> rememberedObjects() {
         return l;
     }
-    static List l = new ArrayList();
+    static List<PerformFileModel> l = new ArrayList<PerformFileModel>();
 }
 
 

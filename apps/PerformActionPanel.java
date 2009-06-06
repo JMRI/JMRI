@@ -13,7 +13,7 @@ import java.util.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends AbstractActionPanel {
@@ -21,7 +21,7 @@ public class PerformActionPanel extends AbstractActionPanel {
     public PerformActionPanel() {
         super("ButtonActionAdd","ButtonActionRemove");
     }
-    List rememberedObjects() { return PerformActionModel.rememberedObjects(); }
+    List<PerformActionModel> rememberedObjects() { return PerformActionModel.rememberedObjects(); }
     AbstractActionModel getNewModel(){ return new PerformActionModel(); }
 }
 

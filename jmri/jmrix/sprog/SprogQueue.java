@@ -8,7 +8,7 @@ import jmri.jmrix.sprog.SprogSlot;
  * DCC Command Station Queue for use with soft command station implementations.
  *
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SprogQueue {
@@ -127,7 +127,8 @@ public class SprogQueue {
     /**
      * Clear the queue
      */
-    private void clear() {
+    @SuppressWarnings("unused")
+	private void clear() {
       for (int i = 0; i < length; i++) {
         q[i].clear();
       }
@@ -140,7 +141,7 @@ public class SprogQueue {
      * @return int
      */
     private int findFree() {
-      int i, j;
+      int i;
       for (i=0; i<length; i++) {
         if (q[i].isFree()) {
           return i;

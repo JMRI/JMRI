@@ -3,7 +3,6 @@
 package apps;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Rectangle;
@@ -18,7 +17,7 @@ import jmri.util.JmriJFrame;
  * A splash screen for showing during JMRI startup
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller Copyright 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SplashWindow extends JmriJFrame {
     Image splashIm;

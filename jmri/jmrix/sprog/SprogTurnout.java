@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
@@ -70,7 +70,7 @@ public class SprogTurnout extends AbstractTurnout {
         m.setElement(i++, 'O');  // "S02 " means send it twice
         m.setElement(i++, ' ');
         // m.setElement(i++, '2'); // not required?
-        String s = Integer.toHexString((int)bl[0]&0xFF).toUpperCase();
+        String s = Integer.toHexString(bl[0]&0xFF).toUpperCase();
         if (s.length() == 1) {
             m.setElement(i++, '0');
             m.setElement(i++, s.charAt(0));
@@ -79,7 +79,7 @@ public class SprogTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(1));
         }
         m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
-        s = Integer.toHexString((int)bl[1]&0xFF).toUpperCase();
+        s = Integer.toHexString(bl[1]&0xFF).toUpperCase();
         if (s.length() == 1) {
             m.setElement(i++, '0');
             m.setElement(i++, s.charAt(0));
@@ -88,7 +88,7 @@ public class SprogTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(1));
         }
         m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
-        s = Integer.toHexString((int)bl[2]&0xFF).toUpperCase();
+        s = Integer.toHexString(bl[2]&0xFF).toUpperCase();
         if (s.length() == 1) {
             m.setElement(i++, '0');
             m.setElement(i++, s.charAt(0));

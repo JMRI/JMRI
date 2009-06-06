@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -241,7 +241,7 @@ public class AppConfigPanel extends JPanel {
     /**
      * Remember items to persist
      */
-    ArrayList clist = new ArrayList();
+    ArrayList<Component> clist = new ArrayList<Component>();
 
     public void dispose() {
         clist.clear();

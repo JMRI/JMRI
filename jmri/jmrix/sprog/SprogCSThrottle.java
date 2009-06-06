@@ -4,9 +4,7 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottle;
-import jmri.util.StringUtil;
 
-import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotManager;
 
 /**
@@ -18,7 +16,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {

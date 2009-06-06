@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SprogReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -98,7 +98,7 @@ public class SprogReply {
         public boolean getChecksum() {
             int checksum = 0;
             for (int i = 0; i < _nDataChars; i++) {
-                checksum += (int)(_dataChars[i] & 0xff);
+                checksum += _dataChars[i] & 0xff;
             }
             _nDataChars--;
             return ((checksum & 0xff) == 0);
@@ -110,11 +110,11 @@ public class SprogReply {
             String s = "";
             if (_isBoot || (_dataChars[0] == SprogMessage.STX)) {
               for (int i=0; i<_nDataChars; i++) {
-                  s+="<"+(int)(_dataChars[i] & 0xff)+">";
+                  s+="<"+(_dataChars[i] & 0xff)+">";
               }
             } else {
               for (int i=0; i<_nDataChars; i++) {
-                  s+=(char)_dataChars[i];
+                  s+=_dataChars[i];
               }
             }
             return s;

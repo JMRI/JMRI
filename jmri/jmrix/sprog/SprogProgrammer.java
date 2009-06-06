@@ -16,7 +16,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -98,16 +98,17 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // notify property listeners - see AbstractProgrammer for more
 
-    protected void notifyPropertyChange(String name, int oldval, int newval) {
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<PropertyChangeListener> v;
         synchronized(this) {
-            v = (Vector) propListeners.clone();
+            v = (Vector<PropertyChangeListener>) propListeners.clone();
         }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }

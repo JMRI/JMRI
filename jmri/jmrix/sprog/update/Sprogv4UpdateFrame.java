@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -58,7 +58,7 @@ public class Sprogv4UpdateFrame
       }
       // Send ? to look for SPROG version regardless of what we found this time
       msg = new SprogMessage(1);
-      msg.setOpCode( (int) '?');
+      msg.setOpCode('?');
       tc.sendSprogMessage(msg, this);
       bootState = QUERYSENT;
     }
@@ -148,7 +148,7 @@ public class Sprogv4UpdateFrame
         log.debug("reply in WRITESENT state");
       }
       // Check for correct response to type of write that was sent
-      if ( (m.getElement(m.getNumDataElements() - 1) == (int) '.')) {
+      if ( (m.getElement(m.getNumDataElements() - 1) == '.')) {
         if (hexFile.read() > 0) {
           // More data to write
           sendWrite();
@@ -293,7 +293,7 @@ public class Sprogv4UpdateFrame
     // At this point we do not know what state SPROG is in
     // send CR to attempt to wake it up
     msg = new SprogMessage(1);
-    msg.setOpCode( (int) ' ');
+    msg.setOpCode(' ');
     tc.sendSprogMessage(msg, this);
     bootState = CRSENT;
     startShortTimer();

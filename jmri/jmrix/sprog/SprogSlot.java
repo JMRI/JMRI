@@ -12,7 +12,7 @@ import java.util.Vector;
  * changes in values will result in notification.
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
  public class SprogSlot {
 
@@ -127,7 +127,7 @@ import java.util.Vector;
     public long getLastUpdateTime() { return lastUpdateTime ; }
 
     // data members to hold contact with the slot listeners
-    final private Vector slotListeners = new Vector();
+    final private Vector<SprogSlotListener> slotListeners = new Vector<SprogSlotListener>();
 
     public synchronized void addSlotListener(SprogSlotListener l) {
         // add only if not already registered
@@ -142,19 +142,20 @@ import java.util.Vector;
         }
     }
 
-    protected void notifySlotListeners() {
+    @SuppressWarnings("unchecked")
+	protected void notifySlotListeners() {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<SprogSlotListener> v;
         synchronized(this)
             {
-                v = (Vector) slotListeners.clone();
+                v = (Vector<SprogSlotListener>) slotListeners.clone();
             }
         if (log.isDebugEnabled()) log.debug("----->notify "+v.size()
                                             +" SlotListeners");
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            SprogSlotListener client = (SprogSlotListener) v.elementAt(i);
+            SprogSlotListener client = v.elementAt(i);
             client.notifyChangedSlot(this);
         }
     }
@@ -163,7 +164,8 @@ import java.util.Vector;
      * Get the address from the packet
      * @return int
      */
-    private int addressFromPacket() {
+    @SuppressWarnings("unused")
+	private int addressFromPacket() {
       if (isFree()) { return -1; }
       if (payload[0] >= 0xC0) { return (payload[0]<<8 | payload[1]); }
       return payload[0];

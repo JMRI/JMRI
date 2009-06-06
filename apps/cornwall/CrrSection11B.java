@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection11B extends CrrSection {
 
@@ -25,20 +25,20 @@ public class CrrSection11B extends CrrSection {
      * Set outputs to match the sensor state
      */
     void setOutput() {
-        boolean tu13 = ( tu[13].getKnownState() == Sensor.ACTIVE);
+        //boolean tu13 = ( tu[13].getKnownState() == Sensor.ACTIVE);
         boolean tu14 = ( tu[14].getKnownState() == Sensor.ACTIVE);
         boolean tu15 = ( tu[15].getKnownState() == Sensor.ACTIVE);
         boolean tu16 = ( tu[16].getKnownState() == Sensor.ACTIVE);
 
         boolean bo1  = ( bo[ 1].getKnownState() == Sensor.ACTIVE);
         boolean bo16 = ( bo[16].getKnownState() == Sensor.ACTIVE);
-        boolean bo17 = ( bo[17].getKnownState() == Sensor.ACTIVE);
+       // boolean bo17 = ( bo[17].getKnownState() == Sensor.ACTIVE);
         boolean bo18 = ( bo[18].getKnownState() == Sensor.ACTIVE);
         boolean bo19 = ( bo[19].getKnownState() == Sensor.ACTIVE);
 
         boolean si9  = ( si[ 9].getCommandedState() == THROWN);
         boolean si12 = ( si[12].getCommandedState() == THROWN);
-        boolean si24 = ( si[24].getCommandedState() == THROWN);
+        //boolean si24 = ( si[24].getCommandedState() == THROWN);
         boolean si132= ( si[132].getCommandedState() == THROWN);
 
         int value = GREEN;

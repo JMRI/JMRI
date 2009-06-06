@@ -5,14 +5,13 @@ package jmri.jmrix.sprog.update;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogTrafficController;
 
 import javax.swing.*;
 
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -32,7 +31,7 @@ public class SprogVersionFrame
         
         // Send a blank message
         msg = new SprogMessage(1);
-        msg.setOpCode( (int) ' ');
+        msg.setOpCode(' ');
         tc.sendSprogMessage(msg, this);
         bootState = CRSENT;
         startShortTimer();
@@ -58,7 +57,7 @@ public class SprogVersionFrame
             }
             if ( (replyString.indexOf("P>")) >= 0) {
                 msg = new SprogMessage(1);
-                msg.setOpCode( (int) '?');
+                msg.setOpCode('?');
                 tc.sendSprogMessage(msg, this);
                 bootState = QUERYSENT;
             } else {

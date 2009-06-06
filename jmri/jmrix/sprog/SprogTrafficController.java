@@ -17,7 +17,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -29,7 +29,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 
 // The methods to implement the SprogInterface
 
-	protected Vector cmdListeners = new Vector();
+	protected Vector<SprogListener> cmdListeners = new Vector<SprogListener>();
 
 	public boolean status() { return (ostream != null & istream != null);
 		}
@@ -52,17 +52,18 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 	/**
 	 * Forward a SprogMessage to all registered SprogInterface listeners.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void notifyMessage(SprogMessage m, SprogListener notMe) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<SprogListener> v;
 		synchronized(this)
 			{
-				v = (Vector) cmdListeners.clone();
+				v = (Vector<SprogListener>) cmdListeners.clone();
 			}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			SprogListener client = (SprogListener) v.elementAt(i);
+			SprogListener client = v.elementAt(i);
 			if (notMe != client) {
 				if (log.isDebugEnabled()) log.debug("notify client: "+client);
 				try {
@@ -104,17 +105,18 @@ public class SprogTrafficController implements SprogInterface, Runnable {
         public boolean isV4BootMode() {return sprogState == V4BOOTMODE; }
 
 
+	@SuppressWarnings("unchecked")
 	protected void notifyReply(SprogReply r) {
           // make a copy of the listener vector to synchronized (not needed for transmit?)
-          Vector v;
+          Vector<SprogListener> v;
           synchronized(this)
           {
-            v = (Vector) cmdListeners.clone();
+            v = (Vector<SprogListener>) cmdListeners.clone();
           }
           // forward to all listeners
           int cnt = v.size();
           for (int i=0; i < cnt; i++) {
-            SprogListener client = (SprogListener) v.elementAt(i);
+            SprogListener client = v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
               // skip forwarding to the last sender for now, we'll get them later
@@ -315,8 +317,8 @@ public class SprogTrafficController implements SprogInterface, Runnable {
          if ( num >= 2) {
            // ptr is offset of last element in SprogReply
            int ptr = num-1;
-           if ((int)(msg.getElement(ptr) & 0xff)   != SprogMessage.ETX) return false;
-           if ((int)(msg.getElement(ptr-1) & 0xff) == SprogMessage.DLE) return false;
+           if ((msg.getElement(ptr) & 0xff)   != SprogMessage.ETX) return false;
+           if ((msg.getElement(ptr-1) & 0xff) == SprogMessage.DLE) return false;
            return true;
          }
          else return false;

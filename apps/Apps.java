@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.81 $
+ * @version     $Revision: 1.82 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -525,8 +525,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("start labels");
         JPanel pane2 = new JPanel();
         
-        JComponent l;
-        
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
@@ -727,9 +725,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // GUI members
     private JMenuBar menuBar;
 
-    static public String startupInfo(String program) {
+    @SuppressWarnings("unchecked")
+	static public String startupInfo(String program) {
     	log.info(ignore);
-        Enumeration e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
         while ( e.hasMoreElements() ) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
             if ( a instanceof org.apache.log4j.RollingFileAppender ) {

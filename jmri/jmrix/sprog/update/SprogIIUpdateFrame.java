@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -70,7 +70,7 @@ public class SprogIIUpdateFrame
       }
       // Send ? to look for SPROG version regardless of what we found this time
       msg = new SprogMessage(1);
-      msg.setOpCode( (int) '?');
+      msg.setOpCode('?');
       tc.sendSprogMessage(msg, this);
       bootState = QUERYSENT;
     }
@@ -201,7 +201,7 @@ public class SprogIIUpdateFrame
       // Check for correct response to type of write that was sent
       if ( (sprogType.indexOf("II") >= 0) && (m.getOpCode() == msg.getElement(2)) &&
           (m.getNumDataElements() == 1)
-          || (m.getElement(m.getNumDataElements() - 1) == (int) '.')) {
+          || (m.getElement(m.getNumDataElements() - 1) == '.')) {
         if (hexFile.read() > 0) {
           // More data to write
           sendWrite();
@@ -378,7 +378,7 @@ public class SprogIIUpdateFrame
     // *** implicitly assume sprog II
 
     msg = new SprogMessage(1);
-    msg.setOpCode( (int) ' ');
+    msg.setOpCode(' ');
     tc.sendSprogMessage(msg, this);
     bootState = CRSENT;
     startShortTimer();

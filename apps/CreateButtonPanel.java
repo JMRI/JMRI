@@ -12,7 +12,7 @@ import java.util.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see apps.CreateButtonModel
  */
 public class CreateButtonPanel extends AbstractActionPanel {
@@ -20,7 +20,7 @@ public class CreateButtonPanel extends AbstractActionPanel {
     public CreateButtonPanel() {
         super("ButtonButtonAdd", "ButtonButtonRemove");
     }
-    List rememberedObjects() { return CreateButtonModel.rememberedObjects(); }
+    List<CreateButtonModel> rememberedObjects() { return CreateButtonModel.rememberedObjects(); }
     AbstractActionModel getNewModel(){ return new CreateButtonModel(); }
 }
 

@@ -8,12 +8,11 @@ import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
 
 import javax.swing.*;
-import jmri.jmrix.sprog.SprogTrafficController;
 
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -89,17 +88,17 @@ public class SprogUpdateFrame
   synchronized public void reply(SprogReply m) {
   }
 
-  private void requestBoot() {
-  }
+  //private void requestBoot() {
+  //}
 
-  private void sendWrite() {
-  }
+  //private void sendWrite() {
+  //}
 
-  private void sendErase() {
-  }
+  //private void sendErase() {
+  //}
 
-  private void doneWriting() {
-  }
+  //private void doneWriting() {
+  //}
 
     /**
      * Set up the GUI

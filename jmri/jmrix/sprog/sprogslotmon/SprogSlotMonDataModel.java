@@ -2,25 +2,20 @@
 
 package jmri.jmrix.sprog.sprogslotmon;
 
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
 import jmri.jmrix.sprog.SprogSlotManager;
 
 import javax.swing.*;
-import java.awt.event.*;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -40,7 +35,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
       SprogSlotManager.instance().addSlotListener(this);
     }
 
-    private int queue;
 
     /**
      * Returns the number of rows to be displayed.  This
@@ -82,7 +76,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case SLOTCOLUMN:
         case ADDRCOLUMN:

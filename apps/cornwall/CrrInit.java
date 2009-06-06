@@ -3,7 +3,6 @@
 package apps.cornwall;
 
 import jmri.*;
-import jmri.jmrix.loconet.LnTurnoutManager;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -43,20 +42,20 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
         // sequence initialization of all the LocoNet turnouts
         SensorManager sm = InstanceManager.sensorManagerInstance();
-        List l = sm.getSystemNameList();
+        List<String> l = sm.getSystemNameList();
 
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List tos = tm.getSystemNameList();
+        List<String> tos = tm.getSystemNameList();
         for (int i = 0; i<tos.size(); i++) {
-            String name = ((String)tos.get(i));
+            String name = tos.get(i);
             Turnout t = tm.getBySystemName(name);
             // find the corresponding sensor
             for (int j=0; j<l.size(); j++) {
-                if (sm.getBySystemName((String)l.get(j)).getUserName()
+                if (sm.getBySystemName(l.get(j)).getUserName()
                         .startsWith(t.getUserName())
-                        && sm.getBySystemName((String)l.get(j)).getUserName().indexOf("tu(")>0) {
+                        && sm.getBySystemName(l.get(j)).getUserName().indexOf("tu(")>0) {
                     // here we've found a match, so command it
-                    Sensor s = sm.getBySystemName((String)l.get(j));
+                    Sensor s = sm.getBySystemName(l.get(j));
                     while (s.getKnownState() == Sensor.UNKNOWN) wait(250); // spin until ready
                     if (s.getKnownState() == Sensor.ACTIVE)
                         t.setCommandedState(Turnout.THROWN);

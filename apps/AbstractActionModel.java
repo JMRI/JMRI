@@ -14,7 +14,7 @@ import java.util.Enumeration;
  * They are displayed in lexical order by human-readable name.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -54,7 +54,7 @@ public abstract class AbstractActionModel {
         if (names==null) loadArrays();
         return names;
     }
-    static public Class[] classList() {
+    static public Class<?>[] classList() {
         if (classes==null) loadArrays();
         return classes;
     }
@@ -63,7 +63,7 @@ public abstract class AbstractActionModel {
         ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
         // count entries (not entirely efficiently!)
         int count = 0;
-        Enumeration e = rb.getKeys();
+        Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             count++;
             e.nextElement();
@@ -73,7 +73,7 @@ public abstract class AbstractActionModel {
         int index = 0;
         e = rb.getKeys();
         while (e.hasMoreElements()) {
-            String key = (String)e.nextElement();
+            String key = e.nextElement();
             names[index] = rb.getString(key);
             index++;
         }
@@ -85,7 +85,7 @@ public abstract class AbstractActionModel {
             // find the key corresponding to this name
             e = rb.getKeys();
             while (e.hasMoreElements()) {
-                String key = (String)e.nextElement();
+                String key = e.nextElement();
                 if (names[index].equals(rb.getString(key))) {
                     // this is a hit,
                     // get class for key
@@ -101,7 +101,7 @@ public abstract class AbstractActionModel {
     }
 
     static private String[] names = null;
-    static private Class[] classes = null;
+    static private Class<?>[] classes = null;
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractActionModel.class.getName());

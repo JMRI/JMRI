@@ -17,7 +17,7 @@ import java.util.List;
  * systems realize the type of data being stored.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see PerformActionPanel
  */
 public class PerformActionModel extends AbstractActionModel {
@@ -28,10 +28,10 @@ public class PerformActionModel extends AbstractActionModel {
     static public void rememberObject(PerformActionModel m) {
         l.add(m);
     }
-    static public List rememberedObjects() {
+    static public List<PerformActionModel> rememberedObjects() {
         return l;
     }
-    static List l = new ArrayList();
+    static List<PerformActionModel> l = new ArrayList<PerformActionModel>();
 
 }
 

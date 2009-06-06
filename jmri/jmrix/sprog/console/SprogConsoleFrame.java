@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * Frame for Sprog Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -82,7 +82,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Send a blank message to kick off the state machine to get the
         // currrent configuration of the attached SPROG
         msg = new SprogMessage(1);
-        msg.setOpCode( (int) ' ');
+        msg.setOpCode(' ');
         nextLine("cmd: \""+msg+"\"\n", "");
         tc.sendSprogMessage(msg, this);
         state = CRSENT;
@@ -344,7 +344,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             if ( (replyString.indexOf("P>")) >= 0) {
                 state = QUERYSENT;
                 msg = new SprogMessage(1);
-                msg.setOpCode( (int) '?');
+                msg.setOpCode('?');
                 nextLine("cmd: \""+msg+"\"\n", "");
                 tc.sendSprogMessage(msg, this);
             } else {
@@ -397,7 +397,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 if (isCurrentLimitPossible()) {
                     state = CURRENTQUERYSENT;
                     msg = new SprogMessage(1);
-                    msg.setOpCode( (int) 'I');
+                    msg.setOpCode('I');
                     nextLine("cmd: \""+msg+"\"\n", "");
                     tc.sendSprogMessage(msg, this);
                 } else {
@@ -406,7 +406,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     currentTextField.setText(String.valueOf(currentLimit));
                     state = MODEQUERYSENT;
                     msg = new SprogMessage(1);
-                    msg.setOpCode( (int) 'M');
+                    msg.setOpCode('M');
                     nextLine("cmd: \""+msg+"\"\n", "");
                     tc.sendSprogMessage(msg, this);
                 }
@@ -429,7 +429,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             // Next get the mode word
             state = MODEQUERYSENT;
             msg = new SprogMessage(1);
-            msg.setOpCode( (int) 'M');
+            msg.setOpCode('M');
             nextLine("cmd: \""+msg+"\"\n", "");
             tc.sendSprogMessage(msg, this);
         } else if (state == MODEQUERYSENT) {

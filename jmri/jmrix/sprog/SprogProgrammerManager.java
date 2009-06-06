@@ -10,25 +10,25 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SprogProgrammerManager  extends DefaultProgrammerManager {
 
     public static final int SERVICE = 0;
     public static final int OPS = 1;
 
-    private Programmer localProgrammer;
+    //private Programmer localProgrammer;
     private int mode;
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
-        localProgrammer = serviceModeProgrammer;
+        //localProgrammer = serviceModeProgrammer;
         this.mode = SERVICE;
     }
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer, int mode) {
         super(serviceModeProgrammer);
-        localProgrammer = serviceModeProgrammer;
+        //localProgrammer = serviceModeProgrammer;
         this.mode = mode;
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
  * has no additional behavior, so that persistance
  * systems realize the type of data being stored.
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see CreateButtonPanel
  */
 public class CreateButtonModel extends AbstractActionModel {
@@ -28,10 +28,10 @@ public class CreateButtonModel extends AbstractActionModel {
     static public void rememberObject(CreateButtonModel m) {
         l.add(m);
     }
-    static public List rememberedObjects() {
+    static public List<CreateButtonModel> rememberedObjects() {
         return l;
     }
-    static List l = new ArrayList();
+    static List<CreateButtonModel> l = new ArrayList<CreateButtonModel>();
 
 }
 

@@ -12,7 +12,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
   private int address = 0;
   private int type;
   private int len;
-  private StringBuffer line;
+  //private StringBuffer line;
   private int data[];
   private boolean read;
   private int lineNo = 0;
@@ -49,7 +49,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
       in = new FileInputStream(file);
       buffIn = new BufferedInputStream(in);
       address = 999999;
-      line = new StringBuffer("");
+      //line = new StringBuffer("");
       return true;
     }
     catch (IOException e) {

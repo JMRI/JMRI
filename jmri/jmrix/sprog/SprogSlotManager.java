@@ -6,7 +6,6 @@ import jmri.CommandStation;
 import jmri.NmraPacket;
 
 import java.util.Vector;
-import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.sprogslotmon.*;
 
 /**
@@ -24,7 +23,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -63,7 +62,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
         // add each byte of the input message
         for (j=0; j<packet.length; j++) {
             m.setElement(i++,' ');
-            String s = Integer.toHexString((int)packet[j]&0xFF).toUpperCase();
+            String s = Integer.toHexString(packet[j]&0xFF).toUpperCase();
             if (s.length() == 1) {
                 m.setElement(i++, '0');
                 m.setElement(i++, s.charAt(0));
@@ -175,7 +174,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
     static private SprogSlotManager self = null;
 
     // data members to hold contact with the slot listeners
-    final private Vector slotListeners = new Vector();
+    final private Vector<SprogSlotListener> slotListeners = new Vector<SprogSlotListener>();
 
     public synchronized void addSlotListener(SprogSlotListener l) {
         // add only if not already registered
@@ -190,12 +189,13 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
      * Trigger the notification of all SlotListeners.
      * @param s The changed slot to notify.
      */
-    protected void notify(SprogSlot s) {
+    @SuppressWarnings("unchecked")
+	protected void notify(SprogSlot s) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<SprogSlotListener> v;
         synchronized(this)
             {
-                v = (Vector) slotListeners.clone();
+                v = (Vector<SprogSlotListener>) slotListeners.clone();
             }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" SlotListeners about slot for address"
@@ -203,7 +203,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            SprogSlotListener client = (SprogSlotListener) v.elementAt(i);
+            SprogSlotListener client = v.elementAt(i);
             client.notifyChangedSlot(s);
         }
     }
@@ -218,7 +218,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
       log.debug("Slot thread starts");
       byte [] p;
       int [] statusA = new int [4];
-      int statusIdx = 0;
+      //int statusIdx = 0;
       int state = 0;
       SprogMessage m = SprogMessage.getStatus();
       while (true) {
@@ -305,7 +305,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
      * @return byte[]
      */
     private byte [] getNextPacket() {
-      boolean foundQ = true;
+      //boolean foundQ = true;
       SprogSlot s;
       byte [] p;
       int rep;

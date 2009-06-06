@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see apps.PerformFileModel
  */
 public class PerformFilePanel extends JPanel {
@@ -58,7 +58,7 @@ public class PerformFilePanel extends JPanel {
         // are there any existing objects from reading existing config?
         int n = PerformFileModel.rememberedObjects().size();
         for (int i = 0; i< n; i++) {
-            PerformFileModel m = (PerformFileModel) PerformFileModel.rememberedObjects().get(i);
+            PerformFileModel m = PerformFileModel.rememberedObjects().get(i);
             add(new Item(m));
         }
     }

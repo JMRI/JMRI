@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see apps.PerformScriptModel
  */
 public class PerformScriptPanel extends JPanel {
@@ -58,7 +58,7 @@ public class PerformScriptPanel extends JPanel {
         // are there any existing objects from reading existing config?
         int n = PerformScriptModel.rememberedObjects().size();
         for (int i = 0; i< n; i++) {
-            PerformScriptModel m = (PerformScriptModel) PerformScriptModel.rememberedObjects().get(i);
+            PerformScriptModel m = PerformScriptModel.rememberedObjects().get(i);
             add(new Item(m));
         }
     }

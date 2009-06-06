@@ -15,7 +15,7 @@ import jmri.util.JmriInsets;
  * @author	Bob Jacobsen    Copyright (C) 2007
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -93,7 +93,7 @@ public class ReportContextAction extends AbstractAction {
         }
         
         // look at context
-        Rectangle virtualBounds = new Rectangle();
+        //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             addString("Environment max bounds: "+ge.getMaximumWindowBounds());
