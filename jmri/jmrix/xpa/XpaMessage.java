@@ -6,11 +6,11 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class XpaMessage {
 
-    public static int maxSize = 64;
+    public final static int maxSize = 64;
 
     private int _nDataChars = 0;
     private byte _dataChars[] = null;
@@ -56,11 +56,11 @@ public class XpaMessage {
 
     // display format
     public String toString() {
-        String s = "";
+        StringBuffer s = new StringBuffer();
         for (int i=0; i<_nDataChars; i++) {
-            s+=(char)_dataChars[i];
+            s.append((char)_dataChars[i]);
         }
-        return s;
+        return s.toString();
     }
 
     // static methods to return a formatted message
@@ -99,10 +99,11 @@ public class XpaMessage {
        calculations easy, this uses a single speed step increase
     */
     static XpaMessage getIncSpeedMsg(int Address,int steps){
-	String Message=new String("ATDT#" +Address+ "*");
+        StringBuffer buf=new StringBuffer("ATDT#" +Address+"*");
+        String Message;
 	for(int i=0;i<steps;i++)
-		Message = Message + "3";
-	Message = Message +";";
+		buf.append("3");
+	Message = buf.toString() +";";
 	XpaMessage m=new XpaMessage(Message);
 	return m;
     }
@@ -113,10 +114,11 @@ public class XpaMessage {
        calculations easy, this uses a single speed step increase
     */
     static XpaMessage getDecSpeedMsg(int Address, int steps){
-	String Message=new String("ATDT#" +Address+ "*");
+        StringBuffer buf=new StringBuffer("ATDT#" +Address+"*");
+        String Message;
 	for(int i=0;i<steps;i++)
-		Message = Message + "1";
-	Message = Message +";";
+		buf.append("1");
+	Message = buf.toString() +";";
 	XpaMessage m=new XpaMessage(Message);
 	return m;
     }
