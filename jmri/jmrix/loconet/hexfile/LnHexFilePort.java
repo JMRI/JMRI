@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -92,9 +92,9 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
                 sFile = null;
                 _running = false;
             }
-            // wait to be told there's more coming
+            // wait to be told there's another file
             try {
-                Thread.sleep(3000);
+                Thread.sleep(Math.max(50, delay));  // wait at least 50 msec
             } catch (java.lang.InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 log.debug("woken from sleep");
@@ -102,8 +102,12 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
         }
     }
 
+    /**
+     * Provide a new message delay value, but 
+     * don't allow it to go below 2 msec.
+     */
     public void setDelay(int newDelay) {
-        delay = newDelay;
+        delay = Math.max(2,newDelay);
     }
 
     // base class methods
