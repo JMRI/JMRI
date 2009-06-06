@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LoadFileTest extends TestCase {
 
@@ -63,8 +63,9 @@ public class LoadFileTest extends TestCase {
         String inLine;
         String outLine;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
-            if (!inLine.startsWith("  <!--Written by JMRI version"))
-                Assert.assertEquals(inLine, outLine);
+            if (!inLine.startsWith("  <!--Written by JMRI version")
+                && !inLine.startsWith("  <timebase"))   // time changes from timezone to timezone
+                    Assert.assertEquals(inLine, outLine);
         }
     }
         
