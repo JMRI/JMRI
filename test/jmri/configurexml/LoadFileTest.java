@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LoadFileTest extends TestCase {
 
@@ -49,7 +49,7 @@ public class LoadFileTest extends TestCase {
     
         // store file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File("temp/LoadFileTest.xml");
+        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/LoadFileTest.xml");
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);
         
