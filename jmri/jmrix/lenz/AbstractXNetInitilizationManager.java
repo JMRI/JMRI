@@ -9,13 +9,19 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
     protected Thread initThread = null;
-    protected final static int InitTimeout = 30000;
-
+    
+    /**
+     * Define timeout used during initialization
+     */
+    protected int getInitTimeout() {
+        return 30000;
+    }
+    
     public AbstractXNetInitilizationManager() {
 	/* spawn a thread to request version information and wait for the 
 	   command station to respond */
@@ -54,22 +60,8 @@ abstract public class AbstractXNetInitilizationManager {
 
 	  parent = Parent;
 
-	  // Initilize and start initilization timeout timer.
-	  initTimer = new javax.swing.Timer(InitTimeout,
-				new java.awt.event.ActionListener() {
-				   public void actionPerformed(
-					java.awt.event.ActionEvent e) {
-					/* If the timer times out, notify any 
-					   waiting objects, and dispose of
-					   this thread */
-					if(log.isDebugEnabled()) 
-						log.debug("Timeout waiting for Command Station Response");
-					finish();
-				      }
-	      			   });
-          initTimer.setInitialDelay(InitTimeout);
-          initTimer.start();
-
+      initTimer = setupInitTimer();
+      
          // Register as an XPressNet Listener
 	    XNetTrafficController.instance().addXNetListener(XNetInterface.CS_INFO,this);
 
@@ -85,6 +77,25 @@ abstract public class AbstractXNetInitilizationManager {
 
 	}
 
+    protected javax.swing.Timer setupInitTimer() {
+	  // Initilize and start initilization timeout timer.
+	  javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
+				new java.awt.event.ActionListener() {
+				   public void actionPerformed(
+					java.awt.event.ActionEvent e) {
+					/* If the timer times out, notify any 
+					   waiting objects, and dispose of
+					   this thread */
+					if(log.isDebugEnabled()) 
+						log.debug("Timeout waiting for Command Station Response");
+					finish();
+				      }
+	      			   });
+          retVal.setInitialDelay(getInitTimeout());
+          retVal.start();
+          return retVal;
+    }
+    
        public void run() {
        }
 
