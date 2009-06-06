@@ -12,10 +12,10 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.3.1
  */
-public class RpsReporterManagerXml extends jmri.configurexml.AbstractReporterManagerConfigXML {
+public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
     public RpsReporterManagerXml() {
         super();
@@ -31,7 +31,7 @@ public class RpsReporterManagerXml extends jmri.configurexml.AbstractReporterMan
 
     public void load(Element reporters) {
         // create the master object
-        RpsReporterManager mgr = RpsReporterManager.instance();
+        RpsReporterManager.instance();
         // load individual sensors
         loadReporters(reporters);
     }

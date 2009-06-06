@@ -2,22 +2,15 @@
  
 package jmri.jmrix.rps.swing.polling;
 
-import jmri.jmrix.rps.*;
-import jmri.implementation.AbstractShutDownTask;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.*;
 import java.util.ResourceBundle;
-import javax.vecmath.Point3d;
-import java.io.*;
+
 
 /**
  * Frame for control of RPS polling
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 

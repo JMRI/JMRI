@@ -6,13 +6,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 // for F2 hack
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.*;
 import javax.vecmath.Point3d;
 import java.io.*;
 
@@ -35,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.28 $
+ * @version   $Revision: 1.29 $
  */
 
 
@@ -279,17 +272,17 @@ public class Engine implements ReadingListener {
     }
     public boolean getPolling() { return polling; }
     
-    java.util.ArrayList transmitters;
+    java.util.ArrayList<Transmitter> transmitters;
     
     void loadInitialTransmitters() {
-        transmitters = new java.util.ArrayList();
+        transmitters = new java.util.ArrayList<Transmitter>();
         // load transmitters from the JMRI roster
-        java.util.List l = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        java.util.List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, null);
         log.debug("Got "+l.size()+" roster entries");
         for (int i=0; i<l.size(); i++) {
             RosterEntry r = null;
             try {
-                r = (RosterEntry)l.get(i);
+                r = l.get(i);
                 int address = Integer.parseInt(r.getDccAddress());
                 Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
                 t.setRosterName(r.getId());
@@ -346,7 +339,7 @@ public class Engine implements ReadingListener {
     public Transmitter getTransmitter(int i) { 
         if (i<0) return null;
         if (transmitters == null) return null;
-        return (Transmitter) transmitters.get(i);
+        return transmitters.get(i);
     }
     public int getNumTransmitters() { 
         if (transmitters == null) return 0;

@@ -61,7 +61,7 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
@@ -75,7 +75,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
         this.Vs = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
     }
 
     public Ash2_2Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {

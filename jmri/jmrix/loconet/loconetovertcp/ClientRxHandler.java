@@ -14,14 +14,14 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
   Socket          clientSocket ;
   BufferedReader  inStream ;
   OutputStream    outStream ;
-  LinkedList      msgQueue ;
+  LinkedList<LocoNetMessage>      msgQueue ;
   Thread          txThread ;
   String          inString ;
   String          remoteAddress ;
@@ -43,7 +43,7 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
       inStream = new BufferedReader( new InputStreamReader( clientSocket.getInputStream() ) );
       outStream = clientSocket.getOutputStream();
 
-      msgQueue = new LinkedList() ;
+      msgQueue = new LinkedList<LocoNetMessage>() ;
       LnTrafficController.instance().addLocoNetListener( ~0, this );
 
       txThread = new Thread( new ClientTxHandler(this) ) ;
@@ -159,7 +159,7 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
               msgQueue.wait();
 
             if(!msgQueue.isEmpty())
-                msg = (LocoNetMessage) msgQueue.removeFirst();
+                msg = msgQueue.removeFirst();
           }
 
           if (msg != null) {

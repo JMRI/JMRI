@@ -4,7 +4,6 @@ package jmri.jmrix.loconet;
 
 import jmri.implementation.DefaultClockControl;
 import java.util.Date;
-import java.awt.event.*;
 
 /**
  * LnClockControl.java
@@ -43,7 +42,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -110,7 +109,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		setClock();
 	}
 	public boolean requiresIntegerRate() {return true;};
-	public double getRate() {return (double) curRate;}
+	public double getRate() {return curRate;}
 
     @SuppressWarnings("deprecation")
 	public void setTime(Date now) {
@@ -240,7 +239,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		// keep the new rate if different and resetting the internal clock
 		else if ( (temRate != curRate) && setInternal) {
 			try {
-				clock.userSetRate((double)temRate);
+				clock.userSetRate(temRate);
 			} 
             catch (jmri.TimebaseRateException e) {
                 if (!timebaseErrorReported) {

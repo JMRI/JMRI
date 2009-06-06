@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.20 $
+ * @version         $Revision: 1.21 $
  */
 public class LocoNetSlot {
 
@@ -126,11 +126,13 @@ public class LocoNetSlot {
     boolean localF28 = false;
     
     // methods to interact with LocoNet
-    public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
+    @SuppressWarnings("fallthrough")
+	public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
         case LnConstants.OPC_SL_RD_DATA:
           lastUpdateTime = System.currentTimeMillis() ;
+          //fall through
         case LnConstants.OPC_WR_SL_DATA: {
             if ( l.getElement(1) != 0x0E ) return;  // not an appropriate reply
             // valid, so fill contents

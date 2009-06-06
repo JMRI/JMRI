@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.43 $
+ * @version			$Revision: 1.44 $
  */
 public class Llnmon {
 
@@ -52,12 +52,12 @@ public class Llnmon {
 
 
     // control data
-    private boolean  rawLogMode      = false;  /* logging mode - 0=normal 1=raw (data only)        */
-    private int      msgNumber       = 1;      /* message number                                   */
-    private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
-    private boolean  showHex         = false;  /* flag that determines if we print hex values      */
+    //private boolean  rawLogMode      = false;  /* logging mode - 0=normal 1=raw (data only)        */
+    //private int      msgNumber       = 1;      /* message number                                   */
+    //private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
+    //private boolean  showHex         = false;  /* flag that determines if we print hex values      */
     private boolean  showOpCode      = false;   /* flag that determines if we print loconet opcodes */
-    private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
+    //private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
     private int      trackStatus     = -1;     /* most recent track status value                   */
 
@@ -849,7 +849,7 @@ public class Llnmon {
 
                 // rwSlotData = (rwSlotDataMsg *) msgBuf;
                 int command =   l.getElement(0);
-                int mesg_size = l.getElement(1);     // ummmmm, size of the message in bytes?
+                //int mesg_size = l.getElement(1);     // ummmmm, size of the message in bytes?
                 int slot = 		l.getElement(2);     // slot number for this request
                 int stat = 		l.getElement(3);     // slot status
                 int adr = 		l.getElement(4);     // loco address
@@ -1592,7 +1592,7 @@ public class Llnmon {
         int src 	= l.getElement(2);            	// source of transfer
         int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
         int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
-        int dst         = dst_h * 128 + dst_l;
+        //int dst         = dst_h * 128 + dst_l;
         int pxct1 	= l.getElement(5);
         int pxct2	= l.getElement(10);
 

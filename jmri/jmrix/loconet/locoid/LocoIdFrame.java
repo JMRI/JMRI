@@ -7,14 +7,13 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import java.util.ResourceBundle;
 
-import java.awt.Dimension;
 import javax.swing.*;
 
 /**
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 

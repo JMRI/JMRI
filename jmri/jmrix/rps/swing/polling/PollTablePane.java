@@ -9,7 +9,6 @@ import java.io.File;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.border.Border;
 
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.PollingFile;
@@ -21,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 

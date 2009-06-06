@@ -15,7 +15,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -28,11 +28,11 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         elements.setAttribute("class","jmri.jmrix.loconet.configurexml.LnSecurityElementManagerXml");
         LnSecurityElementManager sem = (LnSecurityElementManager) o;
         if (sem!=null) {
-            java.util.Iterator iter =
+            java.util.Iterator<SecurityElement> iter =
                                     sem.getSecurityElementList().iterator();
 
             while (iter.hasNext()) {
-                SecurityElement se = (SecurityElement)iter.next();
+                SecurityElement se = iter.next();
                 // we do a brute force store here eventually
                 Element elem = new Element("securityelement");
                 elem.setAttribute("number", String.valueOf(se.mNumber));     // own SE number
@@ -109,17 +109,19 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
      * Utility method to load the individual SecurityElement objects.
      * @param elements Element containing the securityelement elements to load.
      */
-    public void loadElements(Element elements) {
-        List elementList = elements.getChildren("securityelement");
+    @SuppressWarnings("unchecked")
+	public void loadElements(Element elements) {
+        List<Element> elementList = elements.getChildren("securityelement");
         if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" securityelement s");
         LnSecurityElementManager sem = LnSecurityElementManager.instance();
 
         for (int i=0; i<elementList.size(); i++) {
             // create SecurityElement & aspect generator
-            Element current = (Element)(elementList.get(i));
+            Element current = elementList.get(i);
             int number = Integer.parseInt(current.getAttribute("number").getValue());
             SecurityElement se = sem.getSecurityElement(number);
-            AspectGenerator ag = sem.getAspectGenerator(number);
+            @SuppressWarnings("unused")
+			AspectGenerator ag = sem.getAspectGenerator(number);
 
             // brute force the parameters
             Attribute a;

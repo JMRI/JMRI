@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -26,7 +26,7 @@ public class Ash1_0Algorithm implements Calculator {
         this.Vs = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
     }
 
     public Ash1_0Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
@@ -245,10 +245,13 @@ double wgt()					{// Weighting Function
   return (w)					;}
 
 int gps3()						{// GPS Position Solver
-  double    xij, yij, zij, rij, xik, yik, zik, rik;// Inputs (global variables)
-  double    xjk, yjk, zjk, rjk			;
+  @SuppressWarnings("unused")
+double    xij, yij, zij, rij, xik, yik, zik, rik;// Inputs (global variables)
+  @SuppressWarnings("unused")
+double    xjk, yjk, zjk, rjk			;
   double    Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz	;//     sat. position, range:
-  double    Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xi, yi, zi, ri
+  @SuppressWarnings("unused")
+double    Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xi, yi, zi, ri
   double    e1, e2				;//	   xj, yj, zj, rj
 						//	   xk, yk, zk, rk
 

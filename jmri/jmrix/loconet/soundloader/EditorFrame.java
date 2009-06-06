@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
 import java.io.IOException;
 import java.io.File;
@@ -20,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006, 2007, 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class EditorFrame extends JmriJFrame {
 

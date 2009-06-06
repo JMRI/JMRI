@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
@@ -31,7 +31,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.Vs = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
     }
 
     public Analytic_AAlgorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {

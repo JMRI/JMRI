@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 
 public class InitiateSound extends SdfMacro {
@@ -83,7 +83,7 @@ public class InitiateSound extends SdfMacro {
                 // next is leaf, keep it
                 next=decodeInstruction(buff);
             }
-            if (result.children==null) result.children = new ArrayList(); // make sure it's initialized
+            if (result.children==null) result.children = new ArrayList<SdfMacro>(); // make sure it's initialized
             result.children.add(next);
             
             // if this was an END_SOUND, we're done now that we've included it
@@ -114,7 +114,7 @@ public class InitiateSound extends SdfMacro {
         String output = indent+oneInstructionString();
         if (children==null) return output;
         for (int i = 0; i<children.size(); i++) {
-            output+= ((SdfMacro)children.get(i)).allInstructionString(indent+"  ");
+            output+= children.get(i).allInstructionString(indent+"  ");
         }
         return output;
     }

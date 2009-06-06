@@ -3,7 +3,6 @@
 package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.jmrix.loconet.sdf.*;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -12,7 +11,7 @@ import javax.swing.event.*;
  * Editor panel for the PLAY macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 class PlayEditor extends SdfMacroEditor {

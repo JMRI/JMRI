@@ -8,14 +8,12 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import javax.vecmath.Point3d;
-import java.io.*;
 
 /**
  * Frame for control of the sound speed for the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
 

@@ -4,8 +4,6 @@ package jmri.jmrix.loconet.locoio;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +19,7 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame

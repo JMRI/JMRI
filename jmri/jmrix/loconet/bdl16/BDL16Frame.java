@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.bdl16;
 
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
 /**
@@ -22,7 +21,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 

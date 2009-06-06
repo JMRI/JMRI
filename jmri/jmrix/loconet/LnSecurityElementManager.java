@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * objects (for now).
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LnSecurityElementManager {
 
@@ -29,17 +29,17 @@ public class LnSecurityElementManager {
         mHashAG.clear();
 	}
 
-	protected Hashtable mHashSE = new Hashtable();   // stores known instances by system name/number
-	protected Hashtable mHashAG = new Hashtable();   // stores known instances by system name/number
+	protected Hashtable<Integer,SecurityElement> mHashSE = new Hashtable<Integer,SecurityElement>();   // stores known instances by system name/number
+	protected Hashtable<Integer,AspectGenerator> mHashAG = new Hashtable<Integer,AspectGenerator>();   // stores known instances by system name/number
 
     /**
      * Get the list of known SecurityElement objects, unsorted
      */
-    public List getSecurityElementList() {
-        List out = new ArrayList();
-        Enumeration en = mHashSE.elements();
+    public List<SecurityElement> getSecurityElementList() {
+        List<SecurityElement> out = new ArrayList<SecurityElement>();
+        Enumeration<SecurityElement> en = mHashSE.elements();
         while (en.hasMoreElements()) {
-            out.add((SecurityElement)en.nextElement());  // cast is just a sanity check
+            out.add(en.nextElement());  // cast is just a sanity check
         }
          return out;
     }
@@ -47,11 +47,11 @@ public class LnSecurityElementManager {
     /**
      * Get the list of known AspectGenerator objects, unsorted
      */
-    public List getAspectGeneratorList() {
-        List out = new ArrayList();
-        Enumeration en = mHashAG.elements();
+    public List<AspectGenerator> getAspectGeneratorList() {
+        List<AspectGenerator> out = new ArrayList<AspectGenerator>();
+        Enumeration<AspectGenerator> en = mHashAG.elements();
         while (en.hasMoreElements()) {
-            out.add((AspectGenerator)en.nextElement());  // cast is just a sanity check
+            out.add(en.nextElement());  // cast is just a sanity check
         }
          return out;
     }
@@ -59,7 +59,7 @@ public class LnSecurityElementManager {
      * Create a new object as needed
      */
     public SecurityElement getSecurityElement(int i) {
-        SecurityElement se = (SecurityElement)mHashSE.get(new Integer(i));
+        SecurityElement se = mHashSE.get(new Integer(i));
         if (se!=null) return se;
         else {
             se = new SecurityElement(i);
@@ -76,7 +76,7 @@ public class LnSecurityElementManager {
      * Create a new object as needed
      */
     public AspectGenerator getAspectGenerator(int i) {
-        AspectGenerator ag = (AspectGenerator)mHashAG.get(new Integer(i));
+        AspectGenerator ag = mHashAG.get(new Integer(i));
         if (ag!=null) return ag;
         else {
             ag = new AspectGenerator(i);

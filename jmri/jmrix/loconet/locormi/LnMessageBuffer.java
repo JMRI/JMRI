@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
 {
     // versioned Jul 17, 2003 - was CVS revision 1.5
     static final long serialVersionUID = -8483947910723134277L;
-  LinkedList  messageList = null ;
+  LinkedList<LocoNetMessage>  messageList = null ;
 
   public LnMessageBuffer() throws RemoteException
   {
@@ -27,7 +27,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
   public void enable( int mask ) throws RemoteException
   {
     if( messageList == null )
-      messageList = new LinkedList() ;
+      messageList = new LinkedList<LocoNetMessage>() ;
 
     LnTrafficController.instance().addLocoNetListener( mask, this);
   }

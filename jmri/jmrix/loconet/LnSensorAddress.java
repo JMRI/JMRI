@@ -26,7 +26,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class LnSensorAddress {
 
@@ -168,7 +168,6 @@ public class LnSensorAddress {
     public String getBDL16Address() {
         String letter = null;
         String digit = null;
-        int n;
 
         switch (asInt()&0x03) {
             case 0: digit = "0"; break;

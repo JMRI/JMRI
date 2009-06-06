@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -132,7 +132,7 @@ public class Ash1_1Algorithm implements Calculator {
         this.Vs = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
     }
 
     public Ash1_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
@@ -283,7 +283,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
     if (i < ns)		j = i			;//     and to calc. weights
     else  while (
             (j = (int)Math.floor(
-                        ((double)ns)*Math.random()
+                        (ns)*Math.random()
                      ) )
                 == k)	;// Iterative solution
     
@@ -328,9 +328,12 @@ double wgt()					{// Weighting Function
   return (w)					;}
 
 int gps3()						{// GPS Position Solver
+  @SuppressWarnings("unused")
   double    xij, yij, zij, rij, xik, yik, zik, rik;// Inputs (global variables)
+  @SuppressWarnings("unused")
   double    xjk, yjk, zjk, rjk			;//     sat. position, range:
   double    Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz	;//        xi, yi, zi, ri
+  @SuppressWarnings("unused")
   double    Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xj, yj, zj, rj
   double    x1, y1, z1, x2, y2, z2, e1, e2	;//	   xk, yk, zk, rk
 

@@ -5,8 +5,6 @@ import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
-import java.util.HashMap;
-
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
@@ -17,11 +15,11 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.21 $
+ * @version 		$Revision: 1.22 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
-    private HashMap throttleListeners;
+    //private HashMap throttleListeners;
 
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.

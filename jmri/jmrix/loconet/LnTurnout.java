@@ -36,7 +36,7 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -253,6 +253,7 @@ import jmri.implementation.AbstractTurnout;
     	        	
                  }
              }
+             return;
          }
          default:
              return;

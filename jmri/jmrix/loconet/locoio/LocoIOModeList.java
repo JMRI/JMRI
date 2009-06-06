@@ -18,7 +18,7 @@ import jmri.jmrix.loconet.LnConstants;
  * @author plocher
  */
 public class LocoIOModeList {
-    private Vector modeList = new Vector();
+    private Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();
     private String[] validmodes;
 
     /**
@@ -68,18 +68,19 @@ public class LocoIOModeList {
 
         validmodes = new String[modeList.size()];
         for (int i=0; i <= modeList.size()-1; i++) {
-            LocoIOMode m = (LocoIOMode)modeList.elementAt(i);
+            LocoIOMode m = modeList.elementAt(i);
             validmodes[i] = m.getFullMode();
         }
     }
 
-    private void test() {
+    @SuppressWarnings("unused")
+	private void test() {
         /**
          * This should go into a JUnit test
          */
         log.debug("Starting test sequence");
         for (int i=0; i <= modeList.size()-1; i++) {
-            LocoIOMode m = (LocoIOMode)modeList.elementAt(i);
+            LocoIOMode m = modeList.elementAt(i);
 
             int haderror = 0;
             for (i = 1; i <= 2047; i++) {
@@ -143,7 +144,7 @@ public class LocoIOModeList {
 
     protected LocoIOMode getLocoIOModeFor(String s) {
        for (int i=0; i <= modeList.size()-1; i++) {
-            LocoIOMode m = (LocoIOMode)modeList.elementAt(i);
+            LocoIOMode m = modeList.elementAt(i);
             String ms = m.getFullMode();
             if (ms.matches(s)) {
                 return m;
@@ -154,7 +155,7 @@ public class LocoIOModeList {
     protected LocoIOMode getLocoIOModeFor(int cv, int v1, int v2) {
         // v2 &= 0x0F;
         for (int i=0; i <= modeList.size()-1; i++) {
-            LocoIOMode m = (LocoIOMode)modeList.elementAt(i);
+            LocoIOMode m = modeList.elementAt(i);
             if (m.getSV() == cv) {
                 if ( (m.getOpcode() == LnConstants.OPC_INPUT_REP) &&
                     (m.getV2() == (v2 & 0xD0) ) ) {
@@ -229,8 +230,8 @@ public class LocoIOModeList {
     }
 
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {
-        int hi = 0;
-        int lo = 0;
+        //int hi = 0;
+        //int lo = 0;
         if (opcode == LnConstants.OPC_INPUT_REP) {  /* return 1-4096 address */
             return ((SENSOR_ADR(v1, v2)-1)*2+((v2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1));
         } else if (opcode == LnConstants.OPC_SW_REQ) {

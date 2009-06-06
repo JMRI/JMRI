@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -146,7 +146,9 @@ public class SerialNode extends AbstractNode {
             default:
                 log.error("Unexpected nodeType in setNodeType: "+nodeType);
                 // use IO-48 as default
+            	break;
             case DAUGHTER:
+            	break;
             case CABDRIVER:
                 break;
         }

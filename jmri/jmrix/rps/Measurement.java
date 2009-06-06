@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Measurement {
 
@@ -127,7 +127,7 @@ public class Measurement {
     
     // provide a quick decimal truncation for formatting
     double truncate(double x) {
-        return (double)((int)Math.round(x*10)/10.);
+        return (int)Math.round(x*10)/10.;
     }
 }
 

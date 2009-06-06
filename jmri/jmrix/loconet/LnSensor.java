@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -105,6 +105,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                         setOwnState(Sensor.INACTIVE);
                     }
                 }
+                return;
             }
             default:
                 return;

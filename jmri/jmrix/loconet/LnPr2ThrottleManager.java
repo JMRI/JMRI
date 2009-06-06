@@ -1,11 +1,7 @@
 package jmri.jmrix.loconet;
 
-import jmri.DccThrottle;
-import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-
-import java.util.HashMap;
 
 import jmri.jmrix.AbstractThrottleManager;
 
@@ -19,7 +15,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 

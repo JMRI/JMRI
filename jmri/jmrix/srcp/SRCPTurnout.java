@@ -4,7 +4,6 @@ package jmri.jmrix.srcp;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
-import jmri.NmraPacket;
 
 /**
  * SRCP implementation of the Turnout interface.
@@ -15,7 +14,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for SRCP layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SRCPTurnout extends AbstractTurnout {
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
 public class ChannelStart extends SdfMacro {
@@ -44,7 +44,7 @@ public class ChannelStart extends SdfMacro {
             
             // next is leaf, keep it
             next=decodeInstruction(buff);
-            if (result.children==null) result.children = new ArrayList(); // make sure it's initialized
+            if (result.children==null) result.children = new ArrayList<SdfMacro>(); // make sure it's initialized
             result.children.add(next);
         }
         return result;
@@ -72,7 +72,7 @@ public class ChannelStart extends SdfMacro {
         String output = indent+oneInstructionString();
         if (children==null) return output;
         for (int i = 0; i<children.size(); i++) {
-            output+= ((SdfMacro)children.get(i)).allInstructionString(indent+"  ");
+            output+= children.get(i).allInstructionString(indent+"  ");
         }
         return output;
     }

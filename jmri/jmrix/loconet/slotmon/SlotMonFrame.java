@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.slotmon;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +23,7 @@ import jmri.util.JTableUtil;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SlotMonFrame extends jmri.util.JmriJFrame {
 

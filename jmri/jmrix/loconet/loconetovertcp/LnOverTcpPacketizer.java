@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.11 $
+ * @version 		$Revision: 1.12 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -184,7 +184,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   if (debug) log.debug("check for input");
                   byte msg[] = null;
                   synchronized (this) {
-                      msg = (byte[])xmtList.removeFirst();
+                      msg = xmtList.removeFirst();
                   }
 
                   // input - now send

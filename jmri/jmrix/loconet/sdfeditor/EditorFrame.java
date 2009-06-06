@@ -5,7 +5,6 @@ package jmri.jmrix.loconet.sdfeditor;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import java.awt.*;
 
 import jmri.util.JmriJFrame;
 
@@ -19,7 +18,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class EditorFrame extends JmriJFrame {
 

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.pr2;
 
-import jmri.PowerManager;
 import jmri.JmriException;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -25,7 +24,7 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 

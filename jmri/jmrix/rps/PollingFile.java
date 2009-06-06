@@ -5,13 +5,12 @@ import org.jdom.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;
-import javax.vecmath.Point3d;
 
 /**
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class PollingFile extends XmlFile {
 
@@ -29,7 +28,7 @@ public class PollingFile extends XmlFile {
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/rpsroster.xsl"?>
-        java.util.Map m = new java.util.HashMap();
+        java.util.Map<String,String> m = new java.util.HashMap<String,String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation+"rpsroster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -106,11 +105,12 @@ public class PollingFile extends XmlFile {
     /**
      * Get the transmitters from the file
      */
-    public void getTransmitters(Engine engine) {
-        List l = root.getChildren("transmitter");
+    @SuppressWarnings("unchecked")
+	public void getTransmitters(Engine engine) {
+        List<Element> l = root.getChildren("transmitter");
 
         for (int i = 0; i<l.size(); i++) {  // i indexes over the elements in the file
-            Element e = (Element)l.get(i);
+            Element e = l.get(i);
             String id = e.getAttribute("id").getValue();
             if (e.getAttribute("rostername")!=null) {
                 id = e.getAttribute("rostername").getValue();

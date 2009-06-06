@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.loconet.SE8cSignalHead;
 
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
@@ -16,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -57,8 +56,9 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * Create a SE8cSignalHead
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
-        List l = element.getChildren();
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        List<Element> l = element.getChildren();
         int turnout = loadTurnout(l.get(0));
         // put it together
         Attribute a = element.getAttribute("userName");

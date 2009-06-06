@@ -3,8 +3,6 @@
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.jmrix.AbstractMRReply;
 
 /**
  * Manage the RPS-specific Sensor implementation.
@@ -13,7 +11,7 @@ import jmri.jmrix.AbstractMRReply;
  * CSV representation of the region.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 

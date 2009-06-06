@@ -5,14 +5,13 @@ package jmri.jmrix.rps.swing;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.vecmath.Point3d;
 import java.awt.geom.*;
 
 /**
  * Panel for entry and modifiation of an Affine Transform
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 

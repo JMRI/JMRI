@@ -329,7 +329,7 @@ public class LocoIOData
 
     private int lastOpCv = -1;
     private boolean reading = false;  // false means write in progress
-    private boolean writing = false;
+    //private boolean writing = false;
 
     protected int highPart(int value) { // generally value 1
         return value/256;
@@ -693,7 +693,7 @@ public class LocoIOData
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
         reading = true;
-        writing = false;
+        //writing = false;
         // System.out.println("sendReadCommand(to " + Integer.toHexString(locoIOAddress) + "/" +
         //        Integer.toHexString(locoIOSubAddress) + " SV" + cv);
 
@@ -713,7 +713,7 @@ public class LocoIOData
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write
         reading = false;
-        writing = true;
+        //writing = true;
 
         LnTrafficController.instance().sendLocoNetMessage(
                 LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));

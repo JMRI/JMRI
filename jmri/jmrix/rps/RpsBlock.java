@@ -14,7 +14,7 @@ import java.util.List;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -85,12 +85,12 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     }
         
     void updateCurrentThrottles() {
-        List l = sensor.getContents();
+        List<Integer> l = sensor.getContents();
         if (l.size() == 0) return;
         if (l.size() > 1) log.warn("More than one address present!");
         for (int i = 0; i<l.size(); i++) {
-            Integer num = (Integer) l.get(i);
-            DccThrottle t = (DccThrottle) throttleTable.get(num);
+            Integer num = l.get(i);
+            DccThrottle t = throttleTable.get(num);
             if (t!= null) 
                 updateOneThrottle(t);
             else
@@ -119,7 +119,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
         sensor.removePropertyChangeListener(this);
     }
 
-    static java.util.Hashtable throttleTable = new java.util.Hashtable();
+    static java.util.Hashtable<Integer,DccThrottle> throttleTable = new java.util.Hashtable<Integer,DccThrottle>();
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsBlock.class.getName());
 

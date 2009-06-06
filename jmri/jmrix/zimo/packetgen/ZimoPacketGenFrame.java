@@ -2,7 +2,6 @@
 
 package jmri.jmrix.zimo.packetgen;
 
-import java.awt.*;
 import javax.swing.*;
 
 import jmri.jmrix.zimo.Mx1Message;
@@ -12,7 +11,7 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  * Frame for user input of MX-1 messages.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *

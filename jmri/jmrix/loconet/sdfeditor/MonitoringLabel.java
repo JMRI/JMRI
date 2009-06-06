@@ -2,14 +2,13 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
-import java.awt.FlowLayout;
 
 /**
  * Label which displays the contents of 
  * parameter messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class MonitoringLabel extends javax.swing.JTextArea implements java.beans.PropertyChangeListener {
 

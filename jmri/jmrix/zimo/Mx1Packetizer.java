@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -45,7 +45,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 	/**
 	 * Synchronized list used as a transmit queue
 	 */
-         LinkedList xmtList = new LinkedList();
+         LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
 
 	/**
 	 * XmtHandler (a local class) object to implement the transmit thread
@@ -206,7 +206,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             if (debug) log.debug("check for input");
                             byte msg[] = null;
                             synchronized (this) {
-                              msg = (byte[])xmtList.removeFirst();
+                              msg = xmtList.removeFirst();
                             }
                             // input - now send
                             try {

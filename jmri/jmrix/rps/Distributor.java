@@ -9,7 +9,7 @@ import java.util.Vector;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  *
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Distributor {
 
@@ -36,18 +36,19 @@ public class Distributor {
     /**
      * Invoked when a new Reading is created
      */
-    public void submitReading(Reading s) {
+    @SuppressWarnings("unchecked")
+	public void submitReading(Reading s) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<ReadingListener> v;
         synchronized(this) {
-            v = (Vector) readingListeners.clone();
+            v = (Vector<ReadingListener>) readingListeners.clone();
         }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" ReadingListeners about item ");
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            ReadingListener client = (ReadingListener) v.elementAt(i);
+            ReadingListener client = v.elementAt(i);
             javax.swing.SwingUtilities.invokeLater(new ForwardReading(s, client));
         }
     }
@@ -75,18 +76,19 @@ public class Distributor {
     /**
      * Invoked when a new Measurement is created
      */
-    public void submitMeasurement(Measurement s) {
+    @SuppressWarnings("unchecked")
+	public void submitMeasurement(Measurement s) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<MeasurementListener> v;
         synchronized(this) {
-                v = (Vector) measurementListeners.clone();
+                v = (Vector<MeasurementListener>) measurementListeners.clone();
         }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" MeasurementListeners about item ");
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            MeasurementListener client = (MeasurementListener) v.elementAt(i);
+            MeasurementListener client = v.elementAt(i);
             javax.swing.SwingUtilities.invokeLater(new ForwardMeasurement(s, client));
         }
     }
@@ -102,8 +104,8 @@ public class Distributor {
     // Implementation details //
     ////////////////////////////
 
-    final private Vector readingListeners = new Vector();
-    final private Vector measurementListeners = new Vector();
+    final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
+    final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Distributor.class.getName());
 

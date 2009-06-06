@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -90,7 +90,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             return s;
         }
         // register this sensor with the Serial Node
-        node.registerSensor((SerialSensor)s, bit-1);
+        node.registerSensor(s, bit-1);
         return s;
     }
     
@@ -117,12 +117,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
-        java.util.Iterator iter =
+        java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
         // Iterate through the sensors
         SerialNode tNode = null;
         while (iter.hasNext()) {
-            String sName = (String)iter.next();
+            String sName = iter.next();
             if (sName==null) {
                 log.error("System name null during register Sensor");
             }

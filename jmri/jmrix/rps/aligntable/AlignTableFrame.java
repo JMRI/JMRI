@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 /**
  * Frame for user configuration of RPS alignment.
@@ -16,7 +15,7 @@ import javax.swing.border.Border;
  * @see AlignTableAction
  * 
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 

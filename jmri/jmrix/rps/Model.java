@@ -2,8 +2,6 @@
  
 package jmri.jmrix.rps;
 
-import javax.vecmath.Point3d;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -18,7 +16,7 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 
@@ -35,7 +33,7 @@ public class Model {
     public void dispose() {
     }
 
-    ArrayList regions = new ArrayList();
+    ArrayList<Region> regions = new ArrayList<Region>();
     
     /**
      * Include a region in the model
@@ -57,7 +55,7 @@ public class Model {
      * This list should be immutable, hence copied,
      * but for now it's not.
      */
-    public List getRegions() {
+    public List<Region> getRegions() {
         return regions;
     }
     

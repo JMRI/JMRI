@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
 
@@ -39,7 +39,7 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
         int j = 4;
         for (int i=0; i<contents.length; i++) {
             msg.setElement(j++, ' ');
-            msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
+            msg.addIntAsTwoHex(contents[i]&0xFF, j);
             j = j+2;
         }
 

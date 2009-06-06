@@ -37,7 +37,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.23 $
+ * @version         $Revision: 1.24 $
  */
 
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
@@ -117,6 +117,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             // clear so can't resend recursively (we'll see
             // the resent message echo'd back)
             lastSWREQ = null;
+            return;
         }
         default:  // here we didn't find an interesting command
             // clear resend message, indicating not to resend

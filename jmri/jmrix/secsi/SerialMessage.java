@@ -12,7 +12,7 @@ package jmri.jmrix.secsi;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -21,7 +21,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /** Suppress the default ctor, as the response
      * length must always be specified
      */
-    private SerialMessage() {}
+    @SuppressWarnings("unused")
+	private SerialMessage() {}
     
     public SerialMessage(int l) {
         super(l);

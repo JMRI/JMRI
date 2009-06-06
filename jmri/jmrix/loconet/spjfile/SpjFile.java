@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 
 public class SpjFile {
@@ -399,7 +399,7 @@ public class SpjFile {
          * being repositioned
          */
         void updateStart(int newRecordStart) {
-            int oldRecordStart = getRecordStart();
+            //int oldRecordStart = getRecordStart();
             int dataStartOffset = getDataStart()-getRecordStart();
             setRecordStart(newRecordStart);
             setDataStart(newRecordStart+dataStartOffset);
@@ -567,7 +567,8 @@ public class SpjFile {
         /**
          * Read a 2-byte integer, handling endian-ness of SPJ files
          */
-        private int readInt2(InputStream s) throws java.io.IOException {
+        @SuppressWarnings("unused")
+		private int readInt2(InputStream s) throws java.io.IOException {
             int i1 = s.read()&0xFF;
             int i2 = s.read()&0xFF;
             return i1+(i2<<8);

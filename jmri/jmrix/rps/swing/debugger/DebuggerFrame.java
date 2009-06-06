@@ -5,17 +5,13 @@
 import jmri.jmrix.rps.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.*;
-import javax.vecmath.Point3d;
-import java.io.*;
 
 /**
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 
 
@@ -69,7 +65,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // add panes in the middle
-        JPanel p, p1, p2;
+        JPanel p, p1;
  
         // Time inputs
         p = new JPanel();
@@ -267,7 +263,6 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         double[] values = new double[NUMSENSORS+1];
         
         // parse input
-        int index = 0;
         for (int i = 0; i<=NUMSENSORS; i++) {
             values[i] = 0.;
             if ((timep.times[i]!=null) && !timep.times[i].getText().equals("")) {

@@ -12,12 +12,12 @@ import java.util.Properties;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 public class Server{
   static Server self ;
-  LinkedList    clients ;
+  LinkedList<ClientRxHandler>    clients ;
   Thread        socketListener ;
   ServerSocket  serverSocket ;
   boolean       settingsLoaded = false;
@@ -29,7 +29,7 @@ public class Server{
   static final String SETTINGS_FILE_NAME = "LocoNetOverTcpSettings.ini" ;
 
   private Server(){
-    clients = new LinkedList() ;
+    clients = new LinkedList<ClientRxHandler>() ;
   }
 
   public void setStateListner( ServerListner l ) {

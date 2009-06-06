@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.21 $
+ * @version 		$Revision: 1.22 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -62,7 +62,7 @@ public class LnPacketizer extends LnTrafficController {
      * <P>
      * This is public to allow access from the internal class(es) when compiling with Java 1.1
      */
-    public LinkedList xmtList = new LinkedList();
+    public LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread
@@ -424,7 +424,7 @@ public class LnPacketizer extends LnTrafficController {
                     if (fulldebug) log.debug("check for input");
                     byte msg[] = null;
                     synchronized (this) {
-                        msg = (byte[])xmtList.removeFirst();
+                        msg = xmtList.removeFirst();
                     }
 
                     // input - now send

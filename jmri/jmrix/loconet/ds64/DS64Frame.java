@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.ds64;
 
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
 /**
@@ -22,7 +21,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 

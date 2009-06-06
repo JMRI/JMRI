@@ -2,10 +2,7 @@
 
 package jmri.jmrix.loconet.downloader;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
-
-import javax.swing.JMenuBar;
 
 import jmri.util.JmriJFrame;
 
@@ -15,7 +12,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class LoaderFrame extends JmriJFrame {
 

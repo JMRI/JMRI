@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -83,11 +83,11 @@ public abstract class SdfMacro implements SdfConstants {
      * @return List of children, which will be null except in 
      * case of nesting.
      */
-    public List getChildren() { return children; }
+    public List<SdfMacro> getChildren() { return children; }
     /**
      * Local member hold list of child (contained) instructions
      */
-    ArrayList children = null;  // not changed unless there are some!
+    ArrayList<SdfMacro> children = null;  // not changed unless there are some!
     
 
     /**
@@ -95,10 +95,10 @@ public abstract class SdfMacro implements SdfConstants {
      */
     public int totalLength() {
         int result = length();
-        List l = getChildren();
+        List<SdfMacro> l = getChildren();
         if (l ==  null) return result;
         for (int i=0; i<l.size(); i++)
-            result += ((SdfMacro)l.get(i)).totalLength();
+            result += l.get(i).totalLength();
         return result;
     }
     /**
@@ -114,10 +114,10 @@ public abstract class SdfMacro implements SdfConstants {
      * data with setAtIndexAndInc()
      */
     public void loadByteArray(SdfBuffer buffer){
-        List l = getChildren();
+        List<SdfMacro> l = getChildren();
         if (l ==  null) return;
         for (int i=0; i<l.size(); i++)
-            ((SdfMacro)l.get(i)).loadByteArray(buffer);
+            l.get(i).loadByteArray(buffer);
     }
     
     /**

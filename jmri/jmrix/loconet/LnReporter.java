@@ -30,7 +30,7 @@ import jmri.implementation.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -128,7 +128,8 @@ import jmri.implementation.AbstractReporter;
      // data members
      int _number;   // loconet Reporter number
 
-     private boolean myAddress(int a1, int a2) {
+     @SuppressWarnings("unused")
+	private boolean myAddress(int a1, int a2) {
          // the "+ 1" in the following converts to throttle-visible numbering
          return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
      }

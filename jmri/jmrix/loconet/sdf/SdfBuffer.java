@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 public class SdfBuffer {
@@ -69,14 +69,14 @@ public class SdfBuffer {
         // first get length of new array
         int length = 0;
         for (int i = 0; i<ops.size(); i++) {
-            length += ((SdfMacro)ops.get(i)).totalLength();
+            length += ops.get(i).totalLength();
         }
         buffer = new byte[length];
         log.debug("create buffer of length "+length);
         resetIndex();
         // recurse to store bytes
         for (int i = 0; i<ops.size(); i++) {
-            ((SdfMacro)ops.get(i)).loadByteArray(this);
+            ops.get(i).loadByteArray(this);
         }
         if (index!=length) log.error("Lengths did not match: "+index+" "+length);
     }
@@ -84,7 +84,7 @@ public class SdfBuffer {
     public String toString() {
         String out ="";
         for (int i = 0; i<ops.size(); i++) {
-            SdfMacro m = (SdfMacro)ops.get(i);
+            SdfMacro m = ops.get(i);
 
             out += m.allInstructionString("    ");
         }
@@ -92,11 +92,11 @@ public class SdfBuffer {
     }
     
     public byte[] getByteArray() { return buffer; }
-    public List getMacroList() { return ops; }
+    public List<SdfMacro> getMacroList() { return ops; }
     
     void loadMacroList() {
         resetIndex();
-        ops = new ArrayList();
+        ops = new ArrayList<SdfMacro>();
         while (moreData()) {
             SdfMacro m = SdfMacro.decodeInstruction(this);
             ops.add(m);
@@ -104,7 +104,7 @@ public class SdfBuffer {
     }
     
     // List of contained instructions
-    ArrayList ops;
+    ArrayList<SdfMacro> ops;
 
     // byte[] representation
     byte[] buffer;

@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -190,7 +190,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Provide a mapping between locomotive addresses and the
      * SlotListener that's interested in them
      */
-    Hashtable mLocoAddrHash = new Hashtable();
+    Hashtable<Integer,SlotListener> mLocoAddrHash = new Hashtable<Integer,SlotListener>();
 
     /**
      * method to find the existing SlotManager object, if need be creating one
@@ -202,7 +202,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static private SlotManager self = null;
 
     // data members to hold contact with the slot listeners
-    final private Vector slotListeners = new Vector();
+    final private Vector<SlotListener> slotListeners = new Vector<SlotListener>();
 
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
@@ -221,12 +221,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Trigger the notification of all SlotListeners.
      * @param s The changed slot to notify.
      */
-    protected void notify(LocoNetSlot s) {
+    @SuppressWarnings("unchecked")
+	protected void notify(LocoNetSlot s) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<SlotListener> v;
         synchronized(this)
             {
-                v = (Vector) slotListeners.clone();
+                v = (Vector<SlotListener>) slotListeners.clone();
             }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +" SlotListeners about slot "
@@ -234,7 +235,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            SlotListener client = (SlotListener) v.elementAt(i);
+            SlotListener client = v.elementAt(i);
             client.notifyChangedSlot(s);
         }
     }
@@ -483,7 +484,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // slot i has the address of this request
             int addr = _slots[i].locoAddr();
             if (log.isDebugEnabled()) log.debug("LOCO_ADR resp of slot "+i+" loco "+addr);
-            SlotListener l = (SlotListener)mLocoAddrHash.get(new Integer(addr));
+            SlotListener l = mLocoAddrHash.get(new Integer(addr));
             if (l!=null) {
                 // only notify once per request
                 mLocoAddrHash.remove(new Integer(addr));
@@ -585,12 +586,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param oldval
      * @param newval
      */
-    protected void notifyPropertyChange(String name, int oldval, int newval) {
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<PropertyChangeListener> v;
         synchronized(this)
             {
-                v = (Vector) propListeners.clone();
+                v = (Vector<PropertyChangeListener>) propListeners.clone();
             }
         if (log.isDebugEnabled()) log.debug("notify "+v.size()
                                             +"listeners of property change name: "
@@ -598,7 +600,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }

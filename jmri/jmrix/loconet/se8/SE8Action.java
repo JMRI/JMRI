@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  *       			SE8Frame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SE8Action  extends AbstractAction {
 
@@ -19,7 +19,7 @@ public class SE8Action  extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create a PM4Frame
-        SE8Frame f = new SE8Frame();
+        new SE8Frame();
     }
 }
 

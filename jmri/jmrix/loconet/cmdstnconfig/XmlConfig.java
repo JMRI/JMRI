@@ -34,26 +34,27 @@ public class XmlConfig extends XmlFile
     int depth = 0 ;
     dumpNode( root, depth ) ;
   }
-  static void dumpNode( Element node, int depth )
+  @SuppressWarnings("unchecked")
+static void dumpNode( Element node, int depth )
   {
     int leader ;
     for( leader = 0; leader < depth; leader++ )
       System.out.print( '\t' );
 
     System.out.print( node.getName() );
-    Iterator attributes = node.getAttributes().iterator() ;
+    Iterator<Attribute> attributes = node.getAttributes().iterator() ;
     Attribute attribute ;
     while( attributes.hasNext() )
     {
-      attribute = (Attribute) attributes.next() ;
+      attribute = attributes.next() ;
       System.out.print( " " + attribute.getName() + " = " + attribute.getValue() ) ;
     }
     System.out.println() ;
-    Iterator children = node.getChildren().iterator() ;
+    Iterator<Element> children = node.getChildren().iterator() ;
     depth++ ;
     while( children.hasNext() )
     {
-      dumpNode( (Element)children.next(), depth ) ;
+      dumpNode(children.next(), depth );
     }
   }
 

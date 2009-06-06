@@ -2,15 +2,12 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import jmri.jmrix.loconet.spjfile.SpjFile;
 
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import java.util.ResourceBundle;
@@ -19,14 +16,13 @@ import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 
 
 /**
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.11 $
+ * @version		$Revision: 1.12 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -73,7 +69,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case HEADERCOL:
         case HANDLECOL:
@@ -315,7 +311,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        TableColumnModel tcm = table.getColumnModel();
+        //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
 		table.setDefaultRenderer(JButton.class,buttonRenderer);

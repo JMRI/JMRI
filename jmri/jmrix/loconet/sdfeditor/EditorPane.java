@@ -24,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.11 $
+ * @version	    $Revision: 1.12 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -149,12 +149,12 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
      * Add the instructions to the tree
      */
     void addSdf(SdfBuffer buff) {
-        DefaultMutableTreeNode newNode = null;
+        //DefaultMutableTreeNode newNode = null;
     
         // make the top elements at the top
-        List ops = buff.getMacroList();
+        List<SdfMacro> ops = buff.getMacroList();
         for (int i=0; i<ops.size(); i++) {
-            nestNodes(topNode, (SdfMacro)ops.get(i));
+            nestNodes(topNode, ops.get(i));
         }
 
         // don't show the top (single) node, 
@@ -175,10 +175,10 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         parent.add(newNode);
         
         // recurse for kids
-        List children = macro.getChildren();
+        List<SdfMacro> children = macro.getChildren();
         if (children == null) return;
         for (int i=0; i<children.size(); i++) {
-            nestNodes(newNode, (SdfMacro)children.get(i));
+            nestNodes(newNode, children.get(i));
         }
     }
     

@@ -3,15 +3,11 @@
 package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import java.util.Vector;
 import java.beans.*;
 
 /**
@@ -36,7 +32,7 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 
 public class LocoIOTableModel
@@ -45,7 +41,7 @@ public class LocoIOTableModel
 {
     private LocoIOData liodata;
     private boolean inHex;
-    private String maxSizeMode = "";
+    //private String maxSizeMode = "";
 
     /**
      * Define the number of rows in the table, which is also
@@ -76,8 +72,8 @@ public class LocoIOTableModel
     /**
      * Reference to JLabel for firmware version
      */
-    private JLabel     firmware = null;
-    private JLabel     locobuffer = null;
+    //private JLabel     firmware = null;
+    //private JLabel     locobuffer = null;
 
 
     /**
@@ -122,7 +118,7 @@ public class LocoIOTableModel
             default:            return "unknown";
         }
     }
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
             case PINCOLUMN:     return String.class;
             case MODECOLUMN:    return String.class;
@@ -181,7 +177,7 @@ public class LocoIOTableModel
 
     public void setValueAt(Object value, int row, int col) {
         if (col == MODECOLUMN) {
-            if (liodata.getLocoIOModeList().isValidModeValue((String)value)) {
+            if (liodata.getLocoIOModeList().isValidModeValue(value)) {
                 liodata.setMode(row, (String)value);
                 liodata.setLIM(row, (String)value);
                 LocoIOMode l = liodata.getLIM(row);

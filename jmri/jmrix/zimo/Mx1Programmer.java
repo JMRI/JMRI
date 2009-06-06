@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -94,16 +94,17 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
 	// notify property listeners - see AbstractProgrammer for more
 
+	@SuppressWarnings("unchecked")
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<PropertyChangeListener> v;
 		synchronized(this) {
-			v = (Vector) propListeners.clone();
+			v = (Vector<PropertyChangeListener>) propListeners.clone();
 		}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+			PropertyChangeListener client = v.elementAt(i);
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
 		}
 	}

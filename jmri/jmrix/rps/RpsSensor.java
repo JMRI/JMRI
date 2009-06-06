@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -59,7 +59,7 @@ public class RpsSensor extends AbstractSensor
     public void setOwnState(int state) {
         if (state == Sensor.INACTIVE) {
             if (contents.size() > 0 )
-                contents = new ArrayList();
+                contents = new ArrayList<Integer>();
         }
         super.setOwnState(state);
     }
@@ -68,7 +68,7 @@ public class RpsSensor extends AbstractSensor
         return region;
     }
     
-    java.util.List getContents() {
+    java.util.List<Integer> getContents() {
         return contents;
     }
     
@@ -89,7 +89,7 @@ public class RpsSensor extends AbstractSensor
     }
     
     Region region;
-    ArrayList contents = new ArrayList();
+    ArrayList<Integer> contents = new ArrayList<Integer>();
     
     /**
      * Notify parameter listeners that 

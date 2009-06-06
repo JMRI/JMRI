@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -45,7 +45,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         // get mouse coordinates
         try {
             Point mouse = e.getPoint();
-            Point2D userPt = currentAT.inverseTransform(new Point2D.Double((double)mouse.x, (double)mouse.y), null);
+            Point2D userPt = currentAT.inverseTransform(new Point2D.Double(mouse.x, mouse.y), null);
             // find the path object containing it, if any
             for (int i = measurementRepList.size()-1; i>=0 ; i--) {
                 MeasurementRep r = measurementRepList.get(i);
@@ -57,11 +57,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
 
             // find the region containing it, if any
             // Go through backwards to find the top if overlaps
-            List l = Model.instance().getRegions();
+            List<Region> l = Model.instance().getRegions();
             for (int i = l.size()-1; i>=0; i--) {
-                Shape s = ((Region)l.get(i)).getPath();
+                Shape s = l.get(i).getPath();
                 if (s.contains(userPt)) {
-                    return "Region: "+((Region)l.get(i)).toString()+", at "+userPt.getX()+","+userPt.getY();
+                    return "Region: "+l.get(i).toString()+", at "+userPt.getX()+","+userPt.getY();
                 }
             }
             // found nothing, just display location
@@ -144,12 +144,12 @@ public class RpsTrackingPanel extends javax.swing.JPanel
 
         if (showRegions) {
             // Draw the regions
-            List l = Model.instance().getRegions();
+            List<Region> l = Model.instance().getRegions();
             for (int i = 0; i<l.size(); i++) {
                 g2.setPaint(regionOutlineColor);
-                g2.draw(((Region)l.get(i)).getPath()); // border (same color)
+                g2.draw(l.get(i).getPath()); // border (same color)
                 g2.setPaint(regionFillColor);
-                g2.fill(((Region)l.get(i)).getPath());
+                g2.fill(l.get(i).getPath());
             }
         }
         

@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class InitialAlgorithm implements Calculator {
 
@@ -33,7 +33,7 @@ public class InitialAlgorithm implements Calculator {
         this.vsound = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
         
         xi = sensor1.x;
         yi = sensor1.y;
@@ -56,7 +56,7 @@ public class InitialAlgorithm implements Calculator {
         this.sensor4 = sensor4;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
         
         xl = sensor4.x;
         yl = sensor4.y;

@@ -7,22 +7,17 @@ import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.border.Border;
 
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
@@ -84,7 +79,7 @@ public class PollDataModel extends AbstractTableModel
         }
     }
 
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
         if (c == LONGCOL || c == POLLCOL)
             return Boolean.class;
         else if (c == ADDRCOL || c == LASTTIME)

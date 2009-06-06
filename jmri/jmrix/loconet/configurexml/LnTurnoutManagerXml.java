@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.loconet.LnTurnoutManager;
 
 /**
  * Provides load and store functionality for
@@ -11,7 +10,7 @@ import jmri.jmrix.loconet.LnTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

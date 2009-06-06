@@ -24,7 +24,7 @@ import jmri.implementation.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -188,6 +188,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
                         mAppearance = YELLOW;
                 }
             }
+            return;
         }
         default:
             return;

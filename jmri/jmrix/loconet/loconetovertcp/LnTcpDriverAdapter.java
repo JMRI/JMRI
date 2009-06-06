@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -86,7 +86,7 @@ public class LnTcpDriverAdapter extends LnPortController {
         return mInstance;
     }
 
-    public Vector getPortNames() {
+    public Vector<String> getPortNames() {
         log.error("Unexpected call to getPortNames");
         return null;
     }

@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -132,13 +132,13 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
-    private DataInputStream inpipe = null; // feed pout
+    //private DataInputStream inpipe = null; // feed pout
 
     public boolean okToSend() { return true; }
     // define operation
     private int delay=100;  				// units are milliseconds; default is quiet a busy LocoNet
 
-    public java.util.Vector getPortNames() {
+    public java.util.Vector<String> getPortNames() {
         log.error("getPortNames should not have been invoked");
         new Exception().printStackTrace();
         return null;

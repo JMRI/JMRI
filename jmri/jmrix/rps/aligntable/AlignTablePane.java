@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.border.Border;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -25,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -227,7 +226,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             }
         }
 
-        public Class getColumnClass(int c) {
+        public Class<?> getColumnClass(int c) {
             if (c == XCOL || c == YCOL || c == ZCOL)
                 return Double.class;
             else if (c == NUMCOL)

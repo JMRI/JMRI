@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RpsSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class RpsSensorManagerXml extends jmri.managers.configurexml.AbstractSens
 
     public void load(Element sensors) {
         // create the master object
-        RpsSensorManager mgr = RpsSensorManager.instance();
+        RpsSensorManager.instance();
         // load individual sensors
         loadSensors(sensors);
     }

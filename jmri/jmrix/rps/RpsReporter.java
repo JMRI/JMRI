@@ -5,7 +5,6 @@ package jmri.jmrix.rps;
 import javax.vecmath.*;
 import java.util.ArrayList;
 
-import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
 
 /**
@@ -13,7 +12,7 @@ import jmri.implementation.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -67,7 +66,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
     
     Region region;
-    ArrayList contents = new ArrayList();
+    ArrayList<Integer> contents = new ArrayList<Integer>();
     
     /**
      * Notify parameter listeners that 

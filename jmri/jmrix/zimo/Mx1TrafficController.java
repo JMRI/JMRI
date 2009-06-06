@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -48,7 +48,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 	abstract public void sendMx1Message(Mx1Message m, Mx1Listener reply);
 
     // The methods to implement adding and removing listeners
-	protected Vector listeners = new Vector();
+	protected Vector<Mx1Listener> listeners = new Vector<Mx1Listener>();
 
 	public synchronized void addMx1Listener(int mask, Mx1Listener l) {
         // add only if not already registered
@@ -70,17 +70,18 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      * @param replyTo Listener for the reply to this message, doesn't get
      *                the echo of it.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void notify(Mx1Message m, Mx1Listener replyTo) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<Mx1Listener> v;
 		synchronized(this) {
-			v = (Vector) listeners.clone();
+			v = (Vector<Mx1Listener>) listeners.clone();
 		}
 		if (log.isDebugEnabled()) log.debug("notify of incoming packet: "+m.toString());
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			Mx1Listener client = (Mx1Listener) listeners.elementAt(i);
+			Mx1Listener client = listeners.elementAt(i);
 			if (client!=replyTo) client.message(m);
 		}
 	}

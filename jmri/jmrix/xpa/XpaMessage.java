@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class XpaMessage {
 
@@ -46,7 +46,7 @@ public class XpaMessage {
     }
 
     public void setOpCode(int i) { _dataChars[0]=(byte)i;}
-    public int getOpCode() {return (int)_dataChars[0];}
+    public int getOpCode() {return _dataChars[0];}
     public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
 
     // accessors to the bulk data

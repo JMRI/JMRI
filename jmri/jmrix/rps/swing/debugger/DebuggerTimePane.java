@@ -7,7 +7,6 @@ import jmri.jmrix.rps.*;
 import javax.swing.*;
 import java.awt.*;
 import javax.vecmath.Point3d;
-import java.io.*;
 
 /**
  * Pane for manual operation and debugging of the RPS system.
@@ -16,7 +15,7 @@ import java.io.*;
  * as the RPS hardware number.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 

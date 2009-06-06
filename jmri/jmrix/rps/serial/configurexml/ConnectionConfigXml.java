@@ -18,7 +18,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -84,10 +84,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * @param name name of desired parameter
      * @return String value
      */
-    String findParmValue(Element e, String name) {
-        List l = e.getChildren("parameter");
+    @SuppressWarnings("unchecked")
+	String findParmValue(Element e, String name) {
+        List<Element> l = e.getChildren("parameter");
         for (int i = 0; i<l.size(); i++) {
-            Element n = (Element) l.get(i);
+            Element n = l.get(i);
             if (n.getAttributeValue("name").equals(name))
                 return n.getTextTrim();
         }

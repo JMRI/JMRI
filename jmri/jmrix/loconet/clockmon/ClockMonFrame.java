@@ -3,9 +3,7 @@
 package jmri.jmrix.loconet.clockmon;
 
 import jmri.jmrix.loconet.*;
-import jmri.*;
 
-import java.util.Date;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
@@ -24,7 +22,7 @@ import javax.swing.*;
  * items (Dave Duchamp 2007-2008).
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
 

@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.13 $
+ * @version 		$Revision: 1.14 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -41,7 +41,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
     abstract public void sendLocoNetMessage(LocoNetMessage m);
 
     // The methods to implement adding and removing listeners
-    protected Vector listeners = new Vector();
+    protected Vector<LocoNetListener> listeners = new Vector<LocoNetListener>();
 
     public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
         // add only if not already registered
@@ -67,21 +67,22 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * but don't inherit from it
      * @param m Message to forward. Listeners should not modify it!
      */
-    public void notify(LocoNetMessage m) {
+    @SuppressWarnings("unchecked")
+	public void notify(LocoNetMessage m) {
         // record statistics
         receivedMsgCount++;
         receivedByteCount += m.getNumDataElements();
         
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<LocoNetListener> v;
         synchronized(this) {
-            v = (Vector) listeners.clone();
+            v = (Vector<LocoNetListener>) listeners.clone();
         }
         if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
+            LocoNetListener client = listeners.elementAt(i);
             client.message(m);
         }
     }

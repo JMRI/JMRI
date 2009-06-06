@@ -19,7 +19,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NetworkDriverAdapter extends SRCPPortController {
 
@@ -53,8 +53,6 @@ public class NetworkDriverAdapter extends SRCPPortController {
         // mark OK for menus
         jmri.jmrix.srcp.ActiveFlag.setActive();
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SRCPPortController interface
     public DataInputStream getInputStream() {
@@ -102,7 +100,7 @@ public class NetworkDriverAdapter extends SRCPPortController {
 
     Socket socket;
 
-    public Vector getPortNames() {
+    public Vector<String> getPortNames() {
         log.error("Unexpected call to getPortNames");
         return null;
     }

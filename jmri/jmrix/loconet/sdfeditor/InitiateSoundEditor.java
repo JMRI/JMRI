@@ -2,8 +2,6 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
-import java.util.ArrayList;
-
 import jmri.jmrix.loconet.sdf.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +11,7 @@ import javax.swing.*;
  * Editor panel for the INITIATE_SOUND macro.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 class InitiateSoundEditor extends SdfMacroEditor {

@@ -10,15 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 
-    private Programmer localProgrammer;
+    //private Programmer localProgrammer;
 
     public SRCPProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
-        localProgrammer = serviceModeProgrammer;
+        //localProgrammer = serviceModeProgrammer;
 
     }
 

@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class PositionFile extends XmlFile {
 
@@ -29,7 +29,7 @@ public class PositionFile extends XmlFile {
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/rpsfile.xsl"?>
-        java.util.Map m = new java.util.HashMap();
+        java.util.Map<String,String> m = new java.util.HashMap<String,String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation+"rpsfile.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -116,14 +116,15 @@ public class PositionFile extends XmlFile {
         return e;
     }
     
-    public Reading readingFromElement(Element reading) {
+    @SuppressWarnings("unchecked")
+	public Reading readingFromElement(Element reading) {
         String id = reading.getChild("id").getText();
-        List kids = reading.getChildren("time");
+        List<Element> kids = reading.getChildren("time");
         int count = kids.size();
         double[] vals = new double[count+1];
         
         for (int i = 0; i<count; i++) {
-            Element e = (Element)kids.get(i);
+            Element e = kids.get(i);
             double val = Double.parseDouble(e.getText());
             vals[i+1] = val;  // 1st item goes in element 1
         }
@@ -169,11 +170,12 @@ public class PositionFile extends XmlFile {
     /**
      * FInd the highest numbered receiver in the file
      */
-    public int maxReceiver() {
-        List kids = root.getChildren("receiver");
+    @SuppressWarnings("unchecked")
+	public int maxReceiver() {
+        List<Element> kids = root.getChildren("receiver");
         int max = -1;
         for (int i = 0; i<kids.size(); i++) {
-            Attribute a = ((Element) kids.get(i)).getAttribute("number");
+            Attribute a = kids.get(i).getAttribute("number");
             if (a==null) continue;
             int n = -1;
             try { n = a.getIntValue(); }
@@ -187,10 +189,11 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver position in the file.
      * @return null if not present
      */
-    public Point3d getReceiverPosition(int n) {
-        List kids = root.getChildren("receiver");
+    @SuppressWarnings("unchecked")
+	public Point3d getReceiverPosition(int n) {
+        List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
-            Element e = (Element) kids.get(i);
+            Element e = kids.get(i);
             Attribute a = e.getAttribute("number");
             if (a == null) continue;
             int num = -1;
@@ -205,10 +208,11 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver active state in the file.
      * @return true if not present
      */
-    public boolean getReceiverActive(int n) {
-        List kids = root.getChildren("receiver");
+    @SuppressWarnings("unchecked")
+	public boolean getReceiverActive(int n) {
+        List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
-            Element e = (Element) kids.get(i);
+            Element e = kids.get(i);
             Attribute a = e.getAttribute("number");
             if (a == null) continue;
             int num = -1;
@@ -227,10 +231,11 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver min time.
      * @return 0 if not present
      */
-    public int getReceiverMin(int n) {
-        List kids = root.getChildren("receiver");
+    @SuppressWarnings("unchecked")
+	public int getReceiverMin(int n) {
+        List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
-            Element e = (Element) kids.get(i);
+            Element e = kids.get(i);
             Attribute a = e.getAttribute("number");
             if (a == null) continue;
             int num = -1;
@@ -252,10 +257,11 @@ public class PositionFile extends XmlFile {
      * Get the nth receiver max time.
      * @return 0 if not present
      */
-    public int getReceiverMax(int n) {
-        List kids = root.getChildren("receiver");
+    @SuppressWarnings("unchecked")
+	public int getReceiverMax(int n) {
+        List<Element> kids = root.getChildren("receiver");
         for (int i = 0; i<kids.size(); i++) {
-            Element e = (Element) kids.get(i);
+            Element e = kids.get(i);
             Attribute a = e.getAttribute("number");
             if (a == null) continue;
             int num = -1;
@@ -277,10 +283,11 @@ public class PositionFile extends XmlFile {
      * Get the nth calibration position in the file.
      * @return null if not present
      */
-    public Point3d getCalibrationPosition(int n) {
-        List kids = root.getChildren("calibrationpoint");
+    @SuppressWarnings("unchecked")
+	public Point3d getCalibrationPosition(int n) {
+        List<Element> kids = root.getChildren("calibrationpoint");
         if (n>= kids.size()) return null;
-        Element e = (Element) kids.get(n);
+        Element e = kids.get(n);
         return positionFromElement(e.getChild("position"));
     }
         
@@ -288,10 +295,11 @@ public class PositionFile extends XmlFile {
      * Get the nth calibration reading in the file.
      * @return null if not present
      */
-    public Reading getCalibrationReading(int n) {
-        List kids = root.getChildren("calibrationpoint");
+    @SuppressWarnings("unchecked")
+	public Reading getCalibrationReading(int n) {
+        List<Element> kids = root.getChildren("calibrationpoint");
         if (n>= kids.size()) return null;
-        Element e = (Element) kids.get(n);
+        Element e = kids.get(n);
         return readingFromElement(e.getChild("reading"));
     }
         
@@ -306,5 +314,5 @@ public class PositionFile extends XmlFile {
     }
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
+    //static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
 }

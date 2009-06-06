@@ -17,12 +17,12 @@ import java.util.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
         // Linked list to store the transmit queue.
-	LinkedList xmtList = new LinkedList();
+	LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
 
 	/**
          *  xmtHandler (a local class) object to implement the transmit 
@@ -44,7 +44,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
 // The methods to implement the XpaInterface
 
-	protected Vector cmdListeners = new Vector();
+	protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
 	public boolean status() { return (ostream != null & istream != null);
 		}
@@ -67,17 +67,18 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 	/**
 	 * Forward a XpaMessage to all registered XpaInterface listeners.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void notifyMessage(XpaMessage m, XpaListener notMe) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<XpaListener> v;
 		synchronized(this)
 			{
-				v = (Vector) cmdListeners.clone();
+				v = (Vector<XpaListener>) cmdListeners.clone();
 			}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			XpaListener client = (XpaListener) v.elementAt(i);
+			XpaListener client = v.elementAt(i);
 			if (notMe != client) {
 				if (log.isDebugEnabled()) log.debug("notify client: "+client);
 				try {
@@ -93,17 +94,18 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
 	XpaListener lastSender = null;
 
+	@SuppressWarnings("unchecked")
 	protected void notifyReply(XpaMessage r) {
           // make a copy of the listener vector to synchronized (not needed for transmit?)
-          Vector v;
+          Vector<XpaListener> v;
           synchronized(this)
           {
-            v = (Vector) cmdListeners.clone();
+            v = (Vector<XpaListener>) cmdListeners.clone();
           }
           // forward to all listeners
           int cnt = v.size();
           for (int i=0; i < cnt; i++) {
-            XpaListener client = (XpaListener) v.elementAt(i);
+            XpaListener client = v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
 	      // Skip forwarding the message to the last sender until 
@@ -262,7 +264,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                                         if (log.isDebugEnabled()) log.debug("check for input");
                                         byte msg[] = null;
                                         synchronized (this) {
-                                                 msg = (byte[])xmtList.removeFirst();
+                                                 msg = xmtList.removeFirst();
                                         }
 
 				// Now send this to the port

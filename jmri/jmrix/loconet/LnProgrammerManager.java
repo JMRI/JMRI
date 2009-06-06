@@ -10,11 +10,11 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class LnProgrammerManager  extends DefaultProgrammerManager {
 
-    private Programmer mProgrammer;
+    //private Programmer mProgrammer;
 
     public LnProgrammerManager(SlotManager pSlotManager) {
         super(pSlotManager);

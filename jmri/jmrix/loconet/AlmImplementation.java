@@ -16,7 +16,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class AlmImplementation implements LocoNetListener {
@@ -34,11 +34,11 @@ public class AlmImplementation implements LocoNetListener {
      * Does this ALM reply on the LocoNet, or just
      * form an image of an implementation elsewhere?
      */
-    private boolean mImage;
+    //private boolean mImage;
 
     public AlmImplementation(int pNumber, boolean pImage) {
         mNumber = pNumber;
-        mImage  = pImage;
+        //mImage  = pImage;
         initData();
 	LnTrafficController.instance().addLocoNetListener(~0, this);
     }

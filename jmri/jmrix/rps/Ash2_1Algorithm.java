@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * 
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
@@ -34,7 +34,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         this.Vs = vsound;
         
         // load the algorithm variables
-        Point3d origin = new Point3d(); // defaults to 0,0,0
+        //Point3d origin = new Point3d(); // defaults to 0,0,0
     }
 
     public Ash2_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
@@ -206,7 +206,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
       j = k = i%ns				;//    Receivers in order
       w = 1.0					;}//   No wgts.  No "All-Tog."
     else if (S == 1)				{//   Stage 1
-      while ((j = (int)Math.floor(((double)ns)*Math.random()) ) == k)	;//    Receivers random order
+      while ((j = (int)Math.floor((ns)*Math.random()) ) == k)	;//    Receivers random order
       k = j;		w = 1.0			;}//   No weights
     else if (S == 2)				{//   Stage 2
       --k;	j = k%ns			;//    Receivers reverse order

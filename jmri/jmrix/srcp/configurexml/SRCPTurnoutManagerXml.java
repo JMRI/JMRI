@@ -12,7 +12,7 @@ import jmri.jmrix.srcp.SRCPTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
 
     public void load(Element turnouts) {
         // create the master object
-        SRCPTurnoutManager mgr = SRCPTurnoutManager.instance();
+        SRCPTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

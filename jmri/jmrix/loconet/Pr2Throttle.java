@@ -2,7 +2,6 @@ package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 
 import jmri.jmrix.AbstractThrottle;
 
@@ -14,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Pr2Throttle extends AbstractThrottle {
     private int addr;

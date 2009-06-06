@@ -11,7 +11,7 @@ import jmri.jmrix.tmcc.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -29,7 +29,7 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
 
     public void load(Element turnouts) {
         // create the master object
-        SerialTurnoutManager mgr = SerialTurnoutManager.instance();
+        SerialTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

@@ -7,15 +7,13 @@ import jmri.jmrix.rps.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.*;
-import javax.vecmath.Point3d;
 import java.io.*;
 
 /**
  * Panel for load/store of RPS setup
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 
