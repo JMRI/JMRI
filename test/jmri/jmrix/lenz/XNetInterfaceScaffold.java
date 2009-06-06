@@ -9,7 +9,7 @@ import java.util.Vector;
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002, 2006
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -28,7 +28,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 	/**
 	 * record XNet messages sent, provide access for making sure they are OK
 	 */
-	public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+	public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
 	public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
 		if (log.isDebugEnabled()) log.debug("sendXNetMessage ["+m+"]");
 		// save a copy

@@ -4,7 +4,6 @@ package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.*;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.swing.monitor package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class MonitorTest extends TestCase {
 
@@ -23,7 +22,7 @@ public class MonitorTest extends TestCase {
     }
 
     public void testDisplay() throws Exception {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
+        new TrafficControllerScaffold();
 
         MonitorFrame f = new MonitorFrame(){
           { rawCheckBox.setSelected(true);}

@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.8 $
+ * @version $Revision: 2.9 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -65,6 +65,7 @@ public class XNetPacketizerTest extends TestCase {
         // send a message
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         // that's already tested, so don't do here.
+        Assert.assertNotNull("exists", m );
 
         // now send reply
         p.tistream.write(0x52);

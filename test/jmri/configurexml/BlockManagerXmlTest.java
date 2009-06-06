@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Sensor;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,7 +19,7 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  * 
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class BlockManagerXmlTest extends TestCase {
 
@@ -55,7 +54,7 @@ public class BlockManagerXmlTest extends TestCase {
                         jmri.Turnout.THROWN));
         b2.addPath(p21);
 
-        BlockManagerXml tb = new BlockManagerXml();
+        //BlockManagerXml tb = new BlockManagerXml();
         
     }
     // Main entry point

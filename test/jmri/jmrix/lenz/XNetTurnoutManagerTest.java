@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
@@ -33,6 +33,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testMisses() {
         // sample address object
         TurnoutAddress a = new TurnoutAddress("XT22", "user");
+        Assert.assertNotNull("exists", a);
 
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
@@ -63,7 +64,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertTrue(null != l.getBySystemName("XT22"));
 
         // check the list
-        List testList = new ArrayList(2);
+        List<String> testList = new ArrayList<String>(2);
         testList.add("XT21");
         testList.add("XT22");
         Assert.assertEquals("system name list", testList, l.getSystemNameList());

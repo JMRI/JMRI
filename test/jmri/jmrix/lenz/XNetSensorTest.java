@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 public class XNetSensorTest extends TestCase {
 
@@ -22,7 +22,8 @@ public class XNetSensorTest extends TestCase {
     // XNetSensor test for incoming status message
     public void testXNetSensorStatusMsg() {
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-
+        Assert.assertNotNull("exists", xnis );
+        
         XNetSensor t = new XNetSensor("XS044");
         XNetReply m;
 

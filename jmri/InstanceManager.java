@@ -37,11 +37,11 @@ import jmri.managers.DefaultRouteManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 public class InstanceManager {
 
-    static private HashMap<Class,ArrayList> managerLists;
+    static private HashMap<Class<?>,ArrayList> managerLists;
     
     @SuppressWarnings("unchecked")
     static public <T> void store(T val, Class<T> type) {
@@ -206,7 +206,7 @@ public class InstanceManager {
     // This is a separate, protected member so it
     // can be overridden in unit tests
     protected void init() {
-        managerLists = new  HashMap<Class,ArrayList>();
+        managerLists = new  HashMap<Class<?>,ArrayList>();
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
         lightManager = new jmri.managers.ProxyLightManager();

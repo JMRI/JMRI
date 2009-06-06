@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -43,7 +43,8 @@ public class ConfigXmlManagerTest extends TestCase {
 
     public void testRegisterOK() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateFailed(Throwable ex, String adapterName, Object o) {
+                @SuppressWarnings("unused")
+				void locateFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
@@ -57,7 +58,8 @@ public class ConfigXmlManagerTest extends TestCase {
     }
     public void testFind() throws ClassNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateFailed(Throwable ex, String adapterName, Object o) {
+                @SuppressWarnings("unused")
+				void locateFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
