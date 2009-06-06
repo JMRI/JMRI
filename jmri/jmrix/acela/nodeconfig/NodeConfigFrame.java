@@ -16,7 +16,7 @@ import jmri.jmrix.acela.AcelaNode;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -1843,7 +1843,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public class SensorConfigModel extends NodeConfigModel
     {
         public String getColumnName(int c) {return sensorConfigColumnNames[c];}
-        public Class getColumnClass(int c) {return String.class;}
+        public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 5;}
         public int getRowCount () {return numrows;}
         public void setNumRows(int r) {
@@ -1932,7 +1932,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public class OutputConfigModel extends NodeConfigModel
     {
         public String getColumnName(int c) {return outputConfigColumnNames[c];}
-        public Class getColumnClass(int c) {return String.class;}
+        public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 6;}
         public int getRowCount () {return numrows;}
         public void setNumRows(int r) {

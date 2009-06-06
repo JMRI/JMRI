@@ -2,8 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 
 /**
@@ -30,7 +28,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  * 
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MergReply extends GridConnectReply {
     

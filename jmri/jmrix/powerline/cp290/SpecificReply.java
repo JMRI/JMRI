@@ -2,7 +2,6 @@
 
 package jmri.jmrix.powerline.cp290;
 
-import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.cp290.Constants;
 
@@ -11,7 +10,7 @@ import jmri.jmrix.powerline.cp290.Constants;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 

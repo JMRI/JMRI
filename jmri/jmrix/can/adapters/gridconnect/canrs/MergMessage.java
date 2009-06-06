@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
 
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
@@ -28,7 +27,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
  * <P>
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MergMessage extends GridConnectMessage {
     

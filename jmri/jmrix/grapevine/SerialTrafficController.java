@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -251,7 +251,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * May consume one or more than one character.
      * Returns true when the message has been completely loaded.
      */
-    boolean doNextStep(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
+    @SuppressWarnings("fallthrough")
+	boolean doNextStep(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         switch (state) {
             case 0:
                 // get 1st char, check for address bit
@@ -273,6 +274,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     return true;
                 }
                 state = 2;
+                // fall through
             case 2:
                 // as a special case, see what happens if a short
                 // message is expected
@@ -298,6 +300,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     return true;
                 }
                 state = 3;
+                // fall through
             case 3:
                 buffer[3] = readByteProtected(istream);
                 if (logDebug) log.debug("state 3, rcv "+(buffer[3]&0xFF));

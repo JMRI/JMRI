@@ -11,7 +11,7 @@ import javax.swing.*;
  * Pane to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StatusPane extends javax.swing.JPanel implements EcosListener {
 
@@ -55,7 +55,8 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
         tc = null;
     }
 
-    private void checkTC() throws JmriException {
+    @SuppressWarnings("unused")
+	private void checkTC() throws JmriException {
         if (tc == null) throw new JmriException("attempt to use EcosPowerManager after dispose");
     }
 

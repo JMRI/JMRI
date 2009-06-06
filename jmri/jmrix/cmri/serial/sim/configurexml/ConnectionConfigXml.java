@@ -1,12 +1,8 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SerialDriverAdapter;
-import jmri.jmrix.cmri.serial.*;
-import java.util.List;
-import org.jdom.*;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -22,7 +18,7 @@ import org.jdom.*;
  * it can reuse (and benefit from changes to) that code.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.configurexml.ConnectionConfigXml {
 

@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -79,7 +79,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     public boolean getChecksum() {
         int checksum = 0;
         for (int i = 0; i < _nDataChars; i++) {
-            checksum += (int)(_dataChars[i] & 0xff);
+            checksum += _dataChars[i] & 0xff;
         }
         _nDataChars--;
         return ((checksum & 0xff) == 0);
@@ -94,7 +94,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
-                s+="<"+(int)_dataChars[i]+">";
+                s+="<"+_dataChars[i]+">";
             }
         }
         return s;

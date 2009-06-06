@@ -2,26 +2,16 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import java.io.IOException;
 
 import java.util.ResourceBundle;
 
-import javax.swing.border.Border;
 import javax.swing.*;
-import javax.swing.table.*;
-
-import java.lang.Integer;
 
 /**
  * Frame for controlling JInput access to USN
  * @author	 Bob Jacobsen   Copyright (C) 2008
- * @version	 $Revision: 1.3 $
+ * @version	 $Revision: 1.4 $
  */
 public class TreeFrame extends jmri.util.JmriJFrame {
 

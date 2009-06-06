@@ -12,9 +12,7 @@ import jmri.jmrix.can.cbus.CbusAddress;
 
 // This makes it a bit CBUS specific
 // May need refactoring one day
-import jmri.jmrix.can.cbus.CbusConstants;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -28,7 +26,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 

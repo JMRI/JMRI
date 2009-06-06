@@ -2,20 +2,14 @@
 
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.*;
 
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 import jmri.util.davidflanagan.HardcopyWriter;
 
-import java.awt.event.*;
 import java.awt.Font;
 
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 import javax.swing.*;
 
 import java.io.*;
@@ -24,7 +18,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -85,7 +79,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
             case NODECOLUMN:
@@ -475,7 +469,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private String[] _comment = null;
     private File _saveFile = null;
     private String _saveFileName = null;
-    private boolean _saved = false;
+    @SuppressWarnings("unused")
+	private boolean _saved = false;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTableDataModel.class.getName());
 }

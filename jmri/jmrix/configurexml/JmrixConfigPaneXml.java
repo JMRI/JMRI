@@ -6,8 +6,6 @@ import jmri.jmrix.JmrixConfigPane;
 
 import org.jdom.Element;
 
-import jmri.configurexml.GuiLafConfigPaneXml;
-
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,7 +20,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -53,12 +51,12 @@ public class JmrixConfigPaneXml implements XmlAdapter {
       */
     public void load(Element e) {
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-        java.util.Hashtable installedLAFs = new java.util.Hashtable(plafs.length);
+        java.util.Hashtable<String,String> installedLAFs = new java.util.Hashtable<String,String>(plafs.length);
         for (int i = 0; i < plafs.length; i++){
             installedLAFs.put(plafs[i].getName(), plafs[i].getClassName());
         }
         String name = e.getAttribute("LAFclass").getValue();
-        String className = (String) installedLAFs.get(name);
+        String className = installedLAFs.get(name);
         log.debug("GUI selection: "+name+" class name: "+className);
         // set the GUI
         if (className != null) {

@@ -5,13 +5,10 @@ package jmri.jmrix.nce;
 import jmri.implementation.DefaultClockControl;
 import jmri.InstanceManager;
 import jmri.Timebase;
-import jmri.TimebaseRateException;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.awt.event.*;
 
 /**
  * NceClockControl.java
@@ -41,7 +38,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -110,26 +107,26 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     private boolean waitingForCmdTime = false;
     private boolean waitingForCmd1224 = false;
     private NceReply lastClockReadPacket = null;
-    private Date lastClockReadAtTime;
+    //private Date lastClockReadAtTime;
     private int	nceLastHour;
     private int nceLastMinute;
     private int nceLastSecond;
     private int nceLastRatio;
     private boolean nceLastAmPm;
     private boolean nceLast1224;
-    private boolean nceLastRunning;
-    private double internalLastRatio;
-    private boolean internalLastRunning;
-    private double syncInterval = TARGET_SYNC_DELAY;
-    private int internalSyncInitStateCounter = 0;
-    private int internalSyncRunStateCounter = 0;
+    //private boolean nceLastRunning;
+    //private double internalLastRatio;
+    //private boolean internalLastRunning;
+    //private double syncInterval = TARGET_SYNC_DELAY;
+    //private int internalSyncInitStateCounter = 0;
+    //private int internalSyncRunStateCounter = 0;
     private boolean issueDeferredGetTime = false;
-    private boolean issueDeferredGetRate = false;
-    private boolean initNeverCalledBefore = true;
+    //private boolean issueDeferredGetRate = false;
+    //private boolean initNeverCalledBefore = true;
     
     private int nceSyncInitStateCounter = 0;	// NCE master sync initialzation state machine
     private int	nceSyncRunStateCounter = 0;	// NCE master sync runtime state machine
-    private int	alarmDisplayStateCounter = 0;	// manages the display update from the alarm
+    //private int	alarmDisplayStateCounter = 0;	// manages the display update from the alarm
     
     Timebase internalClock ;
     javax.swing.Timer alarmSyncUpdate = null;
@@ -289,11 +286,11 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	/** last known ratio from Nce clock */
 	public double getRate() {
 		issueReadOnlyRequest();	// get the current rate
-		issueDeferredGetRate = true;
+		//issueDeferredGetRate = true;
 		if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()){
 			log.debug("getRate: " + nceLastRatio);
 		}
-		return((double)nceLastRatio);
+		return(nceLastRatio);
 	}
 	
 	/** set the time, the date part is ignored */
@@ -381,11 +378,11 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     
     @SuppressWarnings("deprecation")
     private void readClockPacket (NceReply r) {
-    	NceReply priorClockReadPacket = lastClockReadPacket;
-    	int priorNceRatio = nceLastRatio;
-    	boolean priorNceRunning = nceLastRunning;
+    	//NceReply priorClockReadPacket = lastClockReadPacket;
+    	//int priorNceRatio = nceLastRatio;
+    	//boolean priorNceRunning = nceLastRunning;
         lastClockReadPacket = r;
-        lastClockReadAtTime = internalClock.getTime();
+        //lastClockReadAtTime = internalClock.getTime();
         //log.debug("readClockPacket - at time: " + lastClockReadAtTime);
         nceLastHour = r.getElement(CS_CLOCK_HOURS) & 0xFF;
         nceLastMinute = r.getElement(CS_CLOCK_MINUTES) & 0xFF;
@@ -421,9 +418,9 @@ public class NceClockControl extends DefaultClockControl implements NceListener
             nceLastRatio = 250 / sc;
         }
         if (r.getElement(CS_CLOCK_STATUS) == 1) {
-            nceLastRunning = false;
+            //nceLastRunning = false;
         } else {
-            nceLastRunning = true;
+            //nceLastRunning = true;
         }
     }
     
@@ -436,7 +433,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         jmri.jmrix.nce.NceTrafficController.instance().sendNceMessage(cmdNce, this);
     }
     
-    private void issueClock1224(boolean mode) {
+    @SuppressWarnings("unused")
+	private void issueClock1224(boolean mode) {
         byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
 		NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CMD_CLOCK_SET_REPLY_SIZE);
 		waiting++;
@@ -486,7 +484,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         jmri.jmrix.nce.NceTrafficController.instance().sendNceMessage(cmdNce, this);
     }
    
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "unused" })
     private Date getNceDate() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -497,7 +495,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return(now);
     }
 
-    private double getNceTime() {
+    @SuppressWarnings("unused")
+	private double getNceTime() {
         double nceTime = 0;
         if (lastClockReadPacket != null) {
             nceTime = (lastClockReadPacket.getElement(CS_CLOCK_HOURS) * 3600) +
@@ -508,7 +507,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return(nceTime);
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "unused" })
     private double getIntTime() {
         Date now = internalClock.getTime();
         int ms = (int)(now.getTime() % 1000);

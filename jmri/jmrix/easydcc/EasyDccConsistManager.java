@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.6 $
+ * @version               $Revision: 1.7 $
  */
 
 
@@ -16,18 +16,18 @@ import jmri.DccLocoAddress;
 
 public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
-        private Thread initThread = null;
+	//private Thread initThread = null;
 
-        /**
-         *  Constructor - call the constructor for the superclass, and 
-         *  initilize the consist reader thread, which retrieves consist 
-         *  information from the command station
-         **/
-        public EasyDccConsistManager(){
-              super();
-              // Initilize the consist reader thread.
-	      initThread = new Thread(new EasyDccConsistReader());
-        }
+	/**
+	 *  Constructor - call the constructor for the superclass, and 
+	 *  initilize the consist reader thread, which retrieves consist 
+	 *  information from the command station
+	 **/
+	public EasyDccConsistManager(){
+		super();
+		// Initilize the consist reader thread.
+		new Thread(new EasyDccConsistReader());
+	}
 
 
 	/**
@@ -50,7 +50,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                         consist = new EasyDccConsist(address);
                         ConsistTable.put(address,consist);
                         ConsistList.add(address);
-                        return((Consist)consist);
+                        return consist;
 	}
 
 
@@ -109,10 +109,10 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                             DccLocoAddress locoAddress;
                             int tempAddr;
                             boolean directionNormal=true;
-                            String sb = "" + (char)r.getElement(i) + 
-                                     (char)r.getElement(i+1) +
-                                     (char)r.getElement(i+2) +
-                                     (char)r.getElement(i+3);
+                            //String sb = "" + (char)r.getElement(i) + 
+                            //         (char)r.getElement(i+1) +
+                            //         (char)r.getElement(i+2) +
+                            //         (char)r.getElement(i+3);
                             tempAddr=Integer.valueOf(sa,16).intValue();
                             directionNormal=((tempAddr&0x8000)==0);
                             if(tempAddr!=0) {

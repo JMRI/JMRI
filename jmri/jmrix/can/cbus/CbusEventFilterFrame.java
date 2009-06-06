@@ -7,7 +7,6 @@ package jmri.jmrix.can.cbus;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import java.awt.Color;
 
@@ -21,7 +20,7 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     

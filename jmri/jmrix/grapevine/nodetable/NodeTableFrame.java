@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import jmri.jmrix.grapevine.SerialTrafficController;
 
@@ -14,7 +13,7 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 

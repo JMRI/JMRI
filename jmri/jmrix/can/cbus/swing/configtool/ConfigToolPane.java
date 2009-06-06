@@ -5,10 +5,8 @@ package jmri.jmrix.can.cbus.swing.configtool;
 import jmri.InstanceManager;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.util.StringUtil;
 
 import java.util.ResourceBundle;
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.*;
@@ -20,7 +18,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {
@@ -119,7 +117,6 @@ public class ConfigToolPane extends JPanel implements CanListener {
             bc = new JButton(rb.getString("ButtonCreate"));
             bc.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    String argument;
                     if (f2.getText().equals(""))
                         create(f1.getText());
                     else

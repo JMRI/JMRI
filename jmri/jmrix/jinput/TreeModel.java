@@ -2,9 +2,6 @@
 
 package jmri.jmrix.jinput;
 
-import jmri.jmrit.XmlFile;
-import java.io.File;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -27,7 +24,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {

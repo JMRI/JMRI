@@ -2,13 +2,7 @@
 
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-
-import jmri.util.JTableUtil;
 import java.util.ResourceBundle;
-import jmri.util.HelpUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 import java.awt.Dimension;
@@ -16,7 +10,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.table.JTableHeader;
 import javax.swing.*;
@@ -30,7 +23,7 @@ import javax.swing.*;
  *
  * @author	Andrew Crosland          (C) 2009
  *
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CbusEventTableFrame extends jmri.util.JmriJFrame {
     
@@ -56,7 +49,6 @@ public class CbusEventTableFrame extends jmri.util.JmriJFrame {
             protected JTableHeader createDefaultTableHeader() {
                 return new JTableHeader(columnModel) {
                     public String getToolTipText(MouseEvent e) {
-                        String tip = null;
                         java.awt.Point p = e.getPoint();
                         int index = columnModel.getColumnIndexAtX(p.x);
                         int realIndex =

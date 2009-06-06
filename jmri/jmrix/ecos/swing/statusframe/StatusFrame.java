@@ -2,16 +2,14 @@
 
 package jmri.jmrix.ecos.swing.statusframe;
 
-import jmri.util.*;
 import jmri.jmrix.ecos.*;
-import java.awt.*;
 import javax.swing.*;
 
 
 /**
  * Frame for ECoS status
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame {
 

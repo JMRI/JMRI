@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -174,7 +174,7 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
      */
     public void configure() {
         // install a traffic controller that doesn't time out
-        SerialTrafficController tc = new SerialTrafficController(){
+        new SerialTrafficController(){
             // timeout doesn't do anything
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m) {}
             // and make this the instance

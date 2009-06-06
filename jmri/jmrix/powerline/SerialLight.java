@@ -5,7 +5,6 @@ package jmri.jmrix.powerline;
 import jmri.implementation.AbstractVariableLight;
 import jmri.Sensor;
 import jmri.Turnout;
-import java.util.Date;
 
 /**
  * Implementation of the Light Object for X10.
@@ -27,7 +26,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 

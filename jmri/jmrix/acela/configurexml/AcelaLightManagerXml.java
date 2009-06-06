@@ -13,12 +13,12 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  * <P>
  * @author      Dave Duchamp Copyright (c) 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on Loconet example, modified to establish Acela support. 
  */
-public class AcelaLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
+public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public AcelaLightManagerXml() {
         super();
@@ -34,7 +34,7 @@ public class AcelaLightManagerXml extends jmri.configurexml.AbstractLightManager
 
     public void load(Element lights) {
         // create the master object
-        AcelaLightManager mgr = AcelaLightManager.instance();
+        AcelaLightManager.instance();
         // load individual lights
         loadLights(lights);
     }

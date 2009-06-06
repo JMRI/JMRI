@@ -2,9 +2,6 @@
 
 package jmri.jmrix.can.adapters.lawicell;
 
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanConstants;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -19,7 +16,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 

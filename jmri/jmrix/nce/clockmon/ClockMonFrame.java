@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -104,7 +104,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private boolean updateFormatFromRead = false;
     private boolean updateStatusFromRead = false;
     private NceReply lastClockReadPacket = null;;
-    private Date lastClockReadAtTime;
+    //private Date lastClockReadAtTime;
     private int	nceLastHour;
     private int nceLastMinute;
     private int nceLastSecond;
@@ -584,7 +584,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     	int priorNceRatio = nceLastRatio;
     	boolean priorNceRunning = nceLastRunning;
         lastClockReadPacket = r;
-        lastClockReadAtTime = internalClock.getTime();
+        //lastClockReadAtTime = internalClock.getTime();
         //log.debug("readClockPacket - at time: " + lastClockReadAtTime);
         nceLastHour = r.getElement(CS_CLOCK_HOURS) & 0xFF;
         nceLastMinute = r.getElement(CS_CLOCK_MINUTES) & 0xFF;
@@ -648,7 +648,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                     }
                 });
         }
-        timerDisplayUpdate.setInitialDelay((int)(1 * 1000));
+        timerDisplayUpdate.setInitialDelay((1 * 1000));
         timerDisplayUpdate.setRepeats(true);     // in case we run by
         timerDisplayUpdate.start();
     	alarmDisplayStateCounter = 1;
@@ -672,7 +672,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 alarmSyncUpdate.setRepeats(false);
             }
             if (clockMode == SYNCMODE_NCE_MASTER) {
-                delay = (int)(10 * 1000);
+                delay = 10 * 1000;
                 alarmSyncUpdate.setRepeats(true);
             }
             alarmSyncUpdate.setInitialDelay(delay);
@@ -691,13 +691,13 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         int delay = 60 * 1000;
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
             if (syncInterval - 3 - now.getSeconds() <= 0) {
-                delay = (int)10;	// basicly trigger right away
+                delay = 10;	// basicly trigger right away
             } else {
                 delay = (int)((syncInterval - now.getSeconds()) * 1000 / internalClock.getRate());
             }
         }
         if (clockMode == SYNCMODE_NCE_MASTER) {
-            delay = (int) 10 * 1000;
+            delay = 10 * 1000;
         }
         alarmSyncUpdate.setDelay(delay);
         alarmSyncUpdate.setInitialDelay(delay);
@@ -1120,7 +1120,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         Date now = internalClock.getTime();
         double sumDiff = 0;
         if (priorOffsetErrors.size() > 1) {
-            sumDiff = ((Double) priorOffsetErrors.get(0)).doubleValue() + ((Double) priorOffsetErrors.get(1)).doubleValue();
+            sumDiff = priorOffsetErrors.get(0).doubleValue() + priorOffsetErrors.get(1).doubleValue();
         }
         double avgDiff = sumDiff / 2;
         syncInterval = syncInterval + avgDiff;
@@ -1133,7 +1133,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (log.isDebugEnabled() && false) {
             String txt = "";
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
-                txt = txt + " " + ((Double)priorOffsetErrors.get(i)).doubleValue();
+                txt = txt + " " + priorOffsetErrors.get(i).doubleValue();
             }
             log.debug("priorOffsetErrors: " + txt);
             log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now);
@@ -1141,21 +1141,21 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }
     
     private void recomputeInternalSync() {
-        Date now = internalClock.getTime();
+        //Date now = internalClock.getTime();
         double sumDiff = 0;
         double currError = 0;
-        double diffError = 0;
-        double avgDiff = 0;
+        //double diffError = 0;
+        //double avgDiff = 0;
         if (priorDiffs.size() > 0) {
-            currError = ((Double) priorDiffs.get(priorDiffs.size() - 1)).doubleValue();
-            diffError = ((Double) priorDiffs.get(priorDiffs.size() - 1)).doubleValue() - ((Double) priorDiffs.get(0)).doubleValue();
+            currError = priorDiffs.get(priorDiffs.size() - 1).doubleValue();
+            //diffError = priorDiffs.get(priorDiffs.size() - 1).doubleValue() - ((Double) priorDiffs.get(0)).doubleValue();
         }
         for (int i = 0; i < priorDiffs.size(); i++) {
-            sumDiff = sumDiff + ((Double) priorDiffs.get(i)).doubleValue();
+            sumDiff = sumDiff + priorDiffs.get(i).doubleValue();
         }
         double corrDiff = 0;
         if (priorCorrections.size() > 0) {
-            corrDiff = ((Double) priorCorrections.get(priorCorrections.size() - 1)).doubleValue() - ((Double) priorCorrections.get(0)).doubleValue();
+            corrDiff = priorCorrections.get(priorCorrections.size() - 1).doubleValue() - priorCorrections.get(0).doubleValue();
         }
         double pCorr = currError * intPidGainPv;
         double iCorr = sumDiff * intPidGainIv;
@@ -1188,20 +1188,20 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }
     
     private void recomputeNceSync() {
-        Date now = internalClock.getTime();
+        //Date now = internalClock.getTime();
         double sumDiff = 0;
         double currError = 0;
         double diffError = 0;
         if (priorDiffs.size() > 0) {
-            currError = ((Double) priorDiffs.get(priorDiffs.size() - 1)).doubleValue();
-            diffError = ((Double) priorDiffs.get(priorDiffs.size() - 1)).doubleValue() - ((Double) priorDiffs.get(0)).doubleValue();
+            currError = priorDiffs.get(priorDiffs.size() - 1).doubleValue();
+            diffError = priorDiffs.get(priorDiffs.size() - 1).doubleValue() - priorDiffs.get(0).doubleValue();
         }
         for (int i = 0; i < priorDiffs.size(); i++) {
-            sumDiff = sumDiff + ((Double) priorDiffs.get(i)).doubleValue();
+            sumDiff = sumDiff + priorDiffs.get(i).doubleValue();
         }
         double corrDiff = 0;
         if (priorCorrections.size() > 0) {
-            corrDiff = ((Double) priorCorrections.get(priorCorrections.size() - 1)).doubleValue() - ((Double) priorCorrections.get(0)).doubleValue();
+            corrDiff = priorCorrections.get(priorCorrections.size() - 1).doubleValue() - priorCorrections.get(0).doubleValue();
         }
         double pCorr = currError * ncePidGainPv;
         double iCorr = diffError * ncePidGainIv;
@@ -1580,7 +1580,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         updateStatusFromRead = true;
     }
     
-    private void issueReadTimeRequest() {
+    @SuppressWarnings("unused")
+	private void issueReadTimeRequest() {
         if (!waitingForCmdRead) {
             byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CS_CLOCK_MEM_SIZE);
@@ -1591,7 +1592,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         updateTimeFromRead = true;
     }
     
-    private void issueReadRatioRequest() {
+    @SuppressWarnings("unused")
+	private void issueReadRatioRequest() {
         if (!waitingForCmdRead){
             byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CS_CLOCK_MEM_SIZE);
@@ -1602,7 +1604,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         updateRatioFromRead = true;
     }
     
-    private void issueReadFormatRequest() {
+    @SuppressWarnings("unused")
+	private void issueReadFormatRequest() {
         if (!waitingForCmdRead){
             byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CS_CLOCK_MEM_SIZE);
@@ -1613,7 +1616,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         updateFormatFromRead = true;
     }
     
-    private void issueReadStatusRequest() {
+    @SuppressWarnings("unused")
+	private void issueReadStatusRequest() {
         if (!waitingForCmdRead){
             byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CS_CLOCK_MEM_SIZE);

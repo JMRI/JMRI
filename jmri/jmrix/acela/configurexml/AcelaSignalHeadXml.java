@@ -4,7 +4,6 @@ package jmri.jmrix.acela.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import java.util.List;
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaSignalHead;
@@ -54,7 +53,6 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
      * @param element Top level Element to unpack.
      */
     public void load(Element element) {
-        List l = element.getChildren();
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
         SignalHead h;

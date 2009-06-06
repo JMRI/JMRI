@@ -2,12 +2,7 @@
 
 package jmri.jmrix.powerline.cp290;
 
-import jmri.implementation.AbstractVariableLight;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.jmrix.powerline.*;
-
-import java.util.Date;
 
 /**
  * Implementation of the Light Object for X10 for CP290 interfaces.
@@ -29,7 +24,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 

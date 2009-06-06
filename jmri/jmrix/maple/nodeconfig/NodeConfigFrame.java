@@ -18,7 +18,7 @@ import jmri.jmrix.maple.SerialSensorManager;
  * Frame for user configuration of nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2008
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -941,7 +941,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public class CardConfigModel extends AbstractTableModel
     {
         public String getColumnName(int c) {return cardConfigColumnNames[c];}
-        public Class getColumnClass(int c) {return String.class;}
+        public Class<?> getColumnClass(int c) {return String.class;}
         public int getColumnCount () {return 2;}
         public int getRowCount () {return 64;}
         public Object getValueAt (int r,int c) {
@@ -973,7 +973,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public class SearchlightConfigModel extends AbstractTableModel
     {
         public String getColumnName(int c) {return searchlightConfigColumnNames[c];}
-        public Class getColumnClass(int c) {
+        public Class<?> getColumnClass(int c) {
             if (c > 0) {
                 return Boolean.class;
             }

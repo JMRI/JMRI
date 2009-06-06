@@ -2,17 +2,11 @@
 
 package jmri.jmrix.can;
 
-import jmri.jmrix.can.*;
-
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRListener;
-
 /**
  * Traffic controller for CAN access.
  *
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 abstract public class TrafficController extends AbstractCanTrafficController {
     

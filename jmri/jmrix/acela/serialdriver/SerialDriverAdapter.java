@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
@@ -130,8 +130,6 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
         // packets.startThreads();
         jmri.jmrix.acela.ActiveFlag.setActive();
     }
-
-    private Thread sinkThread;
 
     // base class methods for the AcelaPortController interface
     public DataInputStream getInputStream() {

@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -45,7 +45,6 @@ public class AcelaLightManager extends AbstractLightManager {
 	if (nAddress == -1) return (null);
 	int bitNum = AcelaAddress.getBitFromSystemName(systemName);
 	if (bitNum == -1) return (null);
-	String conflict = "";
 
 // Bob C: Fix this up		
 /*

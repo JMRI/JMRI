@@ -7,21 +7,17 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 
-import jmri.jmrix.powerline.X10Sequence;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.powerline.SerialListener {
 

@@ -11,7 +11,6 @@ import java.beans.PropertyChangeEvent;
 
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
 
 
@@ -19,7 +18,7 @@ import jmri.jmrix.can.TrafficController;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author			Bob Jacobsen  Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -69,16 +68,17 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
     // notify property listeners - see AbstractProgrammer for more
 
-    protected void notifyPropertyChange(String name, int oldval, int newval) {
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
+        Vector<PropertyChangeListener> v;
         synchronized(this) {
-            v = (Vector) propListeners.clone();
+            v = (Vector<PropertyChangeListener>) propListeners.clone();
         }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }

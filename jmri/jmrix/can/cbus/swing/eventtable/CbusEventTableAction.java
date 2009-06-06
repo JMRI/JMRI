@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import jmri.jmrix.can.CanMessage;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -12,7 +11,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Andrew Crosland           (C) 2009
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class CbusEventTableAction extends AbstractAction {

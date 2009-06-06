@@ -13,7 +13,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -35,7 +35,7 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
 
     public void load(Element sensors) {
         // create the master object
-        AcelaSensorManager mgr = AcelaSensorManager.instance();
+        AcelaSensorManager.instance();
         
         // load individual sensors
         loadSensors(sensors);

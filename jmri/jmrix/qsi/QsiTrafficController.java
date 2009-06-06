@@ -23,7 +23,7 @@ import javax.comm.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -35,7 +35,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
 // The methods to implement the QsiInterface
 
-	protected Vector cmdListeners = new Vector();
+	protected Vector<QsiListener> cmdListeners = new Vector<QsiListener>();
 
 	public boolean status() { return (ostream != null & istream != null);
 		}
@@ -58,17 +58,18 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 	/**
 	 * Forward a QsiMessage to all registered QsiInterface listeners.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void notifyMessage(QsiMessage m, QsiListener notMe) {
 		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
+		Vector<QsiListener> v;
 		synchronized(this)
 			{
-				v = (Vector) cmdListeners.clone();
+				v = (Vector<QsiListener>) cmdListeners.clone();
 			}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			QsiListener client = (QsiListener) v.elementAt(i);
+			QsiListener client = v.elementAt(i);
 			if (notMe != client) {
 				if (log.isDebugEnabled()) log.debug("notify client: "+client);
 				try {
@@ -110,17 +111,18 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         public boolean isV4BootMode() {return qsiState == V4BOOTMODE; }
 
 
+	@SuppressWarnings("unchecked")
 	protected void notifyReply(QsiReply r) {
           // make a copy of the listener vector to synchronized (not needed for transmit?)
-          Vector v;
+          Vector<QsiListener> v;
           synchronized(this)
           {
-            v = (Vector) cmdListeners.clone();
+            v = (Vector<QsiListener>) cmdListeners.clone();
           }
           // forward to all listeners
           int cnt = v.size();
           for (int i=0; i < cnt; i++) {
-            QsiListener client = (QsiListener) v.elementAt(i);
+            QsiListener client = v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
               // skip forwarding to the last sender for now, we'll get them later

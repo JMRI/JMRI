@@ -2,15 +2,12 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 

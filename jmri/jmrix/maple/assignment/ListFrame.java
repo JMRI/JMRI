@@ -7,8 +7,6 @@ import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.SerialAddress;
 
-import jmri.jmrix.AbstractNode;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,7 +24,7 @@ import java.lang.Integer;
 /**
  * Frame for running assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.3 $
+ * @version	 $Revision: 1.4 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -329,7 +327,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 		private String curRowSysName = "";
 		
         public String getColumnName(int c) {return assignmentTableColumnNames[c];}
-        public Class getColumnClass(int c) {return String.class;}
+        public Class<?> getColumnClass(int c) {return String.class;}
 		public boolean isCellEditable(int r,int c) {return false;}
         public int getColumnCount () {return 4;}
         public int getRowCount () {return numBits;}
@@ -413,7 +411,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			}
 			float ratio = ((float)charPerLine)/((float)totalColWidth);
 			for (int j = 0; j < 4; j++) {
-				columnSize[j] = ((int)(((float)colWidth[j])*ratio)) - 1;
+				columnSize[j] = ((int)(colWidth[j]*ratio)) - 1;
 				tableLineWidth += (columnSize[j] + 1);
 			}
         

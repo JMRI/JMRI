@@ -31,14 +31,14 @@ import Serialio.SerialPortLocal;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    public Vector getPortNames() {
+    public Vector<String> getPortNames() {
         portNameVector = null;
         try {
             // this has to work through one of two sets of class. If
@@ -68,7 +68,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     }
 
     class InnerSerial {
-        public Vector getPortNames() {
+        public Vector<String> getPortNames() {
             // first, check that the comm package can be opened and ports seen
             portNameVector = new Vector<String>();
             try {
@@ -114,13 +114,14 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     }
 
     class InnerJavaComm  {
-        public Vector getPortNames() {
+        @SuppressWarnings("unchecked")
+		public Vector<String> getPortNames() {
             // first, check that the comm package can be opened and ports seen
             portNameVector = new Vector<String>();
-            Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+            Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
             // find the names of suitable ports
             while (portIDs.hasMoreElements()) {
-                CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+                CommPortIdentifier id = portIDs.nextElement();
                 // accumulate the names in a vector
                 portNameVector.addElement(id.getName());
             }

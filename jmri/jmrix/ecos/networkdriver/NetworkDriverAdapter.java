@@ -16,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
@@ -105,7 +105,7 @@ public class NetworkDriverAdapter extends EcosPortController {
      }
     
     Vector<String> portNameVector = null;
-    public Vector getPortNames() {
+    public Vector<String> getPortNames() {
     	portNameVector = new Vector<String>();
     	portNameVector.addElement(hostName);
         return portNameVector;

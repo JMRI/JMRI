@@ -4,11 +4,8 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.*;
 
-import java.io.DataInputStream;
-
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRListener;
 
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
@@ -25,7 +22,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MergTrafficController extends GcTrafficController {
     

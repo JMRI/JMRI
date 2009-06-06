@@ -12,7 +12,7 @@ import jmri.jmrix.maple.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
 
     public void load(Element turnouts) {
         // create the master object
-        SerialTurnoutManager mgr = SerialTurnoutManager.instance();
+        SerialTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

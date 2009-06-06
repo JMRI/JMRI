@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.serial.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
 
     public void load(Element sensors) {
         // create the master object
-        SerialSensorManager mgr = SerialSensorManager.instance();
+        SerialSensorManager.instance();
         // load individual sensors
         loadSensors(sensors);
     }

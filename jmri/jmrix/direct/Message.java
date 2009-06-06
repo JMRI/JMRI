@@ -9,7 +9,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -124,7 +124,8 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
       return s;
     }
 
-    private static String addIntAsTwo(int val, Message m, int offset) {
+    @SuppressWarnings("unused")
+	private static String addIntAsTwo(int val, Message m, int offset) {
         String s = ""+val;
         if (s.length() != 2) s = "0"+s;  // handle <10
         m.setElement(offset,s.charAt(0));

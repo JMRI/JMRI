@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -25,8 +25,8 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     });
 
     JTabbedPane tabPane = new JTabbedPane();
-    Hashtable displayHash = new Hashtable();
-    Hashtable formatHash = new Hashtable();
+    Hashtable<String,JLabel> displayHash = new Hashtable<String,JLabel>();
+    Hashtable<String,String> formatHash = new Hashtable<String,String>();
     DataSource source = null;
     
     public StatusFrame() { super(rb.getString("TitleStatus")); }
@@ -91,8 +91,8 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
             String id = m.substring(1, 3);
             String value = m.substring(4+addOne, 14+addOne);
             if (log.isDebugEnabled()) log.debug("set var "+id+":"+value);
-            JLabel label = (JLabel)displayHash.get(id);
-            String format = (String)formatHash.get(id);
+            JLabel label = displayHash.get(id);
+            String format = formatHash.get(id);
             if (label != null) label.setText(convertValue(value, format));
             m = m.substring(14+addOne);
         }

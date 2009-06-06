@@ -16,9 +16,9 @@ import jmri.jmrix.maple.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
+public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public SerialLightManagerXml() {
         super();
@@ -34,7 +34,7 @@ public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManage
 
     public void load(Element lights) {
         // create the master object
-        SerialLightManager mgr = SerialLightManager.instance();
+        SerialLightManager.instance();
         // load individual lights
         loadLights(lights);
     }

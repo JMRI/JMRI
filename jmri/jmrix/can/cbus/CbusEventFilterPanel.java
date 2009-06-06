@@ -18,7 +18,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
-import java.awt.event.*;
 
 import jmri.jmrix.can.cbus.CbusEventFilterFrame;
 import jmri.jmrix.can.cbus.CbusConstants;

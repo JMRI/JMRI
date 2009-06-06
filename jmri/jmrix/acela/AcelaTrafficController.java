@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -256,13 +256,13 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
         
         if (needToInitAcelaNetwork) {
-            if (needToCreateNodesState == 0) {
-                if (needToPollNodes) {
-        		AcelaNode specialnode = new AcelaNode(0, AcelaNode.AC);
-                        log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
-                }
-                curAcelaNodeIndex = SPECIALNODE;
-                AcelaMessage m = AcelaMessage.getAcelaResetMsg();
+        	if (needToCreateNodesState == 0) {
+        		if (needToPollNodes) {
+        			new AcelaNode(0, AcelaNode.AC);
+        			log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
+        		}
+        		curAcelaNodeIndex = SPECIALNODE;
+        		AcelaMessage m = AcelaMessage.getAcelaResetMsg();
             	log.debug("send init message: "+m);
             	m.setTimeout(1000);  // wait for init to finish (milliseconds)
 //            	m.setTimeout(10000);  // wait for init to finish (milliseconds)

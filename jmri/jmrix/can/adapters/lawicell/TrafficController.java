@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class TrafficController extends jmri.jmrix.can.TrafficController {
     
@@ -145,7 +145,6 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
         return false;
     }
     
-    private boolean unsolicited;
     private int gcState;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());

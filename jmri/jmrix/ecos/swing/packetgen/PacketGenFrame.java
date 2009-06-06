@@ -2,7 +2,6 @@
 
 package jmri.jmrix.ecos.swing.packetgen;
 
-import jmri.util.*;
 import jmri.jmrix.ecos.*;
 import java.awt.*;
 import javax.swing.*;
@@ -12,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Ecos messages
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.ecos.EcosListener {
 

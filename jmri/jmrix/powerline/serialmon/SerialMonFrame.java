@@ -7,12 +7,10 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 
-import jmri.jmrix.powerline.X10Sequence;
-
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {

@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.6 $
+ * @version                     $Revision: 1.7 $
  */
 
 package jmri.jmrix.easydcc;
@@ -71,7 +71,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	// does the consist contain the specified address?
 	public boolean contains(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-		return( (boolean) ConsistList.contains(address));
+		return ConsistList.contains(address);
 	   } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(address,ConsistListener.NotImplemented);
@@ -83,7 +83,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	// locomotive in the consist
 	public boolean getLocoDirection(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-		Boolean Direction=(Boolean) ConsistDir.get(address);
+		Boolean Direction = ConsistDir.get(address);
 		return( Direction.booleanValue());
 	   } else {
 		log.error("Consist Type Not Supported");
@@ -208,7 +208,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
                  int j = 4;
                  for (int i=0; i<contents.length; i++) { 
                      msg.setElement(j++, ' ');
-                     msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
+                     msg.addIntAsTwoHex(contents[i]&0xFF, j);
                      j = j+2;
                  }
         
@@ -237,7 +237,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
                  int j = 4;
                  for (int i=0; i<contents.length; i++) { 
                      msg.setElement(j++, ' ');
-                     msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
+                     msg.addIntAsTwoHex(contents[i]&0xFF, j);
                      j = j+2;
                  }
         

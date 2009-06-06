@@ -16,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -50,7 +50,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case ADDRESSCOLUMN:
         case TYPECOLUMN:
@@ -206,17 +206,17 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     
     public void reset() {
         int count = keys.size();
-        keys = new Vector();
-        addresses = new Vector();
-        types = new Vector();
-        details = new Vector();
+        keys = new Vector<String>();
+        addresses = new Vector<String>();
+        types = new Vector<String>();
+        details = new Vector<String>();
         fireTableRowsDeleted(0, count-1);
     }
     
-    Vector keys = new Vector();
-    Vector addresses = new Vector();
-    Vector types = new Vector();
-    Vector details = new Vector();
+    Vector<String> keys = new Vector<String>();
+    Vector<String> addresses = new Vector<String>();
+    Vector<String> types = new Vector<String>();
+    Vector<String> details = new Vector<String>();
     
     /**
      * Find the display key from the current input line.

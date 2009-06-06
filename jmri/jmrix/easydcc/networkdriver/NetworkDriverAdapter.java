@@ -18,7 +18,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -94,7 +94,7 @@ public class NetworkDriverAdapter extends EasyDccPortController {
 
     Socket socket;
 
-    public Vector getPortNames() {
+    public Vector<String> getPortNames() {
         log.error("Unexpected call to getPortNames");
         return null;
     }

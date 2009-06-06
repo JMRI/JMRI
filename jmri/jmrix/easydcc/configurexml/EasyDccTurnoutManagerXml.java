@@ -12,7 +12,7 @@ import jmri.jmrix.easydcc.EasyDccTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
 
     public void load(Element turnouts) {
         // create the master object
-        EasyDccTurnoutManager mgr = EasyDccTurnoutManager.instance();
+        EasyDccTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

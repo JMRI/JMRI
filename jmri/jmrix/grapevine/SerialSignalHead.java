@@ -3,7 +3,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.DefaultSignalHead;
-import jmri.SignalHead;
 
 /**
  * SerialSignalHead.java
@@ -13,7 +12,7 @@ import jmri.SignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialSignalHead extends DefaultSignalHead {
 

@@ -4,7 +4,6 @@ package jmri.jmrix.grapevine.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.grapevine.SerialSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
@@ -16,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -46,8 +45,10 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * Create a Grapevine SerialSignalHead
      * @param element Top level Element to unpack.
      */
-    public void load(Element element) {
-        List l = element.getChildren();
+    @SuppressWarnings("unchecked")
+	public void load(Element element) {
+        @SuppressWarnings("unused")
+		List<Element> l = element.getChildren();
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
         SignalHead h;

@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -80,7 +80,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
-    private static int MINNODE = 0;
+    //private static int MINNODE = 0;
     private static int MAXNODE = 255;
     private SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // numbering from 0
     private boolean[] mustInit = new boolean[MAXNODE+1];

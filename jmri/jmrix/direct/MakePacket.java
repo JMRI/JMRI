@@ -84,7 +84,7 @@ package jmri.jmrix.direct;
  * </pre>
  *
  * @author	 Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.9 $
+ * @version  $Revision: 1.10 $
  *
  */
 
@@ -147,7 +147,7 @@ public class MakePacket {
    * @return int[] - first byte is length - 0 length indicates failed to do
    */
   public static int[] createStream(byte[] packet) {
-    int i, j = 0;
+    int i = 0;
     int mask = 0x80;
     int[] bitStream = new int[ (packet.length * BITSTREAM_BITS_PER_BYTE) +
         preambleLength + 1];
@@ -199,7 +199,6 @@ public class MakePacket {
    */
   static int[] bitStreamToSerialBytes(int[] inputBitStream) {
     int currentBufferIndex;
-    boolean result;
     int treeIndex = -1;
     int serialStream[] = new int[inputBitStream.length];
     node tree[] = new node[150];
@@ -215,9 +214,9 @@ public class MakePacket {
     currentBufferIndex = 0;
     treeIndex = 1;
     while (currentBufferIndex < inputBitStream.length) {
-      if ( (result = readFirstChild(inputBitStream, currentBufferIndex,
+      if (readFirstChild(inputBitStream, currentBufferIndex,
                                     inputBitStream.length - currentBufferIndex,
-                                    tree[treeIndex]))) {
+                                    tree[treeIndex])) {
         /* Success, there is a Child at this level in the tree to read */
         /* Move down the tree to next node */
         serialStream[treeIndex] = tree[treeIndex].bitPattern;
@@ -330,7 +329,8 @@ public class MakePacket {
    *
    * Return false if one doesnt exist otherwise returns true.
    */
-  static boolean readFirstChild(int bs[], int offset, int validBits,
+  @SuppressWarnings("fallthrough")
+static boolean readFirstChild(int bs[], int offset, int validBits,
                                 node thisNode) {
     boolean b0 = false;
     boolean b1 = false;
@@ -351,6 +351,7 @@ public class MakePacket {
           thisNode.bitPattern = BITS_11111;
           break;
         }
+        // fall through
       case 4:
         thisNode.patternLength = 4;
         b0 = (bs[0 + offset] != 0);
@@ -373,6 +374,7 @@ public class MakePacket {
           thisNode.bitPattern = BITS_1110;
           break;
         }
+        // fall through
       case 3:
         b0 = (bs[0 + offset] != 0);
         b1 = (bs[1 + offset] != 0);
@@ -402,6 +404,7 @@ public class MakePacket {
           thisNode.bitPattern = BITS_110;
           break;
         }
+        // fall through
       case 2:
         thisNode.patternLength = 2;
         b0 = (bs[0 + offset] != 0);
@@ -418,6 +421,7 @@ public class MakePacket {
           thisNode.bitPattern = BITS_10;
           break;
         }
+        // fall through
       case 1:
         thisNode.patternLength = 1;
         b0 = (bs[0 + offset] != 0);

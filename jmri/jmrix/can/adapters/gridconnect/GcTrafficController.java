@@ -24,7 +24,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -208,7 +208,6 @@ public class GcTrafficController extends TrafficController {
         }
     }
 
-    private boolean unsolicited;
     private int gcState;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GcTrafficController.class.getName());

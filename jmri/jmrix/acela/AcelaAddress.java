@@ -14,7 +14,7 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -82,7 +82,7 @@ public class AcelaAddress {
     public static AcelaNode getNodeFromSystemName(String systemName) {
         // get the node address
         int ua;
-        int tempaddress;
+        //int tempaddress;
 //        log.info("Trying to register sensor "+ systemName );
 
         ua = getNodeAddressFromSystemName(systemName);
@@ -93,7 +93,7 @@ public class AcelaAddress {
         
         AcelaNode tempnode;
         tempnode = (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
-        tempaddress = tempnode.getNodeAddress();
+        //tempaddress = tempnode.getNodeAddress();
 
 //        log.info("Got back node of type (expecting 1,3, or 9): " + tempnode.nodeType + " for node: " + tempaddress);
         return tempnode;

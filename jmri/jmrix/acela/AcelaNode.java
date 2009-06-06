@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -942,7 +942,6 @@ public class AcelaNode extends AbstractNode {
      * @param l Reply to a poll operation
      */
     public void markChanges(AcelaReply l) {
-        int numSensorstoProcess = sensorbitsPerCard;
 
         // We are going to get back 8 bits per byte from the poll.
         // We have three types of sensor modules:
@@ -955,19 +954,19 @@ public class AcelaNode extends AbstractNode {
         //    or spread across three bytes if we start at 4.
         int firstByteNum = startingSensorAddress / 8;
         int firstBitAt = startingSensorAddress % 8; // mod operator
-        int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
+        //int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
 
         if (nodeType == WM) {
             if (firstBitAt != 0) {
-                numBytes = 2;   //  8 bits, but straddling two bytes
+                //numBytes = 2;   //  8 bits, but straddling two bytes
             }
         }
 
         if (nodeType == SY) {
             if (firstBitAt == 0) {
-                numBytes = 2;  // 16 bits, aligned in two bytes
+                //numBytes = 2;  // 16 bits, aligned in two bytes
             } else {
-                numBytes = 3;  // 16 bits, straddling three bytes
+                //numBytes = 3;  // 16 bits, straddling three bytes
             }
         }
 

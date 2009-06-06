@@ -8,9 +8,7 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialListener;
-import jmri.jmrix.powerline.SerialNode;
 import jmri.jmrix.powerline.SerialMessage;
-import jmri.jmrix.powerline.SerialSensorManager;
 
 /**
  * Converts Stream-based I/O to/from messages.  The "SerialInterface"
@@ -25,7 +23,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 

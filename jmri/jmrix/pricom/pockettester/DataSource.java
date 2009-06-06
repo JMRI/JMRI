@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -65,7 +65,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         // load the port selection part
         portBox.setToolTipText(rb.getString("TooltipSelectPort"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-        Vector v = getPortNames();
+        Vector<String> v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
         speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
@@ -275,13 +275,14 @@ public class DataSource extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    public Vector getPortNames() {
+    @SuppressWarnings("unchecked")
+	public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+            CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
             if (id.getPortType() != id.PORT_PARALLEL )
             	// accumulate the names in a vector
@@ -465,7 +466,8 @@ public class DataSource extends jmri.util.JmriJFrame {
      *
      * @param s The new message to distribute
      */
-    protected void nextLine(String s) {
+    @SuppressWarnings("unchecked")
+	protected void nextLine(String s) {
         // Check for version string
         if (s.startsWith("PRICOM Design DCC")) {
             // save as version string & suppress
@@ -474,14 +476,14 @@ public class DataSource extends jmri.util.JmriJFrame {
         }
         // Distribute the result
         // make a copy of the listener vector so synchronized not needed for transmit
-        Vector v;
+        Vector<DataListener> v;
         synchronized(this) {
-            v = (Vector) listeners.clone();
+            v = (Vector<DataListener>) listeners.clone();
         }
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
-            DataListener client = (DataListener) v.elementAt(i);
+            DataListener client = v.elementAt(i);
             client.asciiFormattedMessage(s);
         }
     }

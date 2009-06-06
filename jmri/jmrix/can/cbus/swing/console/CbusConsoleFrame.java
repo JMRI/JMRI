@@ -13,11 +13,9 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -29,7 +27,6 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
@@ -38,7 +35,6 @@ import jmri.util.JmriJFrame;
 
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.*;
-import jmri.jmrix.can.cbus.CbusEventFilter;
 import jmri.jmrix.can.cbus.CbusEventFilterFrame;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
@@ -47,7 +43,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -645,7 +641,6 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             linesBuffer[CBUS].append( sbCbus.toString() );
         }
         
-        final int start = monTextPaneCbus.getText().length();
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
@@ -742,7 +737,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             boolean loggingNow = (logStream != null);
             stopLogButtonActionPerformed(e);  // stop before changing file
-            File file = logFileChooser.getSelectedFile();
+            //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
             if (loggingNow) startLogButtonActionPerformed(e);
         }
@@ -951,9 +946,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * @param msg CanMessage to be decoded
      * Return String decoded message
      */
-    public String decode(AbstractMessage msg) {
+    @SuppressWarnings("fallthrough")
+	public String decode(AbstractMessage msg) {
         String str = "";
-        int bytes = msg.getElement(0) >> 5;
+        //int bytes = msg.getElement(0) >> 5;
         int op = msg.getElement(0);
         int node = msg.getElement(1)*256 + msg.getElement(2);
         int event = msg.getElement(3)*256 + msg.getElement(4);
@@ -963,6 +959,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             case CbusConstants.CBUS_ACON:
                 // ON event
                 onOff = "ON";
+                //fall through
             case CbusConstants.CBUS_ACOF:
                 // OFF event
                 str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
@@ -972,6 +969,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             case CbusConstants.CBUS_ASON:
                 // ON event
                 onOff = "ON";
+                //fall through
             case CbusConstants.CBUS_ASOF:
                 // OFF event
                 str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
@@ -986,6 +984,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             case CbusConstants.CBUS_ACON1:
                 // ON event
                 onOff = "ON";
+                //fall through
             case CbusConstants.CBUS_ACOF1:
                 // OFF event
                 str = str+"Event "+onOff+" NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);

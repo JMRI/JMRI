@@ -4,9 +4,6 @@ package jmri.jmrix.can.adapters.loopback;
 
 import jmri.jmrix.AbstractPortController;
 
-import jmri.jmrix.can.CanConstants;
-import jmri.jmrix.can.CanMessage;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -27,7 +24,7 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class Port extends AbstractPortController {
 
@@ -90,7 +87,7 @@ public class Port extends AbstractPortController {
 
 	public String[] validBaudRates() { return new String[]{"None"}; }
 	public String openPort(String portName, String appName) { return "invalid request"; }
-	public java.util.Vector getPortNames() { 
+	public java.util.Vector<String> getPortNames() { 
 	    java.util.Vector<String> v = new java.util.Vector<String>();
 	    v.addElement("(None)");
 	    return v;

@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -80,7 +80,8 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * Since Grapevine doesn't distinguish between message 
      * and reply, this uses the Message method.
      */
-    public String format() {
+    @SuppressWarnings("fallthrough")
+	public String format() {
         int b1 = -1;
         int b2 = -1;
         int b3 = -1;
@@ -88,10 +89,13 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         switch (getNumDataElements()) {
         case 4:
             b4 = getElement(3)&0xff;
+            // fall through
         case 3:
             b3 = getElement(2)&0xff;
+            // fall through
         case 2:
             b2 = getElement(1)&0xff;
+            // fall through
         case 1:
             b1 = getElement(0)&0xff;
         }

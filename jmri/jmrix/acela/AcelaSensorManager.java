@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003, 2007
  * @author      Dave Duchamp, multi node extensions, 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  *
  * @author      Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -88,7 +88,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
             return s;
         }
         // register this sensor with the Acela Node
-        node.registerSensor((AcelaSensor)s, bit);
+        node.registerSensor(s, bit);
         return s;
     }
     
@@ -168,7 +168,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        AcelaNode node0 = new AcelaNode(tempaddr, nodetype);
+                        new AcelaNode(tempaddr, nodetype);
                         log.info("Created a new Acela Node [" + tempaddr + "] as a result of Acela network Poll of type: " + replynodetype);
                     }
                     AcelaTrafficController.instance().setAcelaTrafficControllerState(true);
@@ -188,12 +188,12 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
         log.info("Trying to register sensor from Manager 2: ASxx");
-        java.util.Iterator iter =
+        java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
         // Iterate through the sensors
         AcelaNode tNode = null;
         while (iter.hasNext()) {
-            String sName = (String)iter.next();
+            String sName = iter.next();
             if (sName==null) {
                 log.error("System name null during register Sensor");
             }

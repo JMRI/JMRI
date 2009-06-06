@@ -7,7 +7,6 @@ import java.awt.event.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialMessage;
@@ -16,7 +15,7 @@ import jmri.jmrix.grapevine.SerialMessage;
  * Frame lets user renumber a Grapevine node
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 

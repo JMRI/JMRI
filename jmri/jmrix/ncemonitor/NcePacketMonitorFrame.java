@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -32,7 +32,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         // load the port selection part
         portBox.setToolTipText("Select the port to use");
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-        Vector v = getPortNames();
+        Vector<String> v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
         openPortButton.setText("Open");
@@ -365,13 +365,14 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         super.dispose();
     }
 
-    public Vector getPortNames() {
+    @SuppressWarnings("unchecked")
+	public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
-        Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+            CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
             if (id.getPortType() != id.PORT_PARALLEL )
             	// accumulate the names in a vector

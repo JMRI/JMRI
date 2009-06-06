@@ -12,7 +12,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,7 +30,7 @@ public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
 
     public void load(Element turnouts) {
         // create the master object
-        AcelaTurnoutManager mgr = AcelaTurnoutManager.instance();
+        AcelaTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }

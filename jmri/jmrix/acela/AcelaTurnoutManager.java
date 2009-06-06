@@ -13,7 +13,7 @@ import jmri.Turnout;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @author	Bob Coleman Copyright (C) 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -45,8 +45,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 	if (nAddress == -1) return (null);
 	int bitNum = AcelaAddress.getBitFromSystemName(systemName);
 	if (bitNum == -1) return (null);
-	String conflict = "";
-
+	
 // Bob C: Fix this up		
 /*
 		conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);

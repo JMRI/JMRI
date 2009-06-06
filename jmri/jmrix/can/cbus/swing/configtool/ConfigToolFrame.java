@@ -2,11 +2,7 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
-import jmri.jmrix.loconet.*;
-import jmri.util.StringUtil;
-
 import java.util.ResourceBundle;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -15,7 +11,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since 2.3.1
  */
 public class ConfigToolFrame extends jmri.util.JmriJFrame {

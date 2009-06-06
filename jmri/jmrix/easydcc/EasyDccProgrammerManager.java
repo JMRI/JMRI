@@ -10,15 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 
-    private Programmer localProgrammer;
+    //private Programmer localProgrammer;
 
     public EasyDccProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
-        localProgrammer = serviceModeProgrammer;
+    //    localProgrammer = serviceModeProgrammer;
 
     }
 

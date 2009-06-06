@@ -12,7 +12,7 @@ package jmri.jmrix.oaktree;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -21,7 +21,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /** Suppress the default ctor, as the response
      * length must always be specified
      */
-    private SerialMessage() {}
+    @SuppressWarnings("unused")
+	private SerialMessage() {}
     
     public SerialMessage(int l) {
         super(5);  // all messages are five bytes

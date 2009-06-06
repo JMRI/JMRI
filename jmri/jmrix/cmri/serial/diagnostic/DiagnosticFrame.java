@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.10 $
+ * @version	 $Revision: 1.11 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -589,11 +589,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                                 statusText1.setVisible(true);
                                 String st = "Compare Error - Out Bytes (hex):";
                                 for (int i = begOutByte;i<=endOutByte;i++) {
-                                    st += " " + Integer.toHexString(((int)outBytes[i])&0x000000ff);
+                                    st += " " + Integer.toHexString((outBytes[i])&0x000000ff);
                                 }
                                 st += "    In Bytes (hex):";
                                 for (int i = begInByte;i<=endInByte;i++) {
-                                    st += " " + Integer.toHexString(((int)inBytes[i])&0x000000ff);
+                                    st += " " + Integer.toHexString((inBytes[i])&0x000000ff);
                                 }
                                 statusText2.setText(st);
                                 statusText2.setVisible(true);

@@ -2,8 +2,6 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
-import java.io.File;
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -12,7 +10,6 @@ import javax.swing.event.*;
 import jmri.jmrix.jinput.TreeModel;
 import jmri.jmrix.jinput.UsbNode;
 
-import net.java.games.input.*;
 
 /**
  * Create a JPanel containing a tree of JInput sources.
@@ -32,7 +29,7 @@ import net.java.games.input.*;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class TreePanel extends JPanel {
     public TreePanel() {

@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialAddress {
 
@@ -117,7 +117,7 @@ public class SerialAddress {
         }
         if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
             // This is a PLaxx address - validate the house code and unit address fields
-            if ((int)hCodes.group(1).charAt(0) < (int)minHouseCode || (int)hCodes.group(1).charAt(0) > (int)maxHouseCode) {
+            if (hCodes.group(1).charAt(0) < minHouseCode || hCodes.group(1).charAt(0) > maxHouseCode) {
                 log.error("house code field out of range in system name: "
                         + systemName);
                 return (false);
@@ -198,7 +198,7 @@ public class SerialAddress {
         }
         if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
             // This is a PLann address 
-            int house = (int)hCodes.group(1).charAt(0) - minHouseCode;
+            int house = hCodes.group(1).charAt(0) - minHouseCode;
             int unit = Integer.parseInt(hCodes.group(2));
             altName = systemName.substring(0,2) + Integer.toString((house * 16) + unit);
         }        

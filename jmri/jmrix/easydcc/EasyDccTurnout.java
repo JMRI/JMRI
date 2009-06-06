@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -70,7 +70,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 		m.setElement(i++, '0');
 		m.setElement(i++, '2');
 		m.setElement(i++, ' ');
-		String s = Integer.toHexString((int)bl[0]&0xFF).toUpperCase();
+		String s = Integer.toHexString(bl[0]&0xFF).toUpperCase();
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));
@@ -78,7 +78,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(0));
 			m.setElement(i++, s.charAt(1));
 		}
-		s = Integer.toHexString((int)bl[1]&0xFF).toUpperCase();
+		s = Integer.toHexString(bl[1]&0xFF).toUpperCase();
 		m.setElement(i++, ' ');
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
@@ -87,7 +87,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(0));
 			m.setElement(i++, s.charAt(1));
 		}
-		s = Integer.toHexString((int)bl[2]&0xFF).toUpperCase();
+		s = Integer.toHexString(bl[2]&0xFF).toUpperCase();
 		m.setElement(i++, ' ');
 		if (s.length() == 1) {
 			m.setElement(i++, '0');

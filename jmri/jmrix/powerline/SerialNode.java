@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialNode {
 
@@ -163,15 +163,17 @@ public class SerialNode {
      * Public method to set node type.
      */
     public void setNodeType(int type) {
-        nodeType = type;
-        switch (nodeType) {
-            default:
-                log.error("Unexpected nodeType in setNodeType: "+nodeType);
-                // use IO-48 as default
-            case DAUGHTER:
-            case CABDRIVER:
-                break;
-        }
+    	nodeType = type;
+    	switch (nodeType) {
+    	default:
+    		log.error("Unexpected nodeType in setNodeType: "+nodeType);
+    		// use IO-48 as default
+    		break;
+    	case DAUGHTER:
+    		break;
+    	case CABDRIVER:
+    		break;
+    	}
     }
 
     /**

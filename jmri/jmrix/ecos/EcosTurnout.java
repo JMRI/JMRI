@@ -3,9 +3,7 @@
 package jmri.jmrix.ecos;
 
 import jmri.implementation.AbstractTurnout;
-import jmri.NmraPacket;
 import jmri.Turnout;
-import jmri.PushbuttonPacket;
 
 /**
  * Implement a Turnout via Ecos communications.
@@ -16,7 +14,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {

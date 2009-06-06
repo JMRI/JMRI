@@ -2,7 +2,6 @@
 
 package jmri.jmrix.qsi;
 
-import jmri.Programmer;
 
 /**
  * Encodes a message to an QSI command station.
@@ -11,7 +10,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -148,7 +147,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         int i=0;
         // Create new message to hold the framed one
         QsiMessage f = new QsiMessage(MAXSIZE);
-        f.setElement(0, (int)':');
+        f.setElement(0, ':');
         // copy existing message adding CRLF
         for (i = 1; i <= _nDataChars; i++) {
             f.setElement(i, _dataChars[i-1]);
@@ -169,7 +168,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
-                s+="<"+(int)_dataChars[i]+">";
+                s+="<"+_dataChars[i]+">";
             }
         }
         return s;
@@ -369,14 +368,16 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
     
     // [AC] 11/09/2002
-    private static String addSpace(QsiMessage m, int offset) {
+    @SuppressWarnings("unused")
+	private static String addSpace(QsiMessage m, int offset) {
         String s = " ";
         m.setElement(offset, ' ');
         return s;
     }
     
     // [AC] 11/09/2002
-    private static String addIntAsTwo(int val, QsiMessage m, int offset) {
+    @SuppressWarnings("unused")
+	private static String addIntAsTwo(int val, QsiMessage m, int offset) {
         String s = ""+val;
         if (s.length() != 2) s = "0"+s;  // handle <10
         m.setElement(offset,s.charAt(0));
@@ -384,7 +385,8 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return s;
     }
     
-    private static String addIntAsThree(int val, QsiMessage m, int offset) {
+    @SuppressWarnings("unused")
+	private static String addIntAsThree(int val, QsiMessage m, int offset) {
         String s = ""+val;
         if (s.length() != 3) s = "0"+s;  // handle <10
         if (s.length() != 3) s = "0"+s;  // handle <100

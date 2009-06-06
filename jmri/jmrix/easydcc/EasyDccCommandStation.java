@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * EasyDcc implementation of the CommandStation interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class EasyDccCommandStation implements CommandStation {
 
@@ -39,7 +39,7 @@ public class EasyDccCommandStation implements CommandStation {
 		
 		for (int j=0; j<packet.length; j++) {
 		    m.setElement(i++, ' ');
-            String s = Integer.toHexString((int)packet[j]&0xFF).toUpperCase();
+            String s = Integer.toHexString(packet[j]&0xFF).toUpperCase();
             if (s.length() == 1) {
                 m.setElement(i++, '0');
                 m.setElement(i++, s.charAt(0));

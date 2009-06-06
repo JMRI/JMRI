@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, adapt to use for Maple 2008
  *
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -277,7 +277,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();
-        int cr = 0;
         return len;
     }
 
