@@ -4,6 +4,7 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Manager;
 
 /**
  * Implementation of a LightManager that can serves as a proxy
@@ -13,10 +14,25 @@ import jmri.LightManager;
  * Based on ProxySensorManager
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
+
+    /**
+     * Override super-class behaviour to include internal 
+     * manager.
+     */
+    public void addManager(Manager m) {
+        if (mgrs.size() == 0) { 
+            log.debug("initial addmanager "+m);
+            mgrs.add(m);
+            mgrs.add(new InternalLightManager());
+        } else {
+            mgrs.add(m);
+        }
+        log.debug("added manager "+m);
+    }
 
     /**
      * Locate via user name, then system name if needed.
