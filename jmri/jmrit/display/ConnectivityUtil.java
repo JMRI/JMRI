@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class ConnectivityUtil 
@@ -311,9 +311,12 @@ public class ConnectivityUtil
 			}
 		}
 		if (notFound) {
-			// could not initialize the connectivity search
-			log.error ("Could not find connection between Blocks "+block.getUserName()+" and "+
-																prevBlock.getUserName());
+			if (prevBlock!=null)
+				// could not initialize the connectivity search
+				log.error ("Could not find connection between Blocks "+block.getUserName()+" and "+
+						prevBlock.getUserName());
+			else
+				log.error("Could not find connection between Blocks "+block.getUserName()+", prevBock is null!");
 			return list;
 		}
 		// search connectivity for turnouts by following TrackSegments to end of Block		
@@ -1375,6 +1378,10 @@ public class ConnectivityUtil
 		boolean hasNode = false;
 		Object tObject = null;
 		int tType = 0;
+		if (tTrack==null){
+			log.error("Error tTrack is null!");
+			return null;
+		}
 		while (!hasNode) {
 			if (tTrack.getConnect1()==pObject) {
 				tObject = tTrack.getConnect2();

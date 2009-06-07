@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.12 $
+ * @version 		$Revision: 1.13 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -62,7 +62,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
     // readline is deprecated, but there are no problems
     // with multi-byte characters here.
-    @SuppressWarnings("deprecation") 
+    @SuppressWarnings({ "deprecation", "null" }) 
     public void run() {
       boolean debug = log.isDebugEnabled();
 
@@ -105,6 +105,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   msg = new LocoNetMessage(byte2);
                   break;
               }
+              if (msg == null)
+              	log.error("msg is null!");
               // message exists, now fill it
               msg.setOpCode(opCode);
               msg.setElement(1, byte2);

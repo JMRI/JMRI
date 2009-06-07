@@ -18,7 +18,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -48,10 +48,8 @@ public class DefaultLogixManager extends AbstractManager
         if (x!=null) return null;
         // Logix does not exist, create a new Logix
         x = new DefaultLogix(sName,userName);
-        if (x!=null) {
-            // save in the maps
-            register(x);
-        }
+        // save in the maps
+        register(x);
         return x;
     }
 

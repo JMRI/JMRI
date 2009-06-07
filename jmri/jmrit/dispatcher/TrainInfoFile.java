@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -239,7 +239,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             }
 		}
         // Sort the resulting array
-		if (sp.length > 1) {
+		if ((sp != null) && sp.length > 1) {
 			jmri.util.StringUtil.sort(sbox);
 		}
 // djd debugging - print list of TrainInfoFiles

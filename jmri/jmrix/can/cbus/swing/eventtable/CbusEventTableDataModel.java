@@ -18,7 +18,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -278,7 +278,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         saveToCSV();
     }
     
-    private void saveToCSV() {
+    @SuppressWarnings("null")
+	private void saveToCSV() {
         FileOutputStream out = null;
         PrintWriter p = null;
         try {
@@ -290,7 +291,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
 
         if (out == null) log.debug("Null File Output Stream");
-        if (p == null) log.debug("Null Print Writer");
+        if (p == null) log.error("Null Print Writer");
 
         // Save rows
         for (int i = 0; i < this.getRowCount(); i++) {

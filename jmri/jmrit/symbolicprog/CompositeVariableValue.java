@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -169,14 +169,17 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
 
         if (variable!=null) {
             variables.add(variable);
-        } else log.error("Variable pointer null when varName="+varName+" in choice "+choice+"; ignored");
-        if (!variable.label().equals(varName)) log.warn("Unexpected label /"+variable.label()+"/ for varName /"+varName+"/ during addSetting");
+            if (!variable.label().equals(varName)) 
+            	log.warn("Unexpected label /"+variable.label()+"/ for varName /"+varName+"/ during addSetting");
+        } else 
+        	log.error("Variable pointer null when varName="+varName+" in choice "+choice+"; ignored");     
     }
     
     /** 
      * Do end of initialization processing.
      */
-    public void lastItem() {
+    @SuppressWarnings("null")
+	public void lastItem() {
         // configure the representation object
         _defaultColor = _value.getBackground();
         super.setState(READ);
@@ -190,7 +193,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         while (i.hasNext()) {
             VariableValue v = i.next();
             if (v==null) log.error("Variable found as null in last item");
-            // connect
+            // connect, force an exception if v == null
             v.addPropertyChangeListener(this);
         }
 

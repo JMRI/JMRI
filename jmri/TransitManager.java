@@ -29,7 +29,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -68,10 +68,8 @@ public class TransitManager extends AbstractManager
         if (z!=null) return null;
         // Transit does not exist, create a new Transit
         z = new Transit(sName,userName);
-        if (z!=null) {
-            // save in the maps
-            register(z);
-        }
+        // save in the maps
+        register(z);
         return z;
     }
 

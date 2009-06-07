@@ -9,7 +9,7 @@ import jmri.implementation.AbstractManager;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -42,13 +42,16 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return (Memory)_tuser.get(key);
     }
 
-    public Memory newMemory(String sysName, String userName) {
+	public Memory newMemory(String sysName, String userName) {
 		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("new Memory:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null) log.error("SystemName cannot be null. UserName was "
-                                        +( (userName==null) ? "null" : userName));
+        if (systemName == null){ 
+        	log.error("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        	return null;
+        }
         // is system name in correct format?
         if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
             log.error("Invalid system name for Memory: "+systemName

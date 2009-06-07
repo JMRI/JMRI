@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -324,7 +324,8 @@ public class AddressPanel extends JInternalFrame {
     /**
      * Open a programmer for this address
      */
-    protected void openProgrammer() {
+    @SuppressWarnings("null")
+	protected void openProgrammer() {
         RosterEntry re = Roster.instance().entryFromTitle((String)rosterBox.getSelectedItem());
         if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
 

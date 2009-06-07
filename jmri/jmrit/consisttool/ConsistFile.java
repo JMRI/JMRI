@@ -17,7 +17,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -37,123 +37,123 @@ class ConsistFile extends jmri.jmrit.XmlFile {
          * Load a Consist from the consist elements in the file.
          * @param consist a JDOM element containing a consist
          */
-	@SuppressWarnings("unchecked")
-	private void ConsistFromXML(Element consist){
-                org.jdom.Attribute type,cnumber,isCLong,cID;
-                jmri.Consist newConsist = null;
+       @SuppressWarnings("unchecked")
+       private void ConsistFromXML(Element consist){
+    	   org.jdom.Attribute type,cnumber,isCLong,cID;
+    	   jmri.Consist newConsist = null;
 
-                // Read the consist address from the file and create the 
-                // consisit in memory if it doesn't exist already.
-                cnumber=consist.getAttribute("consistNumber");
-                isCLong=consist.getAttribute("longAddress");
-                DccLocoAddress consistAddress = null;
-                if(isCLong!=null) {
-                   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with longAddress set to " +isCLong.getValue());
-                   try {
-                	   int number = Integer.parseInt(cnumber.getValue());
-                	   consistAddress=new DccLocoAddress(number, isCLong.getValue().equals("yes"));
-                   } catch (NumberFormatException e) {
-                       if(log.isDebugEnabled())
-                           log.debug("Consist number not an integer");
-                	   return;
-                   }
-                   
-                } else {
-                   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with default long address setting.");
-                   consistAddress=new DccLocoAddress(
-                                             Integer.parseInt(cnumber.getValue()),
-                                             false);
-                }
-                newConsist=ConsistMan.getConsist(consistAddress);
-                if(!(newConsist.getConsistList().isEmpty())) {
-                     if(log.isDebugEnabled())
-                            log.debug("Consist " + consistAddress.toString() + " is not empty.  Using version in memory.");
-                     return;
-                }
+    	   // Read the consist address from the file and create the 
+    	   // consisit in memory if it doesn't exist already.
+    	   cnumber=consist.getAttribute("consistNumber");
+    	   isCLong=consist.getAttribute("longAddress");
+    	   DccLocoAddress consistAddress = null;
+    	   if(isCLong!=null) {
+    		   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with longAddress set to " +isCLong.getValue());
+    		   try {
+    			   int number = Integer.parseInt(cnumber.getValue());
+    			   consistAddress=new DccLocoAddress(number, isCLong.getValue().equals("yes"));
+    		   } catch (NumberFormatException e) {
+    			   if(log.isDebugEnabled())
+    				   log.debug("Consist number not an integer");
+    			   return;
+    		   }
 
-                // read and set the consist type
-                type=consist.getAttribute("type");
-                if(type!=null) {
-                   // use the value read from the file
-                   newConsist.setConsistType((type.getValue().equals("CSAC"))?jmri.Consist.CS_CONSIST:jmri.Consist.ADVANCED_CONSIST);
-                } else {
-                   // use the default (DAC)
-                   newConsist.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-                }
+    	   } else {
+    		   if(log.isDebugEnabled()) log.debug("adding consist "+cnumber +" with default long address setting.");
+    		   consistAddress=new DccLocoAddress(
+    				   Integer.parseInt(cnumber.getValue()),
+    				   false);
+    	   }
+    	   newConsist=ConsistMan.getConsist(consistAddress);
+    	   if(!(newConsist.getConsistList().isEmpty())) {
+    		   if(log.isDebugEnabled())
+    			   log.debug("Consist " + consistAddress.toString() + " is not empty.  Using version in memory.");
+    		   return;
+    	   }
 
-		// Read the consist ID from the file;
-		cID=consist.getAttribute("id");
-		if(cID!=null) {
-			// use the value read from the file
-			newConsist.setConsistID(cID.getValue());
-		}
+    	   // read and set the consist type
+    	   type=consist.getAttribute("type");
+    	   if(type!=null) {
+    		   // use the value read from the file
+    		   newConsist.setConsistType((type.getValue().equals("CSAC"))?jmri.Consist.CS_CONSIST:jmri.Consist.ADVANCED_CONSIST);
+    	   } else {
+    		   // use the default (DAC)
+    		   newConsist.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+    	   }
 
-                // read each child of locomotive in the consist from the file
-                // and restore it's information to memory.
-                java.util.Iterator<Element> childIterator=consist.getDescendants(new org.jdom.filter.ElementFilter("loco"));
-                try {
-                   org.jdom.Element e;
-                   do {
-		        e=childIterator.next();
-                        org.jdom.Attribute number,isLong,direction,position;
-                        number=e.getAttribute("dccLocoAddress");
-                        isLong=e.getAttribute("longAddress");
-                        direction=e.getAttribute("locoDir");
-                        position=e.getAttribute("locoName");
-                        if(log.isDebugEnabled())log.debug("adding Loco "+number);
-                        // Use restore so we DO NOT cause send any commands
-                        // to the command station as we recreate the consist.
-                        DccLocoAddress address;
-                        if(isLong!=null && direction !=null) {
-                           // use the values from the file
-                          if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
-                           address=new DccLocoAddress(
-                                            Integer.parseInt(number.getValue()),
-                                            isLong.getValue().equals("yes"));
-			   newConsist.restore(address,
-                                            direction.getValue().equals("normal"));
-                        } else if(isLong==null && direction !=null) {
-                           // use the direction from the file
-                           // but set as long address
-                          if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
-                           address=new DccLocoAddress(
-                                            Integer.parseInt(number.getValue()),
-                                            true);
-			   newConsist.restore(address,
-                                            direction.getValue().equals("normal"));
-                        } else if(isLong!=null && direction==null) {
-                           // use the default direction
-                           // but the long/short value from the file
-                           address=new DccLocoAddress(
-                                            Integer.parseInt(number.getValue()),
-                                            isLong.getValue().equals("yes"));
-			   newConsist.restore(address,true);
-                        } else { 
-                           // use the default values long address
-                           // and normal direction
-                           address=new DccLocoAddress(
-                                            Integer.parseInt(number.getValue()),
-                                            true);
-			   newConsist.restore(address,true);
-                        }
-                        if(position!=null && position.getValue().equals("mid")){
-                           if(position.getValue().equals("lead")) {
-                              newConsist.setPosition(address,Consist.POSITION_LEAD);
-                           } else if(position.getValue().equals("rear")) {
-                              newConsist.setPosition(address,Consist.POSITION_TRAIL);
-                           } 
-                        } else {
-                              org.jdom.Attribute midNumber=e.getAttribute("locoMidNumber");
-                              if(midNumber!=null) {
-                                 int pos=Integer.parseInt(midNumber.getValue());
-                                 newConsist.setPosition(address,pos);
-                              }
-                        } 
-                    }while(e!=null); 
-                 }catch(java.util.NoSuchElementException nse){
-                      if(log.isDebugEnabled()) log.debug("end of loco list");
-                 }
-        }
+    	   // Read the consist ID from the file;
+    	   cID=consist.getAttribute("id");
+    	   if(cID!=null) {
+    		   // use the value read from the file
+    		   newConsist.setConsistID(cID.getValue());
+    	   }
+
+    	   // read each child of locomotive in the consist from the file
+    	   // and restore it's information to memory.
+    	   java.util.Iterator<Element> childIterator=consist.getDescendants(new org.jdom.filter.ElementFilter("loco"));
+    	   try {
+    		   org.jdom.Element e;
+    		   do {
+    			   e=childIterator.next();
+    			   org.jdom.Attribute number,isLong,direction,position;
+    			   number=e.getAttribute("dccLocoAddress");
+    			   isLong=e.getAttribute("longAddress");
+    			   direction=e.getAttribute("locoDir");
+    			   position=e.getAttribute("locoName");
+    			   if(log.isDebugEnabled())log.debug("adding Loco "+number);
+    			   // Use restore so we DO NOT cause send any commands
+    			   // to the command station as we recreate the consist.
+    			   DccLocoAddress address;
+    			   if(isLong!=null && direction !=null) {
+    				   // use the values from the file
+    				   if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
+    				   address=new DccLocoAddress(
+    						   Integer.parseInt(number.getValue()),
+    						   isLong.getValue().equals("yes"));
+    				   newConsist.restore(address,
+    						   direction.getValue().equals("normal"));
+    			   } else if(isLong==null && direction !=null) {
+    				   // use the direction from the file
+    				   // but set as long address
+    				   if(log.isDebugEnabled())log.debug("using direction from file "+direction.getValue());
+    				   address=new DccLocoAddress(
+    						   Integer.parseInt(number.getValue()),
+    						   true);
+    				   newConsist.restore(address,
+    						   direction.getValue().equals("normal"));
+    			   } else if(isLong!=null && direction==null) {
+    				   // use the default direction
+    				   // but the long/short value from the file
+    				   address=new DccLocoAddress(
+    						   Integer.parseInt(number.getValue()),
+    						   isLong.getValue().equals("yes"));
+    				   newConsist.restore(address,true);
+    			   } else { 
+    				   // use the default values long address
+    				   // and normal direction
+    				   address=new DccLocoAddress(
+    						   Integer.parseInt(number.getValue()),
+    						   true);
+    				   newConsist.restore(address,true);
+    			   }
+    			   if(position!=null && position.getValue().equals("mid")){
+    				   if(position.getValue().equals("lead")) {
+    					   newConsist.setPosition(address,Consist.POSITION_LEAD);
+    				   } else if(position.getValue().equals("rear")) {
+    					   newConsist.setPosition(address,Consist.POSITION_TRAIL);
+    				   } 
+    			   } else {
+    				   org.jdom.Attribute midNumber=e.getAttribute("locoMidNumber");
+    				   if(midNumber!=null) {
+    					   int pos=Integer.parseInt(midNumber.getValue());
+    					   newConsist.setPosition(address,pos);
+    				   }
+    			   } 
+    		   }while(true); 
+    	   }catch(java.util.NoSuchElementException nse){
+    		   if(log.isDebugEnabled()) log.debug("end of loco list");
+    	   }
+       }
 
 	/**
          * convert a Consist to XML.

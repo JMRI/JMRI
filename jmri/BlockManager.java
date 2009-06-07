@@ -27,7 +27,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -56,10 +56,8 @@ public class BlockManager extends AbstractManager
         // Block does not exist, create a new Block
 		String sName = systemName.toUpperCase();
         r = new Block(sName,userName);
-        if (r!=null) {
-            // save in the maps
-            register(r);
-        }
+        // save in the maps
+        register(r);
         return r;
     }
 

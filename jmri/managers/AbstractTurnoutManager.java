@@ -10,7 +10,7 @@ import jmri.implementation.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -54,8 +54,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         if (log.isDebugEnabled()) log.debug("newTurnout:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null) log.error("SystemName cannot be null. UserName was "
-                                        +( (userName==null) ? "null" : userName));
+        if (systemName == null){
+        	log.error("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        	return null;
+        }
         // is system name in correct format?
         if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
             log.error("Invalid system name for turnout: "+systemName

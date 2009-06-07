@@ -18,7 +18,7 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -379,7 +379,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             return SignalHead.FLASHGREEN;
         }
         // empty strings can occur frequently with types that have no integer data
-        if (str != null && str.length() > 0)
+        if (str.length() > 0)
         {
             log.warn("Unexpected parameter to stringToActionData("+str+")");
         }

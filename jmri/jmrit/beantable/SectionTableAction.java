@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class SectionTableAction extends AbstractTableAction {
@@ -929,6 +929,7 @@ public class SectionTableAction extends AbstractTableAction {
 	jmri.util.JmriJFrame frame = null;
 	
 	LayoutEditor panel = null;
+	@SuppressWarnings("null")
 	private boolean initializeLayoutEditor(boolean required) {
 		// Get a Layout Editor panel. Choose Layout Editor panel if more than one.
 		ArrayList<LayoutEditor> layoutEditorList = 
@@ -952,6 +953,8 @@ public class SectionTableAction extends AbstractTableAction {
 					panel = null;
 					return false;
 				}
+				if(panelName==null)
+					log.error("panelName is null!");
 				for (int j = 0; j<layoutEditorList.size(); j++) {
 					if (panelName.equals(choices[j])) {
 						panel = layoutEditorList.get(j);

@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -361,7 +361,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } else if ( null != (result = findFile(fileLocation+f) )) {
             log.debug("found at "+result.getAbsolutePath());
             return result;
-        } else if ( (null != (result = new File(f)) ) && result.exists() ) {
+        } else if ((result = new File(f)).exists() ) {
             log.debug("found at "+result.getAbsolutePath());
             return result;
         } else {

@@ -35,7 +35,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -74,10 +74,8 @@ public class SectionManager extends AbstractManager
         if (y!=null) return null;
         // Section does not exist, create a new Section
         y = new Section(sName,userName);
-        if (y!=null) {
-            // save in the maps
-            register(y);
-        }
+        // save in the maps
+        register(y);
         return y;
     }
 

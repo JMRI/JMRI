@@ -9,7 +9,7 @@ import jmri.implementation.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -47,8 +47,11 @@ public abstract class AbstractReporterManager extends AbstractManager
         if (log.isDebugEnabled()) log.debug("new Reporter:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null) log.error("SystemName cannot be null. UserName was "
-                                        +( (userName==null) ? "null" : userName));
+        if (systemName == null){ 
+        	log.error("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        	return null;
+        }
         // is system name in correct format?
         if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
             log.error("Invalid system name for Reporter: "+systemName

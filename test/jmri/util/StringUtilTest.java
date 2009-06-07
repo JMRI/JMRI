@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -170,10 +170,12 @@ public class StringUtilTest extends TestCase {
 		Assert.assertEquals("7th byte",0xB1,b[7]&0xFF);
 	}
 
-        private boolean compareStringArray(String[] s1, String[] s2) {
+        @SuppressWarnings("null")
+		private boolean compareStringArray(String[] s1, String[] s2) {
             if (s1 == null && s2 == null) return true;
             if (s1 == null && s2 != null) return false;
             if (s1 != null && s2 == null) return false;
+            // s1 and s2 are not null
             if (s1.length != s2.length) return false;
 
             for (int i = 0; i<s1.length; i++) {

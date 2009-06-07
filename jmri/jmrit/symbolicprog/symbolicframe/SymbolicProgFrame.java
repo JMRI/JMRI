@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -331,8 +331,10 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
                 cvObject.setState(CvValue.FROMFILE);
             }
             variableModel.configDone();
-        } else log.error("no values element found in config file; CVs not configured");
-
+        } else {
+        	log.error("no values element found in config file; CVs not configured");
+        	return;
+        }
         // get the variable values and load
         Element decoderDef = values.getChild("decoderDef");
         if (decoderDef != null) {

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -83,7 +83,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
-    public void loadDetails(JPanel details) {
+	public void loadDetails(JPanel details) {
     	
         setInstance();
 
@@ -108,6 +108,10 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         // need to remove ActionListener before addItem() or action event will occur
         if(portBox.getActionListeners().length >0)
         	portBox.removeActionListener(portBox.getActionListeners()[0]);
+        if(v==null){
+        	log.error("port name Vector v is null!");
+        	return;
+        }
         for (int i=0; i<v.size(); i++) {
                 portBox.addItem(v.elementAt(i));
         }

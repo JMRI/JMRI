@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -40,17 +40,17 @@ public class OrderedHashtableTest extends TestCase {
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("1"));
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("2"));
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("3"));
         
         Assert.assertTrue(! en.hasMoreElements());
@@ -80,17 +80,17 @@ public class OrderedHashtableTest extends TestCase {
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("1"));
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("2"));
         
         Assert.assertTrue(en.hasMoreElements());
         t = (String) en.nextElement();
-        Assert.assertTrue(t != null);
+        Assert.assertNotNull(t);
         Assert.assertTrue(t.equals("4"));
         
         Assert.assertTrue(! en.hasMoreElements());

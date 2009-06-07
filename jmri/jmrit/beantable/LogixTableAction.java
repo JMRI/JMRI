@@ -71,7 +71,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -598,6 +598,9 @@ public class LogixTableAction extends AbstractTableAction {
                 log.error("Failure to create Logix with System Name: " + sName);
                 return;
             }
+        } else if (targetLogix == null) {
+            log.error("Error targetLogix is null!");
+            return;
         } else {
             targetLogix.setUserName(uName);
         }

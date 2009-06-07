@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -273,7 +273,7 @@ public class SecurityElementIcon extends JPanel
                     if (newVal.equals("A")) element.attachAleg=SecurityElement.A;
                     else if (newVal.equals("B")) element.attachAleg=SecurityElement.B;
                     else if (newVal.equals("C")) element.attachAleg=SecurityElement.C;
-                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                    else log.warn("value needs to be A, B or C: "+newVal);
                 }
             }
                   );
@@ -299,7 +299,7 @@ public class SecurityElementIcon extends JPanel
                     if (newVal.equals("A")) element.attachBleg=SecurityElement.A;
                     else if (newVal.equals("B")) element.attachBleg=SecurityElement.B;
                     else if (newVal.equals("C")) element.attachBleg=SecurityElement.C;
-                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                    else log.warn("value needs to be A, B or C: "+newVal);
                 }
             }
                   );
@@ -325,7 +325,7 @@ public class SecurityElementIcon extends JPanel
                     if (newVal.equals("A")) element.attachCleg=SecurityElement.A;
                     else if (newVal.equals("B")) element.attachCleg=SecurityElement.B;
                     else if (newVal.equals("C")) element.attachCleg=SecurityElement.C;
-                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                    else log.warn("value needs to be A, B or C: "+newVal);
                 }
             }
                   );

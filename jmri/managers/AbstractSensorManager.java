@@ -8,7 +8,7 @@ import jmri.implementation.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -56,8 +56,11 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null) log.error("SystemName cannot be null. UserName was "
-                                        +( (userName==null) ? "null" : userName));
+        if (systemName == null){ 
+        	log.error("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        	return null;
+        }
         // is system name in correct format?
         if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
             log.error("Invalid system name for sensor: "+systemName
