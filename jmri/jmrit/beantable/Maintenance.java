@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class Maintenance
@@ -333,7 +333,8 @@ public class Maintenance
     * seem to be two kinds of implemetation of Managers and I don't know the which is the
     * preferred kind or why they need to be different.) 
     */
-    static String[] getTypeAndNames(String name) {
+    @SuppressWarnings("null")
+	static String[] getTypeAndNames(String name) {
         String userName = name.trim();
         String sysName = userName.toUpperCase();
         boolean found = false;

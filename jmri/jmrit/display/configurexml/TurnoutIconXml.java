@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -60,7 +60,8 @@ public class TurnoutIconXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  PanelEditor as an Object
      */
-    public void load(Element element, Object o) {
+    @SuppressWarnings("null")
+	public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
         String name;

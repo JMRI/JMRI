@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -706,15 +706,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		}
 		// all information checks out - create	
 		ActiveTrain at = new ActiveTrain(t,trainID,tSource);
-		if (at==null) {
-			if (showErrorMessages) {
-				JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error11"),new Object[] { transitID, trainID }), rb.getString("ErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);
-			}
-			log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
-			return null;
-		}
+		//if (at==null) {
+		//	if (showErrorMessages) {
+		//		JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+		//				"Error11"),new Object[] { transitID, trainID }), rb.getString("ErrorTitle"),
+		//					JOptionPane.ERROR_MESSAGE);
+		//	}
+		//	log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
+		//	return null;
+		//}
 		activeTrainsList.add(at);
 		t.setState(Transit.ASSIGNED);
 		at.setStartBlock(startBlock);
@@ -843,15 +843,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
 		if (ar==null) {
 			ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
-			if (ar==null) {
-				if (showErrorMessages) {
-					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error20"),new Object[] { activeTrain.getActiveTrainName() }), rb.getString("ErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);
-				}
-				log.error("Null return when creating new allocation request for "+activeTrain.getActiveTrainName());
-				return null;
-			}
+			//if (ar==null) {
+			//	if (showErrorMessages) {
+			//		JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+			//			"Error20"),new Object[] { activeTrain.getActiveTrainName() }), rb.getString("ErrorTitle"),
+			//				JOptionPane.ERROR_MESSAGE);
+			//	}
+			//	log.error("Null return when creating new allocation request for "+activeTrain.getActiveTrainName());
+			//	return null;
+			//}
 			allocationRequests.add(ar);
 		}
 		activeTrainsTableModel.fireTableDataChanged();
@@ -965,7 +965,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			 
 			// allocate the section
 			as = new AllocatedSection(s,at,ar.getSectionSeqNumber(),nextSection);
-			if (as!=null) {
+//			if (as!=null) {
 				s.setState(ar.getSectionDirection());
 				at.addAllocatedSection(as);
 				allocatedSections.add(as);
@@ -982,7 +982,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				if (allocatedSectionTableModel!=null) {
 					allocatedSectionTableModel.fireTableDataChanged();
 				}
-			}
+//			}
 			if (extraFrame!=null) cancelExtraRequested(null);
 		}
 		else {

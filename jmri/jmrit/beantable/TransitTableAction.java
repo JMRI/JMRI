@@ -43,7 +43,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -595,6 +595,7 @@ public class TransitTableAction extends AbstractTableAction {
 // add code here as needed
 		return true;
 	}
+	@SuppressWarnings("null")
 	private boolean setTransitInformation() {
 		if (curTransit==null) return false;
 		curTransit.removeAllSections();

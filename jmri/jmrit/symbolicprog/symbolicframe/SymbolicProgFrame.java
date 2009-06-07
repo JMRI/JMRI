@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -284,7 +284,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         xf.loadVariableModel(decoderElem, variableModel);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked" })
 	void processLocoFile(Element loco) {
         // load the name et al
         locoRoadName.setText(loco.getAttributeValue("roadName"));
@@ -342,12 +342,12 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             for (int i=0; i<varList.size(); i++) {
                 // locate the row
                 Attribute itemAttr = null;
-                if ( (itemAttr = ((varList.get(i))).getAttribute("item")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i))));
+                if ( (itemAttr = varList.get(i).getAttribute("item")) == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in item "+varList.get(i));
                     break;
                 }
-                if ( itemAttr == null &&  (itemAttr = ((varList.get(i))).getAttribute("name")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i))));
+                if ( itemAttr == null &&  (itemAttr = varList.get(i).getAttribute("name")) == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+varList.get(i));
                     break;
                 }
                 String item = itemAttr.getValue();

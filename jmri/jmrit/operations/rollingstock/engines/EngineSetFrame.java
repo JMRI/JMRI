@@ -25,7 +25,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -260,6 +260,9 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 						rl = route.getLastLocationByName(_engine.getLocationName());
 						rd = route.getLastLocationByName(_engine.getDestinationName());
 					}
+				} else {
+					log.error("Expected a train from combobox");
+					return;
 				}
 				if (rl == null){
 					JOptionPane.showMessageDialog(this,
@@ -275,7 +278,7 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				} 
-				if (rd != null){
+				if (rd != null && route != null){
 					// now determine if destination is after location
 					List<String> routeSequence = route.getLocationsBySequenceList();
 					boolean foundLoc = false;	// when true, found the engine's location in the route

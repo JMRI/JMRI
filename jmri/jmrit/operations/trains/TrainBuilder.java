@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.45 $
+ * @version             $Revision: 1.46 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -702,6 +702,10 @@ public class TrainBuilder extends TrainCommon{
 												}
 											}
 											if(destinationTemp != null){
+												if(trackTemp == null){
+													buildFailed(fileOut,"Build Failure, trackTemp is null!");
+													return;
+												}
 												addLine(fileOut, THREE, "Car ("+c.getId()+") can drop to (" +destinationTemp.getName()+ ", " +trackTemp.getName()+ ") with " 
 														+rld.getCarMoves()+ "/" +rld.getMaxCarMoves()+" moves");
 												// if there's more than one available destination use the one with the least moves
@@ -776,10 +780,8 @@ public class TrainBuilder extends TrainCommon{
 			addLine(fileOut, ONE, BUILT + train.getNumberCarsWorked() + " "+ rb.getString("cars"));
 		}
 		train.setBuilt(true);
-		if (fileOut != null){
-			fileOut.flush();
-			fileOut.close();
-		}
+		fileOut.flush();
+		fileOut.close();
 
 		// now build manifest
 		makeManifest();

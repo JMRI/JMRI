@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LayoutEditorTools 
@@ -1279,6 +1279,7 @@ public class LayoutEditorTools
 	 * Removes the SignalHead with the specified name from the panel and from
 	 *		assignment to any turnout, positionable point, or level crossing
 	 */
+	@SuppressWarnings("null")
 	public void removeSignalHeadFromPanel(String signalName) {
 		if ( (signalName==null) || (signalName.length()<1) ) return;
 		SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().
@@ -3950,6 +3951,7 @@ public class LayoutEditorTools
 				(int)(p.getY()+2) );
 		}
 	}
+	@SuppressWarnings("null")
 	private void setLogicXing(SignalHead head, TrackSegment track, LayoutBlock crossBlock,
 				TrackSegment crossTrack1, TrackSegment crossTrack2, String headName) {
 		if (track==null) {

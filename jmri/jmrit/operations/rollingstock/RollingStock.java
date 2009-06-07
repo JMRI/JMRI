@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -244,11 +244,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at location: "+ location.getName() + " wrong type");
 			return TYPE;
 		}
-		if (track != null && !track.acceptsTypeName(getType())){
+		if (location != null && track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at track location: "+ location.getName() + " " + track.getName() + " wrong type");
 			return TYPE;
 		}
-		if (track != null && !track.acceptsRoadName(getRoad())){
+		if (location != null && track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + getId() + ") road (" +getRoad()+ ") at track location: "+ location.getName() + " " + track.getName() + " wrong road");
 			return ROAD;
 		}
@@ -258,7 +258,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		} catch (Exception e){
 			return LENGTH;
 		}
-		if (track != null && _trackLocation != track &&
+		if (location != null && track != null && _trackLocation != track &&
 				(track.getUsedLength() + track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
 			log.debug("Can't set (" + getId() + ") at track location ("+ location.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH;	
@@ -386,11 +386,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at destination ("+ destination.getName() + ") wrong type");
 			return TYPE + " ("+getType()+")";
 		}
-		if (track != null && !track.acceptsTypeName(getType())){
+		if (destination != null && track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at track destination ("+ destination.getName() + ", " +track.getName() + ") wrong type");
 			return TYPE+ " ("+getType()+")";
 		}
-		if (track != null && !track.acceptsRoadName(getRoad())){
+		if (destination != null && track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + getId() + ") road (" +getRoad()+ ") at track location ("+ destination.getName() + ", " + track.getName() + ") wrong road");
 			return ROAD+ " ("+getRoad()+")";
 		}
@@ -402,7 +402,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			return LENGTH+ " ("+getLength()+")";
 		}
 		
-		if (track != null &&
+		if (destination != null && track != null &&
 				track.getUsedLength() + track.getReserved()+ length > track.getLength()){
 			log.debug("Can't set (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH+ " ("+getLength()+")";	

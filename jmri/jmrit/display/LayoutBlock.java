@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -444,6 +444,7 @@ public class LayoutBlock extends AbstractNamedBean
 	 * Check/Update Path objects for the attached jmri.Block using the 
 	 *		connectivity in the specified Layout Editor panel.
 	 */
+	@SuppressWarnings("null")
 	public void updatePathsUsingPanel(LayoutEditor panel) {
 		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 		if (panel==null) {

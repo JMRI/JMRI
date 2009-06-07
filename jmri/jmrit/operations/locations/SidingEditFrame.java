@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -103,6 +103,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.enableButtons(enabled);
 	}
 	
+	@SuppressWarnings("null")
 	protected void saveTrack (Track track){
 		// save the schedule
 		Object selected =  comboBoxSchedules.getSelectedItem();	

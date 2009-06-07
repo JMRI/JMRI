@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -107,7 +107,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * invoke this with the parent of the set of Transit elements.
      * @param transits Element containing the Transit elements to load.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "null" })
 	public void loadTransits(Element transits) {
 		List<Element> transitList = transits.getChildren("transit");
         if (log.isDebugEnabled()) log.debug("Found "+transitList.size()+" transits");

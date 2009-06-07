@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ImportCars extends Thread {
 	
@@ -86,7 +86,7 @@ public class ImportCars extends Thread {
 		String carLocation ="";
 		String carTrack ="";
 
-		while (line != null) {
+		while (true) {
 			lineNumber.setText(Integer.toString(++lineNum));
 			try {
 				line = in.readLine();
@@ -252,7 +252,7 @@ public class ImportCars extends Thread {
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					if (!carTrack.equals("")){
+					if (l != null && !carTrack.equals("")){
 						sl = l.getTrackByName(carTrack, null);
 						if (sl == null){
 							JOptionPane.showMessageDialog(null, "Car ("+carRoad+" "+carNumber+") track location ("+carLocation+", "+carTrack+") does not exist",

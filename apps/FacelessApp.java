@@ -21,7 +21,7 @@ import jmri.InstanceManager;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -93,13 +93,13 @@ public class FacelessApp {
 
 		String portName = "/dev/cu.USA28X1b1P1.1";
 		String baudRate = "9600";
-		String option1Setting = null;
-		String option2Setting = null;
+		//String option1Setting = null;
+		//String option2Setting = null;
 		
 		adapter.setPort(portName);
 		adapter.configureBaudRate(baudRate);
-		if (option1Setting !=null) adapter.configureOption1(option1Setting);
-		if (option2Setting !=null) adapter.configureOption2(option2Setting);
+		//if (option1Setting !=null) adapter.configureOption1(option1Setting);
+		//if (option2Setting !=null) adapter.configureOption2(option2Setting);
 
 		adapter.openPort(portName, "JMRI app");
         adapter.configure();

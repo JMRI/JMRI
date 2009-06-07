@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.44 $
+ * @version             $Revision: 1.45 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -686,7 +686,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String newLine = "\n";
 		String line = " ";
 
-		while (line != null) {
+		while (true) {
 			try {
 				line = in.readLine();
 			} catch (IOException e) {
