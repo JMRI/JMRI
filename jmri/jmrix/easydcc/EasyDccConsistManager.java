@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.7 $
+ * @version               $Revision: 1.8 $
  */
 
 
@@ -124,7 +124,11 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                                }
                                locoAddress=new DccLocoAddress(
                                            tempAddr&0x7fff,(tempAddr&0x7fff)>99);
-                               currentConsist.restore(locoAddress,directionNormal);
+                               if (currentConsist != null)
+                            	   currentConsist.restore(locoAddress,directionNormal);
+                               else
+                            	   //should never happen since currentCOnsist get set in the first pass
+                            	   log.error("currentConsist is null!");
                             }
                          }
                          if(_lastAddress<255)
