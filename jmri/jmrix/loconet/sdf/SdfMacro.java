@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -129,7 +129,8 @@ public abstract class SdfMacro implements SdfConstants {
      * @param buff The SdfBuffer being scanned for instruction macros.
      * @return Object of SdfMacro subtype for specific next instruction
      */
-    static public SdfMacro decodeInstruction(SdfBuffer buff) {
+    @SuppressWarnings("null")
+	static public SdfMacro decodeInstruction(SdfBuffer buff) {
             SdfMacro m;
 
             // full 1st byte decoder

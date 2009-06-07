@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -19,6 +19,7 @@ public class SprogReply {
 	}
 
 	// copy one
+	@SuppressWarnings("null")
 	public  SprogReply(SprogReply m) {
           this();
 		if (m == null)

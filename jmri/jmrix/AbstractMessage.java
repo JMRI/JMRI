@@ -7,7 +7,7 @@ package jmri.jmrix;
  * Add description of class here.
  *
  * @author Bob Jacobsen  Copyright 2007, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public abstract class AbstractMessage implements Message {
     
@@ -28,12 +28,13 @@ public abstract class AbstractMessage implements Message {
             _dataChars[i] = s.charAt(i);
     }
 
-    public AbstractMessage(AbstractMessage m) {
-        if (m == null)
-            log.error("copy ctor of null message throws exception");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+    @SuppressWarnings("null")
+	public AbstractMessage(AbstractMessage m) {
+    	if (m == null)
+    		log.error("copy ctor of null message throws exception");
+    	_nDataChars = m._nDataChars;
+    	_dataChars = new int[_nDataChars];
+    	for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
 
     public int getElement(int n) {        return _dataChars[n];}

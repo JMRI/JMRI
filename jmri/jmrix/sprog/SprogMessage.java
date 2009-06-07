@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -48,7 +48,8 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    public  SprogMessage(SprogMessage m) {
+    @SuppressWarnings("null")
+	public  SprogMessage(SprogMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
         _nDataChars = m._nDataChars;

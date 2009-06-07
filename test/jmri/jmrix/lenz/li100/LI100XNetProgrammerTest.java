@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  * @author			Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
     public void testCtor() {
         LI100XNetProgrammer p = new LI100XNetProgrammer();
-        Assert.assertTrue(p != null);
+        Assert.assertNotNull(p);
         jmri.util.JUnitAppender.assertErrorMessage("Creating too many XNetProgrammer objects");
     }
 

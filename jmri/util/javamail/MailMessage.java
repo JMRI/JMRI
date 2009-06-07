@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * 
  */
 
@@ -202,15 +202,16 @@ public class MailMessage {
                 if (folder == null) {
                     System.err.println("Can't get record folder.");
                     System.exit(1);
+                } else {
+                	if (!folder.exists())
+                		folder.create(Folder.HOLDS_MESSAGES);
+
+                	Message[] msgs = new Message[1];
+                	msgs[0] = msg;
+                	folder.appendMessages(msgs);
+
+                	System.out.println("Mail was recorded successfully.");
                 }
-                if (!folder.exists())
-                    folder.create(Folder.HOLDS_MESSAGES);
-                
-                Message[] msgs = new Message[1];
-                msgs[0] = msg;
-                folder.appendMessages(msgs);
-                
-                System.out.println("Mail was recorded successfully.");
             }
             
         } catch (Exception e) {

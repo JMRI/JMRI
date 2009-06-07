@@ -9,7 +9,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -22,7 +22,8 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    public  Message(Message m) {
+    @SuppressWarnings("null")
+	public  Message(Message m) {
         if (m == null)
             log.error("copy ctor of null message");
         _nDataChars = m._nDataChars;

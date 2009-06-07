@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutTurntable
@@ -83,9 +83,9 @@ public class LayoutTurntable
 	public void setRadius(double r) {radius = r;}
 	protected RayTrack addRay(double angle) {
 		RayTrack ray = new RayTrack(angle,getNewIndex());
-		if (ray!=null) {
-			rayList.add(ray);
-		}
+		// (ray!=null) {
+		rayList.add(ray);
+		//}
 		return ray;
     }
 	private int getNewIndex() {
@@ -105,10 +105,10 @@ public class LayoutTurntable
 	// the following method is only for use in loading layout turntables
 	public void addRayTrack(double angle,int index,String name) {
 		RayTrack ray = new RayTrack(angle,index);
-		if (ray!=null) {
-			rayList.add(ray);
-			ray.connectName = name;
-		}
+		//if (ray!=null) {
+		rayList.add(ray);
+		ray.connectName = name;
+		//}
     }
 	public TrackSegment getRayConnectIndexed(int index) {
 		RayTrack ray = null;
@@ -420,7 +420,12 @@ public class LayoutTurntable
             return;
 		}
 		// delete the closest - first delete any connected Track Segment
-		TrackSegment t = closest.getConnect();
+		TrackSegment t = null;
+		if (closest == null){
+			log.error("closest is null!");
+		}else{
+			t = closest.getConnect();
+		}
 		if (t!=null) layoutEditor.removeTrackSegment(t);
 		rayList.remove(closestIndex);	
 		// update the panel

@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class XpaMessage {
 
@@ -37,7 +37,8 @@ public class XpaMessage {
     }
 
     // copy one
-    public  XpaMessage(XpaMessage m) {
+    @SuppressWarnings("null")
+	public  XpaMessage(XpaMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
         _nDataChars = m._nDataChars;

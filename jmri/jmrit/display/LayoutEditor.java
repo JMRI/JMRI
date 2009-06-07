@@ -49,7 +49,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2058,10 +2058,10 @@ public class LayoutEditor extends JmriJFrame {
 			if (duplicate) numLayoutTurntables ++;
 		}
 		LayoutTurntable x = new LayoutTurntable(name,pt,this);		
-		if (x != null) {
-			turntableList.add(x);
-			setDirty(true);
-		}
+		//if (x != null) {
+		turntableList.add(x);
+		setDirty(true);
+		//}
 		x.addRay(0.0);
 		x.addRay(90.0);
 		x.addRay(180.0);
@@ -3188,10 +3188,10 @@ public class LayoutEditor extends JmriJFrame {
 		// create object
 		PositionablePoint o = new PositionablePoint(name, 
 							PositionablePoint.ANCHOR, currentPoint, this);
-		if (o!=null) {
-			pointList.add(o);
-			setDirty(true);
-		}
+		//if (o!=null) {
+		pointList.add(o);
+		setDirty(true);
+		//}
 	}
 
     /**
@@ -3210,10 +3210,10 @@ public class LayoutEditor extends JmriJFrame {
 		// create object
 		PositionablePoint o = new PositionablePoint(name, 
 							PositionablePoint.END_BUMPER, currentPoint, this);
-		if (o!=null) {
-			pointList.add(o);
-			setDirty(true);
-		}
+		//if (o!=null) {
+		pointList.add(o);
+		setDirty(true);
+		//}
 	}
 
     /**
@@ -3278,27 +3278,27 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// create object
 		LevelXing o = new LevelXing(name,currentPoint,this);
-		if (o!=null) {
-			xingList.add(o);
-			setDirty(true);
-			// check on layout block
-			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
-			if (b!=null) {
-				o.setLayoutBlockAC(b);
-				o.setLayoutBlockBD(b);
-				// check on occupancy sensor
-				String sensorName = (blockSensor.getText().trim());
-				if (sensorName.length()>0) {
-					if (!validateSensor(sensorName,b,this)) {
-						b.setOccupancySensorName("");
-					}
-					else {
-						blockSensor.setText( b.getOccupancySensorName() );
-					}
+		//if (o!=null) {
+		xingList.add(o);
+		setDirty(true);
+		// check on layout block
+		LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+		if (b!=null) {
+			o.setLayoutBlockAC(b);
+			o.setLayoutBlockBD(b);
+			// check on occupancy sensor
+			String sensorName = (blockSensor.getText().trim());
+			if (sensorName.length()>0) {
+				if (!validateSensor(sensorName,b,this)) {
+					b.setOccupancySensorName("");
+				}
+				else {
+					blockSensor.setText( b.getOccupancySensorName() );
 				}
 			}
 		}
-	}
+		//}
+    }
 
     /**
      * Add a Layout Turnout 
@@ -3332,41 +3332,41 @@ public class LayoutEditor extends JmriJFrame {
 		// create object
 		LayoutTurnout o = new LayoutTurnout(name,type,
 										currentPoint,rot,xScale,yScale,this);
-		if (o!=null) {
-			turnoutList.add(o);
-			setDirty(true);
-			// check on layout block
-			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
-			if (b!=null) {
-				o.setLayoutBlock(b);
-				// check on occupancy sensor
-				String sensorName = (blockSensor.getText().trim());
-				if (sensorName.length()>0) {
-					if (!validateSensor(sensorName,b,this)) {
-						b.setOccupancySensorName("");
-					}
-					else {
-						blockSensor.setText( b.getOccupancySensorName() );
-					}
+		//if (o!=null) {
+		turnoutList.add(o);
+		setDirty(true);
+		// check on layout block
+		LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+		if (b!=null) {
+			o.setLayoutBlock(b);
+			// check on occupancy sensor
+			String sensorName = (blockSensor.getText().trim());
+			if (sensorName.length()>0) {
+				if (!validateSensor(sensorName,b,this)) {
+					b.setOccupancySensorName("");
 				}
-			}
-			// set default continuing route Turnout State
- 			o.setContinuingSense(Turnout.CLOSED);
-			// check on a physical turnout
-			String turnoutName = nextTurnout.getText().trim();
-			if ( validatePhysicalTurnout(turnoutName,targetPanel) ) {
-				// turnout is valid and unique.
-				o.setTurnout(turnoutName);
-				if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-					nextTurnout.setText(turnoutName.toUpperCase());
+				else {
+					blockSensor.setText( b.getOccupancySensorName() );
 				}
-			}
-			else {
-				o.setTurnout("");
-				nextTurnout.setText("");
 			}
 		}
-	}
+		// set default continuing route Turnout State
+		o.setContinuingSense(Turnout.CLOSED);
+		// check on a physical turnout
+		String turnoutName = nextTurnout.getText().trim();
+		if ( validatePhysicalTurnout(turnoutName,targetPanel) ) {
+			// turnout is valid and unique.
+			o.setTurnout(turnoutName);
+			if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
+				nextTurnout.setText(turnoutName.toUpperCase());
+			}
+		}
+		else {
+			o.setTurnout("");
+			nextTurnout.setText("");
+		}
+		//}
+    }
 	
 	/**
 	 * Validates that a physical turnout exists and is unique among Layout Turnouts
@@ -3744,7 +3744,7 @@ public class LayoutEditor extends JmriJFrame {
 		LayoutBlock lb = o.getLayoutBlockAC();
 		if (lb != null) lb.decrementUse();
 		LayoutBlock lbx = o.getLayoutBlockBD();
-		if ( (lbx != null) && (lbx!=lb) ) lb.decrementUse();
+		if (lbx!=null && lb!=null && lbx!=lb) lb.decrementUse();
 		// delete from array
 		for (int i = 0; i<xingList.size();i++) {
 			LevelXing lx = xingList.get(i);

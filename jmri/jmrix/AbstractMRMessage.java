@@ -10,7 +10,7 @@ import jmri.util.StringUtil;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
@@ -31,16 +31,17 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     // copy one
-    public  AbstractMRMessage(AbstractMRMessage m) {
-        this();
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-        setTimeout(m.getTimeout());
-        setRetries(m.getRetries());
-        setNeededMode(m.getNeededMode());
+    @SuppressWarnings("null")
+	public  AbstractMRMessage(AbstractMRMessage m) {
+    	this();
+    	if (m == null)
+    		log.error("copy ctor of null message");
+    	_nDataChars = m._nDataChars;
+    	_dataChars = new int[_nDataChars];
+    	for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+    	setTimeout(m.getTimeout());
+    	setRetries(m.getRetries());
+    	setNeededMode(m.getNeededMode());
     }
 
     // from String

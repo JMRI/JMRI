@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -514,8 +514,9 @@ public class LayoutBlock extends AbstractNamedBean
 					newp = new jmri.Path(lc.getBlock1().getBlock(),lc.getReverseDirection(),
 									lc.getDirection());					
 				}
-				if (newp != null) block.addPath(newp);				
-				else log.error("Trouble adding Path to block '"+blockName+"'.");
+				//if (newp != null) 
+				block.addPath(newp);				
+				//else log.error("Trouble adding Path to block '"+blockName+"'.");
 				if (c.size()>2) auxTools.addBeanSettings(newp,lc,_instance);
 			}				
 		}

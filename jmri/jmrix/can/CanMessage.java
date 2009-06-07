@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -59,7 +59,8 @@ public class CanMessage extends AbstractMRMessage {
     }
     
     // copy one
-    public  CanMessage(CanMessage m) {
+    @SuppressWarnings("null")
+	public  CanMessage(CanMessage m) {
         if (m == null)
             log.error("copy ctor of null message");
         _header = m._header;

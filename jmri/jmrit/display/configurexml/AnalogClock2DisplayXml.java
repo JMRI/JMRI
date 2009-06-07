@@ -10,7 +10,7 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AnalogClock2DisplayXml
     implements XmlAdapter {
@@ -52,7 +52,7 @@ public class AnalogClock2DisplayXml
      * @param element Top level Element to unpack.
      * @param o  PanelEditor or LayoutEditor as an Object
      */
-    public void load(Element element, Object o) {
+	public void load(Element element, Object o) {
 		// get object class and create the clock object
 		String className = o.getClass().getName();
 		int lastDot = className.lastIndexOf(".");
@@ -70,6 +70,7 @@ public class AnalogClock2DisplayXml
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
+            return;
 		}
 
         // find coordinates

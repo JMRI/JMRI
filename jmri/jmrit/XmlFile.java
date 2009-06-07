@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.41 $
+ * @version	$Revision: 1.42 $
  */
 public abstract class XmlFile {
 
@@ -377,23 +377,24 @@ public abstract class XmlFile {
      *               pathname for either the xml or preferences directory.
      */
     public void revertBackupFile(String name) {
-		File file = findFile(name);
-		if (file == null) {
-			log.info("No " + name + " file to revert");
-		} else {
-			String backupName = backupFileName(file.getAbsolutePath());
-			File backupFile = findFile(backupName);
-			if (backupFile != null) {
-        			log.info("No " + backupName + " backup file to revert");
-				if (file.delete())
-					log.debug("deleted original file " + name);
-			}
-			if (backupFile.renameTo(new File(name)))
-				log.debug("created original file " + name);
-			else
-				log.error("could not create original file " + name);
-		}
-	}
+    	File file = findFile(name);
+    	if (file == null) {
+    		log.info("No " + name + " file to revert");
+    	} else {
+    		String backupName = backupFileName(file.getAbsolutePath());
+    		File backupFile = findFile(backupName);
+    		if (backupFile != null) {
+    			log.info("No " + backupName + " backup file to revert");
+    			if (file.delete())
+    				log.debug("deleted original file " + name);
+
+    			if (backupFile.renameTo(new File(name)))
+    				log.debug("created original file " + name);
+    			else
+    				log.error("could not create original file " + name);
+    		}
+    	}
+    }
 
     /**
 	 * Return the name of a new, unique backup file. This is here so it can be
@@ -455,7 +456,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.41 2009-06-05 04:29:24 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.42 2009-06-07 19:20:26 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

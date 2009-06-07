@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -104,7 +104,10 @@ public class PositionableLabelXml implements XmlAdapter {
                 }
             } catch (org.jdom.DataConversionException e) {}
         }
-
+        if(l==null){
+        	log.error("PositionableLabel is null!");
+        	return;
+        }
         Attribute a = element.getAttribute("forcecontroloff");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setForceControlOff(true);

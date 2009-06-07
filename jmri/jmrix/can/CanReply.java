@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -48,7 +48,8 @@ public class CanReply extends AbstractMRReply {
     }
     
     // copy one
-    public  CanReply(CanReply m) {
+    @SuppressWarnings("null")
+	public  CanReply(CanReply m) {
         if (m == null)
             log.error("copy ctor of null message");
         _header = m._header;
