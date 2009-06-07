@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.8 2009-06-06 20:13:29 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.9 2009-06-07 18:54:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -41,8 +41,12 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the fifth in a new series of test versions. We expect this series
-to end in a production release in late June 2009.
+<p>This is the fifth in a series of test versions. We expect this series
+to end in a JMRI 2.6 production release in late June 2009. 
+Because this test release is very close in content to the next production 
+release, we'd really appreciate it if people would check it out and
+send a brief note on their experience to the
+<a href="http://groups.yahoo.com/groups/jmriusers">jmriusers group</a>.
 
 It contains 
 many new features, including:
@@ -200,6 +204,9 @@ with replacing "empty" (null) values with a space character; in JMRI
 
 <p>
 You can now use "Internal" lights with more setups.
+
+<p>
+Dick Bronson updated the signal icons for USS CTC machine schematic panels.
 
 <!--#include virtual="/Footer" -->
 
