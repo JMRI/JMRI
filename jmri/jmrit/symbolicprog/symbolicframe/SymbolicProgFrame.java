@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -346,7 +346,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
                     if (log.isDebugEnabled()) log.debug("unexpected null in item "+varList.get(i));
                     break;
                 }
-                if ( itemAttr == null &&  (itemAttr = varList.get(i).getAttribute("name")) == null) {
+                if ( (itemAttr = varList.get(i).getAttribute("name")) == null) {
                     if (log.isDebugEnabled()) log.debug("unexpected null in name "+varList.get(i));
                     break;
                 }
