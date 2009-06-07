@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -177,7 +177,7 @@ public class JmriJFrameServlet implements Servlet {
             if (log.isDebugEnabled()) log.debug("Invoke mouseclicked");
             ((MouseListener)c).mouseClicked(e);
             return;
-        } else if (c instanceof Component) {
+        } else {
             MouseListener[] la = c.getMouseListeners();
             if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" mouse listeners");
             log.debug("component is "+c);
@@ -185,9 +185,6 @@ public class JmriJFrameServlet implements Servlet {
                 la[i].mouseClicked(e);
             }
             return;
-        } else {
-            log.warn("Don't know how to click at "+x+","+y+" in "+name);
-            log.debug("component is "+c);
         }
     }
     
