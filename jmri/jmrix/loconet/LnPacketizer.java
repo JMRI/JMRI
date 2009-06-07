@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.22 $
+ * @version 		$Revision: 1.23 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -174,7 +174,8 @@ public class LnPacketizer extends LnTrafficController {
      * stream connected to the LnPortController via <code>connectPort</code>.
      * Terminates with the input stream breaking out of the try block.
      */
-    public void run() {
+    @SuppressWarnings("null")
+	public void run() {
         int opCode;
         while (true) {   // loop permanently, program close will exit
             try {
@@ -298,7 +299,8 @@ public class LnPacketizer extends LnTrafficController {
             trafficController = lt;
         }
 
-        public void run() {
+        @SuppressWarnings("null")
+		public void run() {
  
             int opCode;
             while (true) {   // loop permanently, program close will exit

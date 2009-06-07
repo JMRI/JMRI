@@ -27,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -47,7 +47,8 @@ public class DefaultConditionalManager extends AbstractManager
 	 *		the Conditional is still created. The scenario can happen when a Logix
 	 *      is loaded from a file after its Conditionals.
      */
-    public Conditional createNewConditional(String systemName, String userName) {
+    @SuppressWarnings("null")
+	public Conditional createNewConditional(String systemName, String userName) {
 		// check that Conditional with same system name does not already exist
         systemName = systemName.toUpperCase().trim();
         Conditional c = getBySystemName(systemName);
@@ -62,6 +63,7 @@ public class DefaultConditionalManager extends AbstractManager
                 }
             }
         }
+        if (userName == null) log.error("User name is null!");
         String sName = userName.toUpperCase().trim();
         if (sName != null && sName.length() > 0) {
             c = getBySystemName(sName);
@@ -75,9 +77,8 @@ public class DefaultConditionalManager extends AbstractManager
         } else {
             c = new DefaultConditional(systemName, userName);
         }
-        if (c!=null) {  // save in the maps
-            register(c);
-        }
+        // save in the maps
+        register(c);
         return c;
     }
 	

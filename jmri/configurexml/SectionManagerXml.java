@@ -17,7 +17,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -205,7 +205,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
 					if (elem.getAttribute("fromblockdirection")!=null)
 						fromBlockDirection = elem.getAttribute("fromblockdirection").getValue();
 					EntryPoint ep = new EntryPoint(blockName, fromBlockName, fromBlockDirection);
-					if (ep!=null) {
+					//if (ep!=null) {
 						try {
 							ep.setDirection(elem.getAttribute("direction").getIntValue());
 						}
@@ -217,7 +217,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
 						ep.setFixed(fixed);
 						if (ep.isForwardType()) x.addToForwardList(ep);
 						else if (ep.isReverseType()) x.addToReverseList(ep);
-					}
+					//}
 				}
 			}	
 	    }

@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.liusb.LIUSBFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LIUSBFrameTest extends TestCase {
 
     public void testCtor() {
         LIUSBFrame f = new LIUSBFrame();
-        Assert.assertTrue(f != null);
+        Assert.assertNotNull(f);
     }
 
 	// from here down is testing infrastructure

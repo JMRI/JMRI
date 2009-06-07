@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetInitilizationManager class
  * @author			Paul Bender
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LI100XNetInitilizationManagerTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class LI100XNetInitilizationManagerTest extends TestCase {
         };
         Assert.assertNotNull("exists", t );
         Assert.assertNotNull("exists", l );
-        Assert.assertTrue(m != null);
+        Assert.assertNotNull("exists", m );
         jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
     }
 

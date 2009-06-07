@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -73,13 +73,11 @@ public class LayoutBlockManager extends AbstractManager {
 			if (block!=null) return null;
 			sName = systemName.toUpperCase();
 		}
-        // LayoutBlock does not exist, create a new LayoutBlock
-        block = new LayoutBlock(sName,userName);
-        if (block!=null) {
-            // save in the maps
-            register(block);
-        }
-        return block;
+		// LayoutBlock does not exist, create a new LayoutBlock
+		block = new LayoutBlock(sName,userName);
+		// save in the maps
+		register(block);
+		return block;
     }
 
     /**

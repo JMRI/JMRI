@@ -14,8 +14,9 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.14 $
+ * @version		$Revision: 1.15 $
  */
+@SuppressWarnings("null")
 public class SerialNodeTest extends TestCase {
 		
     public void testConstructor1() {
@@ -401,7 +402,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
-    public void testMarkChangesParallelLowBankLowNibble() {
+	public void testMarkChangesParallelLowBankLowNibble() {
         // test with them not created
         SerialNode b = new SerialNode(1,SerialNode.NODE2002V6);
 

@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -776,7 +776,8 @@ public class RouteTableAction extends AbstractTableAction {
         return true;
     }
 
-    Route checkNamesOK() {
+    @SuppressWarnings("null")
+	Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
@@ -1492,7 +1493,8 @@ public class RouteTableAction extends AbstractTableAction {
         return list;
     }
 
-    ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox,
+    @SuppressWarnings("null")
+	ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox,
                                            boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
         if (devName.length() == 0) {
@@ -1557,7 +1559,8 @@ public class RouteTableAction extends AbstractTableAction {
         return null;
     }
 
-    ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box,
+    @SuppressWarnings("null")
+	ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box,
                                             boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
         if (devName.length() == 0) {

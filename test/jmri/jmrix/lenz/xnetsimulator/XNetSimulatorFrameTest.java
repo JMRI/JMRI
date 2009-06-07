@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.xnetsimulator.XNetSimulatorFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class XNetSimulatorFrameTest extends TestCase {
 
     public void testCtor() {
         XNetSimulatorFrame f = new XNetSimulatorFrame();
-        Assert.assertTrue(f != null);
+        Assert.assertNotNull(f);
     }
 
 	// from here down is testing infrastructure

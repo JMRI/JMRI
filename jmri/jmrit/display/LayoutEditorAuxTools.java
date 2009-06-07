@@ -22,7 +22,7 @@ import jmri.BeanSetting;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutEditorAuxTools 
@@ -668,7 +668,7 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
 					else
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
-					if ( (bs != null) && (bs.getBean() != null) ) 
+					if (bs.getBean() != null) 
 						p.addSetting(bs);
 					else
 						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -682,7 +682,7 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
 					else
 						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
-					if ( (bs != null) && (bs.getBean() != null) ) 
+					if (bs.getBean() != null) 
 						p.addSetting(bs);
 					else
 						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -810,7 +810,7 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 							else
 								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -824,7 +824,7 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
 							else
 								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null)
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -853,7 +853,7 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -870,7 +870,7 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -895,7 +895,7 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
@@ -912,7 +912,7 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if ( (bs != null) && (bs.getBean() != null) ) 
+							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();

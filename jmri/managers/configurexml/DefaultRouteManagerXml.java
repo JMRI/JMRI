@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -130,7 +130,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 // add route control Sensors, if any
                 index = 0;
-                rSensor = null;
+                //rSensor = null;	// previous while forces rSensor to null
                 while ( (rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                                     .setAttribute("systemName", rSensor);
@@ -270,16 +270,20 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 				// add control turnout if there is one
 				if (cTurnout != null) {
 					r.setControlTurnout(cTurnout);
-					if (cTurnoutState.equals("THROWN")) {
-						r.setControlTurnoutState(Route.ONTHROWN);
-					} else if (cTurnoutState.equals("CHANGE"))	{
-						r.setControlTurnoutState(Route.ONCHANGE);
-					} else if (cTurnoutState.equals("VETOCLOSED"))	{
-						r.setControlTurnoutState(Route.VETOCLOSED);
-					} else if (cTurnoutState.equals("VETOTHROWN"))	{
-						r.setControlTurnoutState(Route.VETOTHROWN);
+					if (cTurnoutState != null){
+						if (cTurnoutState.equals("THROWN")) {
+							r.setControlTurnoutState(Route.ONTHROWN);
+						} else if (cTurnoutState.equals("CHANGE"))	{
+							r.setControlTurnoutState(Route.ONCHANGE);
+						} else if (cTurnoutState.equals("VETOCLOSED"))	{
+							r.setControlTurnoutState(Route.VETOCLOSED);
+						} else if (cTurnoutState.equals("VETOTHROWN"))	{
+							r.setControlTurnoutState(Route.VETOTHROWN);
+						} else {
+							r.setControlTurnoutState(Route.ONCLOSED);
+						}
 					} else {
-						r.setControlTurnoutState(Route.ONCLOSED);
+						log.error("cTurnoutState was null!");
 					}
 				}
 				// set added delay
@@ -292,12 +296,16 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 				//add lock control turout if there is one
 				if (cLockTurnout != null) {
 					r.setLockControlTurnout(cLockTurnout);
-					if (cLockTurnoutState.equals("THROWN")) {
-						r.setLockControlTurnoutState(Route.ONTHROWN);
-					} else if (cLockTurnoutState.equals("CHANGE"))	{
-						r.setLockControlTurnoutState(Route.ONCHANGE);
+					if (cLockTurnoutState != null){
+						if (cLockTurnoutState.equals("THROWN")) {
+							r.setLockControlTurnoutState(Route.ONTHROWN);
+						} else if (cLockTurnoutState.equals("CHANGE"))	{
+							r.setLockControlTurnoutState(Route.ONCHANGE);
+						} else {
+							r.setLockControlTurnoutState(Route.ONCLOSED);
+						}
 					} else {
-						r.setLockControlTurnoutState(Route.ONCLOSED);
+						log.error("cLockTurnoutState was null!");
 					}
 				}
                 

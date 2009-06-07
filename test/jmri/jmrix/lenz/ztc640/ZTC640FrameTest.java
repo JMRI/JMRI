@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.ztc640.ZTC640Frame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class ZTC640FrameTest extends TestCase {
 
     public void testCtor() {
         ZTC640Frame f = new ZTC640Frame();
-        Assert.assertTrue(f != null);
+        Assert.assertNotNull(f);
     }
 
 	// from here down is testing infrastructure

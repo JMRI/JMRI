@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li101.LI101PortFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LI101PortFrameTest extends TestCase {
 
     public void testCtor() {
         LI101PortFrame f = new LI101PortFrame();
-        Assert.assertTrue(f != null);
+        Assert.assertNotNull(f);
     }
 
 	// from here down is testing infrastructure

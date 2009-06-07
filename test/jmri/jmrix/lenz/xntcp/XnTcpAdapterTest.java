@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.xntcp.XnTcpAdapter class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class XnTcpAdapterTest extends TestCase {
 
     public void testCtor() {
         XnTcpAdapter a = new XnTcpAdapter();
-        Assert.assertTrue(a != null);
+        Assert.assertNotNull(a);
     }
 
 	// from here down is testing infrastructure

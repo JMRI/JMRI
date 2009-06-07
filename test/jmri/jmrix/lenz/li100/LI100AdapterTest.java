@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100Adapter class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LI100AdapterTest extends TestCase {
 
     public void testCtor() {
         LI100Adapter a = new LI100Adapter();
-        Assert.assertTrue(a != null);
+        Assert.assertNotNull("exists", a);
     }
 
 	// from here down is testing infrastructure

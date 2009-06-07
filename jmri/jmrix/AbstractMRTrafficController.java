@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.65 $
+ * @version         $Revision: 1.66 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -850,7 +850,7 @@ abstract public class AbstractMRTrafficController {
                 try {
                     if (xmtRunnable!=null)
                         synchronized(xmtRunnable) {
-                            if (modeMsg!=null) xmtRunnable.wait(modeMsg.getTimeout());
+                            xmtRunnable.wait(modeMsg.getTimeout());
                         }
                 } catch (InterruptedException e) { 
                     Thread.currentThread().interrupt(); // retain if needed later

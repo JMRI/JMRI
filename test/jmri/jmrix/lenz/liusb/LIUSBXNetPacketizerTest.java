@@ -8,13 +8,13 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LIUSBXNetPacketizerTest extends TestCase {
 
         public void testCtor() {
           LIUSBFrame f = new LIUSBFrame();
-          Assert.assertTrue(f != null);
+          Assert.assertNotNull(f);
         }
 
         // from here down is testing infrastructure

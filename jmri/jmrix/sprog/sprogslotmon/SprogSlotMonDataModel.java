@@ -8,14 +8,12 @@ import jmri.jmrix.sprog.SprogSlotListener;
 import jmri.jmrix.sprog.SprogSlotManager;
 
 import javax.swing.*;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -106,7 +104,8 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     static final Boolean True = new Boolean(true);
     static final Boolean False = new Boolean(false);
 
-    public Object getValueAt(int row, int col) {
+    @SuppressWarnings("null")
+	public Object getValueAt(int row, int col) {
         SprogSlot s = SprogSlotManager.instance().slot(slotNum(row));
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 

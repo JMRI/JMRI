@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LIUSBAdapterTest extends TestCase {
 
     public void testCtor() {
         LIUSBAdapter a = new LIUSBAdapter();
-        Assert.assertTrue(a != null);
+        Assert.assertNotNull(a);
     }
 
 	// from here down is testing infrastructure

@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -161,7 +161,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static final Boolean True = new Boolean(true);
     static final Boolean False = new Boolean(false);
 
-    public Object getValueAt(int row, int col) {
+    @SuppressWarnings("null")
+	public Object getValueAt(int row, int col) {
         LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
         String      t;
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
