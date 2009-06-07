@@ -37,43 +37,42 @@ import jmri.managers.DefaultRouteManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.45 $
+ * @version			$Revision: 1.46 $
  */
 public class InstanceManager {
 
-    static private HashMap<Class<?>,ArrayList> managerLists;
+    static private HashMap<Class<?>,ArrayList<Object>> managerLists;
     
-    @SuppressWarnings("unchecked")
     static public <T> void store(T val, Class<T> type) {
-        ArrayList<T> l = managerLists.get(type);
+        ArrayList<Object> l = managerLists.get(type);
         if (l==null) {
-            l = new ArrayList<T>();
+            l = new ArrayList<Object>();
             managerLists.put(type, l);
         }
         l.add(val);
     }
     
     @SuppressWarnings("unchecked")
-    static public <T> List<T> getList(Class<T> type) {
+    static public <T> List<Object> getList(Class<T> type) {
         return managerLists.get(type);
     }
     
-    static public <T> T getDefault(Class<T> type) {
-        List<T> l = getList(type);
+    static public <T> Object getDefault(Class<T> type) {
+        List<Object> l = getList(type);
         if (l == null) return null;
         if (l.size()<1) return null;
         return l.get(l.size()-1);
     }
     
     static public PowerManager powerManagerInstance()  { 
-        return getDefault(PowerManager.class);
+        return (PowerManager)getDefault(PowerManager.class);
     }
     static public void setPowerManager(PowerManager p) {
         store(p, PowerManager.class);
     }
 
     static public ProgrammerManager programmerManagerInstance()  { 
-        return getDefault(ProgrammerManager.class);
+        return (ProgrammerManager)getDefault(ProgrammerManager.class);
     }
 
     static public void setProgrammerManager(ProgrammerManager p) {
@@ -206,7 +205,7 @@ public class InstanceManager {
     // This is a separate, protected member so it
     // can be overridden in unit tests
     protected void init() {
-        managerLists = new  HashMap<Class<?>,ArrayList>();
+        managerLists = new  HashMap<Class<?>,ArrayList<Object>>();
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
         lightManager = new jmri.managers.ProxyLightManager();

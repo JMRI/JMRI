@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -58,7 +58,7 @@ public class InstanceManagerTest extends TestCase {
         PowerManager m2 = null;
         
         InstanceManager.store(m1, PowerManager.class);
-        m2 = InstanceManager.getDefault(PowerManager.class);
+        m2 = (PowerManager)InstanceManager.getDefault(PowerManager.class);
 
         Assert.assertEquals("retrieved same object", m1, m2);
     }
@@ -86,8 +86,8 @@ public class InstanceManagerTest extends TestCase {
         
         InstanceManager.store(m1, PowerManager.class);
         InstanceManager.store(t1, TurnoutManager.class);
-        m2 = InstanceManager.getDefault(PowerManager.class);
-        t2 = InstanceManager.getDefault(TurnoutManager.class);
+        m2 = (PowerManager)InstanceManager.getDefault(PowerManager.class);
+        t2 = (TurnoutManager)InstanceManager.getDefault(TurnoutManager.class);
 
         Assert.assertEquals("retrieved same PowerManager", m1, m2);
         Assert.assertEquals("retrieved same TurnoutManager", t1, t2);
