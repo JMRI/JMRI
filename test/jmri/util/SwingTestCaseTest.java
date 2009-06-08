@@ -10,7 +10,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Tests for the jmri.util.SwingTestCase class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SwingTestCaseTest extends SwingTestCase {
 
@@ -24,6 +24,7 @@ public class SwingTestCaseTest extends SwingTestCase {
     public void testCheckBox() {
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
+        f.setSize(100,100);	        // checkbox must be visible for test to work
         JCheckBox b = new JCheckBox("Check");
         b.setName("Check");
         f.add(b);
@@ -37,6 +38,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         
         // set the check in the box by clicking it
         getHelper().enterClickAndLeave( new MouseEventData( this, testBox ) );
+        
         // test for selected
         Assert.assertTrue(testBox.isSelected());
     }
