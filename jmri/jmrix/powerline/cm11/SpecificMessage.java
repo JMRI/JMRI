@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -62,16 +62,23 @@ public class SpecificMessage extends SerialMessage {
         switch (getElement(0)&0xFF) {
             case 0xFB : text = "Macro load reply"; break;
             case 0x9B : text = "Set CM11 time"; break;
+            case 0xC3 : if (len == 1) {
+            		text = "Poll Ack"; break;
+            	} // else fall through
             case 0x00 : if (len == 1) {
                     text = "OK for transmission"; break;
                 } // else fall through
             default: {
-                if ((getElement(0)& 0x02) == 0x02) {
-                	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-                		+ ' ' + X10Sequence.formatCommandByte(getElement(1)&0xFF);
-                } else
-                	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-            		+ ' ' + X10Sequence.formatAddressByte(getElement(1)&0xFF);
+            	if (len == 2) {
+                    if ((getElement(0)& 0x02) == 0x02) {
+                    	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
+                    		+ ' ' + X10Sequence.formatCommandByte(getElement(1)&0xFF);
+                    } else
+                    	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
+                		+ ' ' + X10Sequence.formatAddressByte(getElement(1)&0xFF);
+            	} else {
+            		text = "Reply was short, len: " + len + " value: " + Constants.formatHeaderByte(getElement(0 & 0xFF));
+            	}
             }
         }
         return text+"\n";

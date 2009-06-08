@@ -21,7 +21,7 @@ package jmri.jmrix.powerline;
  * you should check the coding of your new specific adapter before using them.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class X10Sequence {
 
@@ -91,6 +91,7 @@ public class X10Sequence {
         public boolean isFunction();
         public int getHouseCode();
     }
+    
     /**
      * Represent a single "set address" X10 command
      */
@@ -106,6 +107,7 @@ public class X10Sequence {
         public boolean isAddress() { return true; }
         public boolean isFunction() { return false; }
     }
+    
     /**
      * Represent a single "do function" X10 command
      */
@@ -123,6 +125,24 @@ public class X10Sequence {
         public int getDimCount()  { return dimcount; }
         public boolean isAddress() { return false; }
         public boolean isFunction() { return true; }
+    }
+
+    /**
+     * Represent a single "Extended Data" X10 command
+     */
+    public class ExtData implements Command {
+        public ExtData(int value) {
+            this.value = value;
+            this.house = -1;
+            this.function = -1;
+        }
+        int value;
+        int house;
+        int function;
+        public int getExtData() { return value; }
+        public int getHouseCode() { return house; }
+        public boolean isAddress() { return false; }
+        public boolean isFunction() { return false; }
     }
     
     /**
@@ -173,7 +193,7 @@ public class X10Sequence {
      * Pretty-print an address code
      */
     public static String formatAddressByte(int b) {
-        return "House "+ X10Sequence.decode((b>>4)&0x0F)
+        return "House "+ X10Sequence.houseValueToText(X10Sequence.decode((b>>4)&0x0F))
             +" address device "+X10Sequence.decode(b&0x0f);
     }
 
@@ -181,11 +201,85 @@ public class X10Sequence {
      * Pretty-print a function code
      */
     public static String formatCommandByte(int b) {
-        return "House "+ X10Sequence.decode((b>>4)&0x0F)
+        return "House "+ X10Sequence.houseValueToText(X10Sequence.decode((b>>4)&0x0F))
                 +" function: "+X10Sequence.functionName(b&0x0f);
     }
 
-}
+    /**
+     * Translate House Value (1 to 16) to text
+     */
+    public static String houseValueToText(int hV) {
+    	if (hV >= 1 || hV <= 16) {
+    		return houseValueDecoder[hV];
+    	} else {
+    		return "??";
+    	}
+    }
+    static String[] houseValueDecoder = new String[]{"??",
+    	"A","B","C","D","E","F","G","H",
+    	"I","J","K","L","M","N","O","P"};
 
+	/**
+	 * Translate House Code to text
+	 */
+	public static String houseCodeToText(int hC) {
+		String hCode = "";
+		switch (hC) {
+		case 0x06:
+			hCode = "A";
+			break;
+		case 0x0E:
+			hCode = "B";
+			break;
+		case 0x02:
+			hCode = "C";
+			break;
+		case 0x0A:
+			hCode = "D";
+			break;
+		case 0x01:
+			hCode = "E";
+			break;
+		case 0x09:
+			hCode = "F";
+			break;
+		case 0x05:
+			hCode = "G";
+			break;
+		case 0x0D:
+			hCode = "H";
+			break;
+		case 0x07:
+			hCode = "I";
+			break;
+		case 0x0F:
+			hCode = "J";
+			break;
+		case 0x03:
+			hCode = "K";
+			break;
+		case 0x0B:
+			hCode = "L";
+			break;
+		case 0x00:
+			hCode = "M";
+			break;
+		case 0x08:
+			hCode = "N";
+			break;
+		case 0x04:
+			hCode = "O";
+			break;
+		case 0x0C:
+			hCode = "P";
+			break;
+		default:
+			hCode = "Unk hC:" + hC;
+			break;
+		}
+	    return hCode;
+	}
+
+}
 
 /* @(#)X10Sequence.java */

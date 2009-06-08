@@ -26,7 +26,8 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.21 $
+ * @author      Ken Cameron Copyright (C) 2009
+ * @version     $Revision: 1.22 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -109,7 +110,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         }
 
         if (log.isDebugEnabled()) {
-        	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        	log.debug("set state " + newState + " house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode);
         }
 
         // create output sequence of address, then function
@@ -120,7 +121,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
         
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);
+    		log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " funct: " + function);
         }
     }
 

@@ -24,7 +24,8 @@ import jmri.jmrix.powerline.*;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @author      Ken Cameron Copyright (C) 2009
+ * @version     $Revision: 1.8 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -80,6 +81,11 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
         // see if going to stabilize at on or off
         if (intensity <= 0.5) {
+            // going to low, send a real off
+            X10Sequence out3 = new X10Sequence();
+            out3.addAddress(housecode, devicecode);
+            out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
+            SerialTrafficController.instance().sendX10Sequence(out3, null);
             // going to low, send max dim count low
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
@@ -92,6 +98,11 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             	log.debug("initIntensity: sent dim reset");
             }
         } else {
+            // going to high, send a real on
+            X10Sequence out3 = new X10Sequence();
+            out3.addAddress(housecode, devicecode);
+            out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
+            SerialTrafficController.instance().sendX10Sequence(out3, null);
             // going to high, send max dim count high
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
@@ -166,7 +177,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 

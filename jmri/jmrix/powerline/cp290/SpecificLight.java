@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -170,7 +170,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 
