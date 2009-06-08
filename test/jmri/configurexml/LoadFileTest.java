@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LoadFileTest extends TestCase {
 
@@ -64,7 +64,8 @@ public class LoadFileTest extends TestCase {
         String outLine;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
             if (!inLine.startsWith("  <!--Written by JMRI version")
-                && !inLine.startsWith("  <timebase"))   // time changes from timezone to timezone
+                && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
+                && !inLine.startsWith("<?xml-stylesheet"))   // Linux seems to put attributes in different order
                     Assert.assertEquals(inLine, outLine);
         }
     }
