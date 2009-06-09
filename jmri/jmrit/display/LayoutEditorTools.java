@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LayoutEditorTools 
@@ -3080,6 +3080,7 @@ public class LayoutEditorTools
 				(int)(layoutTurnout.getCoordsD().getY()+4+testIcon.getIconHeight()));
 		}
 	}
+	@SuppressWarnings("null")
 	private void setLogicXover(SignalHead head,TrackSegment track,SignalHead secondHead,TrackSegment track2,
 				boolean setup1, boolean setup2) {
 		if ( (track==null) && setup1 ) {
@@ -5383,6 +5384,7 @@ public class LayoutEditorTools
 				(int)(layoutTurnout2.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 	}
+	@SuppressWarnings("null")
 	private void setLogicTToT(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
 					boolean setup1, boolean setup2, boolean continuing,
 						LayoutTurnout farTurnout, LayoutTurnout nearTurnout) {
@@ -5479,7 +5481,7 @@ public class LayoutEditorTools
 		SignalHead nextHead2 = null;
 		if (secondHead!=null) {
 			nextHead2 = getNextSignalFromObject(track2,
-					(Object)farTurnout, secondHead.getSystemName(), setSignalsAtTToTFrame);
+					farTurnout, secondHead.getSystemName(), setSignalsAtTToTFrame);
 			if ( (nextHead2==null) && (!reachedEndBumper()) ) {
 				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
