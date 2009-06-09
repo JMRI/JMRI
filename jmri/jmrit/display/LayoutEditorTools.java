@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LayoutEditorTools 
@@ -3159,7 +3159,7 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		if ( (secondHead==null) && setup1 ) {
+		if ( (secondHead==null) && (track!=null) && setup1 ) {
 			if (!initializeBlockBossLogic(head.getSystemName())) return;
 			logic.setMode(BlockBossLogic.FACING);
 			logic.setTurnout(turnout.getSystemName());
@@ -5476,16 +5476,19 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
-		SignalHead nextHead2 = getNextSignalFromObject(track2,
-				farTurnout, secondHead.getSystemName(), setSignalsAtTToTFrame);
-		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
-			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
-				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
-					new Object[]{block2.getUserName()}), 
-						null,JOptionPane.INFORMATION_MESSAGE);
-			return;
+		SignalHead nextHead2 = null;
+		if (secondHead!=null) {
+			nextHead2 = getNextSignalFromObject(track2,
+					(Object)farTurnout, secondHead.getSystemName(), setSignalsAtTToTFrame);
+			if ( (nextHead2==null) && (!reachedEndBumper()) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
+						new Object[]{block2.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 		}
-		if ( (secondHead==null) && setup1 ) {
+		if ( (secondHead==null) && (track1!=null) && setup1 ) {
 			if (!initializeBlockBossLogic(head.getSystemName())) return;
 			logic.setMode(BlockBossLogic.FACING);
 			logic.setTurnout(farTurnout.getTurnout().getSystemName());
