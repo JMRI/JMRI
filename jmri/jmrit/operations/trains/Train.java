@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.45 $
+ * @version             $Revision: 1.46 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -897,7 +897,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			// add throttle if there's a throttle manager
 			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
-				// add throttle if JMRI loco roster entry exsist
+				// add throttle if JMRI loco roster entry exist
 				RosterEntry entry = null;
 				if (getLeadEngine() != null){
 					// first try and find a match based on loco road number
@@ -1055,6 +1055,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		setCurrentLocation(null);
 		setBuilt(false);
 		setPrinted(false);
+		// remove train icon
+		if (trainIcon != null && trainIcon.isActive()) {
+			trainIcon.remove();
+			trainIcon.dispose();
+		}
 		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(0));
 		return true;
 	}
