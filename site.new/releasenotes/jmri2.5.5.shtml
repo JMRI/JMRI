@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.5.shtml,v 1.9 2009-06-07 18:54:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.5.shtml,v 1.10 2009-06-10 00:15:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -207,6 +207,10 @@ You can now use "Internal" lights with more setups.
 
 <p>
 Dick Bronson updated the signal icons for USS CTC machine schematic panels.
+
+<p>
+Ken Cameron added a new "FileLogging.py" script, which logs sensor changes to a 
+comma-separated-variable (CSV) for later examination.
 
 <!--#include virtual="/Footer" -->
 
