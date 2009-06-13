@@ -45,12 +45,12 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         if (e.getAttribute("interval") != null) {
         	try {
             	interval = Integer.parseInt(e.getAttribute("interval").getValue());        		
-        	} catch(NumberFormatException ex) { };
+        	} catch(NumberFormatException ex) { }
         }
         if (e.getAttribute("maxtries") != null) {
         	try {
             	maxTries = Integer.parseInt(e.getAttribute("maxtries").getValue());        		
-        	} catch(NumberFormatException ex) { };
+        	} catch(NumberFormatException ex) { }
         }
         // constructor takes care of enrolling the new operation
         try {

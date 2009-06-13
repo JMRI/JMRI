@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * 
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
@@ -206,14 +206,16 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
       j = k = i%ns				;//    Receivers in order
       w = 1.0					;}//   No wgts.  No "All-Tog."
     else if (S == 1)				{//   Stage 1
-      while ((j = (int)Math.floor((ns)*Math.random()) ) == k)	;//    Receivers random order
+      while ((j = (int)Math.floor((ns)*Math.random()) ) == k){
+      //    Receivers random order
+      }
       k = j;		w = 1.0			;}//   No weights
     else if (S == 2)				{//   Stage 2
       --k;	j = k%ns			;//    Receivers reverse order
       w = 1.0 - Rs[j]/Rmax;	w = w*w		;//    Weight by distance
       w *= 0.01*(k + 1)				;}//		 with fade out
     else if (S == 3)				{//   Stage 3
-      						;}//   No "One-at-a-time"
+      						}//   No "One-at-a-time"
 
     if (S < 3)					{//   One-At-A-Time iteration
       q = Math.sqrt((Xs[j]-x)*(Xs[j]-x)+(Ys[j]-y)*(Ys[j]-y)+(Zs[j]-z)*(Zs[j]-z));

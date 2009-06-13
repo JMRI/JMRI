@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialSensorFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialSensorAction extends AbstractAction  {
 
@@ -26,7 +26,7 @@ public class SerialSensorAction extends AbstractAction  {
             log.error("starting SerialSensorFrame caught exception: "+ex.toString());
         }
         f.setVisible(true);
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorAction.class.getName());
 

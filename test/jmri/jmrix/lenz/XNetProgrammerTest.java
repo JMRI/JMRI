@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.3 $
+ * @version         $Revision: 2.4 $
  */
 
 package jmri.jmrix.lenz;
@@ -97,7 +97,7 @@ public class XNetProgrammerTest extends TestCase {
 	// internal class to simulate a XNetListener
 	class XNetListenerScaffold implements jmri.ProgListener {
 		public XNetListenerScaffold() {
-			rcvdInvoked = 0;;
+			rcvdInvoked = 0;
 			rcvdValue = 0;
 			rcvdStatus = 0;
 		}

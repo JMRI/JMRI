@@ -18,7 +18,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -129,7 +129,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 log.error("internal state inconsistent with table requst for "+row+" "+col);
                 return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

@@ -17,7 +17,7 @@ import java.util.Vector;
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 
@@ -29,7 +29,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 	public void testSendAscii() throws Exception {
 		EasyDccTrafficController c = new EasyDccTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -60,7 +60,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 	public void xtestRcvReply() throws Exception {
 		EasyDccTrafficController c = new EasyDccTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };

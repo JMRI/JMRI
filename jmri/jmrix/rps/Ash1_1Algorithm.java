@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -285,7 +285,9 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
             (j = (int)Math.floor(
                         (ns)*Math.random()
                      ) )
-                == k)	;// Iterative solution
+                == k){
+                // Iterative solution
+                }
     
     k = j					;
     w = Math.sqrt((Xs[j]-x)*(Xs[j]-x)+(Ys[j]-y)*(Ys[j]-y)+(Zs[j]-z)*(Zs[j]-z));

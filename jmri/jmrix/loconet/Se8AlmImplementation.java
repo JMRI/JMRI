@@ -20,7 +20,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
@@ -56,16 +56,16 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
     public int getTO(int se) {return retrieveBySE(se, TO);}
     public int getDS(int se) {return retrieveBySE(se, DS);}
     
-    public void setACon(int se, int value) {storeBySE(se, ACon, value);};
-    public void setBCon(int se, int value) {storeBySE(se, BCon, value);};
-    public void setCCon(int se, int value) {storeBySE(se, CCon, value);};
+    public void setACon(int se, int value) {storeBySE(se, ACon, value);}
+    public void setBCon(int se, int value) {storeBySE(se, BCon, value);}
+    public void setCCon(int se, int value) {storeBySE(se, CCon, value);}
     
-    public void setALeg(int se, int value) {storeBySE(se, ALeg, value);};
-    public void setBLeg(int se, int value) {storeBySE(se, BLeg, value);};
-    public void setCLeg(int se, int value) {storeBySE(se, CLeg, value);};
+    public void setALeg(int se, int value) {storeBySE(se, ALeg, value);}
+    public void setBLeg(int se, int value) {storeBySE(se, BLeg, value);}
+    public void setCLeg(int se, int value) {storeBySE(se, CLeg, value);}
     
-    public void setTO(int se, int value) {storeBySE(se, TO, value);};
-    public void setDS(int se, int value) {storeBySE(se, DS, value);};
+    public void setTO(int se, int value) {storeBySE(se, TO, value);}
+    public void setDS(int se, int value) {storeBySE(se, DS, value);}
     
     /**
      * Internal method to save a new value

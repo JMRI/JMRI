@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -103,7 +103,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private boolean updateRatioFromRead = false;
     private boolean updateFormatFromRead = false;
     private boolean updateStatusFromRead = false;
-    private NceReply lastClockReadPacket = null;;
+    private NceReply lastClockReadPacket = null;
     //private Date lastClockReadAtTime;
     private int	nceLastHour;
     private int nceLastMinute;

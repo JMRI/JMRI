@@ -145,7 +145,7 @@ public class TurnoutOperationManager {
 				try {
 					Class<?> thisClass = Class.forName(thisClassName);
 					thisClass.newInstance();
-					if (log.isDebugEnabled()) { log.debug("loaded TurnoutOperation class "+thisClassName); };
+					if (log.isDebugEnabled()) { log.debug("loaded TurnoutOperation class "+thisClassName); }
 				} catch (Exception e) { }
 			}
 		}
@@ -199,7 +199,7 @@ public class TurnoutOperationManager {
 	 * get/change status of whether operations are in use
 	 */
 	
-	public boolean getDoOperations() { return doOperations; };
+	public boolean getDoOperations() { return doOperations; }
 	
 	public void setDoOperations(boolean b) {
 		boolean oldValue = doOperations;

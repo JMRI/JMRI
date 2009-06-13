@@ -7,7 +7,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
@@ -29,7 +29,7 @@ public class EliteAction 			extends AbstractAction {
 			log.error("starting Elite frame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteAction.class.getName());
 

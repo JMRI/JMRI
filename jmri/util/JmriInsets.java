@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class JmriInsets {
 
@@ -124,7 +124,8 @@ public class JmriInsets {
             if(f.isDirectory() && folder.contains(GNOME_PANEL)) {
                 int val = getGnomeXML(new File(GNOME_ROOT + "/" + folder + "/" + GNOME_CONFIG));
                 if(val == -1)
-                    ; //Skip
+                    {//Skip
+                    } 
                 else if (folder.startsWith("top" + GNOME_PANEL))
                     n = Math.max(val, n);
                 else if (folder.startsWith("bottom" + GNOME_PANEL))

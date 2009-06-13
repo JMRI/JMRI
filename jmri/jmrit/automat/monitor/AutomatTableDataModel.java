@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -111,7 +111,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

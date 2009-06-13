@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -248,7 +248,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

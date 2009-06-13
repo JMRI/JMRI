@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.25 $
+ * @version    $Revision: 2.26 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1137,7 +1137,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                                  Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode28));
             } else if((b1 & 0x04)==0x04) {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
-                this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
+                this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode128)
                     notifyPropertyChangeListener("SpeedSteps",
                                                  Integer.valueOf(this.speedStepMode),

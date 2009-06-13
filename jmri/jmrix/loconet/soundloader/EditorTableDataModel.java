@@ -22,7 +22,7 @@ import javax.swing.table.TableCellEditor;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.12 $
+ * @version		$Revision: 1.13 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -139,7 +139,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         JTextField b;

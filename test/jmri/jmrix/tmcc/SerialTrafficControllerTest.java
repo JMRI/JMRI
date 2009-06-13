@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -50,7 +50,7 @@ public class SerialTrafficControllerTest extends TestCase {
     public void xtestSendOK() throws Exception {
         SerialTrafficController c = new SerialTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -75,7 +75,7 @@ public class SerialTrafficControllerTest extends TestCase {
     public void testRcvReplyOK() throws Exception {
         SerialTrafficController c = new SerialTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -114,7 +114,7 @@ public class SerialTrafficControllerTest extends TestCase {
     public void testRcvReplyShort() throws Exception {
         SerialTrafficController c = new SerialTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };

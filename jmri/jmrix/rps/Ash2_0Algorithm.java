@@ -125,7 +125,7 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -315,8 +315,10 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
   for (i = 0; i < 1250; i++)			{//   One-At-A-Time iteration
     if (i < 50)		    j = k = i%ns	;//    Stage 0
     else if (i < 1000)				{//     Receivers in order
-      while ((j = (int)Math.floor((ns)*Math.random()) ) == k)	;//    Stage 1
-      k = j;					;}//    Receivers random order
+      while ((j = (int)Math.floor((ns)*Math.random()) ) == k){
+      //    Stage 1
+      }
+      k = j;					}//    Receivers random order
     else		    j = (1249 - i)%ns	;//    Stage 2
     if (i < 750)			w = 1.0	;//     Receivers reverse order
     else	{w = 1.0 - Rs[j]/Rmax;  w = w*w	;}//    Weight by distance

@@ -27,7 +27,7 @@ public class JmriSpinner extends JPanel {
 		try {
 //			if (1!=2) throw new Exception(); un-comment to test exception handling
 			spinner = new JSpinner();
-		} catch (Exception ex) { };
+		} catch (Exception ex) { }
 		setLayout(new GridLayout(1,1,5,5));
 		if (spinner==null) {
 			textfield = new TextField();

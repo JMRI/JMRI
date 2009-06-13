@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class ConnectivityUtil 
@@ -1405,7 +1405,7 @@ public class ConnectivityUtil
 				PositionablePoint p = (PositionablePoint)tObject;
 				if (p.getType()==PositionablePoint.END_BUMPER) {
 					hitEnd = true;
-					hasNode = true;;
+					hasNode = true;
 				}
 				else {
 					TrackSegment con1 = p.getConnect1();

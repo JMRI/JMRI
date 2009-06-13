@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class LnProgrammerManager  extends DefaultProgrammerManager {
 
@@ -35,7 +35,7 @@ public class LnProgrammerManager  extends DefaultProgrammerManager {
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
-    };
+    }
 }
 
 

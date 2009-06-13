@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -85,14 +85,14 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Allows text other than "CLOSED" to be use with certain hardware system
      * to represent the Turnout.CLOSED state.
      */
-    public String getClosedText() { return rbt.getString("TurnoutStateClosed"); };
+    public String getClosedText() { return rbt.getString("TurnoutStateClosed"); }
 
      /**
       * Get text to be used for the Turnout.THROWN state in user communication.
       * Allows text other than "THROWN" to be use with certain hardware system
       * to represent the Turnout.THROWN state.
       */
-     public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
+     public String getThrownText() { return rbt.getString("TurnoutStateThrown"); }
 
 
 

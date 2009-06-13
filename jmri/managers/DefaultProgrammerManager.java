@@ -11,7 +11,7 @@ import jmri.*;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -37,7 +37,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
-    };
+    }
     public void releaseAddressedProgrammer(Programmer p) {}
 
     /**

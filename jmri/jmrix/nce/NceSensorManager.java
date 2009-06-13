@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
@@ -26,7 +26,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         for (int i=MINAIU; i<=MAXAIU; i++)
             aiuArray[i] = null;
         listener = new NceListener() {
-        	public void message(NceMessage m) { };
+        	public void message(NceMessage m) { }
         	public void reply(NceReply r) {
         		if (r.isSensorMessage()) { mInstance.handleSensorMessage(r); }
         	}
@@ -186,7 +186,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     						wait(pollTimeout);
     					} catch (InterruptedException e) {
     					    Thread.currentThread().interrupt(); // retain if needed later
-    					};
+    					}
     				}
      	    		int delay = shortCycleInterval;
     	    		if (aiuCycleCount>=2 &&

@@ -27,7 +27,7 @@ import jmri.*;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -362,7 +362,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	}
 
 	public void enableLockOperation(int turnoutLockout, boolean enabled) {
-	};
+	}
 
 	/**
 	 *  When true, report to console anytime a cab attempts to change the
@@ -443,7 +443,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 			myTurnoutOperation.addPropertyChangeListener(this);
 		}
 		firePropertyChange("TurnoutOperationState", oldOp, myTurnoutOperation);
-	};
+	}
 
 	protected void operationPropertyChange(java.beans.PropertyChangeEvent evt) {
 		if (evt.getSource() == myTurnoutOperation) {

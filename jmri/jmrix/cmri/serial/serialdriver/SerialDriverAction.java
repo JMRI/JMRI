@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * cmri.serial.SerialDriverFrame object
  *
  * @author   Bob Jacobsen    Copyright (C) 2002
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
 public class SerialDriverAction 			extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class SerialDriverAction 			extends AbstractAction {
             log.error("starting cmri.serial.SerialDriverFrame caught exception: "+ex.toString());
         }
         f.setVisible(true);
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAction.class.getName());
 

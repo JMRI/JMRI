@@ -27,7 +27,7 @@ public class MS100Action 			extends AbstractAction {
 			log.error("starting MS100Frame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);	
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Action.class.getName());
 

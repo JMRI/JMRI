@@ -27,7 +27,7 @@ public class LocoBufferAction 			extends AbstractAction {
 			log.error("starting LocoBufferFrame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);			
-	};
+	}
  
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferAction.class.getName());
 

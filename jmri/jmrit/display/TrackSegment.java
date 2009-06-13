@@ -29,7 +29,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class TrackSegment 
@@ -188,7 +188,7 @@ public class TrackSegment
 	private LayoutBlock getBlock (Object connect, int type) {
 		if (connect==null) return null;
 		if (type==LayoutEditor.POS_POINT) {
-			PositionablePoint p = (PositionablePoint)connect;;
+			PositionablePoint p = (PositionablePoint)connect;
 			if (p.getConnect1()!=instance) {
 				if (p.getConnect1()!=null) return (p.getConnect1().getLayoutBlock());
 				else return null;

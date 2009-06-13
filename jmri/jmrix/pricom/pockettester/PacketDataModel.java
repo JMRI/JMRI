@@ -16,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -90,7 +90,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
             log.error("internal state inconsistent with table request for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

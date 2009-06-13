@@ -115,7 +115,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 	 * get the descriptive name of the operation
 	 * @return	name
 	 */
-	public String getName() { return name; };
+	public String getName() { return name; }
 
 	/**
 	 * ordering so operations can be sorted, using their name
@@ -223,11 +223,11 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 	 * have a name, which is the turnout it was created for, prefixed by "*"
 	 * @return true if this object is a nonce
 	 */
-	public boolean isNonce() { return nonce; };
+	public boolean isNonce() { return nonce; }
 	public void setNonce(boolean n) {
 		nonce = n;
 		TurnoutOperationManager.getInstance().firePropertyChange("Content", null, null);
-	};
+	}
 	public TurnoutOperation makeNonce(Turnout t) {
 		TurnoutOperation op = makeCopy("*"+t.getSystemName());
 		op.setNonce(true);

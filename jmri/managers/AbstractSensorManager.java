@@ -8,7 +8,7 @@ import jmri.implementation.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -106,7 +106,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 	 * Note that this null implementation only needs be implemented in system-specific 
 	 *		Sensor Managers where readout of sensor status from the layout is possible.
 	 */
-	public void updateAll() { };
+	public void updateAll() { }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
 }

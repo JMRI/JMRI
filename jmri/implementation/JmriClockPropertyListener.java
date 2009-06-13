@@ -112,7 +112,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener
         for (int i=0; i<numRanges; i++) {
             if (_rangeList[i] != newRangeList[i]) {
                 _rangeList = newRangeList;
-                super.propertyChange(evt);;
+                super.propertyChange(evt);
             }
         }
     }

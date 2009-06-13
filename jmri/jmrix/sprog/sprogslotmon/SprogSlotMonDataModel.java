@@ -13,7 +13,7 @@ import javax.swing.*;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -138,7 +138,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

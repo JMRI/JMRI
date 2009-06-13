@@ -10,7 +10,7 @@ import jmri.implementation.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -96,14 +96,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * Allows text other than "CLOSED" to be use with certain hardware system 
 	 * to represent the Turnout.CLOSED state.
 	 */
-	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); };
+	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); }
 	
 	/**
 	 * Get text to be used for the Turnout.THROWN state in user communication.
 	 * Allows text other than "THROWN" to be use with certain hardware system 
 	 * to represent the Turnout.THROWN state.
 	 */
-	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
+	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); }
 	
 	/**
 	 * Get from the user, the number of addressed bits used to control a turnout. 
@@ -116,7 +116,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * If the bits are not available, this method should return 0 for number of 
 	 * control bits, after informing the user of the problem.
 	 */
-	 public int askNumControlBits(String systemName) {return 1; };
+	 public int askNumControlBits(String systemName) {return 1; }
 
 	/**
 	 * Get from the user, the type of output to be used bits to control a turnout. 
@@ -128,7 +128,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
-	 public int askControlType(String systemName) {return 0; };
+	 public int askControlType(String systemName) {return 0; }
 
     /**
      * Internal method to invoke the factory, after all the

@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 
 package jmri.jmrix.easydcc;
@@ -148,7 +148,7 @@ public class EasyDccProgrammerTest extends TestCase {
 	// internal class to simulate a EasyDccListener
 	class EasyDccListenerScaffold implements jmri.ProgListener {
 		public EasyDccListenerScaffold() {
-			rcvdInvoked = 0;;
+			rcvdInvoked = 0;
 			rcvdValue = 0;
 			rcvdStatus = 0;
 		}

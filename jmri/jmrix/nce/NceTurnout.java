@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -64,7 +64,7 @@ public class NceTurnout extends AbstractTurnout {
     
     public int getNumber() { return _number; }
     
-    public static int getNumNtTurnouts() {return numNtTurnouts;};
+    public static int getNumNtTurnouts() {return numNtTurnouts;}
     
       
      // Handle a request to change state by sending a turnout command

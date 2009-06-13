@@ -25,7 +25,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.26 $
+ * @version		$Revision: 1.27 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -155,7 +155,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
 
     public int getPreferredWidth(int col) {
         switch (col) {

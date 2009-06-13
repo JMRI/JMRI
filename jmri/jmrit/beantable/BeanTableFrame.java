@@ -33,7 +33,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -139,7 +139,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      */
 	void extras() {}
 	    
-    protected Box getBottomBox() { return bottomBox; };
+    protected Box getBottomBox() { return bottomBox; }
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts etc
      * @param comp

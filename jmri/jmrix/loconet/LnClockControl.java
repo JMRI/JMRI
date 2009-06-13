@@ -42,7 +42,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -97,7 +97,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	public String getHardwareClockName() {
 		return ("Loconet Fast Clock");
 	}
-	public boolean canCorrectHardwareClock() {return true;};
+	public boolean canCorrectHardwareClock() {return true;}
 	public void setRate(double newRate) {
 		if (curRate==0) {
 			savedRate = (int)newRate;      // clock stopped case
@@ -108,7 +108,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		}
 		setClock();
 	}
-	public boolean requiresIntegerRate() {return true;};
+	public boolean requiresIntegerRate() {return true;}
 	public double getRate() {return curRate;}
 
     @SuppressWarnings("deprecation")

@@ -88,7 +88,7 @@ public class TurnoutOperationFrame extends JDialog {
 	}
 	
 	private void doDelete() {
-		String query = "";;
+		String query = "";
 		if (currentOperation != null && !currentOperation.isDefinitive()) {
 			if (currentOperation.isInUse()) {
 				query = "Operation "+currentOperation.getName()+" is in use\n"+

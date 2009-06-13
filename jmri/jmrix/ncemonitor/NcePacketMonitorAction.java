@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NcePacketMonitorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NcePacketMonitorAction extends AbstractAction  {
 
@@ -30,7 +30,7 @@ public class NcePacketMonitorAction extends AbstractAction  {
 			log.error("starting NcePacketMonitorFrame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketMonitorAction.class.getName());
 

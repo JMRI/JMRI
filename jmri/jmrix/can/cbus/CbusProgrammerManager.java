@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see     jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CbusProgrammerManager  extends DefaultProgrammerManager {
 
@@ -32,7 +32,7 @@ public class CbusProgrammerManager  extends DefaultProgrammerManager {
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
-    };
+    }
 }
 
 

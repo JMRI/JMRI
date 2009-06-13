@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * LnHexFileFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LnHexFileAction 			extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class LnHexFileAction 			extends AbstractAction {
         // it connects to the LnTrafficController when the right button is pressed
 
 
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFileAction.class.getName());
 

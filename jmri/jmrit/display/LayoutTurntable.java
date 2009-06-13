@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutTurntable
@@ -160,7 +160,7 @@ public class LayoutTurntable
 	}
 	public Point2D getRayCoordsOrdered(int i) {
 		if (i>=rayList.size()) return new Point2D.Double(0.0,0.0); 
-		RayTrack ray = rayList.get(i);;
+		RayTrack ray = rayList.get(i);
 		if (ray==null) return new Point2D.Double(0.0,0.0);
 		double angle = (ray.getAngle()/180.0)*Math.PI;
 		// calculate coordinates

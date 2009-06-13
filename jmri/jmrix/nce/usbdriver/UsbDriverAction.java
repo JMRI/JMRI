@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
  * Swing action to create and register a UsbDriverFrame object
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class UsbDriverAction extends AbstractAction  {
 
@@ -25,7 +25,7 @@ public class UsbDriverAction extends AbstractAction  {
 			log.error("starting UsbDriverFrame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbDriverAction.class.getName());
 

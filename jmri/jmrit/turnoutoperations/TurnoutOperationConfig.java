@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class TurnoutOperationConfig extends JPanel {
 
@@ -25,11 +25,11 @@ public class TurnoutOperationConfig extends JPanel {
 		myOperation = op;
 	}
 	
-	TurnoutOperation getOperation() { return myOperation; };
+	TurnoutOperation getOperation() { return myOperation; }
 	
-	public boolean isValid() { return valid; };
+	public boolean isValid() { return valid; }
 	
-	public void endConfigure() {log.error("Should have been overridden!");};
+	public void endConfigure() {log.error("Should have been overridden!");}
 	
 	/**
 	 * Given an instance of a concrete subclass of
@@ -49,9 +49,9 @@ public class TurnoutOperationConfig extends JPanel {
 			if (constrs.length==1) {
 				try {
 					config = (TurnoutOperationConfig)constrs[0].newInstance(new Object[]{op});
-				} catch (Throwable e) { };		// too many to list!
+				} catch (Throwable e) { }		// too many to list!
 			}
-		} catch (ClassNotFoundException e) { };
+		} catch (ClassNotFoundException e) { }
 		if (config==null || !config.isValid()) {
 			config = null;
 			log.debug("could not create configurator for "+op.getClass().getName()+" \""+op.getName()+"\"");

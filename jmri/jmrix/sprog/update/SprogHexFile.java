@@ -131,7 +131,9 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     // Read ":"
     try {
       while (((charIn = buffIn.read()) == 0xd)
-             || (charIn == 0xa)) ;
+             || (charIn == 0xa)){
+             // skip
+             }
       if (charIn != ':') {
 //        ad = new SprogAlertDialog(this, "Hex File Format Error!", "No leading : at line " + lineNo);
         if (log.isDebugEnabled()) log.debug("HexFile.readLine no colon at start of line " + lineNo);

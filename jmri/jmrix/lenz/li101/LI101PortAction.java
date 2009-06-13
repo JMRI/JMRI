@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a LI101
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz.li101;
@@ -27,7 +27,7 @@ public class LI101PortAction 			extends AbstractAction {
 			log.error("starting LI101 frame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI101PortAction.class.getName());
 

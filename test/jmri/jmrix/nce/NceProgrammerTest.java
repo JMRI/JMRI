@@ -16,7 +16,7 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.11 $
+ * @version          $Revision: 1.12 $
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -232,7 +232,7 @@ public class NceProgrammerTest extends TestCase {
     // internal class to simulate a NceListener
     class NceListenerScaffold implements jmri.ProgListener {
         public NceListenerScaffold() {
-            rcvdInvoked = 0;;
+            rcvdInvoked = 0;
             rcvdValue = 0;
             rcvdStatus = 0;
         }

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * grapevine.SerialDriverFrame object
  *
  * @author   Bob Jacobsen    Copyright (C) 2002, 2007
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class SerialDriverAction extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class SerialDriverAction extends AbstractAction {
             log.error("starting grapevine.SerialDriverFrame caught exception: "+ex.toString());
         }
         f.setVisible(true);
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAction.class.getName());
 

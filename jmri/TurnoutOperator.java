@@ -26,7 +26,7 @@ public abstract class TurnoutOperator extends Thread {
 	 * operator is running. This implies that another operation has been
 	 * started and that this one should just quietly stop doing its thing.
 	 */
-	public class TurnoutOperatorException extends java.lang.Exception { };
+	public class TurnoutOperatorException extends java.lang.Exception { }
 	
 	protected void operatorCheck() throws TurnoutOperatorException {
 		if (myTurnout.getCurrentOperator()!= this) {

@@ -55,7 +55,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 						}
 					} catch (InterruptedException e) { 
 					    Thread.currentThread().interrupt(); // retain if needed later
-					};
+					}
 				}
 				if (myTurnout.isConsistentState()) {
 					break;
@@ -67,7 +67,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 			if (!myTurnout.isConsistentState()) {
 				log.warn("failed to throw "+myTurnout.getSystemName());
 			}
-		} catch (TurnoutOperatorException e) { };
+		} catch (TurnoutOperatorException e) { }
 		myTurnout.removePropertyChangeListener(listener);
 	}
 	

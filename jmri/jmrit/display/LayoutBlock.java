@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -141,10 +141,10 @@ public class LayoutBlock extends AbstractNamedBean
 	 * Accessor methods
 	 */
 	public String getID() {return blockName;}	
-	public Color getBlockTrackColor() {return blockTrackColor;};
-	public void setBlockTrackColor(Color color) {blockTrackColor = color;};	
-	public Color getBlockOccupiedColor() {return blockOccupiedColor;};
-	public void setBlockOccupiedColor(Color color) {blockOccupiedColor = color;};	
+	public Color getBlockTrackColor() {return blockTrackColor;}
+	public void setBlockTrackColor(Color color) {blockTrackColor = color;}	
+	public Color getBlockOccupiedColor() {return blockOccupiedColor;}
+	public void setBlockOccupiedColor(Color color) {blockOccupiedColor = color;}	
 	public void incrementUse() {useCount ++;}
 	public void decrementUse() {
 		useCount --;

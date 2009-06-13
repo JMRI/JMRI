@@ -35,12 +35,12 @@ public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 					Thread.sleep(interval);
 				} catch (InterruptedException e) {
 				    Thread.currentThread().interrupt(); // retain if needed later
-				};
+				}
 				operatorCheck();
 				myTurnout.forwardCommandChangeToLayout();
 			}
 			myTurnout.setKnownStateToCommanded();
-		} catch (TurnoutOperatorException e) { };
+		} catch (TurnoutOperatorException e) { }
 	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperator.class.getName());

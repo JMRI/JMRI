@@ -94,7 +94,7 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
     		Class<?> configClass = Class.forName(fullConfigName);
     		adapter = (TurnoutOperationXml)configClass.newInstance();
     	} catch (Throwable e) {
-    	};		// too many to list!
+    	}		// too many to list!
     	if (adapter==null) {
     		log.warn("could not create adapter class "+fullConfigName);
     	}

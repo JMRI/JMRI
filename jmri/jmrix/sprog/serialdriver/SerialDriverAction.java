@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialDriverFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAction extends AbstractAction  {
 
@@ -26,7 +26,7 @@ public class SerialDriverAction extends AbstractAction  {
 			log.error("starting SerialDriverFrame caught exception: "+ex.toString());
 			}
 		f.setVisible(true);
-	};
+	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAction.class.getName());
 

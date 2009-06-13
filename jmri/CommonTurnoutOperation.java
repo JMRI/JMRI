@@ -9,7 +9,7 @@ import jmri.implementation.AbstractTurnout;
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  * @author John Harper
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
@@ -43,9 +43,9 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 	 */
 	public abstract TurnoutOperator getOperator(AbstractTurnout t);
 	
-	public int getInterval() { return interval; };
+	public int getInterval() { return interval; }
 	
-	public int getMaxTries() { return maxTries; };
+	public int getMaxTries() { return maxTries; }
 	
 	public abstract int getDefaultInterval();
 	public abstract int getDefaultMaxTries();

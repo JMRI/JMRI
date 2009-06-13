@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -258,9 +258,9 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField _userName = new JTextField(22);
 
     JmriJFrame addFrame = null;
-    RouteTurnoutModel _routeTurnoutModel;;
+    RouteTurnoutModel _routeTurnoutModel;
     JScrollPane _routeTurnoutScrollPane;
-    RouteSensorModel _routeSensorModel;;
+    RouteSensorModel _routeSensorModel;
     JScrollPane _routeSensorScrollPane;
 
     JTextField soundFile = new JTextField(20);
@@ -1576,7 +1576,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             }
             int mode = turnoutModeFromBox(box);
-            int oper = Conditional.OPERATOR_AND;;
+            int oper = Conditional.OPERATOR_AND;
             int type = 0;
             boolean negated = false;
             boolean trigger = true;

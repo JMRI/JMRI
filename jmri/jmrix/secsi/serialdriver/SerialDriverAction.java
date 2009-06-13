@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * oaktree.SerialDriverFrame object
  *
  * @author   Bob Jacobsen    Copyright (C) 2002, 2007, 2008
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class SerialDriverAction extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class SerialDriverAction extends AbstractAction {
             log.error("starting SECSI SerialDriverFrame caught exception: "+ex.toString());
         }
         f.setVisible(true);
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAction.class.getName());
 

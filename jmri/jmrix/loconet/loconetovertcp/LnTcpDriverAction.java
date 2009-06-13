@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * LnTcpDriverFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LnTcpDriverAction extends AbstractAction  {
 
@@ -26,7 +26,7 @@ public class LnTcpDriverAction extends AbstractAction  {
             log.error("starting LnTcpDriverFrame caught exception: "+ex.toString());
         }
         f.setVisible(true);
-    };
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTcpDriverAction.class.getName());
 

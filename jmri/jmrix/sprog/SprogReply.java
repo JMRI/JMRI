@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SprogReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -52,7 +52,7 @@ public class SprogReply {
 
         public final void setUnsolicited() { unsolicited = true; }
 
-        public boolean isUnsolicited() { return unsolicited; };
+        public boolean isUnsolicited() { return unsolicited; }
 
         public boolean isOverload() {
           return (this.toString().indexOf("!O") >= 0);

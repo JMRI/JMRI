@@ -3,7 +3,7 @@
  *
  * Description:	    AbsBaseClass for PowerManager tests in specific jmrix. packages
  * @author			Bob Jacobsen Copyright 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix;
@@ -71,12 +71,12 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 
 	public void testStateOn() throws JmriException {
 		hearOn();
-		Assert.assertEquals("power state", PowerManager.ON, p.getPower());;
+		Assert.assertEquals("power state", PowerManager.ON, p.getPower());
 	}
 	
 	public void testStateOff() throws JmriException {
 		hearOff();
-		Assert.assertEquals("power state", PowerManager.OFF, p.getPower());;
+		Assert.assertEquals("power state", PowerManager.OFF, p.getPower());
 	}
 	
 	public void testAddListener() throws JmriException {

@@ -35,7 +35,7 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
         if (operationsElement.getAttribute("automate") != null) {
         	try {
             	manager.setDoOperations(operationsElement.getAttribute("automate").getValue().equals("true"));        		
-        	} catch(NumberFormatException ex) { };
+        	} catch(NumberFormatException ex) { }
         }
     	List<Element> operationsList = operationsElement.getChildren("operation");
     	if (log.isDebugEnabled()) log.debug("Found "+operationsList.size()+" operations");

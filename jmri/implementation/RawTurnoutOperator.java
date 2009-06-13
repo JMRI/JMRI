@@ -46,12 +46,12 @@ public class RawTurnoutOperator extends TurnoutOperator {
 					Thread.sleep(interval);
 				} catch (InterruptedException e) {
 				    Thread.currentThread().interrupt(); // retain if needed later
-				};
+				}
 				operatorCheck();
                 sendCommand();
 			}
 			myTurnout.setKnownStateToCommanded();
-		} catch (TurnoutOperatorException e) { };
+		} catch (TurnoutOperatorException e) { }
 	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperator.class.getName());

@@ -269,13 +269,13 @@ public class LRouteTableAction extends AbstractTableAction {
 
     JmriJFrame _addFrame = null;
 
-    RouteInputModel _inputModel;;
+    RouteInputModel _inputModel;
     JScrollPane _inputScrollPane;
     JComboBox _testStateCombo;
     JRadioButton _inputAllButton;   
     boolean _showAllInput;
 
-    RouteOutputModel _outputModel;;
+    RouteOutputModel _outputModel;
     JScrollPane _outputScrollPane;
     JComboBox _setStateCombo;
     JRadioButton _outputAllButton;

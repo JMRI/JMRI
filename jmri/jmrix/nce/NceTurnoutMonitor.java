@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -186,7 +186,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 						wait(POLL_TIME * 5);
 					} catch (InterruptedException e) {
 					    Thread.currentThread().interrupt(); // retain if needed later
-					};
+					}
 				}
 			// process rcv buffer and update turnouts
 			} else {
@@ -231,7 +231,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 						synchronized (this) {
 							try {
 								wait(POLL_TIME);
-							} catch (InterruptedException e) {};
+							} catch (InterruptedException e) {}
 						}
 						// now process again but for turnout KnownState 
 						for (int byteIndex = 0; byteIndex < REPLY_LEN; byteIndex++) {
