@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.6.shtml,v 1.1 2009-06-06 20:13:29 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.6.shtml,v 1.2 2009-06-14 00:19:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -146,6 +146,19 @@ are using a Linux computer.
 
 
 <h3>Changes since test version 2.5.5</h3>
+
+Paul Bender made two improvements to the XPressNet (Lenz) throttle:
+<ol>
+<li>When doing a version check, compare to the BCD version sent from the command station, 
+    rather than the float value calculated in the program (fixes a bug with functions F13-F28).
+<li>Instead of dropping messages when they are outgoing, queue the meessages for in-order delivery.
+</ol>
+
+<p>
+Ken Cameron added some initial code for "extended commands" in the Powerline (X10) support
+
+<p>
+Dan Boudreau updated the operations tools to remove any train icon(s) from the panel(s) when a train is reset.
 
 <!--#include virtual="/Footer" -->
 
