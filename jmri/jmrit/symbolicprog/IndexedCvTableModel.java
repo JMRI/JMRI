@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -459,7 +459,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             if (infoOnly || readOnly) {
                 if (writeOnly) {
                     bw.setEnabled(true);
-                    bw.setActionCommand("W"+_numRows);
+                    bw.setActionCommand("W"+row);
                     bw.addActionListener(this);
                 } else {
                     bw.setEnabled(false);
@@ -469,25 +469,25 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                     bc.setEnabled(false);
                 } else {
                     br.setEnabled(true);
-                    br.setActionCommand("R"+_numRows);
+                    br.setActionCommand("R"+row);
                     br.addActionListener(this);
                     bc.setEnabled(true);
-                    bc.setActionCommand("C"+_numRows);
+                    bc.setActionCommand("C"+row);
                     bc.addActionListener(this);
                 }
             } else {
                 bw.setEnabled(true);
-                bw.setActionCommand("W"+_numRows);
+                bw.setActionCommand("W"+row);
                 bw.addActionListener(this);
                 if (writeOnly) {
                     br.setEnabled(false);
                     bc.setEnabled(false);
                 } else {
                     br.setEnabled(true);
-                    br.setActionCommand("R" + _numRows);
+                    br.setActionCommand("R" + row);
                     br.addActionListener(this);
                     bc.setEnabled(true);
-                    bc.setActionCommand("C" + _numRows);
+                    bc.setActionCommand("C" + row);
                     bc.addActionListener(this);
                 }
            }
