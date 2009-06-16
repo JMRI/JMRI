@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ImageIndex.shtml,v 1.1 2009-06-16 16:38:11 pete_cressman Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Panel Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Index Editor">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>DRAFT</H1>
+<H1>The Image Index Editor</H1>
+
+This window is used to create an Image Index.  The index may be organized
+according to any taxonomy you wish.  Using it allows you to access any
+image file that is accessible from your computer without moving or copying
+the file.  It is similar to a table of contents or index that you might 
+find in a reference textbook. 
+
+
+<H2>Contents of the Image Index Editor</H2>
+<p>
+The window contains two panes side by side.  The left side is your current 
+Image Catalog.  This is what the Icon Editors have been using to change
+icons.  The top panel of this pane consists of one or more trees.  The default tree
+is "resourceJar", the catalog of all the image files downloaded with the
+version of JMRI you are using.  These are files encapsulated in "jmri.jar".
+Another default tree may be "preferenceDir", the catalog of all the image 
+files contained in the "resources" directory in your JMRI preferences directory.
+If you have not created a "resources" directory in your JMRI preferences directory
+you will not see this tree.  Other trees that you may see are those that you have
+installed after using the <b>Open Directory</b> menu item in one of the Icon Editor 
+windows and pressed the <b>Add to Catalog</b> button.  Below the trees is a "Preview"
+panel that displayes the images found in any node that you have selected from
+one of the above trees.
+</p>
+<p>
+The right side is the Image Index you may edit.  It is similar to the right pane
+in that the top panel is the tree of the Index you are creating.  Likewise, the 
+bottom panel displays the
+images found in any node of the tree that you select.
+</p>
+
+<UL>
+	 new components
+	
+</UL>
+
+<H2>The Menus</H2>
+Add Node.
+Delete Node.
+Rename Node.
+
+<H2>Using the Image Index Editor</H2>
+<p>
+Drag any icon from the bottom (left) panel of the Catalog pane to a node of the Index tree 
+(right) pane and that icon is registered in the Index.
+</p>
+<p>
+Using the <b>Open Directory</b> menu item in the <b>Find Icons</b> memu will let you
+choose adirectory that has additional images.  Icons can be dradgged from these 
+directories and dropped into a Index node.
+</p>
+
+<H2>PopUps in the Index (right) Pane </H2>
+
+<H2>Saving the Image Index Editor</H2>
+
+
+<H2>How To</H2>
+
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
