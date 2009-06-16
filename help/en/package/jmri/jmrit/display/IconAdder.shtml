@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: IconAdder.shtml,v 1.1 2009-06-16 16:39:43 pete_cressman Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Icon Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The Icon Editors</H1>
+
+<H2>Contents of the Icon Editors</H2>
+
+<p>Five of the Icon Editors (Right Hand Turnout, Left Hand Turnout, Sensor, Signal, MultiSensor)
+display a group of icons above a table.  The table lists all of the devices of the given type
+that have been defined.  There is one icon for each state that the device can have.  The icons 
+shown are the default icons, but you may change them.,/p>
+<p>  Below the 
+table are two buttons, <b>Add to Panel</b> and <b>Change Icon...</b>.  The Add to Panel button
+is inactive until a device is selected from the table.  Then it becomes active, and when pressed
+will install the set of icons into the panel.  Pressing the Change Icon button is discussed 
+below.</p>  
+
+<p>Two other Icon Editors, Memory Value and Reporter Value, have tables from which you must select
+a device before the Add to Panel button becomes active.  No icons are displayed for these devices
+because pressing Add to Panel installs the values maintained by these elements into the panel.</p>  
+
+<p>Another two Icon Editors, Background Image and Icon (plain), display a default icon, but no
+table, since these elements do not represent a JMRI device.  For these elements the Add to Panel
+button is always active.</p>
+
+<p>The remaining two choices for icons, RPS Reporter and Fast Clock, install their icons directly into the 
+panel.</p>
+
+<H2>Pressing the Change Icon Button</H2>
+
+<p>Pressing this button will add a pane labeled <b>Catalog</b> to the window.  It will show
+one or more trees in a scrollable panel.  Expanding the tree displays nodes that in turn
+can be expanded.  The nodes correspond to entities that are file syetem directories or are
+similar to file syetem directories.  Whenever image (icon) files are encountered in a node, 
+the images are displayed in a pane below the Catalog tree(s).</p>
+
+<p>This pane has a label that states how many image files have been found and the pane
+displays them.  Beneath each image (icon) is a label that states the "scale" at which the 
+image is displayed.  "Scale 1:1" indicates the icon is displayed at full size.  If a 
+large image file had been found, the scale might be 0.25:1 to indicate that the display is
+1/4 the actual size of the image that could be transferred to the Panel.  Below the icons
+are some radio buttoon that allow you to adjust the background to the icons.  This may
+help in determining what parts of the icon are opaque and what parts are transparent.</p>
+
+<p>The Catalog pane will always display at least one tree titled "resourceJar".  This is
+the resource directory within the jmri.jar from which you installed this current version of JMRI.
+Other trees that you might see are: "preferenceDir", if you have created a "resources" 
+directory within your JMRI preferences directory - or possibly, "imageIndex" if it has 
+been created already (see below).</p>
+
+<H3>Changing the Icon</H3>
+
+<p>Most Icon Editor operations are done by "Drag and Drop".   To change an icon, 
+drag any icon from the node display pane at the bottom 
+of the window (i.e. press down on the mouse button and hold it down while moving the mouse) 
+to any of the device icons at the top of the Icon 
+Editor.  Release the mouse button after hovering over the icon you want to change and
+the dragged icon will replace it.  You may go to other nodes and drag any of icons found there
+until you are satisfied with the state icons you want to install into the Panel.</p>
+
+<H2>Icon Editor Menus</H2>
+
+<p>The <b>Find Icons</b> menu has the following items:
+<UL>
+        <LI><b>Create/Edit an ImageIndex Catalog</b>.  see the 
+        <a href="package.jmri.jmrit.catalog.ImageIndex.shtml">Image Index Editor page</a>
+        for how this menu item is used.</LI>
+        
+        <LI><b>Open a File System Directory</b>.  This opens a file chooser dialog where
+        you may open any directory that that has image files.  To open the directory,
+        select any image file contained in it and a window will attempt to display all 
+        the image files found in the directory.
+        <p>Depending on how much memory is needed to show all the files,
+        two possible sequences of events that might follow.</p>
+        <UL>
+        <LI>If there is no difficulty in displaying the files, the window will show
+        them along will the radio buttons to adjust their background.  And, two
+        buttons will be displayed above the images - <b>Add to Catalog</b> and
+        <b>Cancel</b>.  Pressing <b>Add to Catalog</b> will make this directory one
+        of the trees in the Catalog pane.   In this case, you may then use it to
+        select icons to change icons in any of the Icon Editors.  Pressing 
+        <b>Cancel</b> will close the window with no further action.</LI>
+        <LI>If there is not enough memory to display all the image files found in the
+        directory, a message will state how many files can be displayed.  Press 
+        <b>OK</b> and most likely another message will be posted explaining
+        that if you want to add any of these images to the Catalog you should move
+        or copy the ones you want to another directory.  Again press <b>OK</b>
+        and the window will display what it can.  In this case, the two buttons 
+        are <b>Show More</b> and <b>Cancel</b>.  Pressing <b>Show More</b> will
+        display the next group of image files that it is able to display.  Again
+        pressing <b>Cancel</b> will close the window with no further action.
+        <p>Note that this is the case that generally occurs when you open 
+        a photo album directory.</LI>
+        </UL>
+        
+        <LI><b>Search File System for Icons</b>.  This item has you choose a drive
+        on you computer to begin a search for icons.  It will visit every directory
+        on the drive and when it encounters one with image files, it will open a 
+        window and attempt to display all the images it finds there.  This may take
+        some time.  As above, there may  not be enough memory to display all the files.
+        The window that displays the images has three buttons: <b>Show More</b>, 
+        <b>Continue Searching</b> and <b>Cancel</b>.
+        <p>This is a feature to be used sparingly, but many interesting icons can
+        be found, particularly those cached by your browser, for which you might 
+        have a use.
+</UL>        
+      
+
+<P>You can also create your own icons. Create a new folder named "resources" in
+your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
+possible conflicts or loss of data during an upgrade. These new items will automatically 
+appear under "preferenceDir" in the icon Catalog.</P>
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
