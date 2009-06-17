@@ -896,6 +896,8 @@
 
 <mapID target="html.hardware.loconet.Digitrax" url="html/hardware/loconet/Digitrax.shtml"/>
 
+<mapID target="package.jmri.jmrit.catalog.ImageIndex" url="package/jmri/jmrit/catalog/ImageIndex.shtml"/>
+
 <mapID target="manual.Main_lightControl" url="manual/Main_lightControl.shtml"/>
 
 <mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
@@ -999,6 +1001,8 @@
 <mapID target="html.hardware.zimo.Zimo" url="html/hardware/zimo/Zimo.shtml"/>
 
 <mapID target="manual.index_index" url="manual/index.shtml#index"/>
+
+<mapID target="package.jmri.jmrit.display.IconAdder" url="package/jmri/jmrit/display/IconAdder.shtml"/>
 
 <mapID target="manual.Main_LocoNet_Sounds" url="manual/Main_LocoNet.shtml#Sounds"/>
 
