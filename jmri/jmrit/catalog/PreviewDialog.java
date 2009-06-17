@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import java.io.File;
@@ -83,8 +84,8 @@ public class PreviewDialog extends JDialog implements MouseListener {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
 
-    public PreviewDialog(Frame frame, String title, File dir, String[] filter ) {
-        super(frame, rb.getString(title), true);
+    public PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality ) {
+        super(frame, rb.getString(title), modality);
         _currentDir = dir;
         _filter = filter;
     }
@@ -161,6 +162,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
         try {
             _moreButton.setVisible(setIcons(_totalCnt));
         } catch (OutOfMemoryError oome) {
+            oome.printStackTrace();
             resetPanel();
             if (log.isDebugEnabled()) log.debug("setIcons threw OutOfMemoryError "+oome);
         }
@@ -273,7 +275,8 @@ public class PreviewDialog extends JDialog implements MouseListener {
         if (log.isDebugEnabled()) log.debug("setIcons: startNum= "+startNum);
         int numCol = 6;
         int numRow = 5;
-        int width = _preview.getWidth();
+        long memoryNeeded = 0;
+        long memoryAvailable = availableMemory();
         boolean newCol = false;
         GridBagLayout gridbag = new GridBagLayout();
         _preview.setLayout(gridbag);
@@ -307,22 +310,17 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     NamedIcon icon = new NamedIcon(path, name);
                     int w = icon.getIconWidth();
                     int h = icon.getIconHeight();
-                    if (3*w*h > 500000)  {
-                        byte[] memoryTest = null;
-                        try {
-                            memoryTest = new byte[3*w*h];
-                        } catch (OutOfMemoryError me) {
-                             log.debug("OutOfMemoryError for "+3*w*h+" bytes");
-                             memoryTest = null;
-                             noMemory = true;
-                             JOptionPane.showMessageDialog(this, 
-                                    java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                                    new Object[] {new Integer(_cnt)}),
-                                    rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
-                             continue;
-                        }
-                        memoryTest = null;
-                        System.gc();        // please take the hint...
+                    if (memoryAvailable < memoryNeeded+(4*w*h)) {
+                        JOptionPane.showMessageDialog(this, 
+                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                                new Object[] {new Integer(_cnt)}),
+                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                        noMemory = true;
+                        log.debug("\n1\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
+                        continue;
+                    }
+                    if (memoryAvailable < 3*memoryNeeded) {
+                        log.debug("\2\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
                     }
                     double scale = 1;
                     if (w > 100) {
@@ -344,7 +342,23 @@ public class PreviewDialog extends JDialog implements MouseListener {
                         icon.setImage(bufIm);
                         g2d.dispose();
                     }
-                   if (c.gridx < numCol) {
+                    memoryNeeded += icon.getIconWidth()*icon.getIconHeight() +
+                                    icon.getIconWidth()+icon.getIconHeight();
+                    if (memoryAvailable < memoryNeeded+2*CHUNK) {
+                        JOptionPane.showMessageDialog(this, 
+                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                                new Object[] {new Integer(_cnt)}),
+                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                        log.debug("\n3\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
+                        noMemory = true;
+                        continue;
+                    }
+                    if (memoryAvailable < 3*memoryNeeded && !enoughMemory(memoryNeeded)) {
+                        noMemory = true;
+                        log.debug("\n4\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
+                        continue;
+                    }
+                    if (c.gridx < numCol) {
                         c.gridx++;
                     } else if (c.gridy < numRow) { //start next row
                         c.gridy++;
@@ -396,6 +410,62 @@ public class PreviewDialog extends JDialog implements MouseListener {
                               new Object[] {_currentDir.getName(), new Integer(cnt),
                                   new Integer(_totalCnt)}));
         return noMemory;
+    }
+
+    static int CHUNK = 500000;
+
+    private long availableMemory() {
+        long total = 0;
+        ArrayList <byte[]> memoryTest = new ArrayList <byte[]>();
+        try {
+            while (true) {
+                memoryTest.add(new byte[CHUNK]);
+                total += CHUNK;
+            }
+        } catch (OutOfMemoryError me) {
+            for (int i=0; i<memoryTest.size(); i++){
+                memoryTest.remove(i);
+            }
+            memoryTest = null;
+            log.debug("OutOfMemoryError for "+total+" bytes");
+        }
+        return total;
+    }
+
+    private boolean enoughMemory(long bytes) {
+        if (bytes > 500000)  {
+            long total = bytes;
+            int chunk = 0;
+            ArrayList <byte[]> memoryTest = new ArrayList <byte[]>();
+            try {
+                while (total > 0) {
+                    if (total > Integer.MAX_VALUE) {
+                        chunk = Integer.MAX_VALUE;
+                    } else {
+                        chunk = (int)total;
+                    }
+                    memoryTest.add(new byte[chunk]);
+                    total -= chunk;
+                }
+            } catch (OutOfMemoryError me) {
+                for (int i=0; i<memoryTest.size(); i++){
+                    memoryTest.remove(i);
+                }
+                memoryTest = null;
+                log.debug("OutOfMemoryError for "+bytes+" bytes");
+                JOptionPane.showMessageDialog(this, 
+                        java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                        new Object[] {new Integer(_cnt)}),
+                        rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            for (int i=0; i<memoryTest.size(); i++){
+                memoryTest.remove(i);
+            }
+            memoryTest = null;
+            System.gc();        // please take the hint...
+        }
+        return true;
     }
 
     public void dispose() {
