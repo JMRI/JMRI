@@ -32,19 +32,22 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
 			.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
     private LRouteTableAction _lRouteTable;
+    private LogixTableAction _logixTable;
 
     public void testCreate() {
-        assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
+        _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");    
         _lRouteTable._systemName.setText("T");
+        _lRouteTable._alignList.get(5).setIncluded(true);
         for (int i=0; i<20; i++)
         {
             _lRouteTable._inputList.get(3*i).setIncluded(true);
-            _lRouteTable._outputList.get(3*i).setIncluded(true);
+            _lRouteTable._outputList.get(3*i+1).setIncluded(true);
         }
-        _lRouteTable._alignList.get(5).setIncluded(true);
         _lRouteTable.createPressed(null);
+        java.util.List l = InstanceManager.logixManagerInstance().getSystemNameList();
+        assertEquals(1, l.size());
 
         _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, 
                                   LRouteTableAction.LBeanTableDataModel.EDITCOL);
@@ -103,7 +106,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() throws Exception { 
         apps.tests.Log4JFixture.setUp(); 
-        
         super.setUp();
 
         JUnitUtil.resetInstanceManager();
@@ -112,6 +114,10 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
 
         _lRouteTable = new LRouteTableAction("LRoute");
+        assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
+        _logixTable = new LogixTableAction();
+        assertNotNull("LogixTableAction is null!", _logixTable);
+        
         for (int i=1; i<20; i++)
         {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS"+i, "Sensor"+i);
