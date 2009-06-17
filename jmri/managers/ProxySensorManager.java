@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -49,6 +49,9 @@ public class ProxySensorManager extends AbstractProxyManager
     }
 
     public Sensor provideSensor(String name) {
+        if (name == null || name.length() == 0) {
+            return null;
+        }
         Sensor t = getSensor(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
