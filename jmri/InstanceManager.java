@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import jmri.managers.AbstractSignalHeadManager;
+import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
@@ -37,7 +38,7 @@ import jmri.managers.DefaultRouteManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.46 $
+ * @version			$Revision: 1.47 $
  */
 public class InstanceManager {
 
@@ -187,6 +188,11 @@ public class InstanceManager {
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
 
     static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
+
+    static public CatalogTreeManager catalogTreeManagerInstance()  {
+        if (instance().catalogTreeManager == null) instance().catalogTreeManager = new DefaultCatalogTreeManager();        
+        return instance().catalogTreeManager;
+    }
 
     static public MemoryManager memoryManagerInstance()  { 
     	if (instance().memoryManager == null) instance().memoryManager = DefaultMemoryManager.instance();
@@ -363,8 +369,10 @@ public class InstanceManager {
         ((jmri.managers.AbstractProxyManager)instance().reporterManager).addManager(p);
     }
 
+    private CatalogTreeManager catalogTreeManager = null;
 
 	private MemoryManager memoryManager = null;
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
 }
 
