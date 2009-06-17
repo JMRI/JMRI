@@ -644,7 +644,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }   // getControlsAndActions
 
     /**
-    * Exteact the Alignment Sensors and their types
+    * Extract the Alignment Sensors and their types
     */
     void getAlignmentSensors(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
@@ -659,11 +659,6 @@ public class LRouteTableAction extends AbstractTableAction {
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"), 
                                 new Object [] {action.toString(), c.getSystemName()}),
                              rbx .getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
-                } else if (element != null && !name.equals(action.getDeviceName())) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn2"), 
-                                new Object [] {action.toString(), action.getDeviceName(), c.getSystemName()}),
-                             rbx .getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 } else {
                     name = action.getDeviceName();
                     String key = SENSOR_TYPE+name;
@@ -677,6 +672,14 @@ public class LRouteTableAction extends AbstractTableAction {
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                     new Object [] {action.toString(), c.getSystemName()}),
                                  rbx .getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                    
+                    } else if (!name.equals(action.getDeviceName())) {
+                        javax.swing.JOptionPane.showMessageDialog(
+                                _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn2"), 
+                                    new Object [] {action.toString(), action.getDeviceName(), c.getSystemName()}),
+                                 rbx .getString("EditDiff"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                    
+                    
                     } else {
                         element.setIncluded(true);
                     }
