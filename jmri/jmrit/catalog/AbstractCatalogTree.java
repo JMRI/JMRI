@@ -91,7 +91,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
-    java.beans.PropertyChangeSupport pcs = new PropertyChangeSupport((Object)this);
+    java.beans.PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
