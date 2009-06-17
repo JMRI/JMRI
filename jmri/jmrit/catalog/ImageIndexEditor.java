@@ -199,8 +199,8 @@ public class ImageIndexEditor extends JmriJFrame {
         File dir = IconAdder.getDirectory();
         if (dir != null) {
             _previewDialog = new PreviewDialog(this, "previewDir",  
-                                 dir, CatalogTreeManager.IMAGE_FILTER );
-            _previewDialog.setModalityType(java.awt.Dialog.ModalityType.MODELESS);
+                                 dir, CatalogTreeManager.IMAGE_FILTER, false );
+            //_previewDialog.setModalityType(java.awt.Dialog.ModalityType.MODELESS); SDK1.6
             _previewDialog.init(null, null, new ActionListener() {
                                                 public void actionPerformed(ActionEvent a) {
                                                     cancel();

@@ -24,7 +24,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;

@@ -13,7 +13,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.PreviewDialog;
 
-import java.awt.Component;
+//import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -454,7 +454,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         ActionListener cancelAction) {
         _quitLooking = false;
         _previewDialog = new PreviewDialog(_parent, "previewDir", dir, 
-                                          CatalogTreeManager.IMAGE_FILTER );
+                                          CatalogTreeManager.IMAGE_FILTER, true);
         _previewDialog.init(addAction, lookAction, cancelAction);
         _previewDialog.setVisible(true);
     }

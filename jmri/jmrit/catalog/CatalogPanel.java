@@ -7,7 +7,7 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DropMode;
+//import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -22,7 +22,6 @@ import javax.swing.JTree;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.TransferHandler;
-//import javax.swing.ListCellRenderer;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -145,7 +144,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _dTree.setRootVisible(false);
         _dTree.setShowsRootHandles(true);
         _dTree.setScrollsOnExpand(true);
-        _dTree.setDropMode(DropMode.ON);
+        //_dTree.setDropMode(DropMode.ON);
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         _dTree.addTreeSelectionListener(new TreeSelectionListener() {
