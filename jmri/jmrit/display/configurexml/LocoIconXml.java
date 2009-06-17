@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
@@ -13,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -117,7 +118,7 @@ public class LocoIconXml extends PositionableLabelXml {
         
          try {
 			name = element.getAttribute("icon").getValue();
-			l.setIcon(CatalogPane.getIconByName(name));
+			l.setIcon(CatalogPanel.getIconByName(name));
 		} catch (Exception e) {
 			log.error("failed to get icon attribute");
 		}

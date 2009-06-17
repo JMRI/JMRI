@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -47,11 +47,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Attached a numbered element to this display item
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
-    public void setSignalHead(String pName) {
-        mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
-        if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
-        if (mHead == null) log.warn("did not find a SignalHead named "+pName);
-        else {
+    public void setSignalHead(SignalHead sh) {
+        mHead = sh;
+        if (mHead != null) {
             displayState(headState());
             mHead.addPropertyChangeListener(this);
             setProperToolTip();

@@ -17,7 +17,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -63,21 +63,32 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     /**
      * Attached a named Memory to this display item
-     * @param pName Used as a system/user name to lookup the Memory object
+      * @param pName Used as a system/user name to lookup the Memory object
      */
-    public void setMemory(String pName) {
-        if (InstanceManager.memoryManagerInstance()!=null) {
-            memory = InstanceManager.memoryManagerInstance().
-                provideMemory(pName);
-            if (memory != null) {
-                displayState();
-                memory.addPropertyChangeListener(this);
-                setProperToolTip();
-            } else {
-                log.error("Memory '"+pName+"' not available, icon won't see changes");
-            }
-        } else {
-            log.error("No MemoryManager for this protocol, icon won't see changes");
+     public void setMemory(String pName) {
+         if (InstanceManager.memoryManagerInstance()!=null) {
+             memory = InstanceManager.memoryManagerInstance().
+                 provideMemory(pName);
+             if (memory != null) {
+                 setMemory(memory);
+             } else {
+                 log.error("Memory '"+pName+"' not available, icon won't see changes");
+             }
+         } else {
+             log.error("No MemoryManager for this protocol, icon won't see changes");
+         }
+     }
+
+    /**
+     * Attached a named Memory to this display item
+     * @param the Memory object
+     */
+    public void setMemory(Memory m) {
+        memory = m;
+        if (memory != null) {
+            displayState();
+            memory.addPropertyChangeListener(this);
+            setProperToolTip();
         }
     }
 

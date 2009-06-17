@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.MemoryIcon;
@@ -12,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -78,10 +79,11 @@ public class MemoryIconXml extends PositionableLabelXml {
         PanelEditor p = (PanelEditor)o;
         MemoryIcon l = new MemoryIcon();
 
-        l.setMemory(element.getAttribute("memory").getValue());
+        l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
+            element.getAttribute("memory").getValue()));
 
         Attribute a = element.getAttribute("defaulticon");
-        if (a!=null) l.setDefaultIcon(CatalogPane.getIconByName(a.getValue()));
+        if (a!=null) l.setDefaultIcon(CatalogPanel.getIconByName(a.getValue()));
         
         a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
@@ -96,7 +98,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             Element item = items.get(i);
             String icon = item.getAttribute("icon").getValue();
             String keyValue = item.getAttribute("value").getValue();
-        	l.addKeyAndIcon(CatalogPane.getIconByName(icon), keyValue);
+        	l.addKeyAndIcon(CatalogPanel.getIconByName(icon), keyValue);
 		}
 		
         // find coordinates

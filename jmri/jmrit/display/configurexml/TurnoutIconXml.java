@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.TurnoutIcon;
@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -70,22 +70,22 @@ public class TurnoutIconXml implements XmlAdapter {
 
         NamedIcon closed;
         name = element.getAttribute("closed").getValue();
-        l.setClosedIcon(closed = CatalogPane.getIconByName(name));
+        l.setClosedIcon(closed = CatalogPanel.getIconByName(name));
         if (closed == null) log.warn("did not locate closed icon file "+name);
 
         NamedIcon thrown;
         name = element.getAttribute("thrown").getValue();
-        l.setThrownIcon(thrown = CatalogPane.getIconByName(name));
+        l.setThrownIcon(thrown = CatalogPanel.getIconByName(name));
         if (thrown == null) log.warn("did not locate thrown icon file "+name);
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
+        l.setUnknownIcon(unknown = CatalogPanel.getIconByName(name));
         if (unknown == null) log.warn("did not locate unknown icon file "+name);
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = CatalogPanel.getIconByName(name));
         if (inconsistent == null) log.warn("did not locate inconsistent icon file "+name);
 
         try {
@@ -111,7 +111,8 @@ public class TurnoutIconXml implements XmlAdapter {
         else
             l.setTristate(false);
             
-        l.setTurnout(element.getAttribute("turnout").getValue());
+        l.setTurnout(jmri.InstanceManager.turnoutManagerInstance().getTurnout(
+            element.getAttribute("turnout").getValue()));
 
         // find coordinates
         int x = 0;

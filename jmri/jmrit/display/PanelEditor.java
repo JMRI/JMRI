@@ -1,16 +1,37 @@
 package jmri.jmrit.display;
 
 import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.NamedBean;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
+import jmri.util.NamedBeanComparator;
+import jmri.jmrit.catalog.CatalogPanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
+
+import java.io.File;
 
 import javax.swing.*;
 
@@ -50,12 +71,13 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @version $Revision: 1.98 $
+ * @author  Pete Cressman Copyright: Copyright (c) 2009
+ * 
  */
 
-public class PanelEditor extends JmriJFrame {
+public class PanelEditor extends JmriJFrame implements ItemListener {
 
-    final public static Integer BKG       = new Integer(1);
+    public static Integer BKG       = new Integer(1);
     final public static Integer ICONS     = new Integer(3);
     final public static Integer LABELS    = new Integer(5);
     final public static Integer MEMORIES  = new Integer(5);
@@ -91,46 +113,25 @@ public class PanelEditor extends JmriJFrame {
     JButton labelAdd = new JButton(rb.getString("ButtonAddText"));
     JTextField nextLabel = new JTextField(10);
 
-    JButton iconAdd = new JButton(rb.getString("ButtonAddIcon"));
-    MultiIconEditor iconEditor;
-    JFrame iconFrame;
+    JComboBox _addIconBox;
 
-    JButton turnoutAddR = new JButton(rb.getString("ButtonAddRHTurnout"));
-    JTextField nextTurnoutR = new JTextField(5);
-    MultiIconEditor turnoutRIconEditor;
-    JFrame turnoutRFrame;
+    IconAdder iconEditor;
+    JFrameItem iconFrame;
+    IconAdder turnoutRIconEditor;
+    JFrameItem turnoutRFrame;
+    IconAdder turnoutLIconEditor;
+    JFrameItem turnoutLFrame;
+    IconAdder sensorIconEditor;
+    JFrameItem sensorIconFrame;
+    IconAdder signalIconEditor;
+    JFrameItem signalIconFrame;
+    IconAdder memoryIconEditor;
+    IconAdder reporterIconEditor;
+    IconAdder bkgrndEditor;
+    JFrameItem bdIconFrame;
+    MultiSensorIconAdder multiSensorEditor;
+    JFrameItem multiSensorFrame;
 
-    JButton turnoutAddL = new JButton(rb.getString("ButtonAddLHTurnout"));
-    JTextField nextTurnoutL = new JTextField(5);
-    MultiIconEditor turnoutLIconEditor;
-    JFrame turnoutLFrame;
-
-    JButton sensorAdd = new JButton(rb.getString("ButtonAddSensor"));
-    JTextField nextSensor = new JTextField(5);
-    MultiIconEditor sensorIconEditor;
-    JFrame sensorFrame;
-
-    JButton signalAdd = new JButton(rb.getString("ButtonAddSignal"));
-    JTextField nextSignalHead = new JTextField(5);
-    MultiIconEditor signalIconEditor;
-    JFrame signalFrame;
-
-    JButton memoryAdd = new JButton(rb.getString("ButtonAddMemory"));
-    JTextField nextMemory = new JTextField(5);
-
-    JButton reporterAdd = new JButton(rb.getString("ButtonAddReporter"));
-    JTextField nextReporter = new JTextField(5);
-
-    JButton rpsAdd = new JButton("Add RPS Reporter");
-
-    JButton multiSensorAdd = new JButton(rb.getString("ButtonAddMultiSensor"));
-
-    MultiSensorIconFrame multiSensorFrame;
-
-    JButton clockAdd = new JButton("Add Fast clock:");
-
-    JButton backgroundAddButton = new JButton(rb.getString("ButtonAddBkg"));
-    
     static boolean showCloseInfoMessage = true;	//display info message when closing panel
     
     public PanelEditor() { this(rb.getString("Title"));}
@@ -157,6 +158,13 @@ public class PanelEditor extends JmriJFrame {
         fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
 //        fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+        JMenuItem storeIndexItem = new JMenuItem(rb.getString("MIStoreImageIndex"));
+        fileMenu.add(storeIndexItem);
+        storeIndexItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                }
+            });
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
         fileMenu.add(deleteItem);
@@ -193,21 +201,6 @@ public class PanelEditor extends JmriJFrame {
             namep.add(b);
             this.getContentPane().add(namep);
         }
-        // add a background image
-        {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(backgroundAddButton);
-            panel.add(labelAdd);
-            backgroundAddButton.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        addBackground();
-                    }
-                }
-            );
-            this.getContentPane().add(panel);
-        }
-
         // add a text label
         {
             JPanel panel = new JPanel();
@@ -237,347 +230,324 @@ public class PanelEditor extends JmriJFrame {
             this.getContentPane().add(panel);
         }
 
-        // Add icon label
-        {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(iconAdd);
-            iconAdd.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        addIcon();
-                    }
-                }
-                                           );
-
-            iconEditor = new MultiIconEditor(1);
-            iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
-            iconEditor.complete();
-            iconFrame = new JFrame(rb.getString("TitleChangeIcon"));
-            iconFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
-            iconFrame.getContentPane().add(iconEditor);
-            iconFrame.pack();
-
-            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
-            j.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        iconFrame.setVisible(true);
-                    }
-                }
-                                           );
-            panel.add(j);
-
-            this.getContentPane().add(panel);
-        }
+        // Selection of the type of entity for the icon to represent is done from a combobox
+        _addIconBox = new JComboBox();
+        _addIconBox.setMinimumSize(new Dimension(75,75));
+        _addIconBox.setMaximumSize(new Dimension(200,200));
 
         // Add a turnout indicator for right-hand
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(turnoutAddR);
-            turnoutAddR.setEnabled(false);
-            turnoutAddR.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(nextTurnoutR);
-            turnoutAddR.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        addTurnoutR();
-                    }
-                }
-            );
-            nextTurnoutR.setToolTipText(rb.getString("ToolTipTurnout"));
-            nextTurnoutR.addKeyListener(new KeyAdapter() {
-                    public void keyReleased(KeyEvent a){
-                        if (nextTurnoutR.getText().equals("")) {
-                            turnoutAddR.setEnabled(false);
-                            turnoutAddR.setToolTipText(rb.getString("ToolTipWillActivate"));
-                        } else {
-                            turnoutAddR.setEnabled(true);
-                            turnoutAddR.setToolTipText(null);
-                        }
-                    }
-                });
-
-
-            turnoutRIconEditor = new MultiIconEditor(4);
-            turnoutRIconEditor.setIcon(0,InstanceManager.turnoutManagerInstance().getClosedText()+":",
+            turnoutRIconEditor = new IconAdder();
+            turnoutRIconEditor.setIcon(3, InstanceManager.turnoutManagerInstance().getClosedText(),
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
-            turnoutRIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
+            turnoutRIconEditor.setIcon(2, InstanceManager.turnoutManagerInstance().getThrownText(), 
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
-            turnoutRIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
-            turnoutRIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
-            turnoutRIconEditor.complete();
-            turnoutRFrame = new JFrame("Change RH turnout icons");
-            turnoutRFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
-            turnoutRFrame.getContentPane().add(turnoutRIconEditor);
-            turnoutRFrame.pack();
+            turnoutRIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+                "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
+            turnoutRIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+                "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
 
-            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
-            j.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        turnoutRFrame.setVisible(true);
-                    }
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            turnoutRFrame = makeAddIconFrame("AddRHTOIcon", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
+            addHelpMenu(turnoutRFrame, "package.jmri.jmrit.display.IconAdder");
+            turnoutRIconEditor.makeIconPanel();
+            turnoutRIconEditor.setPickList(ts);
+
+            ActionListener addIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addTurnoutR();
                 }
-                                           );
-            panel.add(j);
-
-            this.getContentPane().add(panel);
+            };
+            ActionListener changeIconAction = new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        turnoutRIconEditor.addCatalog();
+                        turnoutRFrame.pack();
+                    }
+            };
+            turnoutRIconEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(turnoutRFrame);
         }
 
         // Add a turnout indicator for left-hand
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(turnoutAddL);
-            turnoutAddL.setEnabled(false);
-            turnoutAddL.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(nextTurnoutL);
-            turnoutAddL.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        addTurnoutL();
-                    }
-                }
-            );
-            nextTurnoutL.setToolTipText(rb.getString("ToolTipTurnout"));
-            nextTurnoutL.addKeyListener(new KeyAdapter() {
-                    public void keyReleased(KeyEvent a){
-                         if (nextTurnoutL.getText().equals("")) {
-                            turnoutAddL.setEnabled(false);
-                            turnoutAddL.setToolTipText(rb.getString("ToolTipWillActivate"));
-                         } else {
-                            turnoutAddL.setEnabled(true);
-                            turnoutAddL.setToolTipText(null);
-                         }
-                    }
-            });
-
-
-            turnoutLIconEditor = new MultiIconEditor(4);
-            turnoutLIconEditor.setIcon(0,InstanceManager.turnoutManagerInstance().getClosedText()+":",
+            turnoutLIconEditor = new IconAdder();
+            turnoutLIconEditor.setIcon(3, InstanceManager.turnoutManagerInstance().getClosedText(),
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-            turnoutLIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
+            turnoutLIconEditor.setIcon(2, InstanceManager.turnoutManagerInstance().getThrownText(), 
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-            turnoutLIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-            turnoutLIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
-            turnoutLIconEditor.complete();
-            turnoutLFrame = new JFrame("Change LH turnout icons");
-            turnoutLFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
-            turnoutLFrame.getContentPane().add(turnoutLIconEditor);
-            turnoutLFrame.pack();
+            turnoutLIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+                "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+            turnoutLIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+                "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
-            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
-            j.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        turnoutLFrame.setVisible(true);
-                    }
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            turnoutLFrame = makeAddIconFrame("AddLHTOIcon", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
+            addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
+            turnoutLIconEditor.makeIconPanel();
+            turnoutLIconEditor.setPickList(ts);
+
+            ActionListener addIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addTurnoutL();
                 }
-            );
-            panel.add(j);
-
-            this.getContentPane().add(panel);
+            };
+            ActionListener changeIconAction = new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        turnoutLIconEditor.addCatalog();
+                        turnoutLFrame.pack();
+                    }
+            };
+            turnoutLIconEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(turnoutLFrame);
         }
 
         // Add a sensor indicator
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(sensorAdd);
-            sensorAdd.setEnabled(false);
-            sensorAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(nextSensor);
-            sensorAdd.addActionListener( new ActionListener() {
+            sensorIconEditor = new IconAdder();
+            sensorIconEditor.setIcon(3, rbean.getString("SensorStateActive"),
+                "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+            sensorIconEditor.setIcon(2, rbean.getString("SensorStateInactive"), 
+                "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+            sensorIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+            sensorIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            SensorManager manager = InstanceManager.sensorManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            sensorIconFrame = makeAddIconFrame("AddSensorIcon", "addIconsToPanel", 
+                                               "SelectSensor", sensorIconEditor);
+            addHelpMenu(sensorIconFrame, "package.jmri.jmrit.display.IconAdder");
+            sensorIconEditor.makeIconPanel();
+            sensorIconEditor.setPickList(ts);
+
+            ActionListener addIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addSensor();
+                }
+            };
+            ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        addSensor();
+                        sensorIconEditor.addCatalog();
+                        sensorIconFrame.pack();
                     }
-                }
-            );
-
-            nextSensor.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent a){
-                    if (nextSensor.getText().equals("")) {
-                        sensorAdd.setEnabled(false);
-                        sensorAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-                    } else {
-                        sensorAdd.setEnabled(true);
-                        sensorAdd.setToolTipText(null);
-                    }
-                }
-            });
-
-
-            sensorIconEditor = new MultiIconEditor(4);
-            sensorIconEditor.setIcon(0, rbean.getString("SensorStateActive")+":","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-            sensorIconEditor.setIcon(1, rbean.getString("SensorStateInactive")+"", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-            sensorIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-            sensorIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/circuit-error.gif");
-            sensorIconEditor.complete();
-            sensorFrame = new JFrame("Change sensor icons");
-            sensorFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
-            sensorFrame.getContentPane().add(sensorIconEditor);
-            sensorFrame.pack();
-
-            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
-            j.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        sensorFrame.setVisible(true);
-                    }
-                }
-            );
-            panel.add(j);
-
-            this.getContentPane().add(panel);
+            };
+            sensorIconEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(sensorIconFrame);
         }
 
         // Add a signal indicator
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(signalAdd);
-            signalAdd.setEnabled(false);
-            signalAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(nextSignalHead);
-            signalAdd.addActionListener( new ActionListener() {
+            signalIconEditor = new IconAdder();
+            signalIconEditor.setIcon(0, rbean.getString("SignalHeadStateFlashingYellow"), 
+                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+            signalIconEditor.setIcon(2, rbean.getString("SignalHeadStateFlashingRed"), 
+                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+            signalIconEditor.setIcon(5, rbean.getString("SignalHeadStateYellow"), 
+                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+            signalIconEditor.setIcon(6, rbean.getString("SignalHeadStateGreen"),
+                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
+            signalIconEditor.setIcon(1, rbean.getString("SignalHeadStateFlashingGreen"),
+                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+            signalIconEditor.setIcon(4, rbean.getString("SignalHeadStateDark"),
+                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+            signalIconEditor.setIcon(3, rbean.getString("SIgnalHeadStateHeld"),
+                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
+            signalIconEditor.setIcon(7, rbean.getString("SignalHeadStateRed"),
+                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
+
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            SignalHeadManager manager = InstanceManager.signalHeadManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            signalIconFrame = makeAddIconFrame("AddSignalIcon", "addIconsToPanel", 
+                                               "SelectSignal", signalIconEditor);
+            addHelpMenu(signalIconFrame, "package.jmri.jmrit.display.IconAdder");
+            signalIconEditor.makeIconPanel();
+            signalIconEditor.setPickList(ts);
+
+            ActionListener addIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addSignalHead();
+                }
+            };
+            ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        addSignalHead();
+                        signalIconEditor.addCatalog();
+                        signalIconFrame.pack();
                     }
-                }
-            );
-
-            nextSignalHead.setToolTipText(rb.getString("ToolTipSignalHead"));
-            nextSignalHead.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent a){
-                    if (nextSignalHead.getText().equals("")) {
-                        signalAdd.setEnabled(false);
-                        signalAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-                    } else {
-                        signalAdd.setEnabled(true);
-                        signalAdd.setToolTipText(null);
-                    }
-                }
-            });
-
-
-            signalIconEditor = new MultiIconEditor(8);
-            signalIconEditor.setIcon(0, rbean.getString("SignalHeadStateRed")+":","resources/icons/smallschematics/searchlights/left-red-marker.gif");
-            signalIconEditor.setIcon(1, rbean.getString("SignalHeadStateFlashingRed")+":", "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-            signalIconEditor.setIcon(2, rbean.getString("SignalHeadStateYellow")+":", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-            signalIconEditor.setIcon(3, rbean.getString("SignalHeadStateFlashingYellow")+":", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-            signalIconEditor.setIcon(4, rbean.getString("SignalHeadStateGreen")+":","resources/icons/smallschematics/searchlights/left-green-marker.gif");
-            signalIconEditor.setIcon(5, rbean.getString("SignalHeadStateFlashingGreen")+":","resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-            signalIconEditor.setIcon(6, rbean.getString("SignalHeadStateDark")+":","resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-            signalIconEditor.setIcon(7, rbean.getString("SIgnalHeadStateHeld")+":","resources/icons/smallschematics/searchlights/left-held-marker.gif");
-            signalIconEditor.complete();
-            signalFrame = new JFrame("Change signal icons");
-            signalFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
-            signalFrame.getContentPane().add(signalIconEditor);
-            signalFrame.pack();
-
-            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
-            j.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        signalFrame.setVisible(true);
-                    }
-                }
-                                           );
-            panel.add(j);
-
-            this.getContentPane().add(panel);
+            };
+            signalIconEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(signalIconFrame);
         }
 
         // add a memory
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            memoryAdd.setEnabled(false);
-            memoryAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(memoryAdd);
-            panel.add(nextMemory);
-            memoryAdd.addActionListener( new ActionListener() {
+            memoryIconEditor = new IconAdder();
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            MemoryManager manager = InstanceManager.memoryManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addMemory();
                 }
-            });
-            nextMemory.addKeyListener(new KeyAdapter() {
-                    public void keyReleased(KeyEvent a){
-                        if (nextMemory.getText().equals("")) {
-                            memoryAdd.setEnabled(false);
-                            memoryAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-                        } else {
-                            memoryAdd.setEnabled(true);
-                            memoryAdd.setToolTipText(null);
-                        }
-                    }
-                });
-            this.getContentPane().add(panel);
+            };
+            _addIconBox.addItem(makeAddIconFrame("AddMemoryValue", "addMemValueToPanel", "SelectMemory", memoryIconEditor));
+            memoryIconEditor.setPickList(ts);
+            memoryIconEditor.complete(addIconAction, null);
         }
 
         // add a reporter
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            reporterAdd.setEnabled(false);
-            reporterAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-            panel.add(reporterAdd);
-            panel.add(nextReporter);
-            reporterAdd.addActionListener( new ActionListener() {
+            reporterIconEditor = new IconAdder();
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            ReporterManager manager = InstanceManager.reporterManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addReporter();
                 }
-            });
-            nextReporter.addKeyListener(new KeyAdapter() {
-                    public void keyReleased(KeyEvent a){
-                        if (nextReporter.getText().equals("")) {
-                            reporterAdd.setEnabled(false);
-                            reporterAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
-                        } else {
-                            reporterAdd.setEnabled(true);
-                            reporterAdd.setToolTipText(null);
-                        }
-                    }
-                });
-            this.getContentPane().add(panel);
+            };
+            _addIconBox.addItem(makeAddIconFrame("AddReporterValue", "addReportValueToPanel", 
+                                                 "SelectReporter", reporterIconEditor));
+            reporterIconEditor.setPickList(ts);
+            reporterIconEditor.complete(addIconAction, null);
         }
 
-        // add an RPS reporter
+        // add Background
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(rpsAdd);
-            rpsAdd.addActionListener( new ActionListener() {
+            bkgrndEditor = new IconAdder();
+            bkgrndEditor.setIcon(0, rb.getString("background"),"resources/PanelPro.gif");
+
+            bdIconFrame = makeAddIconFrame("AddBackground", "addBackgroundToPanel", "pressAdd", bkgrndEditor);
+            addHelpMenu(bdIconFrame, "package.jmri.jmrit.display.IconAdder");
+            bkgrndEditor.makeIconPanel();
+
+            ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    addRpsReporter();
+                    addBackground();
                 }
-            });
-            this.getContentPane().add(panel);
+            };
+            ActionListener changeIconAction = new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        bkgrndEditor.addCatalog();
+                        bdIconFrame.pack();
+                    }
+            };
+            bkgrndEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(bdIconFrame);
         }
 
         // Add a MultiSensor indicator
         {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(multiSensorAdd);
-            multiSensorAdd.setEnabled(true);
-            multiSensorAdd.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        startMultiSensor();
-                    }
-                }
-                                           );
-            this.getContentPane().add(panel);
-        }
-        
-        // add a fast clock indicator
-        {
-            JPanel panel = new JPanel();
-            panel.setLayout(new FlowLayout());
-            panel.add(clockAdd);
-            clockAdd.setEnabled(true);
-            clockAdd.addActionListener( new ActionListener() {
+            multiSensorEditor = new MultiSensorIconAdder();
+            multiSensorEditor.setIcon(0, rbean.getString("BeanStateInconsistent"),
+                                      "resources/icons/USS/plate/levers/l-inconsistent.gif");
+            multiSensorEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+                                      "resources/icons/USS/plate/levers/l-unknown.gif");
+            multiSensorEditor.setIcon(2, rbean.getString("SensorStateInactive"),
+                                      "resources/icons/USS/plate/levers/l-inactive.gif");
+            multiSensorEditor.setIcon(3, "foo",
+                                      "resources/icons/USS/plate/levers/l-left.gif");
+            multiSensorEditor.setIcon(4, "foo",
+                                      "resources/icons/USS/plate/levers/l-vertical.gif");
+            multiSensorEditor.setIcon(5, "foo",
+                                      "resources/icons/USS/plate/levers/l-right.gif");
+
+            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+            SensorManager manager = InstanceManager.sensorManagerInstance();
+            List systemNameList = manager.getSystemNameList();
+            Iterator iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                ts.add(manager.getBySystemName((String)iter.next()));
+            }
+            multiSensorFrame = makeAddIconFrame("AddMultiSensor", "addIconsToPanel", 
+                                               "SelectSensor", multiSensorEditor);
+            addHelpMenu(multiSensorFrame, "package.jmri.jmrit.display.MultiSensorIconAdder");
+            multiSensorEditor.makeIconPanel();
+            multiSensorEditor.setPickList(ts);
+
+            ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    addClock();
-                    // clockAdd.setEnabled(false);
+                    addMultiSensor();
                 }
-            });
-            this.getContentPane().add(panel);
+            };
+            ActionListener changeIconAction = new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        multiSensorEditor.addCatalog();
+                        multiSensorFrame.pack();
+                    }
+            };
+            multiSensorEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(multiSensorFrame);
         }
+        // add an RPS reporter
+        _addIconBox.addItem(makeAddIconFrame("AddRPSreporter", null, null, null));
+
+        // add a fast clock indicator
+        _addIconBox.addItem(makeAddIconFrame("AddFastClock", null, null, null));
+
+        // Add icon label
+        {
+            iconEditor = new IconAdder();
+            iconEditor.setIcon(0, rb.getString("icon"),"resources/jmri48x48.gif");
+            iconFrame = makeAddIconFrame("AddIcon", "addIconToPanel", "pressAdd", iconEditor);
+            addHelpMenu(iconFrame, "package.jmri.jmrit.display.IconAdder");
+            iconEditor.makeIconPanel();
+
+            ActionListener addIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addIcon();
+                }
+            };
+            ActionListener changeIconAction = new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        iconEditor.addCatalog();
+                        iconFrame.pack();
+                    }
+            };
+            iconEditor.complete(addIconAction, changeIconAction);
+            _addIconBox.addItem(iconFrame);
+        }
+
+        _addIconBox.setSelectedIndex(-1);
+        _addIconBox.addItemListener(this);  // must be AFTER no selection is set
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        JPanel p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
+        p2.add(new JLabel(rb.getString("selectTypeIcon")));
+        p1.add(p2);
+        p1.add(_addIconBox);
+        this.getContentPane().add(p1);
 
         // edit, position, control controls
         {
@@ -659,54 +629,127 @@ public class PanelEditor extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
                     setAllPositionable(false);
+                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                 }
             });
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
     }  // end ctor
 
-    // For choosing background images
-    JFileChooser inputFileChooser = null;
+    JFrameItem makeAddIconFrame(String title, String select1, String select2, IconAdder editor) {
+        JFrameItem frame = new JFrameItem(rb.getString(title));
+        if (editor != null) {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            p.add(new JLabel(rb.getString(select1)));
+            p.add(new JLabel(rb.getString(select2)));
+            frame.getContentPane().add(p,BorderLayout.NORTH);
+            frame.getContentPane().add(editor);
+
+            JMenuBar menuBar = new JMenuBar();
+            JMenu findIcon = new JMenu(rb.getString("findIconMenu"));
+            menuBar.add(findIcon);
+            JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
+            editItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ImageIndexEditor ii = ImageIndexEditor.instance();
+                        ii.pack();
+                        ii.setVisible(true);
+                    }
+                });
+            findIcon.add(editItem);
+            findIcon.addSeparator();
+            JMenuItem openItem = new JMenuItem(rb.getString("openDirMenu"));
+            ActionListener action = new ActionListener() {
+                    IconAdder myEditor;
+                    public void actionPerformed(ActionEvent e) {
+                        myEditor.openDirectory();
+                    }
+                    ActionListener init(IconAdder editor) {
+                        myEditor = editor;
+                        return this;
+                    }
+            }.init(editor);
+            openItem.addActionListener(action);
+            findIcon.add(openItem);
+            JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
+            action = new ActionListener() {
+                    IconAdder myEditor;
+                    public void actionPerformed(ActionEvent e) {
+                        myEditor.searchFS(true);
+                    }
+                    ActionListener init(IconAdder editor) {
+                        myEditor = editor;
+                        return this;
+                    }
+            }.init(editor);
+            searchItem.addActionListener(action);
+            findIcon.add(searchItem);
+            frame.setJMenuBar(menuBar);
+            editor.setParent(frame);
+            // when this window closes, check for saving 
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+                    }
+                });
+        }
+
+        frame.pack();
+        return frame;
+    }
+    void addHelpMenu(JFrame frame, String ref) {
+        JMenuBar bar = frame.getJMenuBar();
+        if (bar == null) bar = new JMenuBar();
+        // add Window menu
+		bar.add(new jmri.util.WindowMenu(frame)); // * GT 28-AUG-2008 Added window menu
+		// add Help menu
+        jmri.util.HelpUtil.helpMenu(bar, frame, ref, true);
+        frame.setJMenuBar(bar);
+    }
+
+    // Allows these objects to be used as JComboBox items
+    class JFrameItem extends JFrame {
+        JFrameItem (String title) {
+            super(title);
+        }
+        public String toString() {
+            return this.getTitle();
+        }
+    }
+
+    int locationX = 0;
+    int locationY = 0;
+    static final int DELTA = 20; 
+
+    /*
+    *  itemListener for JComboBox
+    */
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            JFrame frame = (JFrame)e.getItem();
+            if (rb.getString("AddFastClock").equals(frame.getTitle())) {
+                addClock();
+            } else if (rb.getString("AddRPSreporter").equals(frame.getTitle())) {
+                addRpsReporter();
+            } else {
+                frame.setLocation(locationX, locationY);
+                locationX += DELTA;
+                locationY += DELTA;
+                frame.setVisible(true);
+            }
+            _addIconBox.setSelectedIndex(-1);
+        }
+    }
     
     /**
      * Button pushed, add a background image. Note that a background image
-     * differs from a regular icon only in the level at which it's presented,
-     * and that it can be selected as a file anywhere in the file system.
+     * differs from a regular icon only in the level at which it's presented.
      */
     void addBackground() {
-        if (inputFileChooser == null) {
-            inputFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources");
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
-            filt.addExtension("gif");
-            filt.addExtension("jpg");
-            inputFileChooser.setFileFilter(filt);
-        }
-        inputFileChooser.rescanCurrentDirectory();
-        
-        int retVal = inputFileChooser.showOpenDialog(this);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
- 
-        String name = inputFileChooser.getSelectedFile().getPath();
-        String defaultPrefDir = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+java.io.File.separator;
-        String defaultProgDir = System.getProperty("user.dir")+java.io.File.separator;
-        // try to convert to portable path
-        int len = name.length();
-        // first, try relative to preferences directory, a "file:" name
-        if (name.startsWith(defaultPrefDir))
-            name = "file:"+name.substring(defaultPrefDir.length(),len);
-        
-        // next, try relative to program directory, a "resource:" name
-        if (name.startsWith(defaultProgDir))
-            name = name.substring(defaultProgDir.length(),len);
-            
-        if (log.isDebugEnabled()) {
-            log.debug("getPath: "+inputFileChooser.getSelectedFile().getPath());
-            log.debug("prgPath: "+defaultProgDir);
-            log.debug("prfPath: "+defaultPrefDir);
-            log.debug("   name: "+name);
-        }
-        
-        NamedIcon icon = jmri.jmrit.catalog.CatalogPane.getIconByName(name);
+        // most likely the image is scaled.  get full size from URL
+        String url = bkgrndEditor.getIcon(rb.getString("background")).getURL();
+        NamedIcon icon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
         PositionableLabel l = new PositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
@@ -722,16 +765,12 @@ public class PanelEditor extends JmriJFrame {
      * Add a turnout indicator to the target
      */
     void addTurnoutR() {
-        int errorCheck = checkEntry("Turnout" , nextTurnoutR.getText());
-        if (errorCheck != 0) return;
         TurnoutIcon l = new TurnoutIcon();
-        l.setClosedIcon(turnoutRIconEditor.getIcon(0));
-        l.setThrownIcon(turnoutRIconEditor.getIcon(1));
-        l.setInconsistentIcon(turnoutRIconEditor.getIcon(2));
-        l.setUnknownIcon(turnoutRIconEditor.getIcon(3));
-
-        l.setTurnout(nextTurnoutR.getText());
-
+        l.setClosedIcon(turnoutRIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getClosedText()));
+        l.setThrownIcon(turnoutRIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getThrownText()));
+        l.setInconsistentIcon(turnoutRIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
+        l.setUnknownIcon(turnoutRIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
+        l.setTurnout((Turnout)turnoutRIconEditor.getTableSelection());
         setNextLocation(l);
         putTurnout(l);
         // always allow new items to be moved
@@ -739,16 +778,12 @@ public class PanelEditor extends JmriJFrame {
         moveToFront(l);
     }
     void addTurnoutL() {
-        int errorCheck = checkEntry("Turnout" , nextTurnoutL.getText());
-        if (errorCheck != 0) return;
         TurnoutIcon l = new TurnoutIcon();
-        l.setClosedIcon(turnoutLIconEditor.getIcon(0));
-        l.setThrownIcon(turnoutLIconEditor.getIcon(1));
-        l.setInconsistentIcon(turnoutLIconEditor.getIcon(2));
-        l.setUnknownIcon(turnoutLIconEditor.getIcon(3));
-
-        l.setTurnout(nextTurnoutL.getText());
-
+        l.setClosedIcon(turnoutLIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getClosedText()));
+        l.setThrownIcon(turnoutLIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getThrownText()));
+        l.setInconsistentIcon(turnoutLIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
+        l.setUnknownIcon(turnoutLIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
+        l.setTurnout((Turnout)turnoutLIconEditor.getTableSelection());
         setNextLocation(l);
         putTurnout(l);
         // always allow new items to be moved
@@ -785,35 +820,17 @@ public class PanelEditor extends JmriJFrame {
         // reshow the panel
         target.validate();
     }
-    /**
-     * Check for valid names on input
-     */
-    int checkEntry(String type, String name) {
-        int errorFlag = 0;
-        String errorMessage = "";
-        if (name.equals("")) {
-            errorFlag = 1;
-            errorMessage = type + "name not valid. Requires a number or System Name or User Name.\n"
-                + "User Names must be predefined using " + type + " Table tool.\n";
-        }
-        if (errorFlag != 0) {
-            JOptionPane.showMessageDialog(this, errorMessage, rb.getString("LabelInputError"),
-                                          JOptionPane.ERROR_MESSAGE);
-        }
-        return errorFlag;
-    }
+
     /**
      * Add a sensor indicator to the target
      */
     void addSensor() {
-        int errorCheck = checkEntry("Sensor" , nextSensor.getText());
-        if (errorCheck != 0) return;
         SensorIcon l = new SensorIcon();
-        l.setActiveIcon(sensorIconEditor.getIcon(0));
-        l.setInactiveIcon(sensorIconEditor.getIcon(1));
-        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
-        l.setUnknownIcon(sensorIconEditor.getIcon(3));
-        l.setSensor(nextSensor.getText());
+        l.setActiveIcon(sensorIconEditor.getIcon(rbean.getString("SensorStateActive")));
+        l.setInactiveIcon(sensorIconEditor.getIcon(rbean.getString("SensorStateInactive")));
+        l.setInconsistentIcon(sensorIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
+        l.setUnknownIcon(sensorIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
+        l.setSensor((Sensor)sensorIconEditor.getTableSelection());
         setNextLocation(l);
         putSensor(l);
         // always allow new items to be moved
@@ -829,27 +846,30 @@ public class PanelEditor extends JmriJFrame {
         target.validate();
     }
 
-    /**
-     * Invoke a window to allow you to add a MultiSensor indicator to the target
-     */
-    void startMultiSensor() {
-        if (multiSensorFrame == null) {
-            // create a common edit frame
-            multiSensorFrame = new MultiSensorIconFrame(this);
-            multiSensorFrame.initComponents();
-            multiSensorFrame.pack();
-        }  
-        multiSensorFrame.setVisible(true);
-    }
     // Invoked with window has new sensor ready
-    public void addMultiSensor(MultiSensorIcon l) {
-        setNextLocation(l);
-        putMultiSensor(l);
-		multiSensorFrame = null;
-        // always allow new items to be moved
-        l.setPositionable(true);
-        moveToFront(l);
+    public void addMultiSensor() {
+        MultiSensorIcon m = new MultiSensorIcon();
+        m.setUnknownIcon(multiSensorEditor.getIcon(rbean.getString("BeanStateUnknown")));
+        m.setInconsistentIcon(multiSensorEditor.getIcon(rbean.getString("BeanStateInconsistent")));
+        m.setInactiveIcon(multiSensorEditor.getIcon(rbean.getString("SensorStateInactive")));
+        int numPositions = multiSensorEditor.getNumIcons();
+        for (int i=3; i<numPositions; i++) {
+            NamedIcon icon = multiSensorEditor.getIcon(i);
+            Sensor sensor = multiSensorEditor.getSensor(i);
+            m.addEntry(sensor, icon);
+        }
+        m.setUpDown(multiSensorEditor.getUpDown());
+        addMultiSensor(m);
     }
+
+    public void addMultiSensor(MultiSensorIcon m) {
+        setNextLocation(m);
+        putMultiSensor(m);
+        // always allow new items to be moved
+        m.setPositionable(true);
+        moveToFront(m);
+    }
+
     // invoked to install the sensor
     public void putMultiSensor(MultiSensorIcon l) {
         l.invalidate();
@@ -865,15 +885,15 @@ public class PanelEditor extends JmriJFrame {
      */
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
-        l.setRedIcon(signalIconEditor.getIcon(0));
-        l.setFlashRedIcon(signalIconEditor.getIcon(1));
-        l.setYellowIcon(signalIconEditor.getIcon(2));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
-        l.setGreenIcon(signalIconEditor.getIcon(4));
-        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
-        l.setDarkIcon(signalIconEditor.getIcon(6));
-        l.setHeldIcon(signalIconEditor.getIcon(7));
-        l.setSignalHead(nextSignalHead.getText());
+        l.setRedIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateRed")));
+        l.setFlashRedIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingRed")));
+        l.setYellowIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateYellow")));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingYellow")));
+        l.setGreenIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateGreen")));
+        l.setFlashGreenIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingGreen")));
+        l.setDarkIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateDark")));
+        l.setHeldIcon(signalIconEditor.getIcon(rbean.getString("SIgnalHeadStateHeld")));
+        l.setSignalHead((SignalHead)signalIconEditor.getTableSelection());
         setNextLocation(l);
         putSignal(l);
         // always allow new items to be moved
@@ -911,9 +931,6 @@ public class PanelEditor extends JmriJFrame {
         // reshow the panel
         target.validate();
     }
-    void clockAddEnable(boolean enable) {
-        clockAdd.setEnabled(enable);
-    }
 
     /**
      * Add a label to the target
@@ -938,7 +955,7 @@ public class PanelEditor extends JmriJFrame {
 
     void addMemory() {
         MemoryIcon l = new MemoryIcon();
-        l.setMemory(nextMemory.getText());
+        l.setMemory((Memory)memoryIconEditor.getTableSelection());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
@@ -950,7 +967,7 @@ public class PanelEditor extends JmriJFrame {
     
     void addReporter() {
         ReporterIcon l = new ReporterIcon();
-        l.setReporter(nextReporter.getText());
+        l.setReporter((Reporter)reporterIconEditor.getTableSelection());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(REPORTERS);
@@ -973,10 +990,9 @@ public class PanelEditor extends JmriJFrame {
     
     /**
      * Add an icon to the target
-     */
-    
+     */    
     void addIcon() {
-        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0) );
+        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(rb.getString("icon")) );
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
         putLabel(l);
@@ -1055,9 +1071,9 @@ public class PanelEditor extends JmriJFrame {
     public void dispose() {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().deregister(this);
-		jmri.jmrit.display.PanelMenu.instance().deletePanel(self);
+		jmri.jmrit.display.PanelMenu.instance().deletePanel((Object)self);
 		setVisible(false);
-		frame.setVisible(false);		
+		frame.setVisible(false);
         // clean up local links to push GC
         contents.clear();
         target = null;
@@ -1313,9 +1329,9 @@ public class PanelEditor extends JmriJFrame {
             }
             public Component add(Component c, int i) {
                 if (log.isDebugEnabled()) log.debug("size was "+w+","+h);
-                int hnew = Math.max(h,
+                int hnew = (int)Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = Math.max(w,
+                int wnew = (int)Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
                 return super.add(c, i);
@@ -1324,9 +1340,9 @@ public class PanelEditor extends JmriJFrame {
                 if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
                 super.add(c, o);
                 if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
-                int hnew = Math.max(h,
+                int hnew = (int)Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = Math.max(w,
+                int wnew = (int)Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }
@@ -1397,7 +1413,7 @@ public class PanelEditor extends JmriJFrame {
         return targetFrame;
 
     }
-    
+
     /**
      * Internal method to move a component to the front
      * of it's level, used when each item is added.

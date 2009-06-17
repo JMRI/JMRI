@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ImageIndex.shtml,v 1.1 2009-06-16 16:38:11 pete_cressman Exp $ -->
+<!-- $Id: ImageIndex.shtml,v 1.2 2009-06-17 06:16:48 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -46,9 +46,14 @@ If you have not created a "resources" directory in your JMRI preferences directo
 you will not see this tree.  Other trees that you may see are those that you have
 installed after using the <b>Open Directory</b> menu item in one of the Icon Editor 
 windows and pressed the <b>Add to Catalog</b> button.  Below the trees is a "Preview"
-panel that displayes the images found in any node that you have selected from
+pane that displays the images found in any node that you have selected from
 one of the above trees.
 </p>
+<p>This pane has a label that states how many image files are referenced in the node.  
+Beneath each image (icon) is a label that states the "scale" at which the 
+image is displayed.   Below the icons
+are radio buttons that provide three background for the icons.  This may
+help you determine what parts of the icon are opaque and what parts are transparent.</p>
 <p>
 The right side is the Image Index you may edit.  It is similar to the right pane
 in that the top panel is the tree of the Index you are creating.  Likewise, the 
@@ -56,33 +61,47 @@ bottom panel displays the
 images found in any node of the tree that you select.
 </p>
 
-<UL>
-	 new components
-	
-</UL>
 
 <H2>The Menus</H2>
-Add Node.
-Delete Node.
-Rename Node.
 
-<H2>Using the Image Index Editor</H2>
-<p>
-Drag any icon from the bottom (left) panel of the Catalog pane to a node of the Index tree 
-(right) pane and that icon is registered in the Index.
+<p>The <b>Find Icons</b> menu has two items:
+<UL>
+        <LI><b>Store ImageIndex</b>.  This stores apermanent record of the Image Index
+        that will be restored the next time the Panel Editor is opened.  The
+        Image Index will be included in the Catalog trees used by the
+        Icon Editors.</LI>
+        
+        <LI><b>Open a File System Directory</b>.  This opens a file chooser dialog where
+        you may open any directory that that has image files.  To open the directory,
+        select any image file contained in it and a window will attempt to display all 
+        the image files found in the directory.
+        <p>See  
+        <a href="../display/IconAdder.shtml">Icon Editors</a> for more details on this
+        menu item.</p>
+        <p>The icons displayed in this directory window can added to the Image Index.
+</UL>
+<p>The <b>Edit</b> menu has three items:
+<UL>
+        <LI><b>Add Node</b>.  First select a node in the Image Index tree.  Then, use this
+        menu item to add a sub-node the the selected node.</LI> 
+        <LI><b>Delete Node</b>.  First select a node in the Image Index tree.  Then, use this
+        menu item to delete the node.</LI> 
+        <LI><b>Rename Node</b>.  First select a node in the Image Index tree.  Then, use this
+        menu item to change the name of the node.</LI> 
+</UL>
+
+<H2>Adding Icons to the Image Index</H2>
+
+<p>Use "Drag and Drop" to copy an icon from either the Catalog pane (left pane) or a File 
+Directory window to a node of the Image Index tree (right pane).
+Actually, it is only the reference to the location of the icon that is saved by the 
+Image Index.  As long the file remains in place, it will be displayed by the Catalog, the
+Image Index and your Panel (if you have installed it there).
 </p>
-<p>
-Using the <b>Open Directory</b> menu item in the <b>Find Icons</b> memu will let you
-choose adirectory that has additional images.  Icons can be dradgged from these 
-directories and dropped into a Index node.
+<p>PopUp menus can be activated in the Image Index tree preview pane.  This displays the 
+name and location of the icon.  It also provides an item that will delete the entry of
+the icon from the Image Index.
 </p>
-
-<H2>PopUps in the Index (right) Pane </H2>
-
-<H2>Saving the Image Index Editor</H2>
-
-
-<H2>How To</H2>
 
 
 <!--#include virtual="/Footer" -->

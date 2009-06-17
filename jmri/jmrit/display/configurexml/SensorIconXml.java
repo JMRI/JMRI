@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SensorIcon;
@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -69,19 +69,19 @@ public class SensorIconXml implements XmlAdapter {
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = CatalogPane.getIconByName(name));
+        l.setActiveIcon(active = CatalogPanel.getIconByName(name));
 
         NamedIcon inactive;
         name = element.getAttribute("inactive").getValue();
-        l.setInactiveIcon(inactive = CatalogPane.getIconByName(name));
+        l.setInactiveIcon(inactive = CatalogPanel.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
+        l.setUnknownIcon(unknown = CatalogPanel.getIconByName(name));
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = CatalogPanel.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");
@@ -106,7 +106,8 @@ public class SensorIconXml implements XmlAdapter {
         else
             l.setMomentary(false);
             
-        l.setSensor(element.getAttribute("sensor").getValue());
+        l.setSensor(jmri.InstanceManager.sensorManagerInstance().getSensor(
+            element.getAttribute("sensor").getValue()));
 
         // find coordinates
         int x = 0;

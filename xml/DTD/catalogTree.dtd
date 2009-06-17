@@ -1,0 +1,22 @@
+<!-- Defines XML for CatalogTree information -->
+<!--  $ -->
+
+<!-- This DTD is Copyright 2009.  You may freely use               -->
+<!-- it subject to the Open Source Artistic License, a copy of     -->
+<!-- which is available in the COPYING file distributed along with -->
+<!-- this file or at http://jmri.sf.net/COPYING                    -->
+<!-- For more information on the JMRI project, including this DTD, -->
+<!-- see http://jmri.sf.net                                        -->
+
+<!ELEMENT CatalogTreesXml (catalogTrees)>
+
+<!ELEMENT catalogTrees (catalogTree*)>
+  <!ELEMENT catalogTree (node) >
+    <!ATTLIST catalogTree systemName	 CDATA #REQUIRED>  
+    <!ATTLIST catalogTree userName	 CDATA #REQUIRED>
+    <!ELEMENT node (node*, leaf*) >
+        <!ATTLIST node nodeName		 CDATA #REQUIRED>
+        <!ELEMENT leaf EMPTY >
+            <!ATTLIST leaf name		 CDATA #REQUIRED>
+            <!ATTLIST leaf path		 CDATA #REQUIRED>
+

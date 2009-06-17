@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -70,6 +70,11 @@ public class NamedIcon extends ImageIcon {
      * Return the human-readable name of this icon
      */
     public String getName() { return mName; }
+
+    /**
+     * Return the URL of this icon
+     */
+    public String getURL() { return mURL; }
 
     /**
      * Return the 0-3 number of 90-degree rotations needed to

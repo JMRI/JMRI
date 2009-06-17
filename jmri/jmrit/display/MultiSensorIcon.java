@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -46,21 +46,26 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     
     ArrayList<Entry> entries = new ArrayList<Entry>();
     
+
+    public void addEntry(Sensor sensor, NamedIcon icon) {
+        if (sensor != null) {
+            Entry e = new Entry();
+            sensor.addPropertyChangeListener(this);
+            e.sensor = sensor;
+            e.icon = icon;
+            entries.add(e);
+            setProperToolTip();
+            displayState();
+        } else {
+            log.error("Sensor not available, icon won't see changes");
+        }
+    }
+
     public void addEntry(String pName, NamedIcon icon) {
-        Entry e = new Entry();
         Sensor sensor;
         if (InstanceManager.sensorManagerInstance()!=null) {
             sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
-                sensor.addPropertyChangeListener(this);
-                e.sensor = sensor;
-                e.icon = icon;
-                entries.add(e);
-                setProperToolTip();
-                displayState();
-            } else {
-                log.error("Sensor '"+pName+"' not available, icon won't see changes");
-            }
+            addEntry(sensor, icon) ;
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");
         }
@@ -77,10 +82,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     String inactiveName = "resources/icons/USS/plate/levers/l-inactive.gif";
     NamedIcon inactive = new NamedIcon(inactiveName, inactiveName);
 
-    String inconsistentName = "resources/icons/USS/plate/levers/l-unknown.gif";
+    String inconsistentName = "resources/icons/USS/plate/levers/l-inconsistent.gif";
     NamedIcon inconsistent = new NamedIcon(inconsistentName, inconsistentName);
 
-    String unknownName = "resources/icons/USS/plate/levers/l-inconsistent.gif";
+    String unknownName = "resources/icons/USS/plate/levers/l-unknown.gif";
     NamedIcon unknown = new NamedIcon(unknownName, unknownName);
 
     public NamedIcon getInactiveIcon() { return inactive; }

@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -166,7 +166,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * one-liner in this class, it is a separate member to facilitate testing.
      */
     void locateClassFailed(Throwable ex, String adapterName, Object o) {
-        log.error("could not load adapter class "+adapterName);
+        log.error(ex.getMessage()+" could not load adapter class "+adapterName);
+        if (log.isDebugEnabled()) ex.printStackTrace();
     }
 
     protected Element initStore() {
@@ -334,6 +335,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 		// all loaded, initialize objects as necessary
 		InstanceManager.logixManagerInstance().activateAllLogixs();
 		InstanceManager.layoutBlockManagerInstance().initializeLayoutBlockPaths();
+        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
         return result;
     }
 

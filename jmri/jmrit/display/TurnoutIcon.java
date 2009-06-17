@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -44,20 +44,27 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Attached a named turnout to this display item
      * @param pName Used as a system/user name to lookup the turnout object
      */
-    public void setTurnout(String pName) {
-        if (InstanceManager.turnoutManagerInstance()!=null) {
-            turnout = InstanceManager.turnoutManagerInstance().
-                provideTurnout(pName);
-            if (turnout != null) {
-                displayState(turnoutState());
-                turnout.addPropertyChangeListener(this);
-                setProperToolTip();
-            } else {
-                log.error("Turnout '"+pName+"' not available, icon won't see changes");
-            }
-        } else {
-            log.error("No TurnoutManager for this protocol, icon won't see changes");
-        }
+     public void setTurnout(String pName) {
+         if (InstanceManager.turnoutManagerInstance()!=null) {
+             turnout = InstanceManager.turnoutManagerInstance().
+                 provideTurnout(pName);
+             if (turnout != null) {
+                 setTurnout(turnout);
+             } else {
+                 log.error("Turnout '"+pName+"' not available, icon won't see changes");
+             }
+         } else {
+             log.error("No TurnoutManager for this protocol, icon won't see changes");
+         }
+     }
+
+    public void setTurnout(Turnout to) {
+        turnout = to;
+        if (turnout != null) {
+            displayState(turnoutState());
+            turnout.addPropertyChangeListener(this);
+            setProperToolTip();
+        } 
     }
 
     public Turnout getTurnout() { return turnout; }
@@ -257,7 +264,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     public void dispose() {
-        turnout.removePropertyChangeListener(this);
+        if (turnout != null) {
+            turnout.removePropertyChangeListener(this);
+        }
         turnout = null;
 
         closed = null;

@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -92,15 +92,15 @@ public class MultiSensorIconXml implements XmlAdapter {
 
         NamedIcon inactive;
         name = element.getAttribute("inactive").getValue();
-        l.setInactiveIcon(inactive = CatalogPane.getIconByName(name));
+        l.setInactiveIcon(inactive = CatalogPanel.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
+        l.setUnknownIcon(unknown = CatalogPanel.getIconByName(name));
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = CatalogPanel.getIconByName(name));
 
         int rotation = 0;
         try {
@@ -132,7 +132,7 @@ public class MultiSensorIconXml implements XmlAdapter {
             Element item = items.get(i);
             String sensor = item.getAttribute("sensor").getValue();
             String icon = item.getAttribute("icon").getValue();
-            NamedIcon nicon = CatalogPane.getIconByName(icon);
+            NamedIcon nicon = CatalogPanel.getIconByName(icon);
             if (rotation!=0) nicon.setRotation(rotation, l);
             l.addEntry(sensor, nicon);
         }

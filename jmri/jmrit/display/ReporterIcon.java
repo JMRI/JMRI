@@ -12,7 +12,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -31,19 +31,26 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
      * Attached a named Reporter to this display item
      * @param pName Used as a system/user name to lookup the Reporter object
      */
-    public void setReporter(String pName) {
-        if (InstanceManager.reporterManagerInstance()!=null) {
-            reporter = InstanceManager.reporterManagerInstance().
-                provideReporter(pName);
-            if (reporter != null) {
-                displayState();
-                reporter.addPropertyChangeListener(this);
-                setProperToolTip();
-            } else {
-                log.error("Reporter '"+pName+"' not available, icon won't see changes");
-            }
-        } else {
-            log.error("No ReporterManager for this protocol, icon won't see changes");
+     public void setReporter(String pName) {
+         if (InstanceManager.reporterManagerInstance()!=null) {
+             reporter = InstanceManager.reporterManagerInstance().
+                 provideReporter(pName);
+             if (reporter != null) {
+                 setReporter(reporter);
+             } else {
+                 log.error("Reporter '"+pName+"' not available, icon won't see changes");
+             }
+         } else {
+             log.error("No ReporterManager for this protocol, icon won't see changes");
+         }
+     }
+
+    public void setReporter(Reporter r) {
+        reporter = r;
+        if (reporter != null) {
+            displayState();
+            reporter.addPropertyChangeListener(this);
+            setProperToolTip();
         }
     }
 

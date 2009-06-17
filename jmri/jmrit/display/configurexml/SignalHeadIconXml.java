@@ -2,8 +2,9 @@
 
 package jmri.jmrit.display.configurexml;
 
+import jmri.SignalHead;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SignalHeadIcon;
@@ -14,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -74,51 +75,59 @@ public class SignalHeadIconXml implements XmlAdapter {
 
         SignalHeadIcon l = new SignalHeadIcon();
         // handle old format!
-        if (element.getAttribute("signalhead") == null) {
+        Attribute attr = element.getAttribute("signalhead"); 
+        if (attr == null) {
             log.error("incorrect information for signal head; must use signalhead name");
             return;
         }
+        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(
+            attr.getValue());
+        if (sh != null) {
+            l.setSignalHead(sh);
+        } else {
+            log.error("SignalHead named '"+attr.getValue()+"' not found.");
+            return;
+        }
 
-        l.setSignalHead(element.getAttribute("signalhead").getValue());
 
         NamedIcon red;
         name = element.getAttribute("red").getValue();
-        l.setRedIcon(red = CatalogPane.getIconByName(name));
+        l.setRedIcon(red = CatalogPanel.getIconByName(name));
 
         NamedIcon yellow;
         name = element.getAttribute("yellow").getValue();
-        l.setYellowIcon(yellow = CatalogPane.getIconByName(name));
+        l.setYellowIcon(yellow = CatalogPanel.getIconByName(name));
 
         NamedIcon green;
         name = element.getAttribute("green").getValue();
-        l.setGreenIcon(green = CatalogPane.getIconByName(name));
+        l.setGreenIcon(green = CatalogPanel.getIconByName(name));
 
         Attribute a; 
 
         NamedIcon held = null;
         a = element.getAttribute("held");
         if (a!=null) 
-            l.setHeldIcon(held = CatalogPane.getIconByName(a.getValue()));
+            l.setHeldIcon(held = CatalogPanel.getIconByName(a.getValue()));
 
         NamedIcon dark = null;
         a = element.getAttribute("dark");
         if (a!=null) 
-            l.setDarkIcon(dark = CatalogPane.getIconByName(a.getValue()));
+            l.setDarkIcon(dark = CatalogPanel.getIconByName(a.getValue()));
 
         NamedIcon flashred = null;
         a = element.getAttribute("flashred");
         if (a!=null) 
-            l.setFlashRedIcon(flashred = CatalogPane.getIconByName(a.getValue()));
+            l.setFlashRedIcon(flashred = CatalogPanel.getIconByName(a.getValue()));
 
         NamedIcon flashyellow = null;
         a = element.getAttribute("flashyellow");
         if (a!=null) 
-            l.setFlashYellowIcon(flashyellow = CatalogPane.getIconByName(a.getValue()));
+            l.setFlashYellowIcon(flashyellow = CatalogPanel.getIconByName(a.getValue()));
 
         NamedIcon flashgreen = null;
         a = element.getAttribute("flashgreen");
         if (a!=null) 
-            l.setFlashGreenIcon(flashgreen = CatalogPane.getIconByName(a.getValue()));
+            l.setFlashGreenIcon(flashgreen = CatalogPanel.getIconByName(a.getValue()));
         
         try {
             a = element.getAttribute("rotate");

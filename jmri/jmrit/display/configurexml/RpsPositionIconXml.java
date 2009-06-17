@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.RpsPositionIcon;
@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -75,11 +75,11 @@ public class RpsPositionIconXml implements XmlAdapter {
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = CatalogPane.getIconByName(name));
+        l.setActiveIcon(active = CatalogPanel.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("error").getValue();
-        l.setErrorIcon(unknown = CatalogPane.getIconByName(name));
+        l.setErrorIcon(unknown = CatalogPanel.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");

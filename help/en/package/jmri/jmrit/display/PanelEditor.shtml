@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.9 2009-03-12 18:15:47 matthewharris Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.10 2009-06-17 06:17:20 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
+<META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel Editor">
 
 <!-- Style -->
@@ -27,7 +27,8 @@
 
 A panel is a set of icons representing various components of a layout.
 Some of the icons available in JMRI include turnouts, signals, and
-sensors. You can also include a background icon for your panel.
+sensors. You can include a background icon for your panel and add the
+contents of memory and/or reporter variables.
 
 <p>
 The controls on the panel itself as 
@@ -46,100 +47,47 @@ Bronson's clinics page</A>.</P>
 
 <H2>Contents of the Panel Editor</H2>
 
-<A HREF="../../../../images/paneleditor.gif">
-<IMG SRC="../../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
-WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0" align="right"></a>
-
-Starting from the top:</P>
+The Panel Editor consists of the following items:</P>
 <UL>
-	<LI>Two text fields specifying where (in pixels) new components
+	<LI>Two text fields, <b>x:</b> and <b>y:</b>, specifying where (in pixels) new components
 	will be inserted on the panel. You can generally ignore these, as once
 	the components has been inserted you can drag it around by holding the
 	meta (Apple, command; Linux & Windows, right button) key down.</LI>
-	<LI>A button to pick a background image. The editor's drawing
-	capability is rudimentary and likely to stay that way for a long time.
-	To create CTC panels, complex track diagrams, etc, it may be easier to draw
-	them in some other program and insert them as the background image for
-	a JMRI control panel. (see below for more information)</LI>
+	<LI>A button to set the title of the Panel you are editing.  Press the 
+        button and you will be prompted to enter the text.</LI>
 	<LI>A button to add a text label. Put the desired text in the
 	field and click the button. You can slide the label around after
 	inserting it, but you currently can't edit the text later.</LI>
-	<LI>A button to add an icon as a label. This is a way to add track
-	symbols, etc. To change the icon, click the "Change icon" button to
-	activate the Change Icon panel. The current icon is shown at the top.
-	To change it, use the tree in the the window to find a new one. The new
-	icon will be shown at the bottom of the window. To use the new icon,
-	click on the icon at the top of the Change Icon panel to load the
-	selected icon. This is a general mechanism: Any icon in an Change Icon
-	window can be replaced by selecting the desired new one and clicking on
-	the icon to be replaced.</LI>
-	
-	<LI>Two sections for adding left- and right-bound turnouts. These
-	actually work the same way, only with different icons to represent the
-	states of the turnouts. Enter the turnout number (e.g. 23) and click
-	"Add turnout:". If you'd prefer a different graphic for the closed and
-	thrown states, you can change their icons as described above.</LI>
-	
-	<LI>A section for adding a sensor. Type the sensor number (e.g.
-	74) in the field and click "Add sensor:".</LI>
-	
-	<LI>A section for adding a 
-	<a href="../../../../html/tools/Signals.shtml">signal head</a> icon. 
-	You should define your
-	signal heads by using the 
-	<a href="../beantable/SignalTable.shtml">signal head table</a>
-	before attempting to add
-	them to your panel. Then type in the signal head number in the field
-	and click "Add signal head:".</LI>
+	<LI>A dropdown menu where you may choose the type of icon or
+        data you may put into the panel.
+        <UL>
+        <LI>Add Right Hand Turnout Icon</LI>
+        <LI>Add Left Hand Turnout Icon</LI>
+        <LI>Add Sensor Icon</LI>
+        <LI>Add Signal Icon</LI>
+        <LI>Add Memory Value</LI>
+        <LI>Add Reporter Value</LI>
+        <LI>Add Background Image</LI>
+        <LI>Add MultiSensor (i.e levers and switches) Icons</LI>
+        <LI>Add RPS Reporter Icon</LI>
+        <LI>Add Fast Clock</LI>
+        <LI>Add Icon (unassociated to any JMRI device)</LI> 
+        </UL>
+        In most cases, selecting one of these items will open a window from 
+        which icons or values can be choosen.
+        For the items referring to a JMRI device (e.g. turnout, sensor, etc.) a
+        pick list of the available devices is displayed.  From there you select
+        the device and the icon to represent it in the panel.  Exceptions to 
+        this are the Memory and Reporter items where the selection puts the 
+        value of item into the panel.  The Background item provides images
+        for the background of the panel.  Further details on using these 
+        windows are described on the <a href="IconAdder.shtml">Icon Editors page</a>.
+        </p>
+        <p>The two choices for icons that do not open windows are RPS Reporter 
+        and Fast Clock.  These items install their icons directly into the
+        panel.</p></LI>
 
-    <lI>A button for adding a 
-    <a href="../../../../html/tools/Memories.shtml">memory</a>.  Memories can contain various 
-    kinds of things, but are generaly used to hold text or
-    numbers that you want to display on a panel.
-    You can set the value of a memory with a 
-    <a href="../../../../html/tools/Logix.shtml">Logix</a>
-    or a 
-    <a href="../../../../html/tools/scripting/index.shtml">script</a>.
-    
-    <lI>A button for adding a 
-    <a href="../../../../html/tools/Reporters.shtml">reporter</a>.  
-    Reporters contain information from the layout
-    hardware such as train locations from
-    Digitrax Transponding or Lissy receivers.
-    You can also manipulate the value of a reporter with a 
-    <a href="../../../../html/tools/Logix.shtml">Logix</a>
-    or a 
-    <a href="../../../../html/tools/scripting/index.shtml">script</a>.
-    
-    <li>A button to add an 
-    <a href="../../../../html/hardware/rps/index.shtml">RPS reporter</a> icon. 
-    (This may only appear if you
-    have an RPS system attached and configured)
-    RPS is a system for measuring the positions of rolling stock on your
-    layout.  RPS Reporter icons move around on the panel to show
-    where the corresponding equipment is on the layout.
-    For more information, see the 
-    <a href="RpsIcon.shtml">RPS icon help page</a>.
-
-    <li>A button to add a 
-    <a href="MultiSensorIconFrame.shtml">mult-sensor icon</a>.
-    A multi-sensor icon displays the status of a number of sensors
-    in a single set of icons.  This can be useful, for example, to 
-    display the position of a rotary switch.
-    
-    <li>A button to add a 
-    <a href="../../../../html/tools/fastclock/index.shtml">fast clock</a>.
-    When clicked, a fast clock will appear in the default
-    location on the panel.  You can drag it around in the usual
-    way.
-
-</UL>
-
-<H2>Control Checkboxes/Comboboxes</H2>
-
-<UL>
-
-	<LI>Panel items popup menu active. When checked a small popup menu
+	<LI>A checkbox for making popup menus active. When checked a small popup menu
 	will appear when you right click an icon. Most icons allow you to
 	rotate and remove the icon. There are other options depending on the
 	type of icon, for example, you can disable a turnout so it doesn't
@@ -186,8 +134,9 @@ Starting from the top:</P>
 	
 	<LI>Panel scrollbars. (JMRI 2.5.2 and later). Allows you to choose which
 	scrollbars to display.</LI>
-
 </UL>
+
+<H2>After Creating A Panel</H2>
 
 <P>After getting the panel the way you want, you need to use the "Store
 panels..." entry in the "Panels" menu to write it to an XML file.</P>
@@ -195,10 +144,10 @@ panels..." entry in the "Panels" menu to write it to an XML file.</P>
 The JMRI library contains lots of contributed icons for representing CTC
 panels, LEDs, etc. You can browse through them using the file tree in
 the Change Icon frame.
-<P>You can also create your own icons. Create a new folder named "resources" in
-your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
-possible conflicts or loss of data during an upgrade. These new items will automatically 
-appear under "files" in the icon selections.</P>
+<P>Each of the Icon Editor windows has a <b>Find Icons</b> Menu that provides
+several ways to find and acquire additional icons to place into your panel.  See
+the <a href="IconAdder.shtml">Icon Editors page</a> for more details.
+
 
 <H2>Other types of panels</H2>
 

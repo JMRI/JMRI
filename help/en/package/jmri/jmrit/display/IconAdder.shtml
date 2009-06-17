@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IconAdder.shtml,v 1.1 2009-06-16 16:39:43 pete_cressman Exp $ -->
+<!-- $Id: IconAdder.shtml,v 1.2 2009-06-17 06:17:35 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Icon Editor Help</TITLE>
@@ -27,26 +27,30 @@
 
 <H2>Contents of the Icon Editors</H2>
 
-<p>Five of the Icon Editors (Right Hand Turnout, Left Hand Turnout, Sensor, Signal, MultiSensor)
-display a group of icons above a table.  The table lists all of the devices of the given type
-that have been defined.  There is one icon for each state that the device can have.  The icons 
-shown are the default icons, but you may change them.,/p>
+<p>Five of the Icon Editors: (Right Hand Turnout, Left Hand Turnout, Sensor, Signal, MultiSensor)
+display a group of icons above a table.  The table lists all of the JMRI entities of 
+the given type
+that have been defined.  There is one icon for each state that the type of entitiy can have.  
+The icons 
+shown are the default icons, but you may change them.</p>
 <p>  Below the 
-table are two buttons, <b>Add to Panel</b> and <b>Change Icon...</b>.  The Add to Panel button
+table are two buttons, <b>Add to Panel</b> and <b>Change Icon...</b>.  The <b>Add to Panel button</b>
 is inactive until a device is selected from the table.  Then it becomes active, and when pressed
-will install the set of icons into the panel.  Pressing the Change Icon button is discussed 
+will install the set of icons into the panel.  Pressing the <b>Change Icon</b> button is discussed 
 below.</p>  
 
-<p>Two other Icon Editors, Memory Value and Reporter Value, have tables from which you must select
-a device before the Add to Panel button becomes active.  No icons are displayed for these devices
-because pressing Add to Panel installs the values maintained by these elements into the panel.</p>  
+<p>Two other Icon Editors: (Memory Value and Reporter Value) have no icons and no <b>Change Icon</b> 
+button, but do have tables and an <b>Add to Panel</b> button.
+You must select an entity from the tabbe
+before the <b>Add to Panel</b> button becomes active.  No icons are displayed for these JMRI entities
+because pressing <b>Add to Panel</b> installs the value maintained by the entity into the Panel.</p>  
 
-<p>Another two Icon Editors, Background Image and Icon (plain), display a default icon, but no
-table, since these elements do not represent a JMRI device.  For these elements the Add to Panel
+<p>Another two Icon Editors: (Background Image and Icon (plain)) display a default icon, but no
+table, since these elements do not represent a JMRI device.  For these elements the <b>Add to Panel</b>
 button is always active.</p>
 
-<p>The remaining two choices for icons, RPS Reporter and Fast Clock, install their icons directly into the 
-panel.</p>
+<p>The remaining two choices for icons: (RPS Reporter and Fast Clock) install their icons directly into the 
+Panel.</p>
 
 <H2>Pressing the Change Icon Button</H2>
 
@@ -61,7 +65,7 @@ displays them.  Beneath each image (icon) is a label that states the "scale" at 
 image is displayed.  "Scale 1:1" indicates the icon is displayed at full size.  If a 
 large image file had been found, the scale might be 0.25:1 to indicate that the display is
 1/4 the actual size of the image that could be transferred to the Panel.  Below the icons
-are some radio buttoon that allow you to adjust the background to the icons.  This may
+are radio buttons that allow you to adjust the background to the icons.  This may
 help in determining what parts of the icon are opaque and what parts are transparent.</p>
 
 <p>The Catalog pane will always display at least one tree titled "resourceJar".  This is
@@ -84,8 +88,8 @@ until you are satisfied with the state icons you want to install into the Panel.
 
 <p>The <b>Find Icons</b> menu has the following items:
 <UL>
-        <LI><b>Create/Edit an ImageIndex Catalog</b>.  see the 
-        <a href="package.jmri.jmrit.catalog.ImageIndex.shtml">Image Index Editor page</a>
+        <LI><b>Create/Edit an ImageIndex Catalog</b>.  See the 
+        <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
         for how this menu item is used.</LI>
         
         <LI><b>Open a File System Directory</b>.  This opens a file chooser dialog where
@@ -95,8 +99,8 @@ until you are satisfied with the state icons you want to install into the Panel.
         <p>Depending on how much memory is needed to show all the files,
         two possible sequences of events that might follow.</p>
         <UL>
-        <LI>If there is no difficulty in displaying the files, the window will show
-        them along will the radio buttons to adjust their background.  And, two
+        <LI>If there sufficient memory to display the files, the window will show
+        them along with the radio buttons to adjust their background.  Also, two
         buttons will be displayed above the images - <b>Add to Catalog</b> and
         <b>Cancel</b>.  Pressing <b>Add to Catalog</b> will make this directory one
         of the trees in the Catalog pane.   In this case, you may then use it to
@@ -113,25 +117,43 @@ until you are satisfied with the state icons you want to install into the Panel.
         pressing <b>Cancel</b> will close the window with no further action.
         <p>Note that this is the case that generally occurs when you open 
         a photo album directory.</LI>
-        </UL>
-        
+        </UL>        
         <LI><b>Search File System for Icons</b>.  This item has you choose a drive
         on you computer to begin a search for icons.  It will visit every directory
         on the drive and when it encounters one with image files, it will open a 
         window and attempt to display all the images it finds there.  This may take
         some time.  As above, there may  not be enough memory to display all the files.
-        The window that displays the images has three buttons: <b>Show More</b>, 
-        <b>Continue Searching</b> and <b>Cancel</b>.
+        <UL>
+        <LI>If there sufficient memory to display the files, the window will show
+        them and the radio buttons to adjust their background.  In this case,
+        three buttons are shown <b>Add to Catalog</b>, 
+        <b>Continue Searching</b> and <b>Cancel</b>.  Pressing the <b>Continue Searching</b>
+        button will move on to the next directory having image files.  The 
+        <b>Add to Catalog</b> and <b>Cancel</b> buttons operate as above.</LI>
+        <LI>If there is not enough memory to display all the image files, the 
+        three buttons shown are: <b>Show More</b>, <b>Continue Searching</b>
+        and <b>Cancel</b>.  They operate as prviously described.</LI>
+        </UL>
         <p>This is a feature to be used sparingly, but many interesting icons can
-        be found, particularly those cached by your browser, for which you might 
-        have a use.
+        be found, particularly those cached by your browser.  You might 
+        have a use for them.
 </UL>        
       
-
-<P>You can also create your own icons. Create a new folder named "resources" in
-your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
-possible conflicts or loss of data during an upgrade. These new items will automatically 
-appear under "preferenceDir" in the icon Catalog.</P>
+<H3>Making New Icon</H3>
+<P>You can also create your own icons.  There are two ways you can make these permanently
+available to the Panel Editor.</P>
+<UL>
+        <LI>Create an ImageIndex Catalog that is saved to disk and will appear automatically
+        in the Catalog pane.  Use the <b>Create/Edit an ImageIndex Catalog</b> menu item to 
+        create and edit an ImageIndex. The ImageIndex will be preserved unchanged during an 
+        upgrade.  See the 
+        <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
+        for more detail.</LI>
+        <LI>Create a new folder named "resources" in
+        your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
+        possible conflicts or loss of data during an upgrade. These new items will automatically 
+        appear under "preferenceDir" in the icon Catalog.</LI>
+</UL>
 
 <!--#include virtual="/Footer" -->
 </BODY>
