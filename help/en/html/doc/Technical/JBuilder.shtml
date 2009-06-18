@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.5 2009-01-26 16:01:26 dan_boudreau Exp $ -->
+<!-- $Id: JBuilder.shtml,v 1.6 2009-06-18 03:07:55 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -90,8 +90,7 @@ the "Other" radio button and searching using the "Variables.." button.
 You should now be able to run DecoderPro from the JBuilder environment,
 but your serial port won't work if you're using Windows. To make the
 serial port operational, do the following:
-<P>Add the win32com.dll file to the JBuilder->workspace->lib
-directory.
+<P>Add the win32com.dll file to the JBuilder->workspace directory.
 <P>Add the javax.comm.properties file to the
 JBuilder2008->jre->jre->lib directory.
 <P>You should now be completely operational. If you want debug
