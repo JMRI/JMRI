@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
@@ -26,7 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -70,7 +71,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
     	// Set up the jtable in a Scroll Pane..
     	enginesPane = new JScrollPane(enginesTable);
-    	enginesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	enginesModel.initTable(enginesTable);
      	
        	// load the number of engines and listen for changes
@@ -116,7 +117,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
 	    // make sure panel doesn't get too short
 	    controlPane.setMinimumSize(new Dimension(50,90));
-	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(enginesPane);
 	   	getContentPane().add(controlPane);

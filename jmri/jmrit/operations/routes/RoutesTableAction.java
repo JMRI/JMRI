@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.event.ActionEvent;
+import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -13,7 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001
  * @author 	Daniel Boudreau Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class RoutesTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
@@ -28,7 +29,7 @@ public class RoutesTableAction extends AbstractAction {
     	if (f == null || !f.isVisible()){
     		f = new RoutesTableFrame();
      	}
-    	f.setExtendedState(f.NORMAL);
+    	f.setExtendedState(Frame.NORMAL);
     	f.setVisible(true);
     }
 }

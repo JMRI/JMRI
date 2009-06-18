@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class Backup extends XmlFile {
 
@@ -39,8 +39,7 @@ public class Backup extends XmlFile {
 
 	public boolean backupFiles() {
 		try {
-			if (!checkFile(fullBackupFilename(OperationsXml.instance()
-					.getOperationsFileName()))) {
+			if (!checkFile(fullBackupFilename(OperationsXml.getOperationsFileName()))) {
 				// The file/directory does not exist, create it before writing
 				File file = new java.io.File(fullBackupFilename(null));
 				File parentDir = file.getParentFile();
@@ -52,23 +51,17 @@ public class Backup extends XmlFile {
 				}
 			}
 			OperationsXml.instance().writeFile(
-					fullBackupFilename(OperationsXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(OperationsXml.getOperationsFileName()));
 			CarManagerXml.instance().writeFile(
-					fullBackupFilename(CarManagerXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(CarManagerXml.getOperationsFileName()));
 			EngineManagerXml.instance().writeFile(
-					fullBackupFilename(EngineManagerXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(EngineManagerXml.getOperationsFileName()));
 			TrainManagerXml.instance().writeFile(
-					fullBackupFilename(TrainManagerXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(TrainManagerXml.getOperationsFileName()));
 			LocationManagerXml.instance().writeFile(
-					fullBackupFilename(LocationManagerXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(LocationManagerXml.getOperationsFileName()));
 			RouteManagerXml.instance().writeFile(
-					fullBackupFilename(RouteManagerXml.instance()
-							.getOperationsFileName()));
+					fullBackupFilename(RouteManagerXml.getOperationsFileName()));
 		} catch (Exception e) {
 			log.error("Exception while making backup, may not be complete: "
 					+ e);

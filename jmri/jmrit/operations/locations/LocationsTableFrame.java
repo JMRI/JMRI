@@ -17,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 
@@ -25,7 +26,7 @@ import javax.swing.JScrollPane;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -54,8 +55,8 @@ public class LocationsTableFrame extends OperationsFrame {
 
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationsTable);
-    	locationsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	locationsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	locationsModel.initTable(locationsTable);
      	getContentPane().add(locationsPane);
      	

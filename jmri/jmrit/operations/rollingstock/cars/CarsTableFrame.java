@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -75,7 +76,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 
     	// Set up the table in a Scroll Pane..
         JScrollPane carsPane = new JScrollPane(carsTable);
-    	carsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	carsModel.initTable(carsTable);
      	
     	// load the number of cars and listen for changes
@@ -121,7 +122,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
 	    // make sure panel doesn't get too short
 	    controlPane.setMinimumSize(new Dimension(50,90));
-	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(carsPane);
 	   	getContentPane().add(controlPane);

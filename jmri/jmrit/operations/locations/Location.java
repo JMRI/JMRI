@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -191,14 +191,14 @@ public class Location implements java.beans.PropertyChangeListener {
    		int numberOfRS = getNumberRS();
 		numberOfRS++;
 		setNumberRS(numberOfRS);
-		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ rs.COUPLER);
+		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ RollingStock.COUPLER);
 	}
 	
 	public void deleteRS (RollingStock rs){
    		int numberOfRS = getNumberRS();
 		numberOfRS--;
 		setNumberRS(numberOfRS);
-		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ rs.COUPLER));
+		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ RollingStock.COUPLER));
 	}
 
 	/**

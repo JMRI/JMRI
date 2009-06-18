@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.ScrollPaneConstants;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
@@ -31,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -103,8 +104,8 @@ public class TrainsTableFrame extends OperationsFrame {
 
     	// Set up the jtable in a Scroll Pane..
     	trainsPane = new JScrollPane(trainsTable);
-    	trainsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	trainsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	trainsModel.initTable(trainsTable, this);
      	
     	// Set up the control panel
@@ -145,7 +146,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
 	    // make sure panel doesn't get too short
 	    controlPane.setMinimumSize(new Dimension(50,90));
-	    controlPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(trainsPane);
 	   	getContentPane().add(controlPane);

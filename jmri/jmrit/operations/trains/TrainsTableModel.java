@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -269,7 +269,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(manager.LISTLENGTH_CHANGED_PROPERTY) ||
+    	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();

@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -150,14 +150,14 @@ public class RouteCopyFrame extends OperationsFrame {
 			newRl.setCanPickup(oldRl.canDrop());
 			// invert train directions
 			int oldDirection = oldRl.getTrainDirection();
-			if (oldDirection == oldRl.NORTH)
-				newRl.setTrainDirection(newRl.SOUTH);
-			else if (oldDirection == oldRl.SOUTH)
-				newRl.setTrainDirection(newRl.NORTH);
-			else if (oldDirection == oldRl.EAST)
-				newRl.setTrainDirection(newRl.WEST);
-			else if (oldDirection == oldRl.WEST)
-				newRl.setTrainDirection(oldRl.EAST);
+			if (oldDirection == RouteLocation.NORTH)
+				newRl.setTrainDirection(RouteLocation.SOUTH);
+			else if (oldDirection == RouteLocation.SOUTH)
+				newRl.setTrainDirection(RouteLocation.NORTH);
+			else if (oldDirection == RouteLocation.EAST)
+				newRl.setTrainDirection(RouteLocation.WEST);
+			else if (oldDirection == RouteLocation.WEST)
+				newRl.setTrainDirection(RouteLocation.EAST);
 			// get the max length between location
 			if(oldNextRl == null){
 				log.error("Can not copy route, oldNextRl is null!");

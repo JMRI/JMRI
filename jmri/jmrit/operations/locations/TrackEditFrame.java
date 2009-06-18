@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -286,16 +286,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// save train directions serviced by this location
 		int direction = 0;
 		if (northCheckBox.isSelected()){
-			direction += track.NORTH;
+			direction += Track.NORTH;
 		}
 		if (southCheckBox.isSelected()){
-			direction += track.SOUTH;
+			direction += Track.SOUTH;
 		}
 		if (eastCheckBox.isSelected()){
-			direction += track.EAST;
+			direction += Track.EAST;
 		}
 		if (westCheckBox.isSelected()){
-			direction += track.WEST;
+			direction += Track.WEST;
 		}
 		track.setTrainDirections(direction);
 		track.setName(trackNameTextField.getText());
@@ -427,15 +427,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == roadNameAll){
-			_track.setRoadOption(_track.ALLROADS);
+			_track.setRoadOption(Track.ALLROADS);
 			updateRoadNames();
 		}
 		if (ae.getSource() == roadNameInclude){
-			_track.setRoadOption(_track.INCLUDEROADS);
+			_track.setRoadOption(Track.INCLUDEROADS);
 			updateRoadNames();
 		}
 		if (ae.getSource() == roadNameExclude){
-			_track.setRoadOption(_track.EXCLUDEROADS);
+			_track.setRoadOption(Track.EXCLUDEROADS);
 			updateRoadNames();
 		}
 	}
@@ -526,9 +526,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		if(_track != null){
 			// set radio button
-			roadNameAll.setSelected(_track.getRoadOption().equals(_track.ALLROADS));
-			roadNameInclude.setSelected(_track.getRoadOption().equals(_track.INCLUDEROADS));
-			roadNameExclude.setSelected(_track.getRoadOption().equals(_track.EXCLUDEROADS));
+			roadNameAll.setSelected(_track.getRoadOption().equals(Track.ALLROADS));
+			roadNameInclude.setSelected(_track.getRoadOption().equals(Track.INCLUDEROADS));
+			roadNameExclude.setSelected(_track.getRoadOption().equals(Track.EXCLUDEROADS));
 			
 			if (!roadNameAll.isSelected()){
 		    	p = new JPanel();
@@ -572,16 +572,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addItemLeft(panelTrainDir, westCheckBox, 4, 1);
 		panelTrainDir.setBorder(border);
 		
-		northCheckBox.setVisible(((Setup.getTrainDirection() & Setup.NORTH) & (_location.getTrainDirections() & _location.NORTH))>0);
-		southCheckBox.setVisible(((Setup.getTrainDirection() & Setup.SOUTH) & (_location.getTrainDirections() & _location.SOUTH))>0);
-		eastCheckBox.setVisible(((Setup.getTrainDirection() & Setup.EAST) & (_location.getTrainDirections() & _location.EAST))>0);
-		westCheckBox.setVisible(((Setup.getTrainDirection() & Setup.WEST) & (_location.getTrainDirections() & _location.WEST))>0);
+		northCheckBox.setVisible(((Setup.getTrainDirection() & Setup.NORTH) & (_location.getTrainDirections() & Location.NORTH))>0);
+		southCheckBox.setVisible(((Setup.getTrainDirection() & Setup.SOUTH) & (_location.getTrainDirections() & Location.SOUTH))>0);
+		eastCheckBox.setVisible(((Setup.getTrainDirection() & Setup.EAST) & (_location.getTrainDirections() & Location.EAST))>0);
+		westCheckBox.setVisible(((Setup.getTrainDirection() & Setup.WEST) & (_location.getTrainDirections() & Location.WEST))>0);
 		
 		if (_track != null){
-			northCheckBox.setSelected((_track.getTrainDirections() & _track.NORTH) > 0);
-			southCheckBox.setSelected((_track.getTrainDirections() & _track.SOUTH) > 0);
-			eastCheckBox.setSelected((_track.getTrainDirections() & _track.EAST) > 0);
-			westCheckBox.setSelected((_track.getTrainDirections() & _track.WEST) > 0);
+			northCheckBox.setSelected((_track.getTrainDirections() & Track.NORTH) > 0);
+			southCheckBox.setSelected((_track.getTrainDirections() & Track.SOUTH) > 0);
+			eastCheckBox.setSelected((_track.getTrainDirections() & Track.EAST) > 0);
+			westCheckBox.setSelected((_track.getTrainDirections() & Track.WEST) > 0);
 		}
 		
 		panelTrainDir.revalidate();

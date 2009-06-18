@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -49,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -144,11 +145,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		super();
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
-    	locationsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
-    	typeCarPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	typeCarPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
-    	typeEnginePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	typeEnginePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 
 	public void initComponents(Train train) {
@@ -325,8 +326,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
 			commentTextField.setText(_train.getComment());
-			cabooseRadioButton.setSelected((_train.getRequirements()&_train.CABOOSE)>0);
-			fredRadioButton.setSelected((_train.getRequirements()&_train.FRED)>0);
+			cabooseRadioButton.setSelected((_train.getRequirements()& Train.CABOOSE)>0);
+			fredRadioButton.setSelected((_train.getRequirements()& Train.FRED)>0);
 			enableButtons(true);
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -953,7 +954,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
 			updateEngineTypeCheckboxes();
 		}
-		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || 

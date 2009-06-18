@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -48,7 +48,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		gc.gridy = y;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
-		gc.anchor = gc.WEST;
+		gc.anchor = GridBagConstraints.WEST;
 		getContentPane().add(c, gc);
 	}
 	protected void addItemWidth(JComponent c, int width, int x, int y) {
@@ -76,7 +76,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		gc.gridy = y;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
-		gc.anchor = gc.WEST;
+		gc.anchor = GridBagConstraints.WEST;
 		p.add(c, gc);
 	}
 	
@@ -87,7 +87,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		gc.gridwidth = width;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
-		gc.anchor = gc.WEST;
+		gc.anchor = GridBagConstraints.WEST;
 		p.add(c, gc);
 	}
 	

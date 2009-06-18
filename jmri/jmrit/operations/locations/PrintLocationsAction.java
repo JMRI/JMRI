@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -109,7 +109,7 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<yards.size(); k++){
         				Track yard = location.getTrackById(yards.get(k));
         				name = yard.getName();
-                		for (int j=name.length(); j < YardEditFrame.MAX_NAME_LENGTH; j++) {
+                		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
                 		s = getTrackString (yard, name);
@@ -126,7 +126,7 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<sidings.size(); k++){
         				Track siding = location.getTrackById(sidings.get(k));
         				name = siding.getName();
-                		for (int j=name.length(); j < SidingEditFrame.MAX_NAME_LENGTH; j++) {
+                		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
                 		s = getTrackString (siding, name);
@@ -143,7 +143,7 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<interchanges.size(); k++){
         				Track interchange = location.getTrackById(interchanges.get(k));
         				name = interchange.getName();
-                		for (int j=name.length(); j < InterchangeEditFrame.MAX_NAME_LENGTH; j++) {
+                		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
                 		s = getTrackString (interchange, name);
@@ -160,7 +160,7 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<stagings.size(); k++){
         				Track staging = location.getTrackById(stagings.get(k));
         				name = staging.getName();
-                		for (int j=name.length(); j < StagingEditFrame.MAX_NAME_LENGTH; j++) {
+                		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
                 			name += " ";
                 		}
                 		s = getTrackString (staging, name);

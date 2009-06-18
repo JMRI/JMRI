@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -105,7 +105,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		
 	   	// Set up the jtable in a Scroll Pane..
     	routePane = new JScrollPane(routeTable);
-    	routePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	routePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
  		
 		if (_route != null){
@@ -227,7 +227,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 			enableButtons(false);
 			// save route file
-			managerXml.writeOperationsRouteFile();
+			RouteManagerXml.writeOperationsRouteFile();
 		}
 		if (ae.getSource() == addRouteButton){
 			Route route = manager.getRouteByName(routeNameTextField.getText());
@@ -273,7 +273,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 
 		// save route file
-		managerXml.writeOperationsRouteFile();
+		RouteManagerXml.writeOperationsRouteFile();
 	}
 	
 

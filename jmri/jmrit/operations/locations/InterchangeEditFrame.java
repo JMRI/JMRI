@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * to TrackEditFram for train/route car drops and pickups.
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -235,27 +235,27 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == anyDrops){
-			_track.setDropOption(_track.ANY);
+			_track.setDropOption(Track.ANY);
 			updateDropOptions();
 		}
 		if (ae.getSource() == trainDrop){
-			_track.setDropOption(_track.TRAINS);
+			_track.setDropOption(Track.TRAINS);
 			updateDropOptions();
 		}
 		if (ae.getSource() == routeDrop){
-			_track.setDropOption(_track.ROUTES);
+			_track.setDropOption(Track.ROUTES);
 			updateDropOptions();
 		}
 		if (ae.getSource() == anyPickups){
-			_track.setPickupOption(_track.ANY);
+			_track.setPickupOption(Track.ANY);
 			updatePickupOptions();
 		}
 		if (ae.getSource() == trainPickup){
-			_track.setPickupOption(_track.TRAINS);
+			_track.setPickupOption(Track.TRAINS);
 			updatePickupOptions();
 		}
 		if (ae.getSource() == routePickup){
-			_track.setPickupOption(_track.ROUTES);
+			_track.setPickupOption(Track.ROUTES);
 			updatePickupOptions();
 		}
 		super.radioButtonActionPerformed(ae);
@@ -279,9 +279,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 
 		if(_track != null){
 			// set radio button
-			anyDrops.setSelected(_track.getDropOption().equals(_track.ANY));
-			trainDrop.setSelected(_track.getDropOption().equals(_track.TRAINS));
-			routeDrop.setSelected(_track.getDropOption().equals(_track.ROUTES));
+			anyDrops.setSelected(_track.getDropOption().equals(Track.ANY));
+			trainDrop.setSelected(_track.getDropOption().equals(Track.TRAINS));
+			routeDrop.setSelected(_track.getDropOption().equals(Track.ROUTES));
 			
 			if (!anyDrops.isSelected()){
 		    	p = new JPanel();
@@ -348,9 +348,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 
 		if(_track != null){
 			// set radio button
-			anyPickups.setSelected(_track.getPickupOption().equals(_track.ANY));
-			trainPickup.setSelected(_track.getPickupOption().equals(_track.TRAINS));
-			routePickup.setSelected(_track.getPickupOption().equals(_track.ROUTES));
+			anyPickups.setSelected(_track.getPickupOption().equals(Track.ANY));
+			trainPickup.setSelected(_track.getPickupOption().equals(Track.TRAINS));
+			routePickup.setSelected(_track.getPickupOption().equals(Track.ROUTES));
 			
 			if (!anyPickups.isSelected()){
 		    	p = new JPanel();
@@ -424,7 +424,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 			updateDropOptions();
 			updatePickupOptions();
 		}
-		if (e.getPropertyName().equals(routeManager.LISTLENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateRouteComboBox();
 			updateDropOptions();
 			updatePickupOptions();

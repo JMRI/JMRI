@@ -7,22 +7,20 @@ import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-//import java.awt.Frame;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-//import javax.swing.JMenu;
-//import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Frame for adding and editing the Schedule roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -51,8 +49,8 @@ public class SchedulesTableFrame extends OperationsFrame {
 
     	// Set up the jtable in a Scroll Pane..
     	schedulesPane = new JScrollPane(schedulesTable);
-    	schedulesPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	schedulesPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	schedulesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	schedulesPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	schedulesModel.initTable(schedulesTable);
      	getContentPane().add(schedulesPane);
      	

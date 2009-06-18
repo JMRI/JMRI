@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -114,20 +114,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		
 	   	// Set up the jtable in a Scroll Pane..
     	typePane = new JScrollPane(panelCheckBoxes);
-    	typePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	typePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	//typePane.setMinimumSize(new Dimension (typePane.getWidth(), 100));
     	
     	yardPane = new JScrollPane(yardTable);
-    	yardPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         	
     	sidingPane = new JScrollPane(sidingTable);
-    	sidingPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	sidingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
  	    
     	interchangePane = new JScrollPane(interchangeTable);
-    	interchangePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	interchangePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
  
     	stagingPane = new JScrollPane(stagingTable);
-    	stagingPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	stagingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
  		
 		if (_location != null){
 			enableButtons(true);
@@ -137,7 +137,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	      	sidingModel.initTable(sidingTable, location);
 	      	interchangeModel.initTable(interchangeTable, location);
 	      	stagingModel.initTable(stagingTable, location);
-			if (_location.getLocationOps() == _location.NORMAL){
+			if (_location.getLocationOps() == Location.NORMAL){
 				if (sidingModel.getRowCount()>0)
 					sidingRadioButton.setSelected(true);
 				else if (yardModel.getRowCount()>0)
@@ -275,7 +275,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (manager.getLocationEditFrameSize()!= null){
 			setSize(manager.getLocationEditFrameSize());
 		} else {
-			if((getWidth()<670)) setSize(670, getHeight());
+			if((getWidth()<700)) setSize(700, getHeight());
 			setSize(getWidth(), 700);
 		}
 		if (manager.getLocationEditFramePosition()!= null){
@@ -389,10 +389,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		_location.setComment(commentTextField.getText());
 
 		if (sidingRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
-			_location.setLocationOps(_location.NORMAL);
+			_location.setLocationOps(Location.NORMAL);
 		}
 		if (stageRadioButton.isSelected()){
-			_location.setLocationOps(_location.STAGING);
+			_location.setLocationOps(Location.STAGING);
 		}
 		// save frame size and position
 		manager.setLocationEditFrame(this);
@@ -401,7 +401,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// save car file in case location name changed
 		CarManagerXml.instance().writeOperationsCarFile();
 		// save route file in case location name changed
-		RouteManagerXml.instance().writeOperationsRouteFile();
+		RouteManagerXml.writeOperationsRouteFile();
 	}
 	
 
@@ -542,7 +542,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			} else {
 				checkBox.setEnabled(false);
 			}
-			if (x > 5){
+			// seven types per row
+			if (x > 6){
 				y++;
 				x = 0;
 			}
@@ -576,16 +577,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			return;
 		int direction = 0;
 		if (northCheckBox.isSelected()){
-			direction += _location.NORTH;
+			direction += Location.NORTH;
 		}
 		if (southCheckBox.isSelected()){
-			direction += _location.SOUTH;
+			direction += Location.SOUTH;
 		}
 		if (eastCheckBox.isSelected()){
-			direction += _location.EAST;
+			direction += Location.EAST;
 		}
 		if (westCheckBox.isSelected()){
-			direction += _location.WEST;
+			direction += Location.WEST;
 		}
 		_location.setTrainDirections(direction);
 		
@@ -597,10 +598,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST)>0);
 		westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST)>0);
 		
-		northCheckBox.setSelected((_location.getTrainDirections() & _location.NORTH)>0);
-		southCheckBox.setSelected((_location.getTrainDirections() & _location.SOUTH)>0);
-		eastCheckBox.setSelected((_location.getTrainDirections() & _location.EAST)>0);
-		westCheckBox.setSelected((_location.getTrainDirections() & _location.WEST)>0);
+		northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH)>0);
+		southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH)>0);
+		eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST)>0);
+		westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST)>0);
 	}
 	
 	public void dispose() {

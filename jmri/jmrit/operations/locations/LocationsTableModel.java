@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -87,7 +87,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(60);
+		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(80);
 		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DROPS).setPreferredWidth(60);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);

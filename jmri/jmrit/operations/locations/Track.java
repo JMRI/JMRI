@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -216,7 +216,7 @@ public class Track implements java.beans.PropertyChangeListener {
  			setNumberCars(getNumberCars()+1);
  		else if (rs.getClass() == Engine.class)
  			setNumberEngines(getNumberEngines()+1);
-		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ rs.COUPLER);
+		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ RollingStock.COUPLER);
 	}
 	
 	public void deleteRS (RollingStock rs){
@@ -225,7 +225,7 @@ public class Track implements java.beans.PropertyChangeListener {
  			setNumberCars(getNumberCars()-1);
  		else if (rs.getClass() == Engine.class)
  			setNumberEngines(getNumberEngines()-1);
-		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ rs.COUPLER));
+		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ RollingStock.COUPLER));
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class Track implements java.beans.PropertyChangeListener {
 		int old = _dropRS;
 		_dropRS++;
 		_moves++;
-		int reserved = getReserved() + Integer.parseInt(rs.getLength()) + rs.COUPLER;
+		int reserved = getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
 		setReserved(reserved);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
@@ -269,7 +269,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	public void deleteDropRS(RollingStock rs) {
 		int old = _dropRS;
 		_dropRS--;
-		int reserved = getReserved() - (Integer.parseInt(rs.getLength()) + rs.COUPLER);
+		int reserved = getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
 		setReserved(reserved);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}

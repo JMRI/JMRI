@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
+import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -12,7 +13,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsSetupAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
@@ -28,7 +29,7 @@ public class OperationsSetupAction extends AbstractAction {
     		f = new OperationsSetupFrame();
     		f.initComponents();
     	}
-        f.setExtendedState(f.NORMAL);
+        f.setExtendedState(Frame.NORMAL);
         f.setVisible(true);
     }
 }

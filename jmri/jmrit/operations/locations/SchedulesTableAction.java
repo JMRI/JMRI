@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.event.ActionEvent;
+import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -12,7 +13,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SchedulesTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
@@ -27,7 +28,7 @@ public class SchedulesTableAction extends AbstractAction {
     	if (f == null || !f.isVisible()){
     		f = new SchedulesTableFrame();
      	}
-    	f.setExtendedState(f.NORMAL);
+    	f.setExtendedState(Frame.NORMAL);
    		f.setVisible(true);
     }
 }

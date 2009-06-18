@@ -10,7 +10,6 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -21,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -72,7 +71,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     }
     
     public Engine getEngineByRoadAndNumber (String engineRoad, String engineNumber){
-    	String engineId = Car.createId (engineRoad, engineNumber);
+    	String engineId = Engine.createId (engineRoad, engineNumber);
     	return getEngineById (engineId);
     }
  

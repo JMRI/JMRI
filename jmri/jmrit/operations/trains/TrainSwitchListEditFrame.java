@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -82,7 +83,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		// the following code sets the frame's initial state
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
     	trainsPane = new JScrollPane(locationPanelCheckBoxes);
-    	trainsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	getContentPane().add(trainsPane);
 		
 	    // Layout the panel by rows

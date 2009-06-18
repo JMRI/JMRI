@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.awt.Frame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -21,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -359,7 +360,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	    	csf.loadCar(car);
 	    	csf.setTitle(rb.getString("TitleCarSet"));
 	    	csf.setVisible(true);
-	    	csf.setExtendedState(csf.NORMAL);
+	    	csf.setExtendedState(Frame.NORMAL);
 	    	focusCsf = true;
         	break;
         case EDITCOLUMN:
@@ -371,7 +372,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	    	cef.loadCar(car);
 	    	cef.setTitle(rb.getString("TitleCarEdit"));
 	    	cef.setVisible(true);
-	    	cef.setExtendedState(cef.NORMAL);
+	    	cef.setExtendedState(Frame.NORMAL);
 	    	focusCef = true;
         	break;
         default:

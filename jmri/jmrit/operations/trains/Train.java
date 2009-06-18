@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.46 $
+ * @version             $Revision: 1.47 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -936,13 +936,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		}
 		// set color based on train direction at current location
-		if (trainIconRl.getTrainDirection() == trainIconRl.NORTH)
+		if (trainIconRl.getTrainDirection() == RouteLocation.NORTH)
 			trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
-		if (trainIconRl.getTrainDirection() == trainIconRl.SOUTH)
+		if (trainIconRl.getTrainDirection() == RouteLocation.SOUTH)
 			trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
-		if (trainIconRl.getTrainDirection() == trainIconRl.EAST)
+		if (trainIconRl.getTrainDirection() == RouteLocation.EAST)
 			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
-		if (trainIconRl.getTrainDirection() == trainIconRl.WEST)
+		if (trainIconRl.getTrainDirection() == RouteLocation.WEST)
 			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
 	}
 	
@@ -957,8 +957,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				log.debug("engine ("+engine.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
 				if(engine.getRouteLocation() == engine.getRouteDestination()){
 					log.debug("engine ("+engine.getId()+") has arrived at destination");
-					engine.setLocation(engine.getDestination(), engine.getDestinationTrack());
+					Location destination = engine.getDestination();
+					Track destTrack = engine.getDestinationTrack();
 					engine.setDestination(null, null); 	// this also clears the route locations
+					engine.setLocation(destination, destTrack);
 					engine.setTrain(null);
 				}else{
 					Location nextLocation = locationManager.getLocationByName(next.getName());
@@ -988,7 +990,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					Track destTrack = car.getDestinationTrack();
 					car.setDestination(null, null); 	// this also clears the route locations
 					String status = car.setLocation(destination, destTrack);
-					if (!status.equals(car.OKAY)){
+					if (!status.equals(Car.OKAY)){
 						car.setLocation(destination, null); // can't place car at destination track
 						log.error("Can't drop car ("+car.getId()+") on track " + destTrack + " due to " +status);
 					}

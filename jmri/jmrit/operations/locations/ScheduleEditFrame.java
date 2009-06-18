@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -106,7 +106,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 	   	// Set up the jtable in a Scroll Pane..
     	schedulePane = new JScrollPane(scheduleTable);
-    	schedulePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	schedulePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
       	scheduleModel.initTable(scheduleTable, schedule, _location, _track);
 		if (_schedule != null){
