@@ -4,11 +4,7 @@ package jmri.jmrit.catalog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-//import java.awt.event.MouseEvent;
-//import java.awt.event.MouseListener;
-//import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
-//import java.awt.datatransfer.UnsupportedFlavorException;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +12,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -27,33 +22,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JMenuItem;
-//import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-//import javax.swing.JScrollPane;
-//import javax.swing.JTree;
 import javax.swing.SwingConstants;
-/*
-import javax.swing.TransferHandler;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
-*/
+
 import jmri.util.JmriJFrame;
 import jmri.jmrit.display.IconAdder;
-//import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.XmlFile;
 import jmri.CatalogTreeManager;
-//import jmri.CatalogTree;
 import jmri.InstanceManager;
 
 /**
- * A JFrame for creating and editing an Image Index
+ * A JFrame for creating and editing an Image Index.  This is a singleton class.
  * <P>
  * 
  *
@@ -78,7 +57,7 @@ public class ImageIndexEditor extends JmriJFrame {
 
     CatalogPanel    _catalog;
     CatalogPanel    _index;
-    PreviewDialog   _previewDialog;
+    //PreviewDialog   _previewDialog;
 
     static ImageIndexEditor _instance;
     static public boolean  _indexChanged = false;
@@ -117,11 +96,16 @@ public class ImageIndexEditor extends JmriJFrame {
             });
         findIcon.addSeparator();
         JMenuItem openItem = new JMenuItem(IconAdder.rb.getString("openDirMenu"));
-        openItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    openDirectory();
-                }
-            });
+        class AActionListener implements ActionListener {
+            IconAdder editor;
+            public AActionListener() {
+                editor = new IconAdder();
+            }
+            public void actionPerformed(ActionEvent e) {
+                editor.openDirectory(false);
+            }
+        };
+        openItem.addActionListener(new AActionListener());
         findIcon.add(openItem);
 
         JMenu editMenu = new JMenu(rb.getString("EditIndexMenu"));
@@ -194,36 +178,15 @@ public class ImageIndexEditor extends JmriJFrame {
         catch (org.jdom.JDOMException jde) { log.error("Exception writing CatalogTrees: "+jde); }                           
         catch (java.io.IOException ioe) { log.error("Exception writing CatalogTrees: "+ioe); }   
     }
-
-    private void openDirectory() {
-        File dir = IconAdder.getDirectory();
-        if (dir != null) {
-            _previewDialog = new PreviewDialog(this, "previewDir",  
-                                 dir, CatalogTreeManager.IMAGE_FILTER, false );
-            //_previewDialog.setModalityType(java.awt.Dialog.ModalityType.MODELESS); SDK1.6
-            _previewDialog.init(null, null, new ActionListener() {
-                                                public void actionPerformed(ActionEvent a) {
-                                                    cancel();
-                                                }
-                                            }
-            );
-            _previewDialog.setVisible(true);
-        }
-    }
-
-    void cancel() {
-        _previewDialog.dispose();
-        _previewDialog = null;
-    }
-
+    
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("catalog", "selectNode");
         _catalog.init(false);
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        List sysNames = manager.getSystemNameList();
+        List <String> sysNames = manager.getSystemNameList();
         if (sysNames != null) {
             for (int i=0; i<sysNames.size(); i++) {
-                String systemName = (String)sysNames.get(i);
+                String systemName = sysNames.get(i);
                 if (systemName.startsWith("IF")) {
                     _catalog.addTree( manager.getBySystemName(systemName));
                 }
@@ -241,10 +204,10 @@ public class ImageIndexEditor extends JmriJFrame {
 
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        List sysNames = manager.getSystemNameList();
+        List <String> sysNames = manager.getSystemNameList();
         if (sysNames != null) {
             for (int i=0; i<sysNames.size(); i++) {
-                String systemName = (String)sysNames.get(i);
+                String systemName = sysNames.get(i);
                 if (systemName.startsWith("IX")) {
                     _index.addTree(manager.getBySystemName(systemName));
                     found = true;

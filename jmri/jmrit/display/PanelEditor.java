@@ -249,10 +249,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             TurnoutManager manager = InstanceManager.turnoutManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             turnoutRFrame = makeAddIconFrame("AddRHTOIcon", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
             addHelpMenu(turnoutRFrame, "package.jmri.jmrit.display.IconAdder");
@@ -288,10 +288,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             TurnoutManager manager = InstanceManager.turnoutManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             turnoutLFrame = makeAddIconFrame("AddLHTOIcon", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
             addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
@@ -327,10 +327,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             SensorManager manager = InstanceManager.sensorManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             sensorIconFrame = makeAddIconFrame("AddSensorIcon", "addIconsToPanel", 
                                                "SelectSensor", sensorIconEditor);
@@ -375,10 +375,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             SignalHeadManager manager = InstanceManager.signalHeadManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             signalIconFrame = makeAddIconFrame("AddSignalIcon", "addIconsToPanel", 
                                                "SelectSignal", signalIconEditor);
@@ -406,10 +406,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             memoryIconEditor = new IconAdder();
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             MemoryManager manager = InstanceManager.memoryManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -426,10 +426,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             reporterIconEditor = new IconAdder();
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             ReporterManager manager = InstanceManager.reporterManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -484,10 +484,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
             SensorManager manager = InstanceManager.sensorManagerInstance();
-            List systemNameList = manager.getSystemNameList();
-            Iterator iter = systemNameList.iterator();
+            List <String> systemNameList = manager.getSystemNameList();
+            Iterator <String> iter = systemNameList.iterator();
             while (iter.hasNext()) {
-                ts.add(manager.getBySystemName((String)iter.next()));
+                ts.add(manager.getBySystemName(iter.next()));
             }
             multiSensorFrame = makeAddIconFrame("AddMultiSensor", "addIconsToPanel", 
                                                "SelectSensor", multiSensorEditor);
@@ -663,7 +663,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             ActionListener action = new ActionListener() {
                     IconAdder myEditor;
                     public void actionPerformed(ActionEvent e) {
-                        myEditor.openDirectory();
+                        myEditor.openDirectory(true);
                     }
                     ActionListener init(IconAdder editor) {
                         myEditor = editor;
@@ -676,7 +676,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             action = new ActionListener() {
                     IconAdder myEditor;
                     public void actionPerformed(ActionEvent e) {
-                        myEditor.searchFS(true);
+                        myEditor.searchFS();
                     }
                     ActionListener init(IconAdder editor) {
                         myEditor = editor;

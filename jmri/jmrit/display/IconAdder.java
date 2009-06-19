@@ -13,7 +13,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.PreviewDialog;
 
-//import java.awt.Component;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -168,11 +168,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * make a pick list table for managed elements.  (Not all
     * Icon Editors use pick lists)
     */
-    public void setPickList(TreeSet ts) {
+    public void setPickList(TreeSet <NamedBean> ts) {
         _pickList = new ArrayList <NamedBean> (ts.size());
-        Iterator iter = ts.iterator();
+        Iterator <NamedBean> iter = ts.iterator();
         while(iter.hasNext()) {
-            NamedBean elt = (NamedBean)iter.next();
+            NamedBean elt = iter.next();
             _pickList.add(elt);
         }
         TableModel pickListModel = new PickListModel();
@@ -225,11 +225,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (!_addButton.isEnabled()){
             return;
         }
-        Iterator iter = _iconMap.values().iterator();
+        Iterator <JButton> iter = _iconMap.values().iterator();
         int lastWidth = 0;
         int lastHeight = 0;
         while (iter.hasNext()) {
-            JButton but = (JButton)iter.next();
+            JButton but = iter.next();
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((lastWidth>0 && lastWidth != nextWidth) || (lastHeight>0 && lastHeight != nextHeight)) {
@@ -298,7 +298,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _closeButton.setVisible(false);
             p.add(_closeButton);
         }
-        valueChanged(null);     // set enabled, or not
+        valueChanged(null);     // set enabled, tool tips etc.
         this.add(p);
         this.add(Box.createVerticalStrut(STRUT_SIZE));
         pack();
@@ -336,10 +336,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     void makeDefaultCatalog() {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        List sysNames = manager.getSystemNameList();
+        List <String> sysNames = manager.getSystemNameList();
         if (sysNames != null) {
             for (int i=0; i<sysNames.size(); i++) {
-                String systemName = (String)sysNames.get(i);
+                String systemName = sysNames.get(i);
                 if (systemName.charAt(0) == 'I') {
                     _catalog.addTree( manager.getBySystemName(systemName));
                 }
@@ -387,47 +387,76 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         //File dir = _directoryChooser.getSelectedFile();
     }
 
-    public void openDirectory() {
-        File dir = getDirectory();
-        if (dir != null) {
-            doPreviewDialog(dir, new AActionListener(dir), null, new CActionListener());
+    private JTextField showWaitFrame(Frame parent, String msg) {
+        _waitDialog = new JDialog(parent, rb.getString("waitTitle"), false);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel(rb.getString("waitWarning")));
+        JTextField waitText = new JTextField(msg);
+        waitText.setEditable(false);
+        waitText.setFont(new Font("Dialog", Font.BOLD, 12));
+        waitText.setBackground(panel.getBackground());
+        panel.add(waitText);
+        _waitDialog.getContentPane().add(panel);
+        _waitDialog.setLocation(30,50);
+        _waitDialog.pack();
+        java.awt.Rectangle r = _waitDialog.getContentPane().getBounds();
+        _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
+        _waitDialog.setVisible(false);
+        return waitText;
+    }
+
+    private void closeWaitFrame() {
+        if (_waitDialog != null) {
+            _waitDialog.dispose();
+            _waitDialog = null;
         }
     }
 
-    public void searchFS(boolean addToCatalogOption) {
+    public void openDirectory(boolean addDir) {
+        _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
+        _waitDialog.setVisible(false);
+        File dir = getDirectory();
+        if (dir != null) {
+            _waitDialog.setVisible(true);
+            if (addDir) {
+                doPreviewDialog(dir, new AActionListener(dir), new MActionListener(dir, true),
+                                null, new CActionListener(), 0);
+            } else {
+                doPreviewDialog(dir, null, new MActionListener(dir, true),
+                                null, new CActionListener(), 0);
+            }
+        } else {
+            closeWaitFrame();
+        }
+    }
+
+    public void searchFS() {
         File[] roots = File.listRoots();
         String[] rootName = new String[roots.length];
         for (int i=0; i<roots.length; i++) {
             rootName[i] = roots[i].getAbsolutePath();
         }
+        _waitText = showWaitFrame(_parent, rb.getString("prevMsg")); 
+            //java.text.MessageFormat.format(rb.getString("waitMsg"), new Object[] {root}));
+
         String root = (String)JOptionPane.showInputDialog(this, 
                                    rb.getString("selectDrive"), rb.getString("searchFSMenu"),  
                                    JOptionPane.QUESTION_MESSAGE, null, rootName, 
                                    rootName[roots.length/2]);
         if (root == null) {
+            closeWaitFrame();
             return;
         }
-        _waitDialog = new JDialog(_parent, rb.getString("waitTitle"), false);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(rb.getString("waitWarning")));
-        _waitText = new JTextField(java.text.MessageFormat.format(rb.getString("waitMsg"), 
-                                                                  new Object[] {root}));
-        _waitText.setEditable(false);
-        _waitText.setBackground(panel.getBackground());
-        panel.add(_waitText);
-        _waitDialog.getContentPane().add(panel);
-        _waitDialog.pack();
-        _waitDialog.setLocation(100,50);
         _waitDialog.setVisible(true);
 
         log.debug("searchFS at root= "+root);
         _quitLooking = false;
-        getImageDirectory(new File(root), CatalogTreeManager.IMAGE_FILTER, addToCatalogOption);
+        getImageDirectory(new File(root), CatalogTreeManager.IMAGE_FILTER);
 
         JOptionPane.showMessageDialog(this, rb.getString("DirNotFound"), rb.getString("searchFSMenu"),
                                              JOptionPane.INFORMATION_MESSAGE);
-        _waitDialog.dispose();
+        closeWaitFrame();
     }
 
     class AActionListener implements ActionListener {
@@ -437,6 +466,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         public void actionPerformed(ActionEvent a) {
             addDirectoryToCatalog(dir);
+        }
+    };
+    class MActionListener implements ActionListener {
+        File dir;
+        boolean oneDir;
+        public MActionListener(File d, boolean o) {
+            dir = d;
+            oneDir = o;
+        }
+        public void actionPerformed(ActionEvent a) {
+            displayMore(dir, oneDir);
         }
     };
     class LActionListener implements ActionListener {
@@ -450,29 +490,33 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     };
 
-    private void doPreviewDialog(File dir, ActionListener addAction, ActionListener lookAction, 
-                        ActionListener cancelAction) {
+    private void doPreviewDialog(File dir, ActionListener addAction, ActionListener moreAction,
+                                 ActionListener lookAction, ActionListener cancelAction,
+                                 int startNum) {
         _quitLooking = false;
-        _previewDialog = new PreviewDialog(_parent, "previewDir", dir, 
-                                          CatalogTreeManager.IMAGE_FILTER, true);
-        _previewDialog.init(addAction, lookAction, cancelAction);
-        _previewDialog.setVisible(true);
+        // if both addAction & lookAction not null dialog will be modeless - i.e dragable
+        _previewDialog = new PreviewDialog(_parent, "previewDir", dir, CatalogTreeManager.IMAGE_FILTER,
+                                            ((addAction != null)||(lookAction != null)) );
+        _previewDialog.init(addAction, moreAction, lookAction, cancelAction, startNum);
+        if (lookAction == null) {
+            closeWaitFrame();
+        }
     }
 
-    private void getImageDirectory(File f, String[] filter, boolean addToCatalogOption) {
+    private void getImageDirectory(File f, String[] filter) {
         File[] files = f.listFiles();
         if (files == null) {
             return;
         }
         for (int k=0; k<files.length; k++) {
             if (files[k].isDirectory()) {
-                getImageDirectory(files[k], filter, addToCatalogOption);
+                getImageDirectory(files[k], filter);
                 if (_quitLooking){
                     return;
                 }
                 String text = _waitText.getText();
                 if (text.length() > 400) {
-                    text = text.substring(0, 20);
+                    text = text.substring(0, 15);
                 }
                 _waitText.setText(text+".");
                 _waitText.setMinimumSize(_waitText.getPreferredSize());
@@ -480,13 +524,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             } else {
                 for (int j=0; j<filter.length; j++) {
                     if (files[k].getName().endsWith(filter[j])) {
-                        if (addToCatalogOption) {
-                            doPreviewDialog(f, new AActionListener(f),
-                                            new LActionListener(), new CActionListener());
-                        } else {
-                            doPreviewDialog(f, null,
-                                            new LActionListener(), new CActionListener());
-                        }
+                        doPreviewDialog(f, new AActionListener(f), new MActionListener(f, false),
+                                            new LActionListener(), new CActionListener(), 0);
                         return;
                     }
                 }
@@ -494,7 +533,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    PreviewDialog _previewDialog;
+    PreviewDialog _previewDialog = null;
     JDialog _waitDialog;
     JTextField _waitText;
     boolean _quitLooking = false;
@@ -515,17 +554,36 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.pack();
         cancelLooking();
     }
+
+    void displayMore(File dir, boolean oneDir) {
+        if (_previewDialog != null) {
+            _quitLooking = false;
+            int numFilesShown = _previewDialog.getNumFilesShown();
+            _previewDialog.dispose();
+            if (oneDir) {
+                doPreviewDialog(dir, null, new MActionListener(dir, oneDir),
+                                null, new CActionListener(), numFilesShown);
+            } else {
+                doPreviewDialog(dir, null, new MActionListener(dir,oneDir),
+                                new LActionListener(), new CActionListener(), numFilesShown);
+            }
+        }
+    }
     
     void keepLooking() {
-        _quitLooking = false;
-        _previewDialog.dispose();
-        _previewDialog = null;
+        if (_previewDialog != null) {
+            _quitLooking = false;
+            _previewDialog.dispose();
+            _previewDialog = null;
+        }
     }
 
     void cancelLooking() {
-        _quitLooking = true;
-        _previewDialog.dispose();
-        _previewDialog = null;
+        if (_previewDialog != null) {
+            _quitLooking = true;
+            _previewDialog.dispose();
+            _previewDialog = null;
+        }
     }
 
     private class IconButton extends DropButton {
