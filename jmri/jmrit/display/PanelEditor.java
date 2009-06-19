@@ -659,6 +659,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 });
             findIcon.add(editItem);
             findIcon.addSeparator();
+            /*
             JMenuItem openItem = new JMenuItem(rb.getString("openDirMenu"));
             ActionListener action = new ActionListener() {
                     IconAdder myEditor;
@@ -672,8 +673,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             }.init(editor);
             openItem.addActionListener(action);
             findIcon.add(openItem);
+            */
             JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
-            action = new ActionListener() {
+            ActionListener action = new ActionListener() {
                     IconAdder myEditor;
                     public void actionPerformed(ActionEvent e) {
                         myEditor.searchFS();
