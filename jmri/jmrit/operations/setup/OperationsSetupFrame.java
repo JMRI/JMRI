@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -99,6 +99,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JCheckBox showLengthCheckBox = new JCheckBox(rb.getString("ShowCarLength"));
 	JCheckBox showLoadCheckBox = new JCheckBox(rb.getString("ShowCarLoad"));
 	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("ShowCarColor"));
+	JCheckBox showDestinationCheckBox = new JCheckBox(rb.getString("ShowCarDestination"));
 	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("CarComment"));
 	JCheckBox iconCheckBox = new JCheckBox();
 	JCheckBox appendCheckBox = new JCheckBox();
@@ -189,6 +190,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
 		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
 		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
+		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());
 		
 		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 		textBuildReport.setText(rb.getString("BuildReport"));
@@ -327,7 +329,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (pPrinter, showLengthCheckBox, 1, 12);
 		addItemLeft (pPrinter, showLoadCheckBox, 2, 12);
 		addItemLeft (pPrinter, showColorCheckBox, 3, 12);
-		addItemLeft (pPrinter, appendCommentCheckBox, 4, 12);
+		addItemLeft (pPrinter, showDestinationCheckBox, 4, 12);
+		addItemWidth (pPrinter, appendCommentCheckBox, 2, 1, 14);
 		
 		
 		setPrinterFontRadioButton();
@@ -475,6 +478,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setShowCarLengthEnabled(showLengthCheckBox.isSelected());
 			Setup.setShowCarLoadEnabled(showLoadCheckBox.isSelected());
 			Setup.setShowCarColorEnabled(showColorCheckBox.isSelected());
+			Setup.setShowCarDestinationEnabled(showDestinationCheckBox.isSelected());
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
 			// build report level

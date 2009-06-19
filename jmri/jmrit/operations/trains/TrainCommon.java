@@ -55,13 +55,14 @@ public class TrainCommon {
 		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
 		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose()  ? " "+car.getLoad() : "");
 		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");
+		String carDestination = (Setup.isShowCarDestinationEnabled() ? ", destination "+splitLocationName(car.getDestinationName()) : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0]
 				+ carLength + carLoad + carColor 
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
 				+ (car.hasFred() ? " ("+rb.getString("FRED")+")" : "") + " " + rb.getString("from")+ " "
-				+ car.getTrackName() + carComment);
+				+ car.getTrackName() + carDestination + carComment);
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
@@ -97,6 +98,28 @@ public class TrainCommon {
 	
 	protected void newLine (PrintWriter file){
 		file.println(" ");
+	}
+	
+	/**
+	 * Splits a location name as long as the second part of
+	 * the name is a number
+	 * @param name
+	 * @return First half of a location name
+	 */
+	protected String splitLocationName(String name){
+		String[] fullname = name.split("-");
+		String parsedName = fullname[0];
+		// is the hyphen followed by a number?
+		if (fullname.length>1){
+			try{
+				Integer.parseInt(fullname[1]);
+			}
+			catch (NumberFormatException e){
+				// no return full name
+				parsedName = name;
+			}
+		}
+		return parsedName;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

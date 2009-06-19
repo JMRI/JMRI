@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.47 $
+ * @version             $Revision: 1.48 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1202,8 +1202,8 @@ public class TrainBuilder extends TrainCommon{
 		}
 		
 		if (engine != null){
-			String[] engineLocation = engine.getLocationName().split("-");
-			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+engineLocation[0]+", "+engine.getTrackName());
+			String engineLocation = splitLocationName(engine.getLocationName());
+			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+engineLocation+", "+engine.getTrackName());
 		}
 		
 		List<String> carList = carManager.getCarsByTrainDestinationList(train);
@@ -1213,12 +1213,12 @@ public class TrainBuilder extends TrainCommon{
 		for (int r = 0; r < routeList.size(); r++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			newLine(fileOut);
-			String[] routeLocationName = rl.getName().split("-");
+			String routeLocationName = splitLocationName(rl.getName());
 			if (r == 0)
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName[0] 
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 						+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
 			else
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName[0] 
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 						+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
@@ -1240,13 +1240,13 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			if (r != routeList.size() - 1) {
-				addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName[0] +" "+ rl.getTrainDirectionString()
+				addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
 						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null)
 					addLine(fileOut, BOX +rb.getString("DropEngineTo")+ " "+ engine.getDestinationTrackName()); 
-				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + rl.getName());
+				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 		}
 		fileOut.flush();

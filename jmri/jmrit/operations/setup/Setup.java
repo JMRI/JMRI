@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -135,6 +135,7 @@ public class Setup {
 	private static boolean showCarLength = true;		//when true, show car length in manifests 
 	private static boolean showCarLoad = false;			//when true, show car load in manifests 
 	private static boolean showCarColor = true;			//when true, show car color in manifests 
+	private static boolean showCarDestination = false;	//when true, show car destination in manifests 
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
@@ -250,6 +251,14 @@ public class Setup {
 	
 	public static boolean isShowCarColorEnabled(){
 		return showCarColor;
+	}
+
+	public static void  setShowCarDestinationEnabled(boolean enable){
+		showCarDestination = enable;
+	}
+	
+	public static boolean isShowCarDestinationEnabled(){
+		return showCarDestination;
 	}
 
 	public static void  setTrainIconCordEnabled(boolean enable){
@@ -540,6 +549,7 @@ public class Setup {
     	values.setAttribute("showCarLength", isShowCarLengthEnabled()?"true":"false");
     	values.setAttribute("showCarLoad", isShowCarLoadEnabled()?"true":"false");
     	values.setAttribute("showCarColor", isShowCarColorEnabled()?"true":"false");
+    	values.setAttribute("showCarDestination", isShowCarDestinationEnabled()?"true":"false");
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
@@ -645,6 +655,11 @@ public class Setup {
         	String enable = a.getValue();
            	if (log.isDebugEnabled()) log.debug("showCarColor: "+enable);
            	Setup.setShowCarColorEnabled(enable.equals("true"));
+        }
+        if ((a = operations.getChild("settings").getAttribute("showCarDestination"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("showCarDestination: "+enable);
+           	Setup.setShowCarDestinationEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
         	String enable = a.getValue();
