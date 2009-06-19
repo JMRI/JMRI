@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import java.io.IOException;
 import java.io.File;
 
+import java.awt.Component;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -77,6 +78,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     HashMap <String, JButton>   _iconMap;
     ArrayList <String>          _order;
     ArrayList <NamedBean>       _pickList;
+    JScrollPane                 _pickTablePane;
     JTable          _table;
     JButton         _addButton;
     JButton         _changeButton;
@@ -195,8 +197,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         uNameColumnT.setMinWidth(100);
         uNameColumnT.setMaxWidth(300);
 
-        JScrollPane js = new JScrollPane(_table);
-        this.add(js);
+        _pickTablePane = new JScrollPane(_table);
+        this.add(_pickTablePane);
         this.add(Box.createVerticalStrut(STRUT_SIZE));
         pack();
     }
@@ -209,7 +211,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             return;
         }
         int row = _table.getSelectedRow();
-        log.debug("Table valueChanged: row= "+row);
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
@@ -217,7 +218,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
-            log.debug("_addButton.setEnabled(false): row= "+row);
+            if (log.isDebugEnabled()) log.debug("_addButton.setEnabled(false): row= "+row);
         }
     }
 
@@ -248,7 +249,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     */
     protected NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
-        log.debug("getTableSelection: row= "+row);
         if (row >= 0) {
             _table.clearSelection();
             _addButton.setEnabled(false);
@@ -301,6 +301,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         valueChanged(null);     // set enabled, tool tips etc.
         this.add(p);
         this.add(Box.createVerticalStrut(STRUT_SIZE));
+
+        this.add(new JSeparator());
+        _catalog = new CatalogPanel("catalog", "selectNode");
+        _catalog.init(false);
+        makeDefaultCatalog();
+        _catalog.setVisible(false);
+        this.add(_catalog);
+
         pack();
     }
 
@@ -311,26 +319,29 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         // add the catalog, so icons can be selected
         if (_catalog != null)  {
             _catalog.setVisible(true);
-            return;
-        } 
+        }
+        /*
         this.add(new JSeparator());
         _catalog = new CatalogPanel("catalog", "selectNode");
         _catalog.init(false);
         makeDefaultCatalog();
-
+        */
         if (_changeButton != null) {
             _changeButton.setVisible(false);
             _closeButton.setVisible(true);
         }
-        this.add(_catalog);
+        //this.add(_catalog);
+        _pickTablePane.setVisible(false);
         this.pack();
     }
 
     void closeCatalog() {
-        this.remove(_catalog);
-        _catalog = null;
+        //this.remove(_catalog);
+        //_catalog = null;
+        _catalog.setVisible(false);
         _changeButton.setVisible(true);
         _closeButton.setVisible(false);
+        _pickTablePane.setVisible(true);
         this.pack();
     }
 
@@ -345,9 +356,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 }
             }
         }
-        _catalog.createNewBranch("IFJAR", "resourceJar", "resources");
+        _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         XmlFile.ensurePrefsPresent("resources");
-        _catalog.createNewBranch("IFPREF", "preferenceDir", XmlFile.prefsDir()+"resources");
+        _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
     }
 
     // For choosing image directories
@@ -357,7 +368,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * Open file anywhere in the file system and let the user decide whether
     * to add it to the Catalog
     */
-    public static File getDirectory() {    
+    public static File getDirectory(String msg, boolean dirsOnly) {    
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources");
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
@@ -365,26 +376,33 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 filt.addExtension(CatalogTreeManager.IMAGE_FILTER[i]);
             }
             _directoryChooser.setFileFilter(filt);
-            _directoryChooser.setDialogTitle(rb.getString("openDirMenu"));
-            //_directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         }
+        _directoryChooser.setDialogTitle(rb.getString(msg));
         _directoryChooser.rescanCurrentDirectory();
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel(rb.getString("loadDir1"));
-        panel.add(label);
-        label = new JLabel(rb.getString("loadDir2"));
-        panel.add(label);
-        label = new JLabel(rb.getString("loadDir3"));
-        panel.add(label);
-        label = new JLabel(rb.getString("loadDir4"));
-        panel.add(label);
-        _directoryChooser.setAccessory(panel);
+        if (dirsOnly) {
+            _directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        } else {
+            _directoryChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            JLabel label = new JLabel(rb.getString("loadDir1"));
+            panel.add(label);
+            label = new JLabel(rb.getString("loadDir2"));
+            panel.add(label);
+            label = new JLabel(rb.getString("loadDir3"));
+            panel.add(label);
+            label = new JLabel(rb.getString("loadDir4"));
+            panel.add(label);
+            _directoryChooser.setAccessory(panel);
+        }
         int retVal = _directoryChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
  
-        return _directoryChooser.getSelectedFile().getParentFile();
-        //File dir = _directoryChooser.getSelectedFile();
+        if (dirsOnly) {
+            return _directoryChooser.getSelectedFile();
+        } else {
+            return _directoryChooser.getSelectedFile().getParentFile();
+        }
     }
 
     private JTextField showWaitFrame(Frame parent, String msg) {
@@ -401,6 +419,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _waitDialog.setLocation(30,50);
         _waitDialog.pack();
         java.awt.Rectangle r = _waitDialog.getContentPane().getBounds();
+        if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
+                                            r.width+", r.height= "+r.height);
         _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
         _waitDialog.setVisible(false);
         return waitText;
@@ -413,10 +433,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
+    /**
+    *  Open one directory.
+    * @param addDir - <pre>if true, allows directory to be added as a tree to the Catalog.
+    *                      if false, allows preview panel to drag icons.
+    */
     public void openDirectory(boolean addDir) {
         _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
-        _waitDialog.setVisible(false);
-        File dir = getDirectory();
+        File dir = getDirectory("openDirMenu", false);
         if (dir != null) {
             _waitDialog.setVisible(true);
             if (addDir) {
@@ -432,6 +456,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     public void searchFS() {
+        /*
         File[] roots = File.listRoots();
         String[] rootName = new String[roots.length];
         for (int i=0; i<roots.length; i++) {
@@ -453,6 +478,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         log.debug("searchFS at root= "+root);
         _quitLooking = false;
         getImageDirectory(new File(root), CatalogTreeManager.IMAGE_FILTER);
+        */                           
+
+        _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
+        File dir = getDirectory("searchFSMenu", true);
+        if (dir == null) {
+            closeWaitFrame();
+            return;
+        }
+        log.debug("searchFS at dir= "+dir.getPath());
+        _waitDialog.setVisible(true);
+        getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
 
         JOptionPane.showMessageDialog(this, rb.getString("DirNotFound"), rb.getString("searchFSMenu"),
                                              JOptionPane.INFORMATION_MESSAGE);
@@ -736,7 +772,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
     
-/*
+
     public static Frame getParentFrame(Component comp)
     {
         while (true)
@@ -748,7 +784,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             comp = comp.getParent();
         }
     }
-*/
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconAdder.class.getName());
 }
