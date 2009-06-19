@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -111,8 +111,7 @@ public class TurnoutIconXml implements XmlAdapter {
         else
             l.setTristate(false);
             
-        l.setTurnout(jmri.InstanceManager.turnoutManagerInstance().getTurnout(
-            element.getAttribute("turnout").getValue()));
+        l.setTurnout(element.getAttribute("turnout").getValue());
 
         // find coordinates
         int x = 0;
