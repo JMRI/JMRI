@@ -614,6 +614,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
         _preview.setPreferredSize(new java.awt.Dimension(numCol*cellWidth, numRow*cellHeight));
+
+        IconAdder.getParentFrame(this).pack();
         return java.text.MessageFormat.format(rb.getString("numImagesInNode"),
                               new Object[] {node.getUserObject(),new Integer(leaves.size())});
     }

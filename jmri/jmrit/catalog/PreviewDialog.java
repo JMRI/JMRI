@@ -290,6 +290,8 @@ public class PreviewDialog extends JDialog implements MouseListener {
         if (log.isDebugEnabled()) log.debug("setIcons: startNum= "+startNum);
         int numCol = 6;
         int numRow = 5;
+        int cellHeight = 0;
+        int cellWidth = 0;
         long memoryNeeded = 0;
         long memoryAvailable = availableMemory();
         boolean newCol = false;
@@ -398,9 +400,15 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     JPanel p = new JPanel();
                     p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
                     p.add(image);
-                    p.add(new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
-                                        new Object[] {CatalogPanel.printDbl(scale,2)})));
-
+                    JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
+                                        new Object[] {CatalogPanel.printDbl(scale,2)}));
+                    p.add(label);
+                    if (cellHeight < icon.getIconHeight()) {
+                        cellHeight = icon.getIconHeight()+label.getPreferredSize().height;
+                    }
+                    if (cellWidth < icon.getIconWidth()) {
+                        cellWidth = Math.max(label.getPreferredSize().width, icon.getIconWidth())+10;
+                    }
                     p.addMouseListener(this);
                     gridbag.setConstraints(p, c);
                     if (log.isDebugEnabled()) log.debug(name+" inserted at ("+c.gridx+", "+c.gridy+") "
@@ -419,11 +427,11 @@ public class PreviewDialog extends JDialog implements MouseListener {
         JLabel bottom = new JLabel();
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
-        setPreferredSize(new java.awt.Dimension(numCol*50, numRow*50));
+        _preview.setPreferredSize(new java.awt.Dimension(numCol*cellWidth, numRow*cellHeight));
         _previewLabel.setText(java.text.MessageFormat.format(rb.getString("numImagesInDir"),
                               new Object[] {_currentDir.getName(), new Integer(cnt),
                                   new Integer(startNum)}));
-
+        jmri.jmrit.display.IconAdder.getParentFrame(this).pack();
         //log.debug("\n6\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
         return noMemory;
     }
