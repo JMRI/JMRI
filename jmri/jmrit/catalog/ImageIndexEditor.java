@@ -192,9 +192,9 @@ public class ImageIndexEditor extends JmriJFrame {
                 }
             }
         }
-        _catalog.createNewBranch("IFJAR", "resourceJar", "resources");
+        _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         XmlFile.ensurePrefsPresent("resources");
-        _catalog.createNewBranch("IFPREF", "preferenceDir", XmlFile.prefsDir()+"resources");
+        _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
         return _catalog;
     }
 
