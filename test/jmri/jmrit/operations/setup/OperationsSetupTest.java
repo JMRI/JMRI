@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -232,6 +232,11 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertTrue(s.isShowCarColorEnabled());
 		s.setShowCarColorEnabled(false);
 		Assert.assertFalse(s.isShowCarColorEnabled());
+		
+		s.setShowCarDestinationEnabled(true);
+		Assert.assertTrue(s.isShowCarDestinationEnabled());
+		s.setShowCarDestinationEnabled(false);
+		Assert.assertFalse(s.isShowCarDestinationEnabled());
 
 		s.setBuildReportLevel("Test Build Report Level");
 		Assert.assertEquals("Build Report Level", "Test Build Report Level", s.getBuildReportLevel());

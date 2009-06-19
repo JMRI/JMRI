@@ -13,7 +13,7 @@ import junit.framework.TestCase;
  * This is not itself a test class, e.g. should not be added to a suite.  Instead,
  * this forms the base for test classes, including providing some common tests.
  * @author			Bob Jacobsen 2002, 2004, 2005, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
  
 public abstract class AbstractLightTest extends TestCase {
@@ -46,7 +46,7 @@ public abstract class AbstractLightTest extends TestCase {
 		Assert.assertEquals("initial commanded state", Light.OFF, t.getState());
 	}
 
-	public void testAddListener() throws JmriException {
+	public void testAddListener(){
 		t.addPropertyChangeListener(new Listen());
 		listenerResult = false;
 		t.setUserName("user id");
@@ -66,21 +66,21 @@ public abstract class AbstractLightTest extends TestCase {
 				!listenerResult);
 	}
 
-	public void testDispose() throws JmriException {
+	public void testDispose(){
 		t.setState(Light.ON);  	// in case registration with TrafficController 
 												//is deferred to after first use
 		t.dispose();
 		Assert.assertEquals("controller listeners remaining", 0, numListeners());
 	}
 
-	public void testCommandOff() throws JmriException {
+	public void testCommandOff(){
 		t.setState(Light.OFF);
 		// check
 		Assert.assertEquals("commanded state", jmri.Light.OFF, t.getState());
 		checkOffMsgSent();
 	}
 	
-	public void testCommandOn() throws JmriException {
+	public void testCommandOn(){
 		t.setState(Light.ON);
 		// check
 		Assert.assertEquals("commanded state", jmri.Light.ON, t.getState());

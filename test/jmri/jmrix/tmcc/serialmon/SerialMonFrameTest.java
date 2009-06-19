@@ -8,8 +8,6 @@
 
 package jmri.jmrix.tmcc.serialmon;
 
-import jmri.*;
-
 import java.util.*;
 
 import junit.framework.Assert;
@@ -77,7 +75,7 @@ public class SerialMonFrameTest extends TestCase {
 /*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
 /*     } */
     
-    public void testWrite() throws JmriException {
+    public void testWrite(){
         
         // infrastructure objects
         SerialInterfaceScaffold t = new SerialInterfaceScaffold();

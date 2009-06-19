@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Path class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PathTest extends TestCase {
 
@@ -61,14 +61,14 @@ public class PathTest extends TestCase {
         
     }
     
-    public void testShortPathCheck() throws JmriException {
+    public void testShortPathCheck(){
         Path p = new Path();
         // no elements; always true
         Assert.assertTrue("check path set", p.checkPathSet());
         
     }
     
-    public void testFormat() throws JmriException {
+    public void testFormat(){
         Path p = new Path();
         // default direction
         Assert.assertTrue("None", p.decodeDirection(Path.NONE).equals("None"));

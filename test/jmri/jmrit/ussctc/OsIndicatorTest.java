@@ -7,11 +7,11 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class OsIndicatorTest extends TestCase {
 
-    public void testFrameCreate() throws jmri.JmriException {
+    public void testFrameCreate(){
         new OsIndicator("12", "34", "56");
     }
 

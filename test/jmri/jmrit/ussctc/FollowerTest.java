@@ -7,11 +7,11 @@ import junit.framework.*;
 /**
  * Tests for Follower classes in the jmri.jmrit.ussctc package
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class FollowerTest extends TestCase {
 
-    public void testFrameCreate() throws jmri.JmriException {
+    public void testFrameCreate(){
         new Follower("12", "34", false, "56");
     }
 

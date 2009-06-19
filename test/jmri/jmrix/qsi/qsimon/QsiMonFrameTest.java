@@ -8,8 +8,6 @@
 
 package jmri.jmrix.qsi.qsimon;
 
-import jmri.*;
-
 import java.util.*;
 
 import junit.framework.Assert;
@@ -55,7 +53,7 @@ public class QsiMonFrameTest extends TestCase {
 /* 		Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
 /* 	} */
 
-	public void testWrite() throws JmriException {
+	public void testWrite(){
 
 		// infrastructure objects
 		//QsiInterfaceScaffold t = new QsiInterfaceScaffold();

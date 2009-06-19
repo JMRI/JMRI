@@ -8,7 +8,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.loconet.soundloader package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SoundLoaderTest extends TestCase {
 
@@ -16,7 +16,7 @@ public class SoundLoaderTest extends TestCase {
         return;
     }
 
-    public void testRead() throws java.io.IOException {
+    public void testRead(){
         return;
     }
 

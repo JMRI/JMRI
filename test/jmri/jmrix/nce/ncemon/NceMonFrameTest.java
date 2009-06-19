@@ -8,8 +8,6 @@
 
 package jmri.jmrix.nce.ncemon;
 
-import jmri.*;
-
 import java.util.*;
 
 import junit.framework.Assert;
@@ -60,7 +58,7 @@ public class NceMonFrameTest extends TestCase {
 /*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
 /*     } */
     
-    public void testWrite() throws JmriException {
+    public void testWrite(){
         
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();

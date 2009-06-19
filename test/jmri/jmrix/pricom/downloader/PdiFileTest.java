@@ -7,12 +7,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.io.IOException;
 
 /**
  * JUnit tests for the PdiFile class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class PdiFileTest extends TestCase {
 
@@ -21,7 +20,7 @@ public class PdiFileTest extends TestCase {
     }
 
     // create and show, with some data present
-    public void testOpen() throws IOException {
+    public void testOpen(){
         PdiFile f = new PdiFile(null);
         Assert.assertNotNull("exists", f );
     }

@@ -51,7 +51,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
 		Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
 	}
 
-	public void testAddListener() throws JmriException {
+	public void testAddListener(){
 		t.addPropertyChangeListener(new Listen());
 		listenerResult = false;
 		t.setUserName("user id");
@@ -71,21 +71,21 @@ public abstract class AbstractTurnoutTest extends TestCase {
 				!listenerResult);
 	}
 
-	public void testDispose() throws JmriException {
+	public void testDispose(){
 		t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController 
 												//is deferred to after first use
 		t.dispose();
 		Assert.assertEquals("controller listeners remaining", 0, numListeners());
 	}
 
-	public void testCommandClosed() throws JmriException, InterruptedException {
+	public void testCommandClosed() throws InterruptedException {
 		t.setCommandedState(Turnout.CLOSED);
 		// check
 		Assert.assertEquals("commanded state", jmri.Turnout.CLOSED, t.getCommandedState());
 		checkClosedMsgSent();
 	}
 	
-	public void testCommandThrown() throws JmriException, InterruptedException {
+	public void testCommandThrown() throws InterruptedException {
 		t.setCommandedState(Turnout.THROWN);
 		// check
 		Assert.assertEquals("commanded state", jmri.Turnout.THROWN, t.getCommandedState());

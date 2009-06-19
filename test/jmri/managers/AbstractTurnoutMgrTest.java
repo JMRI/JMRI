@@ -45,7 +45,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 	public void testCreate() {
 	}
 
-	public void testDispose() throws JmriException {
+	public void testDispose(){
 		l.dispose();  // all we're really doing here is making sure the method exists
 	}
 
