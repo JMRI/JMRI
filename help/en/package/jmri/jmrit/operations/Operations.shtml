@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.43 2009-04-30 19:44:07 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.44 2009-06-19 00:10:05 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -179,6 +179,11 @@ for the cars and engines. The "Very Detailed" setting produces the most
 pages, and will show why cars are not picked up or dropped. Be sure and
 press "Save" after changing the build report selection.
 
+<H3>Show Car Length</H3>
+
+Select the "Show Car Length" checkbox if you want the car's length shown
+in your manifests and switch lists.
+
 <H3>Show Car Load</H3>
 
 You can optionally show whether the car is empty or loaded. When a car
@@ -190,7 +195,19 @@ create your own loads until you become very familiar with how the
 program works. For many operators, showing whether the car is empty or
 loaded adds just enough realism to their operations.
 
-<H3>Append Car Comment to Manifest</H3>
+<H3>Show Car Color</H3>
+
+Select the "Show Car Color" checkbox if you want the car's color shown
+in your manifests and switch lists.
+
+<H3>Show Car Destination</H3>
+
+Select the "Show Car Destination" checkbox if you want the car's destination shown
+in your manifests and switch lists.
+
+
+
+<H3>Append Car and Engine Comments</H3>
 
 For each car in your roster, you can have an optional comment. If you
 want the car's comment added to your manifest, select the checkbox.
@@ -246,12 +263,18 @@ To add a location, press the "Add" button located on the
 bottom of the "Locations" panel. A new panel should appear. 
 <P>
 <img src="images/EditLocation.png">
-<P>
 
-In the "Add
-Location" panel, enter the name of the location in box across from
-"Name". The location name must be unique; the program will not allow two
-locations with identical names. Now press the "Add Location" button at
+
+<P>In the "Add Location" panel, enter the name of the location in
+box across from "Name". The location name must be unique; the program
+will not allow two locations with identical names. However, if you want
+more than one location to have the same name for your manifests and
+switch lists, add a hyphen and a number to the locations name. For
+example, "Boston-1" and "Boston-2" will print as "Boston". The program
+will remove the hyphen and number when printing manifests and switch
+lists.</P>
+
+<P>Now press the "Add Location" button at
 the bottom of the panel. The various fields that were disabled should
 now appear.
 
