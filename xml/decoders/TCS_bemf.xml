@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.17 2009-06-06 02:44:21 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.18 2009-06-20 00:28:28 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -1219,29 +1219,29 @@
                 </enumVal>
             </variable>
 
-            <variable label="Accel 2 Starting Point" CV="125" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255, CV129" comment="Range 0-255">
+            <variable label="Accel 2 Starting Point" CV="125" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255, CV125" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Accel 2 Rate" CV="126" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
+            <variable label="Accel 2 Rate" CV="126" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV126" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Accel 3 Starting Point" CV="127" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255, CV131" comment="Range 0-255">
+            <variable label="Accel 3 Starting Point" CV="127" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255, CV127" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Accel 3 Rate" CV="128" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255, CV132" comment="Range 0-255">
+            <variable label="Accel 3 Rate" CV="128" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255, CV128" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
 
-            <variable label="Decel 4 Ending Point" CV="129" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255, CV125" comment="Range 0-255">
+            <variable label="Decel 4 Ending Point" CV="129" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255, CV129" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Decel 4 Rate" CV="130" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255, CV126" comment="Range 0-255">
+            <variable label="Decel 4 Rate" CV="130" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Decel 5 Ending Point" CV="131" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255, CV127" comment="Range 0-255">
+            <variable label="Decel 5 Ending Point" CV="131" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255, CV131" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Decel 5 Rate" CV="132" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255, CV128" comment="Range 0-255">
+            <variable label="Decel 5 Rate" CV="132" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255, CV132" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
 
@@ -1449,6 +1449,8 @@
         </column>
     </pane>
 </decoder-config>
+
+
 
 
 
