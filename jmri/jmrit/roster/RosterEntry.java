@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.32 $
+ * @version   $Revision: 1.33 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -193,7 +193,7 @@ public class RosterEntry {
             int address =0;
             try {
                 address = Integer.parseInt(_dccAddress);
-            } catch (IllegalArgumentException e2) { address = 3;}  // ignore, accepting the default value
+            } catch (NumberFormatException e2) { address = 3;}  // ignore, accepting the default value
             if (tf!=null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
                 // if it has to be long, handle that
                 _isLongAddress = true;
