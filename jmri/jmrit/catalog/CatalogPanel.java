@@ -8,29 +8,29 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 //import javax.swing.DropMode;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+//import javax.swing.JButton;
+//import javax.swing.JComponent;
+//import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JPopupMenu.Separator; 
+//import javax.swing.JPopupMenu.Separator; 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.JLabel;
+//import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import javax.swing.TransferHandler;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
+//import javax.swing.TransferHandler;
+//import javax.swing.event.TreeModelEvent;
+//import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
+//import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
+//import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -201,16 +201,17 @@ public class CatalogPanel extends JPanel implements MouseListener {
     /**
     * Recursively add the branch nodes to display tree
     */
-    private void addTreeBranch(CatalogTreeNode node) {
+    @SuppressWarnings("unchecked")
+	private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
             log.debug("addTreeBranch called for node= "+node.toString()+
                       ", has "+node.getChildCount()+" children");
         }
-        String name = node.toString(); 
+        //String name = node.toString(); 
         CatalogTreeNode root = (CatalogTreeNode)_model.getRoot();
-        Enumeration e = node.children();
+        Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode n = e.nextElement();
             addNode(root, n);
         }
     }
@@ -218,13 +219,14 @@ public class CatalogPanel extends JPanel implements MouseListener {
     /**
     * Clones the node and adds to parent. 
     */
-    private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
+    @SuppressWarnings("unchecked")
+	private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
         CatalogTreeNode node = new CatalogTreeNode((String)n.getUserObject());
         node.setLeaves(n.getLeaves());
         parent.add(node);
-        Enumeration e =n.children();
+        Enumeration<CatalogTreeNode> e =n.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode nChild = e.nextElement();
             addNode(node, nChild);
         }
     }
@@ -251,14 +253,15 @@ public class CatalogPanel extends JPanel implements MouseListener {
     *  Find the corresponding node in a CatalogTreeManager tree with a
     * displayed node.
     */
-    private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
+    @SuppressWarnings("unchecked")
+	private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
         if (idx == nodes.length) {
             return cRoot;
         }
-        Enumeration e = cRoot.children();
+        Enumeration<CatalogTreeNode> e = cRoot.children();
         CatalogTreeNode result = null;
         while (e.hasMoreElements()) {
-            CatalogTreeNode cNode = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode cNode = e.nextElement();
             if (nodes[idx].toString().equals(cNode.toString())) {
                 result = match(cNode, nodes, idx+1);
                 break;
@@ -287,14 +290,15 @@ public class CatalogPanel extends JPanel implements MouseListener {
     /**
     *  Insert a new node into the displayed tree.
     */
-    public boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
+    @SuppressWarnings("unchecked")
+	public boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
         if (!nameOK(parent, name)) {
             return false;
         }
         int index = 0;
-        Enumeration e = parent.children();
+        Enumeration<CatalogTreeNode> e = parent.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode n = e.nextElement();
             if (name.compareTo(n.toString()) < 0 ) {
                 break;
             }
@@ -314,7 +318,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     *  Delete a node from the displayed tree.
     */
     public void removeNodeFromModel(CatalogTreeNode node) {
-        CatalogTreeNode cParent = getCorrespondingNode((CatalogTreeNode)node.getParent());
+        //CatalogTreeNode cParent = getCorrespondingNode((CatalogTreeNode)node.getParent());
         AbstractCatalogTree tree = (AbstractCatalogTree)getCorespondingModel(node);
         tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
@@ -475,7 +479,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (node == null) {
             return null;
         }
-        List leaves = node.getLeaves();
+        List<CatalogTreeLeaf> leaves = node.getLeaves();
         if (leaves == null) {
             return null;
         }
@@ -506,7 +510,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 cnt++;
                 continue;
             }
-            CatalogTreeLeaf leaf = (CatalogTreeLeaf)leaves.get(i);
+            CatalogTreeLeaf leaf = leaves.get(i);
             NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
             int w = icon.getIconWidth();
             int h = icon.getIconHeight();
@@ -515,12 +519,14 @@ public class CatalogPanel extends JPanel implements MouseListener {
                           ", w= "+w+", h= "+h);
             }
             if (3*w*h > 500000)  {
-                byte[] memoryTest = null;
+                //byte[] memoryTest = null;
                 try {
-                    memoryTest = new byte[3*w*h];
+                	// not sure if we really need to assign the byte array to memoryTest
+                	@SuppressWarnings("unused")
+					byte[] memoryTest = new byte[3*w*h];
                 } catch (OutOfMemoryError me) {
                      log.debug("OutOfMemoryError for "+3*w*h+" bytes");
-                     memoryTest = null;
+                     //memoryTest = null;
                      noMemory = true;
                      JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                                                         rb.getString("OutOfMemory"), 
@@ -529,15 +535,15 @@ public class CatalogPanel extends JPanel implements MouseListener {
                                                         JOptionPane.INFORMATION_MESSAGE);
                      continue;
                 }
-                memoryTest = null;
+                //memoryTest = null;
                 System.gc();        // please take the hint...
             }
             double scale = 1;
             if (w > 100) {
-                scale = 100.0/(double)w;
+                scale = 100.0/w;
             }
             if (h > 100) {
-                scale = Math.min(scale, 100.0/(double)h);
+                scale = Math.min(scale, 100.0/h);
             }
             if (scale < 1) { // make a thumbnail
                 scale = Math.max(scale, 0.25);  // but not too small
