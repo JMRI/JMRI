@@ -262,7 +262,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     /**
      * Returns a new NamedIcon object for your own use.
-     * @param name of key (label)
+     * @param key Name of key (label)
      * @return Unique object
      */
     public NamedIcon getIcon(String key) {

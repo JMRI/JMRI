@@ -108,8 +108,8 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 	
     /**
      * Default implementation for storing the contents of a CatalogTreeManager
-     * @param o Object to store, of type CatalogTreeManager
-     * @return Element containing the complete info
+     * @param cat Element to load with contents
+     * @param trees List of contents
      */
     public void store(Element cat, List<String> trees) {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
@@ -192,7 +192,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
      * Create a CatalogTreeManager object of the correct class, then
      * register and fill it.
-     * @param memories Top level Element to unpack.
+     * @param catalogTrees Top level Element to unpack.
      */
     public void load(Element catalogTrees) {
         loadCatalogTrees(catalogTrees);
