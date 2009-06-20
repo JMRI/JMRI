@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.6.shtml,v 1.2 2009-06-14 00:19:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.6.shtml,v 1.3 2009-06-20 01:18:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,6 +159,53 @@ Ken Cameron added some initial code for "extended commands" in the Powerline (X1
 
 <p>
 Dan Boudreau updated the operations tools to remove any train icon(s) from the panel(s) when a train is reset.
+
+<p>
+Fix an off-by-one error when doing manual reads and writes with the DecoderPro indexed-CV pane.
+
+<p>
+Pete Cressman made some significant improvements to the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>.
+The textfields that required users to type in the system name of a JMRI entity, e.g. a turnout, sensor, etc, and then press an
+'Change Icon' button to open a window to assign icons to it, have been replaced by a dropdown menu.  
+Selecting an item from this comboBox opens a window similar to the previous version.   
+These new versions of the Add.. window have several 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/IconAdder.shtml">new features</a>:
+<ol>
+<LI>A picklist table is displayed for the JMRI entities that have creation tools.  
+Selecting a row from the table activates an 'Add' button that adds icons for the seletion to the Panel.
+<li>There is a similar panel containing trees for changing icons.  
+The new version displays all the icons contained in a node of the tree and icons are changed by dragging the image 
+from the preview panel to the entity's icons and dropping it there.
+<li>There are menu items for help and file system searches
+<li>Any directory accessible from the computer can be added to the trees that provide icons to import to the Panel.
+<li>Any drive on the computer can be searched for images.
+<li>An Image Index can be created and a permanet copy saved to organize the icons for import to the Panel.  
+This index is usable globally (i.e. not confined to the Panel under construction)
+</ol>
+
+<p>
+Dan Boudreau improved the operations help and updated the images.
+He also fixed a bug: When terminating a train, 
+the train's engine(s) were not always sent to the destination track if the free track space was less than the engine(s) length.  
+He also added minor GUI improvements for locations and tracks,
+and updated it to
+allow users to enter similar location names in operations by using a hyphen and a number in the name.  
+Hyphen and number are no longer printed in manifests and switch lists.
+
+<p>
+Peter Ulvestad added a 
+<a href="http://jmri.org/jython/BackAndForthWithMidStop.py">BackAndForthWithMidStop.py</a>
+sample script that uses two different detectors for the stop because of the location of the station and detection blocks. 
+This allows the RDCs to stop exactly if front of the station in both directions. 
+You can change it to one detector if that works for your situation.
+
+<p>
+Chris Zurek updated the version number and number of functions for the Digitrax DH123 decoder.
+
+<p>
+Marc Fournier updated the TCS BEMF decoder tooltips.
+
 
 <!--#include virtual="/Footer" -->
 
