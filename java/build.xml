@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.45 $ -->
+<!-- Revision $Revision: 1.46 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -160,7 +160,7 @@
            memorymaximumsize="256m"
            deprecation="${deprecation}"
            debug="yes" >
-       <!-- <compilerarg value="-Xlint:{fallthrough, path, finally, -unchecked, -serial, deprecated}"/> -->
+       <compilerarg value="-Xlint:{fallthrough, path, finally, unchecked, -serial, deprecated}"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -455,10 +455,13 @@
  <target name="dist" depends="clean, init, debug, rmic, jar"
  		 description="create a distribution jar file"/>
 	
- <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
-    onerror="ignore"/>
+ <taskdef name="findbugs" 
+    classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+    onerror="ignore"
+    classpath="${findbugs.home}/lib/findbugs.jar"
+    />
  	
- <target name="findbugs" depends="dist">
+ <target name="findbugs" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
  	<findbugs home="${findbugs.home}"
   	      	output="html"
 						outputFile="${jartarget}/jmri-fb.html" 
