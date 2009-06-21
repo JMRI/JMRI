@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -112,6 +112,11 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
             if (log.isDebugEnabled()) log.debug("create sensor: ("+sysName+")");
             Sensor s = tm.newSensor(sysName, userName);
+            
+            if (s==null){
+            	log.error("Could not create sensor: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+            	continue;
+            }
 
             // load common parts
             loadCommon(s, sensorList.get(i));

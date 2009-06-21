@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -179,6 +179,11 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             userName = elem.getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Turnout t = tm.newTurnout(sysName, userName);
+            
+            if (t==null){
+            	log.error("Could not create turnout: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+            	continue;
+            }
             
             // Load common parts
             loadCommon(t, elem);
