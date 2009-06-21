@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class ReportContext {
 
@@ -73,7 +73,6 @@ public class ReportContext {
         addProperty("user.home");
         addProperty("user.dir");
         addProperty("jmri.log.path");
-        addProperty("python.home");
 
         addScreenSize();
         
