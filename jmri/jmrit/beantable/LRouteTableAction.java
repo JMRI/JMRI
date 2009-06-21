@@ -1753,16 +1753,16 @@ public class LRouteTableAction extends AbstractTableAction {
             numConds = makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList, 
                                                vetoList, logix, sName, uName, "L");
         }
-        System.out.println("Conditionals added= "+logix.getNumConditionals());
+        log.debug("Conditionals added= "+logix.getNumConditionals());
         for (int i=0; i<logix.getNumConditionals(); i++)
         {
-            System.out.println("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
+            log.debug("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
         }
         logix.activateLogix();
-        System.out.println("Conditionals added= "+logix.getNumConditionals());
+        log.debug("Conditionals added= "+logix.getNumConditionals());
         for (int i=0; i<logix.getNumConditionals(); i++)
         {
-            System.out.println("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
+            log.debug("Conditional SysName= \""+logix.getConditionalByNumberOrder(i)+"\"");
         }
         finishUpdate(uName, newRoute);
     } //updatePressed
@@ -1833,7 +1833,7 @@ public class LRouteTableAction extends AbstractTableAction {
             int logicType = _newRouteType ? Conditional.MIXED : Conditional.ALL_AND;
             c.setLogicType(logicType, antecedent);
             logix.addConditional(cSystemName, 0);
-            System.out.println("Conditional added: SysName= \""+cSystemName+"\"");
+            log.debug("Conditional added: SysName= \""+cSystemName+"\"");
             c.calculate(true, null);
             numConds++;
         }
@@ -1854,7 +1854,7 @@ public class LRouteTableAction extends AbstractTableAction {
         c.setAction(actionList);
         c.setLogicType(Conditional.ALL_AND, "");
         logix.addConditional(cSystemName, 0);
-        System.out.println("Conditional added: SysName= \""+cSystemName+"\"");
+        log.debug("Conditional added: SysName= \""+cSystemName+"\"");
         c.calculate(true, null);
         numConds++;
         return numConds;
