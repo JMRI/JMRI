@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MultiSensorIconAdder.shtml,v 1.1 2009-06-17 06:17:05 pete_cressman Exp $ -->
+<!-- $Id: MultiSensorIconAdder.shtml,v 1.2 2009-06-22 19:05:41 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: MultiSensor Icon Editor Help</TITLE>
@@ -29,8 +29,9 @@
 changed in the other Icon Editors.  The <b>Change Icon...</b>button and the 
 Catalog function identically with other Icon Editors. The <b>Find Icons</b> 
 menu and its items are 
-also identical.<p>  See the <a href="IconAdder.shtml">Icon Editors page</a> for
-details on their use.
+also identical.<p>  See the <a href="IconAdder.shtml">Icon Editors page</a> 
+and the <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
+for details on their use.
 
 
 <H2>Contents of the MultiSensor Icon Editor</H2>
@@ -39,7 +40,7 @@ details on their use.
 "active" icons.  Each corresponds to a switch or lever position.  In the Panel,
 the positions are cycled through in sequence.  A position can be deleted by 
 pressing the <b>Delete</b> button under the icon.  Additional positions can
-be added by pressing the </b>Add Another Icon</b> button.
+be added by pressing the <b>Add Another Icon</b> button.
 
 <p>Each active icon must have a sensor associated with it.  To assign a
 sensor to an icon position, drag a row from the Sensor table to the place
